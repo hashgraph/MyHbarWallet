@@ -30,6 +30,7 @@ export default Vue.extend({
 
     & .link {
         text-decoration: none;
+        color: var(--color-china-blue);
 
         &:hover {
             cursor: pointer;

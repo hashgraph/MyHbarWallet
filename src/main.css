@@ -12,6 +12,7 @@
     --color-melbourne-cup: #3bc1aa;
     --color-celestial-green: #3ed7bc;
     --color-green-jelly: #269983;
+    --color-china-blue: #506175;
     --color-peral: #f9f9f9;
     --color-basalt-grey: #999;
     --color-jupiter: #e0e0e0;
@@ -30,5 +31,4 @@ body {
 
 html {
     min-height: 100vh;
-    padding: 0;
 }
