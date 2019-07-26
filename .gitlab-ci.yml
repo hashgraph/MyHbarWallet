@@ -18,3 +18,7 @@ test:
     script:
         - yarn lint
         - yarn test
+
+    only:
+        - master
+        - merge_requests
