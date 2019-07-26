@@ -21,4 +21,16 @@ describe("Button.vue", () => {
         expect(wrapper.text()).not.toMatch(label);
         expect(wrapper.contains(FontAwesomeIcon)).toBe(true);
     });
+
+    it("triggers a click handler when clicked", () => {
+        const handler = jest.fn();
+        const wrapper = shallowMount(Button, {
+            propsData: { label: "" },
+            listeners: { click: handler }
+        });
+
+        wrapper.trigger("click");
+
+        expect(handler).toBeCalledTimes(1);
+    });
 });

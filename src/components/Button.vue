@@ -1,6 +1,6 @@
 <template>
-    <button @click="handleClick" :class="{ 'is-busy': isBusy }">
-        <FontAwesomeIcon v-if="isBusy" :icon="faSpinner" spin />
+    <button v-on="this.$listeners" :class="{ 'is-busy': isBusy }">
+        <FontAwesomeIcon v-if="isBusy" class="spinner" :icon="faSpinner" spin />
         <span v-else>{{ label }}</span>
 
         <FontAwesomeIcon
@@ -28,11 +28,6 @@ export default Vue.extend({
     computed: {
         faSpinner() {
             return faSpinner;
-        }
-    },
-    methods: {
-        handleClick() {
-            this.$emit("click");
         }
     }
 });
