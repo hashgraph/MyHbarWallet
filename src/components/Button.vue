@@ -67,6 +67,10 @@ button {
     }
 }
 
+.spinner {
+    padding: 1px 0;
+}
+
 .icon {
     position: absolute;
     right: 15px;
