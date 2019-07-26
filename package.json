@@ -5,10 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "run-s lint:js lint:css",
+    "lint": "npm-run-all lint:js lint:css",
     "lint:js": "vue-cli-service lint",
     "lint:css": "stylelint --fix 'src/**/*.vue'",
-    "test": "run-s test:unit",
+    "test": "npm-run-all test:unit",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
@@ -35,6 +35,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "jest": ">=22 <24",
     "lint-staged": "^8.1.5",
+    "npm-run-all": "^4.1.5",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^1.18.2",
     "stylelint": "^10.1.0",
