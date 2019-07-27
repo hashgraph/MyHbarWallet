@@ -23,7 +23,9 @@
     },
     "devDependencies": {
         "@babel/core": "^7.5.5",
-        "@types/jest": "^23.1.4",
+        "@types/core-js": "2.x.x",
+    "@types/jest": "^23.1.4",
+    "@types/prettier": "1.x.x",
         "@vue/cli-plugin-babel": "^3.9.0",
         "@vue/cli-plugin-eslint": "^3.9.0",
         "@vue/cli-plugin-typescript": "^3.9.0",
