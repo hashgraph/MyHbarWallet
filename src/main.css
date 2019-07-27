@@ -1,4 +1,9 @@
-/* Add global variables, mixins, etc. */
+/* sanitize.css is a CSS library that provides consistent, cross-browser
+   default styling of HTML elements alongside useful defaults. */
+/* https://github.com/csstools/sanitize.css */
+@import "sanitize";
+@import "sanitize/forms";
+@import "sanitize/page";
 
 :root {
     --color-melbourne-cup: #3bc1aa;
