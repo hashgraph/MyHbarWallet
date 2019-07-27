@@ -3,14 +3,18 @@
         <img alt="Vue logo" src="../assets/logo.png" />
         <HelloWorld name="World" />
 
-        <div class="buttons">
-            <SubmitButton label="Choose a Hardware" />
-            <SubmitButton label="Next" :rightIcon="faArrowRight" />
-            <SubmitButton
+        <div class="section">
+            <Button label="Choose a Hardware" />
+            <Button label="Next" :rightIcon="faArrowRight" />
+            <Button
                 label="Access Wallet"
                 @click="handleAccessWallet"
                 :isBusy="isAccessWalletBusy"
             />
+        </div>
+
+        <div class="section">
+            <TextInput obscure placeholder="Enter password" />
         </div>
     </div>
 </template>
@@ -18,14 +22,16 @@
 <script lang="ts">
 import Vue from "vue";
 import HelloWorld from "@/components/HelloWorld.vue";
-import SubmitButton from "@/components/Button.vue";
+import Button from "@/components/Button.vue";
+import TextInput from "@/components/TextInput.vue";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
     name: "home",
     components: {
         HelloWorld,
-        SubmitButton
+        Button,
+        TextInput
     },
     data() {
         return {
@@ -56,10 +62,14 @@ export default Vue.extend({
     align-items: center;
 }
 
-.buttons > * {
+.section {
     margin-top: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.section > * {
+    margin-top: 25px;
 }
 </style>
