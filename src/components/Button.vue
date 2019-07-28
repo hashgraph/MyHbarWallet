@@ -51,7 +51,8 @@ button {
         cursor: pointer;
     }
 
-    &:hover:not(.is-busy) {
+    &:hover:not(.is-busy),
+    &:focus:not(.is-busy) {
         background-color: var(--color-celestial-green);
         border-color: var(--color-celestial-green);
     }

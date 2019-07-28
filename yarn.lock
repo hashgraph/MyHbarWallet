@@ -10346,6 +10346,11 @@ stylehacks@^4.0.0:
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
 
+stylelint-a11y@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/stylelint-a11y/-/stylelint-a11y-1.2.1.tgz#fe5ba2ac2ea62fe26b148d583c2b4d65e6351466"
+  integrity sha512-yfH6ibVkfAlAt7J5ExrzpBPFCSWDTxBL9svdFZ6BfGF5hRmFgTS03x4r/rBAAaNDpgKE32CQz5qcLbgOLzuxfA==
+
 stylelint-config-recommended@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/stylelint-config-recommended/-/stylelint-config-recommended-2.2.0.tgz#46ab139db4a0e7151fd5f94af155512886c96d3f"
