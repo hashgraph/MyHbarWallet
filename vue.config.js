@@ -7,6 +7,7 @@ module.exports = {
                 ...args[0],
                 inject: false,
                 template: require("html-webpack-template"),
+                appMountId: "app",
                 title: "MyHederaWallet",
                 mobile: true,
                 lang: "en"
