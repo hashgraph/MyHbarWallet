@@ -63,18 +63,18 @@ export default Vue.extend({
 
 <style scoped lang="postcss">
 .input-container {
-    position: relative;
     border-radius: 4px;
+    position: relative;
 }
 
 input {
     background-color: var(--color-peral);
-    font-size: 14px;
-    border-radius: 4px;
-    padding: 20px;
-    outline: none;
     border: 2px solid var(--color-peral);
+    border-radius: 4px;
     color: var(--color-washed-black);
+    font-size: 14px;
+    outline: none;
+    padding: 20px;
     width: 100%;
 
     &:focus {
@@ -82,22 +82,21 @@ input {
     }
 
     &:not(:only-child) {
-        padding-right: 50px;
+        padding-inline-end: 50px;
     }
 }
 
 .eye {
-    opacity: 0.3;
     cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 0;
-    bottom: 0;
+    inset-block: 0;
+    inset-inline-end: 20px;
     margin: auto;
+    opacity: 0.3;
+    position: absolute;
 
     &.is-open {
-        opacity: 1;
         color: var(--color-melbourne-cup);
+        opacity: 1;
     }
 }
 </style>

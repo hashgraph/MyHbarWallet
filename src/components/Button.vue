@@ -35,17 +35,17 @@ export default Vue.extend({
 
 <style scoped lang="postcss">
 button {
-    position: relative;
     background: var(--color-melbourne-cup);
-    color: var(--color-white);
-    padding: 15px;
-    border-radius: 4px;
     border: 1px solid var(--color-melbourne-cup);
-    outline: none;
+    border-radius: 4px;
+    color: var(--color-white);
     font-size: 14px;
     font-weight: 500;
-    user-select: none;
     min-width: 250px;
+    outline: none;
+    padding: 15px;
+    position: relative;
+    user-select: none;
 
     &:not(.is-busy) {
         cursor: pointer;
@@ -68,10 +68,9 @@ button {
 }
 
 .icon {
-    position: absolute;
-    right: 15px;
-    top: 0;
-    bottom: 0;
+    inset-block: 0;
+    inset-inline-end: 15px;
     margin: auto 0;
+    position: absolute;
 }
 </style>
