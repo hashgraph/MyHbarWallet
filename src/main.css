@@ -12,3 +12,12 @@
     --color-peral: #f9f9f9;
     --color-washed-black: #212529;
 }
+
+html {
+    padding: 0;
+    min-height: 100vh;
+}
+
+body {
+    min-height: inherit;
+}
