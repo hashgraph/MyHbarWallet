@@ -10197,6 +10197,13 @@ stylelint-config-standard@^18.3.0:
   dependencies:
     stylelint-config-recommended "^2.2.0"
 
+stylelint-csstree-validator@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/stylelint-csstree-validator/-/stylelint-csstree-validator-1.5.2.tgz#31cceacae2a1f22bd2655ca1bd0018fc075e4886"
+  integrity sha512-EweV7qnGyymZ95HYosX+nEi0ummTqxgox8icjp+R5dgaPLkXEWSmwFOrj2jtofkFkUOhm4ZCAO58QnJGTMggwA==
+  dependencies:
+    css-tree "1.0.0-alpha.33"
+
 stylelint@^10.1.0:
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-10.1.0.tgz#1bc4c4ce878107e7c396b19226d91ba28268911a"

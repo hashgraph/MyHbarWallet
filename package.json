@@ -44,6 +44,7 @@
     "prettier": "^1.18.2",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
+    "stylelint-csstree-validator": "^1.5.2",
     "ts-jest": "^23.0.0",
     "typescript": "^3.4.3",
     "vue-template-compiler": "^2.6.10"
