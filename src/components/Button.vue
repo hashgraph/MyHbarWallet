@@ -37,7 +37,7 @@ export default Vue.extend({
 button {
     position: relative;
     background: var(--color-melbourne-cup);
-    color: #fff;
+    color: var(--color-white);
     padding: 15px;
     border-radius: 4px;
     border: 1px solid var(--color-melbourne-cup);

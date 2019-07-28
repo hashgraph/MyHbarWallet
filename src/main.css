@@ -6,6 +6,7 @@
 @import "sanitize/page";
 
 :root {
+    --color-white: #fff;
     --color-melbourne-cup: #3bc1aa;
     --color-celestial-green: #3ed7bc;
     --color-green-jelly: #269983;
