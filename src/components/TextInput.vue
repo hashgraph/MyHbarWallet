@@ -8,11 +8,11 @@
             @input="handleInput"
         />
         <FontAwesomeIcon
-            @click="handleClickEye"
             v-if="obscure"
             class="eye"
             :class="{ 'is-open': isEyeOpen }"
             :icon="faEye"
+            @click="handleClickEye"
         />
     </div>
 </template>
@@ -23,15 +23,15 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faEye, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
+    components: {
+        FontAwesomeIcon
+    },
     props: {
-        placeholder: String,
-        value: String,
+        placeholder: { type: String, required: true },
+        value: { type: String, default: "" },
 
         // Whether to hide the text being edited (e.g., for passwords).
         obscure: Boolean
-    },
-    components: {
-        FontAwesomeIcon
     },
     data() {
         return {

@@ -1,5 +1,5 @@
 <template>
-    <button v-on="this.$listeners" :class="{ 'is-busy': isBusy }">
+    <button :class="{ 'is-busy': isBusy }" v-on="this.$listeners">
         <FontAwesomeIcon v-if="isBusy" class="spinner" :icon="faSpinner" spin />
         <span v-else>{{ label }}</span>
 
@@ -17,13 +17,16 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faSpinner, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
-    props: {
-        label: { type: String, required: true },
-        trailingIcon: Object as PropType<IconDefinition>,
-        isBusy: { type: Boolean, default: false }
-    },
     components: {
         FontAwesomeIcon
+    },
+    props: {
+        label: { type: String, required: true },
+        trailingIcon: {
+            type: Object as PropType<IconDefinition>,
+            default: null
+        },
+        isBusy: { type: Boolean }
     },
     computed: {
         faSpinner() {
