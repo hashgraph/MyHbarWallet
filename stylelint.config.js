@@ -30,7 +30,13 @@ module.exports = {
 
         // Disallows colors that are suspiciously close to being identical
         // https://github.com/ierhyna/stylelint-no-indistinguishable-colors
-        "plugin/stylelint-no-indistinguishable-colors": true,
+        "plugin/stylelint-no-indistinguishable-colors": [
+            true,
+            {
+                ignore: ["#ffffff"],
+                allowEquivalentNotation: true
+            }
+        ],
 
         // https://github.com/csstools/stylelint-use-logical
         "csstools/use-logical": true,
