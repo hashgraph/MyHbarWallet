@@ -1,5 +1,5 @@
 import { mount, shallowMount } from "@vue/test-utils";
-import TextInput from "@/components/TextInput.vue";
+import TextInput from "../../src/components/TextInput.vue";
 
 describe("TextInput.vue", () => {
     it("renders", () => {

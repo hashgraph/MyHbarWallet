@@ -1,5 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
-import Button from "@/components/Button.vue";
+import Button from "../../src/components/Button.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 describe("Button.vue", () => {

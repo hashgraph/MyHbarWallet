@@ -1,11 +1,26 @@
 module.exports = {
     root: true,
     env: {
-        node: true
+        browser: true
     },
-    extends: ["plugin:vue/recommended", "@vue/prettier", "@vue/typescript"],
+    extends: [
+        "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:import/typescript",
+        "plugin:vue/recommended",
+        "@vue/prettier",
+        "@vue/typescript",
+        "plugin:compat/recommended"
+    ],
     parserOptions: {
         parser: "@typescript-eslint/parser"
+    },
+    settings: {
+        "import/extensions": [".js", ".ts"],
+        "import/resolver": {
+            webpack: {},
+            typescript: {}
+        }
     },
     rules: {
         indent: ["error", 4],

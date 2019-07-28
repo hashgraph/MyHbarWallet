@@ -20,7 +20,8 @@
 <script lang="ts">
 import Vue, { PropType } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faEye, IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
     components: {
