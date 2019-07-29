@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import "@/directives";
 
 export default Vue.extend({
     name: "Header",
@@ -27,13 +28,6 @@ export default Vue.extend({
         return {
             isScrolled: false
         };
-    },
-    directives: {
-        scroll: {
-            inserted(el, binding) {
-                window.addEventListener("scroll", binding.value);
-            }
-        }
     },
     methods: {
         onScroll() {
@@ -47,38 +41,54 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .header-container {
     background-color: white;
-    position: sticky;
-    top: 0;
-    transition: all 0.3s ease;
+    inset-inline: 0;
+    position: fixed;
     z-index: 1;
 
-    /* Don't believe IntelliJ, this is totally being used */
-    &.scrolled {
-        box-shadow: 0 2px 13px rgba(0, 0, 0, 0.1);
+    @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
     }
 }
 
-.scrolled header {
-    padding-top: 3px;
-    padding-bottom: 3px;
+.header-container::after {
+    box-shadow: 0 2px 13px rgba(0, 0, 0, 0.1);
+    content: "";
+    inset: 0;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.header-container.scrolled::after {
+    opacity: 1;
 }
 
 header {
     display: flex;
-    padding: 12px 25px;
-    max-width: 1024px;
     margin: 0 auto;
-    transition: all 0.3s ease;
+    max-width: 1024px;
+    padding: 12px 25px;
+    transition: padding-block 0.3s ease;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+}
+
+.scrolled header {
+    padding-block: 3px;
 }
 
 .link {
-    text-decoration: none;
     color: var(--color-china-blue);
+    text-decoration: none;
 
-    &:hover {
+    &:hover,
+    &:focus {
         cursor: pointer;
     }
 }
@@ -88,8 +98,8 @@ header {
     font-size: 14px;
 
     & .link {
-        padding: 7px 14px;
         margin-inline-start: 26px;
+        padding: 7px 14px;
     }
 }
 
