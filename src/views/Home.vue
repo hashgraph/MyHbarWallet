@@ -1,22 +1,17 @@
 <template>
-    <div class="home">
-        <Button label="This Is A Button" />
-    </div>
+    <div class="home"></div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Button from "../components/Button.vue";
 
 export default Vue.extend({
     name: "Home",
-    components: {
-        Button
-    }
+    components: {}
 });
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 .home {
     align-items: center;
     display: flex;
