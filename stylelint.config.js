@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
     extends: ["stylelint-config-standard", "stylelint-a11y/recommended"],
     plugins: [
@@ -45,7 +47,7 @@ module.exports = {
         "csstools/value-no-unknown-custom-properties": [
             true,
             {
-                importFrom: ["./src/main.css"]
+                importFrom: [path.join(__dirname, "src/main.css")]
             }
         ],
 
