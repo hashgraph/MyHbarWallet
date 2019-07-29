@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
     chainWebpack(config) {
         // Use a standard HTML template instead of rolling our own (which is default)
@@ -5,12 +7,7 @@ module.exports = {
         config.plugin("html").tap(args => [
             {
                 ...args[0],
-                inject: false,
-                template: require("html-webpack-template"),
-                appMountId: "app",
-                title: "MyHederaWallet",
-                mobile: true,
-                lang: "en"
+                template: path.resolve(__dirname, "src/index.html")
             }
         ]);
 
