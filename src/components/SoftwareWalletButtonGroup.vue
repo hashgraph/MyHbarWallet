@@ -6,7 +6,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-import RadioButton from "../components/RadioButton.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imageKey from "../assets/button-key.svg";
 import imagePhrase from "../assets/button-phrase.svg";
@@ -21,13 +20,21 @@ export default Vue.extend({
             selected: "",
             name: "software-wallet-radio",
             options: [
-                { label: "Keystore File", value: "keystore", image: imageKey },
+                {
+                    label: "Keystore File",
+                    value: "keystore",
+                    image: imageKey
+                },
                 {
                     label: "Mnemonic Phrase",
                     value: "phrase",
                     image: imagePhrase
                 },
-                { label: "Private Key", value: "key", image: imageKey }
+                {
+                    label: "Private Key",
+                    value: "key",
+                    image: imageKey
+                }
             ]
         };
     },
