@@ -24,7 +24,7 @@ export default Vue.extend({
 }
 
 .main {
-    background-color: var(--color-peral);
+    background-color: var(--color-boysenberry-shadow);
     flex-grow: 1;
 }
 </style>
