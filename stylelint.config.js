@@ -17,6 +17,10 @@ module.exports = {
     rules: {
         indentation: [4],
 
+        // https://github.com/stylelint/stylelint/blob/2b73704b65f0bd69a2c2bada4e53b20d534547d1/lib/rules/selector-max-specificity
+        //Limit the specificity of selectors.
+        "selector-max-specificity": ["0,2,1", { ignoreSelectors: ["/#app/"] }],
+
         // https://github.com/prettier/stylelint-prettier
         "prettier/prettier": true,
 
