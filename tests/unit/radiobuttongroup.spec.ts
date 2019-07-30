@@ -17,7 +17,11 @@ describe("RadioButtonGroup.vue", () => {
             }
         });
 
+        // Renders
         expect(wrapper.isVisible()).toBe(true);
+
+        // RadioGroup renders no RadioButtons (for empty list)
+        expect(wrapper.findAll('radio-group')).toHaveLength(0);
     });
 
     it("renders with a list", () => {

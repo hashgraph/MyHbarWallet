@@ -50,7 +50,7 @@ export default Vue.extend<{}, {}, {}, Props>({
                 option: Record<string, string>
             ) {
                 return (
-                    "name" in option && "label" in option && "value" in option
+                    "image" in option && "label" in option && "value" in option
                 );
             });
         }
