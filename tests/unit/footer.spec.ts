@@ -4,11 +4,10 @@ import Footer from "@/components/Footer.vue";
 describe("Footer.vue", () => {
     it("renders and contains footer information", () => {
         const wrapper = shallowMount(Footer);
-        expect(wrapper.isVisible());
-        expect(wrapper.text().includes("Copyright"));
-        expect(wrapper.text().includes("About"));
-        expect(wrapper.text().includes("Contact"));
-        expect(wrapper.text().includes("Terms & Conditions"));
-        expect(wrapper.text().includes("Privacy Policy"));
+        const year = new Date().getFullYear();
+        expect(wrapper.isVisible()).toBe(true);
+        expect(wrapper.text().includes(year.toString())).toBe(true);
+        expect(wrapper.text().includes("Terms")).toBe(true);
+        expect(wrapper.text().includes("Privacy")).toBe(true);
     });
 });
