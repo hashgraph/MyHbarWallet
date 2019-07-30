@@ -54,7 +54,7 @@ export default Vue.extend({
 .radio-button {
     align-items: center;
     background-color: var(--color-white);
-    border: 1px solid #cecece;
+    border: 1px solid var(--color-american-silver);
     border-radius: 4px;
     cursor: pointer;
     display: flex;
@@ -63,11 +63,11 @@ export default Vue.extend({
     &:hover,
     &:focus,
     &.is-selected {
-        border-color: #05c0a5;
+        border-color: var(--color-melbourne-cup);
     }
 
     &.is-selected {
-        box-shadow: 0 8px 15px 0 rgba(59, 64, 69, 0.12);
+        box-shadow: 0 8px 15px 0 var(--color-dying-light);
     }
 }
 
@@ -89,7 +89,7 @@ export default Vue.extend({
 }
 
 .check {
-    color: #05c0a5;
+    color: var(--color-melbourne-cup);
 }
 
 .input {
