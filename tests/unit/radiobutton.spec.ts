@@ -47,7 +47,7 @@ describe("RadioButton.vue", () => {
         wrapper.find("input").setChecked(true);
         expect(fn).toBeCalledTimes(1);
         expect(wrapper.emitted("change")[0][0]).toEqual(_value);
-        expect(wrapper.find('label').classes()).toContain("is-selected");
-        expect(wrapper.contains(FontAwesomeIcon)).toBe(true);  // green check
+        expect(wrapper.find("label").classes()).toContain("is-selected");
+        expect(wrapper.contains(FontAwesomeIcon)).toBe(true); // green check
     });
 });

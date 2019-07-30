@@ -23,7 +23,7 @@ export default Vue.extend({
                 {
                     label: "Keystore File",
                     value: "file",
-                    image: imageKey
+                    image: imageFile
                 },
                 {
                     label: "Mnemonic Phrase",
