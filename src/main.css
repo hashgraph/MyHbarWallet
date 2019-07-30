@@ -5,14 +5,15 @@
 @import "sanitize/forms";
 
 :root {
-    --color-white: #ffffff;
-    --color-black: #000000;
+    --color-white: #fff;
+    --color-black: #000;
+
     /* use --color-melbourne-cup for turquoise (#05c0a5) */
     --color-melbourne-cup: #3bc1aa;
     --color-celestial-green: #3ed7bc;
     --color-green-jelly: #269983;
     --color-peral: #f9f9f9;
-    --color-basalt-grey: #999999;
+    --color-basalt-grey: #999;
     --color-jupiter: #e0e0e0;
     --color-ghostlands-coal: #003945;
     --color-lightish-red: #ff2f49;
