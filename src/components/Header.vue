@@ -14,16 +14,24 @@
                 <router-link to="" class="link">About</router-link>
                 <router-link to="" class="link">FAQs</router-link>
             </div>
+            <div class="button-container">
+                <!-- TODO: Once the respective views exists, route to them -->
+                <router-link to=""><Button label="New Wallet"/></router-link>
+                <router-link to=""><Button label="Access"/></router-link>
+            </div>
         </header>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import "@/directives";
+import Button from "@/components/Button.vue";
 
 export default Vue.extend({
     name: "Header",
+    components: {
+        Button
+    },
     data() {
         return {
             isScrolled: false
@@ -84,7 +92,9 @@ header {
 }
 
 .link {
+    align-items: center;
     color: var(--color-china-blue);
+    display: flex;
     text-decoration: none;
 
     &:hover,
@@ -100,6 +110,22 @@ header {
     & .link {
         margin-inline-start: 26px;
         padding: 7px 14px;
+    }
+}
+
+.button-container {
+    visibility: collapse;
+}
+
+.scrolled .button-container {
+    visibility: visible;
+}
+
+.button-container a {
+    margin-inline-start: 10px;
+
+    &:first-child {
+        margin-inline-start: 30px;
     }
 }
 
