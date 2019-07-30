@@ -22,7 +22,7 @@ export default Vue.extend({
             options: [
                 {
                     label: "Keystore File",
-                    value: "keystore",
+                    value: "file",
                     image: imageKey
                 },
                 {

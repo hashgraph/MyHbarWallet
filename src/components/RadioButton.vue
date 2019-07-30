@@ -32,7 +32,7 @@ export default Vue.extend({
         name: { type: String, required: true },
         label: { type: String, required: true },
         value: { type: String, required: true },
-        checked: { type: String, required: true }
+        checked: { type: String }
     },
     computed: {
         faCheckCircle() {
