@@ -62,7 +62,12 @@ module.exports = {
         "plugin/no-unsupported-browser-features": [
             true,
             {
-                ignore: []
+                ignore: [
+                    // [...] not supporting the avoid-column, column, and avoid (in the column
+                    // context) values for the properties break-before, break-after,
+                    // and break-inside.
+                    "multicolumn"
+                ]
             }
         ],
 
