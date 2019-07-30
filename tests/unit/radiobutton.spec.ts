@@ -4,7 +4,7 @@ import imageKey from "@/assets/button-key.svg";
 
 
 describe("RadioButton.vue", () => {
-    it("renders", () => {
+    it("renders, contains expected properties", () => {
         const _name = "RadioGroup";
         const _label = "Label";
         const _value = "Value";
@@ -18,13 +18,12 @@ describe("RadioButton.vue", () => {
             }
         });
 
-        // Not Clicked
         expect(wrapper.isVisible()).toBe(true);
         expect(wrapper.find('label').text()).toEqual(_label);
         expect(wrapper.find('input').attributes()['name']).toEqual(_name);
-    })
+    });
 
-    it("triggers a click event onClick, emits Value", () => {
+    it("triggers a click, emits its value", () => {
         const _name = "RadioGroup";
         const _label = "Label";
         const _value = "Value";
@@ -45,5 +44,5 @@ describe("RadioButton.vue", () => {
         wrapper.find('input').trigger("click");
         expect(fn).toBeCalledTimes(1);
         expect(wrapper.emitted("change")[0][0]).toEqual(_value);
-    })
+    });
 });
