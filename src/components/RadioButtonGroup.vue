@@ -1,19 +1,48 @@
 <template>
     <div class="radio-button-group">
-        <slot />
+        <div v-for="option in options" :key="option.value">
+            <RadioButton
+                v-model="selected"
+                :name="name"
+                :label="option.label"
+                :value="option.value"
+                :image="option.image"
+            />
+        </div>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropOptions } from "vue";
+import RadioButton from "../components/RadioButton.vue";
 
-export default Vue.extend({
-    components: {},
-    props: {
-        value: { type: String, required: true }
+type Option = {
+    label: string;
+    value: string;
+    image: string;
+};
+
+type Props = {
+    name: string;
+    options: Option[];
+};
+
+export default Vue.extend<{}, {}, {}, Props>({
+    components: {
+        RadioButton
     },
-    computed: {},
-    methods: {}
+    props: {
+        name: { required: true, type: String },
+        options: {
+            type: Array,
+            required: true
+        } as PropOptions<Option[]>
+    },
+    data() {
+        return {
+            selected: ""
+        };
+    }
 });
 </script>
 

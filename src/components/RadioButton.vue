@@ -9,7 +9,7 @@
             :checked="selected"
             @change="handleChange"
         />
-        <span class="label"><slot /></span>
+        <span class="label">{{ label }}</span>
         <FontAwesomeIcon v-if="selected" class="check" :icon="faCheckCircle" />
     </label>
 </template>
@@ -30,6 +30,7 @@ export default Vue.extend({
     props: {
         image: { type: String, required: true },
         name: { type: String, required: true },
+        label: { type: String, required: true },
         value: { type: String, required: true },
         checked: { type: String, required: true }
     },
