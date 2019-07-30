@@ -20,6 +20,8 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 #app {
     background-color: var(--color-peral);
+    display: flex;
+    flex-direction: column;
     font-family: "Montserrat", sans-serif;
     min-height: inherit;
 }

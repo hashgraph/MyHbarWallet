@@ -20,7 +20,7 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .interface {
     display: flex;
-    min-height: inherit;
+    flex-grow: 1;
 }
 
 .main {

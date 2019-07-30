@@ -1,91 +1,163 @@
 <template>
     <footer>
-        <div class="flex-container">
-            <div class="block">
-                <div class="title">About</div>
-                <div>
-                    <router-link to="/about">About</router-link>
-                </div>
-            </div>
-            <div class="block">
-                <div class="title">Contact</div>
-                <div><a href="https://www.google.com/">Help</a></div>
-            </div>
-        </div>
-        <div class="list">
-            <div class="list-item">
-                <a href="https://www.hedera.com/terms"
-                    >Terms &amp; Conditions</a
+        <div class="wrapper">
+            <div class="links">
+                <a
+                    rel="noopener"
+                    target="_blank"
+                    href="https://www.hedera.com/privacy"
+                    class="link"
                 >
+                    Privacy
+                </a>
+                <a
+                    rel="noopener"
+                    target="_blank"
+                    href="https://www.hedera.com/terms"
+                    class="link"
+                >
+                    Terms
+                </a>
+                <a
+                    target="_blank"
+                    href="https://github.com/hashgraph/myhbarwallet"
+                    class="link"
+                >
+                    v0.0.0+000000
+                </a>
             </div>
-            <div class="list-item">
-                <a href="https://www.hedera.com/privacy">Privacy Policy</a>
+            <div class="copyright">
+                &copy; {{ currentYear }} Hedera Hashgraph LLC. All Rights
+                reserved.
             </div>
-            <div class="list-item">
-                <p class="copyright">
-                    &copy; {{ currentYear }} Copyright Hedera Hashgraph LLC.
-                </p>
+            <div class="social">
+                <a
+                    rel="noopener"
+                    target="_blank"
+                    href="https://www.facebook.com/hashgraph/"
+                    class="social-link"
+                >
+                    <FontAwesomeIcon
+                        size="lg"
+                        class="social-icon"
+                        :icon="faFacebookF"
+                    />
+                </a>
+                <a
+                    rel="noopener"
+                    target="_blank"
+                    href="https://twitter.com/hashgraph"
+                    class="social-link"
+                >
+                    <FontAwesomeIcon
+                        size="lg"
+                        class="social-icon"
+                        :icon="faTwitter"
+                    />
+                </a>
+                <a
+                    rel="noopener"
+                    target="_blank"
+                    href="https://www.github.com/hashgraph/myhbarwallet"
+                    class="social-link"
+                >
+                    <FontAwesomeIcon
+                        size="lg"
+                        class="social-icon"
+                        :icon="faGithub"
+                    />
+                </a>
             </div>
         </div>
     </footer>
 </template>
 
-<style lang="postcss" scoped>
-footer {
-    background-color: var(--color-yankees-blue);
-    color: var(--color-peral);
-    flex-shrink: 1;
-    line-height: 1.5;
-    padding: 2%;
-}
-
-.flex-container {
-    display: flex;
-}
-
-.block {
-    flex-grow: 1;
-    text-align: center;
-}
-
-.title {
-    font-size: larger;
-    font-weight: bold;
-}
-
-.list-item {
-    text-align: center;
-}
-
-.copyright {
-    font-size: small;
-}
-
-a {
-    text-decoration: none;
-
-    &:visited {
-        color: var(--color-peral);
-    }
-
-    &:hover,
-    &:focus,
-    &:active {
-        color: var(--color-white);
-        text-decoration: underline;
-    }
-}
-</style>
-
 <script lang="ts">
 import Vue from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {
+    faFacebookF,
+    faTwitter,
+    faGithub
+} from "@fortawesome/free-brands-svg-icons";
 
 export default Vue.extend({
     name: "Footer",
+    components: {
+        FontAwesomeIcon
+    },
     computed: {
-        currentYear: function() {
+        faFacebookF() {
+            return faFacebookF;
+        },
+        faTwitter() {
+            return faTwitter;
+        },
+        faGithub() {
+            return faGithub;
+        },
+        currentYear() {
             return new Date().getFullYear();
         }
     }
 });
 </script>
+
+<style lang="postcss" scoped>
+footer {
+    background-color: var(--color-yankees-blue);
+    color: var(--color-ashen-wind);
+    font-size: 14px;
+    padding-block: 40px;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+
+    /* FIXME: Move to main.css with a good name so we can share this value */
+    max-width: 1024px;
+    padding: 0 20px;
+}
+
+.link {
+    color: var(--color-white);
+    padding: 0 15px;
+    text-decoration: none;
+
+    &:not(:last-child) {
+        border-right: 1px solid var(--color-white);
+    }
+}
+
+.social-link {
+    color: inherit;
+    text-decoration: none;
+
+    &:not(:first-child) {
+        margin-inline-start: 15px;
+    }
+}
+
+@media (max-width: 860px) {
+    .wrapper {
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .links {
+        margin-block-end: 20px;
+        order: 1;
+    }
+
+    .social {
+        margin-block-end: 20px;
+        order: 2;
+    }
+
+    .copyright {
+        order: 3;
+    }
+}
+</style>
