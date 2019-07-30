@@ -31,7 +31,7 @@ export default Vue.extend({
         FontAwesomeIcon
     },
     props: {
-        placeholder: { type: String, required: true },
+        placeholder: { type: String, default: "" },
         value: { type: String, default: "" },
         label: { type: String, default: null },
 
