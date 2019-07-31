@@ -35,4 +35,9 @@ html {
 
 body {
     min-height: inherit;
+
+    /* For the Modal component */
+    &.modal-is-open {
+        overflow: hidden;
+    }
 }

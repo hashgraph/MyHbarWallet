@@ -1,9 +1,19 @@
 <template>
-    <div class="modal-open modal fade" role="dialog" aria-modal="true">
-        <div class="modal-container">
+    <div
+        class="modal-background"
+        :class="{ 'is-open': isOpen }"
+        role="dialog"
+        aria-modal="true"
+        @click="handleClose"
+    >
+        <div class="modal" @click.stop="">
             <header>
                 <span class="title">{{ title }}</span>
-                <FontAwesomeIcon class="close" :icon="closeIcon" />
+                <FontAwesomeIcon
+                    class="close"
+                    :icon="closeIcon"
+                    @click="handleClose"
+                />
             </header>
             <div class="main">
                 <slot name="banner"></slot>
@@ -20,46 +30,72 @@ import Vue from "vue";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+function setModalIsOpenOnBody(isOpen: boolean) {
+    document.body.classList.toggle("modal-is-open", isOpen);
+}
+
 export default Vue.extend({
     name: "Modal",
     components: {
         FontAwesomeIcon
     },
+    model: {
+        prop: "isOpen",
+        event: "change"
+    },
     props: {
+        isOpen: { type: Boolean },
         title: { type: String, required: true }
     },
     computed: {
         closeIcon() {
             return faTimes;
         }
+    },
+    watch: {
+        isOpen: setModalIsOpenOnBody
+    },
+    created() {
+        setModalIsOpenOnBody(this.isOpen);
+    },
+    beforeDestroy() {
+        setModalIsOpenOnBody(false);
+    },
+    methods: {
+        handleClose() {
+            this.$emit("change", false);
+        }
     }
 });
 </script>
 
 <style scoped lang="postcss">
-.modal-open {
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.modal {
+.modal-background {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     inset: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 25px 0;
+    pointer-events: none;
     position: fixed;
-    z-index: 2;
-}
-
-.fade {
     transition: opacity 0.15s linear;
-    transition-delay: 0s;
-    transition-duration: 15s;
-    transition-property: opacity;
-    transition-timing-function: linear;
+    z-index: 2;
+
+    &.is-open {
+        opacity: 1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        pointer-events: all;
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
 }
 
-.modal-container {
+.modal {
     background-clip: padding-box;
     border: 0;
     border-radius: 5px;
@@ -68,7 +104,18 @@ export default Vue.extend({
     flex-direction: column;
     margin: auto;
     max-width: 530px;
+    overflow: hidden;
+    transform: translateY(-50px);
+    transition: transform 0.3s ease-out;
     z-index: 3;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+}
+
+.modal-background.is-open .modal {
+    transform: none;
 }
 
 header {
@@ -91,11 +138,9 @@ header {
 
 .content-container {
     padding: 40px;
-}
 
-@media screen and (prefers-reduced-motion: reduce) {
-    .fade {
-        transition: none;
+    @media (max-width: 415px) {
+        padding: 20px;
     }
 }
 </style>
