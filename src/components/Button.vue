@@ -1,6 +1,13 @@
 <template>
-    <button :class="{ 'is-busy': isBusy }" v-on="this.$listeners">
-        <FontAwesomeIcon v-if="isBusy" class="spinner" :icon="faSpinner" spin />
+    <button
+        :class="{
+            busy,
+            outline,
+            compact
+        }"
+        v-on="this.$listeners"
+    >
+        <FontAwesomeIcon v-if="busy" class="spinner" :icon="faSpinner" spin />
         <span v-else>{{ label }}</span>
 
         <FontAwesomeIcon
@@ -22,12 +29,14 @@ export default Vue.extend({
         FontAwesomeIcon
     },
     props: {
+        outline: { type: Boolean },
+        compact: { type: Boolean },
         label: { type: String, required: true },
+        busy: { type: Boolean },
         trailingIcon: {
             type: Object as PropType<IconDefinition>,
             default: null
-        },
-        isBusy: { type: Boolean }
+        }
     },
     computed: {
         faSpinner() {
@@ -50,21 +59,44 @@ button {
     padding: 15px;
     position: relative;
     user-select: none;
+    white-space: nowrap;
 
-    &:not(.is-busy) {
+    &:not(.busy) {
         cursor: pointer;
     }
 
-    &:hover:not(.is-busy),
-    &:focus:not(.is-busy) {
+    &:hover:not(.busy),
+    &:focus:not(.busy) {
         background-color: var(--color-celestial-green);
         border-color: var(--color-celestial-green);
     }
 
-    &:active:not(.is-busy) {
+    &:active:not(.busy) {
         background-color: var(--color-green-jelly);
         border-color: var(--color-green-jelly);
     }
+}
+
+.outline {
+    background-color: transparent;
+    color: var(--color-melbourne-cup);
+
+    &:hover:not(.busy),
+    &:focus:not(.busy) {
+        background-color: transparent;
+        color: var(--color-celestial-green);
+    }
+
+    &:active:not(.busy) {
+        background-color: var(--color-distant-horizon);
+        border-color: var(--color-green-fluorite);
+        color: var(--color-green-fluorite);
+    }
+}
+
+.compact {
+    min-width: initial;
+    padding: 10px 20px;
 }
 
 .spinner {

@@ -6,17 +6,26 @@
 
 :root {
     --color-white: #fff;
+    --color-black: #000;
 
     /* use --color-melbourne-cup for turquoise (#05c0a5) */
     --color-melbourne-cup: #3bc1aa;
     --color-celestial-green: #3ed7bc;
+    --color-green-fluorite: #56b7a9;
     --color-green-jelly: #269983;
+    --color-china-blue: #506175;
     --color-peral: #f9f9f9;
+    --color-basalt-grey: #999;
+    --color-jupiter: #e0e0e0;
+    --color-ghostlands-coal: #003945;
+    --color-lightish-red: #ff2f49;
     --color-washed-black: #212529;
     --color-ashen-wind: #96a8b6;
     --color-yankees-blue: #0b2840;
     --color-american-silver: #cfcfcf;
     --color-snowbank: #e7e8e8;
+    --color-boysenberry-shadow: #f2f4fa;
+    --color-distant-horizon: #f3fafa;
 }
 
 html {
@@ -25,5 +34,10 @@ html {
 }
 
 body {
+    background-color: var(--color-peral);
     min-height: inherit;
+}
+
+html {
+    min-height: 100vh;
 }

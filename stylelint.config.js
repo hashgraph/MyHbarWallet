@@ -19,7 +19,10 @@ module.exports = {
 
         // https://github.com/stylelint/stylelint/blob/2b73704b65f0bd69a2c2bada4e53b20d534547d1/lib/rules/selector-max-specificity
         //Limit the specificity of selectors.
-        "selector-max-specificity": ["0,2,1", { ignoreSelectors: ["/#app/"] }],
+        "selector-max-specificity": [
+            "0,4,2",
+            { severity: "warning", ignoreSelectors: ["/#app/"] }
+        ],
 
         // https://github.com/prettier/stylelint-prettier
         "prettier/prettier": true,
@@ -59,7 +62,12 @@ module.exports = {
         "plugin/no-unsupported-browser-features": [
             true,
             {
-                ignore: []
+                ignore: [
+                    // [...] not supporting the avoid-column, column, and avoid (in the column
+                    // context) values for the properties break-before, break-after,
+                    // and break-inside.
+                    "multicolumn"
+                ]
             }
         ],
 

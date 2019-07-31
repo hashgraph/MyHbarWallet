@@ -1,12 +1,15 @@
 <template>
-    <div class="input-container">
-        <input
-            ref="input"
-            :placeholder="placeholder"
-            :type="keyboardType"
-            :value="value"
-            @input="handleInput"
-        />
+    <div class="input-container" :class="classObject">
+        <label>
+            <span v-if="label" class="label">{{ label }}</span>
+            <input
+                ref="input"
+                :placeholder="placeholder"
+                :type="keyboardType"
+                :value="value"
+                @input="handleInput"
+            />
+        </label>
         <FontAwesomeIcon
             v-if="obscure"
             class="eye"
@@ -28,8 +31,11 @@ export default Vue.extend({
         FontAwesomeIcon
     },
     props: {
-        placeholder: { type: String, required: true },
+        placeholder: { type: String, default: "" },
         value: { type: String, default: "" },
+        label: { type: String, default: null },
+
+        compact: Boolean,
 
         // Whether to hide the text being edited (e.g., for passwords).
         obscure: Boolean
@@ -46,6 +52,12 @@ export default Vue.extend({
         keyboardType() {
             if (this.obscure && !this.isEyeOpen) return "password";
             return "text";
+        },
+
+        classObject() {
+            return {
+                "is-compact": this.compact
+            };
         }
     },
     methods: {
@@ -85,6 +97,19 @@ input {
     &:not(:only-child) {
         padding-inline-end: 50px;
     }
+}
+
+.is-compact input {
+    border-width: 1px;
+    padding: 13px 15px;
+}
+
+.label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-block-end: 13px;
+    padding: 0 8px;
 }
 
 .eye {
