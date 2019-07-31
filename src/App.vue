@@ -1,7 +1,6 @@
 <template>
     <div id="app">
         <router-view />
-        <SoftwareWalletButtonGroup />
         <Footer />
     </div>
 </template>
@@ -9,12 +8,10 @@
 <script lang="ts">
 import Vue from "vue";
 import Footer from "@/components/Footer.vue";
-import SoftwareWalletButtonGroup from "@/components/SoftwareWalletButtonGroup.vue";
 
 export default Vue.extend({
     name: "App",
     components: {
-        SoftwareWalletButtonGroup,
         Footer
     }
 });
