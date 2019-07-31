@@ -2,12 +2,12 @@
     <div class="radio-button-group">
         <div v-for="option in validOptions" :key="option.value">
             <RadioButton
-                v-model="selected"
+                :checked="selected"
                 :name="name"
                 :label="option.label"
                 :value="option.value"
                 :image="option.image"
-                :checked="option.value"
+                @change="$emit('change', option.value)"
             />
         </div>
     </div>
@@ -17,32 +17,33 @@
 import Vue, { PropOptions } from "vue";
 import RadioButton from "../components/RadioButton.vue";
 
-type Option = {
+interface Option {
     label: string;
     value: string;
     image: string;
-};
+}
 
-type Props = {
+interface Props {
+    selected: string;
     name: string;
     options: Option[];
-};
+}
 
 export default Vue.extend<{}, {}, {}, Props>({
     components: {
         RadioButton
     },
+    model: {
+        prop: "selected",
+        event: "change"
+    },
     props: {
+        selected: { required: true, type: String },
         name: { required: true, type: String },
         options: {
             type: Array,
             required: true
         } as PropOptions<Option[]>
-    },
-    data() {
-        return {
-            selected: ""
-        };
     },
     computed: {
         validOptions: function() {

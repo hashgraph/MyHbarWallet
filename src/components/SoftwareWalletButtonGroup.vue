@@ -1,6 +1,6 @@
 <template>
     <div class="SoftwareWalletButtonGroup">
-        <RadioButtonGroup :name="name" :options="options" />
+        <RadioButtonGroup v-model="selected" :name="name" :options="options" />
     </div>
 </template>
 
@@ -17,7 +17,7 @@ export default Vue.extend({
     },
     data() {
         return {
-            selected: "",
+            selected: "file",
             name: "software-wallet-radio",
             options: [
                 {
