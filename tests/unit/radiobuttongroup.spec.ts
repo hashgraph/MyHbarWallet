@@ -51,7 +51,7 @@ describe("RadioButtonGroup.vue", () => {
 
     it("triggers appropriate events", () => {
         const _name = "RadioButtonGroup";
-        const emission = {"change": [["key"]]};
+        const emission = { change: [["key"]] };
 
         const _options = [
             {

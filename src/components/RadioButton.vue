@@ -67,7 +67,7 @@ export default Vue.extend({
     }
 
     &.is-selected {
-        box-shadow: 0 8px 15px 0 var(--color-snowbank);
+        box-shadow: 0 8px 15px 0 var(--color-jupiter);
     }
 }
 

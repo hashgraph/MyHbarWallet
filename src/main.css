@@ -23,7 +23,6 @@
     --color-ashen-wind: #96a8b6;
     --color-yankees-blue: #0b2840;
     --color-american-silver: #cfcfcf;
-    --color-snowbank: #e7e8e8;
     --color-boysenberry-shadow: #f2f4fa;
     --color-distant-horizon: #f3fafa;
 }
@@ -34,10 +33,5 @@ html {
 }
 
 body {
-    background-color: var(--color-peral);
     min-height: inherit;
-}
-
-html {
-    min-height: 100vh;
 }
