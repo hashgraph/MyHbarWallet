@@ -6,32 +6,30 @@
         </div>
         <div class="content">
             <p>{{ content }}</p>
-            <p v-if="link !== null && !link.isEmpty()">For more information, click <a :href="link">here</a>.</p>
+            <p v-if="link !== null && !link.isEmpty()">
+                For more information, click <a :href="link">here</a>.
+            </p>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
-    import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-    import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import Vue from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
-    export default Vue.extend({
-        name: "Footer",
-        props: {
-            title: {required: true, type: String},
-            content: {required: true, type: String},
-            link: {required: false, type: String}
-        },
-        components: {
-            FontAwesomeIcon
-        },
-        computed: {
-
-        }
-    });
+export default Vue.extend({
+    name: "Footer",
+    components: {
+        FontAwesomeIcon
+    },
+    props: {
+        title: { required: true, type: String },
+        content: { required: true, type: String },
+        link: { required: false, type: String }
+    },
+    computed: {}
+});
 </script>
 
-<style lang="postcss" scoped>
-
-</style>
+<style lang="postcss" scoped></style>
