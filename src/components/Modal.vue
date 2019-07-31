@@ -1,36 +1,54 @@
 <template>
     <div class="modal-open modal fade" role="dialog" aria-modal="true">
-        <div class="modal-dialog">
-            <div class="modal-title">
-                <span class="modal-title-text">Title</span>
-                <button class="modal-button-close">x</button>
+        <div class="modal-container">
+            <header>
+                <span class="title">{{ title }}</span>
+                <FontAwesomeIcon class="close" :icon="closeIcon" />
+            </header>
+            <div class="main">
+                <slot name="banner"></slot>
+                <div class="content-container">
+                    <slot name="content"></slot>
+                </div>
             </div>
-            Content of modal goes here!
         </div>
     </div>
 </template>
 
-<script>
-export default {
-    name: "Modal"
-};
+<script lang="ts">
+import Vue from "vue";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+export default Vue.extend({
+    name: "Modal",
+    components: {
+        FontAwesomeIcon
+    },
+    props: {
+        title: { type: String, required: true }
+    },
+    computed: {
+        closeIcon() {
+            return faTimes;
+        }
+    }
+});
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .modal-open {
     overflow-x: hidden;
     overflow-y: auto;
 }
 
 .modal {
+    align-items: center;
     background-color: rgba(0, 0, 0, 0.4);
-    box-sizing: border-box;
-    display: block !important;
-    height: 100%;
-    outline: 0;
+    display: flex;
+    inset: 0;
     position: fixed;
-    width: 100%;
-    z-index: 1040;
+    z-index: 2;
 }
 
 .fade {
@@ -41,70 +59,43 @@ export default {
     transition-timing-function: linear;
 }
 
-.modal-dialog {
-    align-items: center;
-    background-color: white;
+.modal-container {
+    background-clip: padding-box;
+    border: 0;
     border-radius: 5px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.22);
     display: flex;
     flex-direction: column;
-    margin: 1.75rem auto;
+    margin: auto;
     max-width: 530px;
-    min-height: calc(100% - 3.5rem);
-    overflow: hidden;
-    pointer-events: none;
-    position: relative;
-    width: auto;
+    z-index: 3;
 }
 
-.modal-title {
-    align-items: flex-start;
-    background-color: #434f61;
-    border: 0;
-    border-radius: 0;
-    box-sizing: border-box;
+header {
+    align-items: center;
+    background-color: var(--color-admiralty);
+    color: white;
     display: flex;
-    flex-flow: row nowrap;
-    height: 58px;
-    justify-content: space-between;
-    padding: 1rem 1rem;
-    pointer-events: auto;
-    width: 100%;
-}
-
-.modal-title-text {
-    color: white;
     font-size: 20px;
-    padding: 0 15px;
+    justify-content: space-between;
+    padding: 14px;
 }
 
-/* vertical rhythm doesn't matter, it is used for formatting the x in the button */
+.title {
+    padding-inline-start: 15px;
+}
 
-/* eslint-disable a11y/line-height-is-vertical-rhythmed */
-.modal-button-close {
-    background-color: transparent;
-    border: 0;
-    box-shadow: none !important;
-    box-sizing: border-box;
-    color: white;
-    cursor: pointer;
-    font-size: 32px;
-    font-weight: 100;
-    margin: -1rem -1rem -1rem auto;
-    opacity: 1;
-    outline: none;
-    overflow: visible;
-    pointer-events: none;
-    text-shadow: none;
+.main {
+    background-color: white;
+}
+
+.content-container {
+    padding: 40px;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
     .fade {
         transition: none;
-        transition-delay: 0s;
-        transition-duration: 15s;
-        transition-property: opacity;
-        transition-timing-function: linear;
     }
 }
 </style>
