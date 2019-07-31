@@ -1,9 +1,5 @@
 <template>
-    <div
-        v-scroll="onScroll"
-        :class="{ 'is-scrolled': isScrolled }"
-        class="header-container"
-    >
+    <div v-scroll="onScroll" :class="{ scrolled }" class="header-container">
         <header>
             <router-link to="/" class="link">
                 <div class="logo">My<strong>Hedera</strong>Wallet</div>
@@ -14,14 +10,14 @@
                 <a href="/#about" class="link">About</a>
                 <a href="/#faqs" class="link">FAQs</a>
             </div>
-            <div v-if="isScrolled" class="button-container">
+            <div v-if="scrolled" class="button-container">
                 <!-- TODO: Once the respective views exists, route to them -->
-                <router-link class="btn" to=""
-                    ><Button label="New Wallet"
-                /></router-link>
-                <router-link class="btn" to=""
-                    ><Button label="Access"
-                /></router-link>
+                <router-link class="btn" to="">
+                    <Button label="Create Account" compact outline />
+                </router-link>
+                <router-link class="btn" to="">
+                    <Button label="Access" compact />
+                </router-link>
             </div>
         </header>
     </div>
@@ -38,13 +34,13 @@ export default Vue.extend({
     },
     data() {
         return {
-            isScrolled: false
+            scrolled: false
         };
     },
     methods: {
         onScroll() {
             // FIXME: 150 should be in a common file somewhere
-            this.isScrolled = window.scrollY > 150;
+            this.scrolled = window.scrollY > 150;
         }
     }
 });
@@ -71,7 +67,7 @@ export default Vue.extend({
         }
     }
 
-    &.is-scrolled::after {
+    &.scrolled::after {
         opacity: 1;
     }
 }
@@ -91,7 +87,7 @@ header {
     }
 }
 
-.is-scrolled header {
+.scrolled header {
     padding-block: 2.5px;
 }
 

@@ -1,13 +1,13 @@
 <template>
     <button
         :class="{
-            'is-busy': isBusy,
-            outline: outlined,
-            'invert-outline': invertedOutline
+            busy,
+            outline,
+            compact
         }"
         v-on="this.$listeners"
     >
-        <FontAwesomeIcon v-if="isBusy" class="spinner" :icon="faSpinner" spin />
+        <FontAwesomeIcon v-if="busy" class="spinner" :icon="faSpinner" spin />
         <span v-else>{{ label }}</span>
 
         <FontAwesomeIcon
@@ -30,24 +30,17 @@ export default Vue.extend({
     },
     props: {
         outline: { type: Boolean },
-        // Note: invert has no effect unless outline is true
-        invert: { type: Boolean },
+        compact: { type: Boolean },
         label: { type: String, required: true },
+        busy: { type: Boolean },
         trailingIcon: {
             type: Object as PropType<IconDefinition>,
             default: null
-        },
-        isBusy: { type: Boolean }
+        }
     },
     computed: {
         faSpinner() {
             return faSpinner;
-        },
-        invertedOutline(): boolean {
-            return this.outline && this.invert;
-        },
-        outlined(): boolean {
-            return this.outline && !this.invertedOutline;
         }
     }
 });
@@ -67,41 +60,42 @@ button {
     position: relative;
     user-select: none;
 
-    &:not(.is-busy) {
+    &:not(.busy) {
         cursor: pointer;
     }
 
-    &:hover:not(.is-busy),
-    &:focus:not(.is-busy) {
+    &:hover:not(.busy),
+    &:focus:not(.busy) {
         background-color: var(--color-celestial-green);
         border-color: var(--color-celestial-green);
     }
 
-    &:active:not(.is-busy) {
+    &:active:not(.busy) {
         background-color: var(--color-green-jelly);
         border-color: var(--color-green-jelly);
     }
 }
 
 .outline {
-    background-color: white;
+    background-color: transparent;
     color: var(--color-melbourne-cup);
 
-    &:hover:not(.is-busy),
-    &:focus:not(.is-busy) {
-        background-color: var(--color-melbourne-cup);
-        border-color: var(--color-melbourne-cup);
-        color: white;
+    &:hover:not(.busy),
+    &:focus:not(.busy) {
+        background-color: transparent;
+        color: var(--color-celestial-green);
+    }
+
+    &:active:not(.busy) {
+        background-color: var(--color-distant-horizon);
+        border-color: var(--color-green-fluorite);
+        color: var(--color-green-fluorite);
     }
 }
 
-.invert-outline {
-    &:hover:not(.is-busy),
-    &:focus:not(.is-busy) {
-        background-color: white;
-        border-color: var(--color-melbourne-cup);
-        color: var(--color-melbourne-cup);
-    }
+.compact {
+    min-width: initial;
+    padding: 10px 20px;
 }
 
 .spinner {
