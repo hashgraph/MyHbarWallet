@@ -31,6 +31,6 @@ export default Vue.extend({
 
 .main {
     /* NOTE: this is required because of Header */
-    padding-block-start: 70px;
+    padding-block-start: 85px;
 }
 </style>
