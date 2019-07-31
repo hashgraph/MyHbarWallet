@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header />
-        <router-view />
+        <router-view class="main" />
         <Footer />
     </div>
 </template>
@@ -27,5 +27,10 @@ export default Vue.extend({
     flex-direction: column;
     font-family: "Montserrat", sans-serif;
     min-height: inherit;
+}
+
+.main {
+    /* NOTE: this is required because of Header */
+    padding-block-start: 70px;
 }
 </style>

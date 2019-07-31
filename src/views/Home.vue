@@ -16,8 +16,5 @@ export default Vue.extend({
     align-items: center;
     display: flex;
     flex-direction: column;
-
-    /* NOTE: this is required because of Header */
-    padding-block-start: 70px;
 }
 </style>
