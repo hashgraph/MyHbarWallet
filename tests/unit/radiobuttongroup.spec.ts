@@ -1,4 +1,4 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, mount } from "@vue/test-utils";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import RadioButtonGroup from "@/components/RadioButtonGroup.vue";
 import imageKey from "@/assets/button-key.svg";
@@ -46,12 +46,13 @@ describe("RadioButtonGroup.vue", () => {
             }
         });
 
-        const buttons = wrapper.findAll("radiobutton-stub");
-        expect(buttons).toHaveLength(3);
+        expect(wrapper.findAll("radiobutton-stub")).toHaveLength(3);
     });
 
     it("triggers appropriate events", () => {
         const _name = "RadioButtonGroup";
+        const emission = {"change": [["key"]]};
+
         const _options = [
             {
                 label: "Keystore File",
@@ -69,14 +70,15 @@ describe("RadioButtonGroup.vue", () => {
                 image: imageKey
             }
         ];
-        const wrapper = shallowMount(RadioButtonGroup, {
+        const wrapper = mount(RadioButtonGroup, {
             propsData: {
                 name: _name,
                 options: _options
             }
         });
 
-        console.log(wrapper.html());
-        expect(wrapper.isVisible()).toBe(true);
+        expect(wrapper.findAll("input[type=radio]")).toHaveLength(3);
+        wrapper.find("input[value=key]").setChecked(true);
+        expect(wrapper.emitted()).toEqual(emission);
     });
 });
