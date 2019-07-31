@@ -1,6 +1,6 @@
 <template>
     <div class="radio-button-group">
-        <div v-for="option in validOptions" :key="option.value">
+        <div v-for="option in options" :key="option.value">
             <RadioButton
                 :checked="selected"
                 :name="name"
@@ -44,15 +44,6 @@ export default Vue.extend<{}, {}, {}, Props>({
             type: Array,
             required: true
         } as PropOptions<Option[]>
-    },
-    computed: {
-        validOptions: function() {
-            return this.options.filter(function(option: Option) {
-                return (
-                    "image" in option && "label" in option && "value" in option
-                );
-            });
-        }
     }
 });
 </script>

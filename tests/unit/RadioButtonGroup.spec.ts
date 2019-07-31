@@ -4,25 +4,12 @@ import RadioButtonGroup from "@/components/RadioButtonGroup.vue";
 import imageKey from "@/assets/button-key.svg";
 import imagePhrase from "@/assets/button-phrase.svg";
 import imageFile from "@/assets/button-file.svg";
+import RadioButton from "@/components/RadioButton.vue";
 
 describe("RadioButtonGroup.vue", () => {
-    it("renders with an empty list", () => {
-        const _name = "RadioButtonGroup";
-        const _options = [{}, {}, {}];
-
-        const wrapper = shallowMount(RadioButtonGroup, {
-            propsData: {
-                name: _name,
-                options: _options
-            }
-        });
-
-        expect(wrapper.findAll("radiobutton-stub")).toHaveLength(0);
-    });
-
     it("renders with a list", () => {
-        const _name = "RadioButtonGroup";
-        const _options = [
+        const name = "RadioButtonGroup";
+        const options = [
             {
                 label: "Keystore File",
                 value: "file",
@@ -41,19 +28,19 @@ describe("RadioButtonGroup.vue", () => {
         ];
         const wrapper = shallowMount(RadioButtonGroup, {
             propsData: {
-                name: _name,
-                options: _options
+                name: name,
+                options: options
             }
         });
 
-        expect(wrapper.findAll("radiobutton-stub")).toHaveLength(3);
+        expect(wrapper.findAll(RadioButton)).toHaveLength(3);
     });
 
     it("triggers appropriate events", () => {
-        const _name = "RadioButtonGroup";
+        const name = "RadioButtonGroup";
         const emission = { change: [["key"]] };
 
-        const _options = [
+        const options = [
             {
                 label: "Keystore File",
                 value: "file",
@@ -72,8 +59,8 @@ describe("RadioButtonGroup.vue", () => {
         ];
         const wrapper = mount(RadioButtonGroup, {
             propsData: {
-                name: _name,
-                options: _options
+                name: name,
+                options: options
             }
         });
 
