@@ -19,9 +19,6 @@ describe("RadioButtonGroup.vue", () => {
 
         // Renders
         expect(wrapper.isVisible()).toBe(true);
-
-        // RadioGroup renders no RadioButtons (for empty list)
-        expect(wrapper.findAll("label")).toHaveLength(0);
     });
 
     it("renders with a list", () => {
@@ -52,9 +49,6 @@ describe("RadioButtonGroup.vue", () => {
 
         // Renders
         expect(wrapper.isVisible()).toBe(true);
-
-        // RadioGroup contains 3 RadioButtons
-        expect(wrapper.findAll("label")).toHaveLength(3);
     });
 
     it("triggers appropriate events", () => {
