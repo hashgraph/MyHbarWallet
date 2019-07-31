@@ -38,7 +38,7 @@ export default Vue.extend<{}, {}, {}, Props>({
         event: "change"
     },
     props: {
-        selected: { required: true, type: String },
+        selected: { type: String, default: "" },
         name: { required: true, type: String },
         options: {
             type: Array,
@@ -47,9 +47,7 @@ export default Vue.extend<{}, {}, {}, Props>({
     },
     computed: {
         validOptions: function() {
-            return this.options.filter(function(
-                option: Record<string, string>
-            ) {
+            return this.options.filter(function(option: Option) {
                 return (
                     "image" in option && "label" in option && "value" in option
                 );

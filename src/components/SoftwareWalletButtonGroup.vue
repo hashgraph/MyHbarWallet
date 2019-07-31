@@ -18,8 +18,12 @@ export default Vue.extend({
     data() {
         return {
             selected: "file",
-            name: "software-wallet-radio",
-            options: [
+            name: "software-wallet-radio"
+        };
+    },
+    computed: {
+        options() {
+            return [
                 {
                     label: "Keystore File",
                     value: "file",
@@ -35,18 +39,7 @@ export default Vue.extend({
                     value: "key",
                     image: imageKey
                 }
-            ]
-        };
-    },
-    computed: {
-        imageKey() {
-            return imageKey;
-        },
-        imagePhrase() {
-            return imagePhrase;
-        },
-        imageFile() {
-            return imageFile;
+            ];
         }
     }
 });
