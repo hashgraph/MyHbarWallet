@@ -9,11 +9,16 @@
         <div class="modal" @click.stop="">
             <header>
                 <span class="title">{{ title }}</span>
-                <FontAwesomeIcon
+                <!-- TODO: Make this a component like FontAwesomeIcon -->
+                <svg
                     class="close"
-                    :icon="closeIcon"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
                     @click="handleClose"
-                />
+                >
+                    <path :d="mdiClose"></path>
+                </svg>
             </header>
             <div class="main">
                 <slot name="banner"></slot>
@@ -27,18 +32,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { mdiClose } from "@mdi/js";
 
 function setModalIsOpenOnBody(isOpen: boolean) {
     document.body.classList.toggle("modal-is-open", isOpen);
 }
 
+// The isOpen property controls if the modal is open or not. It should be bound with
+// the v-model directive to allow the modal to close itself (click out and close button).
 export default Vue.extend({
     name: "Modal",
-    components: {
-        FontAwesomeIcon
-    },
     model: {
         prop: "isOpen",
         event: "change"
@@ -48,8 +51,8 @@ export default Vue.extend({
         title: { type: String, required: true }
     },
     computed: {
-        closeIcon() {
-            return faTimes;
+        mdiClose() {
+            return mdiClose;
         }
     },
     watch: {
@@ -134,6 +137,10 @@ header {
 
 .main {
     background-color: white;
+}
+
+.close {
+    cursor: pointer;
 }
 
 .content-container {
