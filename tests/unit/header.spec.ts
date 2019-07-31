@@ -1,10 +1,19 @@
-import { shallowMount } from "@vue/test-utils";
-import Header from "@/components/Header.vue";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
+import Header from "../../src/components/Header.vue";
+import VueRouter from "vue-router";
+import router from "../../src/router";
+import "../../src/directives";
 
 describe("Header.vue", () => {
-    it("renders", () => {
-        const wrapper = shallowMount(Header);
+    const localVue = createLocalVue()
+    localVue.use(VueRouter);
 
-        expect(wrapper.text().match("MHW  Home About FAQs"));
+    it("renders", () => {
+        const wrapper = shallowMount(Header, {
+            localVue,
+            router
+        });
+
+        expect(wrapper.text()).toMatch("MyHederaWallet  Home About FAQs");
     });
 });

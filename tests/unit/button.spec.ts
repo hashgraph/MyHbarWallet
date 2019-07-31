@@ -15,7 +15,7 @@ describe("Button.vue", () => {
     it("renders a loading spinner when busy", () => {
         const label = "Choose a Hardware";
         const wrapper = shallowMount(Button, {
-            propsData: { label, isBusy: true }
+            propsData: { label, busy: true }
         });
 
         expect(wrapper.text()).not.toMatch(label);
