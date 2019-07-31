@@ -1,35 +1,57 @@
 <template>
-    <div class="accordian">
+    <div class="accordion">
         <div class="title">
             <h2>{{ title }}</h2>
-            <h5>Need additonal information? <a href="https://www.google.com">More</a></h5>
+            <h5 v-if="subtitle !== ''">
+                {{ subtitle }}<a v-if="more !== ''" :href="more">More</a>
+            </h5>
         </div>
         <div class="support">
-            <img :src="imageBell" />
+            <img :src="imageBell" alt="" />
             <h5>Customer Support [Modal]</h5>
         </div>
-        <div class="cards" v-for="record in records">
-            <AccordionCard :title="record.title" :content="record.content" :link="record.link" />
+        <div v-for="record in records" :key="record.toString()" class="cards">
+            <AccordionCard
+                :title="record.title"
+                :content="record.content"
+                :link="record.link"
+            />
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropOptions } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import {} from "@fortawesome/free-brands-svg-icons";
 import imageBell from "@/assets/service-bell.svg";
 import AccordionCard from "@/components/AccordionCard.vue";
 
-export default Vue.extend({
+interface Record {
+    title: string;
+    content: string;
+    link: string;
+}
+
+interface Props {
+    title: string;
+    subtitle: string;
+    more: string;
+    records: Record[];
+}
+
+export default Vue.extend<{}, {}, {}, Props>({
     name: "Accordion",
-    props: {
-        title: {required: true, type: String},
-        records:
-    },
     components: {
-        AccordionCard,
-        FontAwesomeIcon
+        AccordionCard
+    },
+    props: {
+        title: { required: true, type: String },
+        subtitle: { required: false, type: String, default: "" },
+        more: { required: false, type: String, default: "" },
+        records: {
+            type: Array,
+            required: true
+        } as PropOptions<Record[]>
     },
     computed: {
         imageBell() {
@@ -40,5 +62,7 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-
+.cards {
+    padding: 10px;
+}
 </style>
