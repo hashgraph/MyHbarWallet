@@ -5,7 +5,7 @@ import router from "../../src/router";
 import "../../src/directives";
 
 describe("Header.vue", () => {
-    const localVue = createLocalVue()
+    const localVue = createLocalVue();
     localVue.use(VueRouter);
 
     it("renders", () => {

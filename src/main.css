@@ -22,15 +22,16 @@
     --color-washed-black: #212529;
     --color-ashen-wind: #96a8b6;
     --color-yankees-blue: #0b2840;
+    --color-american-silver: #cfcfcf;
     --color-boysenberry-shadow: #f2f4fa;
     --color-distant-horizon: #f3fafa;
 }
 
-body {
-    background-color: var(--color-peral);
-    min-height: inherit;
-}
-
 html {
     min-height: 100vh;
+    padding: 0;
+}
+
+body {
+    min-height: inherit;
 }
