@@ -59,6 +59,7 @@ button {
     padding: 15px;
     position: relative;
     user-select: none;
+    white-space: nowrap;
 
     &:not(.busy) {
         cursor: pointer;
