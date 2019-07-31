@@ -1,0 +1,83 @@
+{
+    "name": "myhbarwallet",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "npm-run-all lint:js lint:css",
+        "lint:js": "vue-cli-service lint",
+        "lint:css": "stylelint --fix 'src/**/*.vue' 'src/**/*.css'",
+        "test": "npm-run-all test:unit",
+        "test:unit": "vue-cli-service test:unit"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.19",
+        "@fortawesome/free-brands-svg-icons": "^5.10.0",
+        "@fortawesome/free-solid-svg-icons": "^5.9.0",
+        "@fortawesome/vue-fontawesome": "^0.1.6",
+        "core-js": "^2.6.5",
+        "vue": "^2.6.10",
+        "vue-router": "^3.0.3",
+        "vuex": "^3.0.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.5.5",
+        "@types/jest": "^23.1.4",
+        "@vue/cli-plugin-babel": "^3.9.0",
+        "@vue/cli-plugin-eslint": "^3.9.0",
+        "@vue/cli-plugin-typescript": "^3.9.0",
+        "@vue/cli-plugin-unit-jest": "^3.9.0",
+        "@vue/cli-service": "^3.9.0",
+        "@vue/eslint-config-prettier": "^4.0.1",
+        "@vue/eslint-config-typescript": "^4.0.0",
+        "@vue/test-utils": "1.0.0-beta.29",
+        "babel-core": "7.0.0-bridge.0",
+        "babel-eslint": "^10.0.1",
+        "cssnano-preset-advanced": "^4.0.7",
+        "eslint": "^5.16.0",
+        "eslint-import-resolver-typescript": "^1.1.1",
+        "eslint-import-resolver-webpack": "^0.11.1",
+        "eslint-plugin-compat": "^3.3.0",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-prettier": "^3.1.0",
+        "eslint-plugin-vue": "^5.0.0",
+        "jest": ">=22 <24",
+        "lint-staged": "^8.1.5",
+        "npm-run-all": "^4.1.5",
+        "postcss-font-magician": "^2.2.2",
+        "postcss-normalize": "^8.0.1",
+        "postcss-preset-env": "^6.7.0",
+        "prettier": "^1.18.2",
+        "stylelint": "^10.1.0",
+        "stylelint-a11y": "^1.2.1",
+        "stylelint-config-standard": "^18.3.0",
+        "stylelint-csstree-validator": "^1.5.2",
+        "stylelint-declaration-block-no-ignored-properties": "^2.1.0",
+        "stylelint-high-performance-animation": "^1.2.1",
+        "stylelint-no-indistinguishable-colors": "^1.2.1",
+        "stylelint-no-unsupported-browser-features": "^3.0.2",
+        "stylelint-no-unused-selectors": "^1.0.10",
+        "stylelint-order": "^3.0.1",
+        "stylelint-prettier": "^1.1.1",
+        "stylelint-use-logical": "^1.1.0",
+        "stylelint-value-no-unknown-custom-properties": "^2.0.0",
+        "ts-jest": "^23.0.0",
+        "typescript": "^3.4.3",
+        "vue-template-compiler": "^2.6.10"
+    },
+    "gitHooks": {
+        "pre-commit": "lint-staged"
+    },
+    "lint-staged": {
+        "*.{js,vue}": [
+            "vue-cli-service lint",
+            "stylelint --fix 'src/**/*.vue' 'src/**/*.css'",
+            "git add"
+        ],
+        "*.css": [
+            "stylelint --fix 'src/**/*.css'",
+            "git add"
+        ]
+    }
+}
