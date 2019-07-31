@@ -21,7 +21,6 @@ export default new Router({
         },
         {
             path: "/interface",
-            name: "interface",
             component: Interface,
             children: [
                 {
