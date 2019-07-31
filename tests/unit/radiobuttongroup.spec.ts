@@ -17,8 +17,7 @@ describe("RadioButtonGroup.vue", () => {
             }
         });
 
-        // Renders
-        expect(wrapper.isVisible()).toBe(true);
+        expect(wrapper.findAll("radiobutton-stub")).toHaveLength(0);
     });
 
     it("renders with a list", () => {
@@ -47,8 +46,8 @@ describe("RadioButtonGroup.vue", () => {
             }
         });
 
-        // Renders
-        expect(wrapper.isVisible()).toBe(true);
+        const buttons = wrapper.findAll("radiobutton-stub");
+        expect(buttons).toHaveLength(3);
     });
 
     it("triggers appropriate events", () => {
@@ -77,6 +76,7 @@ describe("RadioButtonGroup.vue", () => {
             }
         });
 
+        console.log(wrapper.html());
         expect(wrapper.isVisible()).toBe(true);
     });
 });
