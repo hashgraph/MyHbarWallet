@@ -22,7 +22,6 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import imageBell from "@/assets/service-bell.svg";
 import AccordionCard from "@/components/AccordionCard.vue";
 
