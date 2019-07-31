@@ -3,6 +3,7 @@
    https://github.com/csstools/sanitize.css */
 @import "sanitize";
 @import "sanitize/forms";
+@import "sanitize/page";
 
 :root {
     --color-white: #fff;
@@ -20,6 +21,7 @@
     --color-ghostlands-coal: #003945;
     --color-lightish-red: #ff2f49;
     --color-washed-black: #212529;
+    --color-soft-blue: #5a78f0;
     --color-ashen-wind: #96a8b6;
     --color-yankees-blue: #0b2840;
     --color-american-silver: #cfcfcf;
