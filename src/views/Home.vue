@@ -1,13 +1,18 @@
 <template>
-    <div class="home"></div>
+    <div class="home">
+        <HoverTileContainer />
+    </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import HoverTileContainer from "../components/AccessAccountHoverTileContainer.vue";
 
 export default Vue.extend({
     name: "Home",
-    components: {}
+    components: {
+        HoverTileContainer
+    }
 });
 </script>
 

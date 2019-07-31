@@ -1,23 +1,22 @@
 <template>
-    <a :href="isFirst ? `/create-account` : `/access-my-account`">
-        <div
-            :class="isFirst ? `create-account` : `access-account`"
-            class="tile-block"
-        >
+    <a :href="hrefer">
+        <div :class="backColor" class="tile-block">
             <div class="flex-col-center">
                 <div class="tile-icon">
                     <slot></slot>
                 </div>
                 <div class="tile-content">
-                    <h2>{{ title }}</h2>
+                    <h2 v-if="actionLabel">{{ title }}</h2>
+                    <h3 v-else>{{ title }}</h3>
                     <p>{{ content }}</p>
-                    <p class="action-label">
+                    <p v-if="actionLabel" class="action-label">
                         {{ actionLabel }}
                         <FontAwesomeIcon
                             class="action-icon"
                             :icon="faArrowRight"
                         />
                     </p>
+                    <p v-else class="small-note">{{ smallNote }}</p>
                 </div>
             </div>
         </div>
@@ -36,27 +35,23 @@ export default Vue.extend({
     props: {
         title: { type: String, required: true },
         content: { type: String, required: false, default: "" },
-        actionLabel: { type: String, required: false, default: "" }
+        actionLabel: { type: String, required: false, default: "" },
+        hrefer: { type: String, required: true, default: "/" },
+        backColor: { type: String, required: false, default: "none" },
+        smallNote: { type: String, required: false, default: "" }
     },
     computed: {
         faArrowRight() {
             return faArrowRight;
-        },
-        isFirst(): boolean {
-            if (this.title == "Create New Account") return true;
-            return false;
         }
     }
 });
 </script>
 
 <style lang="postcss" scoped>
-.create-account {
-    background-color: var(--color-soft-blue);
-}
-
-.access-account {
-    background-color: var(--color-melbourne-cup);
+p {
+    margin-block-end: 20px;
+    margin-block-start: 0;
 }
 
 a {
@@ -64,19 +59,6 @@ a {
     font-size: 14px;
     font-weight: 400;
     text-decoration: none;
-}
-
-.tile-block {
-    color: var(--color-peral);
-}
-
-.flex-col-center {
-    align-items: center;
-    display: flex;
-}
-
-.tile-icon {
-    padding-inline-end: 40px;
 }
 
 h2 {
@@ -90,9 +72,70 @@ h2 {
     width: 20px;
 }
 
-p {
-    margin-block-end: 20px;
-    margin-block-start: 0;
+.blue {
+    background-color: var(--color-byzantine-night-blue);
+    color: var(--color-white);
+
+    & .tile-icon {
+        padding-inline-end: 40px;
+    }
+
+    & .flex-col-center {
+        align-items: center;
+        display: flex;
+    }
+}
+
+.green {
+    background-color: var(--color-melbourne-cup);
+    color: var(--color-white);
+
+    & .tile-icon {
+        padding-inline-end: 40px;
+    }
+
+    & .flex-col-center {
+        align-items: center;
+        display: flex;
+    }
+}
+
+.none {
+    background-color: var(--color-white);
+    color: var(--color-washed-black);
+
+    &.tile-block {
+        border-radius: 5px;
+        padding-block: 10px 25px;
+        padding-inline: 15px;
+    }
+
+    & p {
+        color: var(--color-china-blue);
+        line-height: 1.25rem;
+        margin-block: 0;
+    }
+
+    & .small-note {
+        color: var(--color-sunkist-coral);
+        font-size: 11px;
+        margin-block: 5px 0;
+    }
+
+    & h3 {
+        font-size: 20px; /* remove */
+        font-weight: 500; /* remove */
+
+        /* line-height: 1.2; remove */
+        margin-block: 0 10px;
+        text-transform: none; /* remove */
+    }
+
+    & .tile-icon {
+        height: 135px;
+        margin-block-end: 5px;
+        padding-block: 44px;
+    }
 }
 
 /* Largest */
@@ -100,7 +143,6 @@ p {
 @media (min-width: 1025px) {
     .tile-block {
         border-radius: 4px;
-        color: var(--color-peral);
         height: 100%;
         inset-block-start: 0;
         margin-block-end: 0;
@@ -141,7 +183,6 @@ p {
     @media screen and (prefers-reduced-motion: reduce) {
         .tile-block {
             border-radius: 4px;
-            color: var(--color-peral);
             height: 100%;
             inset-block-start: 0;
             margin-block-end: 0;

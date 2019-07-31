@@ -5,6 +5,8 @@
             title="Create New Account"
             content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore"
             action-label="Get Started"
+            href="/create-account"
+            back-color="blue"
         >
             <FontAwesomeIcon class="icon" :icon="faWallet" />
         </HoverTile>
@@ -12,6 +14,8 @@
             title="Access My Account"
             content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore"
             action-label="Access Now"
+            href="/access-my-account"
+            back-color="green"
         >
             <FontAwesomeIcon class="icon" :icon="faUnlockAlt" />
         </HoverTile>
@@ -45,6 +49,9 @@ export default Vue.extend({
     display: block;
     grid-column-gap: 30px;
     grid-template-columns: 1fr 1fr;
+    padding-block: 50px; /* remove */
+
+    /* remove */
 }
 
 .icon {
