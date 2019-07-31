@@ -1,5 +1,12 @@
 <template>
-    <button :class="{ 'is-busy': isBusy }" v-on="this.$listeners">
+    <button
+        :class="{
+            'is-busy': isBusy,
+            outline: outlined,
+            'invert-outline': invertedOutline
+        }"
+        v-on="this.$listeners"
+    >
         <FontAwesomeIcon v-if="isBusy" class="spinner" :icon="faSpinner" spin />
         <span v-else>{{ label }}</span>
 
@@ -22,6 +29,9 @@ export default Vue.extend({
         FontAwesomeIcon
     },
     props: {
+        outline: { type: Boolean },
+        // Note: invert has no effect unless outline is true
+        invert: { type: Boolean },
         label: { type: String, required: true },
         trailingIcon: {
             type: Object as PropType<IconDefinition>,
@@ -32,6 +42,12 @@ export default Vue.extend({
     computed: {
         faSpinner() {
             return faSpinner;
+        },
+        invertedOutline(): boolean {
+            return this.outline && this.invert;
+        },
+        outlined(): boolean {
+            return this.outline && !this.invertedOutline;
         }
     }
 });
@@ -64,6 +80,27 @@ button {
     &:active:not(.is-busy) {
         background-color: var(--color-green-jelly);
         border-color: var(--color-green-jelly);
+    }
+}
+
+.outline {
+    background-color: white;
+    color: var(--color-melbourne-cup);
+
+    &:hover:not(.is-busy),
+    &:focus:not(.is-busy) {
+        background-color: var(--color-melbourne-cup);
+        border-color: var(--color-melbourne-cup);
+        color: white;
+    }
+}
+
+.invert-outline {
+    &:hover:not(.is-busy),
+    &:focus:not(.is-busy) {
+        background-color: white;
+        border-color: var(--color-melbourne-cup);
+        color: var(--color-melbourne-cup);
     }
 }
 
