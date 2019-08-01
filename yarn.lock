@@ -680,42 +680,6 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@fortawesome/fontawesome-common-types@^0.2.19":
-  version "0.2.19"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.19.tgz#754a0f85e1290858152e1c05700ab502b11197f1"
-  integrity sha512-nd2Ul/CUs8U9sjofQYAALzOGpgkVJQgEhIJnOHaoyVR/LeC3x2mVg4eB910a4kS6WgLPebAY0M2fApEI497raQ==
-
-"@fortawesome/fontawesome-common-types@^0.2.20":
-  version "0.2.20"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.20.tgz#b5450b07400aea96d87d24e98e22d4a3d8d59305"
-  integrity sha512-5wo0pMNS4gWTkplFAPSfNq4poXwLcgj8+khZs9/zbWMxC0hi6qnehXOrX7i7+Y7XyTQForja2WpR7Nz6LY2BtQ==
-
-"@fortawesome/fontawesome-svg-core@^1.2.19":
-  version "1.2.19"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.19.tgz#0eca1ce9285c3d99e6e340633ee8f615f9d1a2e0"
-  integrity sha512-D4ICXg9oU08eF9o7Or392gPpjmwwgJu8ecCFusthbID95CLVXOgIyd4mOKD9Nud5Ckz+Ty59pqkNtThDKR0erA==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.19"
-
-"@fortawesome/free-brands-svg-icons@^5.10.0":
-  version "5.10.0"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-5.10.0.tgz#59c8cb53e860c79dcba98e59085abc2b03e89768"
-  integrity sha512-Wj4MSV4J4DL8+HgnRTt2mk3pE2n3RZojDAlcN2G+2yzsdkI5TbXODY9bnfxs7Ik02GMqdhTdeHj/orxJYcYGLA==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.20"
-
-"@fortawesome/free-solid-svg-icons@^5.9.0":
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.9.0.tgz#1c73e7bac17417d23f934d83f7fff5b100a7fda9"
-  integrity sha512-U8YXPfWcSozsCW0psCtlRGKjjRs5+Am5JJwLOUmVHFZbIEWzaz4YbP84EoPwUsVmSAKrisu3QeNcVOtmGml0Xw==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.19"
-
-"@fortawesome/vue-fontawesome@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@fortawesome/vue-fontawesome/-/vue-fontawesome-0.1.6.tgz#18a0f4263b90f65180fc927325ba01896276ea04"
-  integrity sha512-HAGRbrOuGDwwUmCYdpzR0hhNQ3EE30dOS4JiJKcoZ+S4M210CxyU0OXCgzIg3HzK/23rlpHbV8zi9PDDZDnuIw==
-
 "@hapi/address@2.x.x":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.0.0.tgz#9f05469c88cb2fd3dcd624776b54ee95c312126a"
