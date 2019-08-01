@@ -7,7 +7,7 @@ import Vue from "vue";
 import FAQ from "@/components/FAQ.vue";
 
 export default Vue.extend({
-    name: "Home"
+    name: "Home",
     components: {}
 });
 </script>
