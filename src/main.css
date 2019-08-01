@@ -3,7 +3,6 @@
    https://github.com/csstools/sanitize.css */
 @import "sanitize";
 @import "sanitize/forms";
-@import "sanitize/page";
 
 :root {
     --color-white: #fff;

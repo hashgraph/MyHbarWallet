@@ -1,9 +1,9 @@
 <template>
-    <a :href="hrefer">
+    <router-link :to="route">
         <div :class="backColor" class="tile-block">
             <div class="flex-col-center">
                 <div class="tile-icon">
-                    <slot></slot>
+                    <FontAwesomeIcon class="icon" :icon="tileIcon" />
                 </div>
                 <div class="tile-content">
                     <h2 v-if="actionLabel">{{ title }}</h2>
@@ -20,12 +20,13 @@
                 </div>
             </div>
         </div>
-    </a>
+    </router-link>
 </template>
 
 <script lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faWallet, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import Vue from "vue";
 
 export default Vue.extend({
@@ -36,9 +37,10 @@ export default Vue.extend({
         title: { type: String, required: true },
         content: { type: String, required: false, default: "" },
         actionLabel: { type: String, required: false, default: "" },
-        hrefer: { type: String, required: true, default: "/" },
+        route: { type: String, required: true, default: "/" },
         backColor: { type: String, required: false, default: "none" },
-        smallNote: { type: String, required: false, default: "" }
+        smallNote: { type: String, required: false, default: "" },
+        tileIcon: { type: Object as PropType<IconDefinition>, default: null }
     },
     computed: {
         faArrowRight() {
@@ -52,6 +54,11 @@ export default Vue.extend({
 p {
     margin-block-end: 20px;
     margin-block-start: 0;
+}
+
+.icon {
+    height: 83.25px;
+    width: 87px;
 }
 
 a {
@@ -143,6 +150,7 @@ h2 {
 @media (min-width: 1025px) {
     .tile-block {
         border-radius: 4px;
+        color: var(--color-peral);
         height: 100%;
         inset-block-start: 0;
         margin-block-end: 0;
@@ -183,6 +191,7 @@ h2 {
     @media screen and (prefers-reduced-motion: reduce) {
         .tile-block {
             border-radius: 4px;
+            color: var(--color-peral);
             height: 100%;
             inset-block-start: 0;
             margin-block-end: 0;
