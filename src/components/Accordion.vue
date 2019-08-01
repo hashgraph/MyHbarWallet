@@ -60,25 +60,6 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.title-container {
-    align-items: center;
-    display: flex;
-    text-align: start;
-}
-
-.title {
-    color: var(--color-black);
-    flex-grow: 1;
-    font-size: 18px;
-    font-weight: 500;
-    padding-inline-end: 45px;
-}
-
-.content {
-    color: var(--color-china-blue);
-    font-size: 14px;
-}
-
 @keyframes rotate {
     from {
         transform: rotate(0);

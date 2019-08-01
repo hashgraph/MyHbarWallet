@@ -1,13 +1,13 @@
 <template>
     <div class="faq">
-        <div class="head">
-            <div class="title">
-                <h2 class="title-header">{{ title }}</h2>
-                <h5 v-if="subtitle !== ''" class="subtitle-header">
+        <div>
+            <div>
+                <h2>{{ title }}</h2>
+                <h5 v-if="subtitle !== ''">
                     {{ subtitle }} <a v-if="more !== ''" :href="more">More</a>
                 </h5>
             </div>
-            <div class="support">
+            <div>
                 <img :src="imageBell" alt="" />
                 <h5>Customer Support [Modal]</h5>
             </div>
@@ -63,10 +63,6 @@ export default Vue.extend<{}, {}, {}, Props>({
 </script>
 
 <style lang="postcss" scoped>
-.faq {
-    color: var(--color-china-blue);
-}
-
 .head {
     align-items: center;
     border-bottom: 1px solid var(--color-jupiter);
