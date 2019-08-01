@@ -1,7 +1,7 @@
 <template>
     <div class="faq">
-        <div>
-            <div>
+        <div class="head">
+            <div class="title">
                 <h2>{{ title }}</h2>
                 <h5 v-if="subtitle !== ''">
                     {{ subtitle }} <a v-if="more !== ''" :href="more">More</a>
@@ -9,12 +9,15 @@
             </div>
             <CustomerSupportLink />
         </div>
-        <div v-for="record in records" :key="record.toString()" class="cards">
-            <Accordion
-                :title="record.title"
-                :content="record.content"
-                :link="record.link"
-            />
+        <div class="cards">
+            <div v-for="record in records" :key="record.toString()">
+                <Accordion
+                    :title="record.title"
+                    :content="record.content"
+                    :link="record.link"
+                    class="accordion"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -61,37 +64,50 @@ export default Vue.extend<{}, {}, {}, Props>({
 </script>
 
 <style lang="postcss" scoped>
+a {
+    color: var(--color-melbourne-cup);
+    text-decoration: none;
+}
+
 .head {
     align-items: center;
-    border-bottom: 1px solid var(--color-jupiter);
     display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    @media (max-width: 1025px) {
+        align-items: flex-start;
+        flex-direction: column;
+    }
 }
 
 .title {
-    flex-grow: 1;
-}
+    & h2 {
+        color: var(--color-black);
+        font-size: 30px;
+        font-weight: 400;
+        margin-block-end: 15px;
+    }
 
-.support {
-    align-items: center;
-    color: var(--color-melbourne-cup);
-    display: flex;
-    margin: 0 auto;
-}
-
-.title-header {
-    color: var(--color-black);
-    font-size: 30px;
-    font-weight: 400;
-    margin-block-end: 15px;
-}
-
-.subtitle-header {
-    font-size: 14px;
-    font-weight: 400;
+    & h5 {
+        color: var(--color-china-blue);
+        font-size: 14px;
+        font-weight: 400;
+    }
 }
 
 .cards {
+    align-content: center;
+    border-top: 1px solid var(--color-jupiter);
+    display: flex;
+    flex-flow: column nowrap;
+
+    @media (max-width: 1025px) {
+        margin-block-start: 30px;
+    }
+}
+
+.accordion {
     border-bottom: 1px solid var(--color-jupiter);
-    padding: 30px 10px;
 }
 </style>
