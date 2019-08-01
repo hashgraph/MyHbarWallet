@@ -4,7 +4,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-import FAQ from "@/components/FAQ.vue";
 
 export default Vue.extend({
     name: "Home",
