@@ -1,13 +1,20 @@
 <template>
     <div class="CustomerSupportLink">
-        <img src="../assets/help-center.svg" /> Customer Support
+        <img alt="" :src="serviceBell" /> Customer Support
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import serviceBell from "@/assets/help-center.svg";
 
-export default Vue.extend({});
+export default Vue.extend({
+    computed: {
+        serviceBell() {
+            return serviceBell;
+        }
+    }
+});
 </script>
 
 <style lang="postcss" scoped>
