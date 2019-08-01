@@ -24,7 +24,7 @@ export default Vue.extend({
                 {
                     title: "How do I create a new wallet?",
                     content: "Carefully",
-                    link: ""
+                    link: "https://www.google.com"
                 },
                 {
                     title: "Does MHW work with other wallets?",
