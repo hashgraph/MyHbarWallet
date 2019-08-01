@@ -1,24 +1,24 @@
 <template>
     <div class="accordion-card">
-        <div class="title" @click="toggle">
-            <h3>{{ title }}</h3>
-            <div class="icon-container">
-                <transition name="flip" mode="out-in" enter-active-class="spin">
-                    <FontAwesomeIcon
-                        :key="expanded"
-                        size="lg"
-                        class="icon"
-                        :icon="icon"
-                    />
-                </transition>
-            </div>
+        <div class="title-container" @click="toggle">
+            <h3 class="title">{{ title }}</h3>
+            <transition name="flip" mode="out-in" enter-active-class="spin">
+                <FontAwesomeIcon
+                    :key="expanded"
+                    size="lg"
+                    class="icon"
+                    :icon="icon"
+                />
+            </transition>
         </div>
-        <div v-if="expanded" class="content-container">
-            <div class="content">{{ content }}</div>
-            <div v-if="link !== ''">
-                For more information, click <a :href="link">here</a>.
+        <transition name="fade">
+            <div v-if="expanded" :key="expanded" class="content-container">
+                <div class="content">{{ content }}</div>
+                <div v-if="link !== ''" class="content">
+                    For more information, click <a :href="link">here</a>.
+                </div>
             </div>
-        </div>
+        </transition>
     </div>
 </template>
 
@@ -45,9 +45,9 @@ export default Vue.extend({
     computed: {
         icon() {
             if (this.expanded) {
-                return faPlus;
-            } else {
                 return faMinus;
+            } else {
+                return faPlus;
             }
         }
     },
@@ -60,6 +60,25 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
+.title-container {
+    align-items: center;
+    display: flex;
+    text-align: start;
+}
+
+.title {
+    color: var(--color-black);
+    flex-grow: 1;
+    font-size: 18px;
+    font-weight: 500;
+    padding-inline-end: 45px;
+}
+
+.content {
+    color: var(--color-china-blue);
+    font-size: 14px;
+}
+
 @keyframes rotate {
     from {
         transform: rotate(0);
