@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <Accordion
+        <FAQ
             :title="faqTitle"
             :subtitle="faqSubtitle"
             :more="faqMore"
@@ -11,12 +11,12 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Accordion from "@/components/FAQ.vue";
+import FAQ from "@/components/FAQ.vue";
 
 export default Vue.extend({
     name: "Home",
     components: {
-        Accordion
+        FAQ
     },
     data: function() {
         return {
