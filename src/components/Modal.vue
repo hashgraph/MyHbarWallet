@@ -1,4 +1,4 @@
-<template>
+1<template>
     <div
         class="modal-background"
         :class="{ 'is-open': isOpen }"
@@ -18,7 +18,7 @@
             <div class="main">
                 <slot name="banner"></slot>
                 <div class="content-container">
-                    <slot name="content"></slot>
+                    <slot></slot>
                 </div>
             </div>
         </div>

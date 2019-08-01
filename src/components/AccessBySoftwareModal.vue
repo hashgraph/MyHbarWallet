@@ -1,13 +1,22 @@
 <template>
-    <div class="AccessBySoftwareModal">
-        <RadioButtonGroup v-model="selected" :name="name" :options="options" />
-        <div class="hardware-link">
-            Purchase a hardware wallet for the highest security when accessing
-            your crypto.
-            <a href="" class="green-link">Purchase a hardware wallet.... </a>
+    <Modal is-open title="Access by Software">
+        <div class="AccessBySoftwareModal">
+            <RadioButtonGroup
+                v-model="selected"
+                :name="name"
+                :options="options"
+            />
+            <div class="hardware-link">
+                Purchase a hardware wallet for the highest security when
+                accessing your crypto.
+                <a href="" class="green-link"
+                    >Purchase a hardware wallet....
+                </a>
+            </div>
+            <div class="expanded"><Button label="Continue" /></div>
+            <CustomerSupportLink />
         </div>
-        <div class="expanded"><Button label="Continue" /></div>
-    </div>
+    </Modal>
 </template>
 
 <script lang="ts">
@@ -17,11 +26,15 @@ import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imageKey from "../assets/button-key.svg";
 import imagePhrase from "../assets/button-phrase.svg";
 import imageFile from "../assets/button-file.svg";
+import Modal from "../components/Modal.vue";
+import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 
 export default Vue.extend({
     components: {
         RadioButtonGroup,
-        Button
+        Button,
+        Modal,
+        CustomerSupportLink
     },
     data() {
         return {
@@ -67,6 +80,7 @@ export default Vue.extend({
 
 .expanded {
     display: flex;
+    padding-block-end: 20px;
 }
 
 .green-link {
