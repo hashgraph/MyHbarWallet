@@ -1,12 +1,15 @@
 <template>
     <Modal is-open title="Access by hardware">
-        <div class="AccessByHardwareModal">
+        <div class="modal-access-by-hardware">
             <RadioButtonGroup
                 v-model="selected"
                 :name="name"
                 :options="options"
             />
-            <div class="expanded"><Button label="Continue" /></div>
+            <Button
+                class="button-choose-a-hardware"
+                label="Choose a Hardware"
+            />
             <CustomerSupportLink />
         </div>
     </Modal>
@@ -31,12 +34,6 @@ export default Vue.extend({
         Button,
         Modal,
         CustomerSupportLink
-    },
-    data() {
-        return {
-            selected: "trezor",
-            name: "hardware-wallet-radio"
-        };
     },
     computed: {
         options() {
@@ -78,13 +75,13 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.AccessByHardwareModal {
-    padding: 20px;
+.modal-access-by-hardware {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
 }
 
-.expanded {
-    display: flex;
-    padding-block-end: 20px;
-    padding-block-start: 20px;
+.button-choose-a-hardware {
+    margin: 20px 0;
 }
 </style>

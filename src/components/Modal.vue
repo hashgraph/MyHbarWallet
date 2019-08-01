@@ -1,4 +1,4 @@
-1<template>
+<template>
     <div
         class="modal-background"
         :class="{ 'is-open': isOpen }"
