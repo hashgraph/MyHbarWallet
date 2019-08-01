@@ -1,5 +1,5 @@
 <template>
-    <div class="home" />
+    <div class="home"></div>
 </template>
 
 <script lang="ts">
@@ -8,6 +8,7 @@ import FAQ from "@/components/FAQ.vue";
 
 export default Vue.extend({
     name: "Home"
+    components: {}
 });
 </script>
 
