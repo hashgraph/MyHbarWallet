@@ -1,7 +1,7 @@
 <template>
     <div class="accordion">
-        <div class="title-container" @click="toggle">
-            <h3 class="title">{{ title }}</h3>
+        <div class="title" @click="toggle">
+            <h3>{{ title }}</h3>
             <transition name="flip" mode="out-in" enter-active-class="spin">
                 <FontAwesomeIcon
                     :key="expanded"
@@ -12,9 +12,9 @@
             </transition>
         </div>
         <transition name="fade">
-            <div v-if="expanded" :key="expanded" class="content-container">
-                <div class="content">{{ content }}</div>
-                <div v-if="link !== ''" class="content">
+            <div v-if="expanded" :key="expanded" class="content">
+                <div>{{ content }}</div>
+                <div v-if="link !== ''">
                     For more information, click <a :href="link">here</a>.
                 </div>
             </div>
@@ -60,6 +60,35 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
+a {
+    color: var(--color-melbourne-cup);
+    text-decoration: none;
+}
+
+.accordion {
+    color: var(--color-black);
+    padding: 30px 10px;
+}
+
+.title {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    text-align: start;
+
+    & h3 {
+        font-size: 18px;
+        font-weight: 500;
+        padding-inline-end: 45px;
+    }
+}
+
+.content {
+    font-size: 14px;
+    font-weight: 400;
+}
+
 @keyframes rotate {
     from {
         transform: rotate(0);
