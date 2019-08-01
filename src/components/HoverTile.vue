@@ -1,12 +1,9 @@
 <template>
-    <a :href="isFirst ? `/create-account` : `/access-my-account`">
-        <div
-            :class="isFirst ? `create-account` : `access-account`"
-            class="tile-block"
-        >
+    <router-link :to="route">
+        <div :class="backColor" class="tile-block">
             <div class="flex-col-center">
                 <div class="tile-icon">
-                    <slot></slot>
+                    <FontAwesomeIcon class="icon" :icon="tileIcon" />
                 </div>
                 <div class="tile-content">
                     <h2>{{ title }}</h2>
@@ -21,12 +18,13 @@
                 </div>
             </div>
         </div>
-    </a>
+    </router-link>
 </template>
 
 <script lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faWallet, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import Vue from "vue";
 
 export default Vue.extend({
@@ -36,27 +34,32 @@ export default Vue.extend({
     props: {
         title: { type: String, required: true },
         content: { type: String, required: false, default: "" },
-        actionLabel: { type: String, required: false, default: "" }
+        actionLabel: { type: String, required: false, default: "" },
+        route: { type: String, required: true, default: "/" },
+        backColor: { type: String, required: false, default: "none" },
+        smallNote: { type: String, required: false, default: "" },
+        tileIcon: { type: Object as PropType<IconDefinition>, default: null }
     },
     computed: {
         faArrowRight() {
             return faArrowRight;
-        },
-        isFirst(): boolean {
-            if (this.title == "Create New Account") return true;
-            return false;
         }
     }
 });
 </script>
 
 <style lang="postcss" scoped>
-.create-account {
+.blue {
     background-color: var(--color-soft-blue);
 }
 
-.access-account {
+.green {
     background-color: var(--color-melbourne-cup);
+}
+
+.icon {
+    height: 83.25px;
+    width: 87px;
 }
 
 a {

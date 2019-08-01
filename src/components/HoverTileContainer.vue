@@ -1,19 +1,22 @@
 <template>
     <div class="tile-grid">
         <HoverTile
-            is-first="true"
             title="Create New Account"
             content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore"
             action-label="Get Started"
+            route="/create-account"
+            back-color="blue"
+            :tile-icon="faWallet"
         >
-            <FontAwesomeIcon class="icon" :icon="faWallet" />
         </HoverTile>
         <HoverTile
             title="Access My Account"
             content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore"
             action-label="Access Now"
+            route="/access-account"
+            back-color="green"
+            :tile-icon="faUnlockAlt"
         >
-            <FontAwesomeIcon class="icon" :icon="faUnlockAlt" />
         </HoverTile>
     </div>
 </template>
@@ -26,8 +29,7 @@ import { faWallet, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
     components: {
-        HoverTile,
-        FontAwesomeIcon
+        HoverTile
     },
     computed: {
         faWallet() {
@@ -45,11 +47,6 @@ export default Vue.extend({
     display: block;
     grid-column-gap: 30px;
     grid-template-columns: 1fr 1fr;
-}
-
-.icon {
-    height: 83.25px;
-    width: 87px;
 }
 
 @media (min-width: 1025px) {
