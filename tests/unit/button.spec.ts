@@ -1,6 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
 import Button from "../../src/components/Button.vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 describe("Button.vue", () => {
     it("renders", () => {
@@ -19,7 +19,7 @@ describe("Button.vue", () => {
         });
 
         expect(wrapper.text()).not.toMatch(label);
-        expect(wrapper.contains(FontAwesomeIcon)).toBe(true);
+        expect(wrapper.contains(MaterialDesignIcon)).toBe(true);
     });
 
     it("triggers a click handler when clicked", () => {

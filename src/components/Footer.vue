@@ -37,11 +37,7 @@
                     href="https://www.facebook.com/hashgraph/"
                     class="social-link"
                 >
-                    <FontAwesomeIcon
-                        size="lg"
-                        class="social-icon"
-                        :icon="faFacebookF"
-                    />
+                    <MaterialDesignIcon class="social-icon" :icon="facebook" />
                 </a>
                 <a
                     rel="noopener"
@@ -49,11 +45,7 @@
                     href="https://twitter.com/hashgraph"
                     class="social-link"
                 >
-                    <FontAwesomeIcon
-                        size="lg"
-                        class="social-icon"
-                        :icon="faTwitter"
-                    />
+                    <MaterialDesignIcon class="social-icon" :icon="twitter" />
                 </a>
                 <a
                     rel="noopener"
@@ -61,11 +53,7 @@
                     href="https://www.github.com/hashgraph/myhbarwallet"
                     class="social-link"
                 >
-                    <FontAwesomeIcon
-                        size="lg"
-                        class="social-icon"
-                        :icon="faGithub"
-                    />
+                    <MaterialDesignIcon class="social-icon" :icon="github" />
                 </a>
             </div>
         </div>
@@ -74,27 +62,23 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import {
-    faFacebookF,
-    faTwitter,
-    faGithub
-} from "@fortawesome/free-brands-svg-icons";
+import { mdiFacebook, mdiGithubCircle, mdiTwitter } from "@mdi/js";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 export default Vue.extend({
     name: "Footer",
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     computed: {
-        faFacebookF() {
-            return faFacebookF;
+        facebook() {
+            return mdiFacebook;
         },
-        faTwitter() {
-            return faTwitter;
+        twitter() {
+            return mdiTwitter;
         },
-        faGithub() {
-            return faGithub;
+        github() {
+            return mdiGithubCircle;
         },
         currentYear() {
             return new Date().getFullYear();
