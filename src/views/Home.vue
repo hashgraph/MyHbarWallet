@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Accordion from "@/components/Accordion.vue";
+import Accordion from "@/components/FAQ.vue";
 
 export default Vue.extend({
     name: "Home",
