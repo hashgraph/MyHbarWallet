@@ -1,109 +1,102 @@
 <template>
     <div class="accordion">
-        <div class="head">
-            <div class="title">
-                <h2 class="title-header">{{ title }}</h2>
-                <h5 v-if="subtitle !== ''" class="subtitle-header">
-                    {{ subtitle }} <a v-if="more !== ''" :href="more">More</a>
-                </h5>
-            </div>
-            <div class="support">
-                <FontAwesomeIcon :icon="iconBell" class="icon" size="lg" />
-                <h5>Customer Support [Modal]</h5>
-            </div>
+        <div class="title-container" @click="toggle">
+            <h3 class="title">{{ title }}</h3>
+            <transition name="flip" mode="out-in" enter-active-class="spin">
+                <FontAwesomeIcon
+                    :key="expanded"
+                    size="lg"
+                    class="icon"
+                    :icon="icon"
+                />
+            </transition>
         </div>
-        <div v-for="record in records" :key="record.toString()" class="cards">
-            <AccordionCard
-                :title="record.title"
-                :content="record.content"
-                :link="record.link"
-            />
-        </div>
+        <transition name="fade">
+            <div v-if="expanded" :key="expanded" class="content-container">
+                <div class="content">{{ content }}</div>
+                <div v-if="link !== ''" class="content">
+                    For more information, click <a :href="link">here</a>.
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from "vue";
-import imageBell from "@/assets/service-bell.svg";
-import AccordionCard from "@/components/AccordionCard.vue";
+import Vue from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faConciergeBell } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
-interface Record {
-    title: string;
-    content: string;
-    link: string;
-}
-
-interface Props {
-    title: string;
-    subtitle: string;
-    more: string;
-    records: Record[];
-}
-
-export default Vue.extend<{}, {}, {}, Props>({
+export default Vue.extend({
     name: "Accordion",
     components: {
-        AccordionCard,
         FontAwesomeIcon
     },
     props: {
         title: { required: true, type: String },
-        subtitle: { required: false, type: String, default: "" },
-        more: { required: false, type: String, default: "" },
-        records: {
-            type: Array,
-            required: true
-        } as PropOptions<Record[]>
+        content: { required: true, type: String },
+        link: { required: false, type: String, default: "" }
+    },
+    data: function() {
+        return {
+            expanded: false
+        };
     },
     computed: {
-        imageBell() {
-            return imageBell;
-        },
-        iconBell() {
-            return faConciergeBell;
+        icon() {
+            if (this.expanded) {
+                return faMinus;
+            } else {
+                return faPlus;
+            }
+        }
+    },
+    methods: {
+        toggle() {
+            this.expanded = !this.expanded;
         }
     }
 });
 </script>
 
 <style lang="postcss" scoped>
-.accordion {
-    color: var(--color-china-blue);
-}
-
-.head {
+.title-container {
     align-items: center;
-    border-bottom: 1px solid var(--color-jupiter);
     display: flex;
+    text-align: start;
 }
 
 .title {
-    flex-grow: 1;
-}
-
-.support {
-    align-items: center;
-    color: var(--color-melbourne-cup);
-    display: flex;
-    margin: 0 auto;
-}
-
-.title-header {
     color: var(--color-black);
-    font-size: 30px;
-    font-weight: 400;
-    margin-block-end: 15px;
+    flex-grow: 1;
+    font-size: 18px;
+    font-weight: 500;
+    padding-inline-end: 45px;
 }
 
-.subtitle-header {
+.content {
+    color: var(--color-china-blue);
     font-size: 14px;
-    font-weight: 400;
 }
 
-.cards {
-    border-bottom: 1px solid var(--color-jupiter);
-    padding: 30px 10px;
+@keyframes rotate {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+.spin {
+    animation: rotate;
+    animation-duration: 0.1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
 }
 </style>
