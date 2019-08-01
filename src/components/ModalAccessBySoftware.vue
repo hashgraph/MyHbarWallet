@@ -1,6 +1,6 @@
 <template>
     <Modal is-open title="Access by Software">
-        <div class="AccessBySoftwareModal">
+        <div class="modal-access-by-software">
             <RadioButtonGroup
                 v-model="selected"
                 :name="name"
@@ -9,11 +9,11 @@
             <div class="hardware-link">
                 Purchase a hardware wallet for the highest security when
                 accessing your crypto.
-                <a href="" class="green-link"
-                    >Purchase a hardware wallet....
+                <a href="" class="green-link">
+                    Purchase a hardware wallet....
                 </a>
             </div>
-            <div class="expanded"><Button label="Continue" /></div>
+            <Button label="Continue" />
             <CustomerSupportLink />
         </div>
     </Modal>
@@ -35,12 +35,6 @@ export default Vue.extend({
         Button,
         Modal,
         CustomerSupportLink
-    },
-    data() {
-        return {
-            selected: "file",
-            name: "software-wallet-radio"
-        };
     },
     computed: {
         options() {
@@ -67,20 +61,16 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.AccessBySoftwareModal {
+.modal-access-by-software {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
     padding: 20px;
 }
 
 .hardware-link {
-    display: flex;
-    flex-direction: column;
     padding: 20px;
     text-align: center;
-}
-
-.expanded {
-    display: flex;
-    padding-block-end: 20px;
 }
 
 .green-link {
