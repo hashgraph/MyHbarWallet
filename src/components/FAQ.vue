@@ -7,10 +7,7 @@
                     {{ subtitle }} <a v-if="more !== ''" :href="more">More</a>
                 </h5>
             </div>
-            <div>
-                <img :src="imageBell" alt="" />
-                <h5>Customer Support [Modal]</h5>
-            </div>
+            <CustomerSupportLink />
         </div>
         <div v-for="record in records" :key="record.toString()" class="cards">
             <Accordion
@@ -24,8 +21,8 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from "vue";
-import imageBell from "@/assets/service-bell.svg";
 import Accordion from "@/components/Accordion.vue";
+import CustomerSupportLink from "@/components/CustomerSupportLink.vue";
 
 interface Record {
     title: string;
@@ -43,7 +40,8 @@ interface Props {
 export default Vue.extend<{}, {}, {}, Props>({
     name: "FAQ",
     components: {
-        Accordion
+        Accordion,
+        CustomerSupportLink
     },
     props: {
         title: { required: true, type: String },
