@@ -7,7 +7,9 @@
             <div class="title">
                 {{ title }}
             </div>
-            <slot></slot>
+            <div class="message">
+                <slot></slot>
+            </div>
             <!-- TODO: > Read: Using MEW Offline Component here -->
         </div>
     </div>
@@ -19,14 +21,13 @@ import Vue from "vue";
 export default Vue.extend({
     name: "Warning",
     props: {
-        title: { type: String, required: false, default: "" }
+        title: { type: String, required: true }
     }
 });
 </script>
 
 <style scoped lang="postcss">
 .warning {
-    /* grid-template-columns: 60px 1fr; */
     background-color: var(--color-sheer-peach);
     display: flex;
     padding: 20px;
@@ -36,18 +37,17 @@ export default Vue.extend({
 .warning-symbol {
     flex-shrink: 0;
     font-size: 30px;
-    height: 122px;
     width: 60px;
-}
-
-.image {
-    height: 30px;
-    width: 30px;
 }
 
 .title {
     font-size: 20px;
     font-weight: 600;
     margin-block-end: 10px;
+}
+
+.message {
+    color: var(--color-china-blue);
+    font-size: 14px;
 }
 </style>
