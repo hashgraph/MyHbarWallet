@@ -41,11 +41,8 @@ a {
     background-color: transparent;
     font-size: 14px;
     font-weight: 400;
+    outline: none;
     text-decoration: none;
-
-    &:focus {
-        outline: none;
-    }
 }
 
 .blue {
@@ -59,48 +56,28 @@ a {
 }
 
 .none {
-    background-color: var(--color-white);
+    background-color: blue;
     color: var(--color-washed-black);
-
-    @media screen and (prefers-reduced-motion: reduce) {
-        &.tile-block {
-            border-radius: 4px;
-            height: 274px;
-            inset-block-start: 0;
-            margin-block-end: 0;
-            padding-block: 10px 25px;
-            padding-inline: 15px;
-            position: relative;
-            -webkit-transition: inset, background-color 0.3s ease;
-            transition: none;
-            width: 210px;
-
-            &:hover,
-            &:focus {
-                -webkit-box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
-                box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
-                inset-block-start: -10px;
-            }
-        }
-    }
 
     &.tile-block {
         border-radius: 4px;
         height: 274px;
-        inset-block-start: 0;
         margin-block-end: 0;
         padding-block: 10px 25px;
         padding-inline: 15px;
-        position: relative;
-        -webkit-transition: inset, background-color 0.3s ease;
-        transition: inset, background-color 0.3s ease;
+        transition: transform 0.3s ease;
         width: 210px;
 
         &:hover,
         &:focus {
-            -webkit-box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
             box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
-            inset-block-start: -10px;
+            transform: translateY(-10px);
+        }
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        &.tile-block {
+            transition: none;
         }
     }
 }
