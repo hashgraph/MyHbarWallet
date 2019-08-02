@@ -1,38 +1,53 @@
 <template>
     <div class="tile-grid">
-        <HoverTile
-            title="MEWconnect"
-            content="Lorem ipsum dolor sit amet, consectetur"
-        >
-            <img :src="mewConnect" />
+        <HoverTile back-color="none toGreen">
+            <template v-slot="{ hovered }">
+                <HoverTileContent
+                    title="MEWconnect"
+                    content="Lorem ipsum dolor sit amet, consectetur"
+                    :img-path="mewConnect"
+                    :hovered="hovered"
+                />
+            </template>
         </HoverTile>
-        <HoverTile
-            title="Hardware"
-            content="Ledger wallet, FINNEY, Trezor, Digital bitbox, Secalot, KeepKey"
-        >
-            <img :src="hardware" />
+        <HoverTile back-color="none toBlue">
+            <template v-slot="{ hovered }">
+                <HoverTileContent
+                    title="Hardware"
+                    content="Ledger wallet, FINNEY, Trezor, Digital bitbox, Secalot, KeepKey"
+                    :img-path="hardware"
+                    :hovered="hovered"
+                />
+            </template>
         </HoverTile>
-        <HoverTile
-            title="MetaMask"
-            content="Lorem ipsum dolor sit amet, consectetur"
-        >
-            <img :src="metamask" />
+        <HoverTile back-color="none">
+            <template v-slot="{ hovered }">
+                <HoverTileContent
+                    title="MetaMask"
+                    content="Lorem ipsum dolor sit amet, consectetur"
+                    :img-path="metamask"
+                    :hovered="hovered"
+                />
+            </template>
         </HoverTile>
-        <HoverTile
-            title="Software"
-            content="Lorem ipsum dolor sit amet, consectetur"
-            small-note="Not Recommended"
-        >
-            <img :src="software" />
+        <HoverTile back-color="none">
+            <template v-slot="{ hovered }">
+                <HoverTileContent
+                    title="Software"
+                    content="Lorem ipsum dolor sit amet, consectetur"
+                    small-note="Not Recommended"
+                    :img-path="software"
+                    :hovered="hovered"
+                />
+            </template>
         </HoverTile>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import HoverTileContent from "../components/AccessAccountHoverTileContent.vue";
 import HoverTile from "../components/HoverTile.vue";
-import { faWallet, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import mewConnect from "../assets/button-mewconnect.svg";
 import hardware from "../assets/button-hardware.svg";
 import metamask from "../assets/button-metamask.svg";
@@ -40,7 +55,8 @@ import software from "../assets/button-software.svg";
 
 export default Vue.extend({
     components: {
-        HoverTile
+        HoverTile,
+        HoverTileContent
     },
     computed: {
         faWallet() {
@@ -72,14 +88,7 @@ export default Vue.extend({
     grid-template-columns: 1fr 1fr 1fr 1fr;
     max-width: 900px;
     padding-block: 50px; /* remove */
-
-    /* remove */
     text-align: center;
-}
-
-.img {
-    font-size: 90px;
-    margin-block-end: 5px;
 }
 
 @media (min-width: 1025px) {

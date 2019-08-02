@@ -1,22 +1,20 @@
 <template>
     <div class="tile-grid">
-        <HoverTile
-            title="Create New Account"
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore"
-            action-label="Get Started"
-            route="/create-account"
-            back-color="blue"
-            :tile-icon="faWallet"
-        >
+        <HoverTile back-color="blue" route="/create-account">
+            <HomeHoverTileContent
+                title="Create New Account"
+                content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore"
+                action-label="Get Started"
+                :tile-icon="faWallet"
+            />
         </HoverTile>
-        <HoverTile
-            title="Access My Account"
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore"
-            action-label="Access Now"
-            route="/access-account"
-            back-color="green"
-            :tile-icon="faUnlockAlt"
-        >
+        <HoverTile back-color="green" route="/access-account">
+            <HomeHoverTileContent
+                title="Access My Account"
+                content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore"
+                action-label="Access Now"
+                :tile-icon="faUnlockAlt"
+            />
         </HoverTile>
     </div>
 </template>
@@ -25,11 +23,13 @@
 import Vue from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import HoverTile from "../components/HoverTile.vue";
+import HomeHoverTileContent from "../components/HomeHoverTileContent.vue";
 import { faWallet, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
     components: {
-        HoverTile
+        HoverTile,
+        HomeHoverTileContent
     },
     computed: {
         faWallet() {
@@ -48,6 +48,7 @@ export default Vue.extend({
     grid-column-gap: 30px;
     grid-template-columns: 1fr 1fr;
     padding-block: 50px; /* remove */
+    width: 85%;
 
     /* remove */
 }
@@ -55,7 +56,11 @@ export default Vue.extend({
 @media (min-width: 1025px) {
     .tile-grid {
         display: grid;
-        grid-column-gap: 30px;
+        max-width: 1024px;
     }
+}
+
+@media (max-width: 414px) {
+    width: 85%;
 }
 </style>
