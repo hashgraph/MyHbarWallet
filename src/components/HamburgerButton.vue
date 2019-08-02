@@ -132,7 +132,7 @@ export default Vue.extend({
     transition: transform 0.2s linear;
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1025px) {
     .button-wrapper {
         transition: none;
         visibility: hidden;

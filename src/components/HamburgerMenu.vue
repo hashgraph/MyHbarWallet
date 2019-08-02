@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div class="wrapper">
         <transition
             v-enter-active="transition"
             v-leave-active="transition"
             name="menu"
         >
-            <nav v-if="isOpen">
+            <nav v-if="openCheck">
                 <li class="link-block">
                     <a href="/">
                         <div class="link">Home</div>
@@ -35,8 +35,8 @@
                 </li>
             </nav>
         </transition>
-        <transition v-enter-active="fade" name="shadow">
-            <div v-if="isOpen" class="shadow-backdrop"></div>
+        <transition v-enter-active="fade" name="shadoow">
+            <div v-if="openCheck" class="shadow-backdrop"></div>
         </transition>
     </div>
 </template>
@@ -54,7 +54,16 @@ export default Vue.extend({
     props: {
         isOpen: { type: Boolean }
     },
+    data() {
+        return {
+            viewWidth: 0
+        };
+    },
     computed: {
+        openCheck() {
+            if (this.isOpen && this.viewWidth <= 1025) return true;
+            else return false;
+        },
         faAngleRight() {
             return faAngleRight;
         },
@@ -65,6 +74,18 @@ export default Vue.extend({
         fade() {
             return "shadow-active";
         }
+    },
+    created() {
+        window.addEventListener("resize", this.handleResize);
+        this.handleResize();
+    },
+    destroyed() {
+        window.removeEventListener("resize", this.handleResize);
+    },
+    methods: {
+        handleResize() {
+            this.viewWidth = window.innerWidth;
+        }
     }
 });
 </script>
@@ -73,7 +94,6 @@ export default Vue.extend({
 nav {
     background-color: var(--color-white);
     height: 100vh;
-    position: relative;
     width: 100vw;
     z-index: 998;
 }
@@ -82,6 +102,7 @@ nav {
     background-color: #000;
     height: 100vh;
     opacity: 0.8;
+    width: 100vw;
     z-index: 990;
 }
 
@@ -121,12 +142,11 @@ a {
 @media screen and (prefers-reduced-motion: reduce) {
     .menu-enter-active {
         animation: none;
-        height: 100vh;
     }
 }
 
 .menu-enter-active {
-    animation: animate 0.3s ease;
+    animation: animate 0.2s ease;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -146,7 +166,7 @@ a {
 }
 
 .shadow-active {
-    animation: fade-in 0.1s ease;
+    animation: fade-in 0.2s ease;
     background-color: #000;
     height: 100vh;
 }
