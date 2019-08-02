@@ -75,14 +75,14 @@ nav {
     height: 100vh;
     position: relative;
     width: 100vw;
-    z-index: 999;
+    z-index: 998;
 }
 
 .shadow-backdrop {
     background-color: #000;
     height: 100vh;
     opacity: 0.8;
-    z-index: 999;
+    z-index: 990;
 }
 
 .link-block {
@@ -127,7 +127,6 @@ a {
 
 .menu-enter-active {
     animation: animate 0.3s ease;
-    height: 100vh;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -148,6 +147,8 @@ a {
 
 .shadow-active {
     animation: fade-in 0.1s ease;
+    background-color: #000;
+    height: 100vh;
 }
 
 @keyframes fade-in {
