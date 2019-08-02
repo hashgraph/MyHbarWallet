@@ -1,0 +1,153 @@
+<template>
+    <div
+        class="modal-background"
+        :class="{ 'is-open': isOpen }"
+        role="dialog"
+        aria-modal="true"
+        @click="handleClose"
+    >
+        <div class="modal" @click.stop="">
+            <header>
+                <span class="title">{{ title }}</span>
+                <!-- TODO: Make this a component like FontAwesomeIcon -->
+                <svg
+                    class="close"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    @click="handleClose"
+                >
+                    <path :d="mdiClose"></path>
+                </svg>
+            </header>
+            <div class="main">
+                <slot name="banner"></slot>
+                <div class="content-container">
+                    <slot name="content"></slot>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import Vue from "vue";
+import { mdiClose } from "@mdi/js";
+
+function setModalIsOpenOnBody(isOpen: boolean) {
+    document.body.classList.toggle("modal-is-open", isOpen);
+}
+
+// The isOpen property controls if the modal is open or not. It should be bound with
+// the v-model directive to allow the modal to close itself (click out and close button).
+export default Vue.extend({
+    name: "Modal",
+    model: {
+        prop: "isOpen",
+        event: "change"
+    },
+    props: {
+        isOpen: { type: Boolean },
+        title: { type: String, required: true }
+    },
+    computed: {
+        mdiClose() {
+            return mdiClose;
+        }
+    },
+    watch: {
+        isOpen: setModalIsOpenOnBody
+    },
+    created() {
+        setModalIsOpenOnBody(this.isOpen);
+    },
+    beforeDestroy() {
+        setModalIsOpenOnBody(false);
+    },
+    methods: {
+        handleClose() {
+            this.$emit("change", false);
+        }
+    }
+});
+</script>
+
+<style scoped lang="postcss">
+.modal-background {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    inset: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 25px 0;
+    pointer-events: none;
+    position: fixed;
+    transition: opacity 0.15s linear;
+    z-index: 2;
+
+    &.is-open {
+        opacity: 1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        pointer-events: all;
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+}
+
+.modal {
+    background-clip: padding-box;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.22);
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 530px;
+    overflow: hidden;
+    transform: translateY(-50px);
+    transition: transform 0.3s ease-out;
+    z-index: 3;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+}
+
+.modal-background.is-open .modal {
+    transform: none;
+}
+
+header {
+    align-items: center;
+    background-color: var(--color-admiralty);
+    color: white;
+    display: flex;
+    font-size: 20px;
+    justify-content: space-between;
+    padding: 14px;
+}
+
+.title {
+    padding-inline-start: 15px;
+}
+
+.main {
+    background-color: white;
+}
+
+.close {
+    cursor: pointer;
+}
+
+.content-container {
+    padding: 40px;
+
+    @media (max-width: 415px) {
+        padding: 20px;
+    }
+}
+</style>
