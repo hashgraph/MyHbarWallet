@@ -62,17 +62,39 @@ a {
     background-color: var(--color-white);
     color: var(--color-washed-black);
 
+    @media screen and (prefers-reduced-motion: reduce) {
+        &.tile-block {
+            border-radius: 4px;
+            height: 274px;
+            inset-block-start: 0;
+            margin-block-end: 0;
+            padding-block: 10px 25px;
+            padding-inline: 15px;
+            position: relative;
+            -webkit-transition: inset, background-color 0.3s ease;
+            transition: none;
+            width: 210px;
+
+            &:hover,
+            &:focus {
+                -webkit-box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
+                box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
+                inset-block-start: -10px;
+            }
+        }
+    }
+
     &.tile-block {
-        padding-block: 10px 25px;
-        padding-inline: 15px;
         border-radius: 4px;
         height: 274px;
-        width: 210px;
         inset-block-start: 0;
         margin-block-end: 0;
+        padding-block: 10px 25px;
+        padding-inline: 15px;
         position: relative;
         -webkit-transition: inset, background-color 0.3s ease;
         transition: inset, background-color 0.3s ease;
+        width: 210px;
 
         &:hover,
         &:focus {
