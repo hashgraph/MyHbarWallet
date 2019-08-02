@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="route">
+    <router-link v-if="route" :to="route">
         <div
             :class="backColor"
             class="tile-block"
@@ -24,7 +24,8 @@ export default Vue.extend({
     },
     data: function() {
         return {
-            hovered: false
+            hovered: false,
+            showModal: false
         };
     },
     computed: {
@@ -41,6 +42,10 @@ a {
     font-size: 14px;
     font-weight: 400;
     text-decoration: none;
+
+    &:focus {
+        outline: none;
+    }
 }
 
 .blue {
@@ -58,9 +63,37 @@ a {
     color: var(--color-washed-black);
 
     &.tile-block {
-        border-radius: 5px;
         padding-block: 10px 25px;
         padding-inline: 15px;
+        border-radius: 4px;
+        height: 274px;
+        width: 210px;
+        inset-block-start: 0;
+        margin-block-end: 0;
+        position: relative;
+        -webkit-transition: inset, background-color 0.3s ease;
+        transition: inset, background-color 0.3s ease;
+
+        &:hover,
+        &:focus {
+            -webkit-box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
+            box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
+            inset-block-start: -10px;
+        }
+    }
+}
+
+.toGreen {
+    &:hover,
+    &:focus {
+        background-color: var(--color-melbourne-cup);
+    }
+}
+
+.toRed {
+    &:hover,
+    &:focus {
+        background-color: var(--color-sunkist-coral);
     }
 }
 
@@ -85,53 +118,6 @@ a {
         }
     }
 
-    .none.tile-block {
-        border-radius: 4px;
-        height: 100%;
-        inset-block-start: 0;
-        margin-block-end: 0;
-        padding: 30px 40px;
-        position: relative;
-        -webkit-transition: inset 0.3s ease;
-        transition: inset 0.3s ease;
-
-        &:hover,
-        &:focus {
-            -webkit-box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
-            box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
-            color: var(--color-white);
-            inset-block-start: -10px;
-        }
-    }
-
-    .toGreen {
-        -webkit-transition: inset 0.3s ease;
-        transition: inset 0.3s ease;
-
-        &:hover,
-        &:focus {
-            background-color: var(--color-melbourne-cup);
-
-            & p {
-                color: var(--color-white);
-            }
-        }
-    }
-
-    .toBlue {
-        -webkit-transition: inset 0.3s ease;
-        transition: inset 0.3s ease;
-
-        &:hover,
-        &:focus {
-            background-color: var(--color-byzantine-night-blue);
-
-            & p {
-                color: var(--color-white);
-            }
-        }
-    }
-
     @media screen and (prefers-reduced-motion: reduce) {
         .none.tile-block {
             border-radius: 4px;
@@ -140,16 +126,8 @@ a {
             margin-block-end: 0;
             padding: 30px 40px;
             position: relative;
-            -webkit-transition: inset 0.3s ease;
+            -webkit-transition: none;
             transition: none;
-
-            &:hover,
-            &:focus {
-                -webkit-box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
-                box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
-                color: var(--color-white);
-                inset-block-start: -10px;
-            }
         }
     }
 

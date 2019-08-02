@@ -1,6 +1,7 @@
 <template>
     <div class="tile-grid">
-        <HoverTile back-color="none toGreen">
+        <!--Can use v-for to get tiles refer to RadioButtonGroup -->
+        <HoverTile back-color="none toGreen" get-modal="">
             <template v-slot="{ hovered }">
                 <HoverTileContent
                     title="MEWconnect"
@@ -10,7 +11,7 @@
                 />
             </template>
         </HoverTile>
-        <HoverTile back-color="none toBlue">
+        <HoverTile back-color="none toGreen">
             <template v-slot="{ hovered }">
                 <HoverTileContent
                     title="Hardware"
@@ -20,7 +21,7 @@
                 />
             </template>
         </HoverTile>
-        <HoverTile back-color="none">
+        <HoverTile back-color="none toGreen">
             <template v-slot="{ hovered }">
                 <HoverTileContent
                     title="MetaMask"
@@ -30,7 +31,7 @@
                 />
             </template>
         </HoverTile>
-        <HoverTile back-color="none">
+        <HoverTile back-color="none toRed">
             <template v-slot="{ hovered }">
                 <HoverTileContent
                     title="Software"
@@ -41,6 +42,15 @@
                 />
             </template>
         </HoverTile>
+        <!--remove example modal-->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Some text in the Modal..</p>
+            </div>
+        </div>
+        <!--remove example modal-->
     </div>
 </template>
 
@@ -83,8 +93,8 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .tile-grid {
-    display: block;
-    grid-column-gap: 30px;
+    display: grid;
+    grid-column-gap: 20px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     max-width: 900px;
     padding-block: 50px; /* remove */
@@ -93,8 +103,6 @@ export default Vue.extend({
 
 @media (min-width: 1025px) {
     .tile-grid {
-        display: grid;
-        grid-column-gap: 30px;
     }
 }
 </style>

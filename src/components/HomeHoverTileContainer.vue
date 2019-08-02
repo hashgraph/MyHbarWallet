@@ -7,6 +7,7 @@
                 action-label="Get Started"
                 :tile-icon="faWallet"
             />
+            <!--Material Design: wallet-outline -->
         </HoverTile>
         <HoverTile back-color="green" route="/access-account">
             <HomeHoverTileContent
@@ -15,6 +16,7 @@
                 action-label="Access Now"
                 :tile-icon="faUnlockAlt"
             />
+            <!--Material Design: lock-open-outline -->
         </HoverTile>
     </div>
 </template>

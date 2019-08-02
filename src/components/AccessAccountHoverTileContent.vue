@@ -5,18 +5,14 @@
         </div>
         <div class="tile-content">
             <h3 :class="classObject">{{ title }}</h3>
-            <p>{{ content }}</p>
-            <p class="small-note">{{ smallNote }}</p>
+            <p :class="classObject">{{ content }}</p>
+            <p :class="classObject" class="small-note">{{ smallNote }}</p>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-
-interface Data {
-    hoveredd: boolean;
-}
 
 export default Vue.extend({
     props: {
@@ -26,21 +22,11 @@ export default Vue.extend({
         imgPath: { type: String, default: null },
         hovered: { type: Boolean }
     },
-    data() {
-        return {
-            hoveredd: false
-        };
-    },
     computed: {
         classObject() {
             return {
-                "is-hovered": this.hoveredd
+                "is-hovered": this.hovered
             };
-        }
-    },
-    methods: {
-        handleHover() {
-            this.hoveredd = hovered;
         }
     }
 });
@@ -51,26 +37,42 @@ p {
     color: var(--color-china-blue);
     line-height: 1.25rem;
     margin-block: 0;
+    -webkit-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+
+    &.is-hovered {
+        color: var(--color-white);
+    }
 }
 
 .small-note {
     color: var(--color-sunkist-coral);
     font-size: 11px;
     margin-block: 5px 0;
+    -webkit-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+
+    &.is-hovered {
+        color: var(--color-white);
+    }
 }
 
 h3 {
-    font-size: 20px; /* remove */
-    font-weight: 500; /* remove */
+    font-size: 20px;
+    font-weight: 500;
 
-    /* line-height: 1.2; remove */
-    margin-block: 0 10px;
-    text-transform: none; /* remove */
+    margin-block: 0 5px;
+    -webkit-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+
+    &.is-hovered {
+        color: var(--color-white);
+    }
 }
 
 .tile-image {
     height: 135px;
-    margin-block-end: 5px;
+    margin-block-end: 10px;
     padding-block: 44px;
 }
 
@@ -82,10 +84,6 @@ h3 {
 /* Largest */
 
 @media (min-width: 1025px) {
-    p {
-        margin-block-end: 20px;
-    }
-
     .action-label {
         display: inline-block;
         font-size: 15px;
@@ -104,11 +102,6 @@ h3 {
 @media (min-width: 415px) and (max-width: 1024px) {
     .tile-icon {
         padding-inline-end: 40px;
-    }
-
-    h2 {
-        font-size: 24px;
-        font-weight: 500;
     }
 
     p {
@@ -141,14 +134,6 @@ h3 {
 @media (max-width: 414px) {
     .tile-content {
         display: inline;
-        text-align: center;
-    }
-
-    h2 {
-        display: block;
-        font-size: 14px;
-        font-weight: 500;
-        margin-block: 10px 10px;
         text-align: center;
     }
 

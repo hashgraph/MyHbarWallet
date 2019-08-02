@@ -2,6 +2,7 @@
     <div class="home">
         <HHoverTileContainer />
         <AAHoverTileContainer />
+        <RadioButtonGroup />
     </div>
 </template>
 
@@ -9,12 +10,14 @@
 import Vue from "vue";
 import HHoverTileContainer from "../components/HomeHoverTileContainer.vue";
 import AAHoverTileContainer from "../components/AccessAccountHoverTileContainer.vue";
+import RadioButtonGroup from "../components/AccessAccountHoverTileContainer.vue";
 
 export default Vue.extend({
     name: "Home",
     components: {
         HHoverTileContainer,
-        AAHoverTileContainer
+        AAHoverTileContainer,
+        RadioButtonGroup
     }
 });
 </script>
