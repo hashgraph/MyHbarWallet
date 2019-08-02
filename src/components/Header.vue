@@ -10,6 +10,7 @@
                 <a href="/#about" class="link">About</a>
                 <a href="/#faqs" class="link">FAQs</a>
             </div>
+            <HamburgerButton @toggle="toggle"></HamburgerButton>
             <div v-if="scrolled" class="button-container">
                 <!-- TODO: Once the respective views exists, route to them -->
                 <router-link class="btn" to="">
@@ -20,27 +21,36 @@
                 </router-link>
             </div>
         </header>
+        <HamburgerMenu :is-open="isHamburgerOpen" />
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Button from "../components/Button.vue";
+import HamburgerMenu from "./HamburgerMenu.vue";
+import HamburgerButton from "./HamburgerButton.vue";
 
 export default Vue.extend({
     name: "Header",
     components: {
-        Button
+        Button,
+        HamburgerMenu,
+        HamburgerButton
     },
     data() {
         return {
-            scrolled: false
+            scrolled: false,
+            isHamburgerOpen: false
         };
     },
     methods: {
         onScroll() {
             // FIXME: 150 should be in a common file somewhere
             this.scrolled = window.scrollY > 150;
+        },
+        toggle() {
+            this.isHamburgerOpen = !this.isHamburgerOpen;
         }
     }
 });
@@ -139,5 +149,12 @@ header {
 
 .spacer {
     flex-grow: 1;
+}
+
+@media screen and (max-width: 1025px) {
+    .links {
+        transition: none;
+        visibility: hidden;
+    }
 }
 </style>
