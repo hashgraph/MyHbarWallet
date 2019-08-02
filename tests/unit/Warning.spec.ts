@@ -9,6 +9,6 @@ describe("Warning.vue", () => {
         });
 
         expect(wrapper.isVisible()).toBe(true);
-        expect(wrapper.text().includes("NOT RECOMMENDED")).toBe(true);
+        expect(wrapper.text()).toMatch(title);
     });
 });
