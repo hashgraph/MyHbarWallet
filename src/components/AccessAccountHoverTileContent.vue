@@ -33,20 +33,6 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-@media screen and (prefers-reduced-motion: reduce) {
-    p {
-        color: var(--color-china-blue);
-        line-height: 1.25rem;
-        margin-block: 0;
-        -webkit-transition: color 0.3s ease;
-        transition: none;
-
-        &.is-hovered {
-            color: var(--color-white);
-        }
-    }
-}
-
 p {
     color: var(--color-china-blue);
     line-height: 1.25rem;
@@ -56,20 +42,6 @@ p {
 
     &.is-hovered {
         color: var(--color-white);
-    }
-}
-
-@media screen and (prefers-reduced-motion: reduce) {
-    .small-note {
-        color: var(--color-sunkist-coral);
-        font-size: 11px;
-        margin-block: 5px 0;
-        -webkit-transition: color 0.3s ease;
-        transition: none;
-
-        &.is-hovered {
-            color: var(--color-white);
-        }
     }
 }
 
@@ -85,24 +57,10 @@ p {
     }
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
-    h3 {
-        font-size: 20px;
-        font-weight: 500;
-        margin-block: 0 5px;
-        -webkit-transition: color 0.3s ease;
-        transition: none;
-
-        &.is-hovered {
-            color: var(--color-white);
-        }
-    }
-}
-
 h3 {
     font-size: 20px;
     font-weight: 500;
-    margin-block: 0px 5px;
+    margin-block: 0 5px;
     -webkit-transition: color 0.3s ease;
     transition: color 0.3s ease;
 
@@ -120,6 +78,48 @@ h3 {
 .img {
     font-size: 90px;
     margin-block-end: 5px;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    p {
+        color: var(--color-china-blue);
+        line-height: 1.25rem;
+        margin-block: 0;
+        -webkit-transition: color 0.3s ease;
+        transition: none;
+
+        &.is-hovered {
+            color: var(--color-white);
+        }
+    }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    .small-note {
+        color: var(--color-sunkist-coral);
+        font-size: 11px;
+        margin-block: 5px 0;
+        -webkit-transition: color 0.3s ease;
+        transition: none;
+
+        &.is-hovered {
+            color: var(--color-white);
+        }
+    }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    h3 {
+        font-size: 20px;
+        font-weight: 500;
+        margin-block: 0 5px;
+        -webkit-transition: color 0.3s ease;
+        transition: none;
+
+        &.is-hovered {
+            color: var(--color-white);
+        }
+    }
 }
 
 /* Largest */

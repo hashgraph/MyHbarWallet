@@ -50,7 +50,7 @@ export default Vue.extend({
     display: flex;
     justify-content: center;
     padding: 30px 40px;
-    padding-bottom: 40px;
+    padding-block-end: 40px;
     text-decoration: none;
 
     @media (min-width: 1025px) {

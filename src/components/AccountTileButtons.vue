@@ -57,13 +57,14 @@ export default Vue.extend({
 .tile-grid {
     display: grid;
     grid-column-gap: 20px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     max-width: 900px;
-    padding-block: 50px; /* remove */
-    text-align: center;
-    /* todo: (mobile) Access-Account page should not have a top level 
+
+    /* todo: (mobile) Access-Account page should not have a top level
     align-items: center; for this overflow to work correctly */
     overflow: auto;
+    padding-block: 50px; /* remove */
+    text-align: center;
 }
 
 .account-tile-button:nth-child(4) {

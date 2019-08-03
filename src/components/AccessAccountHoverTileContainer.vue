@@ -100,9 +100,4 @@ export default Vue.extend({
     padding-block: 50px; /* remove */
     text-align: center;
 }
-
-@media (min-width: 1025px) {
-    .tile-grid {
-    }
-}
 </style>

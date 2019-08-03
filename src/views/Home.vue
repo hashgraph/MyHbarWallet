@@ -37,17 +37,17 @@ export default Vue.extend({
     max-width: 1024px;
 
     @media (min-width: 1025px) {
-        /* fixme: remove 80px when there is more content*/
+        /* fixme: remove 80px when there is more content */
         padding: 80px 20px;
     }
 
     @media (max-width: 1024px) and (min-width: 415px) {
-        /* fixme: remove 80px when there is more content*/
+        /* fixme: remove 80px when there is more content */
         padding: 80px 25px;
     }
 
     @media (max-width: 1024px) {
-        /* fixme: remove 80px when there is more content*/
+        /* fixme: remove 80px when there is more content */
         padding: 80px 25px;
     }
 }

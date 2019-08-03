@@ -27,13 +27,21 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .account-tile-button {
-    height: 274px;
-    width: 210px;
+    background-color: var(--color-white);
     border-radius: 4px;
+    height: 274px;
     padding-block: 10px 25px;
     padding-inline: 15px;
-    background-color: var(--color-white);
     transition: background-color, transform 0.3s ease;
+    width: 210px;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        & .title,
+        & .content,
+        & .note {
+            transition: none;
+        }
+    }
 
     & .title,
     & .content,
@@ -71,8 +79,8 @@ export default Vue.extend({
     color: var(--color-washed-black);
     font-size: 20px;
     font-weight: 500;
-    padding-block-start: 5px;
     padding-block-end: 5px;
+    padding-block-start: 5px;
 }
 
 .content {
