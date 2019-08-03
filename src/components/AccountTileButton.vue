@@ -1,0 +1,87 @@
+<template>
+    <div class="account-tile-button">
+        <!--fixme: can remove div: tile-image if image sizes are normalized-->
+        <div class="tile-image">
+            <img :src="image" />
+            <div class="tile-content">
+                <div class="title">{{ title }}</div>
+                <div class="content">{{ content }}</div>
+                <div class="note">{{ note }}</div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import Vue from "vue";
+
+export default Vue.extend({
+    props: {
+        title: { type: String, required: true },
+        content: { type: String, required: false, default: "" },
+        note: { type: String, required: false, default: "" },
+        image: { type: String, default: null }
+    }
+});
+</script>
+
+<style lang="postcss" scoped>
+.account-tile-button {
+    height: 274px;
+    width: 210px;
+    border-radius: 4px;
+    padding-block: 10px 25px;
+    padding-inline: 15px;
+    background-color: var(--color-white);
+    transition: background-color, transform 0.3s ease;
+
+    & .title,
+    & .content,
+    & .note {
+        transition: color 0.3s ease;
+    }
+
+    &:hover,
+    &:focus {
+        background-color: var(--color-melbourne-cup);
+        box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
+        transform: translateY(-10px);
+
+        & .title,
+        & .content,
+        & .note {
+            color: var(--color-white);
+        }
+    }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    .account-tile-button {
+        transition: none;
+    }
+}
+
+.tile-image {
+    height: 135px;
+    margin-block-end: 10px;
+    padding-block: 44px;
+}
+
+.title {
+    color: var(--color-washed-black);
+    font-size: 20px;
+    font-weight: 500;
+    padding-block-start: 5px;
+    padding-block-end: 5px;
+}
+
+.content {
+    color: var(--color-china-blue);
+    font-size: 14px;
+}
+
+.note {
+    color: var(--color-sunkist-coral);
+    font-size: 11px;
+}
+</style>

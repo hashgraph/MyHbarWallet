@@ -2,6 +2,7 @@
     <div class="home">
         <div class="top">
             <HomeTileButtons />
+            <AccountTileButtons />
         </div>
     </div>
 </template>
@@ -9,11 +10,13 @@
 <script lang="ts">
 import Vue from "vue";
 import HomeTileButtons from "../components/HomeTileButtons.vue";
+import AccountTileButtons from "../components/AccountTileButtons.vue";
 
 export default Vue.extend({
     name: "Home",
     components: {
-        HomeTileButtons
+        HomeTileButtons,
+        AccountTileButtons
     },
     computed: {}
 });
