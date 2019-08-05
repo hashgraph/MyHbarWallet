@@ -1,8 +1,10 @@
 <template>
     <div class="accordion">
         <div class="title" @click="toggle">
-            <h3>{{ title }}</h3>
-            <transition name="flip" mode="out-in" enter-active-class="spin">
+            <div class="title-text">
+                <slot name="title"></slot>
+            </div>
+            <transition mode="out-in" enter-active-class="spin">
                 <FontAwesomeIcon
                     :key="expanded"
                     size="lg"
@@ -11,11 +13,10 @@
                 />
             </transition>
         </div>
-        <transition name="fade">
+        <transition name="component-fade" :duration="250">
             <div v-if="expanded" :key="expanded" class="content">
-                <div>{{ content }}</div>
-                <div v-if="link !== ''">
-                    For more information, click <a :href="link">here</a>.
+                <div class="content-text">
+                    <slot name="content"></slot>
                 </div>
             </div>
         </transition>
@@ -25,17 +26,15 @@
 <script lang="ts">
 import Vue from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import {
+    faChevronCircleUp,
+    faChevronCircleDown
+} from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
     name: "Accordion",
     components: {
         FontAwesomeIcon
-    },
-    props: {
-        title: { required: true, type: String },
-        content: { required: true, type: String },
-        link: { required: false, type: String, default: "" }
     },
     data: function() {
         return {
@@ -45,9 +44,9 @@ export default Vue.extend({
     computed: {
         icon() {
             if (this.expanded) {
-                return faMinus;
+                return faChevronCircleDown;
             } else {
-                return faPlus;
+                return faChevronCircleUp;
             }
         }
     },
@@ -65,23 +64,30 @@ a {
     text-decoration: none;
 }
 
+.icon {
+    color: var(--color-melbourne-cup);
+}
+
 .accordion {
+    border-bottom: 1px solid var(--color-jupiter);
     color: var(--color-black);
     padding: 30px 10px;
 }
 
 .title {
     align-items: center;
+    cursor: pointer;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     text-align: start;
+    user-select: none;
+}
 
-    & h3 {
-        font-size: 18px;
-        font-weight: 500;
-        padding-inline-end: 45px;
-    }
+.title-text {
+    font-size: 18px;
+    font-weight: 500;
+    padding-inline-end: 45px;
 }
 
 .content {
@@ -89,20 +95,39 @@ a {
     font-weight: 400;
 }
 
+.content-text {
+    max-height: 500px;
+    padding-block-start: 20px;
+}
+
 @keyframes rotate {
     from {
-        transform: rotate(0);
+        transform: rotate(180deg);
     }
 
     to {
-        transform: rotate(180deg);
+        transform: rotate(0);
     }
+}
+
+.component-fade-enter-active,
+.component-fade-leave-active {
+    transition: opacity 0.5s ease;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+}
+
+.component-fade-enter,
+.component-fade-leave-to {
+    opacity: 0;
 }
 
 .spin {
     animation: rotate;
-    animation-duration: 0.1s;
-    animation-iteration-count: infinite;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
     animation-timing-function: linear;
 
     @media screen and (prefers-reduced-motion: reduce) {

@@ -1,19 +1,23 @@
 <template>
-    <div class="home"></div>
+    <div class="home">
+        <FAQs />
+    </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import FAQs from "@/components/FAQs.vue";
 
 export default Vue.extend({
     name: "Home",
-    components: {}
+    components: {
+        FAQs
+    }
 });
 </script>
 
 <style lang="postcss" scoped>
 .home {
-    align-items: center;
     display: flex;
     flex-direction: column;
 }
