@@ -6,8 +6,8 @@
                     <div class="title">
                         <div class="title-text">FAQs</div>
                         <div class="subtitle-text">
-                            Haven't found what you're looking for?
-                            <a href="kb.myhederawallet.com">See More...</a>
+                            Bacon ipsum dolor amet jerky venison short ribs
+                            tri-tip porchetta
                         </div>
                     </div>
                     <CustomerSupportLink />
@@ -20,9 +20,7 @@
                         <template v-slot:content>
                             MyHederaWallet (MHW) offers three ways to create a
                             new H wallet. These are via Keystore file,
-                            Passphrase, or Private Key. For more information,
-                            click
-                            <a href="#">here</a>.
+                            Passphrase, or Private Key.
                         </template>
                     </Accordion>
                     <Accordion>
@@ -34,8 +32,7 @@
                             hardware wallets, such as the Ledger Nano S or
                             Trezor, and third-party wallets like MetaMask. We
                             are also open for anyone to use their H wallets with
-                            the appropriate information. Read more
-                            <a href="#">here</a>.
+                            the appropriate information.
                         </template>
                     </Accordion>
                     <Accordion>
@@ -47,8 +44,7 @@
                             transaction without additional charges. Using the
                             Hedera Hashgraph requires a transaction fee paid in
                             Hbar, so we recommend having at least 1 Hbar to
-                            cover around 2 - 3 transactions. Read more
-                            <a href="#">here</a>.
+                            cover around 2 - 3 transactions.
                         </template>
                     </Accordion>
                     <Accordion>
@@ -60,8 +56,7 @@
                             passwords / private keys. We always suggest writing
                             down private keys and passwords on physical media
                             for safekeeping. Maybe you saved it on your
-                            computer! For ideas on where to begin, read more
-                            <a href="#">here</a>.
+                            computer!
                         </template>
                     </Accordion>
                 </div>

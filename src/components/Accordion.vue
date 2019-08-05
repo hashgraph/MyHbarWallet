@@ -1,35 +1,23 @@
 <template>
-    <div class="accordion">
+    <div class="accordion" :class="{ expanded }">
         <div class="title" @click="toggle">
             <div class="title-text">
                 <slot name="title"></slot>
             </div>
-            <transition mode="out-in" enter-active-class="spin">
-                <FontAwesomeIcon
-                    :key="expanded"
-                    size="lg"
-                    class="icon"
-                    :icon="icon"
-                />
-            </transition>
+            <FontAwesomeIcon size="lg" class="icon" :icon="icon" />
         </div>
-        <transition name="component-fade" :duration="250">
-            <div v-if="expanded" :key="expanded" class="content">
-                <div class="content-text">
-                    <slot name="content"></slot>
-                </div>
+        <div class="content">
+            <div class="content-text">
+                <slot name="content"></slot>
             </div>
-        </transition>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import {
-    faChevronCircleUp,
-    faChevronCircleDown
-} from "@fortawesome/free-solid-svg-icons";
+import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
     name: "Accordion",
@@ -43,11 +31,7 @@ export default Vue.extend({
     },
     computed: {
         icon() {
-            if (this.expanded) {
-                return faChevronCircleDown;
-            } else {
-                return faChevronCircleUp;
-            }
+            return faAngleUp;
         }
     },
     methods: {
@@ -66,6 +50,15 @@ a {
 
 .icon {
     color: var(--color-melbourne-cup);
+    transition: transform 0.3s linear;
+
+    @media (prefers-reduced-motion) {
+        transition: none;
+    }
+}
+
+.expanded .icon {
+    transform: rotate(-180deg);
 }
 
 .accordion {
@@ -93,45 +86,23 @@ a {
 .content {
     font-size: 14px;
     font-weight: 400;
-}
+    height: auto;
+    max-height: 50em;
+    overflow: hidden;
 
-.content-text {
-    max-height: 500px;
-    padding-block-start: 20px;
-}
+    /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+    transition: max-height 0.3s linear;
 
-@keyframes rotate {
-    from {
-        transform: rotate(180deg);
-    }
-
-    to {
-        transform: rotate(0);
-    }
-}
-
-.component-fade-enter-active,
-.component-fade-leave-active {
-    transition: opacity 0.5s ease;
-
-    @media screen and (prefers-reduced-motion: reduce) {
+    @media (prefers-reduced-motion) {
         transition: none;
     }
 }
 
-.component-fade-enter,
-.component-fade-leave-to {
-    opacity: 0;
+.accordion:not(.expanded) .content {
+    max-height: 0;
 }
 
-.spin {
-    animation: rotate;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-timing-function: linear;
-
-    @media screen and (prefers-reduced-motion: reduce) {
-        animation: none;
-    }
+.content-text {
+    padding-block-start: 20px;
 }
 </style>
