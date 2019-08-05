@@ -15,9 +15,9 @@
         <HomeTileButton
             title="Access My Account"
             content="Send or swap your ETH and tokens, purchase ENS domains, interact with smart contracts, and more! This is where the magic happens."
-            action="Access Now"
             :icon="faUnlockAlt"
             route="access-account"
+            action="Access Now"
         />
     </div>
 </template>
@@ -25,13 +25,11 @@
 <script lang="ts">
 import Vue from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import HoverTile from "../components/HoverTile.vue";
 import HomeTileButton from "../components/HomeTileButton.vue";
 import { faWallet, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
     components: {
-        HoverTile,
         HomeTileButton
     },
     computed: {

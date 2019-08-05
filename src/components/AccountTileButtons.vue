@@ -1,5 +1,6 @@
 <template>
     <div class="tile-grid">
+        <!-- Add @click="openModal" to AccountTileButton where openModal opens your modal -->
         <AccountTileButton
             title="MEWconnect"
             content="Lorem ipsum dolor sit amet, consectetur"
@@ -48,6 +49,11 @@ export default Vue.extend({
         },
         software() {
             return software;
+        }
+    },
+    methods: {
+        hi() {
+            console.log("hi");
         }
     }
 });
