@@ -73,6 +73,7 @@ a {
     flex-flow: row nowrap;
     justify-content: space-between;
     text-align: start;
+    user-select: none;
 }
 
 .title-text {
