@@ -51,8 +51,25 @@ export default Vue.extend({
     height: 274px;
     padding-block: 10px 25px;
     padding-inline: 15px;
-    transition: transform 0.3s ease;
+    /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+    transition: background-color, transform 0.3s ease;
     width: 210px;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        & .title,
+        & .content,
+        & .note {
+            /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+            transition: none;
+        }
+    }
+
+    & .title,
+    & .content,
+    & .note {
+        /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+        transition: color 0.3s ease;
+    }
 
     &:hover,
     &:focus {
