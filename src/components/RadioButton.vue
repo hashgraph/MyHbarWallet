@@ -10,18 +10,18 @@
             @change="handleChange"
         />
         <span class="label">{{ label }}</span>
-        <FontAwesomeIcon v-if="selected" class="check" :icon="faCheckCircle" />
+        <MaterialDesignIcon v-if="selected" class="check" :icon="check" />
     </label>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import { mdiCheckCircle } from "@mdi/js";
 
 export default Vue.extend({
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     model: {
         prop: "checked",
@@ -35,8 +35,8 @@ export default Vue.extend({
         checked: { type: String, required: true }
     },
     computed: {
-        faCheckCircle() {
-            return faCheckCircle;
+        check() {
+            return mdiCheckCircle;
         },
         selected() {
             return this.checked === this.value;

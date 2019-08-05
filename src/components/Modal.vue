@@ -9,16 +9,11 @@
         <div class="modal" @click.stop="">
             <header>
                 <span class="title">{{ title }}</span>
-                <!-- TODO: Make this a component like FontAwesomeIcon -->
-                <svg
+                <MaterialDesignIcon
                     class="close"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
+                    :icon="closeIcon"
                     @click="handleClose"
-                >
-                    <path :d="mdiClose"></path>
-                </svg>
+                />
             </header>
             <div class="main">
                 <slot name="banner"></slot>
@@ -33,6 +28,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mdiClose } from "@mdi/js";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 function setModalIsOpenOnBody(isOpen: boolean) {
     document.body.classList.toggle("modal-is-open", isOpen);
@@ -42,6 +38,9 @@ function setModalIsOpenOnBody(isOpen: boolean) {
 // the v-model directive to allow the modal to close itself (click out and close button).
 export default Vue.extend({
     name: "Modal",
+    components: {
+        MaterialDesignIcon
+    },
     model: {
         prop: "isOpen",
         event: "change"
@@ -51,7 +50,7 @@ export default Vue.extend({
         title: { type: String, required: true }
     },
     computed: {
-        mdiClose() {
+        closeIcon() {
             return mdiClose;
         }
     },

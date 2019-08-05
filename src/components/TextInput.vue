@@ -10,25 +10,24 @@
                 @input="handleInput"
             />
         </label>
-        <FontAwesomeIcon
+        <MaterialDesignIcon
             v-if="obscure"
             class="eye"
             :class="{ 'is-open': isEyeOpen }"
-            :icon="faEye"
+            :icon="eye"
             @click="handleClickEye"
         />
     </div>
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { IconDefinition } from "@fortawesome/fontawesome-common-types";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import Vue from "vue";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import { mdiEye } from "@mdi/js";
 
 export default Vue.extend({
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     props: {
         placeholder: { type: String, default: "" },
@@ -42,8 +41,6 @@ export default Vue.extend({
     },
     data() {
         return {
-            faEye,
-
             // If the eye is open to show the obscured text anyway
             isEyeOpen: false
         };
@@ -53,7 +50,9 @@ export default Vue.extend({
             if (this.obscure && !this.isEyeOpen) return "password";
             return "text";
         },
-
+        eye() {
+            return mdiEye;
+        },
         classObject() {
             return {
                 "is-compact": this.compact

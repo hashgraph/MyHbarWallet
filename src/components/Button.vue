@@ -7,10 +7,15 @@
         }"
         v-on="this.$listeners"
     >
-        <FontAwesomeIcon v-if="busy" class="spinner" :icon="faSpinner" spin />
+        <MaterialDesignIcon
+            v-if="busy"
+            class="spinner"
+            :icon="mdiSpinner"
+            spin
+        />
         <span v-else>{{ label }}</span>
 
-        <FontAwesomeIcon
+        <MaterialDesignIcon
             v-if="trailingIcon"
             class="icon"
             :icon="trailingIcon"
@@ -19,14 +24,13 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { IconDefinition } from "@fortawesome/fontawesome-common-types";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Vue from "vue";
+import { mdiLoading } from "@mdi/js";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 export default Vue.extend({
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     props: {
         outline: { type: Boolean },
@@ -34,13 +38,13 @@ export default Vue.extend({
         label: { type: String, required: true },
         busy: { type: Boolean },
         trailingIcon: {
-            type: Object as PropType<IconDefinition>,
+            type: String,
             default: null
         }
     },
     computed: {
-        faSpinner() {
-            return faSpinner;
+        mdiSpinner() {
+            return mdiLoading;
         }
     }
 });
@@ -97,10 +101,6 @@ button {
 .compact {
     min-width: initial;
     padding: 10px 20px;
-}
-
-.spinner {
-    padding: 1px 0;
 }
 
 .icon {
