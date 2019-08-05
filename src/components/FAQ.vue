@@ -69,7 +69,7 @@ import Vue, { PropOptions } from "vue";
 import Accordion from "@/components/Accordion.vue";
 import CustomerSupportLink from "@/components/CustomerSupportLink.vue";
 
-export default Vue.extend<{}, {}, {}, Props>({
+export default Vue.extend({
     name: "FAQ",
     components: {
         Accordion,
