@@ -65,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from "vue";
+import Vue from "vue";
 import Accordion from "@/components/Accordion.vue";
 import CustomerSupportLink from "@/components/CustomerSupportLink.vue";
 

@@ -1,8 +1,10 @@
 <template>
     <div class="accordion">
         <div class="title" @click="toggle">
-            <slot class="title-text" name="title"></slot>
-            <transition mode="out-in" name="flip" enter-active-class="spin">
+            <div class="title-text">
+                <slot name="title"></slot>
+            </div>
+            <transition mode="out-in" enter-active-class="spin">
                 <FontAwesomeIcon
                     :key="expanded"
                     size="lg"
@@ -11,7 +13,7 @@
                 />
             </transition>
         </div>
-        <transition name="fade">
+        <transition mode="out-in" name="component-fade">
             <div v-if="expanded" :key="expanded" class="content">
                 <div class="content-text">
                     <slot name="content"></slot>
