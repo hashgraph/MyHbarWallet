@@ -35,7 +35,10 @@ module.exports = {
         "plugin/declaration-block-no-ignored-properties": true,
 
         // https://github.com/kristerkari/stylelint-high-performance-animation
-        "plugin/no-low-performance-animation-properties": true,
+        "plugin/no-low-performance-animation-properties": [
+            true,
+            { severity: "warning" }
+        ],
 
         // Disallows colors that are suspiciously close to being identical
         // https://github.com/ierhyna/stylelint-no-indistinguishable-colors
