@@ -2,6 +2,7 @@
     <div id="app">
         <Header />
         <router-view class="main" />
+        <FAQ />
         <Footer />
     </div>
 </template>
@@ -9,12 +10,14 @@
 <script lang="ts">
 import Vue from "vue";
 import Header from "@/components/Header.vue";
+import FAQ from "@/components/FAQ.vue";
 import Footer from "@/components/Footer.vue";
 
 export default Vue.extend({
     name: "App",
     components: {
         Header,
+        FAQ,
         Footer
     }
 });

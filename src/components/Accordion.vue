@@ -1,8 +1,8 @@
 <template>
     <div class="accordion">
         <div class="title" @click="toggle">
-            <h3>{{ title }}</h3>
-            <transition name="flip" mode="out-in" enter-active-class="spin">
+            <slot class="title-text" name="title"></slot>
+            <transition mode="out-in" name="flip" enter-active-class="spin">
                 <FontAwesomeIcon
                     :key="expanded"
                     size="lg"
@@ -13,9 +13,8 @@
         </div>
         <transition name="fade">
             <div v-if="expanded" :key="expanded" class="content">
-                <div>{{ content }}</div>
-                <div v-if="link !== ''">
-                    For more information, click <a :href="link">here</a>.
+                <div class="content-text">
+                    <slot name="content"></slot>
                 </div>
             </div>
         </transition>
@@ -25,17 +24,12 @@
 <script lang="ts">
 import Vue from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
     name: "Accordion",
     components: {
         FontAwesomeIcon
-    },
-    props: {
-        title: { required: true, type: String },
-        content: { required: true, type: String },
-        link: { required: false, type: String, default: "" }
     },
     data: function() {
         return {
@@ -45,9 +39,9 @@ export default Vue.extend({
     computed: {
         icon() {
             if (this.expanded) {
-                return faMinus;
+                return faChevronDown;
             } else {
-                return faPlus;
+                return faChevronUp;
             }
         }
     },
@@ -66,6 +60,7 @@ a {
 }
 
 .accordion {
+    border-bottom: 1px solid var(--color-jupiter);
     color: var(--color-black);
     padding: 30px 10px;
 }
@@ -76,12 +71,12 @@ a {
     flex-flow: row nowrap;
     justify-content: space-between;
     text-align: start;
+}
 
-    & h3 {
-        font-size: 18px;
-        font-weight: 500;
-        padding-inline-end: 45px;
-    }
+.title-text {
+    font-size: 18px;
+    font-weight: 500;
+    padding-inline-end: 45px;
 }
 
 .content {
@@ -89,20 +84,24 @@ a {
     font-weight: 400;
 }
 
+.content-text {
+    padding-block-start: 20px;
+}
+
 @keyframes rotate {
     from {
-        transform: rotate(0);
+        transform: rotate(180deg);
     }
 
     to {
-        transform: rotate(180deg);
+        transform: rotate(0);
     }
 }
 
 .spin {
     animation: rotate;
     animation-duration: 0.1s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 1;
     animation-timing-function: linear;
 
     @media screen and (prefers-reduced-motion: reduce) {

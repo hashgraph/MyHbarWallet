@@ -1,22 +1,64 @@
 <template>
-    <div class="faq">
-        <div class="head">
-            <div class="title">
-                <h2>{{ title }}</h2>
-                <h5 v-if="subtitle !== ''">
-                    {{ subtitle }} <a v-if="more !== ''" :href="more">More</a>
-                </h5>
+    <div class="faq-wrapper">
+        <div class="faq">
+            <div class="head">
+                <div class="title">
+                    <div class="title-text">FAQs</div>
+                    <div class="subtitle-text">
+                        Haven't found what you're looking for?
+                        <a href="kb.myhederawallet.com">See More...</a>
+                    </div>
+                </div>
+                <CustomerSupportLink />
             </div>
-            <CustomerSupportLink />
-        </div>
-        <div class="cards">
-            <div v-for="record in records" :key="record.toString()">
-                <Accordion
-                    :title="record.title"
-                    :content="record.content"
-                    :link="record.link"
-                    class="accordion"
-                />
+            <div class="cards">
+                <Accordion>
+                    <template v-slot:title>
+                        How do I create a new account?
+                    </template>
+                    <template v-slot:content>
+                        MyHederaWallet (MHW) offers three ways to create a new H
+                        wallet. These are via Keystore file, Passphrase, or
+                        Private Key. For more information, click
+                        <a href="#">here</a>.
+                    </template>
+                </Accordion>
+                <Accordion>
+                    <template v-slot:title>
+                        Can MHW work with other wallets?
+                    </template>
+                    <template v-slot:content>
+                        MHW supports many different wallet types including
+                        hardware wallets, such as the Ledger Nano S or Trezor,
+                        and third-party wallets like MetaMask. We are also open
+                        for anyone to use their H wallets with the appropriate
+                        information. Read more <a href="#">here</a>.
+                    </template>
+                </Accordion>
+                <Accordion>
+                    <template v-slot:title>
+                        How can I send a transaction?
+                    </template>
+                    <template v-slot:content>
+                        MHW lets anyone with a balance of Hbar send a
+                        transaction without additional charges. Using the Hedera
+                        Hashgraph requires a transaction fee paid in Hbar, so we
+                        recommend having at least 1,000,000 Hbar to cover around
+                        2 - 3 transactions. Read more <a href="#">here</a>.
+                    </template>
+                </Accordion>
+                <Accordion>
+                    <template v-slot:title>
+                        I forgot my passphrase / private key! What can I do?
+                    </template>
+                    <template v-slot:content>
+                        MHW does not offer support for recovery or reset of
+                        passwords / private keys. We always suggest writing down
+                        private keys and passwords on physical media for
+                        safekeeping. Maybe you saved it on your computer! For
+                        ideas on where to begin, read more <a href="#">here</a>.
+                    </template>
+                </Accordion>
             </div>
         </div>
     </div>
@@ -27,38 +69,11 @@ import Vue, { PropOptions } from "vue";
 import Accordion from "@/components/Accordion.vue";
 import CustomerSupportLink from "@/components/CustomerSupportLink.vue";
 
-interface Record {
-    title: string;
-    content: string;
-    link: string;
-}
-
-interface Props {
-    title: string;
-    subtitle: string;
-    more: string;
-    records: Record[];
-}
-
 export default Vue.extend<{}, {}, {}, Props>({
     name: "FAQ",
     components: {
         Accordion,
         CustomerSupportLink
-    },
-    props: {
-        title: { required: true, type: String },
-        subtitle: { required: false, type: String, default: "" },
-        more: { required: false, type: String, default: "" },
-        records: {
-            type: Array,
-            required: true
-        } as PropOptions<Record[]>
-    },
-    computed: {
-        imageBell() {
-            return imageBell;
-        }
     }
 });
 </script>
@@ -67,6 +82,15 @@ export default Vue.extend<{}, {}, {}, Props>({
 a {
     color: var(--color-melbourne-cup);
     text-decoration: none;
+}
+
+.faq-wrapper {
+    background-color: var(--color-white);
+    padding: 50px 0;
+}
+
+.faq {
+    padding: 0 30px;
 }
 
 .head {
@@ -82,18 +106,20 @@ a {
 }
 
 .title {
-    & h2 {
-        color: var(--color-black);
-        font-size: 30px;
-        font-weight: 400;
-        margin-block-end: 15px;
-    }
+    margin-block-end: 30px;
+}
 
-    & h5 {
-        color: var(--color-china-blue);
-        font-size: 14px;
-        font-weight: 400;
-    }
+.title-text {
+    color: var(--color-black);
+    font-size: 30px;
+    font-weight: 500;
+    margin-block-end: 15px;
+}
+
+.subtitle-text {
+    color: var(--color-china-blue);
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .cards {
@@ -105,9 +131,5 @@ a {
     @media (max-width: 1025px) {
         margin-block-start: 30px;
     }
-}
-
-.accordion {
-    border-bottom: 1px solid var(--color-jupiter);
 }
 </style>
