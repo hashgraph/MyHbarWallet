@@ -1,5 +1,5 @@
 <template>
-    <div class="CustomerSupportLink">
+    <div class="customer-support-link">
         <img alt="" :src="serviceBell" /> Customer Support
     </div>
 </template>
@@ -18,9 +18,23 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.CustomerSupportLink {
+.customer-support-link {
+    align-items: center;
     color: var(--color-melbourne-cup);
     cursor: pointer;
+    display: flex;
+    font-size: 14px;
     text-align: center;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+}
+
+img {
+    height: 25px;
+    margin-inline-end: 10px;
+    width: 25px;
 }
 </style>
