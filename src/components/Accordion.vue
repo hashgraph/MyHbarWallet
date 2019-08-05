@@ -13,7 +13,7 @@
                 />
             </transition>
         </div>
-        <transition mode="out-in" name="component-fade">
+        <transition name="component-fade" :duration="250">
             <div v-if="expanded" :key="expanded" class="content">
                 <div class="content-text">
                     <slot name="content"></slot>
@@ -26,7 +26,10 @@
 <script lang="ts">
 import Vue from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import {
+    faChevronCircleUp,
+    faChevronCircleDown
+} from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
     name: "Accordion",
@@ -41,9 +44,9 @@ export default Vue.extend({
     computed: {
         icon() {
             if (this.expanded) {
-                return faChevronDown;
+                return faChevronCircleDown;
             } else {
-                return faChevronUp;
+                return faChevronCircleUp;
             }
         }
     },
@@ -61,6 +64,10 @@ a {
     text-decoration: none;
 }
 
+.icon {
+    color: var(--color-melbourne-cup);
+}
+
 .accordion {
     border-bottom: 1px solid var(--color-jupiter);
     color: var(--color-black);
@@ -69,6 +76,7 @@ a {
 
 .title {
     align-items: center;
+    cursor: pointer;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -88,6 +96,7 @@ a {
 }
 
 .content-text {
+    max-height: 500px;
     padding-block-start: 20px;
 }
 
@@ -101,9 +110,23 @@ a {
     }
 }
 
+.component-fade-enter-active,
+.component-fade-leave-active {
+    transition: opacity 0.5s ease;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+}
+
+.component-fade-enter,
+.component-fade-leave-to {
+    opacity: 0;
+}
+
 .spin {
     animation: rotate;
-    animation-duration: 0.1s;
+    animation-duration: 0.5s;
     animation-iteration-count: 1;
     animation-timing-function: linear;
 
