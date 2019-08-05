@@ -86,7 +86,6 @@ module.exports = {
         // https://github.com/YozhikM/stylelint-a11y#rules
         "a11y/content-property-no-static-value": true,
         "a11y/line-height-is-vertical-rhythmed": true,
-        "a11y/no-display-none": true,
         "a11y/no-obsolete-attribute": true,
         "a11y/no-obsolete-element": true,
         "a11y/no-text-align-justify": true
