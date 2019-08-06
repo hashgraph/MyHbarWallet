@@ -19,8 +19,16 @@
             v-model="modalAccessBySoftwareIsOpen"
             @submit="handleAccessBySoftwareSubmit"
         />
+        <input
+            ref="file"
+            type="file"
+            style="display: none;"
+            @change="loadTextFromFile"
+        />
     </div>
 </template>
+
+<!-- TODO:  should go to password modal after getting keystore file -->
 
 <script lang="ts">
 import Vue from "vue";
@@ -70,14 +78,22 @@ export default Vue.extend({
         },
         handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
             this.modalAccessBySoftwareIsOpen = false;
-
-            setTimeout(() => {
-                if (which == AccessSoftwareOption.Phrase) {
-                    this.modalAccessByPhraseState = newAccessByPhraseState(
-                        true
-                    );
-                }
-            }, 125);
+            if (which === "file") {
+                this.$refs.file.click();
+                setTimeout(() => {
+                    console.log("open next modal!");
+                }, 125);
+            } else {
+                setTimeout(() => {
+                    console.log("open next modal!");
+                }, 125);
+            }
+        },
+        loadTextFromFile(ev) {
+            const file = ev.target.files[0];
+            const reader = new FileReader();
+            reader.onload = e => console.log(e.target.result);
+            reader.readAsText(file);
         }
     }
 });
