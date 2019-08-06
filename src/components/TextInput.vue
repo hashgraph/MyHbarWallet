@@ -6,6 +6,7 @@
                 ref="input"
                 :placeholder="placeholder"
                 :type="keyboardType"
+                :tabindex="tabindex"
                 :value="value"
                 @input="handleInput"
             />
@@ -33,6 +34,7 @@ export default Vue.extend({
         placeholder: { type: String, default: "" },
         value: { type: String, default: "" },
         label: { type: String, default: null },
+        tabindex: { type: String, default: null },
 
         compact: Boolean,
 
@@ -60,6 +62,9 @@ export default Vue.extend({
         }
     },
     methods: {
+        focus() {
+            (this.$refs.input as HTMLInputElement).focus();
+        },
         handleInput(event: Event) {
             this.$emit("input", (event.target as HTMLInputElement).value);
         },

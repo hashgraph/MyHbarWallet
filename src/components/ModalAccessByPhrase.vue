@@ -46,15 +46,21 @@
                         <div class="text">
                             Optional
                         </div>
-                        <SwitchButton v-model="showPassword" class="btn" />
+                        <SwitchButton
+                            v-model="showPassword"
+                            class="btn"
+                            @change="handleChangeShowPassword"
+                        />
                     </div>
                 </div>
                 <div class="password-input" :class="{ expanded: showPassword }">
                     <TextInput
+                        ref="passwordInput"
                         :value="state.password"
                         placeholder="Please Enter Password"
                         obscure
                         compact
+                        :tabindex="showPassword ? null : '-1'"
                         @input="handlePasswordInput"
                     />
                 </div>
@@ -125,6 +131,13 @@ export default Vue.extend({
         },
         handlePasswordInput(password: string) {
             this.$emit("change", { ...this.state, password });
+        },
+        handleChangeShowPassword(showPassword: boolean) {
+            if (showPassword) {
+                // If we are now showing the password,
+                // focus the password input
+                (this.$refs.passwordInput as TextInput).focus();
+            }
         }
     }
 });
