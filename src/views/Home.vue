@@ -30,16 +30,17 @@
             <div class="page-container">
                 <div class="banner">
                     <div class="banner-content">
-                        <h2>About MyHederaWallet</h2>
-                        <p>
+                        <div class="about-title">About MyHederaWallet</div>
+                        <div class="about-subtitle">
                             MyHederaWallet puts Hedera Hashgraph at your
                             fingertips. Bacon ipsum dolor amet shank swine beef
                             ribs kevin chicken, jowl prosciutto flank shankle
                             tenderloin burgdoggen leberkas sausage pork belly.
                             Bresaola flank beef meatball fatback ground round,
                             pancetta jerky porchetta.
-                        </p>
+                        </div>
                     </div>
+                    <img class="about-image" :src="about" alt="about" />
                 </div>
             </div>
         </div>
@@ -55,8 +56,9 @@ import Features from "@/components/Features.vue";
 import FAQs from "@/components/FAQs.vue";
 import Community from "@/components/Community.vue";
 import HomeTileButtons from "@/components/HomeTileButtons.vue";
+import aboutImage from "@/assets/about.svg";
 import bannerImage from "@/assets/banner.svg";
-import circle from "@/assets/circle.png";
+import circleImage from "@/assets/circle.png";
 
 export default Vue.extend({
     name: "Home",
@@ -67,11 +69,14 @@ export default Vue.extend({
         Community
     },
     computed: {
+        about() {
+            return aboutImage;
+        },
         banner() {
             return bannerImage;
         },
         circle() {
-            return circle;
+            return circleImage;
         }
     }
 });
@@ -156,5 +161,23 @@ export default Vue.extend({
 .about {
     background-color: var(--color-yankees-blue);
     color: white;
+}
+
+.about-title {
+    color: var(--color-white);
+    font-size: 30px;
+    font-weight: 500;
+    margin-block-end: 15px;
+}
+
+.about-subtitle {
+    color: var(--color-white);
+    margin-block-end: 30px;
+    width: 380px;
+}
+
+.about-image {
+    flex-grow: 1;
+    height: 300px;
 }
 </style>
