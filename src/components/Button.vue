@@ -5,7 +5,8 @@
             outline,
             compact
         }"
-        v-on="this.$listeners"
+        :disabled="disabled"
+        v-on="disabled ? this.$listeners : null"
     >
         <MaterialDesignIcon
             v-if="busy"
@@ -13,6 +14,7 @@
             :icon="mdiSpinner"
             spin
         />
+
         <span v-else>{{ label }}</span>
 
         <MaterialDesignIcon
@@ -37,6 +39,7 @@ export default Vue.extend({
         compact: { type: Boolean },
         label: { type: String, required: true },
         busy: { type: Boolean },
+        disabled: { type: Boolean },
         trailingIcon: {
             type: String,
             default: null
@@ -62,22 +65,28 @@ button {
     font-weight: 500;
     min-width: 250px;
     outline: none;
-    padding: 15px;
+    padding: 18px;
     position: relative;
     user-select: none;
     white-space: nowrap;
 
-    &:not(.busy) {
+    &:disabled {
+        background-color: var(--color-basalt-grey);
+        border-color: var(--color-basalt-grey);
+        cursor: default;
+    }
+
+    &:not(.busy):not(:disabled) {
         cursor: pointer;
     }
 
-    &:hover:not(.busy),
-    &:focus:not(.busy) {
+    &:hover:not(.busy):not(:disabled),
+    &:focus:not(.busy):not(:disabled) {
         background-color: var(--color-celestial-green);
         border-color: var(--color-celestial-green);
     }
 
-    &:active:not(.busy) {
+    &:active:not(.busy):not(:disabled) {
         background-color: var(--color-green-jelly);
         border-color: var(--color-green-jelly);
     }
