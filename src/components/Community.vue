@@ -130,6 +130,10 @@ export default Vue.extend({
     flex-wrap: wrap;
     margin-inline-start: auto;
 
+    & :not(:first-child) {
+        margin-inline-start: 24px;
+    }
+
     @media (max-width: 1024px) {
         margin-block-start: 30px;
     }

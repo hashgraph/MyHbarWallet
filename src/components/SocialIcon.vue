@@ -42,7 +42,6 @@ export default Vue.extend({
     display: flex;
     flex-flow: column nowrap;
     font-size: 14px;
-    margin-inline-start: 40px;
     text-align: center;
 
     & :first-child {
