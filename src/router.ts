@@ -11,7 +11,7 @@ import InterfaceInteractWithContract from "./views/InterfaceInteractWithContract
 import InterfaceSignMessage from "./views/InterfaceSignMessage.vue";
 import InterfaceVerifyMessage from "./views/InterfaceVerifyMessage.vue";
 import UnitConvert from "./views/UnitConvert.vue";
-import PrivacyPolicy from "./views/PrivacyPolicy.vue"
+import PrivacyPolicy from "./views/PrivacyPolicy.vue";
 
 Vue.use(Router);
 
