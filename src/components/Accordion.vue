@@ -4,7 +4,7 @@
             <div class="title-text">
                 <slot name="title"></slot>
             </div>
-            <FontAwesomeIcon size="lg" class="icon" :icon="icon" />
+            <MaterialDesignIcon class="icon" :icon="icon" />
         </div>
         <div class="content">
             <div class="content-text">
@@ -16,13 +16,13 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import { mdiChevronUp } from "@mdi/js";
 
 export default Vue.extend({
     name: "Accordion",
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     data: function() {
         return {
@@ -31,7 +31,7 @@ export default Vue.extend({
     },
     computed: {
         icon() {
-            return faAngleUp;
+            return mdiChevronUp;
         }
     },
     methods: {
