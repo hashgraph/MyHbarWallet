@@ -5,7 +5,7 @@
                 <div class="title">Access My Account</div>
                 <div class="subtitle">
                     Don't have an account?
-                    <router-link to="create-account"
+                    <router-link :to="{ name: 'create-account' }"
                         >Create A New Account</router-link
                     >
                 </div>
