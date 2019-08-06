@@ -59,13 +59,21 @@ export default Vue.extend({
     },
     created() {
         setModalIsOpenOnBody(this.isOpen);
+        window.addEventListener("keydown", this.handleWindowKeyDown);
     },
     beforeDestroy() {
         setModalIsOpenOnBody(false);
+        window.removeEventListener("keydown", this.handleWindowKeyDown);
     },
     methods: {
         handleClose() {
             this.$emit("change", false);
+        },
+        handleWindowKeyDown(event: KeyboardEvent) {
+            // ESCAPE (27)
+            if (this.isOpen && event.keyCode == 27) {
+                this.handleClose();
+            }
         }
     }
 });
