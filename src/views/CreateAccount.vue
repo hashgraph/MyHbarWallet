@@ -13,19 +13,52 @@
             <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
+        <ModalAccessByHardware v-model="modalAccessByHardwareIsOpen" />
+        <ModalAccessBySoftware
+            v-model="modalAccessBySoftwareIsOpen"
+            @submit="handleAccessBySoftwareSubmit"
+        />
     </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "@/components/AccountTileButtons.vue";
+import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
+import ModalAccessBySoftware, {
+    AccessSoftwareOption
+} from "@/components/ModalAccessBySoftware.vue";
 
 export default Vue.extend({
     components: {
         FAQs,
-        AccountTileButtons
+        AccountTileButtons,
+        ModalAccessByHardware,
+        ModalAccessBySoftware
     },
-    computed: {}
+    data() {
+        return {
+            modalAccessByHardwareIsOpen: false,
+            modalAccessBySoftwareIsOpen: false
+        };
+    },
+    computed: {},
+    methods: {
+        handleClickTiles(which: string) {
+            if (which === "hardware") {
+                this.modalAccessByHardwareIsOpen = true;
+            } else if (which === "software") {
+                this.modalAccessBySoftwareIsOpen = true;
+            }
+        },
+        handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
+            this.modalAccessBySoftwareIsOpen = false;
+
+            setTimeout(() => {
+                console.log("open next modal!");
+            }, 125);
+        }
+    }
 });
 </script>
 
