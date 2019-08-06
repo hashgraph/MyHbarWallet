@@ -26,7 +26,7 @@
                 wallet.
             </div>
 
-            <Mnemonic :editable="editable" :words="words" :value="value" />
+            <MnemonicInput :editable="editable" :words="words" :value="value" />
             <div class="button-container">
                 <Button class="button-print" label="Print" />
             </div>
@@ -38,13 +38,13 @@
 import Vue from "vue";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
-import Mnemonic from "./Mnemonic.vue";
+import MnemonicInput from "@/components/MnemonicInput.vue";
 
 export default Vue.extend({
     components: {
         Button,
         Modal,
-        Mnemonic
+        MnemonicInput
     },
     data() {
         return {
