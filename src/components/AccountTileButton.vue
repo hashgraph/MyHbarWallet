@@ -103,6 +103,24 @@ export default Vue.extend({
         & .title,
         & .content,
         & .note {
+            /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+            transition: none;
+        }
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        & .title,
+        & .content,
+        & .note {
+            /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+            transition: none;
+        }
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        & .title,
+        & .content,
+        & .note {
             transition: none;
         }
     }
