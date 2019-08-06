@@ -30,28 +30,30 @@
                             pancetta jerky porchetta.
                         </p>
                     </div>
-                    <div class="banner-image"></div>
                 </div>
             </div>
         </div>
-        <div class="bottom"></div>
+        <Features />
         <FAQs />
-        <div class="community"></div>
+        <Community />
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import FAQs from "../components/FAQs.vue";
-import HomeTileButtons from "../components/HomeTileButtons.vue";
+import Features from "@/components/Features.vue";
+import FAQs from "@/components/FAQs.vue";
+import Community from "@/components/Community.vue";
+import HomeTileButtons from "@/components/HomeTileButtons.vue";
 
 export default Vue.extend({
     name: "Home",
     components: {
         FAQs,
-        HomeTileButtons
-    },
-    computed: {}
+        HomeTileButtons,
+        Features,
+        Community
+    }
 });
 </script>
 
@@ -107,9 +109,8 @@ export default Vue.extend({
     & > h1 {
         color: var(--color-ghostlands-coal);
         font-size: 45px;
-        font-weight: 700px;
+        font-weight: 700;
         letter-spacing: -1px;
-        line-height: 47px;
     }
 }
 
