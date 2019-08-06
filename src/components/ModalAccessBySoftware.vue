@@ -1,5 +1,9 @@
 <template>
-    <Modal is-open title="Access by Software">
+    <Modal
+        :is-open="isOpen"
+        title="Access by Software"
+        @change="this.$listeners.change"
+    >
         <div class="modal-access-by-software">
             <RadioButtonGroup
                 v-model="selected"
@@ -35,6 +39,13 @@ export default Vue.extend({
         Button,
         Modal,
         CustomerSupportLink
+    },
+    model: {
+        prop: "isOpen",
+        event: "change"
+    },
+    props: {
+        isOpen: { type: Boolean }
     },
     computed: {
         options() {

@@ -5,12 +5,14 @@
             title="Hardware"
             content="Ledger wallet, FINNEY, Trezor, Digital bitbox, Secalot, KeepKey"
             :image="hardware"
+            @click="$emit('click', 'hardware')"
         />
         <AccountTileButton
             title="Software"
             content="Lorem ipsum dolor sit amet, consectetur"
             :image="software"
             note="Not Recommended"
+            @click="$emit('click', 'software')"
         />
     </div>
 </template>

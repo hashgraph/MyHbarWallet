@@ -1,5 +1,9 @@
 <template>
-    <Modal is-open title="Access by hardware">
+    <Modal
+        :is-open="isOpen"
+        title="Access by hardware"
+        @change="this.$listeners.change"
+    >
         <div class="modal-access-by-hardware">
             <RadioButtonGroup
                 v-model="selected"
@@ -34,6 +38,13 @@ export default Vue.extend({
         Button,
         Modal,
         CustomerSupportLink
+    },
+    model: {
+        prop: "isOpen",
+        event: "change"
+    },
+    props: {
+        isOpen: { type: Boolean }
     },
     computed: {
         options() {

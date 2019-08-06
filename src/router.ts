@@ -24,12 +24,12 @@ export default new Router({
         {
             path: "/create-account",
             name: "create-account",
-            component: CreateAccount,
+            component: CreateAccount
         },
         {
             path: "/access-my-account",
             name: "access-my-account",
-            component: AccessMyAccount,
+            component: AccessMyAccount
         },
         {
             path: "/interface",
