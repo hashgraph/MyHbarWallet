@@ -5,12 +5,19 @@
             outline,
             compact
         }"
-        v-on="this.$listeners"
+        :disabled="disabled"
+        v-on="disabled ? null : $listeners"
     >
-        <FontAwesomeIcon v-if="busy" class="spinner" :icon="faSpinner" spin />
+        <MaterialDesignIcon
+            v-if="busy"
+            class="spinner"
+            :icon="mdiSpinner"
+            spin
+        />
+
         <span v-else>{{ label }}</span>
 
-        <FontAwesomeIcon
+        <MaterialDesignIcon
             v-if="trailingIcon"
             class="icon"
             :icon="trailingIcon"
@@ -19,28 +26,28 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { IconDefinition } from "@fortawesome/fontawesome-common-types";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Vue from "vue";
+import { mdiLoading } from "@mdi/js";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 export default Vue.extend({
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     props: {
         outline: { type: Boolean },
         compact: { type: Boolean },
         label: { type: String, required: true },
         busy: { type: Boolean },
+        disabled: { type: Boolean },
         trailingIcon: {
-            type: Object as PropType<IconDefinition>,
+            type: String,
             default: null
         }
     },
     computed: {
-        faSpinner() {
-            return faSpinner;
+        mdiSpinner() {
+            return mdiLoading;
         }
     }
 });
@@ -52,26 +59,34 @@ button {
     border: 1px solid var(--color-melbourne-cup);
     border-radius: 4px;
     color: var(--color-white);
+
+    /* flex-grow: 1; */
     font-size: 14px;
     font-weight: 500;
     min-width: 250px;
     outline: none;
-    padding: 15px;
+    padding: 18px;
     position: relative;
     user-select: none;
     white-space: nowrap;
 
-    &:not(.busy) {
+    &:disabled {
+        background-color: var(--color-basalt-grey);
+        border-color: var(--color-basalt-grey);
+        cursor: default;
+    }
+
+    &:not(.busy):not(:disabled) {
         cursor: pointer;
     }
 
-    &:hover:not(.busy),
-    &:focus:not(.busy) {
+    &:hover:not(.busy):not(:disabled),
+    &:focus:not(.busy):not(:disabled) {
         background-color: var(--color-celestial-green);
         border-color: var(--color-celestial-green);
     }
 
-    &:active:not(.busy) {
+    &:active:not(.busy):not(:disabled) {
         background-color: var(--color-green-jelly);
         border-color: var(--color-green-jelly);
     }
@@ -97,10 +112,6 @@ button {
 .compact {
     min-width: initial;
     padding: 10px 20px;
-}
-
-.spinner {
-    padding: 1px 0;
 }
 
 .icon {

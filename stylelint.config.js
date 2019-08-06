@@ -35,7 +35,10 @@ module.exports = {
         "plugin/declaration-block-no-ignored-properties": true,
 
         // https://github.com/kristerkari/stylelint-high-performance-animation
-        "plugin/no-low-performance-animation-properties": true,
+        "plugin/no-low-performance-animation-properties": [
+            true,
+            { severity: "warning" }
+        ],
 
         // Disallows colors that are suspiciously close to being identical
         // https://github.com/ierhyna/stylelint-no-indistinguishable-colors
@@ -83,7 +86,6 @@ module.exports = {
         // https://github.com/YozhikM/stylelint-a11y#rules
         "a11y/content-property-no-static-value": true,
         "a11y/line-height-is-vertical-rhythmed": true,
-        "a11y/no-display-none": true,
         "a11y/no-obsolete-attribute": true,
         "a11y/no-obsolete-element": true,
         "a11y/no-text-align-justify": true

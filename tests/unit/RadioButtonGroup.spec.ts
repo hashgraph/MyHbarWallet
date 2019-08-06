@@ -1,5 +1,4 @@
 import { shallowMount, mount } from "@vue/test-utils";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import RadioButtonGroup from "@/components/RadioButtonGroup.vue";
 import imageKey from "@/assets/button-key.svg";
 import imagePhrase from "@/assets/button-phrase.svg";

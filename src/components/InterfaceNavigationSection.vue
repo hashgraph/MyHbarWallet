@@ -3,10 +3,7 @@
         <div class="nav-section-header" @click="handleHeaderClick">
             <img alt="" :src="isSectionActive ? imageActive : image" />
             <span class="nav-title">{{ title }}</span>
-            <FontAwesomeIcon
-                class="indicator"
-                :icon="isSectionActive ? faAngleUp : faAngleDown"
-            />
+            <MaterialDesignIcon :icon="icon" class="indicator" />
         </div>
         <template v-if="isSectionActive">
             <router-link
@@ -23,8 +20,8 @@
 
 <script lang="ts">
 import Vue, { PropOptions } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
 interface InterfaceNavigationItem {
     name: string;
@@ -40,7 +37,7 @@ interface Props {
 
 export default Vue.extend<{}, {}, {}, Props>({
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     props: {
         image: { type: String, required: true },
@@ -52,14 +49,11 @@ export default Vue.extend<{}, {}, {}, Props>({
         } as PropOptions<InterfaceNavigationItem[]>
     },
     computed: {
-        faAngleDown() {
-            return faAngleDown;
-        },
-        faAngleUp() {
-            return faAngleUp;
-        },
         isSectionActive(): boolean {
             return this.routes.some(route => route.name === this.$route.name);
+        },
+        icon(): string {
+            return this.isSectionActive ? mdiChevronUp : mdiChevronDown;
         }
     },
     methods: {

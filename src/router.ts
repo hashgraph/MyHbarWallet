@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import AccessMyAccount from "./views/AccessMyAccount.vue";
+import CreateAccount from "./views/CreateAccount.vue";
 import Interface from "./views/Interface.vue";
 import InterfaceSendTransfer from "./views/InterfaceSendTransfer.vue";
 import InterfaceDeployContract from "./views/InterfaceDeployContract.vue";
@@ -18,6 +20,16 @@ export default new Router({
             path: "/",
             name: "home",
             component: Home
+        },
+        {
+            path: "/create-account",
+            name: "create-account",
+            component: CreateAccount
+        },
+        {
+            path: "/access-my-account",
+            name: "access-my-account",
+            component: AccessMyAccount
         },
         {
             path: "/interface",

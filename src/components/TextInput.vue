@@ -6,34 +6,35 @@
                 ref="input"
                 :placeholder="placeholder"
                 :type="keyboardType"
+                :tabindex="tabindex"
                 :value="value"
                 @input="handleInput"
             />
         </label>
-        <FontAwesomeIcon
+        <MaterialDesignIcon
             v-if="obscure"
             class="eye"
             :class="{ 'is-open': isEyeOpen }"
-            :icon="faEye"
+            :icon="eye"
             @click="handleClickEye"
         />
     </div>
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { IconDefinition } from "@fortawesome/fontawesome-common-types";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import Vue from "vue";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import { mdiEye, mdiEyeOutline } from "@mdi/js";
 
 export default Vue.extend({
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     props: {
         placeholder: { type: String, default: "" },
         value: { type: String, default: "" },
         label: { type: String, default: null },
+        tabindex: { type: String, default: null },
 
         compact: Boolean,
 
@@ -42,8 +43,6 @@ export default Vue.extend({
     },
     data() {
         return {
-            faEye,
-
             // If the eye is open to show the obscured text anyway
             isEyeOpen: false
         };
@@ -53,7 +52,9 @@ export default Vue.extend({
             if (this.obscure && !this.isEyeOpen) return "password";
             return "text";
         },
-
+        eye() {
+            return this.isEyeOpen ? mdiEye : mdiEyeOutline;
+        },
         classObject() {
             return {
                 "is-compact": this.compact
@@ -61,6 +62,9 @@ export default Vue.extend({
         }
     },
     methods: {
+        focus() {
+            (this.$refs.input as HTMLInputElement).focus();
+        },
         handleInput(event: Event) {
             this.$emit("input", (event.target as HTMLInputElement).value);
         },

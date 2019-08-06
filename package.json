@@ -12,9 +12,8 @@
         "test:unit": "vue-cli-service test:unit"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.19",
-        "@fortawesome/free-brands-svg-icons": "^5.10.0",
-        "@fortawesome/free-solid-svg-icons": "^5.9.0",
+        "@fortawesome/fontawesome-svg-core": "^1.2.21",
+        "@fortawesome/free-solid-svg-icons": "^5.10.1",
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "@mdi/js": "^3.8.95",
         "core-js": "^2.6.5",
@@ -25,8 +24,8 @@
     "devDependencies": {
         "@babel/core": "^7.5.5",
         "@types/core-js": "2.x.x",
-    "@types/jest": "^23.1.4",
-    "@types/prettier": "1.x.x",
+        "@types/jest": "^23.1.4",
+        "@types/prettier": "1.x.x",
         "@vue/cli-plugin-babel": "^3.9.0",
         "@vue/cli-plugin-eslint": "^3.9.0",
         "@vue/cli-plugin-typescript": "^3.9.0",

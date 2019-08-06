@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import RadioButton from "@/components/RadioButton.vue";
 import imageKey from "@/assets/button-key.svg";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 describe("RadioButton.vue", () => {
     it("renders, contains expected properties", () => {
@@ -47,7 +47,7 @@ describe("RadioButton.vue", () => {
         wrapper.find("input").setChecked(true);
         expect(fn).toBeCalledTimes(1);
         expect(wrapper.emitted("change")[0][0]).toEqual(value);
-        expect(wrapper.find("label").classes()).toContain("is-selected");
-        expect(wrapper.contains(FontAwesomeIcon)).toBe(true); // green check
+        expect(wrapper.find("label").classes()).toContain("selected");
+        expect(wrapper.contains(MaterialDesignIcon)).toBe(true); // green check
     });
 });

@@ -10,7 +10,6 @@
             <div class="message">
                 <slot></slot>
             </div>
-            <!-- TODO: > Read: Using MEW Offline Component here -->
         </div>
     </div>
 </template>

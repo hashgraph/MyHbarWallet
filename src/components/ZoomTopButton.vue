@@ -4,14 +4,14 @@
         :class="classObject"
         @click="handleClick"
     >
-        <FontAwesomeIcon class="icon" :icon="faChevronUp" />
+        <MaterialDesignIcon class="icon" :icon="chevronUp" />
     </button>
 </template>
 
 <script lang="ts">
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import Vue from "vue";
+import { mdiChevronUp } from "@mdi/js";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 interface Data {
     isActive: boolean;
@@ -19,7 +19,7 @@ interface Data {
 
 export default Vue.extend<Data, {}, {}>({
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     data() {
         return {
@@ -27,8 +27,8 @@ export default Vue.extend<Data, {}, {}>({
         };
     },
     computed: {
-        faChevronUp() {
-            return faChevronUp;
+        chevronUp() {
+            return mdiChevronUp;
         },
         classObject() {
             return {

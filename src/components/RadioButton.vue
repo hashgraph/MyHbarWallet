@@ -1,5 +1,5 @@
 <template>
-    <label class="radio-button" :class="{ 'is-selected': selected }">
+    <label class="radio-button" :class="{ selected }">
         <img alt="" class="icon" :src="image" />
         <input
             type="radio"
@@ -7,21 +7,21 @@
             :value="value"
             class="input"
             :checked="selected"
-            @change="handleChange"
+            @change="$emit('change', value)"
         />
         <span class="label">{{ label }}</span>
-        <FontAwesomeIcon v-if="selected" class="check" :icon="faCheckCircle" />
+        <MaterialDesignIcon v-if="selected" class="check" :icon="check" />
     </label>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import { mdiCheckCircle } from "@mdi/js";
 
 export default Vue.extend({
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     model: {
         prop: "checked",
@@ -35,16 +35,11 @@ export default Vue.extend({
         checked: { type: String, required: true }
     },
     computed: {
-        faCheckCircle() {
-            return faCheckCircle;
+        check() {
+            return mdiCheckCircle;
         },
-        selected() {
+        selected(): boolean {
             return this.checked === this.value;
-        }
-    },
-    methods: {
-        handleChange() {
-            this.$emit("change", this.value);
         }
     }
 });
@@ -59,14 +54,15 @@ export default Vue.extend({
     cursor: pointer;
     display: flex;
     padding: 5px 20px;
+    position: relative;
 
     &:hover,
     &:focus,
-    &.is-selected {
+    &.selected {
         border-color: var(--color-melbourne-cup);
     }
 
-    &.is-selected {
+    &.selected {
         box-shadow: 0 8px 15px 0 var(--color-jupiter);
     }
 }
@@ -78,21 +74,25 @@ export default Vue.extend({
     user-select: none;
 }
 
-.is-selected .label {
+.selected .label {
     font-weight: 700;
 }
 
 .icon {
     height: 50px;
+    margin-inline-end: 8px;
     user-select: none;
     width: 50px;
 }
 
 .check {
     color: var(--color-melbourne-cup);
+    height: 18px;
+    width: 18px;
 }
 
 .input {
+    position: absolute;
     visibility: hidden;
 }
 </style>
