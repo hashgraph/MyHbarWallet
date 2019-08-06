@@ -345,6 +345,7 @@ export default Vue.extend({
     font-weight: 400;
     justify-content: center;
     line-height: 1.5;
+    margin-block-end: 60px;
     text-align: center;
 }
 
