@@ -52,7 +52,7 @@
 import Vue from "vue";
 import DropDownUnitSelector from "../components/DropDownUnitSelector.vue";
 import JSBI from "jsbi";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 interface UnitMap {
     [key: string]: number;
@@ -130,7 +130,7 @@ export default Vue.extend({
             let z = JSBI.BigInt(this.getValueOfUnit(to));
             return JSBI.toNumber(JSBI.divide(JSBI.multiply(x, y), z));
         },
-        updateCurrency(e: any ) {
+        updateCurrency(e: any) {
             if (e[1] === "left") {
                 this.selectedLeft = e[0];
             } else {

@@ -2,7 +2,7 @@
     <div class="dropdown-unit-selector">
         <div class="unit-selector-click-safe-zone">
             <div
-                :class="dropdownOpen ? 'dropdown-open' : '' "
+                :class="dropdownOpen ? 'dropdown-open' : ''"
                 class="dropdown-input-box"
                 @click="toggle"
             >
@@ -26,14 +26,13 @@
                 </ul>
             </div>
         </div>
-
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons"
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 export default Vue.extend({
     name: "DropDownUnitSelector",
@@ -43,55 +42,57 @@ export default Vue.extend({
     props: {
         options: {
             type: Array,
-            default: function (){
+            default: function() {
                 return [];
             }
         },
         currentSelected: {
             type: String,
-            default: ''
+            default: ""
         },
         left: {
-            type: Boolean,
-            default: false,
-        }
-    },
-    computed: {
-        icon() {
-            if(this.dropdownOpen) return faChevronUp;
-            else return faChevronDown;
-        },
-        side():any {
-            return this.left;
+            type: Boolean
         }
     },
     data() {
         return {
-            dropdownOpen: false,
+            dropdownOpen: false
         };
     },
+    computed: {
+        icon() {
+            if (this.dropdownOpen) return faChevronUp;
+            else return faChevronDown;
+        },
+        side(): any {
+            return this.left;
+        }
+    },
     beforeMount() {
-        document.addEventListener('click', this.clickEvent, false);
+        document.addEventListener("click", this.clickEvent, false);
     },
     beforeDestroy() {
-        document.removeEventListener('click', this.clickEvent, false);
+        document.removeEventListener("click", this.clickEvent, false);
     },
     methods: {
         clickEvent: function(event: any) {
-            const path = event.path || (event.composedPath && event.composedPath()) || this.composedPath(event.target);
+            const path =
+                event.path ||
+                (event.composedPath && event.composedPath()) ||
+                this.composedPath(event.target);
             for (let count = 0; count < path.length; count++) {
-                if(path[count].className === 'unit-selector-click-safe-zone'){
+                if (path[count].className === "unit-selector-click-safe-zone") {
                     return;
                 }
             }
             this.dropdownOpen = false;
         },
         composedPath(el: any) {
-            const path =[];
+            const path = [];
 
             while (el) {
                 path.push(el);
-                if(el.tagname === 'HTML'){
+                if (el.tagname === "HTML") {
                     path.push(document);
                     path.push(window);
                     return path;
@@ -99,146 +100,181 @@ export default Vue.extend({
                 el = el.parentElement;
             }
         },
-        toggle(){
-            return this.dropdownOpen = !this.dropdownOpen
+        toggle() {
+            return (this.dropdownOpen = !this.dropdownOpen);
         },
         selected(val: any) {
             this.dropdownOpen = false;
-            this.$emit('updatedSelected', [val, this.side ? 'left' : 'right']);
+            this.$emit("updatedSelected", [val, this.side ? "left" : "right"]);
         }
     }
 });
-
 </script>
 
 <style lang="postcss" scoped>
-    .dropdown-unit-selector {
-        position: relative;
-        user-select: none;
-    }
+.dropdown-unit-selector {
+    position: relative;
+    user-select: none;
+}
 
-    .form-tile-container {
-        margin-bottom: 10px;
-        padding: 0 10px;
-    }
+.form-tile-container {
+    margin-block-end: 10px;
+    padding: 0 10px;
+}
 
-    .title {
-        font-weight: 600;
-        font-size: 16px;
-        line-height: initial;
-        color: var(--color-washed-black)
-    }
+.title {
+    color: var(--color-washed-black);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: initial;
+}
 
-    .unit-selector-click-safe-zone{
-        position: relative;
-    }
+.unit-selector-click-safe-zone {
+    position: relative;
+}
 
+@media screen and (prefers-reduced-motion: reduce) {
     .dropdown-input-box {
-        position: relative;
+        background-color: var(--color-white);
         border: 1px solid var(--color-white);
         border-radius: 4px;
-        transition: all 0.2s ease;
-        height: 57px;
-        background-color: var(--color-white);
         cursor: pointer;
+        height: 57px;
+        position: relative;
+        transition: none;
 
         &.dropdown-open {
             background-color: var(--color-white);
-            border-botom: 1px solid var(--color-peral);
+            border-bottom: 1px solid var(--color-peral);
             border-radius: 4px 4px 0 0;
         }
+    }
+}
 
-    }
-    .selected-unit {
-        padding: 18px;
-        padding-right: 70px;
-        
-    }
-    span {
-        font-size: 12px;
-        color: var(--color-green-jelly);
-        margin-left: 5px;
-    }
+.dropdown-input-box {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-peral);
+    border-radius: 4px;
+    cursor: pointer;
+    height: 57px;
+    position: relative;
 
-    .dropdown-open-button {
-        user-select: none;
-        height: 100%;
-        position: absolute;
-        display: flex;
-        top: 23px;
-        right: 8px;
-        
-        &.icon {
-            align-content: center;
-            font-size: 9px;
-            padding: 10px 22px;
-            color: #3766aa;
-            margin-top: 12px;
-        }
+    &.dropdown-open {
+        background-color: var(--color-white);
+        border: 1px solid var(--color-peral);
+        border-radius: 4px 4px 0 0;
     }
+}
 
-    .dropdown-list-box{
-        box-shadow: 0 2px 4px rbga(0, 0, 0, 0.12);
-        width: 100%;
-        position: absolute;
-        user-select: none;
+.selected-unit {
+    padding: 18px;
+    padding-inline-end: 70px;
+}
+
+span {
+    color: var(--color-green-jelly);
+    font-size: 12px;
+    margin-inline-start: 5px;
+}
+
+.dropdown-open-button {
+    display: flex;
+    height: 100%;
+    inset-block-start: 23px;
+    inset-inline-end: 8px;
+    justify-content: center;
+    position: absolute;
+    user-select: none;
+
+    &.icon {
+        align-content: center;
+        color: #3766aa;
+        font-size: 9px;
+        margin-block-start: 12px;
+        padding: 10px 22px;
+    }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    .dropdown-list-box {
         background-color: var(--color-peral);
         border: 1px solid #adadad;
         border-radius: 0 0 4px 4px;
-        z-index: 2;
-        overflow-y: auto;
-        overflow-x: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
         max-height: 230px;
-        transition: all 0.2s ease;
         opacity: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
         pointer-events: none;
-        top: 56px;
-        left: 0;
-        
-    }
-    .show-dropdown {
-        background-color: var(--color-white);
-        opacity: 1;
-        pointer-events: initial;
-    }
-    .search-block {
-        padding: 10px;
-        position: relative;
-    }
-    input {
-        background-color: var(--color-peral);
-        border-radius: 5px;
-        border: 0;
-        padding: 10px;
-        width: 100%;
-        padding-left: 40px
-    }
-    img {
         position: absolute;
-        top: 21px;
-        left: 20px;
+        transition: none;
+        user-select: none;
+        width: 100%;
+        z-index: 2;
     }
-    ul {
-        padding-left: 0; 
-        margin: 0;
-    }
-    li {
-        cursor: pointer;
-        padding: 10px 15px;
-        position: relative;
-        display: flex;
-        align-items: center;
-    
-        &:hover{
-            background-color: #e0e0e0;
-        }
-    }
-    li > span {
-        font-size: 12px;
-        color: var(--color-green-jelly);
-        margin-right: 5px;
-    }
-    
-    
+}
 
+.dropdown-list-box {
+    background-color: var(--color-peral);
+    border: 1px solid #adadad;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    max-height: 230px;
+    opacity: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    pointer-events: none;
+    position: absolute;
+    user-select: none;
+    width: 100%;
+    z-index: 2;
+}
+
+.show-dropdown {
+    background-color: var(--color-white);
+    opacity: 1;
+    pointer-events: initial;
+}
+
+.search-block {
+    padding: 10px;
+    position: relative;
+}
+
+input {
+    background-color: var(--color-peral);
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    padding-inline-start: 40px;
+    width: 100%;
+}
+
+img {
+    position: absolute;
+}
+
+ul {
+    margin: 0;
+    padding-inline-start: 0;
+}
+
+li {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    padding: 10px 15px;
+    position: relative;
+
+    &:hover,
+    &:focus {
+        background-color: #e0e0e0;
+    }
+}
+
+li > span {
+    color: var(--color-green-jelly);
+    font-size: 12px;
+    margin-inline-end: 5px;
+}
 </style>

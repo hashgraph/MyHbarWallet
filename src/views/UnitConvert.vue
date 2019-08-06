@@ -2,8 +2,14 @@
     <div class="convert-units">
         <div class="wrap">
             <div class="page-container">
-                <div class="page-title">Convert Units</div>
-
+                <div class="title-wrap">
+                    <h2 class="page-title">Convert Units</h2>
+                    <p class="page-subtitle">
+                        Our helpful conversion tool and ether unit reference
+                        allow you to calculate the total cost of your
+                        transactions.
+                    </p>
+                </div>
                 <div><UnitInput :options="options" /></div>
 
                 <div class="hbar-unit-reference-guide">
@@ -111,23 +117,33 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.wrap{
+.convert-units {
+    background-color: #f2f4fa;
+    display: flex;
+    justify-content: center;
+}
+
+.wrap {
+    padding: 100px 0;
     width: 60vw;
 }
 
-.page-title {
-    text-align: center;
+.title-wrap {
     margin-block-end: 60px;
+    margin-block-start: 0;
+    text-align: center;
 }
 
-h2 {
+.page-title {
     font-size: 45px;
-    margin-block-end: 30px;
+    font-weight: 500;
+    margin: 0;
 }
 
-p {
+p.page-subtitle {
     margin: 0 auto;
     max-width: 600px;
+    padding: 20px;
 }
 
 .hbar-unit-reference-guide {
@@ -154,7 +170,7 @@ tr {
 
 td {
     padding: 18px 10px;
-    position: relative;   
+    position: relative;
 }
 
 span {
