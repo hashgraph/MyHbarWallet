@@ -11,6 +11,7 @@ import InterfaceSignMessage from "./views/InterfaceSignMessage.vue";
 import InterfaceVerifyMessage from "./views/InterfaceVerifyMessage.vue";
 import UnitConvert from "./views/UnitConvert.vue";
 import PrivacyPolicy from "./views/PrivacyPolicy.vue";
+import TermsConditions from "./views/TermsConditions.vue";
 
 Vue.use(Router);
 
@@ -42,6 +43,11 @@ export default new Router({
             path: "/privacy-policy",
             name: "privacy-policy",
             component: PrivacyPolicy
+        },
+        {
+            path: "/terms-and-conditions",
+            name: "terms-and-conditions",
+            component: TermsConditions
         },
         {
             path: "/interface",
