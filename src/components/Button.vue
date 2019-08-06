@@ -96,13 +96,13 @@ button {
     background-color: transparent;
     color: var(--color-melbourne-cup);
 
-    &:hover:not(.busy),
-    &:focus:not(.busy) {
+    &:hover:not(.busy):not(:disabled),
+    &:focus:not(.busy):not(:disabled) {
         background-color: transparent;
         color: var(--color-celestial-green);
     }
 
-    &:active:not(.busy) {
+    &:active:not(.busy):not(:disabled) {
         background-color: var(--color-distant-horizon);
         border-color: var(--color-green-fluorite);
         color: var(--color-green-fluorite);
