@@ -10,6 +10,7 @@ import InterfaceDeployContract from "./views/InterfaceDeployContract.vue";
 import InterfaceInteractWithContract from "./views/InterfaceInteractWithContract.vue";
 import InterfaceSignMessage from "./views/InterfaceSignMessage.vue";
 import InterfaceVerifyMessage from "./views/InterfaceVerifyMessage.vue";
+import UnitConvert from "./views/UnitConvert.vue";
 
 Vue.use(Router);
 
@@ -35,7 +36,12 @@ export default new Router({
         {
             path: "/hardware-wallet-affiliates",
             name: "hardware-wallet-affiliates",
-            component: HardwareWalletAffiliates
+            component: HardwareWalletAffiliates,
+        },
+        {
+            path: "/unit-convert",
+            name: "unit-convert",
+            component: UnitConvert
         },
         {
             path: "/interface",
