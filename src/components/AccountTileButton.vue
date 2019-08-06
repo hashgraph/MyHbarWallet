@@ -1,9 +1,7 @@
 <template>
     <div class="account-tile-button" v-on="this.$listeners">
         <!--fixme: can remove div: tile-image if image sizes are normalized-->
-        <div class="tile-image">
-            <img :src="image" />
-        </div>
+        <img class="tile-image" :src="image" />
         <div class="tile-content">
             <div class="title">{{ title }}</div>
             <div class="content">{{ content }}</div>
@@ -42,18 +40,17 @@ export default Vue.extend({
 .note {
     color: var(--color-sunkist-coral);
     font-size: 11px;
+    margin-block-start: 5px;
 }
 
 .account-tile-button {
     background-color: var(--color-white);
     border-radius: 4px;
     cursor: pointer;
-    height: 274px;
     padding-block: 10px 25px;
     padding-inline: 15px;
     /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
     transition: background-color, transform 0.3s ease;
-    width: 210px;
 
     @media screen and (prefers-reduced-motion: reduce) {
         & .title,
@@ -97,6 +94,15 @@ export default Vue.extend({
         & .title,
         & .content,
         & .note {
+            /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+            transition: none;
+        }
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        & .title,
+        & .content,
+        & .note {
             transition: none;
         }
     }
@@ -117,7 +123,6 @@ export default Vue.extend({
 }
 
 .tile-image {
-    height: 135px;
-    padding-block: 44px;
+    padding-block: 17.5px;
 }
 </style>

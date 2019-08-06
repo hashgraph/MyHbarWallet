@@ -33,6 +33,10 @@ export default Vue.extend({
 }
 
 .top {
+    align-items: center;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
     max-width: 1024px;
 
     @media (min-width: 1025px) {
