@@ -2,11 +2,9 @@
     <div class="account-tile-button" v-on="this.$listeners">
         <!--fixme: can remove div: tile-image if image sizes are normalized-->
         <img class="tile-image" :src="image" />
-        <div class="tile-content">
-            <div class="title">{{ title }}</div>
-            <div class="content">{{ content }}</div>
-            <div class="note">{{ note }}</div>
-        </div>
+        <div class="title">{{ title }}</div>
+        <div class="content">{{ content }}</div>
+        <div class="note">{{ note }}</div>
     </div>
 </template>
 
@@ -35,6 +33,7 @@ export default Vue.extend({
 .content {
     color: var(--color-china-blue);
     font-size: 14px;
+    text-align: center;
 }
 
 .note {
@@ -44,9 +43,12 @@ export default Vue.extend({
 }
 
 .account-tile-button {
+    align-items: center;
     background-color: var(--color-white);
     border-radius: 4px;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
     padding-block: 10px 25px;
     padding-inline: 15px;
     /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */

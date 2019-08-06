@@ -44,11 +44,6 @@ export default Vue.extend({
     grid-column-gap: 20px;
     grid-template-columns: 210px 210px;
     justify-items: center;
-
-    /* todo: (mobile) Access-Account page should not have a top level
-    align-items: center; for this overflow to work correctly */
-    overflow: auto;
-    text-align: center;
 }
 
 .account-tile-button:last-child {
