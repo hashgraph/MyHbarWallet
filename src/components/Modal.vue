@@ -109,6 +109,7 @@ export default Vue.extend({
     overflow: hidden;
     transform: translateY(-50px);
     transition: transform 0.3s ease-out;
+    width: 100%;
     z-index: 3;
 
     @media screen and (prefers-reduced-motion: reduce) {

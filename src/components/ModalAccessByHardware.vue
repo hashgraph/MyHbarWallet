@@ -6,11 +6,12 @@
     >
         <div class="modal-access-by-hardware">
             <RadioButtonGroup
-                v-model="selected"
-                :name="name"
+                v-model="optionSelected"
+                name="hardware-access-option"
                 :options="options"
             />
             <Button
+                :disabled="optionSelected.length === 0"
                 class="button-choose-a-hardware"
                 label="Choose a Hardware"
             />
@@ -45,6 +46,11 @@ export default Vue.extend({
     },
     props: {
         isOpen: { type: Boolean }
+    },
+    data() {
+        return {
+            optionSelected: ""
+        };
     },
     computed: {
         options() {
@@ -93,6 +99,6 @@ export default Vue.extend({
 }
 
 .button-choose-a-hardware {
-    margin: 20px 0;
+    margin-block: 40px 20px;
 }
 </style>
