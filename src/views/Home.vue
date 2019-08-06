@@ -100,7 +100,6 @@ export default Vue.extend({
 }
 
 .banner-content {
-    float: inline-start;
     font-family: Montserrat, sans-serif;
     font-size: 14px;
     max-width: 50%;
