@@ -6,7 +6,7 @@
             compact
         }"
         :disabled="disabled"
-        v-on="disabled ? this.$listeners : null"
+        v-on="disabled ? null : $listeners"
     >
         <MaterialDesignIcon
             v-if="busy"

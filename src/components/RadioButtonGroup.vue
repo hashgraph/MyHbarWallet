@@ -2,7 +2,7 @@
     <div class="radio-button-group">
         <div v-for="option in options" :key="option.value">
             <RadioButton
-                :checked="selected"
+                :checked="selected || ''"
                 :name="name"
                 :label="option.label"
                 :value="option.value"
@@ -24,7 +24,7 @@ interface Option {
 }
 
 interface Props {
-    selected: string;
+    selected: string | null;
     name: string;
     options: Option[];
 }
@@ -38,7 +38,7 @@ export default Vue.extend<{}, {}, {}, Props>({
         event: "change"
     },
     props: {
-        selected: { type: String, default: "" },
+        selected: { type: String, default: null },
         name: { required: true, type: String },
         options: {
             type: Array,

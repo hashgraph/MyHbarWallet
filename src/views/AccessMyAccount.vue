@@ -4,8 +4,12 @@
             <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
+        <ModalAccessByPhrase v-model="modalAccessByPhraseState" />
         <ModalAccessByHardware v-model="modalAccessByHardwareIsOpen" />
-        <ModalAccessBySoftware v-model="modalAccessBySoftwareIsOpen" />
+        <ModalAccessBySoftware
+            v-model="modalAccessBySoftwareIsOpen"
+            @submit="handleAccessBySoftwareSubmit"
+        />
     </div>
 </template>
 
@@ -14,19 +18,36 @@ import Vue from "vue";
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "../components/AccountTileButtons.vue";
 import ModalAccessByHardware from "../components/ModalAccessByHardware.vue";
-import ModalAccessBySoftware from "../components/ModalAccessBySoftware.vue";
+import ModalAccessBySoftware, {
+    AccessSoftwareOption
+} from "../components/ModalAccessBySoftware.vue";
+import ModalAccessByPhrase, {
+    State as ModalAccessByPhraseState,
+    MnemonicType
+} from "../components/ModalAccessByPhrase.vue";
+
+function newAccessByPhraseState(isOpen: boolean) {
+    return {
+        modalIsOpen: isOpen,
+        words: [],
+        numWords: MnemonicType.Words12,
+        password: ""
+    };
+}
 
 export default Vue.extend({
     components: {
         FAQs,
         AccountTileButtons,
         ModalAccessByHardware,
-        ModalAccessBySoftware
+        ModalAccessBySoftware,
+        ModalAccessByPhrase
     },
     data() {
         return {
             modalAccessByHardwareIsOpen: false,
-            modalAccessBySoftwareIsOpen: false
+            modalAccessBySoftwareIsOpen: false,
+            modalAccessByPhraseState: newAccessByPhraseState(false)
         };
     },
     computed: {},
@@ -37,6 +58,17 @@ export default Vue.extend({
             } else if (which === "software") {
                 this.modalAccessBySoftwareIsOpen = true;
             }
+        },
+        handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
+            this.modalAccessBySoftwareIsOpen = false;
+
+            setTimeout(() => {
+                if (which == AccessSoftwareOption.Phrase) {
+                    this.modalAccessByPhraseState = newAccessByPhraseState(
+                        true
+                    );
+                }
+            }, 125);
         }
     }
 });

@@ -28,8 +28,9 @@
                     </router-link>
                 </div>
                 <Button
-                    :disabled="optionSelected.length === 0"
+                    :disabled="optionSelected == null"
                     label="Continue"
+                    @click="$emit('submit', optionSelected)"
                 />
                 <CustomerSupportLink class="support-link" />
             </div>
@@ -48,6 +49,12 @@ import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 
+export enum AccessSoftwareOption {
+    File = "file",
+    Phrase = "phrase",
+    Key = "key"
+}
+
 export default Vue.extend({
     components: {
         RadioButtonGroup,
@@ -65,7 +72,7 @@ export default Vue.extend({
     },
     data() {
         return {
-            optionSelected: ""
+            optionSelected: null
         };
     },
     computed: {
@@ -73,17 +80,17 @@ export default Vue.extend({
             return [
                 {
                     label: "Keystore File",
-                    value: "file",
+                    value: AccessSoftwareOption.File,
                     image: imageFile
                 },
                 {
                     label: "Mnemonic Phrase",
-                    value: "phrase",
+                    value: AccessSoftwareOption.Phrase,
                     image: imagePhrase
                 },
                 {
                     label: "Private Key",
-                    value: "key",
+                    value: AccessSoftwareOption.Key,
                     image: imageKey
                 }
             ];

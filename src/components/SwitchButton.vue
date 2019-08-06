@@ -18,7 +18,7 @@
 import Vue, { PropOptions } from "vue";
 
 interface Props {
-    checked: boolean | string;
+    checked: boolean | string | number;
     values: string[] | null;
 }
 
@@ -28,7 +28,7 @@ export default Vue.extend<{}, {}, {}, Props>({
         event: "change"
     },
     props: {
-        checked: { type: [Boolean, String], required: true },
+        checked: { type: [Boolean, String, Number], required: true },
         values: { type: Array, required: false, default: null } as PropOptions<
             string[] | null
         >
