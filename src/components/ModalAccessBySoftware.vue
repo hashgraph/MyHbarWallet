@@ -4,22 +4,36 @@
         title="Access by Software"
         @change="this.$listeners.change"
     >
-        <div class="modal-access-by-software">
-            <RadioButtonGroup
-                v-model="selected"
-                :name="name"
-                :options="options"
-            />
-            <div class="hardware-link">
-                Purchase a hardware wallet for the highest security when
-                accessing your crypto.
-                <a href="" class="green-link">
-                    Purchase a hardware wallet....
-                </a>
+        <template v-slot:banner>
+            <Warning title="NOT RECOMMENDED">
+                This is not a recommended way to access your wallet. Due to the
+                sensitivity of the information involved, these options should
+                only be used in offline settings by experienced users.
+            </Warning>
+        </template>
+        <template>
+            <div class="modal-access-by-software">
+                <RadioButtonGroup
+                    v-model="optionSelected"
+                    name="software-access-option"
+                    :options="options"
+                />
+                <div class="hardware-link">
+                    <div>
+                        Purchase a hardware wallet for the highest security when
+                        accessing your crypto.
+                    </div>
+                    <router-link :to="{ name: 'hardware-wallet-affiliates' }">
+                        Purchase a hardware wallet....
+                    </router-link>
+                </div>
+                <Button
+                    :disabled="optionSelected.length === 0"
+                    label="Continue"
+                />
+                <CustomerSupportLink class="support-link" />
             </div>
-            <Button label="Continue" />
-            <CustomerSupportLink />
-        </div>
+        </template>
     </Modal>
 </template>
 
@@ -31,6 +45,7 @@ import imageKey from "../assets/button-key.svg";
 import imagePhrase from "../assets/button-phrase.svg";
 import imageFile from "../assets/button-file.svg";
 import Modal from "../components/Modal.vue";
+import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 
 export default Vue.extend({
@@ -38,7 +53,8 @@ export default Vue.extend({
         RadioButtonGroup,
         Button,
         Modal,
-        CustomerSupportLink
+        CustomerSupportLink,
+        Warning
     },
     model: {
         prop: "isOpen",
@@ -46,6 +62,11 @@ export default Vue.extend({
     },
     props: {
         isOpen: { type: Boolean }
+    },
+    data() {
+        return {
+            optionSelected: ""
+        };
     },
     computed: {
         options() {
@@ -76,21 +97,26 @@ export default Vue.extend({
     align-items: stretch;
     display: flex;
     flex-direction: column;
-    padding: 20px;
 }
 
 .hardware-link {
+    color: var(--color-china-blue);
+    font-size: 14px;
     padding: 20px;
     text-align: center;
 }
 
-.green-link {
+a {
     color: var(--color-melbourne-cup);
     text-decoration: none;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
 }
 
-.green-link:hover,
-.green-link:focus {
-    text-decoration: underline;
+.support-link {
+    margin-block-start: 20px;
 }
 </style>
