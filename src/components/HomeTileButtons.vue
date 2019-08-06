@@ -1,7 +1,6 @@
 <template>
     <div class="tile-grid">
         <!-- fixme: Material Design: wallet-outline -->
-        <!-- fixme: route doesn't exist -->
         <HomeTileButton
             title="Create A New Wallet"
             content="Obtain an ETH address and generate your private key. Saving and safekeeping the key will be your responsibility."
@@ -11,12 +10,11 @@
         />
 
         <!--Material Design: lock-open-outline -->
-        <!-- fixme: route doesn't exist -->
         <HomeTileButton
             title="Access My Account"
             content="Send or swap your ETH and tokens, purchase ENS domains, interact with smart contracts, and more! This is where the magic happens."
             :icon="unlock"
-            route="access-account"
+            route="access-my-account"
             action="Access Now"
         />
     </div>

@@ -56,7 +56,8 @@ button {
     border: 1px solid var(--color-melbourne-cup);
     border-radius: 4px;
     color: var(--color-white);
-    flex-grow: 1;
+
+    /* flex-grow: 1; */
     font-size: 14px;
     font-weight: 500;
     min-width: 250px;
