@@ -49,11 +49,35 @@ export default Vue.extend({
     cursor: pointer;
     padding-block: 10px 25px;
     padding-inline: 15px;
-
     /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
     transition: background-color, transform 0.3s ease;
+    user-select: none;
 
-    @media screen and (prefers-reduced-motion: reduce) {
+    & .title,
+    & .content,
+    & .note {
+        /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+        transition: color 0.3s ease;
+
+        @media (prefers-reduced-motion) {
+            transition: none;
+        }
+    }
+
+    &:hover,
+    &:focus {
+        background-color: var(--color-melbourne-cup);
+        box-shadow: 0 5px 24px rgba(0, 0, 0, 0.07);
+        transform: translateY(-10px);
+
+        & .title,
+        & .content,
+        & .note {
+            color: var(--color-white);
+        }
+    }
+
+    @media (prefers-reduced-motion) {
         transition: none;
     }
 }
