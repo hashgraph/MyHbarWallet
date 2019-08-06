@@ -1,7 +1,7 @@
 <template>
     <router-link class="home-tile-button" :to="{ name: route }">
         <!-- FIXME: Use material design icons -->
-        <FontAwesomeIcon class="tile-icon" :icon="icon" />
+        <MaterialDesignIcon class="tile-icon" :icon="icon" />
         <div class="content">
             <!-- TODO: This should likely be an hN at some point -->
             <div class="title">{{ title }}</div>
@@ -9,33 +9,31 @@
             <div v-if="action" class="action-label">
                 {{ action }}
                 <!-- FIXME: Use material design icons to get a proper long arrow -->
-                <FontAwesomeIcon class="action-icon" :icon="faArrowRight" />
+                <MaterialDesignIcon class="action-icon" :icon="rightArrow" />
             </div>
         </div>
     </router-link>
 </template>
 
 <script lang="ts">
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faWallet, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { IconDefinition } from "@fortawesome/fontawesome-common-types";
-import { PropType } from "vue";
 import Vue from "vue";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import { mdiArrowRight } from "@mdi/js";
 
 export default Vue.extend({
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     props: {
         route: { type: String, required: true },
         title: { type: String, required: true },
         content: { type: String, required: false, default: "" },
         action: { type: String, required: false, default: "" },
-        icon: { type: Object as PropType<IconDefinition>, default: null }
+        icon: { type: String, default: null }
     },
     computed: {
-        faArrowRight() {
-            return faArrowRight;
+        rightArrow() {
+            return mdiArrowRight;
         }
     }
 });
