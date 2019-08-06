@@ -1,5 +1,5 @@
 <template>
-    <label class="radio-button" :class="{ 'is-selected': selected }">
+    <label class="radio-button" :class="{ selected }">
         <img alt="" class="icon" :src="image" />
         <input
             type="radio"
@@ -7,7 +7,7 @@
             :value="value"
             class="input"
             :checked="selected"
-            @change="handleChange"
+            @change="$emit('change', value)"
         />
         <span class="label">{{ label }}</span>
         <MaterialDesignIcon v-if="selected" class="check" :icon="check" />
@@ -38,13 +38,8 @@ export default Vue.extend({
         check() {
             return mdiCheckCircle;
         },
-        selected() {
+        selected(): boolean {
             return this.checked === this.value;
-        }
-    },
-    methods: {
-        handleChange() {
-            this.$emit("change", this.value);
         }
     }
 });
@@ -59,14 +54,15 @@ export default Vue.extend({
     cursor: pointer;
     display: flex;
     padding: 5px 20px;
+    position: relative;
 
     &:hover,
     &:focus,
-    &.is-selected {
+    &.selected {
         border-color: var(--color-melbourne-cup);
     }
 
-    &.is-selected {
+    &.selected {
         box-shadow: 0 8px 15px 0 var(--color-jupiter);
     }
 }
@@ -78,12 +74,13 @@ export default Vue.extend({
     user-select: none;
 }
 
-.is-selected .label {
+.selected .label {
     font-weight: 700;
 }
 
 .icon {
     height: 50px;
+    margin-inline-end: 8px;
     user-select: none;
     width: 50px;
 }
@@ -93,6 +90,7 @@ export default Vue.extend({
 }
 
 .input {
+    position: absolute;
     visibility: hidden;
 }
 </style>
