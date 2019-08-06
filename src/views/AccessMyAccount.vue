@@ -1,6 +1,15 @@
 <template>
     <div class="access-my-account">
-        <div class="top">
+        <div class="wrap">
+            <div class="title-container">
+                <div class="title">Access My Account</div>
+                <div class="subtitle">
+                    Don't have an account?
+                    <router-link to="create-account"
+                        >Create A New Account</router-link
+                    >
+                </div>
+            </div>
             <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
@@ -75,16 +84,38 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
+a {
+    color: var(--color-melbourne-cup);
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .access-my-account {
     display: flex;
     flex-direction: column;
 }
 
-.top {
+.wrap {
     align-items: center;
-    align-self: center;
     display: flex;
     flex-direction: column;
-    max-width: 1024px;
+    padding: 80px 0;
+}
+
+.title-container {
+    margin-block-end: 50px;
+    text-align: center;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 500;
+    margin-block-end: 15px;
+}
+
+.subtitle {
+    color: var(--color-china-blue);
+    font-size: 14px;
+    font-weight: 400;
 }
 </style>

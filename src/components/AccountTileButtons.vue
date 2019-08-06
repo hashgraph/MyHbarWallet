@@ -48,7 +48,6 @@ export default Vue.extend({
     /* todo: (mobile) Access-Account page should not have a top level
     align-items: center; for this overflow to work correctly */
     overflow: auto;
-    padding-block: 50px; /* remove */
     text-align: center;
 }
 
