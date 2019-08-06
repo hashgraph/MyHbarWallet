@@ -4,8 +4,6 @@ import Accordion from "@/components/Accordion.vue";
 import CustomerSupportLink from "@/components/CustomerSupportLink.vue";
 
 describe("FAQs.vue", () => {
-    const title = "Title";
-
     it("renders", () => {
         const wrapper = shallowMount(FAQs);
         expect(wrapper.findAll(Accordion)).toHaveLength(4);
