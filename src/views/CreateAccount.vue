@@ -10,7 +10,7 @@
                     </router-link>
                 </div>
             </div>
-            <CreateTabbedMenu />
+            <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
     </div>
@@ -18,12 +18,12 @@
 <script lang="ts">
 import Vue from "vue";
 import FAQs from "../components/FAQs.vue";
-// import CreateTabbedMenu from "@/components/CreateTabbedMenu.vue";
+import AccountTileButtons from "@/components/AccountTileButtons.vue";
 
 export default Vue.extend({
     components: {
-        FAQs
-        // CreateTabbedMenu
+        FAQs,
+        AccountTileButtons
     },
     computed: {}
 });
