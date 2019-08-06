@@ -29,11 +29,13 @@
             <strong>Password + Mnemonic Phrase</strong> to access your wallet.
         </div>
 
-            <MnemonicInput :editable="editable" :words="words" :value="value" />
-            <div class="button-container">
-                <Button class="button-print" label="Print" />
-            </div>
-        </template>
+        <div class="contents">
+            <Mnemonic :editable="false" :words="words.length" :value="words" />
+        </div>
+
+        <div class="button-container">
+            <Button class="button-print" label="Print" outline="true" />
+        </div>
     </Modal>
 </template>
 
@@ -85,6 +87,12 @@ export default Vue.extend({
         font-size: 14px;
         font-weight: 700;
     }
+}
+
+.contents {
+    border: 1px solid var(--color-jupiter);
+    margin: 0;
+    padding: 20px;
 }
 
 .support-email {
