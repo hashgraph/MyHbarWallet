@@ -4,18 +4,28 @@
             <div class="page-container">
                 <div class="banner">
                     <div class="banner-content">
-                        <h1>Hedera's</h1>
-                        <h1>Original Wallet</h1>
-                        MyHederaWallet is a free, client-side interface helping
-                        you interact with Hedera hashgraph. Our easy-to-use,
-                        open-source platform allows you to generate wallets,
-                        interact with smart contracts, and so much more.
+                        <div class="title">
+                            Hedera's
+                        </div>
+                        <div class="title">
+                            Original Wallet
+                        </div>
+                        <div class="subtitle">
+                            MyHederaWallet is a free, client-side interface
+                            helping you interact with Hedera hashgraph. Our
+                            easy-to-use, open-source platform allows you to
+                            generate wallets, interact with smart contracts, and
+                            so much more.
+                        </div>
                     </div>
-                    <div class="banner-image"></div>
+                    <div class="banner-image">
+                        <img :src="banner" alt="banner" />
+                    </div>
                 </div>
                 <HomeTileButtons />
             </div>
         </div>
+        <img class="circle" :src="circle" alt="circle" />
         <div class="about">
             <div class="page-container">
                 <div class="banner">
@@ -45,6 +55,8 @@ import Features from "@/components/Features.vue";
 import FAQs from "@/components/FAQs.vue";
 import Community from "@/components/Community.vue";
 import HomeTileButtons from "@/components/HomeTileButtons.vue";
+import bannerImage from "@/assets/banner.svg";
+import circle from "@/assets/circle.png";
 
 export default Vue.extend({
     name: "Home",
@@ -53,6 +65,14 @@ export default Vue.extend({
         HomeTileButtons,
         Features,
         Community
+    },
+    computed: {
+        banner() {
+            return bannerImage;
+        },
+        circle() {
+            return circle;
+        }
     }
 });
 </script>
@@ -69,12 +89,10 @@ export default Vue.extend({
 }
 
 .page-container {
-    align-items: center;
-    align-self: center;
-    display: flex;
-    flex-direction: column;
     margin: 0 auto;
     max-width: 1024px;
+    padding: 0 20px;
+    text-align: start;
 
     @media (min-width: 1025px) {
         /* fixme: remove 80px when there is more content */
@@ -96,6 +114,7 @@ export default Vue.extend({
     align-items: center;
     align-self: center;
     display: flex;
+    padding: 30px 0 30px 30px;
     width: 100%;
 }
 
@@ -104,18 +123,34 @@ export default Vue.extend({
     font-size: 14px;
     max-width: 50%;
     text-align: start;
+}
 
-    & > h1 {
-        color: var(--color-ghostlands-coal);
-        font-size: 45px;
-        font-weight: 700;
-        letter-spacing: -1px;
-    }
+.title {
+    color: var(--color-ghostlands-coal);
+    font-size: 45px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    color: var(--color-ghostlands-coal);
+    margin-block-start: 17px;
+    max-width: 420px;
 }
 
 .banner-image {
     display: flex;
     flex: 1;
+
+    & :first-child {
+        border-radius: 100%;
+        height: 452px;
+    }
+}
+
+.circle {
+    background-color: var(--color-yankees-blue);
+    width: 100%;
 }
 
 .about {
