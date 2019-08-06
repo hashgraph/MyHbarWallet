@@ -10,6 +10,8 @@ import InterfaceInteractWithContract from "./views/InterfaceInteractWithContract
 import InterfaceSignMessage from "./views/InterfaceSignMessage.vue";
 import InterfaceVerifyMessage from "./views/InterfaceVerifyMessage.vue";
 import UnitConvert from "./views/UnitConvert.vue";
+import PrivacyPolicy from "./views/PrivacyPolicy.vue"
+
 Vue.use(Router);
 
 export default new Router({
@@ -35,6 +37,11 @@ export default new Router({
             path: "/unit-convert",
             name: "unit-convert",
             component: UnitConvert
+        },
+        {
+            path: "/privacy-policy",
+            name: "privacy-policy",
+            component: PrivacyPolicy
         },
         {
             path: "/interface",
