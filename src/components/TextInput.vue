@@ -23,7 +23,7 @@
 <script lang="ts">
 import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
-import { mdiEye } from "@mdi/js";
+import { mdiEye, mdiEyeOutline } from "@mdi/js";
 
 export default Vue.extend({
     components: {
@@ -51,7 +51,7 @@ export default Vue.extend({
             return "text";
         },
         eye() {
-            return mdiEye;
+            return this.isEyeOpen ? mdiEye : mdiEyeOutline;
         },
         classObject() {
             return {
