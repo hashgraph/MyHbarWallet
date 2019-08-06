@@ -15,16 +15,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-import FAQs from "../components/FAQs.vue";
-import AccountTileButtons from "../components/AccountTileButtons.vue";
-import ModalAccessByHardware from "../components/ModalAccessByHardware.vue";
+import FAQs from "@/components/FAQs.vue";
+import AccountTileButtons from "@/components/AccountTileButtons.vue";
+import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
 import ModalAccessBySoftware, {
     AccessSoftwareOption
-} from "../components/ModalAccessBySoftware.vue";
+} from "@/components/ModalAccessBySoftware.vue";
 import ModalAccessByPhrase, {
     State as ModalAccessByPhraseState,
     MnemonicType
-} from "../components/ModalAccessByPhrase.vue";
+} from "@/components/ModalAccessByPhrase.vue";
 
 function newAccessByPhraseState(isOpen: boolean) {
     return {
