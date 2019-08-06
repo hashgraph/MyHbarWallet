@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import AccessMyAccount from "./views/AccessMyAccount.vue";
 import CreateAccount from "./views/CreateAccount.vue";
+import HardwareWalletAffiliates from "./views/HardwareWalletAffiliates.vue";
 import Interface from "./views/Interface.vue";
 import InterfaceSendTransfer from "./views/InterfaceSendTransfer.vue";
 import InterfaceDeployContract from "./views/InterfaceDeployContract.vue";
@@ -30,6 +31,11 @@ export default new Router({
             path: "/access-my-account",
             name: "access-my-account",
             component: AccessMyAccount
+        },
+        {
+            path: "/hardware-wallet-affiliates",
+            name: "hardware-wallet-affiliates",
+            component: HardwareWalletAffiliates
         },
         {
             path: "/interface",

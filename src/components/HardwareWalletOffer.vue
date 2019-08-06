@@ -20,7 +20,7 @@ export default Vue.extend({
     props: {
         description: { type: String, required: true },
         imgSrc: { type: String, required: true },
-        cost: { type: Number, required: true },
+        cost: { type: String, required: true },
         currency: { type: String, required: true },
         moreInfo: { type: String, required: true }
     }
@@ -34,8 +34,7 @@ export default Vue.extend({
     border-color: White;
     border-radius: 4px;
     display: flex;
-    margin: 7px auto;
-    max-width: 720px;
+    margin: 7px 0;
     padding: 26px 34px;
 }
 
