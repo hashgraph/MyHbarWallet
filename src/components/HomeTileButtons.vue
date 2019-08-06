@@ -5,7 +5,7 @@
         <HomeTileButton
             title="Create A New Wallet"
             content="Obtain an ETH address and generate your private key. Saving and safekeeping the key will be your responsibility."
-            :icon="faWallet"
+            :icon="wallet"
             route="create-account"
             action="Get Started"
         />
@@ -15,7 +15,7 @@
         <HomeTileButton
             title="Access My Account"
             content="Send or swap your ETH and tokens, purchase ENS domains, interact with smart contracts, and more! This is where the magic happens."
-            :icon="faUnlockAlt"
+            :icon="unlock"
             route="access-account"
             action="Access Now"
         />
@@ -24,20 +24,19 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import HomeTileButton from "../components/HomeTileButton.vue";
-import { faWallet, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
+import { mdiWallet, mdiLockOpen } from "@mdi/js";
 
 export default Vue.extend({
     components: {
         HomeTileButton
     },
     computed: {
-        faWallet() {
-            return faWallet;
+        wallet() {
+            return mdiWallet;
         },
-        faUnlockAlt() {
-            return faUnlockAlt;
+        unlock() {
+            return mdiLockOpen;
         }
     },
     methods: {
