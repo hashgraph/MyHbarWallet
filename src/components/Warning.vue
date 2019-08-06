@@ -1,10 +1,6 @@
 <template>
     <div class="warning">
-        <MaterialDesignIcon
-            class="warning-symbol"
-            :icon="cautionIcon"
-            @click="handleClose"
-        />
+        <MaterialDesignIcon class="warning-symbol" :icon="cautionIcon" />
         <div class="text">
             <div class="title">
                 {{ title }}
