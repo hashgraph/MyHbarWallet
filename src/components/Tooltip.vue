@@ -27,20 +27,6 @@ export default Vue.extend({
     }
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: none;
-    }
-}
-
-@media screen and (prefers-reduced-motion: reduce) {
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: none;
-    }
-}
-
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.3s;
@@ -57,7 +43,7 @@ export default Vue.extend({
     border-radius: 5px;
     box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.1);
     color: var(--color-china-blue);
-    max-width: 200px;
+    max-width: 400px;
     padding: 5px;
     z-index: 10;
 }
