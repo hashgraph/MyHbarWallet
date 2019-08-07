@@ -34,6 +34,8 @@ export default Vue.extend({
 }
 
 img {
+    align-self: flex-start;
+    margin-block-start: 10px;
     margin-inline-end: 25px;
     width: 60px;
 }
