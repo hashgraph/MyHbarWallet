@@ -1,6 +1,8 @@
 <template>
     <div class="warning">
-        <MaterialDesignIcon class="warning-symbol" :icon="cautionIcon" />
+        <div class="warning-symbol-container">
+            <MaterialDesignIcon class="warning-symbol" :icon="cautionIcon" />
+        </div>
         <div class="text">
             <div class="title">
                 {{ title }}
@@ -41,9 +43,16 @@ export default Vue.extend({
     width: 100%;
 }
 
-.warning-symbol {
+.warning-symbol-container {
+    display: flex;
     flex-shrink: 0;
+    padding-block-start: 10px;
     width: 60px;
+}
+
+.warning-symbol {
+    height: 30px;
+    width: 30px;
 }
 
 .title {
