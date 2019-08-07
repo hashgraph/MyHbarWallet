@@ -5,8 +5,10 @@
         :no-decoration="true"
         @change="this.$listeners.change"
     >
-        <div class="modal-oops-logout">
+        <template v-slot:banner>
             <h2>Oops!</h2>
+        </template>
+        <div class="modal-oops-logout">
             <p>
                 It seems like you forgot to logout of your wallet. For the
                 security of your wallet, please log out of your wallet to
