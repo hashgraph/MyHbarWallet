@@ -3,7 +3,8 @@
         :class="{
             busy,
             outline,
-            compact
+            compact,
+            danger
         }"
         :disabled="disabled"
         v-on="disabled ? null : $listeners"
@@ -40,6 +41,7 @@ export default Vue.extend({
         label: { type: String, required: true },
         busy: { type: Boolean },
         disabled: { type: Boolean },
+        danger: { type: Boolean },
         trailingIcon: {
             type: String,
             default: null
@@ -93,6 +95,22 @@ button {
     &:active:not(.busy):not(:disabled) {
         background-color: var(--color-green-jelly);
         border-color: var(--color-green-jelly);
+    }
+}
+
+.danger {
+    background-color: var(--color-infra-red);
+    border-color: var(--color-infra-red);
+
+    &:hover:not(.busy):not(:disabled),
+    &:focus:not(.busy):not(:disabled) {
+        background-color: var(--color-aggressive-salmon);
+        border-color: var(--color-aggressive-salmon);
+    }
+
+    &:active:not(.busy):not(:disabled) {
+        background-color: var(--color-aggressive-salmon);
+        border-color: var(--color-aggressive-salmon);
     }
 }
 
