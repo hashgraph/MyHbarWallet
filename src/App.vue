@@ -17,7 +17,7 @@
 import Vue from "vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-import InfoTooltip from "@/components/InfoTooltip.vue";
+import InfoTooltip from "@/components/TooltipButton.vue";
 
 export default Vue.extend({
     name: "App",
