@@ -9,7 +9,6 @@ Vue.directive("tooltip",
         bind: function(el: HTMLElement, binding : DirectiveBinding, node : VNode) {
             const title = el.getAttribute("title");
             el.setAttribute("title", "");
-            const vm = node.context;
 
             const tooltip = new Tooltip_({
                 el: document.createElement("div"),
@@ -20,7 +19,7 @@ Vue.directive("tooltip",
 
             el.instance = tooltip;
             el.tooltip = tooltip.$el;
-            addTooltipEvents(el, vm);
+            addTooltipEvents(el, node);
         },
         unbind: function(el: HTMLElement) {
             if (el.domInserted) {
@@ -33,11 +32,13 @@ Vue.directive("tooltip",
     }
 );
 
-const addTooltipEvents = (el: HTMLElement, vm : Vue) => {
+const addTooltipEvents = (el: HTMLElement) => {
+    el.setAttribute("data-has-remove-listener", "false");
+
     const addTooltip = () => {
         document.body.appendChild(el.tooltip);
         Vue.nextTick(() => {
-            new Popper(el, el.tooltip, { placement: "right" });
+            new Popper(el, el.tooltip);
         });
         el.instance.visible = true;
     };
@@ -52,13 +53,21 @@ const addTooltipEvents = (el: HTMLElement, vm : Vue) => {
         }
     };
 
-    // Need to compose these to be:
-    // On click: activate, On click again: deactivate
-    // On hover: activate, On unhover: deactivate
-    // "toggleTooltip" for click? with maintained active state on tooltip.vue?
-    // listen for changes in element vm? i.e $vm.$data.active?
+    // I can't believe I've done this
+    const toggleHideTooltipEvent = () => {
+        if (el.getAttribute("data-has-remove-listener") === "false") {
+            el.addEventListener("mouseleave", hideTooltip, false);
+            el.setAttribute("data-has-remove-listener", "true");
+        } else {
+            el.removeEventListener("mouseleave", hideTooltip, false);
+            el.setAttribute("data-has-remove-listener", "false");
+        }
+    };
+
     el.addEventListener("mouseenter", addTooltip, false);
     el.addEventListener("mouseleave", hideTooltip, false);
+    el.setAttribute("data-has-remove-listener", "true");
+    el.addEventListener("click", toggleHideTooltipEvent, false);
     el.tooltip.addEventListener("transitioned", removeTooltip, false);
 };
 

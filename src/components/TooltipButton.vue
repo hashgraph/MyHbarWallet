@@ -42,6 +42,11 @@ export default Vue.extend({
             }
         }
     },
+    watch: {
+        active: function() {
+            console.log("Active: " + this.active);
+        }
+    },
     created: function() {
         window.addEventListener("click", this.unclicked);
     },
