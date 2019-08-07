@@ -18,7 +18,7 @@
             />
             <Button
                 class="button-access-wallet"
-                label="Access Wallet"
+                label="Access Account"
                 :disabled="userPrivateKey.length === 0"
             />
             <CustomerSupportLink />
