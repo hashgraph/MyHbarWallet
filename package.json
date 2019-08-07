@@ -16,8 +16,8 @@
         "@fortawesome/free-solid-svg-icons": "^5.10.1",
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "@mdi/js": "^3.8.95",
+        "bignumber.js": "^9.0.0",
         "core-js": "^2.6.5",
-        "jsbi": "^3.0.0",
         "vue": "^2.6.10",
         "vue-router": "^3.0.3",
         "vuex": "^3.0.1"

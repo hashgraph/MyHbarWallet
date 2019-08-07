@@ -3,16 +3,17 @@
         <div class="wrap">
             <div class="block-left">
                 <div class="select-block">
-                    <DropDownUnitSelector
+                    <Select
+                        v-model="selectedLeft"
                         :options="options"
-                        :current-selected="selectedLeft"
                         :left="true"
-                        @updatedSelected="updateCurrency"
                     />
                 </div>
                 <div>
-                    <input
+                    <TextInput
                         v-model="valueLeft"
+                        compact
+                        white
                         type="number"
                         step="any"
                         placeholder="Amount"
@@ -22,22 +23,23 @@
 
             <div class="block-center">
                 <div class="convert-icon">
-                    <img src="../assets/swap.svg" alt="swap" />
+                    <img src="../assets/swap.svg" alt="" />
                 </div>
             </div>
 
             <div class="block-right">
                 <div class="select-block">
-                    <DropDownUnitSelector
+                    <Select
+                        v-model="selectedRight"
                         :options="options"
-                        :current-selected="selectedRight"
                         :left="false"
-                        @updatedSelected="updateCurrency"
                     />
                 </div>
                 <div>
-                    <input
+                    <TextInput
                         v-model="valueRight"
+                        compact
+                        white
                         type="number"
                         step="any"
                         placeholder="Amount"
@@ -50,43 +52,59 @@
 
 <script lang="ts">
 import Vue from "vue";
-import DropDownUnitSelector from "../components/DropDownUnitSelector.vue";
-import JSBI from "jsbi";
-import { mapState } from "vuex";
+import Select from "./Select.vue";
+import TextInput from "./TextInput.vue";
+import BigNumber from "bignumber.js";
 
-interface UnitMap {
-    [key: string]: number;
+enum Unit {
+    Tinybar = "tinybar",
+    Microbar = "microbar",
+    Millibar = "millibar",
+    Hbar = "hbar",
+    Kilobar = "kilobar",
+    Megabar = "megabar",
+    Gigabar = "gigabar"
 }
 
-const unitMap: UnitMap = {
-    tinybar: 1,
-    microbar: 100,
-    millibar: 100000,
-    hbar: 100000000,
-    kilobar: 100000000000,
-    megabar: 100000000000000,
-    gigabar: 100000000000000000
-};
+const unitMap: Map<Unit, number> = new Map([
+    [Unit.Tinybar, 1],
+    [Unit.Microbar, 100],
+    [Unit.Millibar, 100000],
+    [Unit.Hbar, 100000000],
+    [Unit.Kilobar, 100000000000],
+    [Unit.Megabar, 100000000000000],
+    [Unit.Gigabar, 100000000000000000]
+]);
 
-export default Vue.extend({
+interface Data {
+    selectedLeft: Unit;
+    selectedRight: Unit;
+    valueLeft: string;
+    valueRight: string;
+}
+
+interface Methods {
+    getValueOfUnit(unit: Unit): BigNumber;
+    convertFromTo(amt: number, from: string, to: string): string;
+}
+
+export default Vue.extend<Data, Methods, {}, {}>({
     components: {
-        DropDownUnitSelector
-    },
-    props: {
-        options: {
-            type: Array,
-            default: function() {
-                return [];
-            }
-        }
+        Select,
+        TextInput
     },
     data() {
         return {
-            selectedLeft: "tinybar",
-            selectedRight: "hbar",
-            valueLeft: 100000000,
-            valueRight: 1
+            selectedLeft: Unit.Tinybar,
+            selectedRight: Unit.Hbar,
+            valueLeft: "100000000",
+            valueRight: "1"
         };
+    },
+    computed: {
+        options() {
+            return Object.values(Unit);
+        }
     },
     watch: {
         valueLeft(newValue) {
@@ -105,37 +123,32 @@ export default Vue.extend({
         },
         selectedLeft(newValue) {
             this.valueRight = this.convertFromTo(
-                this.valueLeft,
+                Number(this.valueLeft),
                 newValue,
                 this.selectedRight
             );
         },
         selectedRight(newValue) {
             this.valueLeft = this.convertFromTo(
-                this.valueRight,
+                Number(this.valueRight),
                 newValue,
                 this.selectedLeft
             );
         }
     },
     methods: {
-        getValueOfUnit(unit: any): any {
-            unit = unit ? unit.toLowerCase() : "hbar";
-            const newValue: any = unitMap[unit];
-            return JSBI.BigInt(newValue);
+        getValueOfUnit(unit: Unit): BigNumber {
+            return new BigNumber(unitMap.get(unit)!);
         },
-        convertFromTo(amt: number, from: string, to: string) {
-            let x = JSBI.BigInt(amt);
-            let y = JSBI.BigInt(this.getValueOfUnit(from));
-            let z = JSBI.BigInt(this.getValueOfUnit(to));
-            return JSBI.toNumber(JSBI.divide(JSBI.multiply(x, y), z));
-        },
-        updateCurrency(e: any) {
-            if (e[1] === "left") {
-                this.selectedLeft = e[0];
-            } else {
-                this.selectedRight = e[0];
-            }
+        convertFromTo(amt: number, from: Unit, to: Unit): string {
+            let x = new BigNumber(amt);
+            let y = this.getValueOfUnit(from) as BigNumber;
+            let z = this.getValueOfUnit(to) as BigNumber;
+
+            return x
+                .multipliedBy(y)
+                .dividedBy(z)
+                .toFixed();
         }
     }
 });
