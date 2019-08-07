@@ -1,13 +1,13 @@
 <template>
     <div class="button-wrapper" @click="menuToggle">
         <div :class="style('1')">
-            <FontAwesomeIcon class="icon" :icon="icon" />
+            <MaterialDesignIcon class="icon" :icon="icon" />
         </div>
         <div :class="style('2')">
-            <FontAwesomeIcon class="icon" :icon="icon" />
+            <MaterialDesignIcon class="icon" :icon="icon" />
         </div>
         <div :class="style('3')">
-            <FontAwesomeIcon class="icon" :icon="icon" />
+            <MaterialDesignIcon class="icon" :icon="icon" />
         </div>
     </div>
 </template>
@@ -20,7 +20,7 @@ import { mdiMinus } from "@mdi/js";
 export default Vue.extend({
     name: "HamburgerButton",
     components: {
-        FontAwesomeIcon
+        MaterialDesignIcon
     },
     data() {
         return {
@@ -58,71 +58,47 @@ export default Vue.extend({
     }
 }
 
-@media screen and (prefers-reduced-motion: reduce) {
-    .bar-1 {
-        transform: translate(25px) scaleY(1.2) scaleX(1.75);
-        transition: none;
-    }
-}
-
 .bar-1 {
-    transform: translate(25px) scaleY(1.2) scaleX(1.75);
+    transform: translate(12px) scaleY(1.2) scaleX(1.5);
     transition: transform 0.2s linear;
-}
 
-@media screen and (prefers-reduced-motion: reduce) {
-    .bar-2 {
-        transform: translate(25px, -15px) scaleY(1.2) scaleX(1.75);
+    @media (prefers-reduced-motion) {
         transition: none;
     }
 }
 
 .bar-2 {
-    transform: translate(25px, -15px) scaleY(1.2) scaleX(1.75);
+    transform: translate(12px, -19px) scaleY(1.2) scaleX(1.5);
     transition: transform 0.2s linear;
-}
 
-@media screen and (prefers-reduced-motion: reduce) {
-    .bar-3 {
-        transform: translate(11px, -30px) scaleY(1.2);
+    @media (prefers-reduced-motion) {
         transition: none;
     }
 }
 
 .bar-3 {
-    transform: translate(11px, -30px) scaleY(1.2);
+    transform: translate(4.5px, -38px) scaleY(1.2);
     transition: transform 0.2s linear;
-}
 
-@media screen and (prefers-reduced-motion: reduce) {
-    .bar-1-anim {
-        transform: rotate(45deg) translate(27.5px, 6px) scaleX(1.75) scaleY(1.5);
+    @media (prefers-reduced-motion) {
         transition: none;
     }
 }
 
 .bar-1-anim {
-    transform: rotate(45deg) translate(27.5px, 6px) scaleX(1.75) scaleY(1.5);
+    transform: rotate(45deg) translate(19px, 4px) scaleX(1.75) scaleY(1.5);
     transition: transform 0.2s linear;
-}
 
-@media screen and (prefers-reduced-motion: reduce) {
-    .bar-2-anim {
-        transform:
-            rotate(-45deg) translate(35px, -11px) scaleX(1.75)
-            scaleY(1.5);
+    @media (prefers-reduced-motion) {
         transition: none;
     }
 }
 
 .bar-2-anim {
-    transform: rotate(-45deg) translate(35px, -11px) scaleX(1.75) scaleY(1.5);
+    transform: rotate(-45deg) translate(27px, -14px) scaleX(1.75) scaleY(1.5);
     transition: transform 0.2s linear;
-}
 
-@media screen and (prefers-reduced-motion: reduce) {
-    .bar-3-anim {
-        transform: translateX(15px) translateX(-5px);
+    @media (prefers-reduced-motion) {
         transition: none;
     }
 }
@@ -130,23 +106,15 @@ export default Vue.extend({
 .bar-3-anim {
     transform: translateX(15px) translateX(-5px);
     transition: transform 0.2s linear;
+
+    @media (prefers-reduced-motion) {
+        transition: none;
+    }
 }
 
 @media screen and (min-width: 1025px) {
     .button-wrapper {
-        transition: none;
         visibility: hidden;
-    }
-}
-
-@media screen and (prefers-reduced-motion: reduce) {
-    .bar-1,
-    &.bar-2,
-    &.bar-3,
-    &.bar-1-anim,
-    &.bar-2-anim,
-    &.bar-3-anim {
-        transition: none;
     }
 }
 </style>

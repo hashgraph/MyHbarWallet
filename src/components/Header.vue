@@ -153,6 +153,7 @@ header {
 
 @media screen and (max-width: 1025px) {
     .links {
+        max-width: 0;
         transition: none;
         visibility: hidden;
     }
