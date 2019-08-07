@@ -4,20 +4,25 @@
             <span v-if="label" class="label">{{ label }}</span>
             <input
                 ref="input"
+                v-model="text"
                 :placeholder="placeholder"
                 :type="keyboardType"
                 :tabindex="tabindex"
-                :value="value"
                 :step="step"
-                @input="handleInput"
             />
         </label>
         <MaterialDesignIcon
-            v-if="obscure"
+            v-if="obscure && !validate"
             class="eye"
             :class="{ 'is-open': isEyeOpen }"
             :icon="eye"
             @click="handleClickEye"
+        />
+        <MaterialDesignIcon
+            v-if="validate && !obscure"
+            class="checkmark"
+            :class="{ 'is-valid': valid }"
+            :icon="checkmark"
         />
     </div>
 </template>
@@ -25,11 +30,15 @@
 <script lang="ts">
 import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
-import { mdiEye, mdiEyeOutline } from "@mdi/js";
+import { mdiEye, mdiEyeOutline, mdiCheckCircle } from "@mdi/js";
 
 export default Vue.extend({
     components: {
         MaterialDesignIcon
+    },
+    model: {
+        prop: "value",
+        event: "input"
     },
     props: {
         placeholder: { type: String, default: "" },
@@ -44,18 +53,30 @@ export default Vue.extend({
         white: Boolean,
 
         // Whether to hide the text being edited (e.g., for passwords).
-        obscure: Boolean
+        obscure: Boolean,
+
+        // Whether to validate the the input as an ID and add the check-mark to the bottom right
+        validate: Boolean
     },
     data() {
         return {
             // If the eye is open to show the obscured text anyway
-            isEyeOpen: false
+            isEyeOpen: false,
+
+            valid: false,
+
+            text: this.value,
+
+            // Set here instead of computed -- where constants would normally go
+            // to prevent recreating object
+            regex: new RegExp("\\d+\\.\\d+\\.\\d+")
         };
     },
     computed: {
-        keyboardType(): string {
+        keyboardType() {
             if (this.type) return this.type;
-            if (this.obscure && !this.isEyeOpen) return "password";
+            if (this.obscure && !this.validate && !this.isEyeOpen)
+                return "password";
             return "text";
         },
         eye(): string {
@@ -68,12 +89,24 @@ export default Vue.extend({
             };
         }
     },
+    watch: {
+        text: function(value: String) {
+            // If validation is on and obscure is off then only emit
+            // input change when the input value is valid
+            // Else always emite new value
+            if (this.validate && !this.obscure) {
+                this.valid = this.regex.test(value);
+                if (this.valid) {
+                    this.$emit("input", value);
+                }
+            } else {
+                this.$emit("input", value);
+            }
+        }
+    },
     methods: {
         focus() {
             (this.$refs.input as HTMLInputElement).focus();
-        },
-        handleInput(event: Event) {
-            this.$emit("input", (event.target as HTMLInputElement).value);
         },
         handleClickEye() {
             this.isEyeOpen = !this.isEyeOpen;
@@ -140,6 +173,21 @@ input {
     position: absolute;
 
     &.is-open {
+        color: var(--color-melbourne-cup);
+        opacity: 1;
+    }
+}
+
+.checkmark {
+    color: var(--color-jupiter);
+    height: 14px;
+    inset-block-end: 13px;
+    inset-inline-end: 13px;
+    opacity: 1;
+    position: absolute;
+    width: 14px;
+
+    &.is-valid {
         color: var(--color-melbourne-cup);
         opacity: 1;
     }
