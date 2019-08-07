@@ -163,4 +163,8 @@ header {
         padding: 20px;
     }
 }
+
+.modal.large .content-container {
+    padding: 30px;
+}
 </style>

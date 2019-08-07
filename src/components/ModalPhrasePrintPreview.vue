@@ -6,9 +6,11 @@
         @change="this.$listeners.change"
     >
         <div class="logo-contents">
-            <div class="logo">
-                My<strong>Hedera</strong>Wallet |
-                <span>Mnemonic Phrase</span>
+            <div class="header-container">
+                <span class="header">
+                    My<strong>Hedera</strong>Wallet
+                </span>
+                <span class="sub-header">Mnemonic Phrase</span>
             </div>
             <div class="support-email">
                 <img
@@ -25,7 +27,7 @@
             </h3>
             We <strong>CAN NOT</strong> change your password. Please
             <strong>DO NOT FORGET</strong> to save your password. It is your
-            <strong>PRIVATE KEY</strong>. You will need this
+            private key. You will need this
             <strong>Password + Mnemonic Phrase</strong> to access your wallet.
         </div>
 
@@ -43,13 +45,13 @@
 import Vue from "vue";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
-import MnemonicInput from "@/components/MnemonicInput.vue";
+import Mnemonic from "@/components/MnemonicInput.vue";
 
 export default Vue.extend({
     components: {
         Button,
         Modal,
-        MnemonicInput
+        Mnemonic
     },
     model: {
         prop: "isOpen",
@@ -59,6 +61,7 @@ export default Vue.extend({
         isOpen: { type: Boolean },
         words: {
             type: Array,
+            // FIXME: Make required when we have data
             default: () => ["", "", "", "", "", "", "", "", "", "", "", ""]
         }
     }
@@ -75,28 +78,38 @@ export default Vue.extend({
     justify-content: space-between;
 }
 
-.logo {
+.header {
+    color: var(--color-china-blue);
     font-size: 24px;
 
     & > strong {
         font-weight: 600;
     }
+}
 
-    & > span {
-        color: var(--color-melbourne-cup);
-        font-size: 14px;
-        font-weight: 700;
-    }
+.header-container {
+    align-items: center;
+    display: flex;
+}
+
+.sub-header {
+    border-left: 2px solid #05c0a5;
+    color: var(--color-melbourne-cup);
+    font-size: 14px;
+    font-weight: 700;
+    margin-inline-start: 8px;
+    padding-inline-start: 8px;
 }
 
 .contents {
     border: 1px solid var(--color-jupiter);
     margin: 0;
-    padding: 20px;
+    padding: 50px;
 }
 
 .support-email {
-    color: var(--color-basalt-grey);
+    color: var(--color-china-blue);
+    font-size: 14px;
     margin-inline-start: 5px;
 
     & > img {
@@ -105,7 +118,7 @@ export default Vue.extend({
 }
 
 .password-disclaimer {
-    color: var(--color-basalt-grey);
+    color: var(--color-china-blue);
     font-size: 14px;
     margin-block-end: 30px;
 
