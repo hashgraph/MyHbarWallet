@@ -20,7 +20,11 @@ module.exports = {
         "import/resolver": {
             webpack: {},
             typescript: {}
-        }
+        },
+        polyfills: [
+            // TODO: Actually add this as a polyfill via webpack
+            "BigInt"
+        ]
     },
     rules: {
         indent: ["error", 4],

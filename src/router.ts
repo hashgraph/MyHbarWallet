@@ -3,13 +3,14 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import AccessMyAccount from "./views/AccessMyAccount.vue";
 import CreateAccount from "./views/CreateAccount.vue";
+import HardwareWalletAffiliates from "./views/HardwareWalletAffiliates.vue";
 import Interface from "./views/Interface.vue";
 import InterfaceSendTransfer from "./views/InterfaceSendTransfer.vue";
 import InterfaceDeployContract from "./views/InterfaceDeployContract.vue";
 import InterfaceInteractWithContract from "./views/InterfaceInteractWithContract.vue";
 import InterfaceSignMessage from "./views/InterfaceSignMessage.vue";
 import InterfaceVerifyMessage from "./views/InterfaceVerifyMessage.vue";
-import UnitConvert from "./views/UnitConvert.vue";
+import ConvertUnits from "./views/ConvertUnits.vue";
 import PrivacyPolicy from "./views/PrivacyPolicy.vue";
 import TermsConditions from "./views/TermsConditions.vue";
 
@@ -35,9 +36,14 @@ export default new Router({
             component: AccessMyAccount
         },
         {
-            path: "/unit-convert",
-            name: "unit-convert",
-            component: UnitConvert
+            path: "/hardware-wallet-affiliates",
+            name: "hardware-wallet-affiliates",
+            component: HardwareWalletAffiliates
+        },
+        {
+            path: "/convert-units",
+            name: "convert-units",
+            component: ConvertUnits
         },
         {
             path: "/privacy-policy",

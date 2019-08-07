@@ -14,8 +14,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import MaterialDesignIcon from "./MaterialDesignIcon.vue";
+import { mdiMinus } from "@mdi/js";
 
 export default Vue.extend({
     name: "HamburgerButton",
@@ -29,7 +29,7 @@ export default Vue.extend({
     },
     computed: {
         icon() {
-            return faMinus;
+            return mdiMinus;
         }
     },
     methods: {

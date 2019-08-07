@@ -8,6 +8,7 @@
                 :type="keyboardType"
                 :tabindex="tabindex"
                 :value="value"
+                :step="step"
                 @input="handleInput"
             />
         </label>
@@ -35,8 +36,12 @@ export default Vue.extend({
         value: { type: String, default: "" },
         label: { type: String, default: null },
         tabindex: { type: String, default: null },
+        step: { type: String, default: null },
+        type: { type: String, default: "text" },
 
         compact: Boolean,
+
+        white: Boolean,
 
         // Whether to hide the text being edited (e.g., for passwords).
         obscure: Boolean
@@ -49,6 +54,7 @@ export default Vue.extend({
     },
     computed: {
         keyboardType() {
+            if (this.type) return this.type;
             if (this.obscure && !this.isEyeOpen) return "password";
             return "text";
         },
@@ -57,7 +63,8 @@ export default Vue.extend({
         },
         classObject() {
             return {
-                "is-compact": this.compact
+                "is-compact": this.compact,
+                "is-white": this.white
             };
         }
     },
@@ -106,6 +113,14 @@ input {
 .is-compact input {
     border-width: 1px;
     padding: 13px 15px;
+}
+
+.is-white input {
+    background-color: var(--color-white);
+
+    &:not(:focus) {
+        border-color: var(--color-white);
+    }
 }
 
 .label {
