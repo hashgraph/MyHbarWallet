@@ -86,6 +86,7 @@ nav {
     background-color: var(--color-white);
     height: 0;
     overflow: hidden;
+    padding: 0 10px;
     transition: height 225ms ease;
     width: 100vw;
     z-index: 100;
@@ -104,17 +105,14 @@ nav {
     }
 }
 
-.shadow-backdrop {
-    background-color: #000;
-    height: 100vh;
-    opacity: 0.8;
-    width: 100vw;
-    z-index: 9;
+.icon {
+    color: #334758;
+    font-size: 16px;
 }
 
 .link-block {
     align-items: center;
-    border-bottom: 1px solid var(--color-peral);
+    border-bottom: 1px solid var(--color-boysenberry-shadow);
     cursor: pointer;
     display: flex;
     list-style: none;
@@ -124,6 +122,7 @@ nav {
 
 a {
     align-items: center;
+    background-color: transparent;
     color: var(--color-washed-black);
     display: flex;
     flex-grow: 1;
@@ -135,7 +134,14 @@ a {
     &:active,
     &:focus,
     &:link {
-        color: var(--color-celestial-green);
+        color: var(--color-melbourne-cup);
     }
+}
+
+.link {
+    color: #334758;
+    flex-grow: 1;
+    font-size: 16px;
+    text-decoration: none;
 }
 </style>

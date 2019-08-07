@@ -48,6 +48,7 @@ export default Vue.extend({
 .button-wrapper {
     border-color: white;
     border-radius: 50%;
+    cursor: pointer;
     max-height: 40px;
     min-width: 40px;
     overflow: hidden;
@@ -59,7 +60,7 @@ export default Vue.extend({
 }
 
 .bar-1 {
-    transform: translate(12px) scaleY(1.2) scaleX(1.5);
+    transform: translate(12px) scaleY(1.75) scaleX(1.5);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {
@@ -68,7 +69,7 @@ export default Vue.extend({
 }
 
 .bar-2 {
-    transform: translate(12px, -19px) scaleY(1.2) scaleX(1.5);
+    transform: translate(12px, -17.5px) scaleY(1.75) scaleX(1.5);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {
@@ -77,7 +78,7 @@ export default Vue.extend({
 }
 
 .bar-3 {
-    transform: translate(4.5px, -38px) scaleY(1.2);
+    transform: translate(4.5px, -35px) scaleY(1.75);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {
@@ -86,7 +87,7 @@ export default Vue.extend({
 }
 
 .bar-1-anim {
-    transform: rotate(45deg) translate(19px, 4px) scaleX(1.75) scaleY(1.5);
+    transform: rotate(45deg) translate(19px, 4px) scaleX(1.75) scaleY(2);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {
@@ -95,7 +96,7 @@ export default Vue.extend({
 }
 
 .bar-2-anim {
-    transform: rotate(-45deg) translate(27px, -14px) scaleX(1.75) scaleY(1.5);
+    transform: rotate(-45deg) translate(27px, -14px) scaleX(1.75) scaleY(2);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {
