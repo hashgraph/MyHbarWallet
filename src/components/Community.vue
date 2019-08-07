@@ -1,0 +1,124 @@
+<template>
+    <div class="community">
+        <div class="wrap">
+            <div class="head">
+                <div class="title">
+                    Join MHW Community
+                </div>
+                <div class="subtitle">
+                    Get in the know and see your balance grow (we hope)!
+                </div>
+            </div>
+            <div class="icons">
+                <CommunitySocialIcon
+                    name="Facebook"
+                    :image="facebook"
+                    href="https://www.facebook.com"
+                />
+                <CommunitySocialIcon
+                    name="Twitter"
+                    :image="twitter"
+                    href="https://www.twitter.com"
+                />
+                <CommunitySocialIcon
+                    name="Medium"
+                    href="https://medium.com"
+                    :image="medium"
+                />
+                <CommunitySocialIcon
+                    name="Reddit"
+                    href="https://www.reddit.com/"
+                    :image="reddit"
+                />
+                <CommunitySocialIcon
+                    name="Github"
+                    href="https://github.com"
+                    :image="github"
+                />
+            </div>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import Vue from "vue";
+import CommunitySocialIcon from "@/components/CommunitySocialIcon.vue";
+import facebookSocial from "@/assets/facebook.png";
+import twitterSocial from "@/assets/twitter.jpg";
+import mediumSocial from "@/assets/medium.png";
+import redditSocial from "@/assets/reddit.svg";
+import githubSocial from "@/assets/github.png";
+
+export default Vue.extend({
+    components: {
+        CommunitySocialIcon
+    },
+    computed: {
+        facebook() {
+            return facebookSocial;
+        },
+        twitter() {
+            return twitterSocial;
+        },
+        medium() {
+            return mediumSocial;
+        },
+        reddit() {
+            return redditSocial;
+        },
+        github() {
+            return githubSocial;
+        }
+    }
+});
+</script>
+
+<style lang="postcss" scoped>
+.community {
+    background-color: var(--color-white);
+    padding: 80px 0;
+
+    @media (max-width: 1024px) {
+        padding: 40px 0 60px;
+    }
+}
+
+.wrap {
+    align-items: center;
+    display: flex;
+    margin: 0 auto;
+    max-width: 1024px;
+    padding: 0 20px;
+
+    @media (max-width: 1024px) {
+        display: block;
+        padding: 0 25px;
+    }
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 500;
+    margin-block-end: 15px;
+}
+
+.subtitle {
+    color: var(--color-china-blue);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.icons {
+    display: flex;
+    flex-wrap: wrap;
+    margin-inline-start: auto;
+
+    & :not(:first-child) {
+        margin-inline-start: 24px;
+    }
+
+    @media (max-width: 1024px) {
+        margin-block-start: 30px;
+    }
+}
+</style>

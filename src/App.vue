@@ -5,6 +5,7 @@
             <router-view />
         </div>
         <Footer />
+        <ZoomTopButton />
     </div>
 </template>
 
@@ -12,12 +13,14 @@
 import Vue from "vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import ZoomTopButton from "@/components/ZoomTopButton.vue";
 
 export default Vue.extend({
     name: "App",
     components: {
         Header,
-        Footer
+        Footer,
+        ZoomTopButton
     }
 });
 </script>
