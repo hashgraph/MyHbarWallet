@@ -1,5 +1,7 @@
 <template>
     <footer>
+        <!-- TODO: conditionally show FooterTop -->
+        <FooterTop />
         <div class="wrapper">
             <div class="links">
                 <a
@@ -64,11 +66,13 @@
 import Vue from "vue";
 import { mdiFacebook, mdiGithubCircle, mdiTwitter } from "@mdi/js";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import FooterTop from "@/components/FooterTop.vue";
 
 export default Vue.extend({
     name: "Footer",
     components: {
-        MaterialDesignIcon
+        MaterialDesignIcon,
+        FooterTop
     },
     computed: {
         facebook() {
