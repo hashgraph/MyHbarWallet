@@ -107,7 +107,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .convert-units {
-    background-color: #f2f4fa;
+    background-color: var(--color-boysenberry-shadow);
     background-image: url(../assets/right.png), url(../assets/left.png);
     background-position: 100% 0, left 80px;
     background-repeat: no-repeat, no-repeat;
