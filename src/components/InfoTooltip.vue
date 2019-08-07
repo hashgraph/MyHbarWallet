@@ -129,5 +129,16 @@ button {
             z-index: 10;
         }
     }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        &::after,
+        &::before {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            transition: none;
+            z-index: 10;
+        }
+    }
 }
 </style>
