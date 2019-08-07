@@ -33,42 +33,26 @@ Vue.directive("tooltip",
 );
 
 const addTooltipEvents = (el: HTMLElement) => {
-    el.setAttribute("data-has-remove-listener", "false");
-
     const addTooltip = () => {
         document.body.appendChild(el.tooltip);
         Vue.nextTick(() => {
             new Popper(el, el.tooltip);
         });
         el.instance.visible = true;
+        el.addEventListener("mouseleave", hideTooltip, false);
     };
 
     const hideTooltip = () => {
         el.instance.visible = false;
     };
 
-    const removeTooltip = () => {
-        if (!el.instance.visible) {
-            document.body.removeChild(el.tooltip);
-        }
-    };
-
-    // I can't believe I've done this
-    const toggleHideTooltipEvent = () => {
-        if (el.getAttribute("data-has-remove-listener") === "false") {
-            el.addEventListener("mouseleave", hideTooltip, false);
-            el.setAttribute("data-has-remove-listener", "true");
-        } else {
-            el.removeEventListener("mouseleave", hideTooltip, false);
-            el.setAttribute("data-has-remove-listener", "false");
-        }
+    const removeRemoveToolTipEvent = () => {
+        el.removeEventListener("mouseleave", hideTooltip, false);
     };
 
     el.addEventListener("mouseenter", addTooltip, false);
-    el.addEventListener("mouseleave", hideTooltip, false);
-    el.setAttribute("data-has-remove-listener", "true");
-    el.addEventListener("click", toggleHideTooltipEvent, false);
-    el.tooltip.addEventListener("transitioned", removeTooltip, false);
+    el.addEventListener("click", removeRemoveToolTipEvent, false);
+    document.addEventListener("click", hideTooltip, false);
 };
 
 

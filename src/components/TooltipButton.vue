@@ -6,7 +6,7 @@
             type="button"
             @mouseenter="hovered"
             @mouseleave="unhovered"
-            @click.stop="clicked"
+            @click.stop
         >
             <img :src="image" alt="(i)" />
         </button>
@@ -25,33 +25,17 @@ export default Vue.extend({
     },
     data: function() {
         return {
-            hover: false,
-            click: false
+            hover: false
         };
     },
     computed: {
-        active() {
-            return this.click || this.hover;
-        },
         image() {
             if (this.hover) {
-                // not this.active
                 return exclamationActive;
             } else {
                 return exclamation;
             }
         }
-    },
-    watch: {
-        active: function() {
-            console.log("Active: " + this.active);
-        }
-    },
-    created: function() {
-        window.addEventListener("click", this.unclicked);
-    },
-    destroyed: function() {
-        window.removeEventListener("click", this.unclicked);
     },
     methods: {
         hovered() {
@@ -59,12 +43,6 @@ export default Vue.extend({
         },
         unhovered() {
             this.hover = false;
-        },
-        clicked() {
-            this.click = !this.click;
-        },
-        unclicked() {
-            this.click = false;
         }
     }
 });
