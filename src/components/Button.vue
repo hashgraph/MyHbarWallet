@@ -109,8 +109,8 @@ button {
     }
 
     &:active:not(.busy):not(:disabled) {
-        background-color: var(--color-aggressive-salmon);
-        border-color: var(--color-aggressive-salmon);
+        background-color: var(--color-sunkist-coral);
+        border-color: var(--color-sunkist-coral);
     }
 }
 
