@@ -13,7 +13,7 @@
                 :key="offer.moreInfo"
                 :currency="offer.currency"
                 :cost="offer.cost"
-                :img-src="offer.imgSrc"
+                :image="offer.image"
                 :more-info="offer.moreInfo"
                 :description="offer.description"
             >
@@ -39,12 +39,11 @@ export default Vue.extend({
     },
     computed: {
         offers() {
-            // maybe do this somewhere else?
             return [
                 {
                     currency: "$",
                     cost: "59.00",
-                    imgSrc: ledgerImage,
+                    image: ledgerImage,
                     moreInfo: "https://www.ledger.com/?r=fa4b",
                     description:
                         "A light, yet solid multicurrency hardware wallet for cryptocurrencies. It is easy to carry everywhere thanks to its USB format."
@@ -52,7 +51,7 @@ export default Vue.extend({
                 {
                     currency: "$",
                     cost: "999.00",
-                    imgSrc: finneyImage,
+                    image: finneyImage,
                     moreInfo:
                         "http://shop.sirinlabs.com/?rfsn=2397639.54fdf&utm_source=refersion&utm_medium=affiliate&utm_campaign=2397639.54fdf",
                     description:
@@ -61,7 +60,7 @@ export default Vue.extend({
                 {
                     currency: "€",
                     cost: "44.00",
-                    imgSrc: bitboxImage,
+                    image: bitboxImage,
                     moreInfo: "https://shiftcrypto.ch/?ref=mew",
                     description:
                         "Our aim is to equip you for independence, with ease, in the digital world."
@@ -69,7 +68,7 @@ export default Vue.extend({
                 {
                     currency: "€",
                     cost: "83.49",
-                    imgSrc: trezorImage,
+                    image: trezorImage,
                     moreInfo: "https://trezor.io/?offer_id=12&aff_id=2029",
                     description:
                         "The most trusted hardware wallet in the world. Get yours today!"
@@ -77,7 +76,7 @@ export default Vue.extend({
                 {
                     currency: "$",
                     cost: "50.00",
-                    imgSrc: secalotImage,
+                    image: secalotImage,
                     moreInfo: "https://www.secalot.com",
                     description:
                         "Your all-in-one digital security companion. it is a small USB dongle that packs a wide range of features."
@@ -85,7 +84,7 @@ export default Vue.extend({
                 {
                     currency: "€",
                     cost: "79.00",
-                    imgSrc: keepkeyImage,
+                    image: keepkeyImage,
                     moreInfo: "http://lddy.no/a4im",
                     description:
                         "Protect your cryptocurrencies, store your private keys offline, and safeguard your assets from hackers."
@@ -103,7 +102,8 @@ export default Vue.extend({
 }
 
 .title {
-    font-size: 30px;
+    color: var(--color-ghostlands-coal);
+    font-size: 45px;
     font-weight: 500;
     margin-block-end: 15px;
 }
@@ -115,7 +115,8 @@ export default Vue.extend({
 }
 
 .hardware-wallet-affiliates {
-    padding: 140px 0 100px 0;
+    background: var(--color-boysenberry-shadow);
+    padding: 100px 0 100px 0;
 }
 
 .header {
