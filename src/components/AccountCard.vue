@@ -35,12 +35,6 @@ export default Vue.extend({
         image: { type: String, default: null },
         publicKey: { type: String, default: null }
     },
-    data() {
-        return {
-            isActive: false,
-            isError: false
-        };
-    },
     computed: {
         qrcode() {
             return mdiQrcode;
