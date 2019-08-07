@@ -86,7 +86,7 @@ header {
     display: flex;
     margin: 0 auto;
     max-width: 1024px;
-    padding: 12px 25px;
+    padding: 12px 45px;
 
     /* Animating padding to match MEW */
     /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */

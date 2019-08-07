@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="banner-image">
-                        <img :src="banner" alt="banner" />
+                        <img src="https://placehold.it/400x400" alt="banner" />
                     </div>
                 </div>
                 <HomeTileButtons />
@@ -40,7 +40,11 @@
                             pancetta jerky porchetta.
                         </div>
                     </div>
-                    <img class="about-image" :src="about" alt="about" />
+                    <img
+                        class="about-image"
+                        src="https://placehold.it/300x300"
+                        alt="about"
+                    />
                 </div>
             </div>
         </div>
@@ -56,8 +60,6 @@ import Features from "@/components/Features.vue";
 import FAQs from "@/components/FAQs.vue";
 import Community from "@/components/Community.vue";
 import HomeTileButtons from "@/components/HomeTileButtons.vue";
-import aboutImage from "@/assets/about.svg";
-import bannerImage from "@/assets/banner.svg";
 import circleImage from "@/assets/circle.png";
 
 export default Vue.extend({
@@ -69,12 +71,6 @@ export default Vue.extend({
         Community
     },
     computed: {
-        about() {
-            return aboutImage;
-        },
-        banner() {
-            return bannerImage;
-        },
         circle() {
             return circleImage;
         }
@@ -101,17 +97,17 @@ export default Vue.extend({
 
     @media (min-width: 1025px) {
         /* fixme: remove 80px when there is more content */
-        padding: 80px 20px;
+        padding: 0 20px;
     }
 
     @media (max-width: 1024px) and (min-width: 415px) {
         /* fixme: remove 80px when there is more content */
-        padding: 80px 25px;
+        padding: 0 25px;
     }
 
     @media (max-width: 1024px) {
         /* fixme: remove 80px when there is more content */
-        padding: 80px 25px;
+        padding: 0 25px;
     }
 }
 
@@ -119,14 +115,18 @@ export default Vue.extend({
     align-items: center;
     align-self: center;
     display: flex;
-    padding: 30px 0 30px 30px;
+    padding: 30px;
     width: 100%;
 }
 
+.top .banner {
+    margin-block-end: 40px;
+}
+
 .banner-content {
+    flex-grow: 1;
     font-family: Montserrat, sans-serif;
     font-size: 14px;
-    max-width: 50%;
     text-align: start;
 }
 
@@ -134,11 +134,13 @@ export default Vue.extend({
     color: var(--color-ghostlands-coal);
     font-size: 45px;
     font-weight: 700;
-    letter-spacing: -1px;
+    height: 45px;
+    line-height: 100%;
+    margin-block-end: 8px;
 }
 
 .subtitle {
-    color: var(--color-ghostlands-coal);
+    color: var(--color-china-blue);
     margin-block-start: 17px;
     max-width: 420px;
 }
@@ -148,8 +150,8 @@ export default Vue.extend({
     flex: 1;
 
     & :first-child {
-        border-radius: 100%;
-        height: 452px;
+        border-radius: 20px;
+        height: 400px;
     }
 }
 
@@ -161,6 +163,8 @@ export default Vue.extend({
 .about {
     background-color: var(--color-yankees-blue);
     color: white;
+    font-size: 14px;
+    padding: 20px 0;
 }
 
 .about-title {
@@ -177,7 +181,7 @@ export default Vue.extend({
 }
 
 .about-image {
-    flex-grow: 1;
+    border-radius: 20px;
     height: 300px;
 }
 </style>
