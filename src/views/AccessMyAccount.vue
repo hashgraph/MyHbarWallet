@@ -1,3 +1,5 @@
+import {AccessSoftwareOption} from "@/components/ModalAccessBySoftware"; import
+{AccessSoftwareOption} from "@/components/ModalAccessBySoftware";
 <template>
     <div class="access-my-account">
         <div class="wrap">
@@ -13,6 +15,7 @@
             <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
+        <ModalAccessByPrivateKey v-model="modalAccessByPrivateKeyIsOpen" />
         <ModalAccessByPhrase v-model="modalAccessByPhraseState" />
         <ModalAccessByHardware v-model="modalAccessByHardwareIsOpen" />
         <ModalAccessBySoftware
@@ -31,9 +34,9 @@ import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "@/components/ModalAccessBySoftware.vue";
 import ModalAccessByPhrase, {
-    State as ModalAccessByPhraseState,
     MnemonicType
 } from "@/components/ModalAccessByPhrase.vue";
+import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
 
 function newAccessByPhraseState(isOpen: boolean) {
     return {
@@ -50,13 +53,15 @@ export default Vue.extend({
         AccountTileButtons,
         ModalAccessByHardware,
         ModalAccessBySoftware,
-        ModalAccessByPhrase
+        ModalAccessByPhrase,
+        ModalAccessByPrivateKey
     },
     data() {
         return {
             modalAccessByHardwareIsOpen: false,
             modalAccessBySoftwareIsOpen: false,
-            modalAccessByPhraseState: newAccessByPhraseState(false)
+            modalAccessByPhraseState: newAccessByPhraseState(false),
+            modalAccessByPrivateKeyIsOpen: false
         };
     },
     computed: {},
@@ -72,10 +77,14 @@ export default Vue.extend({
             this.modalAccessBySoftwareIsOpen = false;
 
             setTimeout(() => {
-                if (which == AccessSoftwareOption.Phrase) {
+                if (which === AccessSoftwareOption.Phrase) {
                     this.modalAccessByPhraseState = newAccessByPhraseState(
                         true
                     );
+                } else if (which === AccessSoftwareOption.Key) {
+                    this.modalAccessByPrivateKeyIsOpen = true;
+                } else if (which === AccessSoftwareOption.File) {
+                    // todo: add this modal
                 }
             }, 125);
         }
