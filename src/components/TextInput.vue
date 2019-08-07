@@ -37,7 +37,7 @@ export default Vue.extend({
         label: { type: String, default: null },
         tabindex: { type: String, default: null },
         step: { type: String, default: null },
-        type: { type: String, default: "text" },
+        type: { type: String, default: null },
 
         compact: Boolean,
 
