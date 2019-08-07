@@ -13,9 +13,8 @@
         </template>
         <div class="modal-access-by-private-key">
             <TextInput
+                v-model="userPrivateKey"
                 placeholder="Enter Private Key"
-                :value="userPrivateKey"
-                @input="handleKeyUpdate"
             />
             <Button
                 class="button-access-wallet"
@@ -54,13 +53,6 @@ export default Vue.extend({
         return {
             userPrivateKey: ""
         };
-    },
-    methods: {
-        handleKeyUpdate(key: string) {
-            // todo: verify the key is a hedera private key
-            // (MEW verifies the key is a proper eth key before enabling the button)
-            this.userPrivateKey = key;
-        }
     }
 });
 </script>

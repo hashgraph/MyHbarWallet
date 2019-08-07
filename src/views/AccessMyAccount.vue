@@ -1,5 +1,3 @@
-import {AccessSoftwareOption} from "@/components/ModalAccessBySoftware"; import
-{AccessSoftwareOption} from "@/components/ModalAccessBySoftware";
 <template>
     <div class="access-my-account">
         <div class="wrap">
