@@ -1,43 +1,40 @@
 <template>
     <div class="community">
-        <div class="outer-wrap">
-            <div class="inner-wrap">
-                <div class="container">
-                    <div class="head">
-                        <div class="title">
-                            Join MHW Community
-                        </div>
-                        <div class="subtitle">
-                            Get in the know and watch the H flow!
-                        </div>
-                    </div>
-                    <div class="icons">
-                        <SocialIcon
-                            name="Facebook"
-                            href="https://www.facebook.com"
-                        >
-                            <img :src="facebook" alt="Facebook" />
-                        </SocialIcon>
-                        <SocialIcon
-                            name="Twitter"
-                            href="https://www.twitter.com"
-                        >
-                            <img :src="twitter" alt="Twitter" />
-                        </SocialIcon>
-                        <SocialIcon name="Medium" href="https://medium.com">
-                            <img :src="medium" alt="Medium" />
-                        </SocialIcon>
-                        <SocialIcon
-                            name="Reddit"
-                            href="https://www.reddit.com/"
-                        >
-                            <img :src="reddit" alt="Reddit" />
-                        </SocialIcon>
-                        <SocialIcon name="Github" href="https://github.com">
-                            <img :src="github" alt="Github" />
-                        </SocialIcon>
-                    </div>
+        <div class="wrap">
+            <div class="head">
+                <div class="title">
+                    Join MHW Community
                 </div>
+                <div class="subtitle">
+                    Get in the know and see your balance grow (we hope)!
+                </div>
+            </div>
+            <div class="icons">
+                <CommunitySocialIcon
+                    name="Facebook"
+                    :image="facebook"
+                    href="https://www.facebook.com"
+                />
+                <CommunitySocialIcon
+                    name="Twitter"
+                    :image="twitter"
+                    href="https://www.twitter.com"
+                />
+                <CommunitySocialIcon
+                    name="Medium"
+                    href="https://medium.com"
+                    :image="medium"
+                />
+                <CommunitySocialIcon
+                    name="Reddit"
+                    href="https://www.reddit.com/"
+                    :image="reddit"
+                />
+                <CommunitySocialIcon
+                    name="Github"
+                    href="https://github.com"
+                    :image="github"
+                />
             </div>
         </div>
     </div>
@@ -45,17 +42,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-import SocialIcon from "@/components/SocialIcon.vue";
-import facebookSocial from "@/assets/facebook.svg";
-import twitterSocial from "@/assets/twitter.svg";
-import mediumSocial from "@/assets/medium.svg";
+import CommunitySocialIcon from "@/components/CommunitySocialIcon.vue";
+import facebookSocial from "@/assets/facebook.png";
+import twitterSocial from "@/assets/twitter.jpg";
+import mediumSocial from "@/assets/medium.png";
 import redditSocial from "@/assets/reddit.svg";
-import githubSocial from "@/assets/github.svg";
+import githubSocial from "@/assets/github.png";
 
 export default Vue.extend({
-    name: "Community",
     components: {
-        SocialIcon
+        CommunitySocialIcon
     },
     computed: {
         facebook() {
@@ -80,9 +76,6 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .community {
     background-color: var(--color-white);
-}
-
-.outer-wrap {
     padding: 80px 0;
 
     @media (max-width: 1024px) {
@@ -90,27 +83,17 @@ export default Vue.extend({
     }
 }
 
-.inner-wrap {
+.wrap {
+    align-items: center;
+    display: flex;
     margin: 0 auto;
     max-width: 1024px;
     padding: 0 20px;
 
     @media (max-width: 1024px) {
+        display: block;
         padding: 0 25px;
     }
-}
-
-.container {
-    align-items: center;
-    display: flex;
-
-    @media (max-width: 1024px) {
-        display: block;
-    }
-}
-
-.head {
-    text-align: start;
 }
 
 .title {

@@ -1,12 +1,7 @@
 <template>
-    <a
-        class="social-icon"
-        :href="href"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
+    <a class="social-icon" :href="href" target="_blank" rel="noopener">
         <div class="link-content">
-            <slot><img :src="logo" alt="<Default Icon>"/></slot>
+            <img :src="image" alt="" />
             {{ name }}
         </div>
     </a>
@@ -17,15 +12,10 @@ import Vue from "vue";
 import logo from "@/assets/logo.png";
 
 export default Vue.extend({
-    name: "Feature",
     props: {
         href: { type: String, required: false, default: "" },
-        name: { type: String, required: true }
-    },
-    computed: {
-        logo() {
-            return logo;
-        }
+        name: { type: String, required: true },
+        image: { type: String, required: true }
     }
 });
 </script>
@@ -33,7 +23,6 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .social-icon {
     min-width: 80px;
-    padding-block-end: 20px;
     text-decoration: none;
 }
 
