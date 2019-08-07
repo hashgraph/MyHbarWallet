@@ -1,14 +1,12 @@
 <template>
     <div class="feature">
-        <div class="image">
-            <slot name="image"></slot>
-        </div>
+        <img class="image" :src="image" alt="" />
         <div class="text">
             <div class="header">
-                <slot name="title"></slot>
+                {{ title }}
             </div>
             <div class="content">
-                <slot name="content"></slot>
+                <slot></slot>
             </div>
         </div>
     </div>
@@ -18,7 +16,11 @@
 import Vue from "vue";
 
 export default Vue.extend({
-    name: "Feature"
+    name: "Feature",
+    props: {
+        image: { type: String, required: true },
+        title: { type: String, required: true }
+    }
 });
 </script>
 
@@ -29,7 +31,8 @@ export default Vue.extend({
 }
 
 .image {
-    padding-inline-end: 30px;
+    margin-inline-end: 30px;
+    width: 80px;
 }
 
 .header {

@@ -2,30 +2,14 @@
     <div class="features">
         <div class="wrap">
             <div class="feature-grid">
-                <Feature>
-                    <template v-slot:image>
-                        <img alt="wallet" :src="wallet" />
-                    </template>
-                    <template v-slot:title>
-                        Join MHW
-                    </template>
-                    <template v-slot:content>
-                        Access the Hedera Hashgraph's original and most-trusted
-                        wallet client, now with a host of features all contained
-                        in an elegant, easy-to-use interface.
-                    </template>
+                <Feature :image="wallet" title="Join MyHederaWallet">
+                    Access the Hedera Hashgraph's original and most-trusted
+                    wallet client, now with a host of features all contained in
+                    an elegant, easy-to-use interface.
                 </Feature>
-                <Feature>
-                    <template v-slot:image>
-                        <img alt="hardware" :src="hardware" />
-                    </template>
-                    <template v-slot:title>
-                        Hardware Wallet Support
-                    </template>
-                    <template v-slot:content>
-                        MHW offers support for all major hardware wallets,
-                        including Ledger, Trezor, and many more.
-                    </template>
+                <Feature :image="hardware" title="Hardware Wallet Support">
+                    MHW offers support for all major hardware wallets, including
+                    Ledger, Trezor, and many more.
                 </Feature>
             </div>
         </div>
@@ -34,10 +18,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {} from "@mdi/js";
 import Feature from "@/components/Feature.vue";
-import Wallet from "@/assets/icon-wallet.svg";
-import Hardware from "@/assets/icon-hardware.svg";
+import imageWallet from "@/assets/icon-wallet.svg";
+import imageHardware from "@/assets/icon-hardware.svg";
 
 export default Vue.extend({
     name: "Features",
@@ -46,10 +29,10 @@ export default Vue.extend({
     },
     computed: {
         wallet() {
-            return Wallet;
+            return imageWallet;
         },
         hardware() {
-            return Hardware;
+            return imageHardware;
         }
     }
 });
@@ -64,14 +47,15 @@ export default Vue.extend({
     display: grid;
     grid-column-gap: 130px;
     grid-row-gap: 90px;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto auto;
     margin: 0 auto;
     max-width: 1024px;
     padding: 0 20px;
 
     @media (max-width: 1025px) {
         grid-row-gap: 70px;
-        grid-template-columns: 1fr;
+        grid-template-columns: auto;
+        padding: 0 25px;
     }
 }
 </style>
