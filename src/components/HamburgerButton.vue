@@ -49,9 +49,11 @@ export default Vue.extend({
     border-color: white;
     border-radius: 50%;
     cursor: pointer;
+    inset-inline-end: 0;
     max-height: 40px;
     min-width: 40px;
     overflow: hidden;
+    position: absolute;
     transform: translate(-10px, 10px);
 
     &:active {
