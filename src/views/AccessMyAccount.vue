@@ -19,6 +19,10 @@
             v-model="modalAccessBySoftwareIsOpen"
             @submit="handleAccessBySoftwareSubmit"
         />
+        <ModalPassword
+            v-model="modalPasswordState"
+            @submit="handlePasswordSubmit"
+        />
     </div>
 </template>
 
@@ -34,6 +38,9 @@ import ModalAccessByPhrase, {
     State as ModalAccessByPhraseState,
     MnemonicType
 } from "@/components/ModalAccessByPhrase.vue";
+import ModalPassword, {
+    State as ModalPasswordState
+} from "../components/ModalPassword.vue";
 
 function newAccessByPhraseState(isOpen: boolean) {
     return {
@@ -50,13 +57,15 @@ export default Vue.extend({
         AccountTileButtons,
         ModalAccessByHardware,
         ModalAccessBySoftware,
-        ModalAccessByPhrase
+        ModalAccessByPhrase,
+        ModalPassword
     },
     data() {
         return {
             modalAccessByHardwareIsOpen: false,
             modalAccessBySoftwareIsOpen: false,
-            modalAccessByPhraseState: newAccessByPhraseState(false)
+            modalAccessByPhraseState: newAccessByPhraseState(false),
+            modalPasswordState: { modalIsOpen: false, password: "" }
         };
     },
     computed: {},
@@ -78,6 +87,9 @@ export default Vue.extend({
                     );
                 }
             }, 125);
+        },
+        handlePasswordSubmit(state: ModalPasswordState) {
+            this.modalPasswordState.modalIsOpen = false;
         }
     }
 });
