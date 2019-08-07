@@ -14,7 +14,11 @@
             </p>
             <div class="button-group">
                 <Button class="button-go-back" label="Go back" outline="true" />
-                <Button class="button-logout" label="Log Out of Wallet" />
+                <Button
+                    class="button-logout"
+                    label="Log Out of Wallet"
+                    danger="true"
+                />
             </div>
         </div>
     </Modal>
