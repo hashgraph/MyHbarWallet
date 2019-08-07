@@ -60,15 +60,17 @@
         <div class="section">
             <div class="title">
                 Love
-                <img src="../assets/heart.svg" />
+                <img class="love" src="../assets/heart.svg" />
                 MHW? Donate!
             </div>
             <div class="item">
                 MyHederaWallet is open-source and free to the community. Your
                 donations go a long way towards making that possible.
             </div>
-            <!-- FIXME: this is ugly -->
-            <div>ħ 0.0.1050</div>
+            <div class="donation">
+                <img class="hbar-icon" src="../assets/icon-hbar-outline2.svg" />
+                0.0.1050
+            </div>
         </div>
     </div>
 </template>
@@ -83,7 +85,7 @@ export default Vue.extend({
 
 <style scoped lang="postcss">
 .container {
-    border-bottom: 1px solid var(--color-ashen-wind);
+    border-bottom: 1px solid var(--color-china-blue);
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1.5fr;
     justify-content: space-between;
@@ -119,8 +121,16 @@ export default Vue.extend({
     }
 }
 
-img {
+.love {
     height: 30px;
     vertical-align: top;
+}
+
+.hbar-icon {
+    height: 28px;
+}
+
+.donation {
+    color: var(--color-melbourne-cup);
 }
 </style>
