@@ -9,14 +9,25 @@
             </PageTitle>
             <AccountTileButtons @click="handleClickTiles" />
         </div>
+
         <FAQs />
+
         <ModalAccessByPrivateKey v-model="modalAccessByPrivateKeyIsOpen" />
+
         <ModalAccessByPhrase v-model="modalAccessByPhraseState" />
+
         <ModalAccessByHardware v-model="modalAccessByHardwareIsOpen" />
+
         <ModalAccessBySoftware
             v-model="modalAccessBySoftwareIsOpen"
             @submit="handleAccessBySoftwareSubmit"
         />
+
+        <ModalPassword
+            v-model="modalPasswordState"
+            @submit="handlePasswordSubmit"
+        />
+
         <input
             ref="file"
             type="file"
@@ -41,6 +52,9 @@ import ModalAccessByPhrase, {
 } from "@/components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
 import PageTitle from "../components/PageTitle.vue";
+import ModalPassword, {
+    State as ModalPasswordState
+} from "../components/ModalPassword.vue";
 
 function newAccessByPhraseState(isOpen: boolean) {
     return {
@@ -59,14 +73,21 @@ export default Vue.extend({
         ModalAccessBySoftware,
         ModalAccessByPhrase,
         ModalAccessByPrivateKey,
-        PageTitle
+        PageTitle,
+        ModalPassword
     },
     data() {
         return {
             modalAccessByHardwareIsOpen: false,
             modalAccessBySoftwareIsOpen: false,
             modalAccessByPhraseState: newAccessByPhraseState(false),
-            modalAccessByPrivateKeyIsOpen: false
+            modalAccessByPrivateKeyIsOpen: false,
+            modalPasswordState: {
+                modalIsOpen: false,
+                password: "",
+                isBusy: false
+            },
+            keystoreFileText: null as string | null
         };
     },
     computed: {},
@@ -104,20 +125,32 @@ export default Vue.extend({
             }
 
             const file = target.files[0];
-            const fileText = await new Promise<string>((resolve, reject) => {
-                const reader = new FileReader();
+            this.keystoreFileText = await new Promise<string>(
+                (resolve, reject) => {
+                    const reader = new FileReader();
 
-                reader.addEventListener("error", reject);
-                reader.addEventListener("loadend", (event: ProgressEvent) => {
-                    resolve(reader.result as string);
-                });
+                    reader.addEventListener("error", reject);
+                    reader.addEventListener(
+                        "loadend",
+                        (event: ProgressEvent) => {
+                            resolve(reader.result as string);
+                        }
+                    );
 
-                reader.readAsText(file);
-            });
+                    reader.readAsText(file);
+                }
+            );
 
-            console.log(fileText);
-
-            // TODO: Open the password modal for the keyfile
+            this.modalPasswordState.modalIsOpen = true;
+        },
+        handlePasswordSubmit(state: ModalPasswordState) {
+            this.modalPasswordState.isBusy = true;
+            this.openInterface();
+        },
+        openInterface() {
+            setTimeout(() => {
+                this.$router.push({ name: "interface" });
+            }, 3000);
         }
     }
 });
