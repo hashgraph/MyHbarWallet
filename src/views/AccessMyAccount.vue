@@ -12,9 +12,15 @@
 
         <FAQs />
 
-        <ModalAccessByPrivateKey v-model="modalAccessByPrivateKeyIsOpen" />
+        <ModalAccessByPrivateKey
+            v-model="modalAccessByPrivateKeyState"
+            @submit="handleAccessByPrivateKeySubmit"
+        />
 
-        <ModalAccessByPhrase v-model="modalAccessByPhraseState" />
+        <ModalAccessByPhrase
+            v-model="modalAccessByPhraseState"
+            @submit="handleAccessByPhraseSubmit"
+        />
 
         <ModalAccessByHardware v-model="modalAccessByHardwareIsOpen" />
 
@@ -56,15 +62,6 @@ import ModalPassword, {
     State as ModalPasswordState
 } from "../components/ModalPassword.vue";
 
-function newAccessByPhraseState(isOpen: boolean) {
-    return {
-        modalIsOpen: isOpen,
-        words: [],
-        numWords: MnemonicType.Words12,
-        password: ""
-    };
-}
-
 export default Vue.extend({
     components: {
         FAQs,
@@ -80,11 +77,21 @@ export default Vue.extend({
         return {
             modalAccessByHardwareIsOpen: false,
             modalAccessBySoftwareIsOpen: false,
-            modalAccessByPhraseState: newAccessByPhraseState(false),
-            modalAccessByPrivateKeyIsOpen: false,
+            modalAccessByPhraseState: {
+                modalIsOpen: false,
+                isBusy: false,
+                words: [],
+                numWords: MnemonicType.Words12,
+                password: ""
+            },
             modalPasswordState: {
                 modalIsOpen: false,
                 password: "",
+                isBusy: false
+            },
+            modalAccessByPrivateKeyState: {
+                modalIsOpen: false,
+                privateKey: "",
                 isBusy: false
             },
             keystoreFileText: null as string | null
@@ -107,11 +114,9 @@ export default Vue.extend({
             } else {
                 setTimeout(() => {
                     if (which === AccessSoftwareOption.Phrase) {
-                        this.modalAccessByPhraseState = newAccessByPhraseState(
-                            true
-                        );
+                        this.modalAccessByPhraseState.modalIsOpen = true;
                     } else if (which === AccessSoftwareOption.Key) {
-                        this.modalAccessByPrivateKeyIsOpen = true;
+                        this.modalAccessByPrivateKeyState.modalIsOpen = true;
                     }
                 }, 125);
             }
@@ -145,9 +150,19 @@ export default Vue.extend({
         },
         handlePasswordSubmit(state: ModalPasswordState) {
             this.modalPasswordState.isBusy = true;
-            this.openInterface();
+            // TODO: Decode private key from file
+            this.openInterface(null);
         },
-        openInterface() {
+        handleAccessByPhraseSubmit() {
+            this.modalAccessByPhraseState.isBusy = true;
+            // TODO: Decode private key from phrase
+            this.openInterface(null);
+        },
+        handleAccessByPrivateKeySubmit() {
+            this.modalAccessByPrivateKeyState.isBusy = true;
+            this.openInterface(this.modalAccessByPrivateKeyState.privateKey);
+        },
+        openInterface(privateKey: string | null) {
             setTimeout(() => {
                 this.$router.push({ name: "interface" });
             }, 3000);

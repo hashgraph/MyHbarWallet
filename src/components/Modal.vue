@@ -69,7 +69,7 @@ export default Vue.extend({
     },
     methods: {
         handleClose() {
-            if (this.notClosable) {
+            if (!this.notClosable) {
                 this.$emit("change", false);
             }
         },

@@ -2,7 +2,7 @@
     <div class="modal-password">
         <Modal
             title="Passowrd"
-            :not-closable="!state.isBusy"
+            :not-closable="state.isBusy"
             :is-open="state.modalIsOpen"
             @change="handleModalChangeIsOpen"
         >
