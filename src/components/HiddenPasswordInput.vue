@@ -35,7 +35,6 @@ import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 
 export default Vue.extend({
-    name: "PasswordInput",
     components: {
         TextInput,
         SwitchButton
