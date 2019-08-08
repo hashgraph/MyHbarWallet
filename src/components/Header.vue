@@ -7,15 +7,12 @@
             <div class="spacer"></div>
             <div class="links">
                 <router-link to="/" class="link">Home</router-link>
-                <router-link
-                    :to="{ name: 'home', hash: '#about' }"
-                    class="link"
+                <router-link :to="{ name: 'home', hash: '#about' }" class="link"
+                    >About</router-link
                 >
-                    About
-                </router-link>
-                <router-link :to="{ name: 'home', hash: '#faqs' }" class="link">
-                    FAQs
-                </router-link>
+                <router-link :to="{ name: 'home', hash: '#faqs' }" class="link"
+                    >FAQs</router-link
+                >
             </div>
             <HeaderHamburgerButton @toggle="toggle" />
             <div v-if="scrolled" class="button-container">
