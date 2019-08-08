@@ -48,19 +48,6 @@ import Tooltip from "./Tooltip.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
-// Type declarations for Clipboard API
-// https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API
-interface Clipboard {
-    writeText(text: string): Promise<void>;
-}
-
-interface NavigatorClipboard extends Navigator {
-    // Only available in a secure context.
-    readonly clipboard?: Clipboard;
-}
-
-interface NavigatorExtended extends NavigatorClipboard {}
-
 export default Vue.extend({
     components: {
         MaterialDesignIcon,
