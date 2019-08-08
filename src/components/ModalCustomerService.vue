@@ -6,8 +6,16 @@
     >
         <template>
             <div class="modal-issue-information">
-                <TextInput class="issue-item" placeholder="Browser" />
-                <TextInput class="issue-item" placeholder="Operating System" />
+                <TextInput
+                    class="issue-item"
+                    placeholder="Browser"
+                    :value="browser"
+                />
+                <TextInput
+                    class="issue-item"
+                    placeholder="Operating System"
+                    :value="platform"
+                />
                 <TextInput
                     class="issue-item"
                     placeholder="Device/Wallet type (if any)"
@@ -16,7 +24,7 @@
                     class="issue-item"
                     placeholder="Wallet PUBLIC address (if any)"
                 />
-                <TextInput class="issue-item" placeholder="URL" />
+                <TextInput class="issue-item" placeholder="URL" :value="url" />
                 <TextArea class="issue-item" placeholder="Describe the issue" />
                 <Button label="Send" class="send-button" :compact="true" />
             </div>
@@ -53,7 +61,11 @@ export default Vue.extend({
     },
     data() {
         return {
-            optionSelected: null
+            optionSelected: null,
+            platform: navigator.platform,
+            url: location.pathname,
+            // fixme: better browser detection?
+            browser: navigator.appVersion
         };
     },
     computed: {}
