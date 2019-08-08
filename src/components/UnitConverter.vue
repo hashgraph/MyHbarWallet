@@ -144,7 +144,6 @@ export default Vue.extend<Data, Methods, {}, {}>({
             let x = new BigNumber(amt);
             let y = this.getValueOfUnit(from) as BigNumber;
             let z = this.getValueOfUnit(to) as BigNumber;
-
             return x
                 .multipliedBy(y)
                 .dividedBy(z)
