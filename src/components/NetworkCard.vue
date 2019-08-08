@@ -1,6 +1,6 @@
 <template>
     <div class="network">
-        <img :src="image" />
+        <img src="@/assets/icon-hbar-outline.svg" />
         <div class="content">
             <div class="title">
                 Network
@@ -52,9 +52,12 @@ img {
 }
 
 .change {
+    border: 1px solid white;
     border-radius: 4px;
+    color: white;
     cursor: pointer;
     font-size: 12px;
     outline: none;
+    padding: 4px 8px;
 }
 </style>

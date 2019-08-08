@@ -56,11 +56,11 @@
   <path
      d="m 0.5,15.754 c 0,8.425 6.829,15.253 15.252,15.253 8.427,0 15.255,-6.828 15.255,-15.253 C 31.007,7.329 24.18,0.5 15.752,0.5 7.329,0.5 0.5,7.329 0.5,15.754 Z"
      id="path2"
-     style="clip-rule:evenodd;fill:none;fill-rule:evenodd;stroke:#3bc1aa;stroke-opacity:1"
+     style="clip-rule:evenodd;fill:none;fill-rule:evenodd;stroke:#fff;stroke-opacity:1"
      inkscape:connector-curvature="0" />
   <path
      d="m 11.367,16.867 h 8.775 v -2.33 h -8.775 v 2.332 z M 20.142,12.84 H 11.367 V 8.422 H 9.24 v 14.663 h 2.127 v -4.52 h 8.775 v 4.52 h 2.125 V 8.422 h -2.125 z"
      id="path4"
-     style="clip-rule:evenodd;fill:#3bc1aa;fill-opacity:1;fill-rule:evenodd"
+     style="clip-rule:evenodd;fill:#fff;fill-opacity:1;fill-rule:evenodd"
      inkscape:connector-curvature="0" />
 </svg>
