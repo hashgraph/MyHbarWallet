@@ -1,12 +1,9 @@
 <template>
     <div class="hardware-wallet-affiliates">
-        <div class="title-container">
-            <div class="title">Buy a Hardware wallet</div>
-            <div class="subtitle">
-                Purchase a hardware wallet for the highest security when
-                accessing your crypto.
-            </div>
-        </div>
+        <PageTitle large title="Buy a Hardware wallet">
+            Purchase a hardware wallet for the highest security when accessing
+            your crypto.
+        </PageTitle>
         <div class="offers">
             <HardwareWalletOffer
                 v-for="offer of offers"
@@ -24,7 +21,10 @@
 
 <script lang="ts">
 import Vue from "vue";
+
 import HardwareWalletOffer from "../components/HardwareWalletOffer.vue";
+import PageTitle from "../components/PageTitle.vue";
+
 import ledgerImage from "../assets/logo-ledger.png";
 import finneyImage from "../assets/logo-finney.png";
 import bitboxImage from "../assets/logo-bitbox.png";
@@ -35,7 +35,8 @@ import keepkeyImage from "../assets/logo-keepkey.png";
 export default Vue.extend({
     name: "HardwareWalletAffiliates",
     components: {
-        HardwareWalletOffer
+        HardwareWalletOffer,
+        PageTitle
     },
     computed: {
         offers() {
@@ -96,24 +97,6 @@ export default Vue.extend({
 </script>
 
 <style lang="postcss" scoped>
-.title-container {
-    margin-block-end: 50px;
-    text-align: center;
-}
-
-.title {
-    color: var(--color-ghostlands-coal);
-    font-size: 45px;
-    font-weight: 500;
-    margin-block-end: 15px;
-}
-
-.subtitle {
-    color: var(--color-china-blue);
-    font-size: 14px;
-    font-weight: 400;
-}
-
 .hardware-wallet-affiliates {
     background: var(--color-boysenberry-shadow);
     padding: 100px 0 100px 0;
