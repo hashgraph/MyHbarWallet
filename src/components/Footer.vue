@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <FooterTop v-if="!compact" />
+        <FooterTop />
         <div class="wrapper">
             <div class="links">
                 <a
@@ -72,9 +72,6 @@ export default Vue.extend({
     components: {
         MaterialDesignIcon,
         FooterTop
-    },
-    props: {
-        compact: { type: Boolean }
     },
     computed: {
         facebook() {

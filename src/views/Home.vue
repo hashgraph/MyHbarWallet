@@ -26,7 +26,7 @@
             </div>
         </div>
         <img class="circle" :src="circle" alt="circle" />
-        <div class="about">
+        <div id="about" class="about">
             <div class="page-container">
                 <div class="banner">
                     <div class="banner-content">
