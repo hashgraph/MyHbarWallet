@@ -1,15 +1,12 @@
 <template>
     <div class="access-my-account">
         <div class="wrap">
-            <div class="title-container">
-                <div class="title">Create A New Account</div>
-                <div class="subtitle">
-                    Already Have One?
-                    <router-link :to="{ name: 'access-my-account' }">
-                        Access My Account
-                    </router-link>
-                </div>
-            </div>
+            <PageTitle title="Create A New Account">
+                Already Have One?
+                <router-link :to="{ name: 'access-my-account' }">
+                    Access My Account
+                </router-link>
+            </PageTitle>
             <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
@@ -29,12 +26,15 @@ import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "@/components/ModalAccessBySoftware.vue";
 
+import PageTitle from "../components/PageTitle.vue";
+
 export default Vue.extend({
     components: {
         FAQs,
         AccountTileButtons,
         ModalAccessByHardware,
-        ModalAccessBySoftware
+        ModalAccessBySoftware,
+        PageTitle
     },
     data() {
         return {
@@ -79,22 +79,5 @@ a {
     display: flex;
     flex-direction: column;
     padding: 80px 0;
-}
-
-.title-container {
-    margin-block-end: 50px;
-    text-align: center;
-}
-
-.title {
-    font-size: 30px;
-    font-weight: 500;
-    margin-block-end: 15px;
-}
-
-.subtitle {
-    color: var(--color-china-blue);
-    font-size: 14px;
-    font-weight: 400;
 }
 </style>

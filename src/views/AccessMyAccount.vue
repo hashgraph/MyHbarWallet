@@ -1,15 +1,12 @@
 <template>
     <div class="access-my-account">
         <div class="wrap">
-            <div class="title-container">
-                <div class="title">Access My Account</div>
-                <div class="subtitle">
-                    Don't have an account?
-                    <router-link :to="{ name: 'create-account' }">
-                        Create A New Account
-                    </router-link>
-                </div>
-            </div>
+            <PageTitle title="Access My Account">
+                Don't have an account?
+                <router-link :to="{ name: 'create-account' }">
+                    Create A New Account
+                </router-link>
+            </PageTitle>
             <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
@@ -43,6 +40,7 @@ import ModalAccessByPhrase, {
     MnemonicType
 } from "@/components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
+import PageTitle from "../components/PageTitle.vue";
 
 function newAccessByPhraseState(isOpen: boolean) {
     return {
@@ -60,7 +58,8 @@ export default Vue.extend({
         ModalAccessByHardware,
         ModalAccessBySoftware,
         ModalAccessByPhrase,
-        ModalAccessByPrivateKey
+        ModalAccessByPrivateKey,
+        PageTitle
     },
     data() {
         return {
@@ -141,22 +140,5 @@ a {
     display: flex;
     flex-direction: column;
     padding: 80px 0;
-}
-
-.title-container {
-    margin-block-end: 50px;
-    text-align: center;
-}
-
-.title {
-    font-size: 30px;
-    font-weight: 500;
-    margin-block-end: 15px;
-}
-
-.subtitle {
-    color: var(--color-china-blue);
-    font-size: 14px;
-    font-weight: 400;
 }
 </style>

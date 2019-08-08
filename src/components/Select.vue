@@ -1,8 +1,8 @@
 <template>
-    <div class="select" :class="{ 'is-open': dropdownOpen }" @click.stop="">
-        <div class="select-value-container" @click="toggle">
+    <div class="select" :class="{ 'is-open': dropdownIsOpen }" @click.stop="">
+        <div class="select-value-container" @click="toggleDropdown">
             <div class="select-value">{{ selected }}</div>
-            <MaterialDesignIcon class="icon" :icon="icon" />
+            <MaterialDesignIcon class="icon" :icon="dropdownIcon" />
         </div>
         <div class="select-menu">
             <div
@@ -18,25 +18,23 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
+import {
+    createComponent,
+    value,
+    computed,
+    onCreated,
+    PropType,
+    onBeforeDestroy
+} from "vue-function-api";
 
 interface Props {
     options: string[];
     selected: string;
 }
 
-interface Methods {
-    handleCloseOnWindowClick(): void;
-}
-
-interface Data {
-    dropdownOpen: boolean;
-}
-
-export default Vue.extend<Data, Methods, {}, Props>({
-    name: "DropDownUnitSelector",
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
@@ -44,44 +42,49 @@ export default Vue.extend<Data, Methods, {}, Props>({
         prop: "selected",
         event: "change"
     },
+    // TODO: https://github.com/vuejs/vue-function-api/pull/16
     props: {
-        options: {
-            type: Array,
-            required: true
-        },
-        selected: {
-            type: String,
-            required: true
-        }
+        selected: (String as unknown) as PropType<string>,
+        options: (Array as unknown) as PropType<string[]>
     },
-    data() {
+    setup({ selected, options }: Props, context) {
+        const dropdownIsOpen = value(false);
+
+        const dropdownIcon = computed(() => {
+            if (dropdownIsOpen.value) {
+                return mdiChevronUp;
+            }
+
+            return mdiChevronDown;
+        });
+
+        function handleCloseOnWindowClick() {
+            dropdownIsOpen.value = false;
+        }
+
+        onCreated(() => {
+            window.addEventListener("click", handleCloseOnWindowClick);
+        });
+
+        onBeforeDestroy(() => {
+            window.removeEventListener("click", handleCloseOnWindowClick);
+        });
+
+        function toggleDropdown() {
+            dropdownIsOpen.value = !dropdownIsOpen.value;
+        }
+
+        function handleOptionClick(option: string) {
+            context.emit("change", option);
+            dropdownIsOpen.value = false;
+        }
+
         return {
-            dropdownOpen: false
+            dropdownIsOpen,
+            dropdownIcon,
+            toggleDropdown,
+            handleOptionClick
         };
-    },
-    computed: {
-        icon() {
-            if (this.dropdownOpen) return mdiChevronUp;
-            else return mdiChevronDown;
-        }
-    },
-    created() {
-        window.addEventListener("click", this.handleCloseOnWindowClick);
-    },
-    beforeDestroy() {
-        window.removeEventListener("click", this.handleCloseOnWindowClick);
-    },
-    methods: {
-        toggle() {
-            this.dropdownOpen = !this.dropdownOpen;
-        },
-        handleOptionClick(option: string) {
-            this.$emit("change", option);
-            this.dropdownOpen = false;
-        },
-        handleCloseOnWindowClick() {
-            this.dropdownOpen = false;
-        }
     }
 });
 </script>
