@@ -13,6 +13,7 @@ import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiAlertCircle } from "@mdi/js";
 import Tooltip from "@/components/Tooltip.vue";
+import { computed } from "vue-function-api";
 
 export default Vue.extend({
     components: {
@@ -22,10 +23,11 @@ export default Vue.extend({
     props: {
         message: { type: String, required: true }
     },
-    computed: {
-        icon() {
+    setup() {
+        const icon = computed(() => {
             return mdiAlertCircle;
-        }
+        });
+        return { icon };
     }
 });
 </script>

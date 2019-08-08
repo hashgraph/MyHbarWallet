@@ -16,45 +16,55 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { computed, onBeforeDestroy, onCreated, value } from "vue-function-api";
 
 export default Vue.extend({
     props: {
         message: { type: String, required: true },
         pinnable: { type: Boolean, required: false }
     },
-    data() {
-        return {
-            hovered: false,
-            pinned: false
-        };
-    },
-    computed: {
-        active() {
-            if (!this.pinnable) {
-                return this.hovered;
+    setup(props) {
+        // data
+        const hovered = value(false);
+        const pinned = value(false);
+
+        // computed
+        const active = computed(() => {
+            if (!props.pinnable) {
+                return hovered.value;
+            } else {
+                return hovered.value || pinned.value;
             }
-            return this.hovered || this.pinned;
-        }
-    },
-    created() {
-        window.addEventListener("click", this.handleCloseOnWindowClick);
-    },
-    beforeDestroy() {
-        window.removeEventListener("click", this.handleCloseOnWindowClick);
-    },
-    methods: {
-        handleMouseOver() {
-            this.hovered = true;
-        },
-        handleMouseOut() {
-            this.hovered = false;
-        },
-        handleTogglePinned() {
-            this.pinned = !this.pinned;
-        },
-        handleCloseOnWindowClick() {
-            this.pinned = false;
-        }
+        });
+
+        // methods
+        const handleMouseOver = () => {
+            hovered.value = true;
+        };
+        const handleMouseOut = () => {
+            hovered.value = false;
+        };
+        const handleTogglePinned = () => {
+            pinned.value = !pinned.value;
+        };
+        const handleCloseOnWindowClick = () => {
+            pinned.value = false;
+        };
+
+        // lifecycle
+        onCreated(() => {
+            window.addEventListener("click", handleCloseOnWindowClick);
+        });
+        onBeforeDestroy(() => {
+            window.removeEventListener("click", handleCloseOnWindowClick);
+        });
+
+        return {
+            handleTogglePinned,
+            handleMouseOver,
+            handleMouseOut,
+            active
+        };
     }
 });
 </script>
@@ -72,8 +82,8 @@ export default Vue.extend({
     border-radius: 4px;
     color: var(--color-china-blue);
     font-size: 14px;
-    bottom: calc(100% + 8px);
-    left: calc((-350px / 2) + (100% / 2));
+    inset-block-end: calc(100% + 8px);
+    inset-inline-start: calc((-350px / 2) + (100% / 2));
     line-height: 2;
     margin: 0 auto;
     opacity: 0;
