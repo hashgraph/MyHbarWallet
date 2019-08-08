@@ -112,10 +112,14 @@
         <div class="section">
             <div class="title">MHW</div>
             <div class="item">
-                <router-link to="/#about" class="link">About</router-link>
+                <router-link :to="{ name: 'home', hash: '#about' }" class="link"
+                    >About</router-link
+                >
             </div>
             <div class="item">
-                <router-link to="/#faqs" class="link">FAQs</router-link>
+                <router-link :to="{ name: 'home', hash: '#faqs' }" class="link"
+                    >FAQs</router-link
+                >
             </div>
             <div class="item">
                 <router-link to class="link">Customer Support</router-link>
