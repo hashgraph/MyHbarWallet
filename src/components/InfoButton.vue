@@ -1,11 +1,9 @@
 <template>
-    <div class="info-button">
+    <span class="info-button">
         <Tooltip :message="message" pinnable="true">
-            <button>
-                <MaterialDesignIcon class="icon" :icon="icon" />
-            </button>
+            <MaterialDesignIcon class="icon" :icon="icon" />
         </Tooltip>
-    </div>
+    </span>
 </template>
 
 <script lang="ts">
@@ -35,9 +33,13 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 button {
     border: none;
-    cursor: pointer;
     outline: none;
     padding: 0;
+}
+
+.info-button {
+    cursor: pointer;
+    display: inline-flex;
 }
 
 .icon {

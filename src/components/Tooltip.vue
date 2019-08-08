@@ -1,17 +1,17 @@
 <template>
-    <div class="tooltip-container" :class="{ active }" @click.stop="">
-        <div
+    <span class="tooltip-container" :class="{ active }" @click.stop="">
+        <span
             class="slot-container"
             @click="handleTogglePinned"
             @mouseenter="handleMouseOver"
             @mouseleave="handleMouseOut"
         >
             <slot></slot>
-        </div>
+        </span>
         <div class="message">
             {{ message }}
         </div>
-    </div>
+    </span>
 </template>
 
 <script lang="ts">
@@ -71,9 +71,12 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .tooltip-container {
-    margin: 0 auto;
+    display: inline-flex;
     position: relative;
-    width: fit-content;
+}
+
+.slot-container {
+    display: inline-flex;
 }
 
 .message {
@@ -81,13 +84,14 @@ export default Vue.extend({
     border: 1px solid var(--color-basalt-grey);
     border-radius: 4px;
     color: var(--color-china-blue);
+    cursor: default;
     font-size: 14px;
-    inset-block-end: calc(100% + 8px);
+    inset-block-end: calc(100% + 12px);
     inset-inline-start: calc((-350px / 2) + (100% / 2));
     line-height: 2;
     margin: 0 auto;
     opacity: 0;
-    padding: 12px;
+    padding: 6px 12px;
     pointer-events: none;
     position: absolute;
     text-align: start;
