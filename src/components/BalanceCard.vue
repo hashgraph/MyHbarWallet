@@ -2,31 +2,34 @@
     <div class="balance">
         <img src="@/assets/wallet.svg" />
         <div class="content">
-            <div class="title">
-                Balance
-            </div>
+            <div class="top">
+                <div class="title">
+                    Balance
+                </div>
 
-            <div v-if="balance" class="subtitle" type="string">
-                {{ balance }} ℏ
+                <div v-if="balance" class="subtitle" type="string">
+                    {{ balance }} ℏ
+                </div>
+                <div v-else class="subtitle-null" type="string">
+                    Unknown
+                </div>
             </div>
-            <div v-else class="subtitle-null" type="string">
-                Unknown
+            <div class="actions">
+                <!-- TODO: add Chris's tooltip component? -->
+
+                <MaterialDesignIcon
+                    v-if="busy"
+                    class="spinner"
+                    :icon="spinner"
+                    spin
+                />
+                <MaterialDesignIcon
+                    v-else
+                    class="refresh-icon"
+                    :icon="refresh"
+                    @click="handleRefresh"
+                />
             </div>
-
-            <!-- TODO: add Chris's tooltip component? -->
-
-            <MaterialDesignIcon
-                v-if="busy"
-                class="spinner"
-                :icon="spinner"
-                spin
-            />
-            <MaterialDesignIcon
-                v-else
-                class="refresh-icon"
-                :icon="refresh"
-                @click="handleRefresh"
-            />
         </div>
     </div>
 </template>
@@ -72,7 +75,6 @@ export default Vue.extend({
 
 <style scoped lang="postcss">
 .balance {
-    align-items: center;
     background-color: var(--color-byzantine-night-blue);
     border-radius: 4px;
     color: var(--color-white);
@@ -111,5 +113,11 @@ img {
     cursor: pointer;
     height: 28px;
     width: 28px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 </style>

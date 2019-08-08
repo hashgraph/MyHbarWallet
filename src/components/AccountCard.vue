@@ -6,24 +6,28 @@
             :src="'https://api.adorable.io/avatars/285/' + rawPublicKey"
         />
         <div class="content">
-            <div class="title">
-                Account
+            <div class="top">
+                <div class="title">
+                    Account
+                </div>
+                <div class="subtitle">
+                    <span>{{ shard }}.{{ realm }}.</span
+                    ><strong>{{ account }}</strong>
+                </div>
+                <div class="subtitle">
+                    {{ rawPublicKey }}
+                </div>
             </div>
-            <div class="subtitle">
-                <span>{{ shard }}.{{ realm }}.</span
-                ><strong>{{ account }}</strong>
+            <div class="actions">
+                <!-- TODO: implement QR Button -->
+                <MaterialDesignIcon class="action qr-icon" :icon="qrcode" />
+                <!-- TODO: Tie Copy/Error alert to copy -->
+                <MaterialDesignIcon
+                    class="action copy-icon"
+                    :icon="copy"
+                    @click="copyKey"
+                />
             </div>
-            <div class="subtitle">
-                {{ rawPublicKey }}
-            </div>
-            <!-- TODO: implement QR Button -->
-            <MaterialDesignIcon class="action qr-icon" :icon="qrcode" />
-            <!-- TODO: Tie Copy/Error alert to copy -->
-            <MaterialDesignIcon
-                class="action copy-icon"
-                :icon="copy"
-                @click="copyKey"
-            />
         </div>
     </div>
 </template>
@@ -90,7 +94,6 @@ export default Vue.extend({
 
 <style scoped lang="postcss">
 .account {
-    align-items: center;
     background-color: var(--color-hera-blue);
     border-radius: 4px;
     color: var(--color-white);
@@ -132,6 +135,9 @@ img {
 
     &:nth-child(3) {
         margin-block-end: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: normal;
     }
 }
 
@@ -146,5 +152,12 @@ img {
 
 .action + .action {
     margin-inline-start: 15px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
 }
 </style>
