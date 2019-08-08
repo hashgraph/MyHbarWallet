@@ -18,6 +18,7 @@ test:
     script:
         - yarn lint
         - yarn test
+        - yarn build
 
     only:
         - master
