@@ -61,9 +61,6 @@ export default Vue.extend({
         transition() {
             if (this.isOpen) return "menu-enter-active";
             else return "menu-leave-active";
-        },
-        fade() {
-            return "shadow-active";
         }
     },
     created() {
