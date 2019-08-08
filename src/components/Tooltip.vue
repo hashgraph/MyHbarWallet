@@ -72,9 +72,8 @@ export default Vue.extend({
     border-radius: 4px;
     color: var(--color-china-blue);
     font-size: 14px;
-    inset-block-end: 34px;
-    inset-block-end: calc(100% + 8px);
-    inset-inline-start: calc((-350px / 2) + (100% / 2));
+    bottom: calc(100% + 8px);
+    left: calc((-350px / 2) + (100% / 2));
     line-height: 2;
     margin: 0 auto;
     opacity: 0;
