@@ -89,7 +89,7 @@ export default Vue.extend({
 }
 
 .bar-1-anim {
-    transform: rotate(45deg) translate(19px, 4px) scaleX(1.75) scaleY(2);
+    transform: rotate(45deg) translate(20px, 4px) scaleX(1.75) scaleY(2);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {
@@ -98,7 +98,7 @@ export default Vue.extend({
 }
 
 .bar-2-anim {
-    transform: rotate(-45deg) translate(27px, -14px) scaleX(1.75) scaleY(2);
+    transform: rotate(-45deg) translate(25.5px, -13px) scaleX(1.75) scaleY(2);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {

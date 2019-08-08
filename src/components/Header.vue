@@ -13,10 +13,10 @@
             <HamburgerButton @toggle="toggle"></HamburgerButton>
             <div v-if="scrolled" class="button-container">
                 <!-- TODO: Once the respective views exists, route to them -->
-                <router-link class="btn" to="">
+                <router-link class="btn" to="/create-account">
                     <Button label="Create Account" compact outline />
                 </router-link>
-                <router-link class="btn" to="">
+                <router-link class="btn" to="access-my-account">
                     <Button label="Access" compact />
                 </router-link>
             </div>
@@ -154,7 +154,10 @@ header {
 @media screen and (max-width: 1025px) {
     .links {
         max-width: 0;
-        transition: none;
+        visibility: hidden;
+    }
+
+    .button-container {
         visibility: hidden;
     }
 }
