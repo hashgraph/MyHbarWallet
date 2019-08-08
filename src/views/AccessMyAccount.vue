@@ -1,12 +1,12 @@
 <template>
     <div class="access-my-account">
         <div class="wrap">
-            <Title title="Access My Account">
+            <PageTitle title="Access My Account">
                 Don't have an account?
                 <router-link :to="{ name: 'create-account' }">
                     Create A New Account
                 </router-link>
-            </Title>
+            </PageTitle>
             <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
@@ -40,7 +40,7 @@ import ModalAccessByPhrase, {
     MnemonicType
 } from "@/components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
-import Title from "../components/Title.vue";
+import PageTitle from "../components/PageTitle.vue";
 
 function newAccessByPhraseState(isOpen: boolean) {
     return {
@@ -59,7 +59,7 @@ export default Vue.extend({
         ModalAccessBySoftware,
         ModalAccessByPhrase,
         ModalAccessByPrivateKey,
-        Title
+        PageTitle
     },
     data() {
         return {

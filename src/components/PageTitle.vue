@@ -1,7 +1,7 @@
 <template>
     <div class="title-container">
         <!-- todo: move this to a computed, it's being difficult with the  -->
-        <div class="title" :class="large ? 'lg' : ''">{{ title }}</div>
+        <div class="title" :class="{ large }">{{ title }}</div>
         <div class="subtitle"><slot></slot></div>
     </div>
 </template>
@@ -9,7 +9,6 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-    name: "Title",
     props: {
         title: { type: String, required: true },
         large: { type: Boolean }
@@ -47,7 +46,7 @@ a {
     margin-block-end: 15px;
 }
 
-.title.lg {
+.title.large {
     font-size: 45px;
 }
 

@@ -1,9 +1,9 @@
 <template>
     <div class="hardware-wallet-affiliates">
-        <Title large title="Buy a Hardware wallet">
+        <PageTitle large title="Buy a Hardware wallet">
             Purchase a hardware wallet for the highest security when accessing
             your crypto.
-        </Title>
+        </PageTitle>
         <div class="offers">
             <HardwareWalletOffer
                 v-for="offer of offers"
@@ -23,7 +23,7 @@
 import Vue from "vue";
 
 import HardwareWalletOffer from "../components/HardwareWalletOffer.vue";
-import Title from "../components/Title.vue";
+import PageTitle from "../components/PageTitle.vue";
 
 import ledgerImage from "../assets/logo-ledger.png";
 import finneyImage from "../assets/logo-finney.png";
@@ -36,7 +36,7 @@ export default Vue.extend({
     name: "HardwareWalletAffiliates",
     components: {
         HardwareWalletOffer,
-        Title
+        PageTitle
     },
     computed: {
         offers() {

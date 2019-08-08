@@ -1,12 +1,12 @@
 <template>
     <div class="access-my-account">
         <div class="wrap">
-            <Title title="Create A New Account">
+            <PageTitle title="Create A New Account">
                 Already Have One?
                 <router-link :to="{ name: 'access-my-account' }">
                     Access My Account
                 </router-link>
-            </Title>
+            </PageTitle>
             <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
@@ -26,7 +26,7 @@ import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "@/components/ModalAccessBySoftware.vue";
 
-import Title from "../components/Title.vue";
+import PageTitle from "../components/PageTitle.vue";
 
 export default Vue.extend({
     components: {
@@ -34,7 +34,7 @@ export default Vue.extend({
         AccountTileButtons,
         ModalAccessByHardware,
         ModalAccessBySoftware,
-        Title
+        PageTitle
     },
     data() {
         return {
