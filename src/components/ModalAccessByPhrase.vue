@@ -37,7 +37,7 @@
                 @input="handleMnemonicInput"
             />
 
-            <HiddenPasswordInput
+            <OptionalPasswordInput
                 :value="state.password"
                 @input="handlePasswordInput"
             />
@@ -59,7 +59,7 @@ import MnemonicInput from "../components/MnemonicInput.vue";
 import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
-import HiddenPasswordInput from "../components/HiddenPasswordInput.vue";
+import OptionalPasswordInput from "../components/OptionalPasswordInput.vue";
 
 export enum MnemonicType {
     Words12 = 12,
@@ -81,7 +81,7 @@ export default Vue.extend({
         Button,
         CustomerSupportLink,
         Warning,
-        HiddenPasswordInput
+        OptionalPasswordInput
     },
     model: {
         prop: "state",
