@@ -5,21 +5,27 @@
         :no-decoration="true"
         @change="this.$listeners.change"
     >
-        <template v-slot:banner>
-            <h2>Oops!</h2>
-        </template>
         <div class="modal-oops-logout">
+            <h2>Oops!</h2>
             <p>
-                It seems like you forgot to logout of your wallet. For the
-                security of your wallet, please log out of your wallet to
-                continue. Otherwise, go back to your wallet.
+                It seems like you forgot to logout of your account. For the
+                security of your account, please log to continue. Otherwise, go
+                back to your account.
             </p>
             <div class="button-group">
-                <Button class="button-go-back" label="Go back" outline="true" />
+                <!-- fixme: handle the click -->
+                <Button
+                    class="button-go-back"
+                    label="Go back"
+                    :outline="true"
+                    :medium="true"
+                />
                 <Button
                     class="button-logout"
-                    label="Log Out of Wallet"
-                    danger="true"
+                    label="Log Out of Account"
+                    :danger="true"
+                    :medium="true"
+                    @click="handleClickLogOut"
                 />
             </div>
         </div>
@@ -42,6 +48,11 @@ export default Vue.extend({
     },
     props: {
         isOpen: { type: Boolean }
+    },
+    methods: {
+        handleClickLogOut() {
+            this.isOpen = false;
+        }
     }
 });
 </script>
@@ -66,7 +77,7 @@ export default Vue.extend({
     align-items: stretch;
     display: flex;
     flex-direction: column;
-    margin-block-start: -40px;
+    margin-block-start: -30px;
 }
 
 h2 {
@@ -80,6 +91,7 @@ h2 {
 p {
     color: var(--color-china-blue);
     font-size: 14px;
+    padding-block-end: 30px;
     text-align: center;
 }
 </style>
