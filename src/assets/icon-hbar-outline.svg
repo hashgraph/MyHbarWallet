@@ -7,8 +7,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="31.507"
-   height="31.507"
+   width="60"
+   height="60"
    version="1.1"
    id="svg6"
    sodipodi:docname="icon-hbar-outline.svg"
@@ -46,21 +46,22 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="15.225806"
-     inkscape:cx="12.984164"
-     inkscape:cy="15.360612"
+     inkscape:zoom="7.612903"
+     inkscape:cx="27.038111"
+     inkscape:cy="25.807711"
      inkscape:window-x="0"
      inkscape:window-y="61"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg6" />
+     inkscape:current-layer="svg6"
+     inkscape:pagecheckerboard="true" />
   <path
-     d="m 0.5,15.754 c 0,8.425 6.829,15.253 15.252,15.253 8.427,0 15.255,-6.828 15.255,-15.253 C 31.007,7.329 24.18,0.5 15.752,0.5 7.329,0.5 0.5,7.329 0.5,15.754 Z"
+     d="m 2.1255697,30.000913 c 0,15.395948 12.4793963,27.873517 27.8716883,27.873517 15.399602,0 27.877172,-12.477569 27.877172,-27.873517 0,-15.395946 -12.475742,-27.875343 -27.877172,-27.875343 -15.392292,0 -27.8716883,12.479397 -27.8716883,27.875343 z"
      id="path2"
-     style="clip-rule:evenodd;fill:none;fill-rule:evenodd;stroke:#fff;stroke-opacity:1"
+     style="clip-rule:evenodd;fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:4.25113964;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      inkscape:connector-curvature="0" />
   <path
-     d="m 11.367,16.867 h 8.775 v -2.33 h -8.775 v 2.332 z M 20.142,12.84 H 11.367 V 8.422 H 9.24 v 14.663 h 2.127 v -4.52 h 8.775 v 4.52 h 2.125 V 8.422 h -2.125 z"
+     d="M 21.801817,32.081084 H 38.20192 V 27.726413 H 21.801817 v 4.358409 z M 38.20192,24.554792 H 21.801817 v -8.257055 h -3.975273 v 27.404526 h 3.975273 V 35.254574 H 38.20192 v 8.447689 h 3.971536 V 16.297737 H 38.20192 Z"
      id="path4"
-     style="clip-rule:evenodd;fill:#fff;fill-opacity:1;fill-rule:evenodd"
+     style="clip-rule:evenodd;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke-width:1.86895764"
      inkscape:connector-curvature="0" />
 </svg>
