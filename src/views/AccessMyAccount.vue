@@ -5,9 +5,9 @@
                 <div class="title">Access My Account</div>
                 <div class="subtitle">
                     Don't have an account?
-                    <router-link :to="{ name: 'create-account' }"
-                        >Create A New Account</router-link
-                    >
+                    <router-link :to="{ name: 'create-account' }">
+                        Create A New Account
+                    </router-link>
                 </div>
             </div>
             <AccountTileButtons @click="handleClickTiles" />
@@ -23,7 +23,7 @@
         <input
             ref="file"
             type="file"
-            style="display: none;"
+            :v-show="false"
             @change="loadTextFromFile"
         />
     </div>
@@ -83,7 +83,7 @@ export default Vue.extend({
             this.modalAccessBySoftwareIsOpen = false;
 
             if (which === "file") {
-                this.$refs.file.click();
+                (this.$refs.file as HTMLInputElement).click();
             } else {
                 setTimeout(() => {
                     if (which === AccessSoftwareOption.Phrase) {
@@ -96,13 +96,29 @@ export default Vue.extend({
                 }, 125);
             }
         },
-        loadTextFromFile(e) {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = e => console.log(e.target.result);
-            reader.readAsText(file);
+        async loadTextFromFile(event: Event) {
+            const target = event.target as HTMLInputElement;
 
-            // [...]
+            if (target.files == null) {
+                // User hit cancel
+                return;
+            }
+
+            const file = target.files[0];
+            const fileText = await new Promise<string>((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.addEventListener("error", reject);
+                reader.addEventListener("loadend", (event: ProgressEvent) => {
+                    resolve(reader.result as string);
+                });
+
+                reader.readAsText(file);
+            });
+
+            console.log(fileText);
+
+            // TODO: Open the password modal for the keyfile
         }
     }
 });
