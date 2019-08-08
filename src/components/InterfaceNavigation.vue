@@ -24,6 +24,13 @@
             />
 
             <InterfaceNavigationSection
+            :image="accountImage"
+            :image-active="accountImageActive"
+            title="Accounts"
+            :routes="accountRoutes"
+        />
+
+        <InterfaceNavigationSection
                 :image="messageImage"
                 :image-active="messageImageActive"
                 title="Message"
