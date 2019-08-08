@@ -1,28 +1,31 @@
 <template>
     <div class="balance">
-        <MaterialDesignIcon class="wallet-icon" :icon="wallet" />
+        <img src="@/assets/wallet.svg" />
         <div class="content">
             <div class="title">
                 Balance
             </div>
+
             <div v-if="balance" class="subtitle" type="string">
                 {{ balance }} ℏ
             </div>
             <div v-else class="subtitle-null" type="string">
-                No Balance
+                Unknown
             </div>
+
             <!-- TODO: add Chris's tooltip component? -->
+
             <MaterialDesignIcon
-                v-show="busy"
+                v-if="busy"
                 class="spinner"
                 :icon="spinner"
                 spin
             />
             <MaterialDesignIcon
-                v-show="!busy"
+                v-else
                 class="refresh-icon"
                 :icon="refresh"
-                @click="doRefresh"
+                @click="handleRefresh"
             />
         </div>
     </div>
@@ -31,15 +34,14 @@
 <script lang="ts">
 import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
-import { mdiRefresh, mdiWalletOutline, mdiLoading } from "@mdi/js";
+import { mdiRefresh, mdiLoading } from "@mdi/js";
 
 export default Vue.extend({
     components: {
         MaterialDesignIcon
     },
     props: {
-        image: { type: String, default: null },
-        balance: { type: String, default: null }
+        balance: { type: Number, default: null }
     },
     data() {
         return {
@@ -50,17 +52,16 @@ export default Vue.extend({
         refresh() {
             return mdiRefresh;
         },
-        wallet() {
-            return mdiWalletOutline;
-        },
         spinner() {
             return mdiLoading;
         }
     },
     methods: {
-        doRefresh() {
-            console.log("HEY");
+        handleRefresh() {
+            console.warn("todo: check balance");
+
             this.busy = true;
+
             setTimeout(() => {
                 this.busy = false;
             }, 2000);
@@ -79,9 +80,8 @@ export default Vue.extend({
     padding: 25px;
 }
 
-.wallet-icon {
+img {
     align-self: flex-start;
-    height: 60px;
     margin-block-start: 10px;
     margin-inline-end: 25px;
     width: 60px;
@@ -94,7 +94,7 @@ export default Vue.extend({
 
 .subtitle {
     font-size: 22px;
-    font-weight: 500;
+    font-weight: 300;
     margin-block-end: 15px;
 }
 
@@ -102,5 +102,9 @@ export default Vue.extend({
     font-size: 14px;
     font-weight: 300;
     margin-block-end: 27px;
+}
+
+.refresh-icon {
+    cursor: pointer;
 }
 </style>
