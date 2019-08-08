@@ -109,7 +109,7 @@ export default Vue.extend({
 .modal {
     background-clip: padding-box;
     border: 0;
-    border-radius: 5px;
+    border-radius: 4px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.22);
     display: flex;
     flex-direction: column;

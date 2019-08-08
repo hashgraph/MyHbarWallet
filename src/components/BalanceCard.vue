@@ -74,7 +74,7 @@ export default Vue.extend({
 .balance {
     align-items: center;
     background-color: var(--color-byzantine-night-blue);
-    border-radius: 5px;
+    border-radius: 4px;
     color: var(--color-white);
     display: flex;
     padding: 25px;
@@ -84,18 +84,21 @@ img {
     align-self: flex-start;
     margin-block-start: 10px;
     margin-inline-end: 25px;
+    user-select: none;
     width: 60px;
 }
 
 .title {
     font-size: 22px;
     font-weight: 500;
+    user-select: none;
 }
 
 .subtitle {
     font-size: 22px;
     font-weight: 300;
     margin-block-end: 15px;
+    user-select: none;
 }
 
 .subtitle-null {
@@ -106,5 +109,7 @@ img {
 
 .refresh-icon {
     cursor: pointer;
+    height: 28px;
+    width: 28px;
 }
 </style>

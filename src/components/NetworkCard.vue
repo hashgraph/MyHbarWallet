@@ -27,7 +27,7 @@ export default Vue.extend({
 .network {
     align-items: center;
     background-color: var(--color-lynx-screen-blue);
-    border-radius: 5px;
+    border-radius: 4px;
     color: var(--color-white);
     display: flex;
     padding: 25px;
@@ -37,18 +37,21 @@ img {
     align-self: flex-start;
     margin-block-start: 10px;
     margin-inline-end: 25px;
+    user-select: none;
     width: 60px;
 }
 
 .title {
     font-size: 22px;
     font-weight: 500;
+    user-select: none;
 }
 
 .subtitle {
     font-size: 14px;
-    font-weight: 300;
     margin-block-end: 12px;
+    opacity: 0.8;
+    user-select: none;
 }
 
 .change {
@@ -59,5 +62,6 @@ img {
     font-size: 12px;
     outline: none;
     padding: 4px 8px;
+    user-select: none;
 }
 </style>
