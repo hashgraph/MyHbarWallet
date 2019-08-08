@@ -5,22 +5,31 @@
                 <div class="title">Access My Account</div>
                 <div class="subtitle">
                     Don't have an account?
-                    <router-link :to="{ name: 'create-account' }"
-                        >Create A New Account</router-link
-                    >
+                    <router-link :to="{ name: 'create-account' }">
+                        Create A New Account
+                    </router-link>
                 </div>
             </div>
             <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
+        <ModalAccessByPrivateKey v-model="modalAccessByPrivateKeyIsOpen" />
         <ModalAccessByPhrase v-model="modalAccessByPhraseState" />
         <ModalAccessByHardware v-model="modalAccessByHardwareIsOpen" />
         <ModalAccessBySoftware
             v-model="modalAccessBySoftwareIsOpen"
             @submit="handleAccessBySoftwareSubmit"
         />
+        <input
+            ref="file"
+            type="file"
+            :v-show="false"
+            @change="loadTextFromFile"
+        />
     </div>
 </template>
+
+<!-- TODO:  should go to password modal after getting keystore file -->
 
 <script lang="ts">
 import Vue from "vue";
@@ -31,9 +40,9 @@ import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "@/components/ModalAccessBySoftware.vue";
 import ModalAccessByPhrase, {
-    State as ModalAccessByPhraseState,
     MnemonicType
 } from "@/components/ModalAccessByPhrase.vue";
+import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
 
 function newAccessByPhraseState(isOpen: boolean) {
     return {
@@ -50,13 +59,15 @@ export default Vue.extend({
         AccountTileButtons,
         ModalAccessByHardware,
         ModalAccessBySoftware,
-        ModalAccessByPhrase
+        ModalAccessByPhrase,
+        ModalAccessByPrivateKey
     },
     data() {
         return {
             modalAccessByHardwareIsOpen: false,
             modalAccessBySoftwareIsOpen: false,
-            modalAccessByPhraseState: newAccessByPhraseState(false)
+            modalAccessByPhraseState: newAccessByPhraseState(false),
+            modalAccessByPrivateKeyIsOpen: false
         };
     },
     computed: {},
@@ -71,13 +82,43 @@ export default Vue.extend({
         handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
             this.modalAccessBySoftwareIsOpen = false;
 
-            setTimeout(() => {
-                if (which == AccessSoftwareOption.Phrase) {
-                    this.modalAccessByPhraseState = newAccessByPhraseState(
-                        true
-                    );
-                }
-            }, 125);
+            if (which === "file") {
+                (this.$refs.file as HTMLInputElement).click();
+            } else {
+                setTimeout(() => {
+                    if (which === AccessSoftwareOption.Phrase) {
+                        this.modalAccessByPhraseState = newAccessByPhraseState(
+                            true
+                        );
+                    } else if (which === AccessSoftwareOption.Key) {
+                        this.modalAccessByPrivateKeyIsOpen = true;
+                    }
+                }, 125);
+            }
+        },
+        async loadTextFromFile(event: Event) {
+            const target = event.target as HTMLInputElement;
+
+            if (target.files == null) {
+                // User hit cancel
+                return;
+            }
+
+            const file = target.files[0];
+            const fileText = await new Promise<string>((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.addEventListener("error", reject);
+                reader.addEventListener("loadend", (event: ProgressEvent) => {
+                    resolve(reader.result as string);
+                });
+
+                reader.readAsText(file);
+            });
+
+            console.log(fileText);
+
+            // TODO: Open the password modal for the keyfile
         }
     }
 });

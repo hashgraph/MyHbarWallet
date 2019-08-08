@@ -1,5 +1,5 @@
 <template>
-    <div class="faqs">
+    <div id="faqs" class="faqs">
         <div class="wrap">
             <div class="page-container">
                 <div class="head">

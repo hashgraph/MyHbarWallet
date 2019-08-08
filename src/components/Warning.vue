@@ -1,7 +1,7 @@
 <template>
     <div class="warning">
-        <div class="warning-symbol">
-            ⚠️
+        <div class="warning-symbol-container">
+            <MaterialDesignIcon class="warning-symbol" :icon="cautionIcon" />
         </div>
         <div class="text">
             <div class="title">
@@ -16,11 +16,21 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { mdiAlertOutline } from "@mdi/js";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 export default Vue.extend({
     name: "Warning",
+    components: {
+        MaterialDesignIcon
+    },
     props: {
         title: { type: String, required: true }
+    },
+    computed: {
+        cautionIcon() {
+            return mdiAlertOutline;
+        }
     }
 });
 </script>
@@ -33,10 +43,16 @@ export default Vue.extend({
     width: 100%;
 }
 
-.warning-symbol {
+.warning-symbol-container {
+    display: flex;
     flex-shrink: 0;
-    font-size: 30px;
+    padding-block-start: 10px;
     width: 60px;
+}
+
+.warning-symbol {
+    height: 30px;
+    width: 30px;
 }
 
 .title {

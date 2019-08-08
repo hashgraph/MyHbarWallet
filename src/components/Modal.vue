@@ -6,7 +6,7 @@
         aria-modal="true"
         @click="handleClose"
     >
-        <div class="modal" @click.stop="">
+        <div class="modal" :class="{ large: large }" @click.stop="">
             <header>
                 <span class="title">{{ title }}</span>
                 <MaterialDesignIcon
@@ -47,7 +47,8 @@ export default Vue.extend({
     },
     props: {
         isOpen: { type: Boolean },
-        title: { type: String, required: true }
+        title: { type: String, required: true },
+        large: { type: Boolean }
     },
     computed: {
         closeIcon() {
@@ -125,6 +126,10 @@ export default Vue.extend({
     }
 }
 
+.modal.large {
+    max-width: 800px;
+}
+
 .modal-background.is-open .modal {
     transform: none;
 }
@@ -157,5 +162,9 @@ header {
     @media (max-width: 415px) {
         padding: 20px;
     }
+}
+
+.modal.large .content-container {
+    padding: 30px;
 }
 </style>
