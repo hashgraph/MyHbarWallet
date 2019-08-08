@@ -19,7 +19,7 @@
             @click="handleClickEye"
         />
         <MaterialDesignIcon
-            v-if="validate && !obscure"
+            v-if="(validateId || hasInput) && !obscure"
             class="checkmark"
             :class="{ 'is-valid': valid }"
             :icon="checkmark"
@@ -56,14 +56,17 @@ export default Vue.extend({
         obscure: Boolean,
 
         // Whether to validate the the input as an ID and add the check-mark to the bottom right
-        validate: Boolean
+        validateId: Boolean,
+
+        // Whether to check if there is input
+        hasInput: Boolean
     },
     data() {
         return {
             // If the eye is open to show the obscured text anyway
             isEyeOpen: false,
 
-            valid: false,
+            valid: this.hasInput ? this.value.length > 0 : false,
 
             text: this.value,
 
@@ -75,7 +78,7 @@ export default Vue.extend({
     computed: {
         keyboardType() {
             if (this.type) return this.type;
-            if (this.obscure && !this.validate && !this.isEyeOpen)
+            if (this.obscure && !this.validateId && !this.isEyeOpen)
                 return "password";
             return "text";
         },
@@ -90,12 +93,19 @@ export default Vue.extend({
         }
     },
     watch: {
-        text: function(value: String) {
-            // If validation is on and obscure is off then only emit
-            // input change when the input value is valid
+        text: function(value: string) {
+            // If validateId option has been set and obscure option is not set then only emit
+            // input change when the input value is an account id
+            // If hasInput option has been set and obscure option is not set then only emit
+            // input change when the input value is a number
             // Else always emite new value
-            if (this.validate && !this.obscure) {
+            if (this.validateId && !this.obscure) {
                 this.valid = this.regex.test(value);
+                if (this.valid) {
+                    this.$emit("input", value);
+                }
+            } else if (this.hasInput && !this.obscure) {
+                this.valid = value.length > 0;
                 if (this.valid) {
                     this.$emit("input", value);
                 }
