@@ -29,9 +29,9 @@
         />
 
         <input
+            v-show="false"
             ref="file"
             type="file"
-            :v-show="false"
             @change="loadTextFromFile"
         />
     </div>

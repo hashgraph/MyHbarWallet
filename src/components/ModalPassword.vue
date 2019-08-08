@@ -2,6 +2,7 @@
     <div class="modal-password">
         <Modal
             title="Passowrd"
+            :not-closable="!state.isBusy"
             :is-open="state.modalIsOpen"
             @change="handleModalChangeIsOpen"
         >
@@ -21,6 +22,7 @@
             />
             <Button
                 class="btn"
+                :busy="state.isBusy"
                 label="Access Wallet"
                 :disabled="state.password === ''"
                 @click="submit"
@@ -39,6 +41,7 @@ import Button from "../components/Button.vue";
 export interface State {
     modalIsOpen: boolean;
     password: string;
+    isBusy: boolean;
 }
 
 export default Vue.extend({
@@ -57,7 +60,7 @@ export default Vue.extend({
     },
     methods: {
         handleInputChange(value: string) {
-            this.state.password = value;
+            this.$emit("change", { ...this.state, password: value });
         },
         submit() {
             this.$emit("submit", this.state);

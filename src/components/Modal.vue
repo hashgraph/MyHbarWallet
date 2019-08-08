@@ -46,6 +46,7 @@ export default Vue.extend({
         event: "change"
     },
     props: {
+        notClosable: { type: Boolean },
         isOpen: { type: Boolean },
         title: { type: String, required: true },
         large: { type: Boolean }
@@ -68,7 +69,9 @@ export default Vue.extend({
     },
     methods: {
         handleClose() {
-            this.$emit("change", false);
+            if (this.notClosable) {
+                this.$emit("change", false);
+            }
         },
         handleWindowKeyDown(event: KeyboardEvent) {
             // ESCAPE (27)
