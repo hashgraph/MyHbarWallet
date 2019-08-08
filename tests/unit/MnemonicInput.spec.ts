@@ -7,7 +7,7 @@ describe("MnemonicInput.vue", () => {
             propsData: {
                 words: 12,
                 value: [],
-                editable: true,
+                editable: true
             }
         });
 
