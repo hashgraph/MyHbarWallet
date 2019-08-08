@@ -1,29 +1,36 @@
 <template>
-    <div class="input-container" :class="classObject">
+    <div class="text-input" :class="classObject">
         <label>
             <span v-if="label" class="label">{{ label }}</span>
             <input
                 ref="input"
                 v-model="text"
+                :class="classObject"
                 :placeholder="placeholder"
                 :type="keyboardType"
                 :tabindex="tabindex"
                 :step="step"
             />
         </label>
+
         <MaterialDesignIcon
-            v-if="obscure && !validate"
+            v-if="obscure && !valid"
             class="eye"
             :class="{ 'is-open': isEyeOpen }"
             :icon="eye"
             @click="handleClickEye"
         />
+
         <MaterialDesignIcon
-            v-if="(validateId || hasInput) && !obscure"
+            v-if="(valid || input) && !obscure"
             class="checkmark"
-            :class="{ 'is-valid': valid }"
+            :class="{ 'is-valid': isValid }"
             :icon="checkmark"
         />
+
+        <div class="action" @click="$emit('action')">
+            {{ action }}
+        </div>
     </div>
 </template>
 
@@ -48,6 +55,8 @@ export default Vue.extend({
         step: { type: String, default: null },
         type: { type: String, default: null },
 
+        action: { type: String, default: null },
+
         compact: Boolean,
 
         white: Boolean,
@@ -56,17 +65,19 @@ export default Vue.extend({
         obscure: Boolean,
 
         // Whether to validate the the input as an ID and add the check-mark to the bottom right
-        validateId: Boolean,
+        valid: Boolean,
 
         // Whether to check if there is input
-        hasInput: Boolean
+        input: Boolean,
+
+        copy: Boolean
     },
     data() {
         return {
             // If the eye is open to show the obscured text anyway
             isEyeOpen: false,
 
-            valid: this.hasInput ? this.value.length > 0 : false,
+            isValid: this.input ? this.value.length > 0 : false,
 
             text: this.value,
 
@@ -78,7 +89,7 @@ export default Vue.extend({
     computed: {
         keyboardType() {
             if (this.type) return this.type;
-            if (this.obscure && !this.validateId && !this.isEyeOpen)
+            if (this.obscure && !this.valid && !this.isEyeOpen)
                 return "password";
             return "text";
         },
@@ -99,14 +110,14 @@ export default Vue.extend({
             // If hasInput option has been set and obscure option is not set then only emit
             // input change when the input value is a number
             // Else always emite new value
-            if (this.validateId && !this.obscure) {
-                this.valid = this.regex.test(value);
-                if (this.valid) {
+            if (this.valid && !this.obscure) {
+                this.isValid = this.regex.test(value);
+                if (this.isValid) {
                     this.$emit("input", value);
                 }
-            } else if (this.hasInput && !this.obscure) {
-                this.valid = value.length > 0;
-                if (this.valid) {
+            } else if (this.input && !this.obscure) {
+                this.isValid = value.length > 0;
+                if (this.isValid) {
                     this.$emit("input", value);
                 }
             } else {
@@ -123,15 +134,28 @@ export default Vue.extend({
 
             // Re-focus the input (loses focus from the tap on the eye)
             (this.$refs.input as HTMLInputElement).focus();
+        },
+        handleActionClick(event: Event) {
+            this.$emit("action");
         }
     }
 });
 </script>
 
 <style scoped lang="postcss">
-.input-container {
+.text-input {
     border-radius: 4px;
     position: relative;
+}
+
+.action {
+    color: var(--color-melbourne-cup);
+    cursor: pointer;
+    font-size: 14px;
+    inset-block-end: 0;
+    inset-block-start: 0;
+    inset-inline-end: 20px;
+    position: absolute;
 }
 
 input {
@@ -151,11 +175,11 @@ input {
     &:not(:only-child) {
         padding-inline-end: 50px;
     }
-}
 
-.is-compact input {
-    border-width: 1px;
-    padding: 13px 15px;
+    &.is-compact {
+        border-width: 1px;
+        padding: 13px 15px;
+    }
 }
 
 .is-white input {
@@ -176,7 +200,7 @@ input {
 
 .eye {
     cursor: pointer;
-    inset-block: 0;
+    inset-block-end: 13px;
     inset-inline-end: 20px;
     margin: auto;
     opacity: 0.3;
@@ -190,16 +214,12 @@ input {
 
 .checkmark {
     color: var(--color-jupiter);
-    height: 14px;
     inset-block-end: 13px;
-    inset-inline-end: 13px;
-    opacity: 1;
+    inset-inline-end: 20px;
     position: absolute;
-    width: 14px;
 
     &.is-valid {
         color: var(--color-melbourne-cup);
-        opacity: 1;
     }
 }
 </style>
