@@ -1,11 +1,15 @@
-import { mount, shallowMount } from "@vue/test-utils";
+import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
 import Accordion from "@/components/Accordion.vue";
+import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("Accordion.vue", () => {
     const title = "Title";
+    const localVue = createLocalVue();
+    localVue.use(VueFunctionApi);
 
     it("renders", () => {
         const wrapper = shallowMount(Accordion, {
+            localVue,
             slots: {
                 title,
                 content: "Content"
@@ -19,18 +23,17 @@ describe("Accordion.vue", () => {
         const content = "Content";
 
         const wrapper = mount(Accordion, {
+            localVue,
             slots: {
                 title,
                 content
             }
         });
+
         expect(wrapper.find(".title-text").text()).toContain(title);
         expect(wrapper.find(".content").text()).toContain(content);
-        expect(wrapper.vm.$data.expanded).toBe(false);
 
         wrapper.find(".title").trigger("click");
-
-        expect(wrapper.find(".content-text").text()).toContain(content);
-        expect(wrapper.vm.$data.expanded).toBe(true);
+        expect(wrapper.classes()).toContain("expanded");
     });
 });
