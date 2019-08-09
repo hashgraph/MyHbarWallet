@@ -35,11 +35,35 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiEye, mdiEyeOutline, mdiCheckCircle } from "@mdi/js";
+import {
+    createComponent,
+    value as vueValue,
+    computed,
+    watch,
+    onCreated,
+    PropType,
+    onBeforeDestroy,
+    Wrapper
+} from "vue-function-api";
 
-export default Vue.extend({
+interface Props {
+    placeholder: string;
+    value: string;
+    label: string;
+    tabindex: string;
+    step: string;
+    type: string;
+    action: string;
+    compact: boolean;
+    white: boolean;
+    obscure: boolean;
+    valid: boolean;
+    input: boolean;
+}
+
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
@@ -48,97 +72,120 @@ export default Vue.extend({
         event: "input"
     },
     props: {
-        placeholder: { type: String, default: "" },
-        value: { type: String, default: "" },
-        label: { type: String, default: null },
-        tabindex: { type: String, default: null },
-        step: { type: String, default: null },
-        type: { type: String, default: null },
-
-        action: { type: String, default: null },
-
-        compact: Boolean,
-
-        white: Boolean,
+        placeholder: (String as unknown) as PropType<string>,
+        value: (String as unknown) as PropType<string>,
+        label: (String as unknown) as PropType<string>,
+        tabindex: (String as unknown) as PropType<string>,
+        step: (String as unknown) as PropType<string>,
+        type: (String as unknown) as PropType<string>,
+        action: (String as unknown) as PropType<string>,
+        compact: (Boolean as unknown) as PropType<boolean>,
+        white: (Boolean as unknown) as PropType<boolean>,
 
         // Whether to hide the text being edited (e.g., for passwords).
-        obscure: Boolean,
+        obscure: (Boolean as unknown) as PropType<boolean>,
 
         // Whether to validate the the input as an ID and add the check-mark to the bottom right
-        valid: Boolean,
+        valid: (Boolean as unknown) as PropType<boolean>,
 
         // Whether to check if there is input
-        input: Boolean,
-
-        copy: Boolean
+        input: (Boolean as unknown) as PropType<boolean>
     },
-    data() {
-        return {
-            // If the eye is open to show the obscured text anyway
-            isEyeOpen: false,
+    setup(
+        {
+            placeholder,
+            value,
+            label,
+            tabindex,
+            step,
+            type,
+            action,
+            compact,
+            white,
+            obscure,
+            valid,
+            input
+            }: Props,
+        context
+    ) {
+        // If the eye is open to show the obscured text anyway
+        let isEyeOpen = vueValue(false);
+        let isValid = vueValue(input ? value.length > 0 : false);
+        const text = vueValue(value);
+        const regex = new RegExp("\\d+\\.\\d+\\.\\d+");
 
-            isValid: this.input ? this.value.length > 0 : false,
-
-            text: this.value,
-
-            // Set here instead of computed -- where constants would normally go
-            // to prevent recreating object
-            regex: new RegExp("\\d+\\.\\d+\\.\\d+")
-        };
-    },
-    computed: {
-        keyboardType() {
-            if (this.type) return this.type;
-            if (this.obscure && !this.valid && !this.isEyeOpen)
-                return "password";
+        const keyboardType = computed(() => {
+            if (type) return type;
+            if (obscure && !valid && !isEyeOpen) return "password";
             return "text";
-        },
-        eye(): string {
-            return this.isEyeOpen ? mdiEye : mdiEyeOutline;
-        },
-        classObject(): {} {
+        });
+
+        const eye = computed(() => {
+            return isEyeOpen ? mdiEye : mdiEyeOutline;
+        });
+
+        const checkmark = computed(() => {
+            return mdiCheckCircle;
+        });
+
+        const classObject = computed(() => {
             return {
-                "is-compact": this.compact,
-                "is-white": this.white
+                "is-compact": compact,
+                "is-white": white
             };
+        });
+
+        function focus() {
+            (context.refs.input as HTMLInputElement).focus();
         }
-    },
-    watch: {
-        text: function(value: string) {
-            // If validateId option has been set and obscure option is not set then only emit
-            // input change when the input value is an account id
-            // If hasInput option has been set and obscure option is not set then only emit
-            // input change when the input value is a number
-            // Else always emite new value
-            if (this.valid && !this.obscure) {
-                this.isValid = this.regex.test(value);
-                if (this.isValid) {
-                    this.$emit("input", value);
-                }
-            } else if (this.input && !this.obscure) {
-                this.isValid = value.length > 0;
-                if (this.isValid) {
-                    this.$emit("input", value);
-                }
-            } else {
-                this.$emit("input", value);
-            }
-        }
-    },
-    methods: {
-        focus() {
-            (this.$refs.input as HTMLInputElement).focus();
-        },
-        handleClickEye() {
-            this.isEyeOpen = !this.isEyeOpen;
+
+        function handleClickEye() {
+            isEyeOpen = !isEyeOpen;
 
             // Re-focus the input (loses focus from the tap on the eye)
-            (this.$refs.input as HTMLInputElement).focus();
-        },
-        handleActionClick(event: Event) {
-            this.$emit("action");
+            (context.refs.input as HTMLInputElement).focus();
         }
-    }
+
+        function handleActionClick(event: Event) {
+            context.emit("action");
+        }
+
+        watch(
+            new Wrapper<string>(value),
+            (newValue: string, oldValue: string) => {
+                // If validateId option has been set and obscure option is not set then only emit
+                // input change when the input newValue is an account id
+                // If hasInput option has been set and obscure option is not set then only emit
+                // input change when the input newValue is a number
+                // Else always emite new newValue
+                if (valid && !obscure) {
+                    isValid = regex.test(newValue);
+                    if (isValid) {
+                        context.emit("input", newValue);
+                    }
+                } else if (input && !obscure) {
+                    isValid = newValue.length > 0;
+                    if (isValid) {
+                        context.emit("input", newValue);
+                    }
+                } else {
+                    context.emit("input", newValue);
+                }
+            }
+        );
+
+        return {
+            isEyeOpen,
+            isValid,
+            text,
+            regex,
+            keyboardType,
+            eye,
+            checkmark,
+            classObject
+        };
+    },
+    methods: {}
 });
 </script>
 
