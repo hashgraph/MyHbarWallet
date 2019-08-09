@@ -1,6 +1,6 @@
 <template>
     <div class="balance">
-        <img src="@/assets/wallet.svg" />
+        <img src="@/assets/wallet-hbar.svg" />
         <div class="content">
             <div class="top">
                 <div class="title">
