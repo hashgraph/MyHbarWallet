@@ -1,6 +1,7 @@
 <template>
     <Modal
-        :is-open="isOpen"
+        :is-open="state.modalIsOpen"
+        :not-closable="state.isBusy"
         title="Access by Private Key"
         @change="this.$listeners.change"
     >
@@ -13,13 +14,16 @@
         </template>
         <div class="modal-access-by-private-key">
             <TextInput
-                v-model="userPrivateKey"
                 placeholder="Enter Private Key"
+                :value="state.privateKey"
+                @input="handlePrivateKeyInput"
             />
             <Button
                 class="button-access-wallet"
                 label="Access Account"
-                :disabled="userPrivateKey.length === 0"
+                :busy="state.isBusy"
+                :disabled="state.privateKey.length === 0"
+                @click="$emit('submit')"
             />
             <CustomerSupportLink />
         </div>
@@ -27,12 +31,18 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue, { PropOptions } from "vue";
 import Warning from "../components/Warning.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
+
+export interface State {
+    modalIsOpen: boolean;
+    privateKey: string;
+    isBusy: boolean;
+}
 
 export default Vue.extend({
     components: {
@@ -43,16 +53,16 @@ export default Vue.extend({
         Warning
     },
     model: {
-        prop: "isOpen",
+        prop: "state",
         event: "change"
     },
     props: {
-        isOpen: { type: Boolean }
+        state: { type: Object, required: true } as PropOptions<State>
     },
-    data() {
-        return {
-            userPrivateKey: ""
-        };
+    methods: {
+        handlePrivateKeyInput(privateKey: string) {
+            this.$emit("change", { ...this.state, privateKey });
+        }
     }
 });
 </script>

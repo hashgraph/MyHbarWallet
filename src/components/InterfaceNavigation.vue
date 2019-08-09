@@ -91,6 +91,7 @@ nav {
     background: var(--color-white);
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     padding: 40px 0;
     width: 270px;
 }

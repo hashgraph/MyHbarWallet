@@ -2,32 +2,38 @@
     <div class="network">
         <img src="@/assets/icon-hbar-outline.svg" />
         <div class="content">
-            <div class="title">
-                Network
+            <div class="top">
+                <div class="title">
+                    Network
+                </div>
+                <div class="subtitle">
+                    mirror.mainnet.aech.io (mainnet)
+                </div>
             </div>
-            <div class="subtitle">
-                mirror.mainnet.aech.io (mainnet)
+            <div class="actions">
+                <Tooltip :pinnable="false" message="Change Network">
+                    <button class="change">Change</button>
+                </Tooltip>
             </div>
-            <button class="change">Change</button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import Tooltip from "./Tooltip.vue";
 
 export default Vue.extend({
-    props: {
-        image: { type: String, default: null }
+    components: {
+        Tooltip
     }
 });
 </script>
 
 <style scoped lang="postcss">
 .network {
-    align-items: center;
     background-color: var(--color-lynx-screen-blue);
-    border-radius: 5px;
+    border-radius: 4px;
     color: var(--color-white);
     display: flex;
     padding: 25px;
@@ -37,18 +43,21 @@ img {
     align-self: flex-start;
     margin-block-start: 10px;
     margin-inline-end: 25px;
+    user-select: none;
     width: 60px;
 }
 
 .title {
     font-size: 22px;
     font-weight: 500;
+    user-select: none;
 }
 
 .subtitle {
     font-size: 14px;
-    font-weight: 300;
     margin-block-end: 12px;
+    opacity: 0.8;
+    user-select: none;
 }
 
 .change {
@@ -57,7 +66,20 @@ img {
     color: white;
     cursor: pointer;
     font-size: 12px;
+    font-weight: 500;
     outline: none;
     padding: 4px 8px;
+    user-select: none;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.actions {
+    align-items: center;
+    display: flex;
 }
 </style>

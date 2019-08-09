@@ -46,6 +46,7 @@ export default Vue.extend({
         event: "change"
     },
     props: {
+        notClosable: { type: Boolean },
         isOpen: { type: Boolean },
         title: { type: String, required: true },
         large: { type: Boolean }
@@ -68,7 +69,9 @@ export default Vue.extend({
     },
     methods: {
         handleClose() {
-            this.$emit("change", false);
+            if (!this.notClosable) {
+                this.$emit("change", false);
+            }
         },
         handleWindowKeyDown(event: KeyboardEvent) {
             // ESCAPE (27)
@@ -109,7 +112,7 @@ export default Vue.extend({
 .modal {
     background-clip: padding-box;
     border: 0;
-    border-radius: 5px;
+    border-radius: 4px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.22);
     display: flex;
     flex-direction: column;

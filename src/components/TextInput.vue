@@ -53,15 +53,15 @@ export default Vue.extend({
         };
     },
     computed: {
-        keyboardType() {
+        keyboardType(): string {
             if (this.type) return this.type;
             if (this.obscure && !this.isEyeOpen) return "password";
             return "text";
         },
-        eye() {
+        eye(): string {
             return this.isEyeOpen ? mdiEye : mdiEyeOutline;
         },
-        classObject() {
+        classObject(): {} {
             return {
                 "is-compact": this.compact,
                 "is-white": this.white

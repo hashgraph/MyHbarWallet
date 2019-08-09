@@ -1,29 +1,43 @@
 <template>
     <div class="access-my-account">
         <div class="wrap">
-            <div class="title-container">
-                <div class="title">Access My Account</div>
-                <div class="subtitle">
-                    Don't have an account?
-                    <router-link :to="{ name: 'create-account' }">
-                        Create A New Account
-                    </router-link>
-                </div>
-            </div>
+            <PageTitle title="Access My Account">
+                Don't have an account?
+                <router-link :to="{ name: 'create-account' }">
+                    Create A New Account
+                </router-link>
+            </PageTitle>
             <AccountTileButtons @click="handleClickTiles" />
         </div>
+
         <FAQs />
-        <ModalAccessByPrivateKey v-model="modalAccessByPrivateKeyIsOpen" />
-        <ModalAccessByPhrase v-model="modalAccessByPhraseState" />
+
+        <ModalAccessByPrivateKey
+            v-model="modalAccessByPrivateKeyState"
+            @submit="handleAccessByPrivateKeySubmit"
+        />
+
+        <ModalAccessByPhrase
+            v-model="modalAccessByPhraseState"
+            @submit="handleAccessByPhraseSubmit"
+        />
+
         <ModalAccessByHardware v-model="modalAccessByHardwareIsOpen" />
+
         <ModalAccessBySoftware
             v-model="modalAccessBySoftwareIsOpen"
             @submit="handleAccessBySoftwareSubmit"
         />
+
+        <ModalPassword
+            v-model="modalPasswordState"
+            @submit="handlePasswordSubmit"
+        />
+
         <input
+            v-show="false"
             ref="file"
             type="file"
-            :v-show="false"
             @change="loadTextFromFile"
         />
     </div>
@@ -43,15 +57,10 @@ import ModalAccessByPhrase, {
     MnemonicType
 } from "@/components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
-
-function newAccessByPhraseState(isOpen: boolean) {
-    return {
-        modalIsOpen: isOpen,
-        words: [],
-        numWords: MnemonicType.Words12,
-        password: ""
-    };
-}
+import PageTitle from "../components/PageTitle.vue";
+import ModalPassword, {
+    State as ModalPasswordState
+} from "../components/ModalPassword.vue";
 
 export default Vue.extend({
     components: {
@@ -60,14 +69,32 @@ export default Vue.extend({
         ModalAccessByHardware,
         ModalAccessBySoftware,
         ModalAccessByPhrase,
-        ModalAccessByPrivateKey
+        ModalAccessByPrivateKey,
+        PageTitle,
+        ModalPassword
     },
     data() {
         return {
             modalAccessByHardwareIsOpen: false,
             modalAccessBySoftwareIsOpen: false,
-            modalAccessByPhraseState: newAccessByPhraseState(false),
-            modalAccessByPrivateKeyIsOpen: false
+            modalAccessByPhraseState: {
+                modalIsOpen: false,
+                isBusy: false,
+                words: [],
+                numWords: MnemonicType.Words12,
+                password: ""
+            },
+            modalPasswordState: {
+                modalIsOpen: false,
+                password: "",
+                isBusy: false
+            },
+            modalAccessByPrivateKeyState: {
+                modalIsOpen: false,
+                privateKey: "",
+                isBusy: false
+            },
+            keystoreFileText: null as string | null
         };
     },
     computed: {},
@@ -87,11 +114,9 @@ export default Vue.extend({
             } else {
                 setTimeout(() => {
                     if (which === AccessSoftwareOption.Phrase) {
-                        this.modalAccessByPhraseState = newAccessByPhraseState(
-                            true
-                        );
+                        this.modalAccessByPhraseState.modalIsOpen = true;
                     } else if (which === AccessSoftwareOption.Key) {
-                        this.modalAccessByPrivateKeyIsOpen = true;
+                        this.modalAccessByPrivateKeyState.modalIsOpen = true;
                     }
                 }, 125);
             }
@@ -105,20 +130,42 @@ export default Vue.extend({
             }
 
             const file = target.files[0];
-            const fileText = await new Promise<string>((resolve, reject) => {
-                const reader = new FileReader();
+            this.keystoreFileText = await new Promise<string>(
+                (resolve, reject) => {
+                    const reader = new FileReader();
 
-                reader.addEventListener("error", reject);
-                reader.addEventListener("loadend", (event: ProgressEvent) => {
-                    resolve(reader.result as string);
-                });
+                    reader.addEventListener("error", reject);
+                    reader.addEventListener(
+                        "loadend",
+                        (event: ProgressEvent) => {
+                            resolve(reader.result as string);
+                        }
+                    );
 
-                reader.readAsText(file);
-            });
+                    reader.readAsText(file);
+                }
+            );
 
-            console.log(fileText);
-
-            // TODO: Open the password modal for the keyfile
+            this.modalPasswordState.modalIsOpen = true;
+        },
+        handlePasswordSubmit(state: ModalPasswordState) {
+            this.modalPasswordState.isBusy = true;
+            // TODO: Decode private key from file
+            this.openInterface(null);
+        },
+        handleAccessByPhraseSubmit() {
+            this.modalAccessByPhraseState.isBusy = true;
+            // TODO: Decode private key from phrase
+            this.openInterface(null);
+        },
+        handleAccessByPrivateKeySubmit() {
+            this.modalAccessByPrivateKeyState.isBusy = true;
+            this.openInterface(this.modalAccessByPrivateKeyState.privateKey);
+        },
+        openInterface(privateKey: string | null) {
+            setTimeout(() => {
+                this.$router.push({ name: "interface" });
+            }, 3000);
         }
     }
 });
@@ -141,22 +188,5 @@ a {
     display: flex;
     flex-direction: column;
     padding: 80px 0;
-}
-
-.title-container {
-    margin-block-end: 50px;
-    text-align: center;
-}
-
-.title {
-    font-size: 30px;
-    font-weight: 500;
-    margin-block-end: 15px;
-}
-
-.subtitle {
-    color: var(--color-china-blue);
-    font-size: 14px;
-    font-weight: 400;
 }
 </style>

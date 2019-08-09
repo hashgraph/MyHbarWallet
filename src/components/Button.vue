@@ -76,6 +76,10 @@ button {
         cursor: default;
     }
 
+    &.busy {
+        padding: 16.5px;
+    }
+
     &:not(.busy):not(:disabled) {
         cursor: pointer;
     }

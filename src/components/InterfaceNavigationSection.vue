@@ -35,7 +35,12 @@ interface Props {
     routes: InterfaceNavigationItem[];
 }
 
-export default Vue.extend<{}, {}, {}, Props>({
+interface Computed {
+    icon: string;
+    isSectionActive: boolean;
+}
+
+export default Vue.extend<{}, {}, Computed, Props>({
     components: {
         MaterialDesignIcon
     },
