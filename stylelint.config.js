@@ -71,7 +71,9 @@ module.exports = {
                     // and break-inside.
                     "multicolumn",
                     // Not supported in older Edge (use chrome Edge)
-                    "intrinsic-width"
+                    "intrinsic-width",
+                    // Not supported in older Edge
+                    "css-resize"
                 ]
             }
         ],
