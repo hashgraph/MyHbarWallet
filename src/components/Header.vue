@@ -24,7 +24,10 @@
                 </router-link>
             </div>
         </header>
-        <HeaderHamburgerMenu :is-open="isHamburgerOpen" />
+        <HeaderHamburgerMenu
+            v-model="isHamburgerOpen"
+            :is-open="isHamburgerOpen"
+        />
     </div>
 </template>
 
