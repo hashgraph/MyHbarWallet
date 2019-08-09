@@ -16,19 +16,24 @@
             </div>
             <div class="actions">
                 <!-- TODO: add Chris's tooltip component? -->
-
                 <MaterialDesignIcon
                     v-if="busy"
                     class="spinner"
                     :icon="spinner"
                     spin
                 />
-                <MaterialDesignIcon
+                <Tooltip
                     v-else
-                    class="refresh-icon"
-                    :icon="refresh"
-                    @click="handleRefresh"
-                />
+                    class="action"
+                    :pinnable="false"
+                    message="Refresh Balance"
+                >
+                    <MaterialDesignIcon
+                        class="refresh-icon"
+                        :icon="refresh"
+                        @click="handleRefresh"
+                    />
+                </Tooltip>
             </div>
         </div>
     </div>
@@ -38,10 +43,12 @@
 import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiRefresh, mdiLoading } from "@mdi/js";
+import Tooltip from "./Tooltip.vue";
 
 export default Vue.extend({
     components: {
-        MaterialDesignIcon
+        MaterialDesignIcon,
+        Tooltip
     },
     props: {
         balance: { type: Number, default: null }
@@ -119,5 +126,10 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.actions {
+    align-items: center;
+    display: flex;
 }
 </style>

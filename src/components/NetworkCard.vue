@@ -11,7 +11,9 @@
                 </div>
             </div>
             <div class="actions">
-                <button class="change">Change</button>
+                <Tooltip :pinnable="false" message="Change Network">
+                    <button class="change">Change</button>
+                </Tooltip>
             </div>
         </div>
     </div>
@@ -19,10 +21,11 @@
 
 <script lang="ts">
 import Vue from "vue";
+import Tooltip from "./Tooltip.vue";
 
 export default Vue.extend({
-    props: {
-        image: { type: String, default: null }
+    components: {
+        Tooltip
     }
 });
 </script>
@@ -73,5 +76,10 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.actions {
+    align-items: center;
+    display: flex;
 }
 </style>

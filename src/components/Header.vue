@@ -14,33 +14,32 @@
                     >FAQs</router-link
                 >
             </div>
-            <HamburgerButton @toggle="toggle"></HamburgerButton>
+            <HeaderHamburgerButton @toggle="toggle" />
             <div v-if="scrolled" class="button-container">
-                <!-- TODO: Once the respective views exists, route to them -->
-                <router-link class="btn" to="/create-account">
+                <router-link class="btn" :to="{ name: 'create-account' }">
                     <Button label="Create Account" compact outline />
                 </router-link>
-                <router-link class="btn" to="/access-my-account">
+                <router-link class="btn" :to="{ name: 'access-my-account' }">
                     <Button label="Access" compact />
                 </router-link>
             </div>
         </header>
-        <HamburgerMenu :is-open="isHamburgerOpen" />
+        <HeaderHamburgerMenu :is-open="isHamburgerOpen" />
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Button from "../components/Button.vue";
-import HamburgerMenu from "./HamburgerMenu.vue";
-import HamburgerButton from "./HamburgerButton.vue";
+import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
+import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
 
 export default Vue.extend({
     name: "Header",
     components: {
         Button,
-        HamburgerMenu,
-        HamburgerButton
+        HeaderHamburgerMenu,
+        HeaderHamburgerButton
     },
     data() {
         return {

@@ -1,7 +1,6 @@
 <template>
     <router-link class="home-tile-button" :to="{ name: route }">
-        <!-- FIXME: Use material design icons -->
-        <MaterialDesignIcon class="tile-icon" :icon="icon" />
+        <img class="tile-image" :src="image" />
         <div class="content">
             <!-- TODO: This should likely be an hN at some point -->
             <div class="title">{{ title }}</div>
@@ -29,7 +28,7 @@ export default Vue.extend({
         title: { type: String, required: true },
         content: { type: String, required: false, default: "" },
         action: { type: String, required: false, default: "" },
-        icon: { type: String, default: null }
+        image: { type: String, default: null }
     },
     computed: {
         rightArrow() {
@@ -67,7 +66,8 @@ export default Vue.extend({
     }
 }
 
-.tile-icon {
+.tile-image {
+    flex-shrink: 0;
     height: 87px;
     margin-inline-end: 40px;
     width: 87px;

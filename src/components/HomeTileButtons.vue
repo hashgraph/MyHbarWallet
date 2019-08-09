@@ -1,19 +1,18 @@
 <template>
     <div class="tile-grid">
-        <!-- fixme: Material Design: wallet-outline -->
+        <!-- fixme: Edit wallet image to add Hedera logo and padding in the image file like MEW's -->
         <HomeTileButton
             title="Create A New Wallet"
             content="Obtain an ETH address and generate your private key. Saving and safekeeping the key will be your responsibility."
-            :icon="wallet"
+            :image="wallet"
             route="create-account"
             action="Get Started"
         />
 
-        <!--Material Design: lock-open-outline -->
         <HomeTileButton
             title="Access My Account"
             content="Send or swap your ETH and tokens, purchase ENS domains, interact with smart contracts, and more! This is where the magic happens."
-            :icon="unlock"
+            :image="unlock"
             route="access-my-account"
             action="Access Now"
         />
@@ -23,7 +22,8 @@
 <script lang="ts">
 import Vue from "vue";
 import HomeTileButton from "../components/HomeTileButton.vue";
-import { mdiWallet, mdiLockOpen } from "@mdi/js";
+import unlockWallet from "../assets/unlock-wallet.png";
+import wallet from "../assets/wallet.svg";
 
 export default Vue.extend({
     components: {
@@ -31,10 +31,10 @@ export default Vue.extend({
     },
     computed: {
         wallet() {
-            return mdiWallet;
+            return wallet;
         },
         unlock() {
-            return mdiLockOpen;
+            return unlockWallet;
         }
     },
     methods: {
@@ -61,7 +61,7 @@ export default Vue.extend({
     }
 }
 
-.home-tile-button:nth-child(2) {
+.home-tile-button:last-child {
     background-color: var(--color-melbourne-cup);
 }
 </style>

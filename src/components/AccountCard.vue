@@ -20,13 +20,21 @@
             </div>
             <div class="actions">
                 <!-- TODO: implement QR Button -->
-                <MaterialDesignIcon class="action qr-icon" :icon="qrcode" />
+                <Tooltip
+                    class="action"
+                    :pinnable="false"
+                    message="Account Qrcode"
+                >
+                    <MaterialDesignIcon class="qr-icon" :icon="qrcode" />
+                </Tooltip>
                 <!-- TODO: Tie Copy/Error alert to copy -->
-                <MaterialDesignIcon
-                    class="action copy-icon"
-                    :icon="copy"
-                    @click="copyKey"
-                />
+                <Tooltip class="action" :pinnable="false" message="Copy">
+                    <MaterialDesignIcon
+                        class="copy-icon"
+                        :icon="copy"
+                        @click="copyKey"
+                    />
+                </Tooltip>
             </div>
         </div>
     </div>
@@ -36,6 +44,7 @@
 import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiQrcode, mdiContentCopy } from "@mdi/js";
+import Tooltip from "./Tooltip.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
@@ -54,7 +63,8 @@ interface NavigatorExtended extends NavigatorClipboard {}
 
 export default Vue.extend({
     components: {
-        MaterialDesignIcon
+        MaterialDesignIcon,
+        Tooltip
     },
     props: {
         shard: { type: Number, required: true },
@@ -104,6 +114,7 @@ export default Vue.extend({
 .account-image {
     border: 4px solid var(--color-white);
     border-radius: 50%;
+    flex-shrink: 0;
     user-select: none;
 }
 
@@ -141,13 +152,13 @@ img {
     }
 }
 
+.actions {
+    align-items: center;
+    display: flex;
+}
+
 .action {
     cursor: pointer;
-
-    &:first-of-type {
-        height: 28px;
-        width: 28px;
-    }
 }
 
 .action + .action {
@@ -158,6 +169,6 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden;
+    width: calc(100% - 60px - 25px);
 }
 </style>

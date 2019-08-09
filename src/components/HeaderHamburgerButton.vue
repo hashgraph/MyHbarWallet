@@ -18,7 +18,6 @@ import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiMinus } from "@mdi/js";
 
 export default Vue.extend({
-    name: "HamburgerButton",
     components: {
         MaterialDesignIcon
     },

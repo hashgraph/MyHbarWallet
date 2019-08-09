@@ -61,6 +61,7 @@ export default new Router({
             children: [
                 {
                     path: "",
+                    name: "interface",
                     redirect: { name: "send-transfer" }
                 },
                 {

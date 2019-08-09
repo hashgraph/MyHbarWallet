@@ -2,6 +2,7 @@
     <div class="mnemonic-phrase">
         <Modal
             title="Access by Mnemonic Phrase"
+            :not-closable="state.isBusy"
             :is-open="state.modalIsOpen"
             @change="handleModalChangeIsOpen"
         >
@@ -37,12 +38,17 @@
                 @input="handleMnemonicInput"
             />
 
-            <HiddenPasswordInput
+            <OptionalPasswordInput
                 :value="state.password"
                 @input="handlePasswordInput"
             />
 
-            <Button class="continue-btn" label="Continue" />
+            <Button
+                class="continue-btn"
+                label="Continue"
+                :busy="state.isBusy"
+                @click="$emit('submit')"
+            />
 
             <div class="support">
                 <CustomerSupportLink />
@@ -59,7 +65,7 @@ import MnemonicInput from "../components/MnemonicInput.vue";
 import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
-import HiddenPasswordInput from "../components/HiddenPasswordInput.vue";
+import OptionalPasswordInput from "../components/OptionalPasswordInput.vue";
 
 export enum MnemonicType {
     Words12 = 12,
@@ -71,6 +77,7 @@ export interface State {
     numWords: MnemonicType;
     words: string[];
     password: string;
+    isBusy: boolean;
 }
 
 export default Vue.extend({
@@ -81,7 +88,7 @@ export default Vue.extend({
         Button,
         CustomerSupportLink,
         Warning,
-        HiddenPasswordInput
+        OptionalPasswordInput
     },
     model: {
         prop: "state",
