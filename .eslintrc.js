@@ -31,6 +31,10 @@ module.exports = {
         "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
         "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
 
+        // Require Object Literal Shorthand Syntax
+        // https://eslint.org/docs/rules/object-shorthand
+        "object-shorthand": ["error", "always"],
+
         // Vue
         // https://eslint.vuejs.org/rules/#uncategorized
         "vue/array-bracket-spacing": "error",
