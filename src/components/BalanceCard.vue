@@ -9,6 +9,7 @@
 
                 <div v-if="balance" class="subtitle" type="string">
                     {{ balance }} ℏ
+                    <div class="usdBalance">/ {{ balanceUSD }}</div>
                 </div>
                 <div v-else class="subtitle-null" type="string">
                     Unknown
@@ -64,6 +65,14 @@ export default Vue.extend({
         },
         spinner() {
             return mdiLoading;
+        },
+        balanceUSD() {
+            var formatter = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD"
+            });
+            let usd = this.balance * 0.12;
+            return formatter.format(usd);
         }
     },
     methods: {
@@ -105,7 +114,7 @@ img {
 
 .subtitle {
     font-size: 22px;
-    font-weight: 300;
+    font-weight: 400;
     margin-block-end: 15px;
     user-select: none;
 }
@@ -131,5 +140,12 @@ img {
 .actions {
     align-items: center;
     display: flex;
+}
+
+.usdBalance {
+    display: inline;
+    font-size: 13px;
+    font-weight: normal;
+    opacity: 0.75;
 }
 </style>
