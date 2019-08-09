@@ -29,39 +29,42 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Button from "../components/Button.vue";
+import { createComponent, value } from "vue-function-api";
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
 
-export default Vue.extend({
-    name: "Header",
+export default createComponent({
     components: {
         Button,
         HeaderHamburgerMenu,
         HeaderHamburgerButton
     },
-    data() {
-        return {
-            scrolled: false,
-            isHamburgerOpen: false
-        };
-    },
-    methods: {
-        onScroll() {
-            // FIXME: 150 should be in a common file somewhere
-            this.scrolled = window.scrollY > 150;
-        },
-        toggle() {
-            this.isHamburgerOpen = !this.isHamburgerOpen;
+    setup() {
+        const scrolled = value(false);
+        const isHamburgerOpen = value(false);
+
+        function onScroll() {
+            scrolled.value = window.scrollY > 150;
         }
+
+        function toggle() {
+            isHamburgerOpen.value = !isHamburgerOpen.value;
+        }
+
+        return {
+            scrolled,
+            isHamburgerOpen,
+            onScroll,
+            toggle
+        };
     }
 });
 </script>
 
 <style lang="postcss" scoped>
 .header-container {
-    background-color: white;
+    background-color: var(--color-white);
     inset-inline: 0;
     position: fixed;
     z-index: 1;
