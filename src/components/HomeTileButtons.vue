@@ -23,7 +23,7 @@
 import Vue from "vue";
 import HomeTileButton from "../components/HomeTileButton.vue";
 import unlockWallet from "../assets/unlock-wallet.png";
-import wallet from "../assets/wallet.svg";
+import wallet from "../assets/wallet-hbar.svg";
 
 export default Vue.extend({
     components: {
