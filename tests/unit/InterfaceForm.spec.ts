@@ -7,7 +7,7 @@ describe("InterfaceForm.vue", () => {
         const title = "ABC123";
         const wrapper = shallowMount(InterfaceForm, {
             propsData: {
-                title: title,
+                title
             }
         });
 

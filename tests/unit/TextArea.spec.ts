@@ -30,7 +30,7 @@ describe("TextArea.vue", () => {
         const wrapper = shallowMount(TextArea, {
             localVue,
             propsData: {
-                label,
+                label
             }
         });
 
