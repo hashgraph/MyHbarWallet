@@ -36,7 +36,7 @@ export default Vue.extend({
         }
     },
     methods: {
-        style(ind: String) {
+        style(ind: string) {
             return this.toggle ? `bar-${ind}-anim` : `bar-${ind}`;
         },
         menuToggle() {

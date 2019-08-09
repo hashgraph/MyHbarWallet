@@ -138,12 +138,12 @@ export default Vue.extend<Data, Methods, {}, {}>({
     },
     methods: {
         getValueOfUnit(unit: Unit): BigNumber {
-            return new BigNumber(unitMap.get(unit)!);
+            return new BigNumber(unitMap.get(unit) || 0);
         },
         convertFromTo(amt: number, from: Unit, to: Unit): string {
-            let x = new BigNumber(amt);
-            let y = this.getValueOfUnit(from) as BigNumber;
-            let z = this.getValueOfUnit(to) as BigNumber;
+            const x = new BigNumber(amt);
+            const y = this.getValueOfUnit(from) as BigNumber;
+            const z = this.getValueOfUnit(to) as BigNumber;
             return x
                 .multipliedBy(y)
                 .dividedBy(z)

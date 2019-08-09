@@ -4,11 +4,11 @@ import VueRouter from "vue-router";
 import router from "../../src/router";
 import "../../src/directives";
 
-describe("Header.vue", () => {
+describe("Header.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueRouter);
 
-    it("renders", () => {
+    it("renders", (): void => {
         const wrapper = shallowMount(Header, {
             localVue,
             router

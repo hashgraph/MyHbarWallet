@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 
 module.exports = {
@@ -6,19 +7,34 @@ module.exports = {
         "stylelint-csstree-validator",
         "stylelint-a11y",
         "stylelint-declaration-block-no-ignored-properties",
-        "stylelint-high-performance-animation",
         "stylelint-no-indistinguishable-colors",
         "stylelint-no-unsupported-browser-features",
         "stylelint-order",
         "stylelint-prettier",
         "stylelint-use-logical",
-        "stylelint-value-no-unknown-custom-properties"
+        "stylelint-value-no-unknown-custom-properties",
+        "stylelint-declaration-strict-value"
     ],
     rules: {
         indentation: [4],
 
+        // https://stylelint.io/user-guide/rules/selector-class-pattern
+        "selector-class-pattern": [
+            "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+            {
+                resolveNestedSelectors: true
+            }
+        ],
+
+        // Autoprefixer does this for us
+        // https://stylelint.io/user-guide/rules/selector-no-vendor-prefix
+        "selector-no-vendor-prefix": true,
+
+        // https://stylelint.io/user-guide/rules/font-weight-notation
+        "font-weight-notation": "numeric",
+
         // https://github.com/stylelint/stylelint/blob/2b73704b65f0bd69a2c2bada4e53b20d534547d1/lib/rules/selector-max-specificity
-        //Limit the specificity of selectors.
+        // Limit the specificity of selectors (and prevents IDs).
         "selector-max-specificity": [
             "0,4,2",
             { severity: "warning", ignoreSelectors: ["/#app/"] }
@@ -33,12 +49,6 @@ module.exports = {
 
         // https://github.com/kristerkari/stylelint-declaration-block-no-ignored-properties
         "plugin/declaration-block-no-ignored-properties": true,
-
-        // https://github.com/kristerkari/stylelint-high-performance-animation
-        "plugin/no-low-performance-animation-properties": [
-            true,
-            { severity: "warning" }
-        ],
 
         // Disallows colors that are suspiciously close to being identical
         // https://github.com/ierhyna/stylelint-no-indistinguishable-colors
@@ -92,6 +102,18 @@ module.exports = {
         "a11y/line-height-is-vertical-rhythmed": true,
         "a11y/no-obsolete-attribute": true,
         "a11y/no-obsolete-element": true,
-        "a11y/no-text-align-justify": true
+        "a11y/no-text-align-justify": true,
+
+        // https://github.com/AndyOGo/stylelint-declaration-strict-value
+        "scale-unlimited/declaration-strict-value": [
+            ["/color/"],
+            {
+                ignoreKeywords: {
+                    "/color/": ["inherit", "transparent"]
+                },
+                severity: "warning",
+                disableFix: true
+            }
+        ]
     }
 };

@@ -37,10 +37,10 @@ export default Vue.extend({
     },
     methods: {
         handleInput(event: Event) {
-            let target = event.target as HTMLInputElement;
-            let index = Number.parseInt(target.dataset.index!, 10);
+            const target = event.target as HTMLInputElement;
+            const index = Number.parseInt(target.dataset.index || "0", 10);
 
-            let newValues = this.value.slice();
+            const newValues = this.value.slice();
             newValues[index - 1] = target.value;
 
             this.$emit("input", newValues);
@@ -52,8 +52,8 @@ export default Vue.extend({
                 return;
             }
 
-            let target = event.target as HTMLInputElement;
-            this.focused = Number.parseInt(target.dataset.index!, 10);
+            const target = event.target as HTMLInputElement;
+            this.focused = Number.parseInt(target.dataset.index || "0", 10);
         }
     }
 });
