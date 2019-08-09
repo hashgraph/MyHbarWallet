@@ -24,11 +24,6 @@ export default Vue.extend({
     props: {
         isOpen: Boolean
     },
-    // data() {
-    //     return {
-    //         toggle: false
-    //     };
-    // },
     computed: {
         icon() {
             return mdiMinus;

@@ -17,15 +17,19 @@ describe("HeaderHamburgerMenu.vue", () => {
 });
 
 describe("HeaderHamburgerButton.vue", () => {
-    const wrapper = shallowMount(HeaderHamburgerButton);
+    const wrapper = shallowMount(HeaderHamburgerButton, {
+        propsData: {
+            isOpen: false
+        }
+    });
 
     it("renders", () => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
     it("triggers", () => {
-        expect(wrapper.vm.$data.toggle).toBeFalsy();
-        wrapper.find(".button-wrapper").trigger("click");
-        expect(wrapper.vm.$data.toggle).toBeTruthy();
+        wrapper.find(".button-wrapper").trigger("click")
+        expect(wrapper.emitted()).toEqual({"toggle": [[true]]});
+    
     });
 });
