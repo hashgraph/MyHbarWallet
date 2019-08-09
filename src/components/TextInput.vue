@@ -4,17 +4,18 @@
             <span v-if="label" class="label">{{ label }}</span>
             <input
                 ref="input"
-                v-model="text"
+                :value="value"
                 :class="classObject"
                 :placeholder="placeholder"
                 :type="keyboardType"
                 :tabindex="tabindex"
                 :step="step"
+                @input="handleInput"
             />
         </label>
 
         <MaterialDesignIcon
-            v-if="obscure && !valid"
+            v-if="obscure && !showValidation"
             class="eye"
             :class="{ 'is-open': isEyeOpen }"
             :icon="eye"
@@ -22,9 +23,9 @@
         />
 
         <MaterialDesignIcon
-            v-if="(valid || input) && !obscure"
+            v-if="showValidation && !obscure"
             class="checkmark"
-            :class="{ 'is-valid': isValid }"
+            :class="{ 'is-valid': valid }"
             :icon="checkmark"
         />
 
@@ -59,8 +60,8 @@ interface Props {
     compact: boolean;
     white: boolean;
     obscure: boolean;
+    showValidation: boolean;
     valid: boolean;
-    input: boolean;
 }
 
 export default createComponent({
@@ -86,42 +87,22 @@ export default createComponent({
         obscure: (Boolean as unknown) as PropType<boolean>,
 
         // Whether to validate the the input as an ID and add the check-mark to the bottom right
-        valid: (Boolean as unknown) as PropType<boolean>,
-
-        // Whether to check if there is input
-        input: (Boolean as unknown) as PropType<boolean>
+        showValidation: (Boolean as unknown) as PropType<boolean>,
+        valid: (Boolean as unknown) as PropType<boolean>
     },
-    setup(
-        {
-            placeholder,
-            value,
-            label,
-            tabindex,
-            step,
-            type,
-            action,
-            compact,
-            white,
-            obscure,
-            valid,
-            input
-            }: Props,
-        context
-    ) {
+    setup(props: Props, context) {
         // If the eye is open to show the obscured text anyway
-        let isEyeOpen = vueValue(false);
-        let isValid = vueValue(input ? value.length > 0 : false);
-        const text = vueValue(value);
-        const regex = new RegExp("\\d+\\.\\d+\\.\\d+");
+        const isEyeOpen = vueValue(false);
 
         const keyboardType = computed(() => {
-            if (type) return type;
-            if (obscure && !valid && !isEyeOpen) return "password";
+            if (props.type) return props.type;
+            if (props.obscure && !props.showValidation && !isEyeOpen.value)
+                return "password";
             return "text";
         });
 
         const eye = computed(() => {
-            return isEyeOpen ? mdiEye : mdiEyeOutline;
+            return isEyeOpen.value ? mdiEye : mdiEyeOutline;
         });
 
         const checkmark = computed(() => {
@@ -130,8 +111,8 @@ export default createComponent({
 
         const classObject = computed(() => {
             return {
-                "is-compact": compact,
-                "is-white": white
+                "is-compact": props.compact,
+                "is-white": props.white
             };
         });
 
@@ -140,7 +121,7 @@ export default createComponent({
         }
 
         function handleClickEye() {
-            isEyeOpen = !isEyeOpen;
+            isEyeOpen.value = !isEyeOpen.value;
 
             // Re-focus the input (loses focus from the tap on the eye)
             (context.refs.input as HTMLInputElement).focus();
@@ -150,42 +131,22 @@ export default createComponent({
             context.emit("action");
         }
 
-        watch(
-            new Wrapper<string>(value),
-            (newValue: string, oldValue: string) => {
-                // If validateId option has been set and obscure option is not set then only emit
-                // input change when the input newValue is an account id
-                // If hasInput option has been set and obscure option is not set then only emit
-                // input change when the input newValue is a number
-                // Else always emite new newValue
-                if (valid && !obscure) {
-                    isValid = regex.test(newValue);
-                    if (isValid) {
-                        context.emit("input", newValue);
-                    }
-                } else if (input && !obscure) {
-                    isValid = newValue.length > 0;
-                    if (isValid) {
-                        context.emit("input", newValue);
-                    }
-                } else {
-                    context.emit("input", newValue);
-                }
-            }
-        );
+        function handleInput(event: Event) {
+            context.emit("input", (event.target as HTMLTextAreaElement).value);
+        }
 
         return {
             isEyeOpen,
-            isValid,
-            text,
-            regex,
             keyboardType,
             eye,
             checkmark,
-            classObject
+            classObject,
+            focus,
+            handleClickEye,
+            handleActionClick,
+            handleInput
         };
-    },
-    methods: {}
+    }
 });
 </script>
 
@@ -199,7 +160,6 @@ export default createComponent({
     color: var(--color-melbourne-cup);
     cursor: pointer;
     font-size: 14px;
-    inset-block-end: 0;
     inset-block-start: 0;
     inset-inline-end: 20px;
     position: absolute;
