@@ -114,6 +114,7 @@ export default Vue.extend({
 .account-image {
     border: 4px solid var(--color-white);
     border-radius: 50%;
+    flex-shrink: 0;
     user-select: none;
 }
 
@@ -168,7 +169,6 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    /* overflow: hidden; */
+    width: calc(100% - 60px - 25px);
 }
 </style>
