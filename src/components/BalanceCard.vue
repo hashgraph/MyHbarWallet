@@ -146,7 +146,6 @@ img {
 .usd-balance {
     display: inline;
     font-size: 13px;
-    font-weight: normal;
     opacity: 0.75;
 }
 </style>
