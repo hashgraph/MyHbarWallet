@@ -122,6 +122,7 @@ textarea {
     }
 
     &.resize {
+        min-height: 200px;
         resize: vertical;
     }
 

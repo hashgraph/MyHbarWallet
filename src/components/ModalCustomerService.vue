@@ -25,7 +25,11 @@
                     placeholder="Wallet PUBLIC address (if any)"
                 />
                 <TextInput class="issue-item" placeholder="URL" :value="url" />
-                <TextArea class="issue-item" placeholder="Describe the issue" />
+                <TextArea
+                    class="issue-item"
+                    placeholder="Describe the issue"
+                    :resizeable="true"
+                />
                 <Button label="Send" class="send-button" :compact="true" />
             </div>
         </template>
