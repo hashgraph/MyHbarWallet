@@ -9,7 +9,7 @@
                 </div>
             </div>
 
-            <div><UnitConverter :options="options" /></div>
+            <div><UnitConverter /></div>
 
             <div class="hbar-unit-reference-guide">
                 <div class="block-title">
@@ -90,15 +90,6 @@ export default Vue.extend({
                     amount: "1",
                     amountInHbar: "1,000,000,000"
                 }
-            ],
-            options: [
-                "tinybar",
-                "microbar",
-                "millibar",
-                "hbar",
-                "kilobar",
-                "megabar",
-                "gigabar"
             ]
         };
     }
