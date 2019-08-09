@@ -10,7 +10,8 @@ module.exports = {
         "plugin:vue/recommended",
         "@vue/prettier",
         "@vue/typescript",
-        "plugin:compat/recommended"
+        "plugin:compat/recommended",
+        "plugin:unicorn/recommended"
     ],
     parserOptions: {
         parser: "@typescript-eslint/parser"
@@ -52,6 +53,10 @@ module.exports = {
         "vue/script-indent": ["error", 4],
         "vue/space-infix-ops": "error",
         "vue/space-unary-ops": "error",
-        "vue/v-on-function-call": "error"
+        "vue/v-on-function-call": "error",
+
+        // Unicorn
+        "unicorn/filename-case": false,
+        "unicorn/prevent-abbreviations": false
     }
 };

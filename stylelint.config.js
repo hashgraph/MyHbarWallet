@@ -18,9 +18,12 @@ module.exports = {
         indentation: [4],
 
         // https://stylelint.io/user-guide/rules/selector-class-pattern
-        "selector-class-pattern": ["^([a-z][a-z0-9]*)(-[a-z0-9]+)*$", {
-            resolveNestedSelectors: true,
-        }],
+        "selector-class-pattern": [
+            "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+            {
+                resolveNestedSelectors: true
+            }
+        ],
 
         // Autoprefixer does this for us
         // https://stylelint.io/user-guide/rules/selector-no-vendor-prefix
@@ -105,11 +108,11 @@ module.exports = {
             ["/color/"],
             {
                 ignoreKeywords: {
-                    "/color/": ["inherit", "transparent"],
+                    "/color/": ["inherit", "transparent"]
                 },
                 severity: "warning",
-                disableFix: true,
+                disableFix: true
             }
-        ],
+        ]
     }
 };
