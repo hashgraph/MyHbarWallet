@@ -21,15 +21,14 @@ export default Vue.extend({
     components: {
         MaterialDesignIcon
     },
-    model: {
-        data: "toggle",
-        event: "change"
+    props: {
+        isOpen: Boolean
     },
-    data() {
-        return {
-            toggle: false
-        };
-    },
+    // data() {
+    //     return {
+    //         toggle: false
+    //     };
+    // },
     computed: {
         icon() {
             return mdiMinus;
@@ -37,11 +36,10 @@ export default Vue.extend({
     },
     methods: {
         style(ind: string) {
-            return this.toggle ? `bar-${ind}-anim` : `bar-${ind}`;
+            return this.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
         },
         menuToggle() {
-            this.toggle = !this.toggle;
-            this.$emit("toggle", this.toggle);
+            this.$emit("toggle", !this.isOpen);
         }
     }
 });

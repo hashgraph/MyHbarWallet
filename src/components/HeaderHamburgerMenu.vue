@@ -30,17 +30,8 @@ export default Vue.extend({
     components: {
         MaterialDesignIcon
     },
-    model: {
-        prop: "isOpen",
-        event: "change"
-    },
     props: {
         isOpen: { type: Boolean }
-    },
-    data() {
-        return {
-            viewWidth: 0
-        };
     },
     computed: {
         mdiChevronRight() {
@@ -49,8 +40,7 @@ export default Vue.extend({
     },
     methods: {
         toggle() {
-            this.isOpen = !this.isOpen;
-            this.$emit("toggle", false);
+            this.$emit("toggle", !this.isOpen);
         }
     }
 });

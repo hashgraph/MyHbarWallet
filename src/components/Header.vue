@@ -14,7 +14,10 @@
                     >FAQs</router-link
                 >
             </div>
-            <HeaderHamburgerButton @toggle="toggle" />
+            <HeaderHamburgerButton
+                :is-open="isHamburgerOpen"
+                @toggle="toggle"
+            />
             <div v-if="scrolled" class="button-container">
                 <router-link class="btn" :to="{ name: 'create-account' }">
                     <Button label="Create Account" compact outline />
@@ -24,10 +27,7 @@
                 </router-link>
             </div>
         </header>
-        <HeaderHamburgerMenu
-            v-model="isHamburgerOpen"
-            :is-open="isHamburgerOpen"
-        />
+        <HeaderHamburgerMenu :is-open="isHamburgerOpen" @toggle="toggle" />
     </div>
 </template>
 
