@@ -14,18 +14,15 @@ describe("UnitConverter.vue", () => {
     it("calculates", () => {
         expect(wrapper.vm.$data.valueRight).toBe("10");
     });
-    
 });
 describe("ConvertUnits.vue", () => {
     const wrapper = shallowMount(ConvertUnits);
 
     it("renders", () => {
         expect(wrapper.isVisible()).toBeTruthy();
-    })
+    });
 
     it("Loads the data", () => {
         expect(wrapper.vm.$data.hbarUnitRef.length).toBe(7);
-    })
-
-
+    });
 });

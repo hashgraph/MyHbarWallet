@@ -68,10 +68,6 @@ export default createComponent({
     components: {
         MaterialDesignIcon
     },
-    model: {
-        prop: "value",
-        event: "input"
-    },
     props: {
         placeholder: (String as unknown) as PropType<string>,
         value: (String as unknown) as PropType<string>,
@@ -95,7 +91,7 @@ export default createComponent({
         const isEyeOpen = vueValue(false);
 
         const keyboardType = computed(() => {
-            if (props.type) return props.type;
+            // if (props.type.length > 0) return props.type;
             if (props.obscure && !props.showValidation && !isEyeOpen.value)
                 return "password";
             return "text";

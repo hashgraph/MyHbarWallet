@@ -1,10 +1,15 @@
-import { mount, shallowMount } from "@vue/test-utils";
+import { createLocalVue, mount, shallowMount } from "@vue/test-utils";
 import TextInput from "../../src/components/TextInput.vue";
+import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("TextInput.vue", () => {
-    it("renders", () => {
+    const localVue = createLocalVue();
+    localVue.use(VueFunctionApi);
+
+    it("renders", (): void => {
         const value = "12345";
         const wrapper = shallowMount(TextInput, {
+            localVue,
             propsData: { value }
         });
 
@@ -14,9 +19,10 @@ describe("TextInput.vue", () => {
         expect(inputElement.value).toBe(value);
     });
 
-    it("renders a password securely (and allows to toggle visibility)", () => {
+    it("renders a password securely (and allows to toggle visibility)", (): void => {
         const value = "super-secure-password";
         const wrapper = mount(TextInput, {
+            localVue,
             propsData: { obscure: true, value }
         });
 
@@ -30,10 +36,11 @@ describe("TextInput.vue", () => {
         expect(inputElement.getAttribute("type")).toBe("text");
     });
 
-    it("forwards input event from HTML input", () => {
+    it("forwards input event from HTML input", (): void => {
         let value = "";
 
         const wrapper = shallowMount(TextInput, {
+            localVue,
             propsData: { obscure: true, value },
             listeners: {
                 input(newValue: string) {
