@@ -45,21 +45,9 @@ import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiQrcode, mdiContentCopy } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
+import { writeToClipboard } from "../clipboard";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
-
-// Type declarations for Clipboard API
-// https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API
-interface Clipboard {
-    writeText(text: string): Promise<void>;
-}
-
-interface NavigatorClipboard extends Navigator {
-    // Only available in a secure context.
-    readonly clipboard?: Clipboard;
-}
-
-interface NavigatorExtended extends NavigatorClipboard {}
 
 export default Vue.extend({
     components: {
@@ -92,9 +80,7 @@ export default Vue.extend({
     },
     methods: {
         async copyKey() {
-            await (navigator as NavigatorExtended).clipboard!.writeText(
-                this.publicKey
-            );
+            await writeToClipboard(this.publicKey);
 
             console.log("Copied");
         }

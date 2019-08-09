@@ -31,7 +31,7 @@ describe("TextInput.vue", () => {
     });
 
     it("forwards input event from HTML input", () => {
-        let value: string = "";
+        let value = "";
 
         const wrapper = shallowMount(TextInput, {
             propsData: { obscure: true, value },

@@ -11,9 +11,9 @@ describe("RadioButton.vue", () => {
 
         const wrapper = shallowMount(RadioButton, {
             propsData: {
-                name: name,
-                label: label,
-                value: value,
+                name,
+                label,
+                value,
                 image: imageKey,
                 checked: value
             }
@@ -33,9 +33,9 @@ describe("RadioButton.vue", () => {
 
         const wrapper = shallowMount(RadioButton, {
             propsData: {
-                name: name,
-                label: label,
-                value: value,
+                name,
+                label,
+                value,
                 image: imageKey,
                 checked: value
             },

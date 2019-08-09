@@ -27,8 +27,8 @@ describe("RadioButtonGroup.vue", () => {
         ];
         const wrapper = shallowMount(RadioButtonGroup, {
             propsData: {
-                name: name,
-                options: options
+                name,
+                options
             }
         });
 
@@ -58,8 +58,8 @@ describe("RadioButtonGroup.vue", () => {
         ];
         const wrapper = mount(RadioButtonGroup, {
             propsData: {
-                name: name,
-                options: options
+                name,
+                options
             }
         });
 

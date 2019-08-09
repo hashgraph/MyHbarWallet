@@ -24,7 +24,7 @@ export default Vue.extend({
     components: {
         MaterialDesignIcon
     },
-    data: function() {
+    data() {
         return {
             expanded: false
         };

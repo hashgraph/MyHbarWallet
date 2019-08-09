@@ -7,7 +7,7 @@ describe("Accordion.vue", () => {
     it("renders", () => {
         const wrapper = shallowMount(Accordion, {
             slots: {
-                title: title,
+                title,
                 content: "Content"
             }
         });
@@ -20,8 +20,8 @@ describe("Accordion.vue", () => {
 
         const wrapper = mount(Accordion, {
             slots: {
-                title: title,
-                content: content
+                title,
+                content
             }
         });
         expect(wrapper.find(".title-text").text()).toContain(title);

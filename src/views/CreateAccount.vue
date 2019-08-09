@@ -15,6 +15,7 @@
             v-model="modalAccessBySoftwareIsOpen"
             @submit="handleAccessBySoftwareSubmit"
         />
+        <ModalCreateByPhrase v-model="modalCreateByPhraseIsOpen" />
     </div>
 </template>
 <script lang="ts">
@@ -25,6 +26,7 @@ import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
 import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "@/components/ModalAccessBySoftware.vue";
+import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
 
 import PageTitle from "../components/PageTitle.vue";
 
@@ -34,12 +36,14 @@ export default Vue.extend({
         AccountTileButtons,
         ModalAccessByHardware,
         ModalAccessBySoftware,
-        PageTitle
+        PageTitle,
+        ModalCreateByPhrase
     },
     data() {
         return {
             modalAccessByHardwareIsOpen: false,
-            modalAccessBySoftwareIsOpen: false
+            modalAccessBySoftwareIsOpen: false,
+            modalCreateByPhraseIsOpen: false
         };
     },
     computed: {},
@@ -55,7 +59,7 @@ export default Vue.extend({
             this.modalAccessBySoftwareIsOpen = false;
 
             setTimeout(() => {
-                console.log("open next modal!");
+                this.modalCreateByPhraseIsOpen = true;
             }, 125);
         }
     }
