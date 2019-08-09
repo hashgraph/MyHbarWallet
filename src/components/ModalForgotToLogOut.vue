@@ -2,24 +2,25 @@
     <Modal
         :is-open="isOpen"
         title="Oops"
-        :no-decoration="true"
-        @change="this.$listeners.change"
+        :hide-decoration="true"
+        :not-closable="true"
     >
-        <div class="modal-oops-logout">
-            <h2>Oops!</h2>
+        <div class="modal-forgot-to-logout">
+            <span>Oops!</span>
             <p>
                 It seems like you forgot to logout of your account. For the
                 security of your account, please log to continue. Otherwise, go
                 back to your account.
             </p>
             <div class="button-group">
-                <!-- fixme: handle the click -->
-                <Button
-                    class="button-go-back"
-                    label="Go back"
-                    :outline="true"
-                    :medium="true"
-                />
+                <router-link to="/interface">
+                    <Button
+                        class="button-go-back"
+                        label="Go back"
+                        :outline="true"
+                        :medium="true"
+                    />
+                </router-link>
                 <Button
                     class="button-logout"
                     label="Log Out of Account"
@@ -43,14 +44,14 @@ export default Vue.extend({
         Modal
     },
     model: {
-        prop: "isOpen",
-        event: "change"
+        prop: "isOpen"
     },
     props: {
         isOpen: { type: Boolean }
     },
     methods: {
         handleClickLogOut() {
+            // todo: Actually log the user out
             this.isOpen = false;
         }
     }
@@ -73,14 +74,14 @@ export default Vue.extend({
     margin-inline: 10px 20px;
 }
 
-.modal-oops-logout {
+.modal-forgot-to-logout {
     align-items: stretch;
     display: flex;
     flex-direction: column;
-    margin-block-start: -30px;
+    margin-block-start: -20px;
 }
 
-h2 {
+span {
     color: var(--color-washed-black);
     font-size: 35px;
     font-weight: 700;
