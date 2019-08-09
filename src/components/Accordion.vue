@@ -18,26 +18,25 @@
 import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiChevronUp } from "@mdi/js";
+import { computed, value } from "vue-function-api";
 
 export default Vue.extend({
-    name: "Accordion",
     components: {
         MaterialDesignIcon
     },
-    data() {
-        return {
-            expanded: false
-        };
-    },
-    computed: {
-        icon() {
+    setup() {
+        const expanded = value(false);
+        const icon = computed(() => {
             return mdiChevronUp;
-        }
-    },
-    methods: {
-        toggle() {
-            this.expanded = !this.expanded;
-        }
+        });
+        const toggle = () => {
+            expanded.value = !expanded.value;
+        };
+        return {
+            expanded,
+            icon,
+            toggle
+        };
     }
 });
 </script>
