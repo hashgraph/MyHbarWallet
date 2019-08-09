@@ -69,7 +69,9 @@ module.exports = {
                     // [...] not supporting the avoid-column, column, and avoid (in the column
                     // context) values for the properties break-before, break-after,
                     // and break-inside.
-                    "multicolumn"
+                    "multicolumn",
+                    // Not supported in older Edge (use chrome Edge)
+                    "intrinsic-width"
                 ]
             }
         ],
