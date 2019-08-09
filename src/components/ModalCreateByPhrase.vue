@@ -13,8 +13,14 @@
                     users.
                 </Warning>
             </template>
-            <!-- todo: tooltip where the (I) is -->
-            <div class="password-info-header">Your Password (I)</div>
+            <div class="password-info-header-wrapper">
+                <div class="password-info-header">
+                    Your Password
+                    <InfoButton
+                        message="This password encrypts your private key. This does not act as a seed to generate your keys."
+                    />
+                </div>
+            </div>
             <div class="value-switch">
                 <!-- TODO: Component that wraps this with the understanding of mnemonic types -->
                 <SwitchButton
@@ -24,6 +30,7 @@
                     @change="handleNumWordsChange"
                 />
                 <div class="text">Value</div>
+                <div class="spacer" />
                 <div class="random-button">
                     <MaterialDesignIcon :size="16" :icon="cachedIcon" />
                     Random
@@ -42,11 +49,18 @@
                 @input="handlePasswordChange"
             />
 
-            <Button class="continue-btn" label="Continue" />
-
-            <div class="support">
-                <CustomerSupportLink />
+            <div class="continue-btn-container">
+                <Button
+                    class="continue-btn"
+                    label="I Wrote Down My Mnemonic Phrase"
+                />
+                <img :src="printerIcon" class="printer-button" />
             </div>
+
+            <p>
+                <span class="important"> DO NOT FORGET</span> to save your
+                password. You will need this
+            </p>
         </Modal>
     </div>
 </template>
@@ -57,10 +71,12 @@ import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import MnemonicInput from "../components/MnemonicInput.vue";
 import HiddenPasswordInput from "../components/OptionalPasswordInput.vue";
-import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
+import InfoButton from "../components/InfoButton.vue";
+
+import printerIcon from "../assets/icon-printer.svg";
 import { mdiCached } from "@mdi/js";
 
 export default Vue.extend({
@@ -69,10 +85,10 @@ export default Vue.extend({
         Warning,
         MnemonicInput,
         HiddenPasswordInput,
-        CustomerSupportLink,
         SwitchButton,
         Button,
-        MaterialDesignIcon
+        MaterialDesignIcon,
+        InfoButton
     },
     model: {
         prop: "isOpen",
@@ -91,6 +107,10 @@ export default Vue.extend({
     computed: {
         cachedIcon() {
             return mdiCached;
+        },
+
+        printerIcon() {
+            return printerIcon;
         }
     },
     methods: {
@@ -131,32 +151,46 @@ export default Vue.extend({
 }
 
 .continue-btn {
-    margin-block-end: 20px;
-    width: 100%;
+    flex-grow: 1;
 }
 
-.support {
+.continue-btn-container {
     align-items: center;
     display: flex;
-    font-size: 14px;
+    flex-direction: row;
+    margin-block-end: 20px;
+}
+
+.password-info-header-wrapper {
+    display: flex;
     justify-content: space-around;
 }
 
 .password-info-header {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+    display: inline;
     font-size: 20px;
     font-weight: 500;
     padding-block-end: 40px;
+}
+
+.spacer {
+    flex-grow: 1;
 }
 
 .random-button {
     color: var(--color-melbourne-cup);
     cursor: pointer;
     font-size: 14px;
+}
 
-    /* hack: this is basically a "spacer" */
-    margin-inline-start: auto;
+.important {
+    color: var(--color-lightish-red);
+    font-weight: 500;
+}
+
+.printer-button {
+    cursor: pointer;
+    height: 30px;
+    margin-inline-start: 20px;
 }
 </style>
