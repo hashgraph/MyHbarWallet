@@ -45,6 +45,7 @@ import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiQrcode, mdiContentCopy } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
+import { writeToClipboard } from "../clipboard";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
@@ -79,9 +80,7 @@ export default Vue.extend({
     },
     methods: {
         async copyKey() {
-            await (navigator as NavigatorExtended).clipboard!.writeText(
-                this.publicKey
-            );
+            await writeToClipboard(this.publicKey);
 
             console.log("Copied");
         }

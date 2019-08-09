@@ -55,7 +55,8 @@ export default Vue.extend({
             if (showPassword) {
                 // If we are now showing the password,
                 // focus the password input
-                (this.$refs.input as TextInput).focus();
+                // FIXME: How do we solve this without any?
+                (this.$refs.input as any).focus();
             }
         }
     }
