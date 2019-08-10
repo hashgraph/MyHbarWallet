@@ -1,11 +1,17 @@
 <template>
-    <div />
+    <div>
+        <SignMessage />
+    </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import SignMessage from "../components/SignMessage.vue";
 
 export default Vue.extend({
-    name: "InterfaceSignMessage"
+    name: "InterfaceSignMessage",
+    components: {
+        SignMessage
+    }
 });
 </script>
