@@ -9,9 +9,9 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     props: {
         title: { type: String, required: true },
         content: { type: String, required: false, default: "" },
