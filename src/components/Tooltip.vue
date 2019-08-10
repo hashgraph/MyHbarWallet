@@ -29,7 +29,7 @@ export default Vue.extend({
         const pinned = value(false);
 
         // computed
-        const active = computed(() => {
+        const active = computed((): boolean => {
             if (!props.pinnable) {
                 return hovered.value;
             } else {
