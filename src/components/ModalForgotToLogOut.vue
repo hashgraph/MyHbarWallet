@@ -26,7 +26,7 @@
                     label="Log Out of Account"
                     :danger="true"
                     :medium="true"
-                    @click="handleClickLogOut"
+                    @click="onClickLogOut"
                 />
             </div>
         </div>
@@ -37,23 +37,29 @@
 import Vue from "vue";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
+import { createComponent, PropType, value } from "vue-function-api";
 
-export default Vue.extend({
+interface Props {
+    isOpen: boolean;
+}
+
+export default createComponent({
     components: {
         Button,
         Modal
     },
-    model: {
-        prop: "isOpen"
-    },
     props: {
-        isOpen: { type: Boolean }
+        isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    methods: {
-        handleClickLogOut() {
+    setup(props: Props, ctx) {
+        async function onClickLogOut() {
             // todo: Actually log the user out
-            this.isOpen = false;
+            ctx.emit("change", false);
         }
+
+        return {
+            onClickLogOut
+        };
     }
 });
 </script>
