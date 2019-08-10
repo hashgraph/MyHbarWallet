@@ -125,7 +125,7 @@ export default new Router({
                 },
                 {
                     path: "create-account",
-                    name: "create-account",
+                    name: "create-account-transaction",
                     component: InterfaceCreateAccount
                 },
                 {
