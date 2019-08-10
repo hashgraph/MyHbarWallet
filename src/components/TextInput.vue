@@ -1,8 +1,19 @@
 <template>
     <div class="text-input" :class="classObject">
         <label>
-            <span v-if="label" class="label">{{ label }}</span>
+            <div v-if="label" class="label">{{ label }}</div>
+            <textarea
+                v-if="multiline"
+                class="text-area"
+                :placeholder="placeholder"
+                :tabindex="tabindex"
+                :value="value"
+                :rows="rows"
+                :class="{ resize: resizable }"
+                @input="handleInput"
+            />
             <input
+                v-else
                 ref="input"
                 :value="value"
                 :class="classObject"
@@ -14,23 +25,33 @@
             />
         </label>
 
-        <MaterialDesignIcon
-            v-if="obscure && !showValidation"
-            class="eye"
-            :class="{ 'is-open': isEyeOpen }"
-            :icon="eye"
-            @click="handleClickEye"
-        />
+        <div class="decorations">
+            <MaterialDesignIcon
+                v-if="obscure"
+                class="eye"
+                :class="{ 'is-open': isEyeOpen }"
+                :icon="eye"
+                @click="handleClickEye"
+            />
 
-        <MaterialDesignIcon
-            v-if="showValidation && !obscure"
-            class="checkmark"
-            :class="{ 'is-valid': valid }"
-            :icon="checkmark"
-        />
+            <MaterialDesignIcon
+                v-else-if="showValidation"
+                class="checkmark"
+                :class="{ 'is-valid': valid }"
+                :icon="checkmark"
+            />
+        </div>
 
-        <div class="action" @click="$emit('action')">
-            {{ action }}
+        <div v-if="label != null" class="actions">
+            <div v-if="action" class="action" @click="$emit('action')">
+                {{ action }}
+            </div>
+            <div v-if="canClear" class="action" @click="handleClickClear">
+                Clear
+            </div>
+            <div v-if="canCopy" class="action" @click="handleClickCopy">
+                Copy
+            </div>
         </div>
     </div>
 </template>
@@ -40,7 +61,7 @@ import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiEye, mdiEyeOutline, mdiCheckCircle } from "@mdi/js";
 import {
     createComponent,
-    value as vueValue,
+    value,
     computed,
     watch,
     onCreated,
@@ -48,6 +69,7 @@ import {
     onBeforeDestroy,
     Wrapper
 } from "vue-function-api";
+import { writeToClipboard } from "@/clipboard";
 
 interface Props {
     placeholder: string;
@@ -60,8 +82,12 @@ interface Props {
     compact: boolean;
     white: boolean;
     obscure: boolean;
+    canClear: boolean;
+    canCopy: boolean;
     showValidation: boolean;
     valid: boolean;
+    multiline: boolean;
+    resizable: boolean;
 }
 
 export default createComponent({
@@ -77,7 +103,11 @@ export default createComponent({
         type: (String as unknown) as PropType<string>,
         action: (String as unknown) as PropType<string>,
         compact: (Boolean as unknown) as PropType<boolean>,
+        multiline: (Boolean as unknown) as PropType<boolean>,
         white: (Boolean as unknown) as PropType<boolean>,
+        resizable: (Boolean as unknown) as PropType<boolean>,
+        canClear: (Boolean as unknown) as PropType<boolean>,
+        canCopy: (Boolean as unknown) as PropType<boolean>,
 
         // Whether to hide the text being edited (e.g., for passwords).
         obscure: (Boolean as unknown) as PropType<boolean>,
@@ -88,7 +118,7 @@ export default createComponent({
     },
     setup(props: Props, context) {
         // If the eye is open to show the obscured text anyway
-        const isEyeOpen = vueValue(false);
+        const isEyeOpen = value(false);
 
         const keyboardType = computed(() => {
             // if (props.type.length > 0) return props.type;
@@ -96,6 +126,8 @@ export default createComponent({
                 return "password";
             return "text";
         });
+
+        const rows = computed(() => (props.compact ? 2 : 8));
 
         const eye = computed(() => {
             return isEyeOpen.value ? mdiEye : mdiEyeOutline;
@@ -108,7 +140,9 @@ export default createComponent({
         const classObject = computed(() => {
             return {
                 "is-compact": props.compact,
-                "is-white": props.white
+                "is-white": props.white,
+                "is-multiline": props.multiline,
+                "has-label": props.label != null
             };
         });
 
@@ -123,12 +157,16 @@ export default createComponent({
             (context.refs.input as HTMLInputElement).focus();
         }
 
-        function handleActionClick(event: Event) {
-            context.emit("action");
-        }
-
         function handleInput(event: Event) {
             context.emit("input", (event.target as HTMLTextAreaElement).value);
+        }
+
+        function handleClickClear() {
+            context.emit("input", "");
+        }
+
+        async function handleClickCopy() {
+            await writeToClipboard(props.value);
         }
 
         return {
@@ -138,9 +176,11 @@ export default createComponent({
             checkmark,
             classObject,
             focus,
+            rows,
             handleClickEye,
-            handleActionClick,
-            handleInput
+            handleInput,
+            handleClickCopy,
+            handleClickClear
         };
     }
 });
@@ -152,16 +192,38 @@ export default createComponent({
     position: relative;
 }
 
-.action {
-    color: var(--color-melbourne-cup);
-    cursor: pointer;
-    font-size: 14px;
+.actions {
+    align-items: center;
+    display: flex;
+    height: 24px;
     inset-block-start: 0;
-    inset-inline-end: 20px;
+    inset-inline-end: 8px;
     position: absolute;
+    user-select: none;
 }
 
-input {
+.action {
+    color: var(--color-basalt-grey);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 8px;
+
+    &:last-child {
+        margin-inline-end: -8px;
+    }
+
+    &:active {
+        color: var(--color-melbourne-cup);
+    }
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+}
+
+input,
+textarea {
     background-color: var(--color-peral);
     border: 2px solid var(--color-peral);
     border-radius: 4px;
@@ -170,11 +232,9 @@ input {
     outline: none;
     padding: 20px;
     width: 100%;
+}
 
-    &:focus {
-        border-color: var(--color-melbourne-cup);
-    }
-
+input {
     &:not(:only-child) {
         padding-inline-end: 50px;
     }
@@ -183,6 +243,26 @@ input {
         border-width: 1px;
         padding: 13px 15px;
     }
+}
+
+textarea {
+    max-width: 100%;
+    min-width: 100%;
+    resize: none;
+
+    &.resize {
+        resize: vertical;
+    }
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--color-melbourne-cup);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-basalt-grey);
 }
 
 .is-white input {
@@ -197,17 +277,34 @@ input {
     display: block;
     font-size: 16px;
     font-weight: 600;
+    height: 24px;
     margin-block-end: 13px;
     padding: 0 8px;
 }
 
+.decorations {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    inset-block-start: 0;
+    inset-inline-end: 15px;
+    position: absolute;
+}
+
+.has-label .decorations {
+    height: calc(100% - 37px);
+    inset-block-start: 37px;
+}
+
+.is-multiline .decorations {
+    align-items: flex-end;
+    padding-block-end: 15px;
+}
+
 .eye {
     cursor: pointer;
-    inset-block-end: 13px;
-    inset-inline-end: 20px;
     margin: auto;
     opacity: 0.3;
-    position: absolute;
 
     &.is-open {
         color: var(--color-melbourne-cup);
@@ -217,9 +314,7 @@ input {
 
 .checkmark {
     color: var(--color-jupiter);
-    inset-block-end: 13px;
-    inset-inline-end: 20px;
-    position: absolute;
+    height: 19px;
 
     &.is-valid {
         color: var(--color-melbourne-cup);

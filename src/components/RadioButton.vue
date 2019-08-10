@@ -87,8 +87,8 @@ export default Vue.extend({
 
 .check {
     color: var(--color-melbourne-cup);
-    height: 18px;
-    width: 18px;
+    height: 19px;
+    width: 19px;
 }
 
 .input {
