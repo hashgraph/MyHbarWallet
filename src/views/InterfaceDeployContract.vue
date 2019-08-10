@@ -1,11 +1,95 @@
 <template>
-    <div />
+    <InterfaceForm title="Deploy Contract">
+        <TextInput
+            compact
+            can-copy
+            can-clear
+            multiline
+            label="Byte Code"
+            class="deploy-contract-form-item"
+            show-validation
+            :valid="byteCodeIsValid"
+        />
+        <TextInput
+            can-copy
+            can-clear
+            multiline
+            label="ABI/JSON Interface"
+            class="deploy-contract-form-item"
+            show-validation
+            :valid="interfaceIsValid"
+        />
+        <TextInput
+            compact
+            label="Maximum Transaction Fee"
+            class="deploy-contract-form-item"
+            show-validation
+            :valid="maxFeeIsValid"
+        />
+
+        <div class="deploy-contract-form-footer">
+            <Button :disabled="!signable" label="Sign Transaction" />
+            <p>
+                <!-- help center doesn't exist right now...
+                This might be better served by an `<a>` tag  -->
+                Have any issues?
+                <router-link :to="{ name: 'help-center' }"
+                    >Help Center</router-link
+                >
+            </p>
+        </div>
+    </InterfaceForm>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import InterfaceForm from "../components/InterfaceForm.vue";
+import TextInput from "../components/TextInput.vue";
+import Button from "../components/Button.vue";
 
-export default Vue.extend({
-    name: "InterfaceDeployContract"
+import { createComponent, value as vueValue, computed } from "vue-function-api";
+
+export default createComponent({
+    components: {
+        InterfaceForm,
+        TextInput,
+        Button
+    },
+    setup() {
+        const byteCodeIsValid = vueValue(false);
+        const interfaceIsValid = vueValue(false);
+        const maxFeeIsValid = vueValue(false);
+
+        const signable = computed(
+            (): boolean =>
+                byteCodeIsValid.value &&
+                interfaceIsValid.value &&
+                maxFeeIsValid.value
+        );
+
+        return { byteCodeIsValid, interfaceIsValid, maxFeeIsValid, signable };
+    }
 });
 </script>
+
+<style lang="postcss" scoped>
+.deploy-contract-form-item {
+    margin-block-end: 30px;
+}
+
+.deploy-contract-form-footer {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: var(--color-melbourne-cup);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    text-decoration: underline;
+}
+</style>
