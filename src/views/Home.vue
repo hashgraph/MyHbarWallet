@@ -51,6 +51,7 @@
         <Features />
         <FAQs />
         <Community />
+        <ModalForgotToLogOut v-model="modalForgotToLogOutIsOpen" />
     </div>
 </template>
 
@@ -61,6 +62,7 @@ import FAQs from "@/components/FAQs.vue";
 import Community from "@/components/Community.vue";
 import HomeTileButtons from "@/components/HomeTileButtons.vue";
 import circleImage from "@/assets/circle.png";
+import ModalForgotToLogOut from "@/components/ModalForgotToLogOut.vue";
 
 export default Vue.extend({
     name: "Home",
@@ -68,12 +70,25 @@ export default Vue.extend({
         FAQs,
         HomeTileButtons,
         Features,
-        Community
+        Community,
+        ModalForgotToLogOut
+    },
+    data() {
+        return {
+            modalForgotToLogOutIsOpen: false
+        };
     },
     computed: {
         circle() {
             return circleImage;
         }
+    },
+    created() {
+        // FIXME: Only spawn this if you are logged in when navigating to home
+        const areWeLoggedIn = Math.random() > 0.5;
+        setTimeout(() => {
+            this.modalForgotToLogOutIsOpen = areWeLoggedIn;
+        }, 0);
     }
 });
 </script>

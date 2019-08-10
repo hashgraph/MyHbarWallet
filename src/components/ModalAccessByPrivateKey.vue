@@ -14,14 +14,7 @@
         </template>
         <div class="modal-access-by-private-key">
             <TextInput
-                show-validation
-                label="Private Key"
-                :valid="state.privateKey.length > 0"
-                can-copy
-                can-clear
-                multiline
                 placeholder="Enter Private Key"
-                resizable
                 :value="state.privateKey"
                 @input="handlePrivateKeyInput"
             />

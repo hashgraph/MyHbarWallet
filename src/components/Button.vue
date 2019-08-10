@@ -4,8 +4,7 @@
             busy,
             outline,
             compact,
-            danger,
-            medium
+            danger
         }"
         :disabled="disabled"
         v-on="disabled ? null : $listeners"
@@ -43,7 +42,6 @@ export default Vue.extend({
         busy: { type: Boolean },
         disabled: { type: Boolean },
         danger: { type: Boolean },
-        medium: { type: Boolean },
         trailingIcon: {
             type: String,
             default: null
@@ -111,8 +109,8 @@ button {
     }
 
     &:active:not(.busy):not(:disabled) {
-        background-color: var(--color-sunkist-coral);
-        border-color: var(--color-sunkist-coral);
+        background-color: var(--color-warm-pink);
+        border-color: var(--color-warm-pink);
     }
 }
 
@@ -131,10 +129,6 @@ button {
         border-color: var(--color-green-fluorite);
         color: var(--color-green-fluorite);
     }
-}
-
-.medium {
-    min-width: 217px;
 }
 
 .compact {
