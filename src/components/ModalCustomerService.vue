@@ -22,13 +22,14 @@
                 />
                 <TextInput
                     class="issue-item"
-                    placeholder="Wallet PUBLIC address (if any)"
+                    placeholder="Account ID (if any)"
                 />
                 <TextInput class="issue-item" placeholder="URL" :value="url" />
-                <TextArea
+                <TextInput
+                    multiline
                     class="issue-item"
                     placeholder="Describe the issue"
-                    :resizeable="true"
+                    resizable
                 />
                 <Button label="Send" class="send-button" :compact="true" />
             </div>
@@ -37,42 +38,34 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import TextInput from "../components/TextInput.vue";
-import TextArea from "../components/TextArea.vue";
+import { UAParser } from "ua-parser-js";
+import { createComponent, PropType } from "vue-function-api";
 
-export enum AccessSoftwareOption {
-    File = "file",
-    Phrase = "phrase",
-    Key = "key"
-}
-
-export default Vue.extend({
+export default createComponent({
     components: {
         Button,
         Modal,
-        TextInput,
-        TextArea
+        TextInput
     },
     model: {
         prop: "isOpen",
         event: "change"
     },
     props: {
-        isOpen: { type: Boolean }
+        isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    data() {
+    setup() {
+        const ua = new UAParser(navigator.userAgent);
+
         return {
-            optionSelected: null,
-            platform: navigator.platform,
-            url: location.pathname,
-            // fixme: better browser detection?
-            browser: navigator.appVersion
+            platform: ua.getOS().name,
+            browser: ua.getBrowser().name,
+            url: location.pathname
         };
-    },
-    computed: {}
+    }
 });
 </script>
 
@@ -89,9 +82,5 @@ export default Vue.extend({
 
 .issue-item {
     margin-block-end: 15px;
-}
-
-.issue-description {
-    min-height: 200px;
 }
 </style>
