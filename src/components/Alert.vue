@@ -1,16 +1,15 @@
 <template>
-    <div :class="classes">
+    <div :class="['alert', level]">
         <div class="message">
-            <MaterialDesignIcon
-                class="message-icon"
-                :icon="messageIcon"
-            />&nbsp;{{ message }}
+            <MaterialDesignIcon class="message-icon" :icon="messageIcon" />
+            {{ message }}
         </div>
-        <div class="close">
-            <button @click="destroyMe">
-                <MaterialDesignIcon class="close-icon" :icon="mdiClose" />
-            </button>
-        </div>
+        <MaterialDesignIcon
+            role="button"
+            class="close"
+            :icon="mdiClose"
+            @click="destroyMe"
+        />
     </div>
 </template>
 
@@ -25,7 +24,7 @@ import {
     mdiAlertOutline,
     mdiCheckCircleOutline
 } from "@mdi/js";
-import { REMOVE_ALERT } from "@/mutations";
+import { REMOVE_ALERT } from "@/store/mutations";
 import store from "@/store";
 
 export default Vue.extend({
@@ -35,14 +34,9 @@ export default Vue.extend({
     props: {
         id: { type: Number, required: true },
         message: { type: String, required: true },
-        level: { type: String, required: false, default: "info" },
-        timeout: { type: String, required: false, default: "5000" }
+        level: { type: String, required: false, default: "info" }
     },
     setup(props) {
-        const classes = computed(() => {
-            return "alert " + props.level;
-        });
-
         const messageIcon = computed(() => {
             if (props.level === "info") {
                 return mdiInformationOutline;
@@ -61,12 +55,7 @@ export default Vue.extend({
             store.commit(REMOVE_ALERT, props.id);
         };
 
-        onCreated(() => {
-            setTimeout(destroyMe, Number(props.timeout));
-        });
-
         return {
-            classes,
             messageIcon,
             mdiClose,
             destroyMe
@@ -79,55 +68,36 @@ export default Vue.extend({
 .alert {
     align-items: center;
     background-color: var(--color-black);
-    background-position: 15px center;
-    background-repeat: no-repeat;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    clear: both;
     color: var(--color-white);
     display: flex;
-    float: inline-end;
     font-size: 15px;
     font-weight: 300;
-    inset-block-start: 35px;
     justify-content: space-between;
-    line-height: 1.1em;
-    margin: 10px 0 0 0;
+    margin-block-start: 10px;
     min-height: 75px;
-    opacity: 1;
     overflow: hidden;
     padding: 6px 20px;
-    position: relative;
-    transform: translateY(-35px);
     user-select: none;
     width: 325px;
 }
 
 .close {
+    cursor: pointer;
     display: flex;
-    float: inline-end;
-    font-size: 20px;
-    font-weight: 600;
+    flex-shrink: 0;
     justify-content: center;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    text-decoration: none;
-    text-shadow: 0 1px 0 var(--color-white);
+}
 
-    & button {
-        background: transparent;
-        border: none;
-        margin: 0;
-        outline: none;
-        padding: 0;
+.message {
+    align-items: center;
+    display: flex;
+}
 
-        & :hover,
-        & :focus,
-        & :active {
-            cursor: pointer;
-        }
-    }
+.message-icon {
+    flex-shrink: 0;
+    margin-inline-end: 10px;
 }
 
 .error {

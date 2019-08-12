@@ -4,18 +4,16 @@
         <button @click="sendWarn">Warn</button>
         <button @click="sendError">Error</button>
         <button @click="sendSuccess">Success</button>
-        <div class="alerts">
-            <transition-group name="list" tag="div">
-                <Alert
-                    v-for="alert in alerts"
-                    :id="alert.id"
-                    :key="alert.id"
-                    :message="alert.message"
-                    :level="alert.level"
-                    :timeout="alert.timeout"
-                />
-            </transition-group>
-        </div>
+        <transition-group name="list" tag="div" class="alerts">
+            <Alert
+                v-for="alert in alerts"
+                :id="alert.id"
+                :key="alert.id"
+                :message="alert.message"
+                :level="alert.level"
+                :timeout="alert.timeout"
+            />
+        </transition-group>
     </div>
 </template>
 
@@ -24,7 +22,7 @@ import Vue from "vue";
 import { computed, value } from "vue-function-api";
 import store from "@/store";
 import Alert from "@/components/Alert.vue";
-import { ALERT } from "@/mutations";
+import { ALERT } from "@/store/actions";
 
 export default Vue.extend({
     components: {
@@ -35,38 +33,41 @@ export default Vue.extend({
     },
     setup() {
         const alerts = computed(() => {
-            return store.state.alerts;
+            return store.state.alerts.queue;
         });
 
-        const id = value(0);
-
-        const createAlert = (message: string, level: string) => {
+        function createAlert(message: string, level: string) {
             return {
-                id: id.value++,
                 message,
                 level
             };
-        };
+        }
 
-        const sendAlert = (level: string) => {
-            store.commit(ALERT, createAlert("Message", level));
-        };
+        function sendAlert(level: string) {
+            store.dispatch(
+                ALERT,
+                createAlert(
+                    "This is a message that is long enough to be long.",
+                    level
+                )
+            );
+        }
 
-        const sendInfo = () => {
+        function sendInfo() {
             sendAlert("info");
-        };
+        }
 
-        const sendWarn = () => {
+        function sendWarn() {
             sendAlert("warn");
-        };
+        }
 
-        const sendError = () => {
+        function sendError() {
             sendAlert("error");
-        };
+        }
 
-        const sendSuccess = () => {
+        function sendSuccess() {
             sendAlert("success");
-        };
+        }
 
         return {
             alerts,
@@ -83,13 +84,13 @@ export default Vue.extend({
 .alerts {
     display: flex;
     flex-direction: column;
-    inset-block-end: 7%;
-    inset-inline-end: 5%;
+    inset-block-end: 70px;
+    inset-inline-end: 70px;
     max-height: 425px;
     overflow: hidden;
     position: fixed;
     width: 325px;
-    z-index: 9001;
+    z-index: 5;
 }
 
 .list-enter-active,
@@ -104,6 +105,5 @@ export default Vue.extend({
 .list-enter,
 .list-leave-to {
     opacity: 0;
-    transform: translateY(35px);
 }
 </style>
