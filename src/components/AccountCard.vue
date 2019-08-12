@@ -45,8 +45,7 @@ import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiQrcode, mdiContentCopy } from "@mdi/js";
 import Tooltip from "@/components/Tooltip.vue";
 import { writeToClipboard } from "@/clipboard";
-import { computed, createComponent } from "vue-function-api";
-import { PropType } from "vue/types/options";
+import { computed, createComponent, PropType } from "vue-function-api";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
@@ -64,13 +63,13 @@ export default createComponent({
     setup(props) {
         const rawPublicKey = computed(() => {
             let publickey = props.publicKey;
-            if (publickey.startsWith(ED25519_PREFIX)) {
+            if (publickey.startsWith(ED25519_PREFIX, 0)) {
                 publickey = publickey.slice(ED25519_PREFIX.length);
             }
             return publickey;
         });
         const copyKey = async () => {
-            await writeToClipboard(props.publickey);
+            await writeToClipboard(props.publicKey);
             console.log("Copied");
         };
         return {
