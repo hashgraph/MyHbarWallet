@@ -13,13 +13,12 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent, PropType } from "vue-function-api";
 
-export default Vue.extend({
-    name: "Feature",
+export default createComponent({
     props: {
-        image: { type: String, required: true },
-        title: { type: String, required: true }
+        image: (String as unknown) as PropType<string>,
+        title: (String as unknown) as PropType<string>
     }
 });
 </script>
