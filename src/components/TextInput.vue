@@ -53,6 +53,10 @@
                 Copy
             </div>
         </div>
+
+        <div v-if="showValidation && !valid && error !== null" class="error">
+            {{ error }}
+        </div>
     </div>
 </template>
 
@@ -86,6 +90,7 @@ interface Props {
     canCopy: boolean;
     showValidation: boolean;
     valid: boolean;
+    error: string;
     multiline: boolean;
     resizable: boolean;
 }
@@ -114,7 +119,11 @@ export default createComponent({
 
         // Whether to validate the the input as an ID and add the check-mark to the bottom right
         showValidation: (Boolean as unknown) as PropType<boolean>,
-        valid: (Boolean as unknown) as PropType<boolean>
+        valid: (Boolean as unknown) as PropType<boolean>,
+
+        // Error text to show when _not_ valid and validation should be shown
+        // WARNING: this only works properly with a single line of text,
+        error: (String as unknown) as PropType<string>
     },
     setup(props: Props, context) {
         // If the eye is open to show the obscured text anyway
@@ -142,7 +151,9 @@ export default createComponent({
                 "is-compact": props.compact,
                 "is-white": props.white,
                 "is-multiline": props.multiline,
-                "has-label": props.label != null
+                "has-label": props.label != null,
+                "has-error":
+                    props.error !== null && props.showValidation && !props.valid
             };
         });
 
@@ -291,14 +302,23 @@ textarea::placeholder {
     position: absolute;
 }
 
+.has-error .decorations {
+    padding-block-end: 28px;
+}
+
 .has-label .decorations {
     height: calc(100% - 37px);
     inset-block-start: 37px;
 }
 
-.is-multiline .decorations {
+.is-multiline:not(.has-error) .decorations {
     align-items: flex-end;
     padding-block-end: 15px;
+}
+
+.is-multiline.has-error .decorations {
+    align-items: flex-end;
+    padding-block-end: 43px;
 }
 
 .eye {
@@ -319,5 +339,10 @@ textarea::placeholder {
     &.is-valid {
         color: var(--color-melbourne-cup);
     }
+}
+
+.error {
+    color: red;
+    margin: 7px 0 0 15px;
 }
 </style>
