@@ -10,6 +10,7 @@
             show-validation
             :valid="byteCodeIsValid"
         />
+
         <TextInput
             can-copy
             can-clear
@@ -19,6 +20,7 @@
             show-validation
             :valid="interfaceIsValid"
         />
+
         <TextInput
             label="Maximum Transaction Fee"
             class="deploy-contract-form-item"
@@ -26,9 +28,9 @@
             :valid="maxFeeIsValid"
         />
 
-        <div class="deploy-contract-form-footer">
+        <template v-slot:footer>
             <Button :disabled="!signable" label="Sign Transaction" />
-        </div>
+        </template>
     </InterfaceForm>
 </template>
 
@@ -61,26 +63,3 @@ export default createComponent({
     }
 });
 </script>
-
-<style lang="postcss" scoped>
-.deploy-contract-form-item {
-    margin-block-end: 30px;
-}
-
-.deploy-contract-form-footer {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-}
-
-a {
-    color: var(--color-melbourne-cup);
-    cursor: pointer;
-    text-decoration: none;
-}
-
-a:hover,
-a:focus {
-    text-decoration: underline;
-}
-</style>

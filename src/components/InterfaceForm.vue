@@ -1,7 +1,14 @@
 <template>
     <div class="interface-form">
         <InterfaceFormTitle :title="title" />
-        <div class="interface-form-container"><slot></slot></div>
+        <div class="interface-form-container">
+            <div class="form-main">
+                <slot></slot>
+            </div>
+            <div class="form-footer">
+                <slot name="footer" />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -13,7 +20,6 @@ export default Vue.extend({
     components: {
         InterfaceFormTitle
     },
-
     props: {
         title: { type: String, required: true }
     }
@@ -22,11 +28,23 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .interface-form {
-    background-color: white;
-    border-radius: 5px;
+    background-color: var(--color-white);
+    border-radius: 4px;
 }
 
 .interface-form-container {
     padding: 40px;
+}
+
+.form-main {
+    display: grid;
+    grid-row-gap: 30px;
+}
+
+.form-footer {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-block-start: 40px;
 }
 </style>
