@@ -1,5 +1,9 @@
 <template>
-    <div class="account-tile-button" v-on="this.$listeners">
+    <div
+        class="account-tile-button"
+        :class="{ disabled }"
+        v-on="this.$listeners"
+    >
         <!--fixme: can remove div: tile-image if image sizes are normalized-->
         <img class="tile-image" :src="image" />
         <div class="title">{{ title }}</div>
@@ -13,6 +17,7 @@ import { createComponent } from "vue-function-api";
 
 export default createComponent({
     props: {
+        disabled: Boolean,
         title: { type: String, required: true },
         content: { type: String, required: false, default: "" },
         note: { type: String, required: false, default: "" },
@@ -77,6 +82,12 @@ export default createComponent({
         & .note {
             color: var(--color-white);
         }
+    }
+
+    &.disabled {
+        filter: blur(2px);
+        opacity: 0.5;
+        pointer-events: none;
     }
 
     @media (prefers-reduced-motion) {

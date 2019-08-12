@@ -83,7 +83,9 @@ module.exports = {
                     // Not supported in older Edge (use chrome Edge)
                     "intrinsic-width",
                     // Not supported in older Edge
-                    "css-resize"
+                    "css-resize",
+                    // Just a decoration
+                    "css-filters"
                 ]
             }
         ],

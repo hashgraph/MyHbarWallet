@@ -3,14 +3,15 @@
         <!-- TODO: Add @click="openModal" to AccountTileButton where openModal opens your modal -->
         <AccountTileButton
             title="Hardware"
+            disabled
             content="Ledger wallet, FINNEY, Trezor, Digital bitbox, Secalot, KeepKey"
-            :image="hardware"
+            :image="hardwareImage"
             @click="$emit('click', 'hardware')"
         />
         <AccountTileButton
             title="Software"
             content="Lorem ipsum dolor sit amet, consectetur"
-            :image="software"
+            :image="softwareImage"
             note="Not Recommended"
             @click="$emit('click', 'software')"
         />
@@ -29,11 +30,7 @@ export default createComponent({
     },
 
     setup() {
-        const hardware = hardwareImage;
-
-        const software = softwareImage;
-
-        return { hardware, software };
+        return { hardwareImage, softwareImage };
     }
 });
 </script>
