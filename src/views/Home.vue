@@ -52,6 +52,7 @@
         <FAQs />
         <Community />
         <ModalForgotToLogOut v-model="modalForgotToLogOutIsOpen" />
+        <Alerts timeout="7000" />
     </div>
 </template>
 
@@ -63,6 +64,7 @@ import Community from "@/components/Community.vue";
 import HomeTileButtons from "@/components/HomeTileButtons.vue";
 import circleImage from "@/assets/circle.png";
 import ModalForgotToLogOut from "@/components/ModalForgotToLogOut.vue";
+import Alerts from "@/components/Alerts.vue";
 
 export default Vue.extend({
     name: "Home",
@@ -71,6 +73,7 @@ export default Vue.extend({
         HomeTileButtons,
         Features,
         Community,
+        Alerts,
         ModalForgotToLogOut
     },
     data() {
