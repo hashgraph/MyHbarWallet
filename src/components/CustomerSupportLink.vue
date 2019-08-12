@@ -1,18 +1,32 @@
 <template>
-    <div class="customer-support-link">
+    <div class="customer-support-link" @click="handleButtonClick">
         <img alt="" :src="serviceBell" /> Customer Support
+        <ModalCustomerService v-model="modalCustomerServiceIsOpen" />
     </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import serviceBell from "@/assets/help-center.svg";
+import { createComponent, value } from "vue-function-api";
 
-export default Vue.extend({
-    computed: {
-        serviceBell() {
-            return serviceBell;
+import ModalCustomerService from "@/components/ModalCustomerService.vue";
+
+export default createComponent({
+    components: {
+        ModalCustomerService
+    },
+    setup() {
+        const modalCustomerServiceIsOpen = value(false);
+
+        function handleButtonClick() {
+            modalCustomerServiceIsOpen.value = !modalCustomerServiceIsOpen.value;
         }
+
+        return {
+            modalCustomerServiceIsOpen,
+            serviceBell,
+            handleButtonClick
+        };
     }
 });
 </script>

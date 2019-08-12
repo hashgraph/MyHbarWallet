@@ -4,7 +4,7 @@
             <div class="title-text">
                 <slot name="title"></slot>
             </div>
-            <MaterialDesignIcon class="icon" :icon="icon" />
+            <MaterialDesignIcon class="icon" :icon="mdiChevronUp" />
         </div>
         <div class="content">
             <div class="content-text">
@@ -18,26 +18,22 @@
 import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiChevronUp } from "@mdi/js";
+import { computed, value } from "vue-function-api";
 
 export default Vue.extend({
-    name: "Accordion",
     components: {
         MaterialDesignIcon
     },
-    data() {
-        return {
-            expanded: false
+    setup() {
+        const expanded = value(false);
+        const toggle = () => {
+            expanded.value = !expanded.value;
         };
-    },
-    computed: {
-        icon() {
-            return mdiChevronUp;
-        }
-    },
-    methods: {
-        toggle() {
-            this.expanded = !this.expanded;
-        }
+        return {
+            expanded,
+            mdiChevronUp,
+            toggle
+        };
     }
 });
 </script>

@@ -22,6 +22,7 @@ export default Vue.extend({
 .interface-form-title {
     border-left: 5px solid var(--color-melbourne-cup);
     font-size: 24px;
+    font-weight: 500;
     padding-inline-start: 27px;
 }
 </style>

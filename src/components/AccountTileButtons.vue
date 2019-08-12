@@ -18,22 +18,22 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import AccountTileButton from "../components/AccountTileButton.vue";
-import hardware from "../assets/button-hardware.svg";
-import software from "../assets/button-software.svg";
+import hardwareImage from "../assets/button-hardware.svg";
+import softwareImage from "../assets/button-software.svg";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         AccountTileButton
     },
-    computed: {
-        hardware() {
-            return hardware;
-        },
-        software() {
-            return software;
-        }
+
+    setup() {
+        const hardware = hardwareImage;
+
+        const software = softwareImage;
+
+        return { hardware, software };
     }
 });
 </script>

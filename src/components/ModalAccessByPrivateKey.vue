@@ -3,7 +3,7 @@
         :is-open="state.modalIsOpen"
         :not-closable="state.isBusy"
         title="Access by Private Key"
-        @change="this.$listeners.change"
+        @change="handleModalChangeIsOpen"
     >
         <template v-slot:banner>
             <Warning title="NOT RECOMMENDED">
@@ -60,6 +60,9 @@ export default Vue.extend({
         state: { type: Object, required: true } as PropOptions<State>
     },
     methods: {
+        handleModalChangeIsOpen(isOpen: boolean) {
+            this.$emit("change", { ...this.state, modalIsOpen: isOpen });
+        },
         handlePrivateKeyInput(privateKey: string) {
             this.$emit("change", { ...this.state, privateKey });
         }

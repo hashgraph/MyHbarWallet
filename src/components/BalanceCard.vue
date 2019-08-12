@@ -9,6 +9,7 @@
 
                 <div v-if="balance" class="subtitle" type="string">
                     {{ balance }} ℏ
+                    <div class="usd-balance">/ {{ balanceUSD }}</div>
                 </div>
                 <div v-else class="subtitle-null" type="string">
                     Unknown
@@ -45,6 +46,11 @@ import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiRefresh, mdiLoading } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
 
+const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
+});
+
 export default Vue.extend({
     components: {
         MaterialDesignIcon,
@@ -64,6 +70,11 @@ export default Vue.extend({
         },
         spinner() {
             return mdiLoading;
+        },
+        balanceUSD() {
+            const usd = this.balance * 0.12;
+            const usdFormatted = formatter.format(usd);
+            return usdFormatted;
         }
     },
     methods: {
@@ -105,7 +116,6 @@ img {
 
 .subtitle {
     font-size: 22px;
-    font-weight: 300;
     margin-block-end: 15px;
     user-select: none;
 }
@@ -131,5 +141,11 @@ img {
 .actions {
     align-items: center;
     display: flex;
+}
+
+.usd-balance {
+    display: inline;
+    font-size: 13px;
+    opacity: 0.75;
 }
 </style>

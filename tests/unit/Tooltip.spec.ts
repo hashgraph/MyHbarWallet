@@ -2,11 +2,11 @@ import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Tooltip from "@/components/Tooltip.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
-describe("Tooltip.vue", () => {
+describe("Tooltip.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
 
-    it("opens tooltip on click for pinnable", () => {
+    it("opens tooltip on click for pinnable", (): void => {
         const message = "Tooltip Text";
         const wrapper = shallowMount(Tooltip, {
             localVue,
@@ -27,7 +27,7 @@ describe("Tooltip.vue", () => {
         expect(wrapper.find(".message").text()).toMatch(message);
     });
 
-    it("does not open tooltip on click for unpinnable", () => {
+    it("does not open tooltip on click for unpinnable", (): void => {
         const wrapper = shallowMount(Tooltip, {
             localVue,
             propsData: {
@@ -46,7 +46,7 @@ describe("Tooltip.vue", () => {
         expect(wrapper.classes()).not.toContain("active");
     });
 
-    it("does open tooltip on mouseenter and close on mouseleave", () => {
+    it("does open tooltip on mouseenter and close on mouseleave", (): void => {
         const wrapper = shallowMount(Tooltip, {
             localVue,
             propsData: {

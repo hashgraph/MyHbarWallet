@@ -20,27 +20,21 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import HomeTileButton from "../components/HomeTileButton.vue";
 import unlockWallet from "../assets/unlock-wallet.png";
-import wallet from "../assets/wallet-hbar.svg";
+import walletImage from "../assets/wallet-hbar.svg";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         HomeTileButton
     },
-    computed: {
-        wallet() {
-            return wallet;
-        },
-        unlock() {
-            return unlockWallet;
-        }
-    },
-    methods: {
-        handleClickLeft() {
-            console.log("LEFTG");
-        }
+    setup() {
+        const wallet = walletImage;
+
+        const unlock = unlockWallet;
+
+        return { wallet, unlock };
     }
 });
 </script>
