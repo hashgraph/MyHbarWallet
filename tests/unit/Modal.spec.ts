@@ -1,8 +1,11 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Modal from "../../src/components/Modal.vue";
+import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("Modal.vue", (): void => {
     const localVue = createLocalVue();
+    localVue.use(VueFunctionApi);
+
     const wrapper = shallowMount(Modal, {
         localVue,
         propsData: {

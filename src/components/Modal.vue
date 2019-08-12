@@ -11,7 +11,7 @@
                 <span class="title">{{ title }}</span>
                 <MaterialDesignIcon
                     class="close"
-                    :icon="closeIcon"
+                    :icon="mdiClose"
                     @click="handleClose"
                 />
             </header>
@@ -26,7 +26,14 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import {
+    createComponent,
+    value,
+    watch,
+    PropType,
+    onCreated,
+    onBeforeDestroy
+} from "vue-function-api";
 import { mdiClose } from "@mdi/js";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
@@ -34,9 +41,17 @@ function setModalIsOpenOnBody(isOpen: boolean) {
     document.body.classList.toggle("modal-is-open", isOpen);
 }
 
+interface Props {
+    notClosable: boolean;
+    isOpen: boolean;
+    title: string;
+    hideDecoration: boolean;
+    large: boolean;
+}
+
 // The isOpen property controls if the modal is open or not. It should be bound with
 // the v-model directive to allow the modal to close itself (click out and close button).
-export default Vue.extend({
+export default createComponent({
     name: "Modal",
     components: {
         MaterialDesignIcon
@@ -46,40 +61,44 @@ export default Vue.extend({
         event: "change"
     },
     props: {
-        notClosable: { type: Boolean },
-        isOpen: { type: Boolean },
-        title: { type: String, required: true },
-        hideDecoration: { type: Boolean },
-        large: { type: Boolean }
+        notClosable: (Boolean as unknown) as PropType<boolean>,
+        isOpen: (Boolean as unknown) as PropType<boolean>,
+        title: (String as unknown) as PropType<string>,
+        hideDecoration: (Boolean as unknown) as PropType<boolean>,
+        large: (Boolean as unknown) as PropType<boolean>
     },
-    computed: {
-        closeIcon() {
-            return mdiClose;
-        }
-    },
-    watch: {
-        isOpen: setModalIsOpenOnBody
-    },
-    created() {
-        setModalIsOpenOnBody(this.isOpen);
-        window.addEventListener("keydown", this.handleWindowKeyDown);
-    },
-    beforeDestroy() {
-        setModalIsOpenOnBody(false);
-        window.removeEventListener("keydown", this.handleWindowKeyDown);
-    },
-    methods: {
-        handleClose() {
-            if (!this.notClosable) {
-                this.$emit("change", false);
+
+    setup(props: Props, context) {
+        function handleClose() {
+            if (!props.notClosable) {
+                context.emit("change", false);
             }
-        },
-        handleWindowKeyDown(event: KeyboardEvent) {
+        }
+
+        function handleWindowKeyDown(event: KeyboardEvent) {
             // ESCAPE (27)
-            if (this.isOpen && event.keyCode == 27) {
-                this.handleClose();
+            if (props.isOpen && event.keyCode == 27) {
+                handleClose();
             }
         }
+
+        onCreated(() => {
+            setModalIsOpenOnBody(props.isOpen);
+            window.addEventListener("keydown", handleWindowKeyDown);
+        });
+
+        onBeforeDestroy(() => {
+            setModalIsOpenOnBody(false);
+            window.removeEventListener("keydown", handleWindowKeyDown);
+        });
+
+        watch(() => props.isOpen, setModalIsOpenOnBody);
+
+        return {
+            mdiClose,
+            handleClose,
+            handleWindowKeyDown
+        };
     }
 });
 </script>
