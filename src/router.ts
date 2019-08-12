@@ -4,16 +4,53 @@ import Home from "./views/Home.vue";
 import AccessMyAccount from "./views/AccessMyAccount.vue";
 import CreateAccount from "./views/CreateAccount.vue";
 import HardwareWalletAffiliates from "./views/HardwareWalletAffiliates.vue";
-import Interface from "./views/Interface.vue";
-import InterfaceSendTransfer from "./views/InterfaceSendTransfer.vue";
-import InterfaceDeployContract from "./views/InterfaceDeployContract.vue";
-import InterfaceInteractWithContract from "./views/InterfaceInteractWithContract.vue";
-import InterfaceSignMessage from "./views/InterfaceSignMessage.vue";
-import InterfaceVerifyMessage from "./views/InterfaceVerifyMessage.vue";
-import ConvertUnits from "./views/ConvertUnits.vue";
 import PrivacyPolicy from "./views/PrivacyPolicy.vue";
 import TermsConditions from "./views/TermsConditions.vue";
 import { PositionResult } from "vue-router/types/router";
+
+function ConvertUnits(): Promise<typeof import("./views/ConvertUnits.vue")> {
+    return import(/* webpackChunkName: "units" */ "./views/ConvertUnits.vue");
+}
+
+function Interface(): Promise<typeof import("*.vue")> {
+    return import(/* webpackChunkName: "interface" */ "./views/Interface.vue");
+}
+
+function InterfaceSendTransfer(): Promise<
+    typeof import("./views/InterfaceSendTransfer.vue")
+> {
+    return import(
+        /* webpackChunkName: "interface" */ "./views/InterfaceSendTransfer.vue"
+    );
+}
+
+function InterfaceDeployContract(): Promise<
+    typeof import("./views/InterfaceDeployContract.vue")
+> {
+    return import(
+        /* webpackChunkName: "interface" */ "./views/InterfaceDeployContract.vue"
+    );
+}
+
+function InterfaceInteractWithContract(): Promise<
+    typeof import("./views/InterfaceInteractWithContract.vue")
+> {
+    return import(
+        /* webpackChunkName: "interface" */ "./views/InterfaceInteractWithContract.vue"
+    );
+}
+
+function InterfaceSignMessage(): Promise<typeof import("*.vue")> {
+    return import(
+        /* webpackChunkName: "interface" */ "./views/InterfaceSignMessage.vue"
+    );
+}
+
+function InterfaceVerifyMessage(): Promise<typeof import("*.vue")> {
+    return import(
+        /* webpackChunkName: "interface" */ "./views/InterfaceVerifyMessage.vue"
+    );
+}
 
 Vue.use(Router);
 
