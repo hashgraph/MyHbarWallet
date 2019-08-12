@@ -1,19 +1,19 @@
 <template>
     <nav :class="{ 'nav-open': isOpen }">
         <div class="link-block">
-            <a href="/">
+            <a href="/" @click="toggle">
                 <div class="link">Home</div>
                 <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
             </a>
         </div>
         <div class="link-block">
-            <a href="/#about">
+            <a href="/#about" @click="toggle">
                 <div class="link">About</div>
                 <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
             </a>
         </div>
         <div class="link-block">
-            <a href="/#faqs">
+            <a href="/#faqs" @click="toggle">
                 <div class="link">FAQs</div>
                 <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
             </a>
@@ -33,14 +33,14 @@ export default Vue.extend({
     props: {
         isOpen: { type: Boolean }
     },
-    data() {
-        return {
-            viewWidth: 0
-        };
-    },
     computed: {
         mdiChevronRight() {
             return mdiChevronRight;
+        }
+    },
+    methods: {
+        toggle() {
+            this.$emit("toggle", !this.isOpen);
         }
     }
 });

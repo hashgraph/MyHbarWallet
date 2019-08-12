@@ -21,10 +21,8 @@ export default Vue.extend({
     components: {
         MaterialDesignIcon
     },
-    data() {
-        return {
-            toggle: false
-        };
+    props: {
+        isOpen: Boolean
     },
     computed: {
         icon() {
@@ -33,11 +31,10 @@ export default Vue.extend({
     },
     methods: {
         style(ind: string) {
-            return this.toggle ? `bar-${ind}-anim` : `bar-${ind}`;
+            return this.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
         },
         menuToggle() {
-            this.toggle = !this.toggle;
-            this.$emit("toggle", this.toggle);
+            this.$emit("toggle", !this.isOpen);
         }
     }
 });
@@ -88,7 +85,7 @@ export default Vue.extend({
 }
 
 .bar-1-anim {
-    transform: rotate(45deg) translate(19px, 4px) scaleX(1.75) scaleY(2);
+    transform: rotate(45deg) translate(20px, 4px) scaleX(1.75) scaleY(2);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {
@@ -97,7 +94,7 @@ export default Vue.extend({
 }
 
 .bar-2-anim {
-    transform: rotate(-45deg) translate(27px, -14px) scaleX(1.75) scaleY(2);
+    transform: rotate(-45deg) translate(25.5px, -13px) scaleX(1.75) scaleY(2);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {
