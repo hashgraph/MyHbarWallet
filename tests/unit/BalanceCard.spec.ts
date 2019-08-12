@@ -1,12 +1,18 @@
-import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import BalanceCard from "../../src/components/BalanceCard.vue";
+import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("BalanceCard.vue", (): void => {
+    const localVue = createLocalVue();
+    localVue.use(VueFunctionApi);
+
     const wrapper = shallowMount(BalanceCard, {
+        localVue,
         propsData: {
             balance: null
         }
     });
+
     it("renders", (): void => {
         expect(wrapper.find(".balance").exists()).toBeTruthy();
     });

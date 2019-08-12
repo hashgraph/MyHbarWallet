@@ -155,7 +155,7 @@ export default createComponent({
 
 select,
 input {
-    background-color: white;
+    background-color: var(--color-white);
     border: 0;
     border-radius: 4px;
     padding: 18px;

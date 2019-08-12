@@ -37,8 +37,8 @@ export default Vue.extend({
 <style lang="postcss" scoped>
 .hardware-wallet-offer {
     align-items: center;
-    background-color: white;
-    border-color: white;
+    background-color: var(--color-white);
+    border-color: var(--color-white);
     border-radius: 4px;
     display: flex;
     margin: 7px 0;

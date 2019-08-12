@@ -31,7 +31,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import TextInput from "../components/TextInput.vue";
+import TextInput, {
+    Component as TextInputComponent
+} from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 
 export default Vue.extend({
@@ -55,8 +57,8 @@ export default Vue.extend({
             if (showPassword) {
                 // If we are now showing the password,
                 // focus the password input
-                // FIXME: How do we solve this without any?
-                (this.$refs.input as any).focus();
+                // FIXME: How to remove the _ unknown _ hack ?
+                ((this.$refs.input as unknown) as TextInputComponent).focus();
             }
         }
     }

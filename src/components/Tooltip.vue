@@ -75,7 +75,7 @@ export default Vue.extend({
 }
 
 .message {
-    background-color: white;
+    background-color: var(--color-white);
     border: 1px solid var(--color-basalt-grey);
     border-radius: 4px;
     color: var(--color-china-blue);

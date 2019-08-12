@@ -67,10 +67,7 @@ import {
     createComponent,
     value,
     computed,
-    watch,
-    onCreated,
     PropType,
-    onBeforeDestroy,
     Wrapper
 } from "vue-function-api";
 import { writeToClipboard } from "@/clipboard";
@@ -93,6 +90,20 @@ interface Props {
     error: string;
     multiline: boolean;
     resizable: boolean;
+}
+
+export interface Component {
+    isEyeOpen: Wrapper<boolean>;
+    keyboardType: Wrapper<string>;
+    eye: Wrapper<string>;
+    checkmark: Wrapper<string>;
+    classObject: Wrapper<{ [key: string]: boolean }>;
+    focus: () => void;
+    rows: Wrapper<number>;
+    handleClickEye: () => void;
+    handleInput: (event: Event) => void;
+    handleClickCopy: () => void;
+    handleClickClear: () => void;
 }
 
 export default createComponent({
@@ -125,7 +136,7 @@ export default createComponent({
         // WARNING: this only works properly with a single line of text,
         error: (String as unknown) as PropType<string>
     },
-    setup(props: Props, context) {
+    setup(props: Props, context): Component {
         // If the eye is open to show the obscured text anyway
         const isEyeOpen = value(false);
 
@@ -342,7 +353,7 @@ textarea::placeholder {
 }
 
 .error {
-    color: red;
+    color: var(--color-lightish-red);
     margin: 7px 0 0 15px;
 }
 </style>

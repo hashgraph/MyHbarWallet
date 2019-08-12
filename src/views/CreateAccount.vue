@@ -56,6 +56,8 @@ export default Vue.extend({
             }
         },
         handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
+            console.log("?", which);
+
             this.modalAccessBySoftwareIsOpen = false;
 
             setTimeout(() => {

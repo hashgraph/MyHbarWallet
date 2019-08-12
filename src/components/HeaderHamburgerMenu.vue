@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from "vue";
+import Vue from "vue";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiChevronRight } from "@mdi/js";
 
@@ -77,7 +77,7 @@ nav {
 }
 
 .icon {
-    color: #334758;
+    color: var(--color-dilly-blue);
     font-size: 16px;
 }
 
@@ -110,7 +110,7 @@ a {
 }
 
 .link {
-    color: #334758;
+    color: var(--color-dilly-blue);
     flex-grow: 1;
     font-size: 16px;
     text-decoration: none;

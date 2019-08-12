@@ -42,7 +42,7 @@ export default Vue.extend({
 
 <style lang="postcss" scoped>
 .button-wrapper {
-    border-color: white;
+    border-color: var(--color-white);
     border-radius: 50%;
     cursor: pointer;
     inset-inline-end: 0;

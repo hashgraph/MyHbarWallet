@@ -99,11 +99,11 @@ export default Vue.extend<{}, {}, Computed, Props>({
 }
 
 .indicator {
-    color: #c7c7c7;
+    color: var(--color-silver-polish);
 }
 
 .nav-item {
-    color: #c7c7c7;
+    color: var(--color-silver-polish);
     font-size: 14px;
     margin-block-start: 10px;
     padding-inline-start: 40px;

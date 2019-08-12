@@ -173,7 +173,7 @@ export default Vue.extend({
 }
 
 .title {
-    color: white;
+    color: var(--color-white);
     font-size: 19px;
     font-weight: 500;
     margin-block-end: 20px;

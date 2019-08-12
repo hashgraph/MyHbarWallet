@@ -49,7 +49,7 @@ export default Vue.extend({
 .radio-button {
     align-items: center;
     background-color: var(--color-white);
-    border: 1px solid var(--color-american-silver);
+    border: 1px solid var(--color-silver-polish);
     border-radius: 4px;
     cursor: pointer;
     display: flex;

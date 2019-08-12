@@ -16,7 +16,7 @@
             placeholder="shard.realm.account"
             label="To Account"
             show-validation
-            :valid="true"
+            :valid="isIdValid"
             can-copy
         />
 
@@ -58,6 +58,7 @@ export default createComponent({
         return {
             amount,
             toAccount,
+            isIdValid,
             handleClickEnterBalance
         };
     }

@@ -13,6 +13,7 @@ import InterfaceVerifyMessage from "./views/InterfaceVerifyMessage.vue";
 import ConvertUnits from "./views/ConvertUnits.vue";
 import PrivacyPolicy from "./views/PrivacyPolicy.vue";
 import TermsConditions from "./views/TermsConditions.vue";
+import { PositionResult } from "vue-router/types/router";
 
 Vue.use(Router);
 
@@ -92,13 +93,15 @@ export default new Router({
             ]
         }
     ],
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior(to, from, savedPosition): PositionResult {
         if (savedPosition) {
             return savedPosition;
         }
+
         if (to.hash) {
             return { selector: to.hash };
         }
+
         return { x: 0, y: 0 };
     }
 });

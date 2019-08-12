@@ -123,12 +123,12 @@ export default Vue.extend({
     margin-block-end: 30px;
 
     & > strong {
-        color: red;
+        color: var(--color-lightish-red);
         font-weight: 700;
     }
 
     & > h3 {
-        color: black;
+        color: var(--color-black);
         font-size: 16px;
         font-weight: 700;
     }

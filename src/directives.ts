@@ -1,10 +1,10 @@
 import Vue from "vue";
 
 Vue.directive("scroll", {
-    inserted(el, binding) {
+    inserted(el, binding): void {
         window.addEventListener("scroll", binding.value);
     },
-    unbind(el, binding) {
+    unbind(el, binding): void {
         window.removeEventListener("scroll", binding.value);
     }
 });

@@ -141,7 +141,7 @@ export default Vue.extend({
 header {
     align-items: center;
     background-color: var(--color-admiralty);
-    color: white;
+    color: var(--color-white);
     display: flex;
     font-size: 20px;
     justify-content: space-between;
@@ -153,7 +153,7 @@ header {
 }
 
 .main {
-    background-color: white;
+    background-color: var(--color-white);
 }
 
 .close {

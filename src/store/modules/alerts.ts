@@ -23,10 +23,10 @@ export default {
         queue: []
     } as State,
     mutations: {
-        [ADD_ALERT](state: State, alert: Alert) {
+        [ADD_ALERT](state: State, alert: Alert): void {
             state.queue.push(alert);
         },
-        [REMOVE_ALERT](state: State, id: number) {
+        [REMOVE_ALERT](state: State, id: number): void {
             for (let i = 0; i < state.queue.length; i++) {
                 if (state.queue[i].id === id) {
                     state.queue.splice(i, 1);
@@ -39,7 +39,7 @@ export default {
         [ALERT](
             { commit }: ActionContext<State, RootState>,
             payload: NewAlert
-        ) {
+        ): void {
             const alert = {
                 id: ++alertId,
                 ...payload
@@ -47,7 +47,7 @@ export default {
 
             commit(ADD_ALERT, alert);
 
-            setTimeout(() => {
+            setTimeout((): void => {
                 commit(REMOVE_ALERT, alert.id);
             }, 5000);
         }

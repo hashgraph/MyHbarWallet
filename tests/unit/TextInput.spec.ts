@@ -44,7 +44,7 @@ describe("TextInput.vue", (): void => {
             localVue,
             propsData: { obscure: true, value },
             listeners: {
-                input(newValue: string) {
+                input(newValue: string): void {
                     value = newValue;
                 }
             }
@@ -120,7 +120,9 @@ describe("TextInput.vue", (): void => {
         });
 
         expect(
-            wrapper.findAll(".action").filter(e => e.text() === copyText).length
+            wrapper
+                .findAll(".action")
+                .filter((e): boolean => e.text() === copyText).length
         ).toEqual(1);
     });
 
@@ -137,8 +139,9 @@ describe("TextInput.vue", (): void => {
         });
 
         expect(
-            wrapper.findAll(".action").filter(e => e.text() === clearText)
-                .length
+            wrapper
+                .findAll(".action")
+                .filter((e): boolean => e.text() === clearText).length
         ).toEqual(1);
     });
 
@@ -170,7 +173,9 @@ describe("TextInput.vue", (): void => {
         });
 
         expect(
-            wrapper.findAll(".action").filter(e => e.text() === copyText).length
+            wrapper
+                .findAll(".action")
+                .filter((e): boolean => e.text() === copyText).length
         ).toEqual(0);
     });
 
@@ -187,12 +192,13 @@ describe("TextInput.vue", (): void => {
         });
 
         expect(
-            wrapper.findAll(".action").filter(e => e.text() === clearText)
-                .length
+            wrapper
+                .findAll(".action")
+                .filter((e): boolean => e.text() === clearText).length
         ).toEqual(0);
     });
 
-    it("renders error-text when it isn't null", () => {
+    it("renders error-text when it isn't null", (): void => {
         const error = "ERROR: foo";
         const wrapper = mount(TextInput, {
             localVue,
@@ -207,7 +213,7 @@ describe("TextInput.vue", (): void => {
         expect(wrapper.find(".error").text()).toBe(error);
     });
 
-    it("doesn't render error-text when valid is true", () => {
+    it("doesn't render error-text when valid is true", (): void => {
         const error = "ERROR: foo";
         const wrapper = mount(TextInput, {
             localVue,
@@ -222,7 +228,7 @@ describe("TextInput.vue", (): void => {
         expect(wrapper.findAll(".error")).toHaveLength(0);
     });
 
-    it("doesn't render error-text when showValidation is false", () => {
+    it("doesn't render error-text when showValidation is false", (): void => {
         const error = "ERROR: foo";
         const wrapper = mount(TextInput, {
             localVue,
