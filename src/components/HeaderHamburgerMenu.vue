@@ -40,7 +40,7 @@ export default createComponent({
     setup(props: Props, context) {
         const icon = mdiChevronRight;
 
-        function toggle() {
+        function toggle(): void {
             context.emit("toggle", !props.isOpen);
         }
         return {

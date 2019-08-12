@@ -36,7 +36,7 @@ export default createComponent({
             return props.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
         }
 
-        function handleToggle() {
+        function handleToggle(): void {
             context.emit("toggle", !props.isOpen);
         }
 
