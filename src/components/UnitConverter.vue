@@ -51,10 +51,11 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Select from "./Select.vue";
 import TextInput from "./TextInput.vue";
 import BigNumber from "bignumber.js";
+
+import { createComponent, value, watch } from "vue-function-api";
 
 enum Unit {
     Tinybar = "tinybar",
@@ -76,79 +77,71 @@ const unitMap: Map<Unit, number> = new Map([
     [Unit.Gigabar, 100000000000000000]
 ]);
 
-interface Data {
-    selectedLeft: Unit;
-    selectedRight: Unit;
-    valueLeft: string;
-    valueRight: string;
+function getValueOfUnit(unit: Unit): BigNumber {
+    return new BigNumber(unitMap.get(unit) || 0);
 }
 
-interface Methods {
-    getValueOfUnit(unit: Unit): BigNumber;
-    convertFromTo(amt: number, from: string, to: string): string;
+function convertFromTo(amt: string, from: Unit, to: Unit): string {
+    const x = new BigNumber(amt);
+    const y = getValueOfUnit(from);
+    const z = getValueOfUnit(to);
+    return x
+        .multipliedBy(y)
+        .dividedBy(z)
+        .toFixed();
 }
 
-export default Vue.extend<Data, Methods, {}, {}>({
+export default createComponent({
     components: {
         Select,
         TextInput
     },
-    data() {
+    setup() {
+        const selectedLeft = value(Unit.Tinybar);
+        const selectedRight = value(Unit.Hbar);
+        const valueLeft = value("100000000");
+        const valueRight = value("1");
+        const options = Object.values(Unit);
+
+        watch(valueLeft, newValue => {
+            valueRight.value = convertFromTo(
+                newValue,
+                selectedLeft.value,
+                selectedRight.value
+            );
+        });
+
+        watch(valueRight, newValue => {
+            valueLeft.value = convertFromTo(
+                newValue,
+                selectedRight.value,
+                selectedLeft.value
+            );
+        });
+
+        watch(selectedLeft, newValue => {
+            valueRight.value = convertFromTo(
+                valueLeft.value,
+                newValue,
+                selectedRight.value
+            );
+        });
+
+        watch(selectedRight, newValue => {
+            valueLeft.value = convertFromTo(
+                valueRight.value,
+                newValue,
+                selectedLeft.value
+            );
+        });
+
         return {
-            selectedLeft: Unit.Tinybar,
-            selectedRight: Unit.Hbar,
-            valueLeft: "100000000",
-            valueRight: "1"
+            selectedLeft,
+            selectedRight,
+            valueLeft,
+            valueRight,
+            options
         };
-    },
-    computed: {
-        options() {
-            return Object.values(Unit);
-        }
-    },
-    watch: {
-        valueLeft(newValue) {
-            this.valueRight = this.convertFromTo(
-                newValue,
-                this.selectedLeft,
-                this.selectedRight
-            );
-        },
-        valueRight(newValue) {
-            this.valueLeft = this.convertFromTo(
-                newValue,
-                this.selectedRight,
-                this.selectedLeft
-            );
-        },
-        selectedLeft(newValue) {
-            this.valueRight = this.convertFromTo(
-                Number(this.valueLeft),
-                newValue,
-                this.selectedRight
-            );
-        },
-        selectedRight(newValue) {
-            this.valueLeft = this.convertFromTo(
-                Number(this.valueRight),
-                newValue,
-                this.selectedLeft
-            );
-        }
-    },
-    methods: {
-        getValueOfUnit(unit: Unit): BigNumber {
-            return new BigNumber(unitMap.get(unit) || 0);
-        },
-        convertFromTo(amt: number, from: Unit, to: Unit): string {
-            const x = new BigNumber(amt);
-            const y = this.getValueOfUnit(from) as BigNumber;
-            const z = this.getValueOfUnit(to) as BigNumber;
-            return x
-                .multipliedBy(y)
-                .dividedBy(z)
-                .toFixed();
-        }
     }
 });
 </script>
@@ -162,7 +155,7 @@ export default Vue.extend<Data, Methods, {}, {}>({
 
 select,
 input {
-    background-color: white;
+    background-color: var(--color-white);
     border: 0;
     border-radius: 4px;
     padding: 18px;

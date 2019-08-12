@@ -1,6 +1,6 @@
 import "./main.css";
 import "./directives";
-import Vue from "vue";
+import Vue, { VNode } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import { plugin as VueFunctionApi } from "vue-function-api";
@@ -10,5 +10,5 @@ Vue.use(VueFunctionApi);
 
 new Vue({
     router,
-    render: h => h(App)
+    render: (h): VNode => h(App)
 }).$mount("#app");

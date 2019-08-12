@@ -5,8 +5,8 @@ import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import FooterTop from "@/components/FooterTop.vue";
 import VueRouter from "vue-router";
 
-describe("Footer.vue", () => {
-    it("renders and contains footer information", () => {
+describe("Footer.vue", (): void => {
+    it("renders and contains footer information", (): void => {
         const localVue = createLocalVue();
         localVue.use(VueRouter);
         localVue.use(VueFunctionApi);
@@ -18,9 +18,11 @@ describe("Footer.vue", () => {
                 FooterTop
             }
         });
+
         const year = new Date().getFullYear();
+
         expect(wrapper.isVisible()).toBeTruthy();
-        expect(wrapper.find(".copyright").text()).toContain((year.toString()));
+        expect(wrapper.find(".copyright").text()).toContain(year.toString());
         expect(wrapper.text().includes("Terms")).toBeTruthy();
         expect(wrapper.text().includes("Privacy")).toBeTruthy();
     });

@@ -3,8 +3,8 @@ import RadioButton from "@/components/RadioButton.vue";
 import imageKey from "@/assets/button-key.svg";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
-describe("RadioButton.vue", () => {
-    it("renders, contains expected properties", () => {
+describe("RadioButton.vue", (): void => {
+    it("renders, contains expected properties", (): void => {
         const name = "RadioGroup";
         const label = "Label";
         const value = "Value";
@@ -25,7 +25,7 @@ describe("RadioButton.vue", () => {
         expect(wrapper.find("img").attributes()["src"]).toEqual(imageKey);
     });
 
-    it("reacts when checked", () => {
+    it("reacts when checked", (): void => {
         const name = "RadioGroup";
         const label = "Label";
         const value = "Value";

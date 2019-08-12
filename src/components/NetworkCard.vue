@@ -63,7 +63,7 @@ img {
 .change {
     border: 1px solid white;
     border-radius: 4px;
-    color: white;
+    color: var(--color-white);
     cursor: pointer;
     font-size: 12px;
     font-weight: 500;

@@ -47,7 +47,7 @@ export default createComponent({
         selected: (String as unknown) as PropType<string>,
         options: (Array as unknown) as PropType<string[]>
     },
-    setup({ selected, options }: Props, context) {
+    setup(props: Props, context) {
         const dropdownIsOpen = value(false);
 
         const dropdownIcon = computed(() => {
@@ -97,7 +97,7 @@ export default createComponent({
 
 .select-value-container {
     align-items: center;
-    background-color: white;
+    background-color: var(--color-white);
     border: 1px solid white;
     border-radius: 4px;
     cursor: pointer;

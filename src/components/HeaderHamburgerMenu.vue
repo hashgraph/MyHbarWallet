@@ -82,7 +82,7 @@ nav {
 }
 
 .icon {
-    color: #334758;
+    color: var(--color-dilly-blue);
     font-size: 16px;
 }
 
@@ -115,7 +115,7 @@ a {
 }
 
 .link {
-    color: #334758;
+    color: var(--color-dilly-blue);
     flex-grow: 1;
     font-size: 16px;
     text-decoration: none;

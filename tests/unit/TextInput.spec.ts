@@ -3,7 +3,7 @@ import TextInput from "../../src/components/TextInput.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
-describe("TextInput.vue", () => {
+describe("TextInput.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
 
@@ -44,7 +44,7 @@ describe("TextInput.vue", () => {
             localVue,
             propsData: { obscure: true, value },
             listeners: {
-                input(newValue: string) {
+                input(newValue: string): void {
                     value = newValue;
                 }
             }
@@ -59,7 +59,7 @@ describe("TextInput.vue", () => {
         expect(value).toBe(newValue);
     });
 
-    it("render textarea when multiline", () => {
+    it("render textarea when multiline", (): void => {
         const placeholder = "placeholder text";
         const value = "textarea text";
         const wrapper = shallowMount(TextInput, {
@@ -78,7 +78,7 @@ describe("TextInput.vue", () => {
         expect(textAreaElement.value).toBe(value);
     });
 
-    it("renders label when it's not null", () => {
+    it("renders label when it's not null", (): void => {
         const label = "label text";
         const wrapper = shallowMount(TextInput, {
             localVue,
@@ -92,7 +92,7 @@ describe("TextInput.vue", () => {
         expect(wrapper.find(".label").text()).toBe(label);
     });
 
-    it("renders validation indicator when showValidation is true", () => {
+    it("renders validation indicator when showValidation is true", (): void => {
         const showValidation = true;
         const valid = true;
         const wrapper = mount(TextInput, {
@@ -107,7 +107,7 @@ describe("TextInput.vue", () => {
         expect(wrapper.contains(MaterialDesignIcon)).toBe(true);
     });
 
-    it("renders copy action when canCopy is true", () => {
+    it("renders copy action when canCopy is true", (): void => {
         const copyText = "Copy";
         const canCopy = true;
         const wrapper = mount(TextInput, {
@@ -120,11 +120,13 @@ describe("TextInput.vue", () => {
         });
 
         expect(
-            wrapper.findAll(".action").filter(e => e.text() === copyText).length
+            wrapper
+                .findAll(".action")
+                .filter((e): boolean => e.text() === copyText).length
         ).toEqual(1);
     });
 
-    it("renders clear action when canClear is true", () => {
+    it("renders clear action when canClear is true", (): void => {
         const clearText = "Clear";
         const canClear = true;
         const wrapper = mount(TextInput, {
@@ -137,12 +139,13 @@ describe("TextInput.vue", () => {
         });
 
         expect(
-            wrapper.findAll(".action").filter(e => e.text() === clearText)
-                .length
+            wrapper
+                .findAll(".action")
+                .filter((e): boolean => e.text() === clearText).length
         ).toEqual(1);
     });
 
-    it("does not render validation indicator when showValidation is false", () => {
+    it("does not render validation indicator when showValidation is false", (): void => {
         const showValidation = false;
         const valid = true;
         const wrapper = mount(TextInput, {
@@ -157,7 +160,7 @@ describe("TextInput.vue", () => {
         expect(wrapper.contains(MaterialDesignIcon)).toBe(false);
     });
 
-    it("does not render copy action when canCopy is false", () => {
+    it("does not render copy action when canCopy is false", (): void => {
         const copyText = "Copy";
         const canCopy = false;
         const wrapper = mount(TextInput, {
@@ -170,11 +173,13 @@ describe("TextInput.vue", () => {
         });
 
         expect(
-            wrapper.findAll(".action").filter(e => e.text() === copyText).length
+            wrapper
+                .findAll(".action")
+                .filter((e): boolean => e.text() === copyText).length
         ).toEqual(0);
     });
 
-    it("does not render clear action when canClear is false", () => {
+    it("does not render clear action when canClear is false", (): void => {
         const clearText = "Clear";
         const canClear = false;
         const wrapper = mount(TextInput, {
@@ -187,8 +192,54 @@ describe("TextInput.vue", () => {
         });
 
         expect(
-            wrapper.findAll(".action").filter(e => e.text() === clearText)
-                .length
+            wrapper
+                .findAll(".action")
+                .filter((e): boolean => e.text() === clearText).length
         ).toEqual(0);
+    });
+
+    it("renders error-text when it isn't null", (): void => {
+        const error = "ERROR: foo";
+        const wrapper = mount(TextInput, {
+            localVue,
+            propsData: {
+                multiline: true,
+                error,
+                valid: false,
+                showValidation: true
+            }
+        });
+
+        expect(wrapper.find(".error").text()).toBe(error);
+    });
+
+    it("doesn't render error-text when valid is true", (): void => {
+        const error = "ERROR: foo";
+        const wrapper = mount(TextInput, {
+            localVue,
+            propsData: {
+                multiline: true,
+                error,
+                valid: true,
+                showValidation: true
+            }
+        });
+
+        expect(wrapper.findAll(".error")).toHaveLength(0);
+    });
+
+    it("doesn't render error-text when showValidation is false", (): void => {
+        const error = "ERROR: foo";
+        const wrapper = mount(TextInput, {
+            localVue,
+            propsData: {
+                multiline: true,
+                error,
+                valid: false,
+                showValidation: false
+            }
+        });
+
+        expect(wrapper.findAll(".error")).toHaveLength(0);
     });
 });

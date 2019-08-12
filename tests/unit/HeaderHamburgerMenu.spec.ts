@@ -3,7 +3,7 @@ import HeaderHamburgerMenu from "../../src/components/HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "../../src/components/HeaderHamburgerButton.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
-describe("HeaderHamburgerMenu.vue", () => {
+describe("HeaderHamburgerMenu.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
 
@@ -11,18 +11,18 @@ describe("HeaderHamburgerMenu.vue", () => {
         localVue
     });
 
-    it("renders", () => {
+    it("renders", (): void => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
-    it("opens", () => {
+    it("opens", (): void => {
         expect(wrapper.find("nav").classes()).not.toContain("nav-open");
         wrapper.setProps({ isOpen: true });
         expect(wrapper.find("nav").classes()).toContain("nav-open");
     });
 });
 
-describe("HeaderHamburgerButton.vue", () => {
+describe("HeaderHamburgerButton.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
 
@@ -33,13 +33,12 @@ describe("HeaderHamburgerButton.vue", () => {
         }
     });
 
-    it("renders", () => {
+    it("renders", (): void => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
-    it("triggers", () => {
-        wrapper.find(".button-wrapper").trigger("click")
-        expect(wrapper.emitted()).toEqual({"toggle": [[true]]});
-    
+    it("triggers", (): void => {
+        wrapper.find(".button-wrapper").trigger("click");
+        expect(wrapper.emitted()).toEqual({ toggle: [[true]] });
     });
 });

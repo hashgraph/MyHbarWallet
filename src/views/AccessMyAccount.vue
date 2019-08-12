@@ -58,9 +58,7 @@ import ModalAccessByPhrase, {
 } from "@/components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
 import PageTitle from "../components/PageTitle.vue";
-import ModalPassword, {
-    State as ModalPasswordState
-} from "../components/ModalPassword.vue";
+import ModalPassword from "../components/ModalPassword.vue";
 
 export default Vue.extend({
     components: {
@@ -135,12 +133,9 @@ export default Vue.extend({
                     const reader = new FileReader();
 
                     reader.addEventListener("error", reject);
-                    reader.addEventListener(
-                        "loadend",
-                        (event: ProgressEvent) => {
-                            resolve(reader.result as string);
-                        }
-                    );
+                    reader.addEventListener("loadend", (): void => {
+                        resolve(reader.result as string);
+                    });
 
                     reader.readAsText(file);
                 }
@@ -148,7 +143,7 @@ export default Vue.extend({
 
             this.modalPasswordState.modalIsOpen = true;
         },
-        handlePasswordSubmit(state: ModalPasswordState) {
+        handlePasswordSubmit() {
             this.modalPasswordState.isBusy = true;
             // TODO: Decode private key from file
             this.openInterface(null);
@@ -163,6 +158,8 @@ export default Vue.extend({
             this.openInterface(this.modalAccessByPrivateKeyState.privateKey);
         },
         openInterface(privateKey: string | null) {
+            console.log("privateKey =", privateKey);
+
             setTimeout(() => {
                 this.$router.push({ name: "interface" });
             }, 3000);
