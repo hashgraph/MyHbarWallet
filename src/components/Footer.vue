@@ -62,30 +62,33 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import { mdiFacebook, mdiGithubCircle, mdiTwitter } from "@mdi/js";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import FooterTop from "@/components/FooterTop.vue";
+import { createComponent, computed } from "vue-function-api";
 
-export default Vue.extend({
-    name: "Footer",
+export default createComponent({
     components: {
         MaterialDesignIcon,
         FooterTop
     },
-    computed: {
-        facebook() {
-            return mdiFacebook;
-        },
-        twitter() {
-            return mdiTwitter;
-        },
-        github() {
-            return mdiGithubCircle;
-        },
-        currentYear() {
+    setup() {
+        const facebook = mdiFacebook;
+
+        const twitter = mdiTwitter;
+
+        const github = mdiGithubCircle;
+
+        const currentYear = computed(() => {
             return new Date().getFullYear();
-        }
+        });
+
+        return {
+            facebook,
+            twitter,
+            github,
+            currentYear
+        };
     }
 });
 </script>
