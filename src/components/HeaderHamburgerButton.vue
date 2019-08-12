@@ -16,28 +16,41 @@
 import Vue from "vue";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiMinus } from "@mdi/js";
+import { createComponent, computed } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
     props: {
-        isOpen: Boolean
+        isOpen: { type: String, required: true }
     },
-    computed: {
-        icon() {
-            return mdiMinus;
-        }
-    },
-    methods: {
-        style(ind: string) {
-            return this.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
-        },
-        menuToggle() {
-            this.$emit("toggle", !this.isOpen);
-        }
+    setup() {
+        const icon = mdiMinus;
+        return { icon };
     }
 });
+// export default Vue.extend({
+//     components: {
+//         MaterialDesignIcon
+//     },
+//     props: {
+//         isOpen: Boolean
+//     },
+//     computed: {
+//         icon() {
+//             return mdiMinus;
+//         }
+//     },
+//     methods: {
+//         style(ind: string) {
+//             return this.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
+//         },
+//         menuToggle() {
+//             this.$emit("toggle", !this.isOpen);
+//         }
+//     }
+// });
 </script>
 
 <style lang="postcss" scoped>
