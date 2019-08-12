@@ -37,7 +37,6 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import UnitConverter from "../components/UnitConverter.vue";
 import { createComponent } from "vue-function-api";
 

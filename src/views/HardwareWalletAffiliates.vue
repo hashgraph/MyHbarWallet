@@ -20,11 +20,9 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-
+import { createComponent } from "vue-function-api";
 import HardwareWalletOffer from "../components/HardwareWalletOffer.vue";
 import PageTitle from "../components/PageTitle.vue";
-
 import ledgerImage from "../assets/logo-ledger.png";
 import finneyImage from "../assets/logo-finney.png";
 import bitboxImage from "../assets/logo-bitbox.png";
@@ -32,66 +30,65 @@ import trezorImage from "../assets/logo-trezor.png";
 import secalotImage from "../assets/logo-secalot.png";
 import keepkeyImage from "../assets/logo-keepkey.png";
 
-export default Vue.extend({
-    name: "HardwareWalletAffiliates",
+export default createComponent({
     components: {
         HardwareWalletOffer,
         PageTitle
     },
-    computed: {
-        offers() {
-            return [
-                {
-                    currency: "$",
-                    cost: "59.00",
-                    image: ledgerImage,
-                    moreInfo: "https://www.ledger.com/?r=fa4b",
-                    description:
-                        "A light, yet solid multicurrency hardware wallet for cryptocurrencies. It is easy to carry everywhere thanks to its USB format."
-                },
-                {
-                    currency: "$",
-                    cost: "999.00",
-                    image: finneyImage,
-                    moreInfo:
-                        "http://shop.sirinlabs.com/?rfsn=2397639.54fdf&utm_source=refersion&utm_medium=affiliate&utm_campaign=2397639.54fdf",
-                    description:
-                        "Uncompromised Security In a Blockchain Smartphone"
-                },
-                {
-                    currency: "€",
-                    cost: "44.00",
-                    image: bitboxImage,
-                    moreInfo: "https://shiftcrypto.ch/?ref=mew",
-                    description:
-                        "Our aim is to equip you for independence, with ease, in the digital world."
-                },
-                {
-                    currency: "€",
-                    cost: "83.49",
-                    image: trezorImage,
-                    moreInfo: "https://trezor.io/?offer_id=12&aff_id=2029",
-                    description:
-                        "The most trusted hardware wallet in the world. Get yours today!"
-                },
-                {
-                    currency: "$",
-                    cost: "50.00",
-                    image: secalotImage,
-                    moreInfo: "https://www.secalot.com",
-                    description:
-                        "Your all-in-one digital security companion. it is a small USB dongle that packs a wide range of features."
-                },
-                {
-                    currency: "€",
-                    cost: "79.00",
-                    image: keepkeyImage,
-                    moreInfo: "http://lddy.no/a4im",
-                    description:
-                        "Protect your cryptocurrencies, store your private keys offline, and safeguard your assets from hackers."
-                }
-            ];
-        }
+    setup() {
+        const offers = [
+            {
+                currency: "$",
+                cost: "59.00",
+                image: ledgerImage,
+                moreInfo: "https://www.ledger.com/?r=fa4b",
+                description:
+                    "A light, yet solid multicurrency hardware wallet for cryptocurrencies. It is easy to carry everywhere thanks to its USB format."
+            },
+            {
+                currency: "$",
+                cost: "999.00",
+                image: finneyImage,
+                moreInfo:
+                    "http://shop.sirinlabs.com/?rfsn=2397639.54fdf&utm_source=refersion&utm_medium=affiliate&utm_campaign=2397639.54fdf",
+                description: "Uncompromised Security In a Blockchain Smartphone"
+            },
+            {
+                currency: "€",
+                cost: "44.00",
+                image: bitboxImage,
+                moreInfo: "https://shiftcrypto.ch/?ref=mew",
+                description:
+                    "Our aim is to equip you for independence, with ease, in the digital world."
+            },
+            {
+                currency: "€",
+                cost: "83.49",
+                image: trezorImage,
+                moreInfo: "https://trezor.io/?offer_id=12&aff_id=2029",
+                description:
+                    "The most trusted hardware wallet in the world. Get yours today!"
+            },
+            {
+                currency: "$",
+                cost: "50.00",
+                image: secalotImage,
+                moreInfo: "https://www.secalot.com",
+                description:
+                    "Your all-in-one digital security companion. it is a small USB dongle that packs a wide range of features."
+            },
+            {
+                currency: "€",
+                cost: "79.00",
+                image: keepkeyImage,
+                moreInfo: "http://lddy.no/a4im",
+                description:
+                    "Protect your cryptocurrencies, store your private keys offline, and safeguard your assets from hackers."
+            }
+        ];
+        return {
+            offers
+        };
     }
 });
 </script>
