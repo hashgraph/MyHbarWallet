@@ -3,7 +3,11 @@ import ZoomTopButton from "../../src/components/ZoomTopButton.vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import "../../src/directives";
 
+<<<<<<< HEAD
 describe("ZoomTopButton", () => {
+=======
+describe(ZoomTopButton, () => {
+>>>>>>> e97b6da... accountcard.vue functional update + lint + test
     it("isn't active at first", async () => {
         const wrapper = shallowMount(ZoomTopButton);
         const zButton = wrapper.find("button");
