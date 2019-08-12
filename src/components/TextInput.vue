@@ -54,8 +54,8 @@
             </div>
         </div>
 
-        <div v-if="showValidation && !valid" class="error-text">
-            {{ errorText }}
+        <div v-if="showValidation && !valid && error !== null" class="error">
+            {{ error }}
         </div>
     </div>
 </template>
@@ -90,7 +90,7 @@ interface Props {
     canCopy: boolean;
     showValidation: boolean;
     valid: boolean;
-    errorText: string;
+    error: string;
     multiline: boolean;
     resizable: boolean;
 }
@@ -123,7 +123,7 @@ export default createComponent({
 
         // Error text to show when _not_ valid and validation should be shown
         // WARNING: this only works properly with a single line of text,
-        errorText: (String as unknown) as PropType<string>
+        error: (String as unknown) as PropType<string>
     },
     setup(props: Props, context) {
         // If the eye is open to show the obscured text anyway
@@ -152,10 +152,8 @@ export default createComponent({
                 "is-white": props.white,
                 "is-multiline": props.multiline,
                 "has-label": props.label != null,
-                "has-error-text":
-                    props.errorText !== null &&
-                    props.showValidation &&
-                    !props.valid
+                "has-error":
+                    props.error !== null && props.showValidation && !props.valid
             };
         });
 
@@ -304,7 +302,7 @@ textarea::placeholder {
     position: absolute;
 }
 
-.has-error-text .decorations {
+.has-error .decorations {
     padding-block-end: 28px;
 }
 
@@ -313,12 +311,12 @@ textarea::placeholder {
     inset-block-start: 37px;
 }
 
-.is-multiline:not(.has-error-text) .decorations {
+.is-multiline:not(.has-error) .decorations {
     align-items: flex-end;
     padding-block-end: 15px;
 }
 
-.is-multiline.has-error-text .decorations {
+.is-multiline.has-error .decorations {
     align-items: flex-end;
     padding-block-end: 43px;
 }
@@ -343,7 +341,7 @@ textarea::placeholder {
     }
 }
 
-.error-text {
+.error {
     color: red;
     margin: 7px 0 0 15px;
 }

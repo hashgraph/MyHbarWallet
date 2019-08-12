@@ -198,9 +198,9 @@ describe("TextInput.vue", (): void => {
             localVue,
             propsData: {
                 multiline: true,
-                errorText: errorText,
+                errorText,
                 valid: false,
-                showValidation: true,
+                showValidation: true
             }
         });
 
@@ -213,9 +213,9 @@ describe("TextInput.vue", (): void => {
             localVue,
             propsData: {
                 multiline: true,
-                errorText: errorText,
+                errorText,
                 valid: true,
-                showValidation: true,
+                showValidation: true
             }
         });
 
@@ -228,9 +228,9 @@ describe("TextInput.vue", (): void => {
             localVue,
             propsData: {
                 multiline: true,
-                errorText: errorText,
+                errorText,
                 valid: false,
-                showValidation: false,
+                showValidation: false
             }
         });
 
