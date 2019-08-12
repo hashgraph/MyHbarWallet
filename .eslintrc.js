@@ -30,7 +30,8 @@ module.exports = {
         ]
     },
     rules: {
-        indent: ["error", 4],
+        // Managed through prettier
+        indent: "off",
 
         // FIXME: Make these error on build
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
