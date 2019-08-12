@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { computed, createComponent, value, watch } from "vue-function-api";
+import { computed, createComponent, value } from "vue-function-api";
 import InterfaceForm from "@/components/InterfaceForm.vue";
 import TextInput from "@/components/TextInput.vue";
 import Button from "@/components/Button.vue";
@@ -45,15 +45,26 @@ export default createComponent({
         Button
     },
     setup() {
+        const contractIdRegex = /^\d+\.\d+\.\d+$/;
         const contractId = value("");
         const abi = value("");
-        const isJsonValid = value(false);
-        const isIdValid = value(false);
 
-        const arrowRight = computed(() => mdiArrowRight);
+        const isIdValid = computed(() => {
+            const matches = contractId.value.match(contractIdRegex);
+            return matches != null && matches.length == 1;
+        });
+        const isJsonValid = computed(() => {
+            try {
+                JSON.parse(abi.value);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        });
         const isFormValid = computed(
             () => isIdValid.value && isJsonValid.value
         );
+        const arrowRight = computed(() => mdiArrowRight);
 
         function handleContractIdInput(value: string) {
             contractId.value = value.trim();
@@ -63,34 +74,14 @@ export default createComponent({
             abi.value = value.trim();
         }
 
-        // Watch contract ID and validate it!
-        watch(
-            () => contractId.value,
-            value => {
-                isIdValid.value = value.match(/\d+\.\d+\.\d+/gm) != null;
-            }
-        );
-
-        // Watch json and validate it!
-        watch(
-            () => abi.value,
-            value => {
-                try {
-                    JSON.parse(value);
-                    isJsonValid.value = true;
-                } catch (error) {
-                    isJsonValid.value = false;
-                }
-            }
-        );
-
         return {
+            contractIdRegex,
             contractId,
             abi,
             isIdValid,
             isJsonValid,
-            arrowRight,
             isFormValid,
+            arrowRight,
             handleContractIdInput,
             handleAbiInput
         };
