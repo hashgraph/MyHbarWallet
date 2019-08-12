@@ -33,9 +33,8 @@ module.exports = {
         indent: ["error", 4],
 
         // FIXME: Make these error on build
-        "no-console": process.env.NODE_ENV === "production" ? "warning" : "off",
-        "no-debugger":
-            process.env.NODE_ENV === "production" ? "warning" : "off",
+        "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
+        "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
 
         // Broken in eslint@6.x
         // See https://github.com/benmosher/eslint-plugin-import/issues/1341

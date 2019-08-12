@@ -4,46 +4,42 @@
         :class="classObject"
         @click="handleClick"
     >
-        <MaterialDesignIcon class="icon" :icon="chevronUp" />
+        <MaterialDesignIcon class="icon" :icon="mdiChevronUp" />
     </button>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import { mdiChevronUp } from "@mdi/js";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import { computed, createComponent, value } from "vue-function-api";
 
-interface Data {
-    isActive: boolean;
-}
-
-export default Vue.extend<Data, {}, {}>({
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
-    data() {
-        return {
-            isActive: false
-        };
-    },
-    computed: {
-        chevronUp() {
-            return mdiChevronUp;
-        },
-        classObject() {
-            return {
-                "is-active": this.isActive
-            };
-        }
-    },
-    methods: {
-        handleClick() {
+    setup() {
+        const isActive = value(false);
+
+        const classObject = computed(() => {
+            return { "is-active": isActive.value };
+        });
+
+        function handleClick() {
             window.scrollTo({ top: 0, behavior: "smooth" });
-        },
-        handleWindowScroll() {
-            // FIXME: 150 should be in a common file somewhere
-            this.isActive = window.scrollY > 150;
         }
+
+        function handleWindowScroll() {
+            // FIXME: 150 should be in a common file somewhere
+            isActive.value = window.scrollY > 150;
+        }
+
+        return {
+            isActive,
+            mdiChevronUp,
+            classObject,
+            handleClick,
+            handleWindowScroll
+        };
     }
 });
 </script>
