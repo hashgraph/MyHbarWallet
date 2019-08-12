@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { computed, onCreated } from "vue-function-api";
+import { computed } from "vue-function-api";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import {
     mdiClose,

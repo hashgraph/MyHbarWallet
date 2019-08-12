@@ -18,7 +18,7 @@
 import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiChevronUp } from "@mdi/js";
-import { computed, value } from "vue-function-api";
+import { value } from "vue-function-api";
 
 export default Vue.extend({
     components: {
