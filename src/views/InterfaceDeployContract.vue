@@ -29,14 +29,6 @@
 
         <div class="deploy-contract-form-footer">
             <Button :disabled="!signable" label="Sign Transaction" />
-            <p>
-                <!-- help center doesn't exist right now...
-                This might be better served by an `<a>` tag  -->
-                Have any issues?
-                <router-link :to="{ name: 'help-center' }"
-                    >Help Center</router-link
-                >
-            </p>
         </div>
     </InterfaceForm>
 </template>
