@@ -15,43 +15,51 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from "vue";
+import { computed, createComponent } from "vue-function-api";
+import { PropType } from "vue-function-api/dist/ts-api";
 
 interface Props {
     checked: boolean | string | number;
     values: string[] | null;
 }
 
-export default Vue.extend<{}, {}, {}, Props>({
+export default createComponent({
     model: {
         prop: "checked",
         event: "change"
     },
     props: {
-        checked: { type: [Boolean, String, Number], required: true },
-        values: { type: Array, required: false, default: null } as PropOptions<
-            string[] | null
-        >
+        checked: ([Boolean, String, Number] as unknown) as PropType<
+            boolean | string | number
+        >,
+        values: (Array as unknown) as PropType<string[]>
     },
-    computed: {
-        isChecked() {
-            if (this.values == null) {
-                return this.checked;
+    setup(props: Props, context) {
+        const isChecked = computed(() => {
+            if (props.values == null) {
+                return props.checked;
             }
 
-            return this.checked === this.values[1];
-        }
-    },
-    methods: {
-        handleChange(event: Event) {
+            return props.checked === props.values[1];
+        });
+
+        function handleChange(event: Event) {
             const checked = (event.target as HTMLInputElement).checked;
 
-            if (this.values == null) {
-                this.$emit("change", checked);
+            if (props.values == null) {
+                context.emit("change", checked);
             } else {
-                this.$emit("change", checked ? this.values[1] : this.values[0]);
+                context.emit(
+                    "change",
+                    checked ? props.values[1] : props.values[0]
+                );
             }
         }
+
+        return {
+            isChecked,
+            handleChange
+        };
     }
 });
 </script>
@@ -119,7 +127,7 @@ export default Vue.extend<{}, {}, {}, Props>({
 
 .leading,
 .trailing {
-    color: #999;
+    color: var(--color-basalt-grey);
     font-size: 11px;
     inset-block-start: 6px;
     pointer-events: none;
