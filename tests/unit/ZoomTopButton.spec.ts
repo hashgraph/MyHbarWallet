@@ -35,14 +35,11 @@ describe("ZoomTopButton", (): void => {
     });
 
     it("triggers a click handler when clicked", (): void => {
-        Object.defineProperty(window, "scrollTo", { value: jest.fn() });
-
         const clickHandler = jest.fn();
+        Object.defineProperty(window, "scrollTo", { value: clickHandler });
+
         const wrapper = shallowMount(ZoomTopButton, {
-            localVue,
-            listeners: {
-                click: clickHandler
-            }
+            localVue
         });
 
         wrapper.find("button").trigger("click");
