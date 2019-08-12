@@ -1,10 +1,11 @@
-import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import InterfaceNavigationSection from "../../src/components/InterfaceNavigationSection.vue";
 import InterfaceNavigation from "../../src/components/InterfaceNavigation.vue";
 
-describe("InterfaceNavigation", () => {
+
+describe("InterfaceNavigation", (): void => {
     const wrapper = shallowMount(InterfaceNavigation);
-    it("renders with children components", () => {
+    it("renders with children components", (): void => {
         expect(wrapper.find(InterfaceNavigationSection).exists()).toBeTruthy();
     });
 });
