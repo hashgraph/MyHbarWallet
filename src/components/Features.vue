@@ -17,23 +17,20 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Feature from "@/components/Feature.vue";
-import imageWallet from "@/assets/icon-wallet.svg";
-import imageHardware from "@/assets/icon-hardware.svg";
+import wallet from "../assets/icon-wallet.svg";
+import hardware from "../assets/icon-hardware.svg";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
-    name: "Features",
+export default createComponent({
     components: {
         Feature
     },
-    computed: {
-        wallet() {
-            return imageWallet;
-        },
-        hardware() {
-            return imageHardware;
-        }
+    setup() {
+        return {
+            wallet,
+            hardware
+        };
     }
 });
 </script>
