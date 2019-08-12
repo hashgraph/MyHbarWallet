@@ -27,7 +27,10 @@ describe("HeaderHamburgerButton.vue", () => {
     localVue.use(VueFunctionApi);
 
     const wrapper = shallowMount(HeaderHamburgerButton, {
-        localVue
+        localVue,
+        propsData: {
+            isOpen: false
+        }
     });
 
     it("renders", () => {

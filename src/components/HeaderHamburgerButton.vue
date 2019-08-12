@@ -1,5 +1,5 @@
 <template>
-    <div class="button-wrapper" @click="menuToggle">
+    <div class="button-wrapper" @click="handleToggle">
         <div :class="style('1')">
             <MaterialDesignIcon class="icon" :icon="icon" />
         </div>
@@ -16,41 +16,37 @@
 import Vue from "vue";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiMinus } from "@mdi/js";
-import { createComponent, computed } from "vue-function-api";
+import { createComponent, computed, PropType, value } from "vue-function-api";
+
+interface Props {
+    isOpen: boolean;
+}
 
 export default createComponent({
     components: {
         MaterialDesignIcon
     },
     props: {
-        isOpen: { type: String, required: true }
+        isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    setup() {
+    setup(props: Props, context) {
         const icon = mdiMinus;
-        return { icon };
+
+        function style(ind: string): string {
+            return props.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
+        }
+
+        function handleToggle() {
+            context.emit("toggle", !props.isOpen);
+        }
+
+        return {
+            icon,
+            style,
+            handleToggle
+        };
     }
 });
-// export default Vue.extend({
-//     components: {
-//         MaterialDesignIcon
-//     },
-//     props: {
-//         isOpen: Boolean
-//     },
-//     computed: {
-//         icon() {
-//             return mdiMinus;
-//         }
-//     },
-//     methods: {
-//         style(ind: string) {
-//             return this.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
-//         },
-//         menuToggle() {
-//             this.$emit("toggle", !this.isOpen);
-//         }
-//     }
-// });
 </script>
 
 <style lang="postcss" scoped>
