@@ -1,8 +1,8 @@
 import { shallowMount } from "@vue/test-utils";
 import CustomerSupportLink from "../../src/components/CustomerSupportLink.vue";
 
-describe("CustomerSupportLink.vue", () => {
-    it("renders", () => {
+describe("CustomerSupportLink.vue", (): void => {
+    it("renders", (): void => {
         const wrapper = shallowMount(CustomerSupportLink, {
             propsData: {}
         });
