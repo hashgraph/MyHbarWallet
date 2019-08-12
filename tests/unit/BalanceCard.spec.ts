@@ -1,7 +1,7 @@
 import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
 import BalanceCard from "../../src/components/BalanceCard.vue";
 
-describe("BalanceCard.vue", ():void => {
+describe("BalanceCard.vue", (): void => {
     const wrapper = shallowMount(BalanceCard, {
         propsData: {
             balance: null
@@ -19,5 +19,5 @@ describe("BalanceCard.vue", ():void => {
             balance: 1
         });
         expect(wrapper.find(".usd-balance").text()).toBe("/ $0.12");
-    })
+    });
 });

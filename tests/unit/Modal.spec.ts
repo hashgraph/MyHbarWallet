@@ -11,13 +11,12 @@ describe("Modal.vue", (): void => {
             isOpen: true
         }
     });
-    it("renders", (): void => { 
-        expect(wrapper.find("div").classes()).toContain("is-open")
-    });
-    
-    it("closes", (): void => {
-        wrapper.setProps({isOpen: false})
-        expect(wrapper.find("div").classes()).not.toContain("is-open");
+    it("renders", (): void => {
+        expect(wrapper.find("div").classes()).toContain("is-open");
     });
 
+    it("closes", (): void => {
+        wrapper.setProps({ isOpen: false });
+        expect(wrapper.find("div").classes()).not.toContain("is-open");
+    });
 });

@@ -9,18 +9,17 @@ describe("Select.vue", (): void => {
         localVue,
         propsData: {
             selected: "current selected",
-            options: ["1","2","3"]
+            options: ["1", "2", "3"]
         }
     });
 
     it("renders", (): void => {
-        expect(wrapper.findAll(".select-option")).toHaveLength(3)
-    })
+        expect(wrapper.findAll(".select-option")).toHaveLength(3);
+    });
 
     it("opens on click", (): void => {
         const select = wrapper.find(".select-value-container");
-        select.trigger("click")
-        expect(wrapper.find(".select").classes()).toContain("is-open")
-        
+        select.trigger("click");
+        expect(wrapper.find(".select").classes()).toContain("is-open");
     });
 });
