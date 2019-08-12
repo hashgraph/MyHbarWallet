@@ -101,7 +101,7 @@ export default Vue.extend({
         return {
             numWords: 12,
             passwordValue: "",
-            words: [] as Array<string>
+            words: [] as string[]
         };
     },
     computed: {

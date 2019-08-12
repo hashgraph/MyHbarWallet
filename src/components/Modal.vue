@@ -7,7 +7,7 @@
         @click="handleClose"
     >
         <div class="modal" :class="{ large: large }" @click.stop="">
-            <header>
+            <header v-if="!hideDecoration">
                 <span class="title">{{ title }}</span>
                 <MaterialDesignIcon
                     class="close"
@@ -49,6 +49,7 @@ export default Vue.extend({
         notClosable: { type: Boolean },
         isOpen: { type: Boolean },
         title: { type: String, required: true },
+        hideDecoration: { type: Boolean },
         large: { type: Boolean }
     },
     computed: {

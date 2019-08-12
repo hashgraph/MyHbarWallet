@@ -1,9 +1,15 @@
-import { shallowMount } from "@vue/test-utils";
+import { createLocalVue, shallowMount } from "@vue/test-utils";
 import HeaderHamburgerMenu from "../../src/components/HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "../../src/components/HeaderHamburgerButton.vue";
+import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("HeaderHamburgerMenu.vue", () => {
-    const wrapper = shallowMount(HeaderHamburgerMenu);
+    const localVue = createLocalVue();
+    localVue.use(VueFunctionApi);
+
+    const wrapper = shallowMount(HeaderHamburgerMenu, {
+        localVue
+    });
 
     it("renders", () => {
         expect(wrapper.isVisible()).toBeTruthy();
@@ -17,7 +23,12 @@ describe("HeaderHamburgerMenu.vue", () => {
 });
 
 describe("HeaderHamburgerButton.vue", () => {
-    const wrapper = shallowMount(HeaderHamburgerButton);
+    const localVue = createLocalVue();
+    localVue.use(VueFunctionApi);
+
+    const wrapper = shallowMount(HeaderHamburgerButton, {
+        localVue
+    });
 
     it("renders", () => {
         expect(wrapper.isVisible()).toBeTruthy();

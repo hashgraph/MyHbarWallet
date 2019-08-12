@@ -1,97 +1,229 @@
 <template>
-    <div class="input-container" :class="classObject">
+    <div class="text-input" :class="classObject">
         <label>
-            <span v-if="label" class="label">{{ label }}</span>
+            <div v-if="label" class="label">{{ label }}</div>
+            <textarea
+                v-if="multiline"
+                class="text-area"
+                :placeholder="placeholder"
+                :tabindex="tabindex"
+                :value="value"
+                :rows="rows"
+                :class="{ resize: resizable }"
+                @input="handleInput"
+            />
             <input
+                v-else
                 ref="input"
+                :value="value"
+                :class="classObject"
                 :placeholder="placeholder"
                 :type="keyboardType"
                 :tabindex="tabindex"
-                :value="value"
                 :step="step"
                 @input="handleInput"
             />
         </label>
-        <MaterialDesignIcon
-            v-if="obscure"
-            class="eye"
-            :class="{ 'is-open': isEyeOpen }"
-            :icon="eye"
-            @click="handleClickEye"
-        />
+
+        <div class="decorations">
+            <MaterialDesignIcon
+                v-if="obscure"
+                class="eye"
+                :class="{ 'is-open': isEyeOpen }"
+                :icon="eye"
+                @click="handleClickEye"
+            />
+
+            <MaterialDesignIcon
+                v-else-if="showValidation"
+                class="checkmark"
+                :class="{ 'is-valid': valid }"
+                :icon="checkmark"
+            />
+        </div>
+
+        <div v-if="label != null" class="actions">
+            <div v-if="action" class="action" @click="$emit('action')">
+                {{ action }}
+            </div>
+            <div v-if="canClear" class="action" @click="handleClickClear">
+                Clear
+            </div>
+            <div v-if="canCopy" class="action" @click="handleClickCopy">
+                Copy
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
-import { mdiEye, mdiEyeOutline } from "@mdi/js";
+import { mdiEye, mdiEyeOutline, mdiCheckCircle } from "@mdi/js";
+import {
+    createComponent,
+    value,
+    computed,
+    watch,
+    onCreated,
+    PropType,
+    onBeforeDestroy,
+    Wrapper
+} from "vue-function-api";
+import { writeToClipboard } from "@/clipboard";
 
-export default Vue.extend({
+interface Props {
+    placeholder: string;
+    value: string;
+    label: string;
+    tabindex: string;
+    step: string;
+    type: string;
+    action: string;
+    compact: boolean;
+    white: boolean;
+    obscure: boolean;
+    canClear: boolean;
+    canCopy: boolean;
+    showValidation: boolean;
+    valid: boolean;
+    multiline: boolean;
+    resizable: boolean;
+}
+
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
     props: {
-        placeholder: { type: String, default: "" },
-        value: { type: String, default: "" },
-        label: { type: String, default: null },
-        tabindex: { type: String, default: null },
-        step: { type: String, default: null },
-        type: { type: String, default: null },
-
-        compact: Boolean,
-
-        white: Boolean,
+        placeholder: (String as unknown) as PropType<string>,
+        value: (String as unknown) as PropType<string>,
+        label: (String as unknown) as PropType<string>,
+        tabindex: (String as unknown) as PropType<string>,
+        step: (String as unknown) as PropType<string>,
+        type: (String as unknown) as PropType<string>,
+        action: (String as unknown) as PropType<string>,
+        compact: (Boolean as unknown) as PropType<boolean>,
+        multiline: (Boolean as unknown) as PropType<boolean>,
+        white: (Boolean as unknown) as PropType<boolean>,
+        resizable: (Boolean as unknown) as PropType<boolean>,
+        canClear: (Boolean as unknown) as PropType<boolean>,
+        canCopy: (Boolean as unknown) as PropType<boolean>,
 
         // Whether to hide the text being edited (e.g., for passwords).
-        obscure: Boolean
+        obscure: (Boolean as unknown) as PropType<boolean>,
+
+        // Whether to validate the the input as an ID and add the check-mark to the bottom right
+        showValidation: (Boolean as unknown) as PropType<boolean>,
+        valid: (Boolean as unknown) as PropType<boolean>
     },
-    data() {
-        return {
-            // If the eye is open to show the obscured text anyway
-            isEyeOpen: false
-        };
-    },
-    computed: {
-        keyboardType(): string {
-            if (this.type) return this.type;
-            if (this.obscure && !this.isEyeOpen) return "password";
+    setup(props: Props, context) {
+        // If the eye is open to show the obscured text anyway
+        const isEyeOpen = value(false);
+
+        const keyboardType = computed(() => {
+            // if (props.type.length > 0) return props.type;
+            if (props.obscure && !props.showValidation && !isEyeOpen.value)
+                return "password";
             return "text";
-        },
-        eye(): string {
-            return this.isEyeOpen ? mdiEye : mdiEyeOutline;
-        },
-        classObject(): {} {
+        });
+
+        const rows = computed(() => (props.compact ? 2 : 8));
+
+        const eye = computed(() => {
+            return isEyeOpen.value ? mdiEye : mdiEyeOutline;
+        });
+
+        const checkmark = computed(() => {
+            return mdiCheckCircle;
+        });
+
+        const classObject = computed(() => {
             return {
-                "is-compact": this.compact,
-                "is-white": this.white
+                "is-compact": props.compact,
+                "is-white": props.white,
+                "is-multiline": props.multiline,
+                "has-label": props.label != null
             };
+        });
+
+        function focus() {
+            (context.refs.input as HTMLInputElement).focus();
         }
-    },
-    methods: {
-        focus() {
-            (this.$refs.input as HTMLInputElement).focus();
-        },
-        handleInput(event: Event) {
-            this.$emit("input", (event.target as HTMLInputElement).value);
-        },
-        handleClickEye() {
-            this.isEyeOpen = !this.isEyeOpen;
+
+        function handleClickEye() {
+            isEyeOpen.value = !isEyeOpen.value;
 
             // Re-focus the input (loses focus from the tap on the eye)
-            (this.$refs.input as HTMLInputElement).focus();
+            (context.refs.input as HTMLInputElement).focus();
         }
+
+        function handleInput(event: Event) {
+            context.emit("input", (event.target as HTMLTextAreaElement).value);
+        }
+
+        function handleClickClear() {
+            context.emit("input", "");
+        }
+
+        async function handleClickCopy() {
+            await writeToClipboard(props.value);
+        }
+
+        return {
+            isEyeOpen,
+            keyboardType,
+            eye,
+            checkmark,
+            classObject,
+            focus,
+            rows,
+            handleClickEye,
+            handleInput,
+            handleClickCopy,
+            handleClickClear
+        };
     }
 });
 </script>
 
 <style scoped lang="postcss">
-.input-container {
+.text-input {
     border-radius: 4px;
     position: relative;
 }
 
-input {
+.actions {
+    align-items: center;
+    display: flex;
+    height: 24px;
+    inset-block-start: 0;
+    inset-inline-end: 8px;
+    position: absolute;
+    user-select: none;
+}
+
+.action {
+    color: var(--color-basalt-grey);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 8px;
+
+    &:last-child {
+        margin-inline-end: -8px;
+    }
+
+    &:active {
+        color: var(--color-melbourne-cup);
+    }
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+}
+
+input,
+textarea {
     background-color: var(--color-peral);
     border: 2px solid var(--color-peral);
     border-radius: 4px;
@@ -100,19 +232,37 @@ input {
     outline: none;
     padding: 20px;
     width: 100%;
+}
 
-    &:focus {
-        border-color: var(--color-melbourne-cup);
-    }
-
+input {
     &:not(:only-child) {
         padding-inline-end: 50px;
     }
+
+    &.is-compact {
+        border-width: 1px;
+        padding: 13px 15px;
+    }
 }
 
-.is-compact input {
-    border-width: 1px;
-    padding: 13px 15px;
+textarea {
+    max-width: 100%;
+    min-width: 100%;
+    resize: none;
+
+    &.resize {
+        resize: vertical;
+    }
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--color-melbourne-cup);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-basalt-grey);
 }
 
 .is-white input {
@@ -127,21 +277,47 @@ input {
     display: block;
     font-size: 16px;
     font-weight: 600;
+    height: 24px;
     margin-block-end: 13px;
     padding: 0 8px;
 }
 
+.decorations {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    inset-block-start: 0;
+    inset-inline-end: 15px;
+    position: absolute;
+}
+
+.has-label .decorations {
+    height: calc(100% - 37px);
+    inset-block-start: 37px;
+}
+
+.is-multiline .decorations {
+    align-items: flex-end;
+    padding-block-end: 15px;
+}
+
 .eye {
     cursor: pointer;
-    inset-block: 0;
-    inset-inline-end: 20px;
     margin: auto;
     opacity: 0.3;
-    position: absolute;
 
     &.is-open {
         color: var(--color-melbourne-cup);
         opacity: 1;
+    }
+}
+
+.checkmark {
+    color: var(--color-jupiter);
+    height: 19px;
+
+    &.is-valid {
+        color: var(--color-melbourne-cup);
     }
 }
 </style>
