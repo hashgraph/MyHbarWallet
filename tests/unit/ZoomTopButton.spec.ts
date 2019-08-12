@@ -1,11 +1,15 @@
-import { shallowMount } from "@vue/test-utils";
+import { createLocalVue, shallowMount } from "@vue/test-utils";
 import ZoomTopButton from "../../src/components/ZoomTopButton.vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import "../../src/directives";
+import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("ZoomTopButton", (): void => {
+    const localVue = createLocalVue();
+    localVue.use(VueFunctionApi);
+
     it("isn't active at first", (): void => {
-        const wrapper = shallowMount(ZoomTopButton);
+        const wrapper = shallowMount(ZoomTopButton, { localVue });
         const zButton = wrapper.find("button");
 
         expect(zButton.classes()).not.toEqual(
@@ -14,7 +18,7 @@ describe("ZoomTopButton", (): void => {
     });
 
     it("appears after 150px scrolling in the Y direction", (): void => {
-        const wrapper = shallowMount(ZoomTopButton);
+        const wrapper = shallowMount(ZoomTopButton, { localVue });
         const zButton = wrapper.find("button");
 
         wrapper.setData({ isActive: true });
@@ -25,18 +29,24 @@ describe("ZoomTopButton", (): void => {
     });
 
     it("renders an up arrow", (): void => {
-        const wrapper = shallowMount(ZoomTopButton);
+        const wrapper = shallowMount(ZoomTopButton, { localVue });
 
         expect(wrapper.contains(MaterialDesignIcon)).toBe(true);
     });
 
     it("triggers a click handler when clicked", (): void => {
-        const wrapper = shallowMount(ZoomTopButton);
-        const handleClickMock = jest.fn();
+        Object.defineProperty(window, "scrollTo", { value: jest.fn() });
 
-        wrapper.setMethods({ handleClick: handleClickMock });
+        const clickHandler = jest.fn();
+        const wrapper = shallowMount(ZoomTopButton, {
+            localVue,
+            listeners: {
+                click: clickHandler
+            }
+        });
+
         wrapper.find("button").trigger("click");
 
-        expect(handleClickMock).toBeCalledTimes(1);
+        expect(clickHandler).toBeCalledTimes(1);
     });
 });
