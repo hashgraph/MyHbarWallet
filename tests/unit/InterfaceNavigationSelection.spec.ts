@@ -1,4 +1,4 @@
-import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
+import { mount, createLocalVue } from "@vue/test-utils";
 import InterfaceNavigationSection from "../../src/components/InterfaceNavigationSection.vue";
 import contractImage from "../../src/assets/contract.svg";
 import contractImageActive from "../../src/assets/contract-active.svg";
