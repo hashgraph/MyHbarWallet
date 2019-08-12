@@ -1,4 +1,4 @@
-import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
+import { mount, createLocalVue } from "@vue/test-utils";
 import AccountCard from "../../src/components/AccountCard.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
