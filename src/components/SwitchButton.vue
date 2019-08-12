@@ -46,7 +46,7 @@ export default createComponent({
         function handleChange(event: Event) {
             const checked = (event.target as HTMLInputElement).checked;
 
-            if (props.valuzes == null) {
+            if (props.values == null) {
                 context.emit("change", checked);
             } else {
                 context.emit(
