@@ -2,9 +2,13 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import InterfaceNavigationSection from "../../src/components/InterfaceNavigationSection.vue";
 import contractImage from "../../src/assets/contract.svg";
 import contractImageActive from "../../src/assets/contract-active.svg";
-import VueRouter from "vue-router";
+import router from "../../src/router";
+import Router from "vue-router";
 
 describe("InterfaceNavigationSection", (): void => {
+    // Mock-out `window.scrollTo`
+    Object.defineProperty(window, "scrollTo", { value: jest.fn() });
+
     const routes = [
         {
             name: "deploy-contract",
@@ -15,9 +19,10 @@ describe("InterfaceNavigationSection", (): void => {
             label: "Interact with Contract"
         }
     ];
+
     const localVue = createLocalVue();
-    localVue.use(VueRouter);
-    const router = new VueRouter();
+    localVue.use(Router);
+
     const wrapper = mount(InterfaceNavigationSection, {
         localVue,
         router,
@@ -33,7 +38,7 @@ describe("InterfaceNavigationSection", (): void => {
         expect(wrapper.find(".nav-title").text()).toMatch("Contract");
     });
 
-    it("Accepts click inputs and shows links", (): void => {
+    it("accepts click inputs and shows links", (): void => {
         const img = wrapper.find("img").attributes("src");
         expect(img).toBe(wrapper.vm.$props.image);
         wrapper.find(".nav-section-header").trigger("click");
