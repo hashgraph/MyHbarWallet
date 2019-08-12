@@ -30,13 +30,14 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent, value } from "vue-function-api";
+
 import TextInput, {
     Component as TextInputComponent
 } from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         TextInput,
         SwitchButton
@@ -44,23 +45,23 @@ export default Vue.extend({
     props: {
         value: { type: String, default: "" }
     },
-    data() {
-        return {
-            showPassword: false
-        };
-    },
-    methods: {
-        handleInput(password: string) {
-            this.$emit("input", password);
-        },
-        handleChangeShowPassword(showPassword: boolean) {
+    setup(props: {}, context) {
+        const showPassword = value(false);
+
+        function handleInput(password: string) {
+            context.emit("input", password);
+        }
+
+        function handleChangeShowPassword(showPassword: boolean) {
             if (showPassword) {
                 // If we are now showing the password,
                 // focus the password input
                 // FIXME: How to remove the _ unknown _ hack ?
-                ((this.$refs.input as unknown) as TextInputComponent).focus();
+                ((context.refs.input as unknown) as TextInputComponent).focus();
             }
         }
+
+        return { showPassword, handleInput, handleChangeShowPassword };
     }
 });
 </script>
