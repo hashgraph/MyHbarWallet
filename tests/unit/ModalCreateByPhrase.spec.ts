@@ -7,16 +7,16 @@ describe("ModalCreateByPhrase.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = shallowMount(ModalCreateByPhrase, {
             propsData: {
-                isOpen: false,
+                isOpen: false
             },
             listeners: {
-                change: onChange,
+                change: onChange
             }
         });
 
         expect(wrapper.find(Modal).props().isOpen).toBe(false);
 
-        wrapper.setProps({isOpen: true});
+        wrapper.setProps({ isOpen: true });
         expect(wrapper.find(Modal).props().isOpen).toBe(true);
 
         expect(onChange).toHaveBeenCalledTimes(0);

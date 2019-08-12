@@ -25,7 +25,7 @@
                 <HomeTileButtons />
             </div>
         </div>
-        <img class="circle" :src="circle" alt="circle" />
+        <img class="circle" :src="circleImage" alt="circle" />
         <div id="about" class="about">
             <div class="page-container">
                 <div class="banner">
@@ -52,43 +52,44 @@
         <FAQs />
         <Community />
         <ModalForgotToLogOut v-model="modalForgotToLogOutIsOpen" />
+        <Alerts timeout="7000" />
     </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Features from "@/components/Features.vue";
 import FAQs from "@/components/FAQs.vue";
 import Community from "@/components/Community.vue";
 import HomeTileButtons from "@/components/HomeTileButtons.vue";
 import circleImage from "@/assets/circle.png";
 import ModalForgotToLogOut from "@/components/ModalForgotToLogOut.vue";
+import Alerts from "@/components/Alerts.vue";
+import { computed, createComponent, onCreated, value } from "vue-function-api";
 
-export default Vue.extend({
-    name: "Home",
+export default createComponent({
     components: {
         FAQs,
         HomeTileButtons,
         Features,
         Community,
+        Alerts,
         ModalForgotToLogOut
     },
-    data() {
+    setup() {
+        // TODO: Use actual logged in state
+        const modalForgotToLogOutIsOpen = value(false);
+        const areWeLoggedIn = computed(() => {
+            return Math.random() > 0.5;
+        });
+
+        onCreated(() => {
+            modalForgotToLogOutIsOpen.value = areWeLoggedIn.value;
+        });
+
         return {
-            modalForgotToLogOutIsOpen: false
+            circleImage,
+            modalForgotToLogOutIsOpen
         };
-    },
-    computed: {
-        circle() {
-            return circleImage;
-        }
-    },
-    created() {
-        // FIXME: Only spawn this if you are logged in when navigating to home
-        const areWeLoggedIn = Math.random() > 0.5;
-        setTimeout(() => {
-            this.modalForgotToLogOutIsOpen = areWeLoggedIn;
-        }, 0);
     }
 });
 </script>
@@ -101,7 +102,7 @@ export default Vue.extend({
 }
 
 .top {
-    background-color: white;
+    background-color: var(--color-white);
 }
 
 .page-container {
@@ -177,7 +178,7 @@ export default Vue.extend({
 
 .about {
     background-color: var(--color-yankees-blue);
-    color: white;
+    color: var(--color-white);
     font-size: 14px;
     padding: 20px 0;
 }

@@ -46,7 +46,7 @@ import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiRefresh, mdiLoading } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
 
-let formatter = new Intl.NumberFormat("en-US", {
+const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD"
 });
@@ -72,8 +72,8 @@ export default Vue.extend({
             return mdiLoading;
         },
         balanceUSD() {
-            let usd = this.balance * 0.12;
-            let usdFormatted = formatter.format(usd);
+            const usd = this.balance * 0.12;
+            const usdFormatted = formatter.format(usd);
             return usdFormatted;
         }
     },

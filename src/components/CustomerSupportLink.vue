@@ -6,28 +6,27 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import serviceBell from "@/assets/help-center.svg";
+import { createComponent, value } from "vue-function-api";
+
 import ModalCustomerService from "@/components/ModalCustomerService.vue";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         ModalCustomerService
     },
-    data() {
+    setup() {
+        const modalCustomerServiceIsOpen = value(false);
+
+        function handleButtonClick() {
+            modalCustomerServiceIsOpen.value = !modalCustomerServiceIsOpen.value;
+        }
+
         return {
-            modalCustomerServiceIsOpen: false
+            modalCustomerServiceIsOpen,
+            serviceBell,
+            handleButtonClick
         };
-    },
-    computed: {
-        serviceBell() {
-            return serviceBell;
-        }
-    },
-    methods: {
-        handleButtonClick() {
-            this.modalCustomerServiceIsOpen = !this.modalCustomerServiceIsOpen;
-        }
     }
 });
 </script>

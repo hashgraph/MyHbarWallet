@@ -14,7 +14,7 @@ describe("BalanceCard.vue", ():void => {
     it("computes and displays data properly", (): void => {
         const balanceNull = wrapper.find(".subtitle-null");
         expect(wrapper.find(".subtitle").exists()).toBeFalsy();
-        expect(balanceNull.exists()).toBeTruthy()
+        expect(balanceNull.exists()).toBeTruthy();
         wrapper.setProps({
             balance: 1
         });

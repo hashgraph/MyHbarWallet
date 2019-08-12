@@ -7,5 +7,5 @@ describe("InterfaceNavigation", (): void => {
     const wrapper = shallowMount(InterfaceNavigation);
     it("renders with children components", (): void => {
         expect(wrapper.find(InterfaceNavigationSection).exists()).toBeTruthy();
-    })
+    });
 });

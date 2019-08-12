@@ -73,6 +73,11 @@ a {
     text-decoration: none;
 }
 
+a:hover,
+a:focus {
+    text-decoration: underline;
+}
+
 .access-my-account {
     display: flex;
     flex-direction: column;
