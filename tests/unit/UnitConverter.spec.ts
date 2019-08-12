@@ -1,9 +1,13 @@
-import { mount, shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import UnitConverter from "../../src/components/UnitConverter.vue";
 import ConvertUnits from "../../src/views/ConvertUnits.vue";
+import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("UnitConverter.vue", (): void => {
-    const wrapper = shallowMount(UnitConverter);
+    const localVue = createLocalVue();
+    localVue.use(VueFunctionApi);
+
+    const wrapper = shallowMount(UnitConverter, { localVue });
 
     wrapper.setData({ valueLeft: "1000000000" });
 
@@ -15,6 +19,7 @@ describe("UnitConverter.vue", (): void => {
         expect(wrapper.vm.$data.valueRight).toBe("10");
     });
 });
+
 describe("ConvertUnits.vue", (): void => {
     const wrapper = shallowMount(ConvertUnits);
 
