@@ -52,10 +52,13 @@ export default Vue.extend({
 
         contractRoutes() {
             return [
-                { name: "deploy-contract", label: "Deploy Contract" },
                 {
                     name: "interact-with-contract",
                     label: "Interact with Contract"
+                },
+                {
+                    name: "deploy-contract",
+                    label: "Deploy Contract"
                 }
             ];
         },
