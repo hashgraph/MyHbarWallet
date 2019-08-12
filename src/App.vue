@@ -14,9 +14,9 @@ import Vue from "vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import ZoomTopButton from "@/components/ZoomTopButton.vue";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
-    name: "App",
+export default createComponent({
     components: {
         Header,
         Footer,
