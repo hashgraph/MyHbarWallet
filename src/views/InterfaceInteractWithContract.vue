@@ -2,23 +2,21 @@
     <div class="interact-with-contract">
         <InterfaceForm title="Interact With Contract">
             <TextInput
+                v-model.trim="contractId"
                 label="Contract ID"
                 placeholder="Enter Contract ID"
                 show-validation
                 :valid="isIdValid"
-                :value="contractId"
-                @input="handleContractIdInput"
             />
             <div class="space" />
             <TextInput
+                v-model.trim="abi"
                 label="ABI/JSON Interface"
                 can-copy
                 can-clear
                 multiline
                 show-validation
                 :valid="isJsonValid"
-                :value="abi"
-                @input="handleAbiInput"
             />
             <div class="form-footer">
                 <Button
@@ -45,7 +43,9 @@ export default createComponent({
         Button
     },
     setup() {
+        const arrowRight = mdiArrowRight;
         const contractIdRegex = /^\d+\.\d+\.\d+$/;
+
         const contractId = value("");
         const abi = value("");
 
@@ -64,26 +64,15 @@ export default createComponent({
         const isFormValid = computed(
             () => isIdValid.value && isJsonValid.value
         );
-        const arrowRight = computed(() => mdiArrowRight);
-
-        function handleContractIdInput(value: string) {
-            contractId.value = value.trim();
-        }
-
-        function handleAbiInput(value: string) {
-            abi.value = value.trim();
-        }
 
         return {
+            arrowRight,
             contractIdRegex,
             contractId,
             abi,
             isIdValid,
             isJsonValid,
-            isFormValid,
-            arrowRight,
-            handleContractIdInput,
-            handleAbiInput
+            isFormValid
         };
     }
 });
