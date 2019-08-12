@@ -12,12 +12,11 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { computed } from "vue-function-api";
 import store from "@/store";
 import Alert from "@/components/Alert.vue";
+import { createComponent, computed } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         Alert
     },

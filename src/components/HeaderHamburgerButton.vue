@@ -13,10 +13,9 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiMinus } from "@mdi/js";
-import { createComponent, computed, PropType, value } from "vue-function-api";
+import { createComponent, PropType } from "vue-function-api";
 
 interface Props {
     isOpen: boolean;
