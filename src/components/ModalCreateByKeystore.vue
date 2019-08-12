@@ -51,8 +51,7 @@ import {
     value,
     Wrapper,
     PropType,
-    watch,
-    onUpdated
+    watch
 } from "vue-function-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
