@@ -17,6 +17,7 @@
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "@mdi/js": "^3.9.97",
         "bignumber.js": "^9.0.0",
+        "ua-parser-js": "^0.7.20",
         "vue": "^2.6.10",
         "vue-function-api": "^2.1.1",
         "vue-router": "^3.1.2",
@@ -27,6 +28,7 @@
         "@types/core-js": "2.x.x",
         "@types/jest": "^24.0.17",
         "@types/prettier": "1.18.1",
+        "@types/ua-parser-js": "^0.7.33",
         "@vue/cli-plugin-babel": "^3.10.0",
         "@vue/cli-plugin-eslint": "^3.10.0",
         "@vue/cli-plugin-typescript": "^3.10.0",
@@ -83,23 +85,5 @@
             "stylelint --fix 'src/**/*.css'",
             "git add"
         ]
-    },
-    "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts",
-      "vue"
-    ],
-    "transform": {
-      "^.+\\.ts$": "ts-jest",
-      ".*\\.(vue)$": "vue-jest"
-    },
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
-    },
-    "snapshotSerializers": [
-      "jest-serializer-vue"
-    ]
-  }
+    }
 }
