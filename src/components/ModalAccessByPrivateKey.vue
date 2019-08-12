@@ -14,7 +14,7 @@
         </template>
         <div class="modal-access-by-private-key">
             <TextInput
-                placeholder="Enter Private Key"
+                :placeholder="placeholder"
                 :value="state.privateKey"
                 @input="handlePrivateKeyInput"
             />
@@ -31,12 +31,14 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from "vue";
 import Warning from "../components/Warning.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
+import { createComponent, PropType, watch } from "vue-function-api";
+
+const placeholder = "Enter Private Key";
 
 export interface State {
     modalIsOpen: boolean;
@@ -44,7 +46,7 @@ export interface State {
     isBusy: boolean;
 }
 
-export default Vue.extend({
+export default createComponent({
     components: {
         Button,
         Modal,
@@ -57,15 +59,33 @@ export default Vue.extend({
         event: "change"
     },
     props: {
-        state: { type: Object, required: true } as PropOptions<State>
+        state: (Object as unknown) as PropType<State>
     },
-    methods: {
-        handleModalChangeIsOpen(isOpen: boolean) {
-            this.$emit("change", { ...this.state, modalIsOpen: isOpen });
-        },
-        handlePrivateKeyInput(privateKey: string) {
-            this.$emit("change", { ...this.state, privateKey });
+    setup(props, context) {
+        function handleModalChangeIsOpen(isOpen: boolean) {
+            context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
+
+        function handlePrivateKeyInput(privateKey: string) {
+            context.emit("change", { ...props.state, privateKey });
+        }
+
+        watch(
+            () => props.state.modalIsOpen,
+            (newVal: boolean, oldVal: boolean) => {
+                if (newVal) {
+                    (document.querySelector(
+                        "input[placeholder=" + placeholder + "]"
+                    ) as HTMLInputElement).focus();
+                }
+            }
+        );
+
+        return {
+            handleModalChangeIsOpen,
+            handlePrivateKeyInput,
+            placeholder
+        };
     }
 });
 </script>
