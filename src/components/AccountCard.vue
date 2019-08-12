@@ -25,13 +25,13 @@
                     :pinnable="false"
                     message="Account Qrcode"
                 >
-                    <MaterialDesignIcon class="qr-icon" :icon="qrcode" />
+                    <MaterialDesignIcon class="qr-icon" :icon="mdiQrcode" />
                 </Tooltip>
                 <!-- TODO: Tie Copy/Error alert to copy -->
                 <Tooltip class="action" :pinnable="false" message="Copy">
                     <MaterialDesignIcon
                         class="copy-icon"
-                        :icon="copy"
+                        :icon="mdiContentCopy"
                         @click="copyKey"
                     />
                 </Tooltip>
@@ -41,49 +41,43 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiQrcode, mdiContentCopy } from "@mdi/js";
-import Tooltip from "./Tooltip.vue";
-import { writeToClipboard } from "../clipboard";
+import Tooltip from "@/components/Tooltip.vue";
+import { writeToClipboard } from "@/clipboard";
+import { computed, createComponent, PropType } from "vue-function-api";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         MaterialDesignIcon,
         Tooltip
     },
     props: {
-        shard: { type: Number, required: true },
-        realm: { type: Number, required: true },
-        account: { type: Number, required: true },
-        publicKey: { type: String, default: null }
+        shard: (Number as unknown) as PropType<number>,
+        realm: (Number as unknown) as PropType<number>,
+        account: (Number as unknown) as PropType<number>,
+        publicKey: (String as unknown) as PropType<string>
     },
-    computed: {
-        qrcode() {
-            return mdiQrcode;
-        },
-        copy() {
-            return mdiContentCopy;
-        },
-        rawPublicKey(): string {
-            let publicKey = this.publicKey;
-
-            if (publicKey.startsWith(ED25519_PREFIX)) {
-                // Remove ed25519 header from key if present
-                publicKey = publicKey.slice(ED25519_PREFIX.length);
+    setup(props) {
+        const rawPublicKey = computed(() => {
+            let publickey = props.publicKey;
+            if (publickey.startsWith(ED25519_PREFIX, 0)) {
+                publickey = publickey.slice(ED25519_PREFIX.length);
             }
-
-            return publicKey;
-        }
-    },
-    methods: {
-        async copyKey() {
-            await writeToClipboard(this.publicKey);
-
+            return publickey;
+        });
+        const copyKey = async () => {
+            await writeToClipboard(props.publicKey);
             console.log("Copied");
-        }
+        };
+        return {
+            mdiQrcode,
+            mdiContentCopy,
+            rawPublicKey,
+            copyKey
+        };
     }
 });
 </script>

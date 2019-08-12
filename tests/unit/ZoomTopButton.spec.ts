@@ -1,9 +1,9 @@
-import { shallowMount, createLocalVue } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import ZoomTopButton from "../../src/components/ZoomTopButton.vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import "../../src/directives";
 
-describe("ZoomTopButton", () => {
+describe(ZoomTopButton, () => {
     it("isn't active at first", async () => {
         const wrapper = shallowMount(ZoomTopButton);
         const zButton = wrapper.find("button");
