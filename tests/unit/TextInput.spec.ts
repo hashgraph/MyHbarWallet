@@ -191,4 +191,49 @@ describe("TextInput.vue", (): void => {
                 .length
         ).toEqual(0);
     });
+
+    it("renders error-text when it isn't null", () => {
+        const errorText = "ERROR: foo";
+        const wrapper = mount(TextInput, {
+            localVue,
+            propsData: {
+                multiline: true,
+                errorText: errorText,
+                valid: false,
+                showValidation: true,
+            }
+        });
+
+        expect(wrapper.find(".error-text").text()).toBe(errorText);
+    });
+
+    it("doesn't render error-text when valid is true", () => {
+        const errorText = "ERROR: foo";
+        const wrapper = mount(TextInput, {
+            localVue,
+            propsData: {
+                multiline: true,
+                errorText: errorText,
+                valid: true,
+                showValidation: true,
+            }
+        });
+
+        expect(wrapper.findAll(".error-text")).toHaveLength(0);
+    });
+
+    it("doesn't render error-text when showValidation is false", () => {
+        const errorText = "ERROR: foo";
+        const wrapper = mount(TextInput, {
+            localVue,
+            propsData: {
+                multiline: true,
+                errorText: errorText,
+                valid: false,
+                showValidation: false,
+            }
+        });
+
+        expect(wrapper.findAll(".error-text")).toHaveLength(0);
+    });
 });
