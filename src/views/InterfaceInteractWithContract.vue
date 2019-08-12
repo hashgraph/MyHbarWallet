@@ -3,12 +3,11 @@
         <InterfaceForm title="Interact With Contract">
             <TextInput
                 v-model.trim="contractId"
-                label="Contract ID"
-                placeholder="Enter Contract ID"
+                label="Contract"
+                placeholder="shard.realm.contract"
                 show-validation
                 :valid="isIdValid"
             />
-            <div class="space" />
             <TextInput
                 v-model.trim="abi"
                 label="ABI/JSON Interface"
@@ -18,13 +17,14 @@
                 show-validation
                 :valid="isJsonValid"
             />
-            <div class="form-footer">
+
+            <template v-slot:footer>
                 <Button
                     label="Continue"
                     :trailing-icon="arrowRight"
                     :disabled="!isFormValid"
                 />
-            </div>
+            </template>
         </InterfaceForm>
     </div>
 </template>
@@ -44,15 +44,13 @@ export default createComponent({
     },
     setup() {
         const arrowRight = mdiArrowRight;
-        const contractIdRegex = /^\d+\.\d+\.\d+$/;
+        const idRegex = /^\d+\.\d+\.\d+$/;
 
         const contractId = value("");
         const abi = value("");
 
-        const isIdValid = computed(() => {
-            const matches = contractId.value.match(contractIdRegex);
-            return matches != null && matches.length == 1;
-        });
+        const isIdValid = computed(() => idRegex.test(contractId.value));
+
         const isJsonValid = computed(() => {
             try {
                 JSON.parse(abi.value);
@@ -67,7 +65,6 @@ export default createComponent({
 
         return {
             arrowRight,
-            contractIdRegex,
             contractId,
             abi,
             isIdValid,
@@ -77,16 +74,3 @@ export default createComponent({
     }
 });
 </script>
-
-<style lang="postcss" scoped>
-.form-footer {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    margin-block-start: 60px;
-}
-
-.space {
-    padding-block-end: 30px;
-}
-</style>

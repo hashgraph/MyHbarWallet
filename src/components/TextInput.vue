@@ -121,7 +121,7 @@ export default createComponent({
         const isEyeOpen = value(false);
 
         const keyboardType = computed(() => {
-            // if (props.type.length > 0) return props.type;
+            if (props.type) return props.type;
             if (props.obscure && !props.showValidation && !isEyeOpen.value)
                 return "password";
             return "text";
