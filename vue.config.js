@@ -36,6 +36,14 @@ module.exports = {
                     ]
                 }
             ]);
+
+            // Pass images through an optimization pipeline
+            config.module
+                .rule("optimize-images")
+                .test(/\.(jpg|png|gif|svg)$/)
+                .pre()
+                .use()
+                .loader("image-webpack-loader");
         }
     }
 };
