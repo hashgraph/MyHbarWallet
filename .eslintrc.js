@@ -20,7 +20,9 @@ module.exports = {
         "import/extensions": [".js", ".ts"],
         "import/resolver": {
             webpack: {},
-            typescript: {}
+            typescript: {
+                alwaysTryTypes: true
+            }
         },
         polyfills: [
             // TODO: Actually add this as a polyfill via webpack
@@ -31,6 +33,10 @@ module.exports = {
         indent: ["error", 4],
         "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
         "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
+
+        // Broken in eslint@6.x
+        // See https://github.com/benmosher/eslint-plugin-import/issues/1341
+        "import/named": "off",
 
         // Require Object Literal Shorthand Syntax
         // https://eslint.org/docs/rules/object-shorthand
@@ -56,8 +62,8 @@ module.exports = {
         "vue/v-on-function-call": "error",
 
         // Unicorn
-        "unicorn/filename-case": false,
-        "unicorn/prevent-abbreviations": false,
+        "unicorn/filename-case": "off",
+        "unicorn/prevent-abbreviations": "off",
 
         // Typescript
         "no-var": "error",
