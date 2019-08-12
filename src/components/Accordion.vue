@@ -4,7 +4,7 @@
             <div class="title-text">
                 <slot name="title"></slot>
             </div>
-            <MaterialDesignIcon class="icon" :icon="icon" />
+            <MaterialDesignIcon class="icon" :icon="mdiChevronUp" />
         </div>
         <div class="content">
             <div class="content-text">
@@ -26,15 +26,12 @@ export default Vue.extend({
     },
     setup() {
         const expanded = value(false);
-        const icon = computed(() => {
-            return mdiChevronUp;
-        });
         const toggle = () => {
             expanded.value = !expanded.value;
         };
         return {
             expanded,
-            icon,
+            mdiChevronUp,
             toggle
         };
     }
