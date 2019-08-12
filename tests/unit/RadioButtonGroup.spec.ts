@@ -5,8 +5,8 @@ import imagePhrase from "@/assets/button-phrase.svg";
 import imageFile from "@/assets/button-file.svg";
 import RadioButton from "@/components/RadioButton.vue";
 
-describe("RadioButtonGroup.vue", () => {
-    it("renders with a list", () => {
+describe("RadioButtonGroup.vue", (): void => {
+    it("renders with a list", (): void => {
         const name = "RadioButtonGroup";
         const options = [
             {
@@ -35,7 +35,7 @@ describe("RadioButtonGroup.vue", () => {
         expect(wrapper.findAll(RadioButton)).toHaveLength(3);
     });
 
-    it("triggers appropriate events", () => {
+    it("triggers appropriate events", (): void => {
         const name = "RadioButtonGroup";
         const emission = { change: [["key"]] };
 

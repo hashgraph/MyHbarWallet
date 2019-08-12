@@ -1,8 +1,8 @@
 import { shallowMount } from "@vue/test-utils";
 import SwitchButton from "../../src/components/SwitchButton.vue";
 
-describe("SwitchButton.vue", () => {
-    it("renders", () => {
+describe("SwitchButton.vue", (): void => {
+    it("renders", (): void => {
         const handler = jest.fn();
         const wrapper = shallowMount(SwitchButton, {
             propsData: { checked: false },

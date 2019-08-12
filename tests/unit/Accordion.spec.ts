@@ -2,12 +2,12 @@ import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
 import Accordion from "@/components/Accordion.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
-describe("Accordion.vue", () => {
+describe("Accordion.vue", (): void => {
     const title = "Title";
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
 
-    it("renders", () => {
+    it("renders", (): void => {
         const wrapper = shallowMount(Accordion, {
             localVue,
             slots: {
@@ -18,7 +18,7 @@ describe("Accordion.vue", () => {
         expect(wrapper.find(".title-text").text()).toContain(title);
     });
 
-    it("transitions to show content when clicked", () => {
+    it("transitions to show content when clicked", (): void => {
         const title = "Title";
         const content = "Content";
 

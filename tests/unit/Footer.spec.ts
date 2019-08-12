@@ -1,8 +1,8 @@
 import { shallowMount } from "@vue/test-utils";
 import Footer from "@/components/Footer.vue";
 
-describe("Footer.vue", () => {
-    it("renders and contains footer information", () => {
+describe("Footer.vue", (): void => {
+    it("renders and contains footer information", (): void => {
         const wrapper = shallowMount(Footer);
         const year = new Date().getFullYear();
         expect(wrapper.isVisible()).toBe(true);

@@ -4,7 +4,7 @@ import contractImage from "../../src/assets/contract.svg";
 import contractImageActive from "../../src/assets/contract-active.svg";
 import VueRouter from "vue-router";
 
-describe("InterfaceNavigationSection", () => {
+describe("InterfaceNavigationSection", (): void => {
     const routes = [
         {
             name: "deploy-contract",
@@ -29,11 +29,11 @@ describe("InterfaceNavigationSection", () => {
         }
     });
 
-    it("renders", () => {
+    it("renders", (): void => {
         expect(wrapper.find(".nav-title").text()).toMatch("Contract");
     });
 
-    it("Accepts click inputs and shows links", () => {
+    it("Accepts click inputs and shows links", (): void => {
         const img = wrapper.find("img").attributes("src");
         expect(img).toBe(wrapper.vm.$props.image);
         wrapper.find(".nav-section-header").trigger("click");

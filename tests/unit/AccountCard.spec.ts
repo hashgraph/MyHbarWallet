@@ -2,7 +2,7 @@ import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
 import AccountCard from "../../src/components/AccountCard.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
-describe("AccountCard.vue", () => {
+describe("AccountCard.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
 
@@ -18,11 +18,11 @@ describe("AccountCard.vue", () => {
         }
     });
 
-    it("renders", () => {
+    it("renders", (): void => {
         expect(wrapper.isVisible()).toBeTruthy();
     });
 
-    it("removes the public key prefix", () => {
+    it("removes the public key prefix", (): void => {
         expect(wrapper.find(".top div:nth-child(3)").text()).toMatch(
             "2cc9e2d0c16c717476d4bbbfa3307a98cf0c41d7afc77c851e476b5921f3fb65"
         );

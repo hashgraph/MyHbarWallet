@@ -1,8 +1,8 @@
 import { mount, shallowMount } from "@vue/test-utils";
 import MnemonicInput from "@/components/MnemonicInput.vue";
 
-describe("MnemonicInput.vue", () => {
-    it("renders with 12 placeholders", () => {
+describe("MnemonicInput.vue", (): void => {
+    it("renders with 12 placeholders", (): void => {
         const wrapper = shallowMount(MnemonicInput, {
             propsData: {
                 words: 12,
