@@ -1,4 +1,4 @@
-import { mount, shallowMount } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import Warning from "../../src/components/Warning.vue";
 
 describe("Warning.vue", (): void => {
