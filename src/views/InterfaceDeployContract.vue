@@ -20,7 +20,6 @@
             :valid="interfaceIsValid"
         />
         <TextInput
-            compact
             label="Maximum Transaction Fee"
             class="deploy-contract-form-item"
             show-validation
