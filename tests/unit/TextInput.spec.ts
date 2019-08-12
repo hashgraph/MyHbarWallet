@@ -193,47 +193,47 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders error-text when it isn't null", () => {
-        const errorText = "ERROR: foo";
+        const error = "ERROR: foo";
         const wrapper = mount(TextInput, {
             localVue,
             propsData: {
                 multiline: true,
-                errorText,
+                error,
                 valid: false,
                 showValidation: true
             }
         });
 
-        expect(wrapper.find(".error-text").text()).toBe(errorText);
+        expect(wrapper.find(".error").text()).toBe(error);
     });
 
     it("doesn't render error-text when valid is true", () => {
-        const errorText = "ERROR: foo";
+        const error = "ERROR: foo";
         const wrapper = mount(TextInput, {
             localVue,
             propsData: {
                 multiline: true,
-                errorText,
+                error,
                 valid: true,
                 showValidation: true
             }
         });
 
-        expect(wrapper.findAll(".error-text")).toHaveLength(0);
+        expect(wrapper.findAll(".error")).toHaveLength(0);
     });
 
     it("doesn't render error-text when showValidation is false", () => {
-        const errorText = "ERROR: foo";
+        const error = "ERROR: foo";
         const wrapper = mount(TextInput, {
             localVue,
             propsData: {
                 multiline: true,
-                errorText,
+                error,
                 valid: false,
                 showValidation: false
             }
         });
 
-        expect(wrapper.findAll(".error-text")).toHaveLength(0);
+        expect(wrapper.findAll(".error")).toHaveLength(0);
     });
 });
