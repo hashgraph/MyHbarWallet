@@ -15,11 +15,11 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiArrowRight } from "@mdi/js";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
@@ -30,10 +30,9 @@ export default Vue.extend({
         action: { type: String, required: false, default: "" },
         image: { type: String, default: null }
     },
-    computed: {
-        rightArrow() {
-            return mdiArrowRight;
-        }
+    setup() {
+        const rightArrow = mdiArrowRight;
+        return { rightArrow };
     }
 });
 </script>
