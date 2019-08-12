@@ -7,7 +7,7 @@ import Router from "vue-router";
 
 describe("InterfaceNavigationSection", (): void => {
     // Mock-out `window.scrollTo`
-    Object.defineProperty(window, 'scrollTo', { value: jest.fn() });
+    Object.defineProperty(window, "scrollTo", { value: jest.fn() });
 
     const routes = [
         {
