@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent, value } from "vue-function-api";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imageLedger from "../assets/button-ledger.svg";
@@ -33,7 +33,7 @@ import imageKeepKey from "../assets/button-keepkey.svg";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         RadioButtonGroup,
         Button,
@@ -47,46 +47,45 @@ export default Vue.extend({
     props: {
         isOpen: { type: Boolean }
     },
-    data() {
+    setup() {
+        const optionSelected = value("");
+        const options = [
+            {
+                label: "Ledger",
+                value: "ledger",
+                image: imageLedger
+            },
+            {
+                label: "FINNEY",
+                value: "finney",
+                image: imageFinney
+            },
+            {
+                label: "Digital Bitbox",
+                value: "bitbox",
+                image: imageBitbox
+            },
+            {
+                label: "Trezor",
+                value: "trezor",
+                image: imageTrezor
+            },
+            {
+                label: "Secalot",
+                value: "secalot",
+                image: imageSecalot
+            },
+            {
+                label: "KeepKey",
+                value: "keepkey",
+                image: imageKeepKey
+            }
+        ];
+
         return {
-            optionSelected: ""
+            optionSelected,
+            options
         };
-    },
-    computed: {
-        options() {
-            return [
-                {
-                    label: "Ledger",
-                    value: "ledger",
-                    image: imageLedger
-                },
-                {
-                    label: "FINNEY",
-                    value: "finney",
-                    image: imageFinney
-                },
-                {
-                    label: "Digital Bitbox",
-                    value: "bitbox",
-                    image: imageBitbox
-                },
-                {
-                    label: "Trezor",
-                    value: "trezor",
-                    image: imageTrezor
-                },
-                {
-                    label: "Secalot",
-                    value: "secalot",
-                    image: imageSecalot
-                },
-                {
-                    label: "KeepKey",
-                    value: "keepkey",
-                    image: imageKeepKey
-                }
-            ];
-        }
     }
 });
 </script>
