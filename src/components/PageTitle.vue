@@ -7,8 +7,9 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-export default Vue.extend({
+import { createComponent } from "vue-function-api";
+
+export default createComponent({
     props: {
         title: { type: String, required: true },
         large: { type: Boolean }
