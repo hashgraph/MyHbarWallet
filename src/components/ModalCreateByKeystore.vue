@@ -51,14 +51,18 @@ import {
     value,
     Wrapper,
     PropType,
+    watch,
     onUpdated
 } from "vue-function-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
-import TextInput from "../components/TextInput.vue";
+import TextInput, {
+    Component as TextInputComponent
+} from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import { mdiArrowRight } from "@mdi/js";
+import { SetupContext } from "vue-function-api/dist/types/vue";
 
 export interface State {
     modalIsOpen: boolean;
@@ -68,6 +72,12 @@ export interface State {
 interface Props {
     state: State;
 }
+
+type Context = SetupContext & {
+    refs: {
+        input: TextInputComponent;
+    };
+};
 
 export interface Component {
     password: Wrapper<string>;
@@ -102,11 +112,15 @@ export default createComponent({
             context.emit("submit", password);
         }
 
-        // Focus field on creation
-        onUpdated(() => {
-            const textinput = context.refs.input as TextInput;
-            (textinput.$refs.input as HTMLInputElement).focus();
-        });
+        // Focus the single text input when the modal is opened
+        watch(
+            () => props.state.modalIsOpen,
+            (newVal: boolean) => {
+                if (newVal) {
+                    (context as Context).refs.input.focus();
+                }
+            }
+        );
 
         return {
             password,

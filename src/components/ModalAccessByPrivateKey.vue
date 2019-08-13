@@ -36,12 +36,19 @@ import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import { createComponent, PropType, watch } from "vue-function-api";
+import { SetupContext } from "vue-function-api/dist/types/vue";
 
 export interface State {
     modalIsOpen: boolean;
     privateKey: string;
     isBusy: boolean;
 }
+
+type Context = SetupContext & {
+    refs: {
+        input: TextInputComponent;
+    };
+};
 
 export default createComponent({
     components: {
@@ -72,9 +79,7 @@ export default createComponent({
             () => props.state.modalIsOpen,
             (newVal: boolean) => {
                 if (newVal) {
-                    // FIXME: How to remove the _ unknown _ hack ?
-                    ((context.refs
-                        .input as unknown) as TextInputComponent).focus();
+                    (context as Context).refs.input.focus();
                 }
             }
         );
