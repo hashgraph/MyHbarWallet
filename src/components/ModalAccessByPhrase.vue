@@ -7,12 +7,7 @@
             @change="handleModalChangeIsOpen"
         >
             <template v-slot:banner>
-                <Warning title="NOT RECOMMENDED">
-                    This is not a recommended way to access your wallet. Due to
-                    the sensitivity of the information involved, these options
-                    should only be used in offline settings by experienced
-                    users.
-                </Warning>
+                <Warning />
             </template>
 
             <div class="instruction">

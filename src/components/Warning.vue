@@ -11,7 +11,12 @@
                 {{ title }}
             </div>
             <div class="message">
-                <slot></slot>
+                <slot>
+                    This is not a recommended way to access your wallet. Due to
+                    the sensitivity of the information involved, these options
+                    should only be used in offline settings by experienced
+                    users.
+                </slot>
             </div>
         </div>
     </div>
@@ -27,7 +32,7 @@ export default createComponent({
         MaterialDesignIcon
     },
     props: {
-        title: { type: String, required: true }
+        title: { type: String, default: "NOT RECOMMENDED" }
     },
     setup() {
         return { mdiAlertOutline };
