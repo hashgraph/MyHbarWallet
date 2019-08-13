@@ -40,13 +40,13 @@ function InterfaceInteractWithContract(): Promise<
     );
 }
 
-function InterfaceSignMessage(): Promise<typeof import("*.vue")> {
+function InterfaceSignMessage(): Promise<typeof import("./views/InterfaceSignMessage.vue")> {
     return import(
         /* webpackChunkName: "interface" */ "./views/InterfaceSignMessage.vue"
     );
 }
 
-function InterfaceVerifyMessage(): Promise<typeof import("*.vue")> {
+function InterfaceVerifyMessage(): Promise<typeof import("./views/InterfaceVerifyMessage.vue")> {
     return import(
         /* webpackChunkName: "interface" */ "./views/InterfaceVerifyMessage.vue"
     );
