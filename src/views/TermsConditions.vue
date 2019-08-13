@@ -1,5 +1,5 @@
 <template>
-    <div class="terms">
+    <CirclePage>
         <div class="wrap">
             <div class="title-container">
                 <div class="title">Terms of Conditions</div>
@@ -69,18 +69,21 @@
                 </p>
             </div>
         </div>
-    </div>
+    </CirclePage>
 </template>
 
-<style lang="postcss" scoped>
-.terms {
-    background-color: var(--color-boysenberry-shadow);
-    background-image: url(../assets/right.png), url(../assets/left.png);
-    background-position: 100% 0, left 80px;
-    background-repeat: no-repeat, no-repeat;
-    font-size: 14px;
-}
+<script lang="ts">
+import CirclePage from "../components/CirclePage.vue";
+import { createComponent } from "vue-function-api";
 
+export default createComponent({
+    components: {
+        CirclePage
+    }
+});
+</script>
+
+<style lang="postcss" scoped>
 .wrap {
     margin: 0 auto;
     max-width: 620px;

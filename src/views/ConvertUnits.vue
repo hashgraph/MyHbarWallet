@@ -1,5 +1,5 @@
 <template>
-    <div class="convert-units">
+    <CirclePage>
         <div class="wrap">
             <div class="title-wrap">
                 <div class="page-title">Convert Units</div>
@@ -33,16 +33,18 @@
                 </div>
             </div>
         </div>
-    </div>
+    </CirclePage>
 </template>
 
 <script lang="ts">
 import UnitConverter from "../components/UnitConverter.vue";
+import CirclePage from "../components/CirclePage.vue";
 import { createComponent } from "vue-function-api";
 
 export default createComponent({
     components: {
-        UnitConverter
+        UnitConverter,
+        CirclePage
     },
     setup() {
         const hbarUnitRef = [
@@ -95,13 +97,6 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.convert-units {
-    background-color: var(--color-boysenberry-shadow);
-    background-image: url(../assets/right.png), url(../assets/left.png);
-    background-position: 100% 0, left 80px;
-    background-repeat: no-repeat, no-repeat;
-}
-
 .wrap {
     margin: 0 auto;
     max-width: 1024px;

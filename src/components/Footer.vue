@@ -3,22 +3,15 @@
         <FooterTop />
         <div class="wrapper">
             <div class="links">
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    href="https://www.hedera.com/privacy"
-                    class="link"
-                >
+                <router-link :to="{ name: 'privacy-policy' }" class="link">
                     Privacy
-                </a>
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    href="https://www.hedera.com/terms"
+                </router-link>
+                <router-link
+                    :to="{ name: 'terms-and-conditions' }"
                     class="link"
                 >
                     Terms
-                </a>
+                </router-link>
                 <a
                     target="_blank"
                     href="https://github.com/hashgraph/myhbarwallet"
