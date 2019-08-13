@@ -1,7 +1,7 @@
 <template>
     <div class="modal-password">
         <Modal
-            title="Passowrd"
+            title="Password"
             :not-closable="state.isBusy"
             :is-open="state.modalIsOpen"
             @change="handleModalChangeIsOpen"
@@ -32,11 +32,11 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from "vue";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
+import { createComponent, PropType } from "vue-function-api";
 
 export interface State {
     modalIsOpen: boolean;
@@ -44,30 +44,42 @@ export interface State {
     isBusy: boolean;
 }
 
-export default Vue.extend({
+interface Props {
+    state: State;
+}
+
+export default createComponent({
     components: {
         Modal,
         Warning,
         TextInput,
         Button
     },
+    props: {
+        state: (Object as unknown) as PropType<State>
+    },
     model: {
         prop: "state",
         event: "change"
     },
-    props: {
-        state: { type: Object, required: true } as PropOptions<State>
-    },
-    methods: {
-        handleInputChange(value: string) {
-            this.$emit("change", { ...this.state, password: value });
-        },
-        submit() {
-            this.$emit("submit", this.state);
-        },
-        handleModalChangeIsOpen(isOpen: boolean) {
-            this.$emit("change", { ...this.state, modalIsOpen: isOpen });
+    setup(props: Props, context) {
+        function handleInputChange(value: string) {
+            context.emit("change", { ...props.state, password: value });
         }
+
+        function submit() {
+            context.emit("submit", props.state);
+        }
+
+        function handleModalChangeIsOpen(isOpen: boolean) {
+            context.emit("change", { ...props.state, modalIsOpen: isOpen });
+        }
+
+        return {
+            handleInputChange,
+            submit,
+            handleModalChangeIsOpen
+        };
     }
 });
 </script>
