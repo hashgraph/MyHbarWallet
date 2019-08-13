@@ -5,29 +5,23 @@
             cannot use it. Include a specific reason for the message so it
             cannot be reused for a different purpose.
         </div>
+
         <div class="text-input-container">
             <TextInput
                 v-model="message"
                 label="Message"
                 type="text"
-                :multiline="true"
+                :error="enableErr ? 'The message field is required' : null"
+                multiline
             />
-            <div v-if="enableErr" class="validation-error">
-                The message field is required
-            </div>
         </div>
+
         <template v-slot:footer>
             <Button
                 :disabled="!signable"
                 label="Sign"
                 @click="$emit('sign', messageText)"
             />
-            <div class="bottom-text">
-                Have any issues?
-                <router-link :to="{ name: 'help-center' }">
-                    Help Center
-                </router-link>
-            </div>
         </template>
     </InterfaceForm>
 </template>
@@ -72,27 +66,5 @@ export default createComponent({
     font-size: 14px;
     margin-block-end: 10px;
     padding-inline: 8px;
-}
-
-.validation-error {
-    color: var(--color-washed-black);
-    font-size: 14px;
-}
-
-a {
-    color: var(--color-melbourne-cup);
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-        text-decoration: underline;
-    }
-}
-
-.bottom-text {
-    color: var(--color-china-blue);
-    font-size: 14px;
-    margin-block-start: 20px;
-    margin-inline: auto;
 }
 </style>
