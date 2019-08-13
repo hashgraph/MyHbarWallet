@@ -163,7 +163,7 @@ export default createComponent({
                 "is-white": props.white,
                 "is-multiline": props.multiline,
                 "has-label": props.label != null,
-                "has-error": props.error !== null
+                "has-error": props.error != null
             };
         });
 
