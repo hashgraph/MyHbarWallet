@@ -44,6 +44,7 @@
             <div class="button-container">
                 <Button
                     label="Download Keystore File"
+                    :busy="isBusy"
                     class="download-button"
                 />
             </div>
@@ -72,7 +73,9 @@ export default Vue.extend({
         isOpen: { type: Boolean, required: true }
     },
     data() {
-        return {};
+        return {
+            isBusy: true
+        };
     },
     computed: {
         noLoseIcon() {
@@ -84,8 +87,7 @@ export default Vue.extend({
         makeBackupIcon() {
             return makeBackupIcon;
         }
-    },
-    methods: {}
+    }
 });
 </script>
 
