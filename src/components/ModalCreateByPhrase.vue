@@ -41,6 +41,7 @@
 
             <HiddenPasswordInput
                 :value="passwordValue"
+                password-warning="If you choose to include a password, understand you will ALWAYS need this password with your mnemonic phrase. You can not change it. It becomes a permanent part of your phrase. Read more about the password option here."
                 @input="handlePasswordChange"
             />
 
