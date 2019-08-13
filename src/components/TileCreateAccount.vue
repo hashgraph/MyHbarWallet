@@ -2,14 +2,14 @@
     <div class="tile-create-account">
         <InterfaceForm title="Create Account">
             <div class="field">
-                <TextInput
+                <NumberInput
                     v-model="balance"
                     has-input
                     label="Initial Balance"
-                    type="number"
                     show-validation
                     :valid="validBalance"
                     compact
+                    suffix="ħ"
                     @input="handleBalanceInput"
                 />
             </div>
@@ -28,13 +28,13 @@
             </div>
 
             <div class="field">
-                <TextInput
-                    :value="maxFee"
+                <NumberInput
+                    v-model="maxFee"
                     label="Maximum Transaction Fee"
-                    type="number"
                     :valid="validMaxFee"
                     show-validation
                     compact
+                    suffix="ħ"
                     @input="handleMaxFeeInput"
                 />
             </div>
@@ -43,10 +43,10 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import TextInput from "../components/TextInput.vue";
+import NumberInput from "@/components/NumberInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
-import { computed, createComponent, value } from "vue-function-api";
+import { createComponent, value } from "vue-function-api";
 
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
@@ -54,16 +54,17 @@ const ED25519_PREFIX = "302a300506032b6570032100";
 export default createComponent({
     components: {
         TextInput,
-        InterfaceForm
+        InterfaceForm,
+        NumberInput
     },
-    setup(_, context) {
+    setup() {
         // fixme: get actual user balance
         const userBalance = 10;
 
         // 5 is used a default starting balance
-        const validBalance = value<boolean>(5 < userBalance);
+        const validBalance = value<boolean>(5 <= userBalance);
         const validKey = value<boolean>(false);
-        const validMaxFee = value<boolean>(100000 < userBalance);
+        const validMaxFee = value<boolean>(100000 <= userBalance);
 
         function handleBalanceInput(input: number) {
             validBalance.value = input >= 0 && input <= userBalance;
