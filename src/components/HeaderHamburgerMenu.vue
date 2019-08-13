@@ -24,7 +24,7 @@
 <script lang="ts">
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiChevronRight } from "@mdi/js";
-import { createComponent, computed, PropType, value } from "vue-function-api";
+import { createComponent, PropType } from "vue-function-api";
 
 interface Props {
     isOpen: boolean;
