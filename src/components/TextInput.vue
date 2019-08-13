@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div v-if="showValidation && !valid && error !== null" class="error">
+        <div v-if="error != null && error !== true" class="error">
             {{ error }}
         </div>
     </div>
@@ -163,8 +163,7 @@ export default createComponent({
                 "is-white": props.white,
                 "is-multiline": props.multiline,
                 "has-label": props.label != null,
-                "has-error":
-                    props.error !== null && props.showValidation && !props.valid
+                "has-error": props.error !== null
             };
         });
 
@@ -287,6 +286,11 @@ textarea::placeholder {
     color: var(--color-basalt-grey);
 }
 
+.has-error input,
+.has-error textarea {
+    border-color: var(--color-lightish-red);
+}
+
 .is-white input {
     background-color: var(--color-white);
 
@@ -354,6 +358,7 @@ textarea::placeholder {
 
 .error {
     color: var(--color-lightish-red);
+    font-size: 14px;
     margin: 7px 0 0 15px;
 }
 </style>
