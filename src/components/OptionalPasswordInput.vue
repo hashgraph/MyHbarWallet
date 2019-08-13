@@ -31,11 +31,19 @@
 
 <script lang="ts">
 import { createComponent, value } from "vue-function-api";
+import { SetupContext } from "vue-function-api/dist/types/vue";
 
 import TextInput, {
     Component as TextInputComponent
 } from "../components/TextInput.vue";
+
 import SwitchButton from "../components/SwitchButton.vue";
+
+type Context = SetupContext & {
+    refs: {
+        input: TextInputComponent;
+    };
+};
 
 export default createComponent({
     components: {
@@ -45,7 +53,7 @@ export default createComponent({
     props: {
         value: { type: String, default: "" }
     },
-    setup(props: {}, context) {
+    setup(props, context) {
         const showPassword = value(false);
 
         function handleInput(password: string) {
@@ -56,8 +64,7 @@ export default createComponent({
             if (showPassword) {
                 // If we are now showing the password,
                 // focus the password input
-                // FIXME: How to remove the _ unknown _ hack ?
-                ((context.refs.input as unknown) as TextInputComponent).focus();
+                (context as Context).refs.input.focus();
             }
         }
 
