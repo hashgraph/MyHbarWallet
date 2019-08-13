@@ -1,5 +1,5 @@
 <template>
-    <div class="button-wrapper" @click="menuToggle">
+    <div class="button-wrapper" @click="handleToggle">
         <div :class="style('1')">
             <MaterialDesignIcon class="icon" :icon="icon" />
         </div>
@@ -13,29 +13,37 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiMinus } from "@mdi/js";
+import { createComponent, PropType } from "vue-function-api";
 
-export default Vue.extend({
+interface Props {
+    isOpen: boolean;
+}
+
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
     props: {
-        isOpen: Boolean
+        isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    computed: {
-        icon() {
-            return mdiMinus;
+    setup(props: Props, context) {
+        const icon = mdiMinus;
+
+        function style(ind: string): string {
+            return props.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
         }
-    },
-    methods: {
-        style(ind: string) {
-            return this.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
-        },
-        menuToggle() {
-            this.$emit("toggle", !this.isOpen);
+
+        function handleToggle(): void {
+            context.emit("toggle", !props.isOpen);
         }
+
+        return {
+            icon,
+            style,
+            handleToggle
+        };
     }
 });
 </script>

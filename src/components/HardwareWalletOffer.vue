@@ -20,10 +20,9 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
-    name: "HardwareWalletOffer",
+export default createComponent({
     props: {
         description: { type: String, required: true },
         image: { type: String, required: true },

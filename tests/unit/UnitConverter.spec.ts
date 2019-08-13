@@ -21,7 +21,9 @@ describe("UnitConverter.vue", (): void => {
 });
 
 describe("ConvertUnits.vue", (): void => {
-    const wrapper = shallowMount(ConvertUnits);
+    const localVue = createLocalVue();
+    localVue.use(VueFunctionApi);
+    const wrapper = shallowMount(ConvertUnits, { localVue });
 
     it("renders", (): void => {
         expect(wrapper.isVisible()).toBeTruthy();

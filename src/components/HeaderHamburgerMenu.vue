@@ -3,45 +3,50 @@
         <div class="link-block">
             <a href="/" @click="toggle">
                 <div class="link">Home</div>
-                <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+                <MaterialDesignIcon class="icon" :icon="icon" />
             </a>
         </div>
         <div class="link-block">
             <a href="/#about" @click="toggle">
                 <div class="link">About</div>
-                <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+                <MaterialDesignIcon class="icon" :icon="icon" />
             </a>
         </div>
         <div class="link-block">
             <a href="/#faqs" @click="toggle">
                 <div class="link">FAQs</div>
-                <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+                <MaterialDesignIcon class="icon" :icon="icon" />
             </a>
         </div>
     </nav>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiChevronRight } from "@mdi/js";
+import { createComponent, computed, PropType, value } from "vue-function-api";
 
-export default Vue.extend({
+interface Props {
+    isOpen: boolean;
+}
+
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
     props: {
-        isOpen: { type: Boolean }
+        isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    computed: {
-        mdiChevronRight() {
-            return mdiChevronRight;
+    setup(props: Props, context) {
+        const icon = mdiChevronRight;
+
+        function toggle(): void {
+            context.emit("toggle", !props.isOpen);
         }
-    },
-    methods: {
-        toggle() {
-            this.$emit("toggle", !this.isOpen);
-        }
+        return {
+            icon,
+            toggle
+        };
     }
 });
 </script>

@@ -9,12 +9,12 @@
                 </div>
             </div>
 
-            <div><UnitConverter /></div>
+            <div>
+                <UnitConverter />
+            </div>
 
             <div class="hbar-unit-reference-guide">
-                <div class="block-title">
-                    Hbar Unit Reference Guide
-                </div>
+                <div class="block-title">Hbar Unit Reference Guide</div>
 
                 <div class="unit-table">
                     <table>
@@ -37,61 +37,59 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import UnitConverter from "../components/UnitConverter.vue";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
-    name: "UnitConvert",
+export default createComponent({
     components: {
         UnitConverter
     },
-    data() {
-        return {
-            hbarUnitRef: [
-                {
-                    name: "Tinybar",
-                    symbol: "tℏ",
-                    amount: "100,000,000",
-                    amountInHbar: "1"
-                },
-                {
-                    name: "Microbar",
-                    symbol: "μℏ",
-                    amount: "1,000,000",
-                    amountInHbar: "1"
-                },
-                {
-                    name: "Milibar",
-                    symbol: "mℏ",
-                    amount: "1,000",
-                    amountInHbar: "1"
-                },
-                {
-                    name: "Hbar",
-                    symbol: "ℏ",
-                    amount: "1",
-                    amountInHbar: "1"
-                },
-                {
-                    name: "Kilobar",
-                    symbol: "kℏ",
-                    amount: "1",
-                    amountInHbar: "1,000"
-                },
-                {
-                    name: "Megabar",
-                    symbol: "Mℏ",
-                    amount: "1",
-                    amountInHbar: "1,000,000"
-                },
-                {
-                    name: "Gigabar",
-                    symbol: "Gℏ",
-                    amount: "1",
-                    amountInHbar: "1,000,000,000"
-                }
-            ]
-        };
+    setup() {
+        const hbarUnitRef = [
+            {
+                name: "Tinybar",
+                symbol: "tℏ",
+                amount: "100,000,000",
+                amountInHbar: "1"
+            },
+            {
+                name: "Microbar",
+                symbol: "μℏ",
+                amount: "1,000,000",
+                amountInHbar: "1"
+            },
+            {
+                name: "Milibar",
+                symbol: "mℏ",
+                amount: "1,000",
+                amountInHbar: "1"
+            },
+            {
+                name: "Hbar",
+                symbol: "ℏ",
+                amount: "1",
+                amountInHbar: "1"
+            },
+            {
+                name: "Kilobar",
+                symbol: "kℏ",
+                amount: "1",
+                amountInHbar: "1,000"
+            },
+            {
+                name: "Megabar",
+                symbol: "Mℏ",
+                amount: "1",
+                amountInHbar: "1,000,000"
+            },
+            {
+                name: "Gigabar",
+                symbol: "Gℏ",
+                amount: "1",
+                amountInHbar: "1,000,000,000"
+            }
+        ];
+        return { hbarUnitRef };
     }
 });
 </script>
