@@ -14,7 +14,8 @@
         </template>
         <div class="modal-access-by-private-key">
             <TextInput
-                :placeholder="placeholder"
+                ref="input"
+                placeholder="Enter Private Key"
                 :value="state.privateKey"
                 @input="handlePrivateKeyInput"
             />
@@ -32,13 +33,13 @@
 
 <script lang="ts">
 import Warning from "../components/Warning.vue";
-import TextInput from "../components/TextInput.vue";
+import TextInput, {
+    Component as TextInputComponent
+} from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import { createComponent, PropType, watch } from "vue-function-api";
-
-const placeholder = "Enter Private Key";
 
 export interface State {
     modalIsOpen: boolean;
@@ -70,21 +71,21 @@ export default createComponent({
             context.emit("change", { ...props.state, privateKey });
         }
 
+        // Focus the single text input when the modal is opened
         watch(
             () => props.state.modalIsOpen,
             (newVal: boolean) => {
                 if (newVal) {
-                    (document.querySelector(
-                        "input[placeholder='" + placeholder + "']"
-                    ) as HTMLInputElement).focus();
+                    // FIXME: How to remove the _ unknown _ hack ?
+                    ((context.refs
+                    .input as unknown) as TextInputComponent).focus();
                 }
             }
         );
 
         return {
             handleModalChangeIsOpen,
-            handlePrivateKeyInput,
-            placeholder
+            handlePrivateKeyInput
         };
     }
 });
