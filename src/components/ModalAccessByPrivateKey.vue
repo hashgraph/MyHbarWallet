@@ -72,10 +72,10 @@ export default createComponent({
 
         watch(
             () => props.state.modalIsOpen,
-            (newVal: boolean, oldVal: boolean) => {
+            (newVal: boolean) => {
                 if (newVal) {
                     (document.querySelector(
-                        "input[placeholder=" + placeholder + "]"
+                        "input[placeholder='" + placeholder + "']"
                     ) as HTMLInputElement).focus();
                 }
             }
