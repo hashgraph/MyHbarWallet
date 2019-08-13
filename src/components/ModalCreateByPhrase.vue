@@ -98,7 +98,7 @@ export default createComponent({
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    setup(props, context) {
+    setup() {
         const numWords = value(12);
         const passwordValue = value("");
         const words = value([]);
