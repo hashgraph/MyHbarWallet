@@ -10,19 +10,25 @@
                     class="issue-item"
                     placeholder="Browser"
                     :value="browser"
+                    @input="handleBrowserInput"
                 />
                 <TextInput
                     class="issue-item"
                     placeholder="Operating System"
                     :value="platform"
+                    @input="handlePlatformInput"
                 />
                 <TextInput
                     class="issue-item"
                     placeholder="Device/Wallet type (if any)"
+                    :value="device"
+                    @input="handleDeviceInput"
                 />
                 <TextInput
                     class="issue-item"
                     placeholder="Account ID (if any)"
+                    :value="accountId"
+                    @input="handleAccountIdInput"
                 />
                 <TextInput class="issue-item" placeholder="URL" :value="url" />
                 <TextInput
@@ -30,8 +36,12 @@
                     class="issue-item"
                     placeholder="Describe the issue"
                     resizable
+                    :value="description"
+                    @input="handleDescriptionInput"
                 />
-                <Button label="Send" class="send-button" :compact="true" />
+                <a :href="sendLink">
+                    <Button label="Send" class="send-button" :compact="true" />
+                </a>
             </div>
         </template>
     </Modal>
@@ -42,7 +52,30 @@ import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import TextInput from "../components/TextInput.vue";
 import { UAParser } from "ua-parser-js";
-import { createComponent, PropType } from "vue-function-api";
+import { createComponent, PropType, value, computed } from "vue-function-api";
+
+function createLink(
+    url: string,
+    platform: string,
+    browser: string,
+    device: string,
+    accountId: string,
+    description: string
+): string {
+    const subjectTemplate = `Issue on ${url}`;
+    const bodyTemplate = `Browser: ${browser}
+OS: ${platform}
+Device: ${device}
+AccountID: ${accountId}
+URL: ${url}
+
+
+${description}
+`;
+    return `mailto:contact@myhbarwallet.com?subject=${encodeURIComponent(
+        subjectTemplate
+    )}&body=${encodeURIComponent(bodyTemplate)}`;
+}
 
 export default createComponent({
     components: {
@@ -59,11 +92,56 @@ export default createComponent({
     },
     setup() {
         const ua = new UAParser(navigator.userAgent);
+        const platform = value(ua.getOS.name);
+        const browser = value(ua.getBrowser().name || "");
+        const url = value(location.pathname);
+        const description = value("");
+        const device = value("");
+        const accountId = value("");
+        function handleBrowserInput(input: string) {
+            browser.value = input;
+        }
+
+        function handlePlatformInput(input: string) {
+            platform.value = input;
+        }
+
+        function handleDeviceInput(input: string) {
+            device.value = input;
+        }
+
+        function handleAccountIdInput(input: string) {
+            accountId.value = input;
+        }
+
+        function handleDescriptionInput(input: string) {
+            description.value = input;
+        }
+
+        const sendLink = computed(() =>
+            createLink(
+                url.value,
+                platform.value,
+                browser.value,
+                device.value,
+                accountId.value,
+                description.value
+            )
+        );
 
         return {
-            platform: ua.getOS().name,
-            browser: ua.getBrowser().name,
-            url: location.pathname
+            platform,
+            browser,
+            url,
+            device,
+            accountId,
+            description,
+            sendLink,
+            handleBrowserInput,
+            handlePlatformInput,
+            handleDeviceInput,
+            handleAccountIdInput,
+            handleDescriptionInput
         };
     }
 });
