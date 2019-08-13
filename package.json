@@ -25,6 +25,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.5.5",
+        "@lwc/eslint-plugin-lwc": "^0.7.0",
         "@types/core-js": "2.x.x",
         "@types/jest": "^24.0.17",
         "@types/prettier": "1.18.2",

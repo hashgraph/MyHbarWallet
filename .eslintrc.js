@@ -13,6 +13,7 @@ module.exports = {
         "plugin:compat/recommended",
         "plugin:unicorn/recommended"
     ],
+    plugins: ["@lwc/eslint-plugin-lwc"],
     parserOptions: {
         parser: "@typescript-eslint/parser"
     },
@@ -37,6 +38,9 @@ module.exports = {
         "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
         "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
 
+        // Disable access to document queries
+        "@lwc/lwc/no-document-query": "error",
+
         // Broken in eslint@6.x
         // See https://github.com/benmosher/eslint-plugin-import/issues/1341
         "import/named": "off",
@@ -59,7 +63,6 @@ module.exports = {
         "vue/match-component-file-name": "error",
         "vue/no-boolean-default": "error",
         "vue/object-curly-spacing": ["error", "always"],
-        "vue/script-indent": ["error", 4],
         "vue/space-infix-ops": "error",
         "vue/space-unary-ops": "error",
         "vue/v-on-function-call": "error",
