@@ -14,13 +14,13 @@ describe("BalanceCard.vue", (): void => {
     });
 
     it("renders", (): void => {
-        expect(wrapper.find(".balance").exists()).toBeTruthy();
+        expect(wrapper.find(".balance").exists()).toBe(true);
     });
 
     it("computes and displays data properly", (): void => {
         const balanceNull = wrapper.find(".subtitle-null");
-        expect(wrapper.find(".subtitle").exists()).toBeFalsy();
-        expect(balanceNull.exists()).toBeTruthy();
+        expect(wrapper.find(".subtitle").exists()).toBe(false);
+        expect(balanceNull.exists()).toBe(true);
         wrapper.setProps({
             balance: 1
         });

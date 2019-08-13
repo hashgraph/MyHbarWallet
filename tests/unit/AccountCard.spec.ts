@@ -19,7 +19,7 @@ describe("AccountCard.vue", (): void => {
     });
 
     it("renders", (): void => {
-        expect(wrapper.isVisible()).toBeTruthy();
+        expect(wrapper.isVisible()).toBe(true);
     });
 
     it("removes the public key prefix", (): void => {

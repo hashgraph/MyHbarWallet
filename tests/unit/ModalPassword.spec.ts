@@ -15,7 +15,7 @@ describe("ModalPassword.vue", (): void => {
             }
         });
 
-        expect(wrapper.find(".modal-password")).toBeTruthy();
+        expect(wrapper.find(".modal-password")).toBe(true);
     });
 
     it("renders a disabled button when the password is empty", (): void => {
@@ -27,7 +27,7 @@ describe("ModalPassword.vue", (): void => {
             }
         });
 
-        expect(wrapper.find(".btn").attributes()["disabled"]).toBeTruthy();
+        expect(wrapper.find(".btn").attributes()["disabled"]).toBe(true);
     });
 
     it("renders an enabled button when the password is not empty", (): void => {
@@ -43,6 +43,6 @@ describe("ModalPassword.vue", (): void => {
             }
         });
 
-        expect(wrapper.find(".btn").attributes()["disabled"]).toBeFalsy();
+        expect(wrapper.find(".btn").attributes()["disabled"]).toBe(false);
     });
 });

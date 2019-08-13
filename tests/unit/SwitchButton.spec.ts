@@ -23,6 +23,6 @@ describe("SwitchButton.vue", (): void => {
         wrapper.trigger("click");
 
         expect(el.checked).toBe(true);
-        expect(handler).toBeCalledTimes(1);
+        expect(handler).toHaveBeenCalledTimes(1);
     });
 });

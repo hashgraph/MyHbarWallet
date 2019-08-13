@@ -12,7 +12,7 @@ describe("HeaderHamburgerMenu.vue", (): void => {
     });
 
     it("renders", (): void => {
-        expect(wrapper.isVisible()).toBeTruthy();
+        expect(wrapper.isVisible()).toBe(true);
     });
 
     it("opens", (): void => {
@@ -34,11 +34,11 @@ describe("HeaderHamburgerButton.vue", (): void => {
     });
 
     it("renders", (): void => {
-        expect(wrapper.isVisible()).toBeTruthy();
+        expect(wrapper.isVisible()).toBe(true);
     });
 
     it("triggers", (): void => {
         wrapper.find(".button-wrapper").trigger("click");
-        expect(wrapper.emitted()).toEqual({ toggle: [[true]] });
+        expect(wrapper.emitted()).toStrictEqual({ toggle: [[true]] });
     });
 });

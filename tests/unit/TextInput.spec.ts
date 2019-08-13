@@ -122,8 +122,8 @@ describe("TextInput.vue", (): void => {
         expect(
             wrapper
                 .findAll(".action")
-                .filter((e): boolean => e.text() === copyText).length
-        ).toEqual(1);
+                .filter((e): boolean => e.text() === copyText)
+        ).toHaveLength(1);
     });
 
     it("renders clear action when canClear is true", (): void => {
@@ -141,8 +141,8 @@ describe("TextInput.vue", (): void => {
         expect(
             wrapper
                 .findAll(".action")
-                .filter((e): boolean => e.text() === clearText).length
-        ).toEqual(1);
+                .filter((e): boolean => e.text() === clearText)
+        ).toHaveLength(1);
     });
 
     it("does not render validation indicator when showValidation is false", (): void => {
@@ -175,8 +175,8 @@ describe("TextInput.vue", (): void => {
         expect(
             wrapper
                 .findAll(".action")
-                .filter((e): boolean => e.text() === copyText).length
-        ).toEqual(0);
+                .filter((e): boolean => e.text() === copyText)
+        ).toHaveLength(0);
     });
 
     it("does not render clear action when canClear is false", (): void => {
@@ -194,8 +194,8 @@ describe("TextInput.vue", (): void => {
         expect(
             wrapper
                 .findAll(".action")
-                .filter((e): boolean => e.text() === clearText).length
-        ).toEqual(0);
+                .filter((e): boolean => e.text() === clearText)
+        ).toHaveLength(0);
     });
 
     it("renders error-text when it isn't null", (): void => {

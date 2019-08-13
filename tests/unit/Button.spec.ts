@@ -31,6 +31,6 @@ describe("Button.vue", (): void => {
 
         wrapper.trigger("click");
 
-        expect(handler).toBeCalledTimes(1);
+        expect(handler).toHaveBeenCalledTimes(1);
     });
 });

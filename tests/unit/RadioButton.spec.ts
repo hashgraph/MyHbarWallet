@@ -20,9 +20,9 @@ describe("RadioButton.vue", (): void => {
         });
 
         expect(wrapper.isVisible()).toBe(true);
-        expect(wrapper.find("label").text()).toEqual(label);
-        expect(wrapper.find("input").attributes()["name"]).toEqual(name);
-        expect(wrapper.find("img").attributes()["src"]).toEqual(imageKey);
+        expect(wrapper.find("label").text()).toStrictEqual(label);
+        expect(wrapper.find("input").attributes()["name"]).toStrictEqual(name);
+        expect(wrapper.find("img").attributes()["src"]).toStrictEqual(imageKey);
     });
 
     it("reacts when checked", (): void => {
@@ -45,8 +45,8 @@ describe("RadioButton.vue", (): void => {
         });
 
         wrapper.find("input").setChecked(true);
-        expect(fn).toBeCalledTimes(1);
-        expect(wrapper.emitted("change")[0][0]).toEqual(value);
+        expect(fn).toHaveBeenCalledTimes(1);
+        expect(wrapper.emitted("change")[0][0]).toStrictEqual(value);
         expect(wrapper.find("label").classes()).toContain("selected");
         expect(wrapper.contains(MaterialDesignIcon)).toBe(true); // green check
     });

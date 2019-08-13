@@ -12,7 +12,7 @@ describe("UnitConverter.vue", (): void => {
     wrapper.setData({ valueLeft: "1000000000" });
 
     it("renders", (): void => {
-        expect(wrapper.isVisible()).toBeTruthy();
+        expect(wrapper.isVisible()).toBe(true);
     });
 
     it("calculates", (): void => {
@@ -26,10 +26,10 @@ describe("ConvertUnits.vue", (): void => {
     const wrapper = shallowMount(ConvertUnits, { localVue });
 
     it("renders", (): void => {
-        expect(wrapper.isVisible()).toBeTruthy();
+        expect(wrapper.isVisible()).toBe(true);
     });
 
-    it("Loads the data", (): void => {
-        expect(wrapper.vm.$data.hbarUnitRef.length).toBe(7);
+    it("loads the data", (): void => {
+        expect(wrapper.vm.$data.hbarUnitRef).toHaveLength(7);
     });
 });

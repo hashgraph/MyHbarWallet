@@ -21,9 +21,9 @@ describe("Footer.vue", (): void => {
 
         const year = new Date().getFullYear();
 
-        expect(wrapper.isVisible()).toBeTruthy();
+        expect(wrapper.isVisible()).toBe(true);
         expect(wrapper.find(".copyright").text()).toContain(year.toString());
-        expect(wrapper.text().includes("Terms")).toBeTruthy();
-        expect(wrapper.text().includes("Privacy")).toBeTruthy();
+        expect(wrapper.text()).toContain("Terms");
+        expect(wrapper.text()).toContain("Privacy");
     });
 });

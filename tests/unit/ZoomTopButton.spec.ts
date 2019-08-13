@@ -12,7 +12,7 @@ describe("ZoomTopButton", (): void => {
         const wrapper = shallowMount(ZoomTopButton, { localVue });
         const zButton = wrapper.find("button");
 
-        expect(zButton.classes()).not.toEqual(
+        expect(zButton.classes()).not.toStrictEqual(
             expect.arrayContaining(["is-active"])
         );
     });
@@ -23,7 +23,7 @@ describe("ZoomTopButton", (): void => {
 
         wrapper.setData({ isActive: true });
 
-        expect(zButton.classes()).toEqual(
+        expect(zButton.classes()).toStrictEqual(
             expect.arrayContaining(["is-active"])
         );
     });
@@ -44,6 +44,6 @@ describe("ZoomTopButton", (): void => {
 
         wrapper.find("button").trigger("click");
 
-        expect(clickHandler).toBeCalledTimes(1);
+        expect(clickHandler).toHaveBeenCalledTimes(1);
     });
 });
