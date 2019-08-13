@@ -49,7 +49,12 @@
                     class="continue-btn"
                     label="I Wrote Down My Mnemonic Phrase"
                 />
-                <img :src="printerIcon" class="printer-button" />
+                <img
+                    :src="printerIcon"
+                    class="printer-button"
+                    @click="handlePrintModal"
+                />
+                <ModalPhrasePrintPreview v-model="printModalIsOpen" />
             </div>
 
             <p>
@@ -61,7 +66,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent, value, PropType } from "vue-function-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import MnemonicInput from "../components/MnemonicInput.vue";
@@ -70,14 +75,15 @@ import SwitchButton from "../components/SwitchButton.vue";
 import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import InfoButton from "../components/InfoButton.vue";
-
+import ModalPhrasePrintPreview from "../components/ModalPhrasePrintPreview.vue";
 import printerIcon from "../assets/icon-printer.svg";
 import { mdiCached } from "@mdi/js";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         Modal,
         Warning,
+        ModalPhrasePrintPreview,
         MnemonicInput,
         HiddenPasswordInput,
         SwitchButton,
@@ -90,31 +96,38 @@ export default Vue.extend({
         event: "change"
     },
     props: {
-        isOpen: { type: Boolean, required: true }
+        isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    data() {
-        return {
-            numWords: 12,
-            passwordValue: "",
-            words: [] as string[]
-        };
-    },
-    computed: {
-        cachedIcon() {
-            return mdiCached;
-        },
+    setup(props, context) {
+        const numWords = value(12);
+        const passwordValue = value("");
+        const words = value([]);
+        const printModalIsOpen = value(false);
+        const cachedIcon = mdiCached;
 
-        printerIcon() {
-            return printerIcon;
+        function handleNumWordsChange(num: number) {
+            numWords.value = num;
         }
-    },
-    methods: {
-        handleNumWordsChange(numWords: number) {
-            this.numWords = numWords;
-        },
-        handlePasswordChange(password: string) {
-            this.passwordValue = password;
+
+        function handlePasswordChange(password: string) {
+            passwordValue.value = password;
         }
+
+        function handlePrintModal() {
+            printModalIsOpen.value = !printModalIsOpen.value;
+        }
+
+        return {
+            numWords,
+            passwordValue,
+            words,
+            cachedIcon,
+            printerIcon,
+            printModalIsOpen,
+            handlePrintModal,
+            handleNumWordsChange,
+            handlePasswordChange
+        };
     }
 });
 </script>
