@@ -1,6 +1,6 @@
 <template>
     <span class="info-button">
-        <Tooltip :message="message" pinnable="true">
+        <Tooltip :message="message" :pinnable="true">
             <MaterialDesignIcon class="icon" :icon="icon" />
         </Tooltip>
     </span>

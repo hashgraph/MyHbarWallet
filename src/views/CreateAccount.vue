@@ -1,3 +1,6 @@
+import {AccessSoftwareOption} from "../components/ModalAccessBySoftware"; import
+{AccessSoftwareOption} from "../components/ModalAccessBySoftware"; import
+{AccessSoftwareOption} from "../components/ModalAccessBySoftware";
 <template>
     <div class="access-my-account">
         <div class="wrap">
@@ -16,6 +19,7 @@
             @submit="handleAccessBySoftwareSubmit"
         />
         <ModalCreateByPhrase v-model="modalCreateByPhraseIsOpen" />
+        <ModalCreateByKeystore v-model="modalCreateByKeystore" />
     </div>
 </template>
 <script lang="ts">
@@ -27,6 +31,7 @@ import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "@/components/ModalAccessBySoftware.vue";
 import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
+import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
 
 import PageTitle from "../components/PageTitle.vue";
 
@@ -37,16 +42,20 @@ export default Vue.extend({
         ModalAccessByHardware,
         ModalAccessBySoftware,
         PageTitle,
-        ModalCreateByPhrase
+        ModalCreateByPhrase,
+        ModalCreateByKeystore
     },
     data() {
         return {
             modalAccessByHardwareIsOpen: false,
             modalAccessBySoftwareIsOpen: false,
-            modalCreateByPhraseIsOpen: false
+            modalCreateByPhraseIsOpen: false,
+            modalCreateByKeystore: {
+                modalIsOpen: false,
+                filename: ""
+            }
         };
     },
-    computed: {},
     methods: {
         handleClickTiles(which: string) {
             if (which === "hardware") {
@@ -56,12 +65,16 @@ export default Vue.extend({
             }
         },
         handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
-            console.log("?", which);
-
             this.modalAccessBySoftwareIsOpen = false;
 
             setTimeout(() => {
-                this.modalCreateByPhraseIsOpen = true;
+                if (which === AccessSoftwareOption.File) {
+                    this.modalCreateByKeystore.modalIsOpen = true;
+                } else if (which === AccessSoftwareOption.Key) {
+                    this.modalCreateByPhraseIsOpen = true;
+                } else if (which === AccessSoftwareOption.Phrase) {
+                    this.modalCreateByPhraseIsOpen = true;
+                }
             }, 125);
         }
     }
