@@ -28,7 +28,6 @@
 <script lang="ts">
 import {
     createComponent,
-    value,
     watch,
     PropType,
     onCreated,
