@@ -19,7 +19,7 @@
             <div class="value-switch">
                 <!-- TODO: Component that wraps this with the understanding of mnemonic types -->
                 <SwitchButton
-                    :checked="numWords"
+                    :checked="numberWords"
                     class="btn"
                     :values="[12, 24]"
                     @change="handleNumWordsChange"
@@ -34,7 +34,7 @@
 
             <MnemonicInput
                 class="phrase-input"
-                :words="numWords"
+                :words="numberWords"
                 :value="words"
                 :editable="false"
             />
@@ -69,7 +69,6 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value, PropType } from "vue-function-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import MnemonicInput from "../components/MnemonicInput.vue";
@@ -79,8 +78,25 @@ import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import InfoButton from "../components/InfoButton.vue";
 import ModalPhrasePrintPreview from "../components/ModalPhrasePrintPreview.vue";
-import printerIcon from "../assets/icon-printer.svg";
+import printIcon from "../assets/icon-printer.svg";
 import { mdiCached } from "@mdi/js";
+import {
+    computed,
+    createComponent,
+    PropType,
+    value,
+    Wrapper
+} from "vue-function-api";
+
+export interface Component {
+    numberWords: Wrapper<number>;
+    passwordValue: Wrapper<string>;
+    words: Wrapper<string[]>;
+    cachedIcon: Wrapper<string>;
+    printerIcon: Wrapper<string>;
+    handleNumWordsChange: (numWords: number) => void;
+    handlePasswordChange: (password: string) => void;
+}
 
 export default createComponent({
     components: {
@@ -99,34 +115,36 @@ export default createComponent({
         event: "change"
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>
+        isOpen: ({ type: Boolean, required: true } as unknown) as PropType<
+            boolean
+        >
     },
-    setup() {
-        const numWords = value(12);
+    setup(): Component {
+        const numberWords = value(12);
         const passwordValue = value("");
-        const words = value([]);
-        const printModalIsOpen = value(false);
+        const words = value([] as string[]);
 
-        function handleNumWordsChange(num: number) {
-            numWords.value = num;
+        const cachedIcon = computed(() => {
+            return mdiCached;
+        });
+        const printerIcon = computed(() => {
+            return printIcon;
+        });
+
+        function handleNumWordsChange(numWords: number) {
+            numberWords.value = numWords;
         }
 
         function handlePasswordChange(password: string) {
             passwordValue.value = password;
         }
 
-        function handlePrintModal() {
-            printModalIsOpen.value = !printModalIsOpen.value;
-        }
-
         return {
-            numWords,
+            numberWords,
             passwordValue,
             words,
-            mdiCached,
+            cachedIcon,
             printerIcon,
-            printModalIsOpen,
-            handlePrintModal,
             handleNumWordsChange,
             handlePasswordChange
         };
