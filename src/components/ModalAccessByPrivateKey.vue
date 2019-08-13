@@ -78,7 +78,7 @@ export default createComponent({
                 if (newVal) {
                     // FIXME: How to remove the _ unknown _ hack ?
                     ((context.refs
-                    .input as unknown) as TextInputComponent).focus();
+                        .input as unknown) as TextInputComponent).focus();
                 }
             }
         );
