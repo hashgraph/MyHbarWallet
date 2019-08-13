@@ -39,6 +39,6 @@ describe("HeaderHamburgerButton.vue", (): void => {
 
     it("triggers", (): void => {
         wrapper.find(".button-wrapper").trigger("click");
-        expect(wrapper.emitted()).toStrictEqual({ toggle: [[true]] });
+        expect(wrapper.emitted().toggle).toStrictEqual([[true]]);
     });
 });

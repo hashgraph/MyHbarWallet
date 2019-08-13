@@ -65,6 +65,6 @@ describe("RadioButtonGroup.vue", (): void => {
 
         expect(wrapper.findAll("input[type=radio]")).toHaveLength(3);
         wrapper.find("input[value=key]").setChecked(true);
-        expect(wrapper.emitted()).toStrictEqual(emission);
+        expect(wrapper.emitted()["change"]).toStrictEqual([["key"]]);
     });
 });

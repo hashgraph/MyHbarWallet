@@ -1,5 +1,5 @@
 import ModalPassword from "@/components/ModalPassword.vue";
-import { createLocalVue, shallowMount } from "@vue/test-utils";
+import { createLocalVue, shallowMount, mount } from "@vue/test-utils";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("ModalPassword.vue", (): void => {
@@ -15,19 +15,21 @@ describe("ModalPassword.vue", (): void => {
             }
         });
 
-        expect(wrapper.find(".modal-password")).toBe(true);
+        expect(wrapper.find(".modal-password").isVisible()).toBe(true);
     });
 
     it("renders a disabled button when the password is empty", (): void => {
         const state = { modalIsOpen: false, password: "", isBusy: false };
-        const wrapper = shallowMount(ModalPassword, {
+        const wrapper = mount(ModalPassword, {
             localVue,
             propsData: {
                 state
             }
         });
 
-        expect(wrapper.find(".btn").attributes()["disabled"]).toBe(true);
+        expect(wrapper.find("button").element.hasAttribute("disabled")).toBe(
+            true
+        );
     });
 
     it("renders an enabled button when the password is not empty", (): void => {
@@ -36,13 +38,16 @@ describe("ModalPassword.vue", (): void => {
             password: "nonempty",
             isBusy: false
         };
-        const wrapper = shallowMount(ModalPassword, {
+
+        const wrapper = mount(ModalPassword, {
             localVue,
             propsData: {
                 state
             }
         });
 
-        expect(wrapper.find(".btn").attributes()["disabled"]).toBe(false);
+        expect(wrapper.find("button").element.hasAttribute("disabled")).toBe(
+            false
+        );
     });
 });
