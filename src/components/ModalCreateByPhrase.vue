@@ -58,10 +58,12 @@
                 <ModalPhrasePrintPreview v-model="printModalIsOpen" />
             </div>
 
-            <p>
-                <span class="important"> DO NOT FORGET</span> to save your
-                password. You will need this
-            </p>
+            <div class="warning-container">
+                <p class="do-not-forget">
+                    <span class="important"> DO NOT FORGET</span> to save your
+                    password. You will need this
+                </p>
+            </div>
         </Modal>
     </div>
 </template>
@@ -194,5 +196,16 @@ export default createComponent({
     cursor: pointer;
     height: 30px;
     margin-inline-start: 20px;
+}
+
+.do-not-forget {
+    color: var(--color-china-blue);
+    font-size: 14px;
+    margin-inline: auto;
+}
+
+.warning-container {
+    display: flex;
+    flex-flow: row nowrap;
 }
 </style>
