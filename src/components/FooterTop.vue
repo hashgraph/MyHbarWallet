@@ -124,8 +124,9 @@
                     FAQs
                 </router-link>
             </div>
-            <div class="item">
-                <router-link to class="link">Customer Support</router-link>
+            <div class="item customer-service" @click="handleButtonClick">
+                Customer Support
+                <ModalCustomerService v-model="modalCustomerServiceIsOpen" />
             </div>
         </div>
         <div class="section">
@@ -147,10 +148,25 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent, value } from "vue-function-api";
+import ModalCustomerService from "@/components/ModalCustomerService.vue";
 
-export default Vue.extend({
-    name: "FooterTop"
+export default createComponent({
+    components: {
+        ModalCustomerService
+    },
+    setup() {
+        const modalCustomerServiceIsOpen = value(false);
+
+        function handleButtonClick() {
+            modalCustomerServiceIsOpen.value = !modalCustomerServiceIsOpen.value;
+        }
+
+        return {
+            modalCustomerServiceIsOpen,
+            handleButtonClick
+        };
+    }
 });
 </script>
 
@@ -181,6 +197,13 @@ export default Vue.extend({
 
 .item {
     margin-block-end: 15px;
+}
+
+.customer-service {
+    &:hover,
+    &:focus {
+        cursor: pointer;
+    }
 }
 
 .link {
