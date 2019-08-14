@@ -126,7 +126,6 @@
             </div>
             <div class="item customer-service" @click="handleButtonClick">
                 Customer Support
-                <ModalCustomerService v-model="modalCustomerServiceIsOpen" />
             </div>
         </div>
         <div class="section">
@@ -144,6 +143,7 @@
                 0.0.1050
             </div>
         </div>
+        <ModalCustomerService v-model="modalCustomerServiceIsOpen" />
     </div>
 </template>
 
@@ -157,7 +157,7 @@ export default createComponent({
     },
     setup() {
         const modalCustomerServiceIsOpen = value(false);
-        const hasAffiliates = value(false);
+        const hasAffiliates = false;
 
         function handleButtonClick() {
             modalCustomerServiceIsOpen.value = !modalCustomerServiceIsOpen.value;
