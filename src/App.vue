@@ -34,6 +34,9 @@ export default createComponent({
 }
 
 .main {
+    /* to force the footer to the bottom of the page. */
+    flex-grow: 1;
+
     /* NOTE: this is required because of Header */
     padding-block-start: 85px;
 }
