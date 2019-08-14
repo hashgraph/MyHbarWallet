@@ -1,22 +1,53 @@
 <template>
     <div class="interface-form-title-container">
         <div class="interface-form-title">{{ title }}</div>
+        <Button label="Menu" @click="emitMenuOpen" />
     </div>
 </template>
 
 <script lang="ts">
 import { createComponent } from "vue-function-api";
+import Button from "@/components/Button.vue";
+import store from "@/store";
+import { SETISOPEN } from "@/store/mutations";
+
 export default createComponent({
     props: {
         title: { type: String, required: true }
+    },
+    components: {
+        Button
+    },
+    setup() {
+        function emitMenuOpen() {
+            store.commit(SETISOPEN, true);
+        }
+        return { emitMenuOpen };
     }
 });
 </script>
 
 <style lang="postcss" scoped>
 .interface-form-title-container {
+    align-items: center;
     border-bottom: 2px solid var(--color-peral);
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-inline-end: 10px;
     padding: 15px 0;
+}
+
+button {
+    border-radius: 30px;
+    font-size: 12px;
+    inset-inline-end: 10px;
+    min-width: 10px;
+    padding: 8px 12px;
+
+    @media (min-width: 1258px) {
+        display: none;
+    }
 }
 
 .interface-form-title {

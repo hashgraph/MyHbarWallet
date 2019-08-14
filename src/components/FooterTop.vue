@@ -1,5 +1,5 @@
 <template>
-    <div class="footer-top">
+    <div class="footer-top" :class="{ 'footer-w-affiliate': hasAffiliates }">
         <div class="section">
             <div class="title">Discover</div>
             <div class="item">
@@ -16,7 +16,7 @@
                 </router-link>
             </div>
         </div>
-        <div class="section">
+        <div v-if="hasAffiliates" class="section">
             <div class="title">Affiliates</div>
             <div class="item">
                 <a
@@ -124,8 +124,8 @@
                     FAQs
                 </router-link>
             </div>
-            <div class="item">
-                <router-link to class="link">Customer Support</router-link>
+            <div class="item customer-service" @click="handleButtonClick">
+                Customer Support
             </div>
         </div>
         <div class="section">
@@ -143,14 +143,32 @@
                 0.0.1050
             </div>
         </div>
+        <ModalCustomerService v-model="modalCustomerServiceIsOpen" />
     </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent, value } from "vue-function-api";
+import ModalCustomerService from "@/components/ModalCustomerService.vue";
 
-export default Vue.extend({
-    name: "FooterTop"
+export default createComponent({
+    components: {
+        ModalCustomerService
+    },
+    setup() {
+        const modalCustomerServiceIsOpen = value(false);
+        const hasAffiliates = false;
+
+        function handleButtonClick() {
+            modalCustomerServiceIsOpen.value = !modalCustomerServiceIsOpen.value;
+        }
+
+        return {
+            modalCustomerServiceIsOpen,
+            handleButtonClick,
+            hasAffiliates
+        };
+    }
 });
 </script>
 
@@ -158,7 +176,7 @@ export default Vue.extend({
 .footer-top {
     border-bottom: 1px solid var(--color-china-blue);
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1.5fr;
+    grid-template-columns: 1fr 1fr 1.5fr;
     justify-content: space-between;
     margin: auto;
     margin-block-end: 40px;
@@ -166,6 +184,10 @@ export default Vue.extend({
     padding-block-end: 40px;
     padding-block-start: 30px;
     padding-inline: 20px;
+}
+
+.footer-w-affiliate {
+    grid-template-columns: 1fr 1fr 1fr 1.5fr;
 }
 
 .section {
@@ -181,6 +203,13 @@ export default Vue.extend({
 
 .item {
     margin-block-end: 15px;
+}
+
+.customer-service {
+    &:hover,
+    &:focus {
+        cursor: pointer;
+    }
 }
 
 .link {

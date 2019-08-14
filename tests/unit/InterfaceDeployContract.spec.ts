@@ -2,6 +2,7 @@ import { shallowMount } from "@vue/test-utils";
 import InterFaceDeployContract from "../../src/views/InterfaceDeployContract.vue";
 import TextInput from "../../src/components/TextInput.vue";
 import Button from "../../src/components/Button.vue";
+
 describe("InterFaceDeployContract", (): void => {
     it("renders", (): void => {
         expect.assertions(1);
