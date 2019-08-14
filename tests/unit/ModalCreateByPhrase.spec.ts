@@ -5,6 +5,7 @@ import Modal from "@/components/Modal.vue";
 
 describe("ModalCreateByPhrase.vue", (): void => {
     it("renders", (): void => {
+        expect.assertions(3);
         const localVue = createLocalVue();
         localVue.use(VueFunctionApi);
         const onChange = jest.fn();
