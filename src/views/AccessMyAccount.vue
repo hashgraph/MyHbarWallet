@@ -33,6 +33,10 @@
             v-model="modalPasswordState"
             @submit="handlePasswordSubmit"
         />
+        <ModalEnterAccountId
+            v-model="modalEnterAccountId"
+            @submit="handleAccountIdSubmit"
+        />
 
         <input
             v-show="false"
@@ -57,6 +61,7 @@ import ModalAccessByPhrase, {
     MnemonicType
 } from "@/components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
+import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalPassword from "../components/ModalPassword.vue";
 
@@ -69,7 +74,8 @@ export default Vue.extend({
         ModalAccessByPhrase,
         ModalAccessByPrivateKey,
         PageTitle,
-        ModalPassword
+        ModalPassword,
+        ModalEnterAccountId
     },
     data() {
         return {
@@ -90,6 +96,11 @@ export default Vue.extend({
             modalAccessByPrivateKeyState: {
                 modalIsOpen: false,
                 privateKey: "",
+                isBusy: false
+            },
+            modalEnterAccountId: {
+                modalIsOpen: false,
+                account: "",
                 isBusy: false
             },
             keystoreFileText: null as string | null
@@ -146,16 +157,37 @@ export default Vue.extend({
         handlePasswordSubmit() {
             this.modalPasswordState.isBusy = true;
             // TODO: Decode private key from file
-            this.openInterface(null);
+            setTimeout(() => {
+                // Close  previous modal and open another one
+                this.modalPasswordState.isBusy = false;
+                this.modalPasswordState.modalIsOpen = false;
+                this.modalEnterAccountId.modalIsOpen = true;
+            }, 3000);
         },
         handleAccessByPhraseSubmit() {
             this.modalAccessByPhraseState.isBusy = true;
             // TODO: Decode private key from phrase
-            this.openInterface(null);
+            setTimeout(() => {
+                // Close  previous modal and open another one
+                this.modalAccessByPhraseState.isBusy = false;
+                this.modalAccessByPhraseState.modalIsOpen = false;
+                this.modalEnterAccountId.modalIsOpen = true;
+            }, 3000);
         },
         handleAccessByPrivateKeySubmit() {
             this.modalAccessByPrivateKeyState.isBusy = true;
-            this.openInterface(this.modalAccessByPrivateKeyState.privateKey);
+
+            setTimeout(() => {
+                // Close  previous modal and open another one
+                this.modalAccessByPrivateKeyState.isBusy = false;
+                this.modalAccessByPrivateKeyState.modalIsOpen = false;
+                this.modalEnterAccountId.modalIsOpen = true;
+            }, 3000);
+        },
+        handleAccountIdSubmit() {
+            this.modalEnterAccountId.isBusy = true;
+
+            this.openInterface(null);
         },
         openInterface(privateKey: string | null) {
             console.log("privateKey =", privateKey);
