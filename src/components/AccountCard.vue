@@ -1,9 +1,9 @@
 <template>
     <div class="account">
-        <!-- TODO: Use a similar hashed image generator that MEW uses -->
-        <img
+        <IdenticonComponent
+            :value="rawPublicKey"
+            size="60"
             class="account-image"
-            :src="'https://api.adorable.io/avatars/285/' + rawPublicKey"
         />
         <div class="content">
             <div class="top">
@@ -46,13 +46,15 @@ import { mdiQrcode, mdiContentCopy } from "@mdi/js";
 import Tooltip from "@/components/Tooltip.vue";
 import { writeToClipboard } from "@/clipboard";
 import { computed, createComponent, PropType } from "vue-function-api";
+import IdenticonComponent from "@/components/IdenticonComponent.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
 export default createComponent({
     components: {
         MaterialDesignIcon,
-        Tooltip
+        Tooltip,
+        IdenticonComponent
     },
     props: {
         shard: (Number as unknown) as PropType<number>,
@@ -92,16 +94,13 @@ export default createComponent({
 }
 
 .account-image {
+    align-self: flex-start;
     border: 4px solid var(--color-white);
     border-radius: 50%;
     flex-shrink: 0;
-    user-select: none;
-}
-
-img {
-    align-self: flex-start;
     margin-block-start: 10px;
     margin-inline-end: 25px;
+    user-select: none;
     width: 60px;
 }
 
