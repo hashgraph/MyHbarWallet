@@ -4,12 +4,12 @@
             :class="classObject"
             class="side-nav-background"
             @click="handleClick"
-        ></div>
+        />
         <div :class="classObject" class="side-nav-top">
             <div class="logo">My<strong>Hedera</strong>Wallet</div>
             <MaterialDesignIcon
                 class="close"
-                :icon="close"
+                :icon="mdiClose"
                 @click="handleClick"
             />
         </div>
@@ -38,10 +38,11 @@ import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "@/components/NetworkCard.vue";
 import BalanceCard from "@/components/BalanceCard.vue";
 import AccountCard from "@/components/AccountCard.vue";
-import { createComponent, value, computed } from "vue-function-api";
-import EventBus from "../event-bus";
+import { createComponent, computed } from "vue-function-api";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiClose } from "@mdi/js";
+import store from "@/store";
+import { SETISOPEN } from "@/store/mutations";
 
 export default createComponent({
     components: {
@@ -52,30 +53,22 @@ export default createComponent({
         MaterialDesignIcon
     },
     setup() {
-        const close = mdiClose;
-        const menuOpen = value(false);
+        const menuOpen = computed(() => store.state.interfaceMenu.isOpen);
 
         const classObject = computed(() => {
             if (menuOpen.value) return "menu-open";
             else return "menu-closed";
         });
 
-        function handleToggle() {
-            menuOpen.value = !menuOpen.value;
-        }
-
         function handleClick() {
-            menuOpen.value = false;
+            store.commit(SETISOPEN, false);
         }
-
-        EventBus.$on("toggle-menu", handleToggle);
 
         return {
             menuOpen,
             classObject,
-            handleToggle,
             handleClick,
-            close
+            mdiClose
         };
     }
 });
@@ -128,51 +121,68 @@ export default createComponent({
     .side-nav-background {
         display: none;
     }
+}
 
-    .close {
-        display: none;
+.side-nav-background {
+    background-color: var(--color-black);
+    height: 100%;
+    inset-block-start: 0;
+    opacity: 0.75;
+    position: fixed;
+    transition: opacity 0.3s ease;
+    width: 100%;
+    z-index: 1;
+
+    &.menu-closed {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .side-nav-background {
+            transition: none;
+        }
     }
 }
 
-@media (max-width: 1258px) {
-    .side-nav-background {
-        background-color: var(--color-black);
-        height: 100%;
-        opacity: 0.75;
-        position: fixed;
-        inset-block-start: 0;
-        transition: opacity 0.3s ease;
-        width: 100%;
+.side-nav-top {
+    align-items: center;
+    background-color: var(--color-white);
+    display: flex;
+    height: 85px;
+    inset-block-start: 0;
+    justify-content: space-between;
+    position: fixed;
+    transition: transform 0.3s ease;
+    width: 350px;
+
+    &.menu-closed {
+        transform: translate(-350px);
         z-index: 1;
+    }
 
-        &.menu-closed {
-            opacity: 0;
-            pointer-events: none;
+    @media screen and (prefers-reduced-motion: reduce) {
+        .side-nav-top {
+            transition: none;
         }
     }
+}
 
-    .side-nav-top {
-        align-items: center;
-        background-color: var(--color-white);
-        display: flex;
-        height: 85px;
-        justify-content: space-between;
-        position: fixed;
-        inset-block-start: 0;
-        transition: transform 0.3s ease;
-        width: 350px;
+.logo {
+    padding-inline-start: 25px;
+}
 
-        &.menu-closed {
-            transform: translate(-350px);
-            z-index: 1;
-        }
-    }
+.close {
+    cursor: pointer;
+    margin-inline-end: 25px;
+}
 
-    .logo {
-        padding-inline-start: 25px;
-    }
+.menu-open {
+    z-index: 2;
+}
 
-    .side-nav {
+.side-nav {
+    @media (max-width: 1258px) {
         height: 100%;
         position: fixed;
         transition: transform 0.3s ease;
@@ -184,64 +194,8 @@ export default createComponent({
         }
     }
 
-    .menu-open {
-        z-index: 2;
-    }
-
-    .close {
-        cursor: pointer;
-        margin-inline-end: 25px;
-    }
-
     @media screen and (prefers-reduced-motion: reduce) {
-        .side-nav-background {
-            background-color: var(--color-black);
-            height: 100%;
-            opacity: 0.75;
-            position: fixed;
-            inset-block-start: 0;
-            transition: none;
-            width: 100%;
-            z-index: 1;
-
-            &.menu-closed {
-                opacity: 0;
-                pointer-events: none;
-            }
-        }
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-        .side-nav-top {
-            align-items: center;
-            background-color: var(--color-white);
-            display: flex;
-            height: 85px;
-            justify-content: space-between;
-            position: fixed;
-            inset-block-start: 0;
-            transition: none;
-            width: 350px;
-
-            &.menu-closed {
-                transform: translate(-350px);
-                z-index: 1;
-            }
-        }
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-        .side-nav {
-            height: 100%;
-            position: fixed;
-            transition: none;
-            width: 350px;
-
-            &.menu-closed {
-                transform: translate(-350px);
-                z-index: 2;
-            }
-        }
+        transition: none;
     }
 }
 

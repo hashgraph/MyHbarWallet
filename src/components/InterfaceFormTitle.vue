@@ -1,14 +1,15 @@
 <template>
     <div class="interface-form-title-container">
         <div class="interface-form-title">{{ title }}</div>
-        <Button label="Menu" @click="emitMenuToggle"></Button>
+        <Button label="Menu" @click="emitMenuOpen" />
     </div>
 </template>
 
 <script lang="ts">
 import { createComponent } from "vue-function-api";
 import Button from "@/components/Button.vue";
-import EventBus from "../event-bus";
+import store from "@/store";
+import { SETISOPEN } from "@/store/mutations";
 
 export default createComponent({
     props: {
@@ -18,10 +19,10 @@ export default createComponent({
         Button
     },
     setup() {
-        function emitMenuToggle() {
-            EventBus.$emit("toggle-menu");
+        function emitMenuOpen() {
+            store.commit(SETISOPEN, true);
         }
-        return { emitMenuToggle };
+        return { emitMenuOpen };
     }
 });
 </script>
@@ -38,21 +39,14 @@ export default createComponent({
 }
 
 button {
+    border-radius: 30px;
+    font-size: 12px;
+    inset-inline-end: 10px;
+    min-width: 10px;
+    padding: 8px 12px;
+
     @media (min-width: 1258px) {
         display: none;
-    }
-
-    @media (max-width: 1258px) {
-        border-radius: 30px;
-        font-size: 12px;
-        min-width: 10px;
-        padding: 8px 12px;
-    }
-
-    /* FIXME: remove max-width block below when there is more interface content */
-    @media (max-width: 1020px) {
-        position: fixed;
-        inset-inline-end: 10px;
     }
 }
 
