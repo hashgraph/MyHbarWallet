@@ -7,6 +7,7 @@ describe("SwitchButton.vue", (): void => {
     localVue.use(VueFunctionApi);
 
     it("renders", (): void => {
+        expect.assertions(3);
         const handler = jest.fn();
         const wrapper = shallowMount(SwitchButton, {
             localVue,

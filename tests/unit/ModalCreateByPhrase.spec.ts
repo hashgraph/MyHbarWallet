@@ -4,6 +4,7 @@ import Modal from "@/components/Modal.vue";
 
 describe("ModalCreateByPhrase.vue", (): void => {
     it("renders", (): void => {
+        expect.assertions(3);
         const onChange = jest.fn();
         const wrapper = shallowMount(ModalCreateByPhrase, {
             propsData: {

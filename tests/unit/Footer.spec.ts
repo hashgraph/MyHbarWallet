@@ -7,6 +7,8 @@ import VueRouter from "vue-router";
 
 describe("Footer.vue", (): void => {
     it("renders and contains footer information", (): void => {
+        expect.assertions(4);
+
         const localVue = createLocalVue();
         localVue.use(VueRouter);
         localVue.use(VueFunctionApi);

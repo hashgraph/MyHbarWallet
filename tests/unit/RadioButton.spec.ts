@@ -5,6 +5,7 @@ import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 describe("RadioButton.vue", (): void => {
     it("renders, contains expected properties", (): void => {
+        expect.assertions(4);
         const name = "RadioGroup";
         const label = "Label";
         const value = "Value";
@@ -26,6 +27,7 @@ describe("RadioButton.vue", (): void => {
     });
 
     it("reacts when checked", (): void => {
+        expect.assertions(4);
         const name = "RadioGroup";
         const label = "Label";
         const value = "Value";

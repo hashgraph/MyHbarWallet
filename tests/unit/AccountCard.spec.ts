@@ -19,10 +19,12 @@ describe("AccountCard.vue", (): void => {
     });
 
     it("renders", (): void => {
+        expect.assertions(1);
         expect(wrapper.isVisible()).toBe(true);
     });
 
     it("removes the public key prefix", (): void => {
+        expect.assertions(1);
         expect(wrapper.find(".top div:nth-child(3)").text()).toMatch(
             "2cc9e2d0c16c717476d4bbbfa3307a98cf0c41d7afc77c851e476b5921f3fb65"
         );

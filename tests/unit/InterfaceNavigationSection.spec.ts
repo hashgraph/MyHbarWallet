@@ -35,10 +35,12 @@ describe("InterfaceNavigationSection", (): void => {
     });
 
     it("renders", (): void => {
+        expect.assertions(1);
         expect(wrapper.find(".nav-title").text()).toMatch("Contract");
     });
 
     it("accepts click inputs and shows links", (): void => {
+        expect.assertions(2);
         const img = wrapper.find("img").attributes("src");
         expect(img).toBe(wrapper.vm.$props.image);
         wrapper.find(".nav-section-header").trigger("click");

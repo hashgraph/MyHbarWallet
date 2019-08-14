@@ -12,10 +12,12 @@ describe("UnitConverter.vue", (): void => {
     wrapper.setData({ valueLeft: "1000000000" });
 
     it("renders", (): void => {
+        expect.assertions(1);
         expect(wrapper.isVisible()).toBe(true);
     });
 
     it("calculates", (): void => {
+        expect.assertions(1);
         expect(wrapper.vm.$data.valueRight).toBe("10");
     });
 });
@@ -26,10 +28,12 @@ describe("ConvertUnits.vue", (): void => {
     const wrapper = shallowMount(ConvertUnits, { localVue });
 
     it("renders", (): void => {
+        expect.assertions(1);
         expect(wrapper.isVisible()).toBe(true);
     });
 
     it("loads the data", (): void => {
+        expect.assertions(1);
         expect(wrapper.vm.$data.hbarUnitRef).toHaveLength(7);
     });
 });

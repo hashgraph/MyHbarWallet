@@ -8,6 +8,7 @@ describe("Accordion.vue", (): void => {
     localVue.use(VueFunctionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
         const wrapper = shallowMount(Accordion, {
             localVue,
             slots: {
@@ -19,6 +20,7 @@ describe("Accordion.vue", (): void => {
     });
 
     it("transitions to show content when clicked", (): void => {
+        expect.assertions(3);
         const title = "Title";
         const content = "Content";
 

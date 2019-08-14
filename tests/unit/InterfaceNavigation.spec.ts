@@ -5,6 +5,7 @@ import InterfaceNavigation from "../../src/components/InterfaceNavigation.vue";
 describe("InterfaceNavigation", (): void => {
     const wrapper = shallowMount(InterfaceNavigation);
     it("renders with children components", (): void => {
+        expect.assertions(1);
         expect(wrapper.find(InterfaceNavigationSection).exists()).toBe(true);
     });
 });

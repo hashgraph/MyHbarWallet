@@ -4,6 +4,7 @@ import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 describe("Button.vue", (): void => {
     it("renders", (): void => {
+        expect.assertions(1);
         const label = "Choose a Hardware";
         const wrapper = shallowMount(Button, {
             propsData: { label }
@@ -13,6 +14,7 @@ describe("Button.vue", (): void => {
     });
 
     it("renders a loading spinner when busy", (): void => {
+        expect.assertions(2);
         const label = "Choose a Hardware";
         const wrapper = shallowMount(Button, {
             propsData: { label, busy: true }
@@ -23,6 +25,7 @@ describe("Button.vue", (): void => {
     });
 
     it("triggers a click handler when clicked", (): void => {
+        expect.assertions(1);
         const handler = jest.fn();
         const wrapper = shallowMount(Button, {
             propsData: { label: "" },

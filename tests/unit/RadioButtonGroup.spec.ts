@@ -7,6 +7,7 @@ import RadioButton from "@/components/RadioButton.vue";
 
 describe("RadioButtonGroup.vue", (): void => {
     it("renders with a list", (): void => {
+        expect.assertions(1);
         const name = "RadioButtonGroup";
         const options = [
             {
@@ -36,8 +37,8 @@ describe("RadioButtonGroup.vue", (): void => {
     });
 
     it("triggers appropriate events", (): void => {
+        expect.assertions(2);
         const name = "RadioButtonGroup";
-        const emission = { change: [["key"]] };
 
         const options = [
             {
