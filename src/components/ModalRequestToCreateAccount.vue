@@ -6,16 +6,22 @@
         @change="this.$listeners.change"
     >
         <div class="modal-contents">
+            <!-- todo: decide on a desired error correction level -->
             <qrcode-vue
-                value="hello hedera"
-                size="300"
-                level="H"
+                :value="publicKey"
+                size="180"
+                level="L"
                 class="pub-qr"
             />
 
-            <TextInput class="input key-input" placeholder="Enter Public Key" />
+            <TextInput compact class="input key-input" :value="publicKey" />
 
-            <Button label="copy" class="modal-button" />
+            <Button
+                compact
+                label="copy"
+                class="modal-button"
+                @click="handleClickCopy"
+            />
 
             <div class="have-id">
                 <router-link to="/">
@@ -33,6 +39,13 @@ import TextInput from "@/components/TextInput.vue";
 import Button from "@/components/Button.vue";
 import { createComponent, PropType } from "vue-function-api";
 import QrcodeVue from "qrcode.vue";
+import { writeToClipboard } from "@/clipboard";
+
+interface Props {
+    isOpen: boolean;
+    event: "change";
+    publicKey: string;
+}
 
 export default createComponent({
     components: {
@@ -46,7 +59,18 @@ export default createComponent({
         event: "change"
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>
+        isOpen: (Boolean as unknown) as PropType<boolean>,
+        event: (String as unknown) as PropType<string>,
+        publicKey: (String as unknown) as PropType<string>
+    },
+    setup(props) {
+        async function handleClickCopy() {
+            await writeToClipboard(props.publicKey);
+        }
+
+        return {
+            handleClickCopy
+        };
     }
 });
 </script>
@@ -62,7 +86,7 @@ export default createComponent({
 }
 
 .key-input {
-    padding-block-end: 30px;
+    padding-block-end: 12px;
 }
 
 .pub-qr {
