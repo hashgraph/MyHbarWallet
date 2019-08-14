@@ -7,6 +7,8 @@ describe("Tooltip.vue", (): void => {
     localVue.use(VueFunctionApi);
 
     it("opens tooltip on click for pinnable", (): void => {
+        expect.assertions(3);
+
         const message = "Tooltip Text";
         const wrapper = shallowMount(Tooltip, {
             localVue,
@@ -28,6 +30,8 @@ describe("Tooltip.vue", (): void => {
     });
 
     it("does not open tooltip on click for unpinnable", (): void => {
+        expect.assertions(2);
+
         const wrapper = shallowMount(Tooltip, {
             localVue,
             propsData: {
@@ -47,6 +51,8 @@ describe("Tooltip.vue", (): void => {
     });
 
     it("does open tooltip on mouseenter and close on mouseleave", (): void => {
+        expect.assertions(3);
+
         const wrapper = shallowMount(Tooltip, {
             localVue,
             propsData: {
