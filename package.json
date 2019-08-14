@@ -19,6 +19,7 @@
         "bignumber.js": "^9.0.0",
         "qrcode.vue": "^1.6.2",
         "hedera-sdk-js": "git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js",
+        "jdenticon": "^2.2.0",
         "ua-parser-js": "^0.7.20",
         "vue": "^2.6.10",
         "vue-function-api": "^2.1.2",
