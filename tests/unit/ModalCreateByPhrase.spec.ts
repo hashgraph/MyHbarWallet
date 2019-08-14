@@ -1,11 +1,16 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
+import { plugin as VueFunctionApi } from "vue-function-api";
 import ModalCreateByPhrase from "@/components/ModalCreateByPhrase.vue";
 import Modal from "@/components/Modal.vue";
 
 describe("ModalCreateByPhrase.vue", (): void => {
     it("renders", (): void => {
+        expect.assertions(3);
+        const localVue = createLocalVue();
+        localVue.use(VueFunctionApi);
         const onChange = jest.fn();
         const wrapper = shallowMount(ModalCreateByPhrase, {
+            localVue,
             propsData: {
                 isOpen: false
             },
