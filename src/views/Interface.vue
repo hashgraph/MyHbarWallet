@@ -1,6 +1,19 @@
 <template>
     <div class="interface">
-        <InterfaceNavigation />
+        <div
+            :class="classObject"
+            class="side-nav-background"
+            @click="handleClick"
+        ></div>
+        <div :class="classObject" class="side-nav-top">
+            <div class="logo">My<strong>Hedera</strong>Wallet</div>
+            <MaterialDesignIcon
+                class="close"
+                :icon="close"
+                @click="handleClick"
+            />
+        </div>
+        <InterfaceNavigation :class="classObject" class="side-nav" />
         <div class="main-container">
             <div class="main">
                 <router-view />
@@ -21,18 +34,49 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "@/components/NetworkCard.vue";
 import BalanceCard from "@/components/BalanceCard.vue";
 import AccountCard from "@/components/AccountCard.vue";
+import { createComponent, value, computed } from "vue-function-api";
+import EventBus from "../event-bus";
+import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import { mdiClose } from "@mdi/js";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         InterfaceNavigation,
         NetworkCard,
         BalanceCard,
-        AccountCard
+        AccountCard,
+        MaterialDesignIcon
+    },
+    setup() {
+        const close = mdiClose;
+        const menuOpen = value(false);
+
+        const classObject = computed(() => {
+            if (menuOpen.value) return "menu-open";
+            else return "menu-closed";
+        });
+
+        function handleToggle() {
+            menuOpen.value = !menuOpen.value;
+        }
+
+        function handleClick() {
+            menuOpen.value = false;
+        }
+
+        EventBus.$on("toggle-menu", handleToggle);
+
+        return {
+            menuOpen,
+            classObject,
+            handleToggle,
+            handleClick,
+            close
+        };
     }
 });
 </script>
@@ -74,5 +118,136 @@ export default Vue.extend({
 .info-network {
     flex-shrink: 0;
     grid-area: info-network;
+}
+
+@media (min-width: 1259px) {
+    .side-nav-top {
+        display: none;
+    }
+
+    .side-nav-background {
+        display: none;
+    }
+
+    .close {
+        display: none;
+    }
+}
+
+@media (max-width: 1258px) {
+    .side-nav-background {
+        background-color: var(--color-black);
+        height: 100%;
+        opacity: 0.75;
+        position: fixed;
+        inset-block-start: 0;
+        transition: opacity 0.3s ease;
+        width: 100%;
+        z-index: 1;
+
+        &.menu-closed {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+
+    .side-nav-top {
+        align-items: center;
+        background-color: var(--color-white);
+        display: flex;
+        height: 85px;
+        justify-content: space-between;
+        position: fixed;
+        inset-block-start: 0;
+        transition: transform 0.3s ease;
+        width: 350px;
+
+        &.menu-closed {
+            transform: translate(-350px);
+            z-index: 1;
+        }
+    }
+
+    .logo {
+        padding-inline-start: 25px;
+    }
+
+    .side-nav {
+        height: 100%;
+        position: fixed;
+        transition: transform 0.3s ease;
+        width: 350px;
+
+        &.menu-closed {
+            transform: translate(-350px);
+            z-index: 2;
+        }
+    }
+
+    .menu-open {
+        z-index: 2;
+    }
+
+    .close {
+        cursor: pointer;
+        margin-inline-end: 25px;
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .side-nav-background {
+            background-color: var(--color-black);
+            height: 100%;
+            opacity: 0.75;
+            position: fixed;
+            inset-block-start: 0;
+            transition: none;
+            width: 100%;
+            z-index: 1;
+
+            &.menu-closed {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .side-nav-top {
+            align-items: center;
+            background-color: var(--color-white);
+            display: flex;
+            height: 85px;
+            justify-content: space-between;
+            position: fixed;
+            inset-block-start: 0;
+            transition: none;
+            width: 350px;
+
+            &.menu-closed {
+                transform: translate(-350px);
+                z-index: 1;
+            }
+        }
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .side-nav {
+            height: 100%;
+            position: fixed;
+            transition: none;
+            width: 350px;
+
+            &.menu-closed {
+                transform: translate(-350px);
+                z-index: 2;
+            }
+        }
+    }
+}
+
+@media (max-width: 1012px) {
+    .menu-open {
+        width: 100%;
+    }
 }
 </style>
