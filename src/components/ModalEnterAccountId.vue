@@ -1,36 +1,39 @@
 <template>
-    <Modal
-        :is-open="state.modalIsOpen"
-        :not-closable="state.isBusy"
-        title="Enter Account ID"
-        @change="handleModalChangeIsOpen"
-    >
-        <div class="label">
-            Bacon ipsum dolor amet jerky
-        </div>
+    <div class="enter-account-id">
+        <Modal
+            :is-open="state.modalIsOpen"
+            :not-closable="state.isBusy"
+            title="Enter Account ID"
+            @change="handleModalChangeIsOpen"
+        >
+            <div class="label">
+                Bacon ipsum dolor amet jerky
+            </div>
 
-        <TextInput
-            ref="input"
-            :value="input"
-            show-validation
-            :valid="valid"
-            placeholder="shard.realm.account"
-            @input="handleInput"
-        />
-
-        <div class="btn-container">
-            <Button
-                class="btn"
-                label="Continue"
-                :busy="state.isBusy"
-                @click="handleSubmit"
+            <TextInput
+                ref="input"
+                :value="input"
+                show-validation
+                :valid="valid"
+                placeholder="shard.realm.account"
+                @input="handleInput"
             />
-        </div>
 
-        <div class="link-container">
-            <a href="#" class="link">Don't have an Account ID?</a>
-        </div>
-    </Modal>
+            <div class="btn-container">
+                <Button
+                    class="btn"
+                    label="Continue"
+                    :disabled="!valid"
+                    :busy="state.isBusy"
+                    @click="handleSubmit"
+                />
+            </div>
+
+            <div class="link-container">
+                <a href="#" class="link">Don't have an Account ID?</a>
+            </div>
+        </Modal>
+    </div>
 </template>
 
 <script lang="ts">
@@ -88,9 +91,7 @@ export default createComponent({
         }
 
         function handleSubmit() {
-            if (valid.value) {
-                context.emit("submit", props.state);
-            }
+            context.emit("submit", props.state);
         }
 
         function handleModalChangeIsOpen(isOpen: boolean) {

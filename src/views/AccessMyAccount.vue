@@ -157,12 +157,22 @@ export default Vue.extend({
         handlePasswordSubmit() {
             this.modalPasswordState.isBusy = true;
             // TODO: Decode private key from file
-            this.modalEnterAccountId.modalIsOpen = true;
+            setTimeout(() => {
+                // Close  previous modal and open another one
+                this.modalPasswordState.isBusy = false;
+                this.modalPasswordState.modalIsOpen = false;
+                this.modalEnterAccountId.modalIsOpen = true;
+            }, 3000);
         },
         handleAccessByPhraseSubmit() {
             this.modalAccessByPhraseState.isBusy = true;
             // TODO: Decode private key from phrase
-            this.openInterface(null);
+            setTimeout(() => {
+                // Close  previous modal and open another one
+                this.modalAccessByPhraseState.isBusy = false;
+                this.modalAccessByPhraseState.modalIsOpen = false;
+                this.modalEnterAccountId.modalIsOpen = true;
+            }, 3000);
         },
         handleAccessByPrivateKeySubmit() {
             this.modalAccessByPrivateKeyState.isBusy = true;
