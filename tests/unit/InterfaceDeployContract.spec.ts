@@ -7,8 +7,8 @@ describe("InterfaceDeployContract", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
 
-    const wrapper = shallowMount(InterfaceDeployContract, {localVue})
     it("renders", (): void => {
-        expect(wrapper.findAll(TextInput)).toHaveLength(3)
+        const wrapper = shallowMount(InterfaceDeployContract, { localVue });
+        expect(wrapper.findAll(TextInput)).toHaveLength(3);
     });
 });
