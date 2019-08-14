@@ -12,7 +12,7 @@ function ConvertUnits(): Promise<typeof import("./views/ConvertUnits.vue")> {
     return import(/* webpackChunkName: "units" */ "./views/ConvertUnits.vue");
 }
 
-function Interface(): Promise<typeof import("*.vue")> {
+function Interface(): Promise<typeof import(".views/Interface.vue")> {
     return import(/* webpackChunkName: "interface" */ "./views/Interface.vue");
 }
 
