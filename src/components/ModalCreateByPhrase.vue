@@ -49,7 +49,9 @@
                 <Button
                     class="continue-btn"
                     label="I Wrote Down My Mnemonic Phrase"
+                    @click="handleClick"
                 />
+                <ModalVerifyPhrase v-model="verifyPhraseData" />
                 <img
                     :src="printerIcon"
                     class="printer-button"
@@ -80,6 +82,7 @@ import InfoButton from "../components/InfoButton.vue";
 import ModalPhrasePrintPreview from "../components/ModalPhrasePrintPreview.vue";
 import printIcon from "../assets/icon-printer.svg";
 import { mdiCached } from "@mdi/js";
+import ModalVerifyPhrase from "@/components/ModalVerifyPhrase.vue";
 import {
     computed,
     createComponent,
@@ -110,7 +113,8 @@ export default createComponent({
         SwitchButton,
         Button,
         MaterialDesignIcon,
-        InfoButton
+        InfoButton,
+        ModalVerifyPhrase
     },
     model: {
         prop: "isOpen",
@@ -126,6 +130,7 @@ export default createComponent({
         const passwordValue = value("");
         const words = value([] as string[]);
         const printModalIsOpen = value(false);
+        const verifyPhraseData = value({ isOpen: false, words: [] });
 
         const cachedIcon = computed(() => {
             return mdiCached;
@@ -136,6 +141,7 @@ export default createComponent({
 
         function handleNumWordsChange(numWords: number) {
             numberWords.value = numWords;
+            verifyPhraseData.value.words = words.value.slice(0, num);
         }
 
         function handlePasswordChange(password: string) {
@@ -146,6 +152,10 @@ export default createComponent({
             printModalIsOpen.value = !printModalIsOpen.value;
         }
 
+        function handleClick() {
+            verifyPhraseData.value.isOpen = true;
+        }
+
         return {
             numberWords,
             passwordValue,
@@ -153,9 +163,11 @@ export default createComponent({
             cachedIcon,
             printerIcon,
             printModalIsOpen,
+            verifyPhraseData,
             handlePrintModal,
             handleNumWordsChange,
-            handlePasswordChange
+            handlePasswordChange,
+            handleClick
         };
     }
 });
