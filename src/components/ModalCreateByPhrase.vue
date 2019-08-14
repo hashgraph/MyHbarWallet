@@ -27,7 +27,7 @@
                 <div class="text">Value</div>
                 <div class="spacer" />
                 <div class="random-button">
-                    <MaterialDesignIcon :size="16" :icon="cachedIcon" />
+                    <MaterialDesignIcon :size="16" :icon="mdiCached" />
                     Random
                 </div>
             </div>
@@ -103,7 +103,6 @@ export default createComponent({
         const passwordValue = value("");
         const words = value([]);
         const printModalIsOpen = value(false);
-        const cachedIcon = mdiCached;
 
         function handleNumWordsChange(num: number) {
             numWords.value = num;
@@ -121,7 +120,7 @@ export default createComponent({
             numWords,
             passwordValue,
             words,
-            cachedIcon,
+            mdiCached,
             printerIcon,
             printModalIsOpen,
             handlePrintModal,
@@ -133,12 +132,6 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.instruction {
-    color: var(--color-china-blue);
-    font-size: 14px;
-    margin-block-end: 20px;
-}
-
 .value-switch {
     align-items: center;
     display: flex;
