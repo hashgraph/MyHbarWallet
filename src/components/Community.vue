@@ -12,28 +12,28 @@
             <div class="icons">
                 <CommunitySocialIcon
                     name="Facebook"
-                    :image="facebook"
+                    :image="facebookSocial"
                     href="https://www.facebook.com"
                 />
                 <CommunitySocialIcon
                     name="Twitter"
-                    :image="twitter"
+                    :image="twitterSocial"
                     href="https://www.twitter.com"
                 />
                 <CommunitySocialIcon
                     name="Medium"
                     href="https://medium.com"
-                    :image="medium"
+                    :image="mediumSocial"
                 />
                 <CommunitySocialIcon
                     name="Reddit"
                     href="https://www.reddit.com/"
-                    :image="reddit"
+                    :image="redditSocial"
                 />
                 <CommunitySocialIcon
                     name="Github"
                     href="https://github.com"
-                    :image="github"
+                    :image="githubSocial"
                 />
             </div>
         </div>
@@ -42,6 +42,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { createComponent } from "vue-function-api";
 import CommunitySocialIcon from "@/components/CommunitySocialIcon.vue";
 import facebookSocial from "@/assets/facebook.png";
 import twitterSocial from "@/assets/twitter.jpg";
@@ -49,26 +50,18 @@ import mediumSocial from "@/assets/medium.png";
 import redditSocial from "@/assets/reddit.svg";
 import githubSocial from "@/assets/github.png";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         CommunitySocialIcon
     },
-    computed: {
-        facebook() {
-            return facebookSocial;
-        },
-        twitter() {
-            return twitterSocial;
-        },
-        medium() {
-            return mediumSocial;
-        },
-        reddit() {
-            return redditSocial;
-        },
-        github() {
-            return githubSocial;
-        }
+    setup() {
+        return {
+            facebookSocial,
+            twitterSocial,
+            mediumSocial,
+            redditSocial,
+            githubSocial
+        };
     }
 });
 </script>
