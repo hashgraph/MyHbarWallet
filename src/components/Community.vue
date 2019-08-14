@@ -41,7 +41,6 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import { createComponent } from "vue-function-api";
 import CommunitySocialIcon from "@/components/CommunitySocialIcon.vue";
 import facebookSocial from "@/assets/facebook.png";

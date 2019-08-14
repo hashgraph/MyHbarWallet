@@ -12,7 +12,7 @@
         <MaterialDesignIcon
             v-if="busy"
             class="spinner"
-            :icon="mdiSpinner"
+            :icon="mdiLoading"
             spin
         />
 
@@ -27,11 +27,11 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent } from "vue-function-api";
 import { mdiLoading } from "@mdi/js";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
@@ -47,10 +47,10 @@ export default Vue.extend({
             default: null
         }
     },
-    computed: {
-        mdiSpinner() {
-            return mdiLoading;
-        }
+    setup() {
+        return {
+            mdiLoading
+        };
     }
 });
 </script>

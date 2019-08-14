@@ -8,9 +8,9 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     props: {
         href: { type: String, required: false, default: "" },
         name: { type: String, required: true },
