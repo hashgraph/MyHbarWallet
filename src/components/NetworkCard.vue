@@ -12,7 +12,8 @@
             </div>
             <div class="actions">
                 <Tooltip :pinnable="false" message="Change Network">
-                    <button class="change">Change</button>
+                    <!--FIXME: Disabling button until it can do something -->
+                    <button v-if="false" class="change">Change</button>
                 </Tooltip>
             </div>
         </div>
@@ -20,10 +21,10 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Tooltip from "./Tooltip.vue";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         Tooltip
     }
