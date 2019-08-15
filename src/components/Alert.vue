@@ -41,7 +41,7 @@ export default createComponent({
         message: (String as unknown) as PropType<string>,
         level: (String as unknown) as PropType<string>
     },
-    setup(props) {
+    setup(props: Props) {
         const messageIcon = computed(() => {
             if (props.level === "info") {
                 return mdiInformationOutline;
