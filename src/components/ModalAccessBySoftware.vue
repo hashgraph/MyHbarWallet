@@ -35,7 +35,6 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imageKey from "../assets/button-key.svg";
@@ -44,6 +43,7 @@ import imageFile from "../assets/button-file.svg";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
+import { createComponent, value } from "vue-function-api";
 
 export enum AccessSoftwareOption {
     File = "file",
@@ -51,7 +51,7 @@ export enum AccessSoftwareOption {
     Key = "key"
 }
 
-export default Vue.extend({
+export default createComponent({
     components: {
         RadioButtonGroup,
         Button,
@@ -66,31 +66,27 @@ export default Vue.extend({
     props: {
         isOpen: { type: Boolean }
     },
-    data() {
-        return {
-            optionSelected: null
-        };
-    },
-    computed: {
-        options() {
-            return [
-                {
-                    label: "Keystore File",
-                    value: AccessSoftwareOption.File,
-                    image: imageFile
-                },
-                {
-                    label: "Mnemonic Phrase",
-                    value: AccessSoftwareOption.Phrase,
-                    image: imagePhrase
-                },
-                {
-                    label: "Private Key",
-                    value: AccessSoftwareOption.Key,
-                    image: imageKey
-                }
-            ];
-        }
+    setup() {
+        const optionSelected = value(null);
+
+        const options = [
+            {
+                label: "Keystore File",
+                value: AccessSoftwareOption.File,
+                image: imageFile
+            },
+            {
+                label: "Mnemonic Phrase",
+                value: AccessSoftwareOption.Phrase,
+                image: imagePhrase
+            },
+            {
+                label: "Private Key",
+                value: AccessSoftwareOption.Key,
+                image: imageKey
+            }
+        ];
+        return { optionSelected, options };
     }
 });
 </script>
