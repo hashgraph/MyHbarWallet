@@ -17,7 +17,6 @@
             <div class="field">
                 <TextInput
                     v-model="publicKey"
-                    placeholder="302a300506032b6570032100xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                     validate-id
                     label="Public Key"
                     show-validation
@@ -72,12 +71,7 @@ export default createComponent({
 
         function handleKeyInput(input: string) {
             // todo: public key validation
-            if (!input.includes(ED25519_PREFIX)) {
-                validKey.value = false;
-                return;
-            }
-
-            validKey.value = true;
+            validKey.value = input.startsWith(ED25519_PREFIX);
         }
 
         function handleMaxFeeInput(input: number) {

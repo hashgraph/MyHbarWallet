@@ -24,13 +24,13 @@
             />
 
             <InterfaceNavigationSection
-            :image="accountImage"
-            :image-active="accountImageActive"
-            title="Accounts"
-            :routes="accountRoutes"
-        />
+                :image="sendImage"
+                :image-active="sendImageActive"
+                title="Accounts"
+                :routes="accountRoutes"
+            />
 
-        <InterfaceNavigationSection
+            <InterfaceNavigationSection
                 :image="messageImage"
                 :image-active="messageImageActive"
                 title="Message"
@@ -72,6 +72,10 @@ export default createComponent({
             { name: "deploy-contract", label: "Deploy Contract" }
         ];
 
+        const accountRoutes = [
+            { name: "create-account-transaction", label: "Create Account" }
+        ];
+
         const messageRoutes = [
             { name: "sign-message", label: "Sign Message" },
             { name: "verify-message", label: "Verify Message" }
@@ -96,6 +100,7 @@ export default createComponent({
             contractRoutes,
             contractImage,
             contractImageActive,
+            accountRoutes,
             messageRoutes,
             messageImage,
             messageImageActive,

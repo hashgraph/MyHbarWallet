@@ -11,7 +11,6 @@
                 :placeholder="placeholder"
                 :tabindex="tabindex"
                 :step="step"
-                :suffix="suffix"
                 @input="handleInput"
             />
         </label>
@@ -86,7 +85,6 @@ export interface Component {
     focus: () => void;
     rows: Wrapper<number>;
     handleClickEye: () => void;
-    handleInput: (event: Event) => void;
     handleClickCopy: () => void;
     handleClickClear: () => void;
 }
@@ -94,6 +92,10 @@ export interface Component {
 export default createComponent({
     components: {
         MaterialDesignIcon
+    },
+    model: {
+        prop: "value",
+        event: "change"
     },
     props: {
         placeholder: (String as unknown) as PropType<string>,
@@ -153,19 +155,6 @@ export default createComponent({
             (context.refs.input as HTMLInputElement).focus();
         }
 
-        function handleInput(event: Event) {
-            const input = parseInt((event.target as HTMLInputElement).value);
-
-            // if the input is not a number; auto fail validation and set to min
-            if (isNaN(input)) {
-                (context.refs
-                    .input as HTMLInputElement).value = props.min.toString();
-                return;
-            }
-
-            context.emit("input", input);
-        }
-
         function handleClickClear() {
             context.emit("input", props.min);
         }
@@ -182,7 +171,6 @@ export default createComponent({
             focus,
             rows,
             handleClickEye,
-            handleInput,
             handleClickCopy,
             handleClickClear
         };
@@ -221,9 +209,22 @@ export default createComponent({
     }
 }
 
+.decorations {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    inset-block-start: 0;
+    inset-inline-end: 15px;
+    position: absolute;
+}
+
 label {
     display: flex;
     flex-direction: column;
+
+    & + .decorations {
+        padding-inline-end: 20px;
+    }
 }
 
 input {
@@ -235,10 +236,6 @@ input {
     outline: none;
     padding: 20px;
     width: 100%;
-
-    &:not(:only-child) {
-        padding-inline-end: 50px;
-    }
 
     &.is-compact {
         border-width: 1px;
@@ -273,15 +270,6 @@ input::placeholder {
     height: 24px;
     margin-block-end: 13px;
     padding: 0 8px;
-}
-
-.decorations {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    inset-block-start: 0;
-    inset-inline-end: 15px;
-    position: absolute;
 }
 
 .has-error .decorations {
@@ -327,5 +315,9 @@ input::placeholder {
     color: var(--color-lightish-red);
     font-size: 14px;
     margin: 7px 0 0 15px;
+}
+
+.suffix {
+    padding-inline: 2px;
 }
 </style>
