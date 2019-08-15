@@ -1,19 +1,6 @@
 <template>
     <div class="interface">
-        <div
-            :class="classObject"
-            class="side-nav-background"
-            @click="handleClick"
-        />
-        <div :class="classObject" class="side-nav-top">
-            <div class="logo">My<strong>Hedera</strong>Wallet</div>
-            <MaterialDesignIcon
-                class="close"
-                :icon="mdiClose"
-                @click="handleClick"
-            />
-        </div>
-        <InterfaceNavigation :class="classObject" class="side-nav" />
+        <InterfaceNavigation />
         <div class="main-container">
             <div class="main">
                 <router-view />
@@ -38,38 +25,14 @@ import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "@/components/NetworkCard.vue";
 import BalanceCard from "@/components/BalanceCard.vue";
 import AccountCard from "@/components/AccountCard.vue";
-import { createComponent, computed } from "vue-function-api";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
-import { mdiClose } from "@mdi/js";
-import store from "@/store";
-import { SETISOPEN } from "@/store/mutations";
+import { createComponent } from "vue-function-api";
 
 export default createComponent({
     components: {
         InterfaceNavigation,
         NetworkCard,
         BalanceCard,
-        AccountCard,
-        MaterialDesignIcon
-    },
-    setup() {
-        const menuOpen = computed(() => store.state.interfaceMenu.isOpen);
-
-        const classObject = computed(() => {
-            if (menuOpen.value) return "menu-open";
-            else return "menu-closed";
-        });
-
-        function handleClick() {
-            store.commit(SETISOPEN, false);
-        }
-
-        return {
-            menuOpen,
-            classObject,
-            handleClick,
-            mdiClose
-        };
+        AccountCard
     }
 });
 </script>
@@ -111,97 +74,5 @@ export default createComponent({
 .info-network {
     flex-shrink: 0;
     grid-area: info-network;
-}
-
-@media (min-width: 1259px) {
-    .side-nav-top {
-        display: none;
-    }
-
-    .side-nav-background {
-        display: none;
-    }
-}
-
-.side-nav-background {
-    background-color: var(--color-black);
-    height: 100%;
-    inset-block-start: 0;
-    opacity: 0.75;
-    position: fixed;
-    transition: opacity 0.3s ease;
-    width: 100%;
-    z-index: 1;
-
-    &.menu-closed {
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-        .side-nav-background {
-            transition: none;
-        }
-    }
-}
-
-.side-nav-top {
-    align-items: center;
-    background-color: var(--color-white);
-    display: flex;
-    height: 85px;
-    inset-block-start: 0;
-    justify-content: space-between;
-    position: fixed;
-    transition: transform 0.3s ease;
-    width: 350px;
-
-    &.menu-closed {
-        transform: translate(-350px);
-        z-index: 1;
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-        .side-nav-top {
-            transition: none;
-        }
-    }
-}
-
-.logo {
-    padding-inline-start: 25px;
-}
-
-.close {
-    cursor: pointer;
-    margin-inline-end: 25px;
-}
-
-.menu-open {
-    z-index: 2;
-}
-
-.side-nav {
-    @media (max-width: 1258px) {
-        height: 100%;
-        position: fixed;
-        transition: transform 0.3s ease;
-        width: 350px;
-
-        &.menu-closed {
-            transform: translate(-350px);
-            z-index: 2;
-        }
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-        transition: none;
-    }
-}
-
-@media (max-width: 1012px) {
-    .menu-open {
-        width: 100%;
-    }
 }
 </style>
