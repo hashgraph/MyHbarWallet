@@ -32,16 +32,12 @@
 <script lang="ts">
 import { createComponent, value } from "vue-function-api";
 import { SetupContext } from "vue-function-api/dist/types/vue";
-
-import TextInput, {
-    Component as TextInputComponent
-} from "../components/TextInput.vue";
-
+import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 
 type Context = SetupContext & {
     refs: {
-        input: TextInputComponent;
+        input: HTMLInputElement;
     };
 };
 
@@ -110,8 +106,7 @@ export default createComponent({
 
 .password-input {
     padding-inline: 10px;
-    transition: max-height 0.3s ease;
-    transition: padding-top 0.3s ease;
+    transition: max-height, padding-block-start 0.3s ease;
 
     @media screen and (prefers-reduced-motion: reduce) {
         transition: none;
