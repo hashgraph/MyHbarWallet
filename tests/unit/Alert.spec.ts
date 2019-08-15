@@ -5,6 +5,7 @@ import Alert from "../../src/components/Alert.vue";
 describe("Alert", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
+
     const wrapper = shallowMount(Alert, {
         localVue,
         propsData: {
