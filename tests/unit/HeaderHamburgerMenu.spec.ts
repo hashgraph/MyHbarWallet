@@ -12,10 +12,14 @@ describe("HeaderHamburgerMenu.vue", (): void => {
     });
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         expect(wrapper.isVisible()).toBe(true);
     });
 
     it("opens", (): void => {
+        expect.assertions(2);
+
         expect(wrapper.find("nav").classes()).not.toContain("nav-open");
         wrapper.setProps({ isOpen: true });
         expect(wrapper.find("nav").classes()).toContain("nav-open");
@@ -34,10 +38,12 @@ describe("HeaderHamburgerButton.vue", (): void => {
     });
 
     it("renders", (): void => {
+        expect.assertions(1);
         expect(wrapper.isVisible()).toBe(true);
     });
 
     it("triggers", (): void => {
+        expect.assertions(1);
         wrapper.find(".button-wrapper").trigger("click");
         expect(wrapper.emitted().toggle).toStrictEqual([[true]]);
     });

@@ -1,6 +1,6 @@
 <template>
     <div class="network">
-        <img src="@/assets/icon-hbar-outline.svg" />
+        <img :src="hbar" />
         <div class="content">
             <div class="top">
                 <div class="title">
@@ -12,7 +12,8 @@
             </div>
             <div class="actions">
                 <Tooltip :pinnable="false" message="Change Network">
-                    <button class="change">Change</button>
+                    <!--FIXME: Disabling button until it can do something -->
+                    <button v-if="false" class="change">Change</button>
                 </Tooltip>
             </div>
         </div>
@@ -20,12 +21,18 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Tooltip from "./Tooltip.vue";
+import { createComponent } from "vue-function-api";
+import hbar from "../assets/icon-hbar-outline.svg";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         Tooltip
+    },
+    setup() {
+        return {
+            hbar
+        };
     }
 });
 </script>

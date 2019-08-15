@@ -21,13 +21,13 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "@/components/NetworkCard.vue";
 import BalanceCard from "@/components/BalanceCard.vue";
 import AccountCard from "@/components/AccountCard.vue";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         InterfaceNavigation,
         NetworkCard,

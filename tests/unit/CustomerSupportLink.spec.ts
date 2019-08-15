@@ -7,6 +7,8 @@ describe("CustomerSupportLink.vue", (): void => {
     localVue.use(VueFunctionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = shallowMount(CustomerSupportLink, {
             localVue,
             propsData: {}

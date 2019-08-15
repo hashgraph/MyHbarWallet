@@ -1,6 +1,3 @@
-import {AccessSoftwareOption} from "../components/ModalAccessBySoftware"; import
-{AccessSoftwareOption} from "../components/ModalAccessBySoftware"; import
-{AccessSoftwareOption} from "../components/ModalAccessBySoftware";
 <template>
     <div class="access-my-account">
         <div class="wrap">
@@ -19,11 +16,11 @@ import {AccessSoftwareOption} from "../components/ModalAccessBySoftware"; import
             @submit="handleAccessBySoftwareSubmit"
         />
         <ModalCreateByPhrase v-model="modalCreateByPhraseIsOpen" />
-        <ModalCreateByKeystore v-model="modalCreateByKeystore" />
+        <ModalCreateByKeystore v-model="modalCreateByKeystoreData" />
     </div>
 </template>
+
 <script lang="ts">
-import Vue from "vue";
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "@/components/AccountTileButtons.vue";
 import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
@@ -32,10 +29,11 @@ import ModalAccessBySoftware, {
 } from "@/components/ModalAccessBySoftware.vue";
 import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
 import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
-
 import PageTitle from "../components/PageTitle.vue";
+import { createComponent, value, Wrapper } from "vue-function-api";
+import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         FAQs,
         AccountTileButtons,
@@ -45,38 +43,47 @@ export default Vue.extend({
         ModalCreateByPhrase,
         ModalCreateByKeystore
     },
-    data() {
-        return {
-            modalAccessByHardwareIsOpen: false,
-            modalAccessBySoftwareIsOpen: false,
-            modalCreateByPhraseIsOpen: false,
-            modalCreateByKeystore: {
+    setup() {
+        const modalAccessByHardwareIsOpen = value(false);
+        const modalAccessBySoftwareIsOpen = value(false);
+        const modalCreateByPhraseIsOpen = value(false);
+        const modalCreateByKeystoreData: Wrapper<CreateByKeystoreState> = value(
+            {
                 modalIsOpen: false,
                 filename: ""
             }
-        };
-    },
-    methods: {
-        handleClickTiles(which: string) {
+        );
+
+        function handleClickTiles(which: string) {
             if (which === "hardware") {
-                this.modalAccessByHardwareIsOpen = true;
+                modalAccessByHardwareIsOpen.value = true;
             } else if (which === "software") {
-                this.modalAccessBySoftwareIsOpen = true;
+                modalAccessBySoftwareIsOpen.value = true;
             }
-        },
-        handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
-            this.modalAccessBySoftwareIsOpen = false;
+        }
+
+        function handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
+            modalAccessBySoftwareIsOpen.value = false;
 
             setTimeout(() => {
                 if (which === AccessSoftwareOption.File) {
-                    this.modalCreateByKeystore.modalIsOpen = true;
+                    modalCreateByKeystoreData.value.modalIsOpen = true;
                 } else if (which === AccessSoftwareOption.Key) {
-                    this.modalCreateByPhraseIsOpen = true;
+                    modalCreateByPhraseIsOpen.value = true;
                 } else if (which === AccessSoftwareOption.Phrase) {
-                    this.modalCreateByPhraseIsOpen = true;
+                    modalCreateByPhraseIsOpen.value = true;
                 }
             }, 125);
         }
+
+        return {
+            modalAccessByHardwareIsOpen,
+            modalAccessBySoftwareIsOpen,
+            modalCreateByPhraseIsOpen,
+            modalCreateByKeystoreData,
+            handleClickTiles,
+            handleAccessBySoftwareSubmit
+        };
     }
 });
 </script>

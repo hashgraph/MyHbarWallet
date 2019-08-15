@@ -1,19 +1,18 @@
 <template>
     <span class="info-button">
         <Tooltip :message="message" :pinnable="true">
-            <MaterialDesignIcon class="icon" :icon="icon" />
+            <MaterialDesignIcon class="icon" :icon="mdiAlertCircle" />
         </Tooltip>
     </span>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiAlertCircle } from "@mdi/js";
 import Tooltip from "@/components/Tooltip.vue";
-import { computed } from "vue-function-api";
+import { createComponent } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         MaterialDesignIcon,
         Tooltip
@@ -22,10 +21,7 @@ export default Vue.extend({
         message: { type: String, required: true }
     },
     setup() {
-        const icon = computed(() => {
-            return mdiAlertCircle;
-        });
-        return { icon };
+        return { mdiAlertCircle };
     }
 });
 </script>

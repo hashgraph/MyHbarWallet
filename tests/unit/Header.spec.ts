@@ -11,6 +11,8 @@ describe("Header.vue", (): void => {
     localVue.use(VueFunctionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = shallowMount(Header, {
             localVue,
             router

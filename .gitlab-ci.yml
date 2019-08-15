@@ -12,7 +12,12 @@ test:
     stage: test
 
     before_script:
+        - apt-get update
+        - apt-get install -y protobuf-compiler
+        - apt-get install -y libprotobuf-dev
         - yarn config set cache-folder .yarn
+        # This is the only way to tell yarn to use credentials for a git repo
+        - yarn add "git+https://gitlab-ci-token:$CI_JOB_TOKEN@gitlab.launchbadge.com/hedera/hedera-sdk-js.git"
         - yarn install
 
     script:
