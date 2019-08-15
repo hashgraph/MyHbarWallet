@@ -1,46 +1,56 @@
 <template>
     <div class="text-input" :class="classObject">
-        <label>
-            <div v-if="label" class="label">{{ label }}</div>
-            <textarea
-                v-if="multiline"
-                class="text-area"
-                :placeholder="placeholder"
-                :tabindex="tabindex"
-                :value="value"
-                :rows="rows"
-                :class="{ resize: resizable }"
-                @input="handleInput"
-            />
-            <input
-                v-else
-                ref="input"
-                :value="value"
-                :class="classObject"
-                :placeholder="placeholder"
-                :type="keyboardType"
-                :tabindex="tabindex"
-                :step="step"
-                @input="handleInput"
-            />
+        <label class="label-container">
+            <span v-if="label" class="label">{{ label }}</span>
+
+            <span class="input-container">
+                <span v-if="prefix" class="prefix">{{ prefix }}</span>
+
+                <textarea
+                    v-if="multiline"
+                    class="text-area"
+                    :placeholder="placeholder"
+                    :tabindex="tabindex"
+                    :value="value"
+                    :rows="rows"
+                    :class="{ resize: resizable }"
+                    @focusin="handleFocusIn"
+                    @focusout="handleFocusOut"
+                    @input="handleInput"
+                />
+                <input
+                    v-else
+                    ref="input"
+                    :value="value"
+                    :placeholder="placeholder"
+                    :type="keyboardType"
+                    :tabindex="tabindex"
+                    :step="step"
+                    @focusin="handleFocusIn"
+                    @focusout="handleFocusOut"
+                    @input="handleInput"
+                />
+
+                <span v-if="suffix" class="suffix">{{ suffix }}</span>
+
+                <span v-if="hasDecorations" class="decorations">
+                    <MaterialDesignIcon
+                        v-if="obscure"
+                        class="eye"
+                        :class="{ 'is-open': isEyeOpen }"
+                        :icon="eye"
+                        @click="handleClickEye"
+                    />
+
+                    <MaterialDesignIcon
+                        v-else-if="showValidation"
+                        class="checkmark"
+                        :class="{ 'is-valid': valid }"
+                        :icon="mdiCheckCircle"
+                    />
+                </span>
+            </span>
         </label>
-
-        <div class="decorations">
-            <MaterialDesignIcon
-                v-if="obscure"
-                class="eye"
-                :class="{ 'is-open': isEyeOpen }"
-                :icon="eye"
-                @click="handleClickEye"
-            />
-
-            <MaterialDesignIcon
-                v-else-if="showValidation"
-                class="checkmark"
-                :class="{ 'is-valid': valid }"
-                :icon="checkmark"
-            />
-        </div>
 
         <div v-if="label != null" class="actions">
             <div v-if="action" class="action" @click="$emit('action')">
@@ -54,7 +64,7 @@
             </div>
         </div>
 
-        <div v-if="error != null && error !== true" class="error">
+        <div v-if="error" class="error">
             {{ error }}
         </div>
     </div>
@@ -90,13 +100,15 @@ interface Props {
     error: string;
     multiline: boolean;
     resizable: boolean;
+    prefix: string;
+    suffix: string;
 }
 
 export interface Component {
     isEyeOpen: Wrapper<boolean>;
     keyboardType: Wrapper<string>;
     eye: Wrapper<string>;
-    checkmark: Wrapper<string>;
+    mdiCheckCircle: string;
     classObject: Wrapper<{ [key: string]: boolean }>;
     focus: () => void;
     rows: Wrapper<number>;
@@ -104,6 +116,9 @@ export interface Component {
     handleInput: (event: Event) => void;
     handleClickCopy: () => void;
     handleClickClear: () => void;
+    handleFocusIn: () => void;
+    handleFocusOut: () => void;
+    hasDecorations: Wrapper<boolean>;
 }
 
 export default createComponent({
@@ -134,16 +149,22 @@ export default createComponent({
 
         // Error text to show when _not_ valid and validation should be shown
         // WARNING: this only works properly with a single line of text,
-        error: (String as unknown) as PropType<string>
+        error: (String as unknown) as PropType<string>,
+
+        // labels to be appended before and after input text
+        prefix: (String as unknown) as PropType<string>,
+        suffix: (String as unknown) as PropType<string>
     },
     setup(props: Props, context): Component {
         // If the eye is open to show the obscured text anyway
         const isEyeOpen = value(false);
 
+        const hasFocus = value(false);
+
         const keyboardType = computed(() => {
             if (props.type) return props.type;
-            if (props.obscure && !props.showValidation && !isEyeOpen.value)
-                return "password";
+            if (props.obscure && !isEyeOpen.value) return "password";
+
             return "text";
         });
 
@@ -153,17 +174,20 @@ export default createComponent({
             return isEyeOpen.value ? mdiEye : mdiEyeOutline;
         });
 
-        const checkmark = computed(() => {
-            return mdiCheckCircle;
-        });
+        const hasDecorations = computed(
+            () => props.showValidation || props.obscure
+        );
 
         const classObject = computed(() => {
             return {
                 "is-compact": props.compact,
                 "is-white": props.white,
                 "is-multiline": props.multiline,
+                "has-focus": hasFocus.value,
                 "has-label": props.label != null,
-                "has-error": props.error != null
+                "has-error": props.error != null,
+                "has-prefix": props.prefix != null,
+                "has-suffix": props.suffix != null
             };
         });
 
@@ -173,13 +197,12 @@ export default createComponent({
 
         function handleClickEye() {
             isEyeOpen.value = !isEyeOpen.value;
-
-            // Re-focus the input (loses focus from the tap on the eye)
-            (context.refs.input as HTMLInputElement).focus();
+            focus();
         }
 
         function handleInput(event: Event) {
-            context.emit("input", (event.target as HTMLTextAreaElement).value);
+            const input = event.target as HTMLTextAreaElement;
+            context.emit("input", input.value);
         }
 
         function handleClickClear() {
@@ -190,18 +213,29 @@ export default createComponent({
             await writeToClipboard(props.value);
         }
 
+        function handleFocusIn() {
+            hasFocus.value = true;
+        }
+
+        function handleFocusOut() {
+            hasFocus.value = false;
+        }
+
         return {
             isEyeOpen,
             keyboardType,
             eye,
-            checkmark,
+            mdiCheckCircle,
             classObject,
             focus,
             rows,
             handleClickEye,
             handleInput,
             handleClickCopy,
-            handleClickClear
+            handleClickClear,
+            handleFocusIn,
+            handleFocusOut,
+            hasDecorations
         };
     }
 });
@@ -211,6 +245,7 @@ export default createComponent({
 .text-input {
     border-radius: 4px;
     position: relative;
+    width: 100%;
 }
 
 .actions {
@@ -238,34 +273,6 @@ export default createComponent({
     }
 }
 
-label {
-    display: flex;
-    flex-direction: column;
-}
-
-input,
-textarea {
-    background-color: var(--color-peral);
-    border: 2px solid var(--color-peral);
-    border-radius: 4px;
-    color: var(--color-washed-black);
-    font-size: 14px;
-    outline: none;
-    padding: 20px;
-    width: 100%;
-}
-
-input {
-    &:not(:only-child) {
-        padding-inline-end: 50px;
-    }
-
-    &.is-compact {
-        border-width: 1px;
-        padding: 13px 15px;
-    }
-}
-
 textarea {
     max-width: 100%;
     min-width: 100%;
@@ -276,27 +283,24 @@ textarea {
     }
 }
 
-input:focus,
-textarea:focus {
-    border-color: var(--color-melbourne-cup);
-}
+input,
+textarea {
+    border: 0;
+    color: var(--color-washed-black);
+    flex-grow: 1;
+    font-size: 14px;
+    outline: none;
+    padding: 20px;
+    width: 100%;
 
-input::placeholder,
-textarea::placeholder {
-    color: var(--color-basalt-grey);
-}
-
-.has-error input,
-.has-error textarea {
-    border-color: var(--color-lightish-red);
-}
-
-.is-white input {
-    background-color: var(--color-white);
-
-    &:not(:focus) {
-        border-color: var(--color-white);
+    &::placeholder {
+        color: var(--color-basalt-grey);
     }
+}
+
+.label-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .label {
@@ -308,6 +312,17 @@ textarea::placeholder {
     padding: 0 8px;
 }
 
+.input-container {
+    background-color: var(--color-peral);
+    border: 2px solid var(--color-peral);
+    border-radius: 4px;
+    display: flex;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
 .decorations {
     align-items: center;
     display: flex;
@@ -317,23 +332,87 @@ textarea::placeholder {
     position: absolute;
 }
 
-.has-error .decorations {
-    padding-block-end: 28px;
+/* Compact */
+.text-input.is-compact {
+    & input,
+    & textarea {
+        border-width: 1px;
+        padding: 13px 15px;
+    }
+
+    & .input-container {
+        border-width: 1px;
+    }
 }
 
-.has-label .decorations {
-    height: calc(100% - 37px);
-    inset-block-start: 37px;
+/* White */
+.text-input.is-white {
+    & .input-container {
+        background-color: var(--color-white);
+        border-color: var(--color-white);
+    }
 }
 
-.is-multiline:not(.has-error) .decorations {
-    align-items: flex-end;
-    padding-block-end: 15px;
+/* Has Focus */
+.text-input.has-focus {
+    & .input-container {
+        border-color: var(--color-melbourne-cup);
+    }
 }
 
-.is-multiline.has-error .decorations {
-    align-items: flex-end;
-    padding-block-end: 43px;
+/* Has Error */
+.text-input.has-error {
+    & .input-container {
+        border-color: var(--color-lightish-red);
+    }
+}
+
+/* Decorations */
+.text-input.has-decorations {
+    & input,
+    & textarea {
+        padding-inline-end: 50px;
+    }
+}
+
+/* Has Prefix */
+.text-input.has-prefix {
+    & input,
+    & textarea {
+        border-left: 1px solid var(--color-jupiter);
+    }
+}
+
+/* Has Suffix */
+.text-input.has-suffix {
+    & input,
+    & textarea {
+        border-right: 1px solid var(--color-jupiter);
+    }
+
+    & .decorations {
+        /* TODO Fix */
+        padding-inline-end: 22%;
+    }
+}
+
+/* Is Multiline */
+.text-input.is-multiline {
+    & .decorations {
+        align-items: flex-end;
+        padding-block-end: 15px;
+    }
+}
+
+.prefix,
+.suffix {
+    align-items: center;
+    color: var(--color-basalt-grey);
+    display: flex;
+    flex-shrink: 0;
+    font-size: 14px;
+    padding: 0 14px;
+    white-space: nowrap;
 }
 
 .eye {
@@ -354,6 +433,10 @@ textarea::placeholder {
     &.is-valid {
         color: var(--color-melbourne-cup);
     }
+}
+
+.symbol {
+    color: var(--color-basalt-grey);
 }
 
 .error {
