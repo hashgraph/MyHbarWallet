@@ -1,16 +1,21 @@
-import { shallowMount } from "@vue/test-utils";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import RadioButton from "@/components/RadioButton.vue";
 import imageKey from "@/assets/button-key.svg";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("RadioButton.vue", (): void => {
+    const localVue = createLocalVue();
+    localVue.use(VueFunctionApi);
+
     it("renders, contains expected properties", (): void => {
         expect.assertions(4);
         const name = "RadioGroup";
         const label = "Label";
         const value = "Value";
 
-        const wrapper = shallowMount(RadioButton, {
+        const wrapper = shallowMount(RadioButton, { 
+            localVue,
             propsData: {
                 name,
                 label,
@@ -34,6 +39,7 @@ describe("RadioButton.vue", (): void => {
         const fn = jest.fn();
 
         const wrapper = shallowMount(RadioButton, {
+            localVue,
             propsData: {
                 name,
                 label,
