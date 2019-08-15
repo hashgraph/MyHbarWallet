@@ -64,6 +64,8 @@ import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalPassword from "../components/ModalPassword.vue";
+import store from "@/store";
+import { SET_PRIVATE_KEY } from "@/store/mutations";
 
 export default Vue.extend({
     components: {
@@ -176,6 +178,10 @@ export default Vue.extend({
         },
         handleAccessByPrivateKeySubmit() {
             this.modalAccessByPrivateKeyState.isBusy = true;
+            store.commit(
+                SET_PRIVATE_KEY,
+                this.modalAccessByPrivateKeyState.privateKey
+            );
 
             setTimeout(() => {
                 // Close  previous modal and open another one

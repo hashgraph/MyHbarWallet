@@ -47,7 +47,7 @@ import contractImageActive from "../assets/contract-active.svg";
 import messageImage from "../assets/message.svg";
 import messageImageActive from "../assets/message-active.svg";
 import store from "@/store";
-import { SETISOPEN } from "@/store/mutations";
+import { SET_IS_OPEN } from "@/store/mutations";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiClose } from "@mdi/js";
 import { createComponent, computed } from "vue-function-api";
@@ -78,7 +78,7 @@ export default createComponent({
         });
 
         function handleClick() {
-            store.commit(SETISOPEN, false);
+            store.commit(SET_IS_OPEN, false);
         }
 
         return {

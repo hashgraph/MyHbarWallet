@@ -19,7 +19,7 @@
                 class="button-access-wallet"
                 label="Access Account"
                 :busy="state.isBusy"
-                :disabled="state.privateKey.length === 0"
+                :disabled="!valid"
                 @click="$emit('submit')"
             />
             <CustomerSupportLink />
@@ -35,8 +35,9 @@ import TextInput, {
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
-import { createComponent, PropType, watch } from "vue-function-api";
+import { computed, createComponent, PropType, watch } from "vue-function-api";
 import { SetupContext } from "vue-function-api/dist/types/vue";
+import { decodeKey } from "hedera-sdk-js";
 
 export interface State {
     modalIsOpen: boolean;
@@ -66,6 +67,15 @@ export default createComponent({
         state: (Object as unknown) as PropType<State>
     },
     setup(props, context) {
+        const valid = computed(() => {
+            try {
+                decodeKey(props.state.privateKey);
+                return true;
+            } catch {
+                return false;
+            }
+        });
+
         function handleModalChangeIsOpen(isOpen: boolean) {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
@@ -85,6 +95,7 @@ export default createComponent({
         );
 
         return {
+            valid,
             handleModalChangeIsOpen,
             handlePrivateKeyInput
         };

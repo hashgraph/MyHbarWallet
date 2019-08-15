@@ -6423,7 +6423,7 @@ he@1.2.x, he@^1.1.0:
 
 "hedera-sdk-js@git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js":
   version "0.1.0"
-  resolved "git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js#5134e143ac122c056860f06ea53bcebe5a566885"
+  resolved "git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js#be4faa8739774f06897d10799b1e1a60e66a560b"
   dependencies:
     "@improbable-eng/grpc-web" "0.11.0"
     "@types/google-protobuf" "^3.2.7"
