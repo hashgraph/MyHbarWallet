@@ -17,12 +17,21 @@
         </div>
 
         <template v-slot:footer>
-            <Button
-                :disabled="!signable"
-                label="Sign"
-                @click="$emit('sign', messageText)"
-            />
+            <Button :disabled="!signable" label="Sign" @click="onSignClicked" />
         </template>
+        <ModalConfirmSignMessage
+            :message="message"
+            public-key="302a300506032b65700321002cc9e2d0c16c717476d4bbbfa3307a98cf0c41d7afc77c851e476b5921f3fb65"
+            :is-open="confirmSignIsOpen"
+            @change="handleConfirmModalChanged"
+            @confirm="handleConfirmModalConfirm"
+        />
+        <!-- value should be a json thing, not `message` -->
+        <ModalMessageSigned
+            :is-open="signedModalIsOpen"
+            :value="message"
+            @change="handleSignedModalChanged"
+        />
     </InterfaceForm>
 </template>
 
@@ -30,6 +39,8 @@
 import InterfaceForm from "../components/InterfaceForm.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
+import ModalConfirmSignMessage from "../components/ModalConfirmSignMessage.vue";
+import ModalMessageSigned from "../components/ModalMessageSigned.vue";
 import { createComponent, watch, value } from "vue-function-api";
 
 export default createComponent({
@@ -37,12 +48,32 @@ export default createComponent({
     components: {
         InterfaceForm,
         TextInput,
-        Button
+        Button,
+        ModalConfirmSignMessage,
+        ModalMessageSigned
     },
-    setup() {
+    setup(props) {
         const message = value(null);
         const signable = value(true);
         const enableErr = value(false);
+        const confirmSignIsOpen = value(false);
+        const signedModalIsOpen = value(false);
+        function onSignClicked() {
+            confirmSignIsOpen.value = true;
+        }
+
+        function handleSignedModalChanged(value: boolean) {
+            signedModalIsOpen.value = value;
+        }
+
+        function handleConfirmModalChanged(value: boolean) {
+            confirmSignIsOpen.value = value;
+        }
+
+        function handleConfirmModalConfirm() {
+            confirmSignIsOpen.value = false;
+            signedModalIsOpen.value = true;
+        }
 
         watch(
             () => message.value,
@@ -55,7 +86,17 @@ export default createComponent({
             }
         );
 
-        return { message, signable, enableErr };
+        return {
+            message,
+            signable,
+            enableErr,
+            onSignClicked,
+            confirmSignIsOpen,
+            signedModalIsOpen,
+            handleConfirmModalChanged,
+            handleSignedModalChanged,
+            handleConfirmModalConfirm
+        };
     }
 });
 </script>
