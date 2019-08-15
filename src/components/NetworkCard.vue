@@ -1,6 +1,6 @@
 <template>
     <div class="network">
-        <img src="@/assets/icon-hbar-outline.svg" />
+        <img :src="hbar" />
         <div class="content">
             <div class="top">
                 <div class="title">
@@ -23,10 +23,16 @@
 <script lang="ts">
 import Tooltip from "./Tooltip.vue";
 import { createComponent } from "vue-function-api";
+import hbar from "../assets/icon-hbar-outline.svg";
 
 export default createComponent({
     components: {
         Tooltip
+    },
+    setup() {
+        return {
+            hbar
+        };
     }
 });
 </script>
