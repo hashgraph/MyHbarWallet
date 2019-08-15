@@ -105,12 +105,12 @@ nav {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    height: 100%;
     padding: 40px 0;
     width: 270px;
     z-index: 2;
 
     @media (max-width: 1258px) {
-        height: 100%;
         position: fixed;
         transition: transform 0.3s ease;
         width: 350px;
