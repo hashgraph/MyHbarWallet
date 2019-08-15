@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from "vue";
+import { PropOptions } from "vue";
 import Modal from "../components/Modal.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 import MnemonicInput from "../components/MnemonicInput.vue";
@@ -61,6 +61,7 @@ import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
 import OptionalPasswordInput from "../components/OptionalPasswordInput.vue";
+import { createComponent } from "vue-function-api";
 
 export enum MnemonicType {
     Words12 = 12,
@@ -75,7 +76,7 @@ export interface State {
     isBusy: boolean;
 }
 
-export default Vue.extend({
+export default createComponent({
     components: {
         Modal,
         MnemonicInput,
@@ -92,19 +93,26 @@ export default Vue.extend({
     props: {
         state: { type: Object, required: true } as PropOptions<State>
     },
-    methods: {
-        handleModalChangeIsOpen(isOpen: boolean) {
-            this.$emit("change", { ...this.state, modalIsOpen: isOpen });
-        },
-        handleNumWordsChange(numWords: number) {
-            this.$emit("change", { ...this.state, numWords });
-        },
-        handleMnemonicInput(words: string[]) {
-            this.$emit("change", { ...this.state, words });
-        },
-        handlePasswordInput(password: string) {
-            this.$emit("change", { ...this.state, password });
+    setup(props, context) {
+        function handleModalChangeIsOpen(isOpen: boolean) {
+            context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
+        function handleNumWordsChange(numWords: number) {
+            context.emit("change", { ...props.state, numWords });
+        }
+        function handleMnemonicInput(words: string[]) {
+            context.emit("change", { ...props.state, words });
+        }
+        function handlePasswordInput(password: string) {
+            context.emit("change", { ...props.state, password });
+        }
+
+        return {
+            handleModalChangeIsOpen,
+            handleNumWordsChange,
+            handleMnemonicInput,
+            handlePasswordInput
+        };
     }
 });
 </script>
