@@ -43,7 +43,7 @@ import imageFile from "../assets/button-file.svg";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
-import { createComponent } from "vue-function-api";
+import { createComponent, value } from "vue-function-api";
 
 export enum AccessSoftwareOption {
     File = "file",
@@ -67,6 +67,8 @@ export default createComponent({
         isOpen: { type: Boolean }
     },
     setup() {
+        const optionSelected = value(null);
+
         const options = [
             {
                 label: "Keystore File",
@@ -84,7 +86,7 @@ export default createComponent({
                 image: imageKey
             }
         ];
-        return { optionSelected: null, options };
+        return { optionSelected, options };
     }
 });
 </script>
