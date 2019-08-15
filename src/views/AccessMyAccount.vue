@@ -36,6 +36,12 @@
         <ModalEnterAccountId
             v-model="modalEnterAccountId"
             @submit="handleAccountIdSubmit"
+            @noAccount="handleDoesntHaveAccount"
+        />
+
+        <ModalRequestToCreateAccount
+            v-model="modalRequestToCreateAccountIsOpen"
+            @hasAccount="handleHasAccount"
         />
 
         <input
@@ -66,6 +72,7 @@ import PageTitle from "../components/PageTitle.vue";
 import ModalPassword from "../components/ModalPassword.vue";
 import store from "@/store";
 import { SET_PRIVATE_KEY } from "@/store/mutations";
+import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 
 export default Vue.extend({
     components: {
@@ -77,7 +84,8 @@ export default Vue.extend({
         ModalAccessByPrivateKey,
         PageTitle,
         ModalPassword,
-        ModalEnterAccountId
+        ModalEnterAccountId,
+        ModalRequestToCreateAccount
     },
     data() {
         return {
@@ -105,6 +113,7 @@ export default Vue.extend({
                 account: "",
                 isBusy: false
             },
+            modalRequestToCreateAccountIsOpen: false,
             keystoreFileText: null as string | null
         };
     },
@@ -194,6 +203,14 @@ export default Vue.extend({
             this.modalEnterAccountId.isBusy = true;
 
             this.openInterface(null);
+        },
+        handleDoesntHaveAccount() {
+            this.modalEnterAccountId.modalIsOpen = false;
+            this.modalRequestToCreateAccountIsOpen = true;
+        },
+        handleHasAccount() {
+            this.modalRequestToCreateAccountIsOpen = false;
+            this.modalEnterAccountId.modalIsOpen = true;
         },
         openInterface(privateKey: string | null) {
             console.log("privateKey =", privateKey);

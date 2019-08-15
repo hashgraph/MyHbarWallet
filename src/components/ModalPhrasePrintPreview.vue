@@ -36,7 +36,7 @@
         </div>
 
         <div class="button-container">
-            <Button class="button-print" label="Print" :outline="true" />
+            <Button class="button-print" label="Print" outline="true" />
         </div>
     </Modal>
 </template>

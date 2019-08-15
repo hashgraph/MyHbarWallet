@@ -8,4 +8,5 @@ export const SET_IS_OPEN = "SET_INTERFACE_IS_OPEN";
 // Crypto Mutations
 export const SET_ACCOUNT = "SET_CRYPTO_ACCOUNT";
 export const SET_PRIVATE_KEY = "SET_CRYPTO_PRIVATE_KEY";
+export const SET_PUBLIC_KEY = "SET_CRYPTO_PUBLIC_KEY";
 export const SET_CLIENT = "SET_CRYPTO_CLIENT";

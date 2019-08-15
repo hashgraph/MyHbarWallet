@@ -1,4 +1,9 @@
-import { SET_ACCOUNT, SET_PRIVATE_KEY, SET_CLIENT } from "@/store/mutations";
+import {
+    SET_ACCOUNT,
+    SET_PRIVATE_KEY,
+    SET_CLIENT,
+    SET_PUBLIC_KEY
+} from "@/store/mutations";
 import { Client } from "hedera-sdk-js";
 
 export interface Id {
@@ -10,6 +15,7 @@ export interface Id {
 export interface State {
     account: Id;
     privateKey: string;
+    publicKey: string;
     client: Client | null;
 }
 
@@ -21,6 +27,7 @@ export default {
             account: 0
         },
         privateKey: "",
+        publicKey: "",
         client: null
     },
     getters: {
@@ -33,6 +40,9 @@ export default {
         },
         [SET_PRIVATE_KEY](state: State, privateKey: string): void {
             state.privateKey = privateKey;
+        },
+        [SET_PUBLIC_KEY](state: State, publicKey: string): void {
+            state.publicKey = publicKey;
         },
         [SET_CLIENT](state: State, client: Client): void {
             state.client = client;

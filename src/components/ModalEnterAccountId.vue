@@ -132,6 +132,10 @@ export default createComponent({
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
 
+        function handleDontHaveAccount() {
+            context.emit("noAccount");
+        }
+
         watch(
             () => props.state.modalIsOpen,
             (newVal: boolean) => {
@@ -147,7 +151,8 @@ export default createComponent({
             failed,
             handleSubmit,
             handleInput,
-            handleModalChangeIsOpen
+            handleModalChangeIsOpen,
+            handleDontHaveAccount
         };
     }
 });
