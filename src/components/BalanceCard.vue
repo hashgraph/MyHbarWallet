@@ -1,6 +1,6 @@
 <template>
     <div class="balance">
-        <img src="@/assets/wallet-hbar.svg" />
+        <img :src="walletHbar" />
         <div class="content">
             <div class="top">
                 <div class="title">
@@ -42,9 +42,10 @@
 
 <script lang="ts">
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
-import { mdiRefresh, mdiLoading } from "@mdi/js";
+import { mdiLoading, mdiRefresh } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
-import { createComponent, PropType, computed, value } from "vue-function-api";
+import { computed, createComponent, PropType, value } from "vue-function-api";
+import walletHbar from "../assets/wallet-hbar.svg";
 
 const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -65,9 +66,9 @@ export default createComponent({
     },
     setup(props: Props) {
         const balanceUSD = computed(() => {
+            // FIXME: once the unit store exists, use it
             const usd = props.balance * 0.12;
-            const usdFormatted = formatter.format(usd);
-            return usdFormatted;
+            return formatter.format(usd);
         });
 
         const busy = value(false);
@@ -90,7 +91,8 @@ export default createComponent({
             mdiRefresh,
             mdiLoading,
             balanceUSD,
-            handleRefresh
+            handleRefresh,
+            walletHbar
         };
     }
 });
