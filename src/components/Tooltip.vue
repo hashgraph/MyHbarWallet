@@ -15,10 +15,15 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { computed, onBeforeDestroy, onCreated, value } from "vue-function-api";
+import {
+    computed,
+    onBeforeDestroy,
+    onCreated,
+    value,
+    createComponent
+} from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     props: {
         message: { type: String, required: true },
         pinnable: { type: Boolean, required: false }
