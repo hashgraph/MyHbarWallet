@@ -31,7 +31,9 @@
             </div>
 
             <div class="link-container">
-                <span class="link">Don't have an Account ID?</span>
+                <span class="link" @click="handleDontHaveAccount">
+                    Don't have an Account ID?
+                </span>
             </div>
         </Modal>
     </div>
