@@ -4,6 +4,7 @@ import InterfaceFormTitle from "@/components/InterfaceFormTitle.vue";
 
 describe("InterfaceForm.vue", (): void => {
     it("renders", (): void => {
+        expect.assertions(1);
         const title = "ABC123";
         const wrapper = shallowMount(InterfaceForm, {
             propsData: {

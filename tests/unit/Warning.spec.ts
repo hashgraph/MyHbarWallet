@@ -7,6 +7,7 @@ describe("Warning.vue", (): void => {
     localVue.use(VueFunctionApi);
 
     it("renders", (): void => {
+        expect.assertions(2);
         const title = "NOT RECOMMENDED";
         const wrapper = shallowMount(Warning, {
             propsData: { title },

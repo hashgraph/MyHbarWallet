@@ -9,6 +9,7 @@ describe("ZoomTopButton", (): void => {
     localVue.use(VueFunctionApi);
 
     it("isn't active at first", (): void => {
+        expect.assertions(1);
         const wrapper = shallowMount(ZoomTopButton, { localVue });
         const zButton = wrapper.find("button");
 
@@ -18,6 +19,7 @@ describe("ZoomTopButton", (): void => {
     });
 
     it("appears after 150px scrolling in the Y direction", (): void => {
+        expect.assertions(1);
         const wrapper = shallowMount(ZoomTopButton, { localVue });
         const zButton = wrapper.find("button");
 
@@ -29,12 +31,14 @@ describe("ZoomTopButton", (): void => {
     });
 
     it("renders an up arrow", (): void => {
+        expect.assertions(1);
         const wrapper = shallowMount(ZoomTopButton, { localVue });
 
         expect(wrapper.contains(MaterialDesignIcon)).toBe(true);
     });
 
     it("triggers a click handler when clicked", (): void => {
+        expect.assertions(1);
         const clickHandler = jest.fn();
         Object.defineProperty(window, "scrollTo", { value: clickHandler });
 

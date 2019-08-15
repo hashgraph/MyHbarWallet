@@ -7,6 +7,7 @@ describe("ModalPassword.vue", (): void => {
     localVue.use(VueFunctionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
         const state = { modalIsOpen: false, password: "", isBusy: false };
         const wrapper = shallowMount(ModalPassword, {
             localVue,
@@ -19,6 +20,7 @@ describe("ModalPassword.vue", (): void => {
     });
 
     it("renders a disabled button when the password is empty", (): void => {
+        expect.assertions(1);
         const state = { modalIsOpen: false, password: "", isBusy: false };
         const wrapper = mount(ModalPassword, {
             localVue,
@@ -33,6 +35,7 @@ describe("ModalPassword.vue", (): void => {
     });
 
     it("renders an enabled button when the password is not empty", (): void => {
+        expect.assertions(1);
         const state = {
             modalIsOpen: false,
             password: "nonempty",

@@ -8,6 +8,7 @@ describe("TextInput.vue", (): void => {
     localVue.use(VueFunctionApi);
 
     it("renders", (): void => {
+        expect.assertions(2);
         const value = "12345";
         const wrapper = shallowMount(TextInput, {
             localVue,
@@ -21,6 +22,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders a password securely (and allows to toggle visibility)", (): void => {
+        expect.assertions(2);
         const value = "super-secure-password";
         const wrapper = mount(TextInput, {
             localVue,
@@ -38,6 +40,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("forwards input event from HTML input", (): void => {
+        expect.assertions(1);
         let value = "";
 
         const wrapper = shallowMount(TextInput, {
@@ -60,6 +63,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("render textarea when multiline", (): void => {
+        expect.assertions(2);
         const placeholder = "placeholder text";
         const value = "textarea text";
         const wrapper = shallowMount(TextInput, {
@@ -79,6 +83,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders label when it's not null", (): void => {
+        expect.assertions(2);
         const label = "label text";
         const wrapper = shallowMount(TextInput, {
             localVue,
@@ -93,6 +98,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders validation indicator when showValidation is true", (): void => {
+        expect.assertions(1);
         const showValidation = true;
         const valid = true;
         const wrapper = mount(TextInput, {
@@ -108,6 +114,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders copy action when canCopy is true", (): void => {
+        expect.assertions(1);
         const copyText = "Copy";
         const canCopy = true;
         const wrapper = mount(TextInput, {
@@ -127,6 +134,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders clear action when canClear is true", (): void => {
+        expect.assertions(1);
         const clearText = "Clear";
         const canClear = true;
         const wrapper = mount(TextInput, {
@@ -146,6 +154,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("does not render validation indicator when showValidation is false", (): void => {
+        expect.assertions(1);
         const showValidation = false;
         const valid = true;
         const wrapper = mount(TextInput, {
@@ -161,6 +170,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("does not render copy action when canCopy is false", (): void => {
+        expect.assertions(1);
         const copyText = "Copy";
         const canCopy = false;
         const wrapper = mount(TextInput, {
@@ -180,6 +190,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("does not render clear action when canClear is false", (): void => {
+        expect.assertions(1);
         const clearText = "Clear";
         const canClear = false;
         const wrapper = mount(TextInput, {
@@ -199,6 +210,7 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders error message when it isn't null", (): void => {
+        expect.assertions(1);
         const error = "ERROR: foo";
         const wrapper = mount(TextInput, {
             localVue,

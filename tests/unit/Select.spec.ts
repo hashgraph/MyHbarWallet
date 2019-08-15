@@ -14,10 +14,12 @@ describe("Select.vue", (): void => {
     });
 
     it("renders", (): void => {
+        expect.assertions(1);
         expect(wrapper.findAll(".select-option")).toHaveLength(3);
     });
 
     it("opens on click", (): void => {
+        expect.assertions(1);
         const select = wrapper.find(".select-value-container");
         select.trigger("click");
         expect(wrapper.find(".select").classes()).toContain("is-open");
