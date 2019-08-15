@@ -51,6 +51,7 @@
         "eslint-plugin-prettier": "^3.1.0",
         "eslint-plugin-unicorn": "^10.0.0",
         "eslint-plugin-vue": "^5.0.0",
+        "firebase-tools": "^7.2.2",
         "image-webpack-loader": "^5.0.0",
         "jest": "^24.8.0",
         "lint-staged": "^9.2.1",
