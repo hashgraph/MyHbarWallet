@@ -14,7 +14,7 @@ describe("RadioButton.vue", (): void => {
         const label = "Label";
         const value = "Value";
 
-        const wrapper = shallowMount(RadioButton, { 
+        const wrapper = shallowMount(RadioButton, {
             localVue,
             propsData: {
                 name,
