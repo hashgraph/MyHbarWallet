@@ -1,4 +1,4 @@
-import { SETISOPEN } from "@/store/mutations";
+import { SET_IS_OPEN } from "@/store/mutations";
 
 export interface State {
     isOpen: boolean;
@@ -12,7 +12,7 @@ export default {
         isOpen: (state: State): boolean => state.isOpen
     },
     mutations: {
-        [SETISOPEN](state: State, isOpen: boolean): void {
+        [SET_IS_OPEN](state: State, isOpen: boolean): void {
             state.isOpen = isOpen;
         }
     }
