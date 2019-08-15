@@ -66,12 +66,11 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent } from "vue-function-api";
 import Accordion from "@/components/Accordion.vue";
 import CustomerSupportLink from "@/components/CustomerSupportLink.vue";
 
-export default Vue.extend({
-    name: "FAQs",
+export default createComponent({
     components: {
         Accordion,
         CustomerSupportLink
