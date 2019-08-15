@@ -15,6 +15,7 @@
                 :value="input"
                 show-validation
                 :valid="valid"
+                :error="failed"
                 placeholder="shard.realm.account"
                 @input="handleInput"
             />
@@ -42,7 +43,8 @@ import {
     value,
     computed,
     watch,
-    PropType
+    PropType,
+    Wrapper
 } from "vue-function-api";
 import Modal from "../components/Modal.vue";
 import TextInput, {
@@ -86,6 +88,7 @@ export default createComponent({
     setup(props: Props, context) {
         const regex = /\d+\.\d+\.\d+/;
         const input = value("");
+        const failed: Wrapper<string | null> = value(null);
         const valid = computed(() => regex.test(input.value));
 
         function handleInput(account: string) {
@@ -94,15 +97,16 @@ export default createComponent({
         }
 
         async function handleSubmit() {
+            failed.value = null;
             context.emit("change", { ...props.state, isBusy: true });
-            const array = input.value.split(".");
+            const parts = input.value.split(".");
             const key = store.state.crypto.privateKey;
 
             try {
                 const account = {
-                    shard: parseInt(array[0]),
-                    realm: parseInt(array[1]),
-                    account: parseInt(array[2])
+                    shard: parseInt(parts[0]),
+                    realm: parseInt(parts[1]),
+                    account: parseInt(parts[2])
                 };
                 const client = new Client({ account, key });
 
@@ -117,7 +121,8 @@ export default createComponent({
                 // Propagate change up to parent component
                 context.emit("submit", props.state);
             } catch {
-                // TODO: Handle error
+                failed.value =
+                    "This account is not associated with your private key";
                 // Only update isBusy if getting account balance failed
                 context.emit("change", { ...props.state, isBusy: false });
             }
@@ -139,6 +144,7 @@ export default createComponent({
         return {
             input,
             valid,
+            failed,
             handleSubmit,
             handleInput,
             handleModalChangeIsOpen
