@@ -1,6 +1,6 @@
 <template>
     <div class="balance">
-        <img src="@/assets/wallet-hbar.svg" />
+        <img :src="walletHbar" />
         <div class="content">
             <div class="top">
                 <div class="title">
@@ -20,7 +20,7 @@
                 <MaterialDesignIcon
                     v-if="busy"
                     class="spinner"
-                    :icon="spinner"
+                    :icon="mdiLoading"
                     spin
                 />
                 <Tooltip
@@ -31,7 +31,7 @@
                 >
                     <MaterialDesignIcon
                         class="refresh-icon"
-                        :icon="refresh"
+                        :icon="mdiRefresh"
                         @click="handleRefresh"
                     />
                 </Tooltip>
@@ -41,52 +41,59 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
-import { mdiRefresh, mdiLoading } from "@mdi/js";
+import { mdiLoading, mdiRefresh } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
+import { computed, createComponent, PropType, value } from "vue-function-api";
+import walletHbar from "../assets/wallet-hbar.svg";
 
 const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD"
 });
 
-export default Vue.extend({
+interface Props {
+    balance: number;
+}
+
+export default createComponent({
     components: {
         MaterialDesignIcon,
         Tooltip
     },
     props: {
-        balance: { type: Number, default: null }
+        balance: (Number as unknown) as PropType<number>
     },
-    data() {
-        return {
-            busy: false
-        };
-    },
-    computed: {
-        refresh() {
-            return mdiRefresh;
-        },
-        spinner() {
-            return mdiLoading;
-        },
-        balanceUSD() {
-            const usd = this.balance * 0.12;
-            const usdFormatted = formatter.format(usd);
-            return usdFormatted;
-        }
-    },
-    methods: {
-        handleRefresh() {
+    setup(props: Props) {
+        const balanceUSD = computed(() => {
+            // FIXME: once the unit store exists, use it
+            const usd = props.balance * 0.12;
+            return formatter.format(usd);
+        });
+
+        const busy = value(false);
+
+        function handleRefresh() {
             console.warn("todo: check balance");
 
-            this.busy = true;
+            busy.value = true;
+
+            console.log("busy: " + busy);
 
             setTimeout(() => {
-                this.busy = false;
+                busy.value = false;
+                console.log("busy: " + busy);
             }, 2000);
         }
+
+        return {
+            busy,
+            mdiRefresh,
+            mdiLoading,
+            balanceUSD,
+            handleRefresh,
+            walletHbar
+        };
     }
 });
 </script>
