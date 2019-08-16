@@ -3,10 +3,13 @@
         <div class="nav-section-header" @click="handleHeaderClick">
             <img alt :src="isSectionActive ? imageActive : image" />
             <span class="nav-title">{{ title }}</span>
-            <MaterialDesignIcon
-                :icon="isSectionActive ? mdiChevronUp : mdiChevronDown"
-                class="indicator"
-            />
+            <transition name="fade" mode="out-in">
+                <MaterialDesignIcon
+                    :key="isSectionActive"
+                    :icon="isSectionActive ? mdiChevronUp : mdiChevronDown"
+                    class="indicator"
+                />
+            </transition>
         </div>
         <template v-if="isSectionActive">
             <router-link
@@ -14,6 +17,7 @@
                 :key="item.route"
                 class="nav-item"
                 :to="{ name: item.name }"
+                @click.native="handleClick"
                 >{{ item.label }}</router-link
             >
         </template>
@@ -24,6 +28,8 @@
 import { createComponent, PropType, computed } from "vue-function-api";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
+import store from "@/store";
+import { SET_IS_OPEN } from "@/store/mutations";
 
 interface InterfaceNavigationItem {
     name: string;
@@ -64,11 +70,16 @@ export default createComponent({
             context.root.$router.push({ name: firstRoute.name });
         }
 
+        function handleClick() {
+            store.commit(SET_IS_OPEN, false);
+        }
+
         return {
             isSectionActive,
             mdiChevronUp,
             mdiChevronDown,
-            handleHeaderClick
+            handleHeaderClick,
+            handleClick
         };
     }
 });
