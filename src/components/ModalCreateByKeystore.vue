@@ -50,8 +50,6 @@
 <script lang="ts">
 import {
     createComponent,
-    value,
-    Wrapper,
     PropType,
     watch
 } from "vue-function-api";
@@ -64,6 +62,7 @@ import TextInput, {
 import Button from "../components/Button.vue";
 import { mdiArrowRight } from "@mdi/js";
 import { SetupContext } from "vue-function-api/dist/types/vue";
+import zxcvbn, {ZXCVBNResult} from "zxcvbn";
 
 export interface State {
     modalIsOpen: boolean;
@@ -80,6 +79,27 @@ type Context = SetupContext & {
         input: TextInputComponent;
     };
 };
+
+// some common words that might be thrown into a password and make it less secure
+// todo: audit and add/remove words
+/*
+    The optional user_inputs argument is an array of strings that zxcvbn will treat as an extra dictionary.
+    This can be whatever list of strings you like, but is meant for user inputs from
+    other fields of the form, like name and email. That way a password that includes a user's personal information
+    can be heavily penalized. This list is also good for site-specific vocabulary — Acme Brick Co. might want to
+    include ['acme', 'brick', 'acmebrick', etc].
+ */
+const wordlist: string[] = [
+    "hedera",
+    "Hedera",
+    "hashgraph",
+    "hbar",
+    "crypto",
+    "cryptocoin",
+    "wallet",
+    "myhbarwallet",
+    "myhederawallet"
+];
 
 export default createComponent({
     components: {
@@ -108,6 +128,20 @@ export default createComponent({
         );
 
         function handleInputPassword(value: string) {
+
+            const passwordMetrics: ZXCVBNResult = zxcvbn(value, wordlist);
+
+            /**
+             0 # too guessable: risky password. (guesses < 10^3)
+             1 # very guessable: protection from throttled online attacks. (guesses < 10^6)
+             2 # somewhat guessable: protection from unthrottled online attacks. (guesses < 10^8)
+             3 # safely unguessable: moderate protection from offline slow-hash scenario. (guesses < 10^10)
+             4 # very unguessable: strong protection from offline slow-hash scenario. (guesses >= 10^10)
+             */
+            if (passwordMetrics.score < 2) {
+                context.emit("change", { ...props.state, password: value });
+            }
+
             context.emit("change", { ...props.state, password: value });
         }
 
