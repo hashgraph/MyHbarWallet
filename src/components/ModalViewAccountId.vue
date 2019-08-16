@@ -28,7 +28,6 @@ import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import Button from "../components/Button.vue";
 import { createComponent, PropType, computed } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
-import { writeToClipboard } from "../clipboard";
 import store from "../store";
 import { Id } from "../store/modules/wallet";
 
@@ -52,7 +51,7 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>,
         event: (String as unknown) as PropType<string>
     },
-    setup(props, context) {
+    setup() {
         const accountId = computed(() => {
             const accountId: Id | null = store.state.wallet.session
                 ? store.state.wallet.session.account

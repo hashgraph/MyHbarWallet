@@ -5,7 +5,10 @@
         class="header-container"
     >
         <header>
-            <router-link to="/" class="link">
+            <div v-if="isHome" class="link" @click="handleReturnClick">
+                <div class="logo">My<strong>Hbar</strong>Wallet</div>
+            </div>
+            <router-link v-else to="/" class="link">
                 <div class="logo">My<strong>Hbar</strong>Wallet</div>
             </router-link>
             <div class="spacer"></div>
@@ -40,7 +43,7 @@
 
 <script lang="ts">
 import Button from "../components/Button.vue";
-import { createComponent, reactive } from "@vue/composition-api";
+import { createComponent, computed, reactive } from "@vue/composition-api";
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
 
@@ -50,7 +53,7 @@ export default createComponent({
         HeaderHamburgerMenu,
         HeaderHamburgerButton
     },
-    setup() {
+    setup(props, context) {
         const state = reactive({
             scrolled: false,
             isHamburgerOpen: false
@@ -60,14 +63,29 @@ export default createComponent({
             state.scrolled = window.scrollY > 150;
         }
 
+        function handleReturnClick() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
         function toggle() {
             state.isHamburgerOpen = !state.isHamburgerOpen;
         }
 
+        const isHome = computed(() => {
+            // This conditional is required for unit tests to passs
+            if (context.root.$route != null) {
+                return context.root.$route.name === "home";
+            } else {
+                return false;
+            }
+        });
+
         return {
             state,
             onScroll,
-            toggle
+            toggle,
+            isHome,
+            handleReturnClick
         };
     }
 });
