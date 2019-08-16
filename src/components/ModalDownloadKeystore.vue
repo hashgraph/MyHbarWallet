@@ -1,9 +1,10 @@
 <template>
     <div class="modal-create-by-mnemonic-phrase">
         <Modal
-            :is-open="isOpen"
+            :is-open="state.modalIsOpen"
+            :not-closable="true"
             title="By Keystore File"
-            @change="this.$listeners.change"
+            @change="handleModalChangeIsOpen"
         >
             <div class="modal-save-my-keystore-cards">
                 <span class="modal-body-title">Save My Keystore File</span>
@@ -44,8 +45,9 @@
             <div class="button-container">
                 <Button
                     label="Download Keystore File"
-                    :busy="isBusy"
+                    :busy="state.isBusy"
                     class="download-button"
+                    @click="$emit('submit')"
                 />
             </div>
         </Modal>
@@ -60,22 +62,22 @@ import noLoseIcon from "../assets/icon-no-lose.svg";
 import noShareIcon from "../assets/icon-no-share.svg";
 import makeBackupIcon from "../assets/icon-make-backup.svg";
 
+export interface State {
+    modalIsOpen: boolean;
+    isBusy: boolean;
+}
+
 export default Vue.extend({
     components: {
         Modal,
         Button
     },
     model: {
-        prop: "isOpen",
+        prop: "state",
         event: "change"
     },
     props: {
-        isOpen: { type: Boolean, required: true }
-    },
-    data() {
-        return {
-            isBusy: true
-        };
+        state: { type: Object, required: true }
     },
     computed: {
         noLoseIcon() {
@@ -86,6 +88,11 @@ export default Vue.extend({
         },
         makeBackupIcon() {
             return makeBackupIcon;
+        }
+    },
+    methods: {
+        handleModalChangeIsOpen(isOpen: boolean) {
+            this.$emit("change", { ...this.state, modalIsOpen: isOpen });
         }
     }
 });

@@ -38,13 +38,11 @@
 import { createComponent, value, Wrapper } from "vue-function-api";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
-import imageKey from "../assets/button-key.svg";
 import imagePhrase from "../assets/button-phrase.svg";
 import imageFile from "../assets/button-file.svg";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
-import { ValueWrapper } from "vue-function-api/dist/wrappers";
 
 export enum CreateSoftwareOption {
     File = "file",
@@ -70,6 +68,7 @@ export default createComponent({
         const optionSelected: Wrapper<CreateSoftwareOption | null> = value(
             null
         );
+
         const options = [
             {
                 label: "Keystore File",

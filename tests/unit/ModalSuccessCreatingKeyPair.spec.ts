@@ -17,7 +17,5 @@ describe("ModalSuccessCreatingKeyPair.vue", (): void => {
         expect(wrapper.find(Modal).props().isOpen).toBe(true);
     });
 
-    it("navigates", (): void => {
-        
-    })
+    it.todo("navigates");
 });

@@ -21,7 +21,7 @@
 <script lang="ts">
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiCheckCircle } from "@mdi/js";
-import { createComponent, value } from "vue-function-api";
+import { createComponent, computed } from "vue-function-api";
 
 export default createComponent({
     components: {
@@ -39,7 +39,7 @@ export default createComponent({
         checked: { type: String, required: true }
     },
     setup(props) {
-        const selected = value(props.checked === props.value);
+        const selected = computed(() => props.checked === props.value);
 
         return { mdiCheckCircle, selected };
     }

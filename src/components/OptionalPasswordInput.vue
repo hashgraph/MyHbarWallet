@@ -133,5 +133,10 @@ export default createComponent({
     color: var(--color-china-blue);
     margin-block-start: 20px;
     padding: 0 10px;
+    pointer-events: none;
+}
+
+.password-input.expanded .password-warning {
+    pointer-events: all;
 }
 </style>

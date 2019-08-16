@@ -52,7 +52,7 @@ export default createComponent({
         ModalConfirmSignMessage,
         ModalMessageSigned
     },
-    setup(props) {
+    setup() {
         const message = value(null);
         const signable = value(true);
         const enableErr = value(false);
