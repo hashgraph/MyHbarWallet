@@ -7,11 +7,15 @@ describe("OptionalPasswordInput", (): void => {
             value: ""
         },
         data(): { showPassword: boolean } {
-            return {showPassword: true};
+            return { showPassword: true };
         },
         methods: {
-            handleInput: (_: string) => { return; },
-            handleChangeShowPassword: (_: boolean) => {return;},
+            handleInput: (_: string) => {
+                return;
+            },
+            handleChangeShowPassword: (_: boolean) => {
+                return;
+            }
         }
     });
 
