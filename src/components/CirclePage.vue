@@ -9,5 +9,9 @@
     background-position: 100% 0, left 80px;
     background-repeat: no-repeat, no-repeat;
     font-size: 14px;
+
+    @media (max-width: 650px) {
+        padding: 0 20px;
+    }
 }
 </style>

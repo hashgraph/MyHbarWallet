@@ -1,12 +1,9 @@
 <template>
     <CirclePage>
         <div class="wrap">
-            <div class="title-container">
-                <div class="title">
-                    Privacy Policy
-                </div>
-                <div class="sub-title">Last Updated: May 10, 2018</div>
-            </div>
+            <PageTitle title="Privacy Policy">
+                Last Updated: May 10, 2018
+            </PageTitle>
 
             <div class="text-content">
                 <div class="paragraph-wrap">
@@ -305,11 +302,13 @@
 
 <script lang="ts">
 import CirclePage from "../components/CirclePage.vue";
+import PageTitle from "../components/PageTitle.vue";
 import { createComponent } from "vue-function-api";
 
 export default createComponent({
     components: {
-        CirclePage
+        CirclePage,
+        PageTitle
     }
 });
 </script>
@@ -319,47 +318,15 @@ export default createComponent({
     margin: 0 auto;
     max-width: 620px;
     padding: 60px 0;
-    text-align: center;
-}
-
-.title-container {
-    color: var(--color-washed-black);
-    margin-block-end: 50px;
-}
-
-.title {
-    font-size: 42px;
-    font-weight: 700;
-    margin-block-end: 20px;
-    text-align: center;
-}
-
-.sub-title {
-    font-size: 13px;
-    font-weight: 600;
-    text-align: center;
 }
 
 p {
     color: var(--color-china-blue);
 }
 
-h1 {
-    font-size: 42px;
-    font-weight: 700;
-    margin-block-end: 20px;
-}
-
 h3 {
     font-weight: 500;
     padding-block-start: 30px;
     text-align: center;
-}
-
-h5 {
-    font-size: 13px;
-    font-weight: 600;
-    margin-block-start: 0;
-    padding-block-start: 0;
 }
 </style>
