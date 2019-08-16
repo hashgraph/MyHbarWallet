@@ -14,8 +14,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { computed } from "vue-function-api";
+import { createComponent, computed, PropType } from "vue-function-api";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import {
     mdiClose,
@@ -27,16 +26,22 @@ import {
 import { REMOVE_ALERT } from "@/store/mutations";
 import store from "@/store";
 
-export default Vue.extend({
+interface Props {
+    id: number;
+    message: string;
+    level: string;
+}
+
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
     props: {
-        id: { type: Number, required: true },
-        message: { type: String, required: true },
-        level: { type: String, required: false, default: "info" }
+        id: (Number as unknown) as PropType<number>,
+        message: (String as unknown) as PropType<string>,
+        level: (String as unknown) as PropType<string>
     },
-    setup(props) {
+    setup(props: Props) {
         const messageIcon = computed(() => {
             if (props.level === "info") {
                 return mdiInformationOutline;
