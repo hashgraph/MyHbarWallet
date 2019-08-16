@@ -5,6 +5,7 @@ import AccessMyAccount from "./views/AccessMyAccount.vue";
 import CreateAccount from "./views/CreateAccount.vue";
 import HardwareWalletAffiliates from "./views/HardwareWalletAffiliates.vue";
 import PrivacyPolicy from "./views/PrivacyPolicy.vue";
+import InterfaceCreateAccount from "@/views/InterfaceCreateAccount.vue";
 import TermsConditions from "./views/TermsConditions.vue";
 import { PositionResult } from "vue-router/types/router";
 
@@ -120,6 +121,11 @@ export default new Router({
                     path: "interact-with-contract",
                     name: "interact-with-contract",
                     component: InterfaceInteractWithContract
+                },
+                {
+                    path: "create-account",
+                    name: "create-account-transaction",
+                    component: InterfaceCreateAccount
                 },
                 {
                     path: "sign-message",

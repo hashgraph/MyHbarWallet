@@ -6,49 +6,52 @@
             <span class="input-container">
                 <span v-if="prefix" class="prefix">{{ prefix }}</span>
 
-                <textarea
-                    v-if="multiline"
-                    class="text-area"
-                    :placeholder="placeholder"
-                    :tabindex="tabindex"
-                    :value="value"
-                    :rows="rows"
-                    :class="{ resize: resizable }"
-                    @focusin="handleFocusIn"
-                    @focusout="handleFocusOut"
-                    @input="handleInput"
-                />
-                <input
-                    v-else
-                    ref="input"
-                    :value="value"
-                    :placeholder="placeholder"
-                    :type="keyboardType"
-                    :tabindex="tabindex"
-                    :step="step"
-                    @focusin="handleFocusIn"
-                    @focusout="handleFocusOut"
-                    @input="handleInput"
-                />
+                <span class="input-wrapper">
+                    <textarea
+                        v-if="multiline"
+                        class="text-area"
+                        :placeholder="placeholder"
+                        :tabindex="tabindex"
+                        :value="value"
+                        :rows="rows"
+                        :class="{ resize: resizable }"
+                        @focusin="handleFocusIn"
+                        @focusout="handleFocusOut"
+                        @input="handleInput"
+                    />
+                    <input
+                        v-else
+                        ref="input"
+                        :value="value"
+                        :placeholder="placeholder"
+                        :type="keyboardType"
+                        :tabindex="tabindex"
+                        :step="step"
+                        :min="min"
+                        @focusin="handleFocusIn"
+                        @focusout="handleFocusOut"
+                        @input="handleInput"
+                    />
+
+                    <span v-if="hasDecorations" class="decorations">
+                        <MaterialDesignIcon
+                            v-if="obscure"
+                            class="eye"
+                            :class="{ 'is-open': isEyeOpen }"
+                            :icon="eye"
+                            @click="handleClickEye"
+                        />
+
+                        <MaterialDesignIcon
+                            v-else-if="showValidation"
+                            class="checkmark"
+                            :class="{ 'is-valid': valid }"
+                            :icon="mdiCheckCircle"
+                        />
+                    </span>
+                </span>
 
                 <span v-if="suffix" class="suffix">{{ suffix }}</span>
-
-                <span v-if="hasDecorations" class="decorations">
-                    <MaterialDesignIcon
-                        v-if="obscure"
-                        class="eye"
-                        :class="{ 'is-open': isEyeOpen }"
-                        :icon="eye"
-                        @click="handleClickEye"
-                    />
-
-                    <MaterialDesignIcon
-                        v-else-if="showValidation"
-                        class="checkmark"
-                        :class="{ 'is-valid': valid }"
-                        :icon="mdiCheckCircle"
-                    />
-                </span>
             </span>
         </label>
 
@@ -84,11 +87,12 @@ import { writeToClipboard } from "@/clipboard";
 
 interface Props {
     placeholder: string;
-    value: string;
+    value: any;
     label: string;
     tabindex: string;
     step: string;
     type: string;
+    min: number;
     action: string;
     compact: boolean;
     white: boolean;
@@ -129,6 +133,7 @@ export default createComponent({
         placeholder: (String as unknown) as PropType<string>,
         value: (String as unknown) as PropType<string>,
         label: (String as unknown) as PropType<string>,
+        min: (Number as unknown) as PropType<number>,
         tabindex: (String as unknown) as PropType<string>,
         step: (String as unknown) as PropType<string>,
         type: (String as unknown) as PropType<string>,
@@ -287,7 +292,6 @@ input,
 textarea {
     border: 0;
     color: var(--color-washed-black);
-    flex-grow: 1;
     font-size: 14px;
     outline: none;
     padding: 20px;
@@ -296,6 +300,11 @@ textarea {
     &::placeholder {
         color: var(--color-basalt-grey);
     }
+}
+
+.input-wrapper {
+    flex-grow: 1;
+    position: relative;
 }
 
 .label-container {
@@ -319,7 +328,6 @@ textarea {
     display: flex;
     outline: none;
     overflow: hidden;
-    position: relative;
     width: 100%;
 }
 
@@ -392,7 +400,6 @@ textarea {
 
     & .decorations {
         /* TODO Fix */
-        padding-inline-end: 22%;
     }
 }
 
