@@ -23,7 +23,6 @@ import Button from "../components/Button.vue";
 import PageTitle from "../components/PageTitle.vue";
 import { mdiCheck } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
-import { PropType } from "vue";
 
 export default createComponent({
     components: {
@@ -31,6 +30,10 @@ export default createComponent({
         MaterialDesignIcon,
         Button,
         PageTitle
+    },
+    model: {
+        prop: "isOpen",
+        event: "change"
     },
     props: {
         isOpen: { type: Boolean }

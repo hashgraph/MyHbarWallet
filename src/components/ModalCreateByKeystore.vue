@@ -20,18 +20,20 @@
 
             <TextInput
                 ref="input"
-                v-model="password"
+                :value="state.password"
                 placeholder="Please Enter At Least 9 Characters"
                 obscure
+                @input="handleInputPassword"
             />
 
             <div class="btn-container">
                 <Button
-                    :disabled="password.length < 9"
+                    :disabled="state.password.length < 9"
+                    :busy="state.isBusy"
                     class="btn"
                     label="Next"
                     :trailing-icon="mdiArrowRight"
-                    @click="handleSubmit"
+                    @click="$emit('submit', state.password)"
                 />
             </div>
 
@@ -65,7 +67,8 @@ import { SetupContext } from "vue-function-api/dist/types/vue";
 
 export interface State {
     modalIsOpen: boolean;
-    filename: string;
+    password: string;
+    isBusy: boolean;
 }
 
 interface Props {
@@ -77,13 +80,6 @@ type Context = SetupContext & {
         input: TextInputComponent;
     };
 };
-
-export interface Component {
-    password: Wrapper<string>;
-    handleModalChangeIsOpen: (isOpen: boolean) => void;
-    handleSubmit: () => void;
-    mdiArrowRight: string;
-}
 
 export default createComponent({
     components: {
@@ -100,17 +96,7 @@ export default createComponent({
     props: {
         state: (Object as unknown) as PropType<State>
     },
-    setup(props: Props, context): Component {
-        const password = value("");
-
-        function handleModalChangeIsOpen(isOpen: boolean): void {
-            context.emit("change", { ...props.state, modalIsOpen: isOpen });
-        }
-
-        function handleSubmit(): void {
-            context.emit("submit", password);
-        }
-
+    setup(props: Props, context) {
         // Focus the single text input when the modal is opened
         watch(
             () => props.state.modalIsOpen,
@@ -121,10 +107,17 @@ export default createComponent({
             }
         );
 
+        function handleInputPassword(value: string) {
+            context.emit("change", { ...props.state, password: value });
+        }
+
+        function handleModalChangeIsOpen(isOpen: boolean): void {
+            context.emit("change", { ...props.state, modalIsOpen: isOpen });
+        }
+
         return {
-            password,
             handleModalChangeIsOpen,
-            handleSubmit,
+            handleInputPassword,
             mdiArrowRight
         };
     }

@@ -16,7 +16,15 @@
             @submit="handleCreateWithSoftwareSubmit"
         />
         <ModalCreateByPhrase v-model="modalCreateByPhraseIsOpen" />
-        <ModalCreateByKeystore v-model="modalCreateByKeystoreData" />
+        <ModalCreateByKeystore
+            v-model="modalCreateByKeystoreState"
+            @submit="handleCreateByKeystoreSubmit"
+        />
+        <ModalDownloadKeystore
+            v-model="modalDownloadKeystoreState"
+            @submit="handleDownloadKeystoreSubmit"
+        />
+        <ModalSuccess v-model="modalSuccessIsOpen" />
     </div>
 </template>
 
@@ -28,10 +36,14 @@ import ModalCreateWithSoftware, {
     CreateSoftwareOption
 } from "@/components/ModalCreateWithSoftware.vue";
 import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
+import ModalDownloadKeystore, {
+    State as DownloadKeystoreState
+} from "../components/ModalDownloadKeystore.vue";
 import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
 import PageTitle from "../components/PageTitle.vue";
 import { createComponent, value, Wrapper } from "vue-function-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
+import ModalSuccess from "../components/ModalSuccessCreatingKeyPair.vue";
 
 export default createComponent({
     components: {
@@ -41,18 +53,29 @@ export default createComponent({
         ModalCreateWithSoftware,
         PageTitle,
         ModalCreateByPhrase,
-        ModalCreateByKeystore
+        ModalCreateByKeystore,
+        ModalDownloadKeystore,
+        ModalSuccess
     },
     setup() {
         const modalAccessByHardwareIsOpen = value(false);
         const modalCreateWithSoftwareIsOpen = value(false);
         const modalCreateByPhraseIsOpen = value(false);
-        const modalCreateByKeystoreData: Wrapper<CreateByKeystoreState> = value(
-            {
-                modalIsOpen: false,
-                filename: ""
-            }
-        );
+        const modalSuccessIsOpen = value(false);
+        const modalCreateByKeystoreState: Wrapper<
+            CreateByKeystoreState
+        > = value({
+            modalIsOpen: false,
+            password: "",
+            isBusy: false
+        });
+
+        const modalDownloadKeystoreState: Wrapper<
+            DownloadKeystoreState
+        > = value({
+            modalIsOpen: false,
+            isBusy: true
+        });
 
         function handleClickTiles(which: string) {
             if (which === "hardware") {
@@ -67,10 +90,30 @@ export default createComponent({
 
             setTimeout(() => {
                 if (which === CreateSoftwareOption.File) {
-                    modalCreateByKeystoreData.value.modalIsOpen = true;
+                    modalCreateByKeystoreState.value.modalIsOpen = true;
                 } else if (which === CreateSoftwareOption.Phrase) {
                     modalCreateByPhraseIsOpen.value = true;
                 }
+            }, 125);
+        }
+
+        function handleCreateByKeystoreSubmit() {
+            modalCreateByKeystoreState.value.modalIsOpen = false;
+
+            setTimeout(() => {
+                modalDownloadKeystoreState.value.modalIsOpen = true;
+            }, 125);
+
+            setTimeout(() => {
+                modalDownloadKeystoreState.value.isBusy = false;
+            }, 5000);
+        }
+
+        function handleDownloadKeystoreSubmit() {
+            modalDownloadKeystoreState.value.modalIsOpen = false;
+
+            setTimeout(() => {
+                modalSuccessIsOpen.value = true;
             }, 125);
         }
 
@@ -78,9 +121,13 @@ export default createComponent({
             modalAccessByHardwareIsOpen,
             modalCreateWithSoftwareIsOpen,
             modalCreateByPhraseIsOpen,
-            modalCreateByKeystoreData,
+            modalDownloadKeystoreState,
+            modalCreateByKeystoreState,
+            modalSuccessIsOpen,
             handleClickTiles,
-            handleCreateWithSoftwareSubmit
+            handleCreateWithSoftwareSubmit,
+            handleCreateByKeystoreSubmit,
+            handleDownloadKeystoreSubmit
         };
     }
 });
