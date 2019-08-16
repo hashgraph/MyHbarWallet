@@ -22,39 +22,41 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from "vue";
+import { createComponent, value } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     props: {
-        editable: { type: Boolean },
-        words: { type: Number, required: true },
-        value: { type: Array, required: true } as PropOptions<string[]>
+        editable: (Boolean as unknown) as boolean,
+        words: (Number as unknown) as number,
+        value: (Array as unknown) as string[]
     },
-    data() {
-        return {
-            focused: null as (number | null)
-        };
-    },
-    methods: {
-        handleInput(event: Event) {
+    setup(props, context) {
+        const focused = value<number | null>(null);
+        function handleInput(event: Event) {
             const target = event.target as HTMLInputElement;
             const index = Number.parseInt(target.dataset.index || "0", 10);
 
-            const newValues = this.value.slice();
+            const newValues = props.value.slice();
             newValues[index - 1] = target.value;
 
-            this.$emit("input", newValues);
-        },
+            context.emit("input", newValues);
+        }
 
-        handleFocus(event: Event) {
-            if (!this.editable) {
+        function handleFocus(event: Event) {
+            if (!props.editable) {
                 // Non-editable controls should not set focus
                 return;
             }
 
             const target = event.target as HTMLInputElement;
-            this.focused = Number.parseInt(target.dataset.index || "0", 10);
+            focused.value = Number.parseInt(target.dataset.index || "0", 10);
         }
+
+        return {
+            focused,
+            handleInput,
+            handleFocus
+        };
     }
 });
 </script>
