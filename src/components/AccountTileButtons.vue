@@ -1,6 +1,5 @@
 <template>
     <div class="tile-grid">
-        <!-- TODO: Add @click="openModal" to AccountTileButton where openModal opens your modal -->
         <AccountTileButton
             title="Hardware"
             content="Ledger wallet, FINNEY, Trezor, Digital bitbox, Secalot, KeepKey"

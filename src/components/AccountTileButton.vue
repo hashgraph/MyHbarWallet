@@ -4,7 +4,6 @@
         :class="{ disabled }"
         v-on="this.$listeners"
     >
-        <!--fixme: can remove div: tile-image if image sizes are normalized-->
         <img class="tile-image" :src="image" />
         <div class="text">
             <div class="title">{{ title }}</div>
@@ -102,6 +101,7 @@ export default createComponent({
 }
 
 .tile-image {
+    flex-shrink: 0;
     padding-block: 17.5px;
 }
 
