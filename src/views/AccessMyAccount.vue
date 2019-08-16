@@ -223,5 +223,9 @@ a {
     display: flex;
     flex-direction: column;
     padding: 80px 0;
+
+    @media (max-width: 600px) {
+        padding: 20px;
+    }
 }
 </style>

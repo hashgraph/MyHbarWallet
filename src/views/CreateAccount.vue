@@ -154,7 +154,7 @@ a:focus {
     align-items: center;
     display: flex;
     flex-direction: column;
-    padding: 80px 20px;
+    padding: 80px 0;
 
     @media (max-width: 600px) {
         padding: 20px;
