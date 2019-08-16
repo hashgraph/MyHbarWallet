@@ -72,4 +72,10 @@ button {
         transition: none;
     }
 }
+
+@media screen and (max-width: 450px) {
+    button {
+        display: none;
+    }
+}
 </style>
