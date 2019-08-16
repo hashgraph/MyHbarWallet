@@ -67,8 +67,9 @@ import HomeTileButtons from "@/components/HomeTileButtons.vue";
 import circleImage from "@/assets/circle.png";
 import ModalForgotToLogOut from "@/components/ModalForgotToLogOut.vue";
 import Alerts from "@/components/Alerts.vue";
-import { computed, createComponent } from "vue-function-api";
-import store from "@/store";
+import {createComponent, value, onMounted, computed} from "vue-function-api";
+import store from '@/store';
+import { IS_LOGGED_IN } from '@/store/getters';
 
 export default createComponent({
     components: {

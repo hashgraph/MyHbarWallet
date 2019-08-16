@@ -9,7 +9,10 @@ export default {
         isOpen: false
     },
     getters: {
-        isOpen: (state: State): boolean => state.isOpen
+        isOpen: (state: State): boolean => {
+            debugger;
+            return state.isOpen
+        }
     },
     mutations: {
         [SET_IS_OPEN](state: State, isOpen: boolean): void {

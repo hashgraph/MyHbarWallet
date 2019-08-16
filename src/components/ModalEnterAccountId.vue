@@ -56,6 +56,7 @@ import Button from "../components/Button.vue";
 import { SetupContext } from "vue-function-api/dist/types/vue";
 import { Client } from "hedera-sdk-js";
 import { SET_ACCOUNT, SET_CLIENT } from "@/store/mutations";
+import { IS_LOGGED_IN } from "@/store/getters";
 
 export interface State {
     modalIsOpen: boolean;
@@ -114,7 +115,7 @@ export default createComponent({
 
                 // If getting account balance doesn't throw an error then we know that
                 // the account id and private key the user entered are valid
-                await client.getAccountBalance();
+                // await client.getAccountBalance();
 
                 // Set Account and Client if `client.getBalance()` doesn't throw an error
                 context.root.$store.commit(SET_ACCOUNT, account.account);

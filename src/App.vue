@@ -5,6 +5,7 @@
             <router-view />
         </div>
         <Footer />
+        <Alerts />
         <ZoomTopButton />
     </div>
 </template>
@@ -12,6 +13,7 @@
 <script lang="ts">
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import Alerts from "@/components/Alerts.vue";
 import ZoomTopButton from "@/components/ZoomTopButton.vue";
 import { createComponent } from "vue-function-api";
 
@@ -19,6 +21,7 @@ export default createComponent({
     components: {
         Header,
         Footer,
+        Alerts,
         ZoomTopButton
     }
 });
