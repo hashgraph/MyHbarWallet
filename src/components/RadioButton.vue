@@ -10,16 +10,20 @@
             @change="$emit('change', value)"
         />
         <span class="label">{{ label }}</span>
-        <MaterialDesignIcon v-if="selected" class="check" :icon="check" />
+        <MaterialDesignIcon
+            v-if="selected"
+            class="check"
+            :icon="mdiCheckCircle"
+        />
     </label>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiCheckCircle } from "@mdi/js";
+import { createComponent, value } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
@@ -34,13 +38,10 @@ export default Vue.extend({
         value: { type: String, required: true },
         checked: { type: String, required: true }
     },
-    computed: {
-        check() {
-            return mdiCheckCircle;
-        },
-        selected(): boolean {
-            return this.checked === this.value;
-        }
+    setup(props) {
+        const selected = value(props.checked === props.value);
+
+        return { mdiCheckCircle, selected };
     }
 });
 </script>
