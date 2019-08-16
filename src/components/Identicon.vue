@@ -7,6 +7,7 @@
 import { createComponent, computed, PropType } from "vue-function-api";
 
 // Must turn off observe setting BEFORE importing this module.. someone shoot me
+// @ts-ignore
 window["jdenticon_config"] = { replaceMode: "never" };
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const jdenticon = require("jdenticon");
