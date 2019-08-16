@@ -26,6 +26,7 @@
                     class="continue-btn"
                     label="Continue"
                     :busy="state.isBusy"
+                    :disabled="!areFieldsFilled"
                 />
             </form>
             <div class="support">
@@ -43,7 +44,7 @@ import MnemonicInput from "../components/MnemonicInput.vue";
 import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
-import { createComponent } from "@vue/composition-api";
+import { computed, createComponent } from "@vue/composition-api";
 
 export interface State {
     modalIsOpen: boolean;
@@ -75,10 +76,22 @@ export default createComponent({
         function handleMnemonicInput(words: string[]) {
             context.emit("change", { ...props.state, words });
         }
+x
+        const areFieldsFilled = computed(() => {
+            if (props.state.words.length == 24) {
+                for (const word of props.state.words) {
+                    if (word == "") {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        });
 
         return {
             handleModalChangeIsOpen,
-            handleMnemonicInput
+            handleMnemonicInput,
+            areFieldsFilled
         };
     }
 });
