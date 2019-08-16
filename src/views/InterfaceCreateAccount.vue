@@ -75,8 +75,6 @@ export default createComponent({
                 validMaxFee.value = false;
             }
 
-            console.log(input);
-
             validMaxFee.value = input >= 0 && input <= userBalance;
         }
 

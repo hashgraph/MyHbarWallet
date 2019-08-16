@@ -77,7 +77,6 @@ export default createComponent({
             console.warn("todo: check balance");
 
             busy.value = true;
-
             console.log("busy: " + busy);
 
             setTimeout(() => {

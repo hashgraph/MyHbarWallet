@@ -1,9 +1,6 @@
 import {
-    SET_ACCOUNT,
-    SET_PRIVATE_KEY,
-    SET_CLIENT,
-    SET_PUBLIC_KEY,
-    LOG_OUT
+    LOG_OUT,
+    LOG_IN
 } from "@/store/mutations";
 import { Client } from "hedera-sdk-js";
 import { IS_LOGGED_IN } from "@/store/getters";
@@ -14,47 +11,34 @@ export interface Id {
     account: number;
 }
 
+export interface Session {
+    account: Id;
+    privateKey: string;
+    publicKey: string;
+    client: Client;   
+}
+
 export interface State {
-    account: Id | null;
-    privateKey: string | null;
-    publicKey: string | null;
-    client: Client | null;
+    session: Session | null;
 }
 
 export default {
     state: {
-        account: null,
-        privateKey: null,
-        publicKey: null,
-        client: null
+        session: null,
     },
     getters: {
         [IS_LOGGED_IN]: (state: State): boolean => {
             return (
-                state.account != null &&
-                state.publicKey != null &&
-                state.client != null
+                state.session != null
             );
         }
     },
     mutations: {
-        [SET_ACCOUNT](state: State, account: Id): void {
-            state.account = account;
-        },
-        [SET_PRIVATE_KEY](state: State, privateKey: string): void {
-            state.privateKey = privateKey;
-        },
-        [SET_PUBLIC_KEY](state: State, publicKey: string): void {
-            state.publicKey = publicKey;
-        },
-        [SET_CLIENT](state: State, client: Client): void {
-            state.client = client;
+        [LOG_IN](state: State, session: Session): void {
+            state.session = session;
         },
         [LOG_OUT](state: State): void {
-            state.account = null;
-            state.publicKey = null;
-            state.privateKey = null;
-            state.client = null;
+            state.session = null;
         }
     }
 };

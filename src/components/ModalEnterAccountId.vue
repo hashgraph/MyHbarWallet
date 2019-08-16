@@ -15,7 +15,7 @@
                 :value="input"
                 show-validation
                 :valid="valid"
-                :error="failed"
+                :error="state.error"
                 placeholder="shard.realm.account"
                 @input="handleInput"
             />
@@ -26,7 +26,7 @@
                     label="Continue"
                     :disabled="!valid"
                     :busy="state.isBusy"
-                    @click="handleSubmit"
+                    @click="$emit('submit')"
                 />
             </div>
 
@@ -54,14 +54,13 @@ import TextInput, {
 } from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import { SetupContext } from "vue-function-api/dist/types/vue";
-import { Client } from "hedera-sdk-js";
-import { SET_ACCOUNT, SET_CLIENT } from "@/store/mutations";
-import { IS_LOGGED_IN } from "@/store/getters";
+import { Id } from "@/store/modules/wallet";
 
 export interface State {
     modalIsOpen: boolean;
-    account: string;
+    account: Id | null;
     isBusy: boolean;
+    error: string | null;
 }
 
 export interface Props {
@@ -93,43 +92,20 @@ export default createComponent({
         const failed: Wrapper<string | null> = value(null);
         const valid = computed(() => regex.test(input.value));
 
-        function handleInput(account: string) {
-            input.value = account;
-            context.emit("change", { ...props.state, account });
-        }
+        function handleInput(accountText: string) {
+            input.value = accountText;
 
-        async function handleSubmit() {
-            failed.value = null;
-            context.emit("change", { ...props.state, isBusy: true });
-            const parts = input.value.split(".");
-            const key = context.root.$store.state.wallet.privateKey;
-
-            try {
+            if (valid.value) {
+                const parts = input.value.split(".");
                 const account = {
                     shard: parseInt(parts[0]),
                     realm: parseInt(parts[1]),
                     account: parseInt(parts[2])
                 };
 
-                const client = new Client({ account, key });
-
-                // If getting account balance doesn't throw an error then we know that
-                // the account id and private key the user entered are valid
-                // await client.getAccountBalance();
-
-                // Set Account and Client if `client.getBalance()` doesn't throw an error
-                context.root.$store.commit(SET_ACCOUNT, account.account);
-                context.root.$store.commit(SET_CLIENT, client);
-
-                console.log(context.root.$store.getters.IS_LOGGED_IN);
-
-                // Propagate change up to parent component
-                context.emit("submit", props.state);
-            } catch {
-                failed.value =
-                    "This account is not associated with your private key";
-                // Only update isBusy if getting account balance failed
-                context.emit("change", { ...props.state, isBusy: false });
+                context.emit("change", { ...props.state, account });
+            } else {
+                context.emit("change", { ...props.state, account: null });
             }
         }
 
@@ -154,7 +130,6 @@ export default createComponent({
             input,
             valid,
             failed,
-            handleSubmit,
             handleInput,
             handleModalChangeIsOpen,
             handleDontHaveAccount

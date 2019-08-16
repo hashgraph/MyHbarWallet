@@ -47,7 +47,7 @@ import contractImageActive from "../assets/contract-active.svg";
 import messageImage from "../assets/message.svg";
 import messageImageActive from "../assets/message-active.svg";
 import store from "@/store";
-import { SET_IS_OPEN } from "@/store/mutations";
+import { SET_INTERFACE_MENU_IS_OPEN } from "@/store/mutations";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiClose } from "@mdi/js";
 import { createComponent, computed } from "vue-function-api";
@@ -73,7 +73,7 @@ export default createComponent({
             { name: "verify-message", label: "Verify Message" }
         ];
 
-        const menuOpen = computed(() => store.getters.isOpen);
+        const menuOpen = computed(() => store.state.interfaceMenu.isOpen);
 
         const classObject = computed(() => {
             if (menuOpen.value) return "menu-open";
@@ -81,7 +81,7 @@ export default createComponent({
         });
 
         function handleClick() {
-            store.commit(SET_IS_OPEN, false);
+            store.commit(SET_INTERFACE_MENU_IS_OPEN, false);
         }
 
         return {

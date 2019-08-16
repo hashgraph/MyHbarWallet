@@ -38,8 +38,6 @@ import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import { computed, createComponent, PropType, watch } from "vue-function-api";
 import { SetupContext } from "vue-function-api/dist/types/vue";
 import { decodePrivateKey } from "hedera-sdk-js";
-import { SET_PUBLIC_KEY } from "@/store/mutations";
-import store from "@/store";
 
 export interface State {
     modalIsOpen: boolean;
@@ -71,12 +69,9 @@ export default createComponent({
     setup(props, context) {
         const valid = computed(() => {
             try {
-                // TODO: Remove `.toString()` when that is implemented on the sdk side
-                // For now this will do
-                const publicKey = decodePrivateKey(
-                    props.state.privateKey
-                ).publicKey.toString();
-                store.commit(SET_PUBLIC_KEY, publicKey);
+                // TODO: Perhaps debounce this?
+                // TODO: Find a clean way to re-use the derived public key back in AccessMyAccount
+                decodePrivateKey(props.state.privateKey);
                 return true;
             } catch {
                 return false;

@@ -71,9 +71,10 @@ import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalPassword from "../components/ModalPassword.vue";
 import store from "@/store";
-import { SET_PRIVATE_KEY } from "@/store/mutations";
+import { LOG_IN } from "@/store/mutations";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { createComponent, value, Wrapper } from "vue-function-api";
+import { Client, decodePrivateKey } from "hedera-sdk-js";
 
 export default createComponent({
     components: {
@@ -89,6 +90,9 @@ export default createComponent({
         ModalRequestToCreateAccount
     },
     setup(props, context) {
+        const privateKey: Wrapper<string | null> = value(null);
+        const publicKey: Wrapper<string | null> = value(null);
+
         const modalAccessByHardwareIsOpen = value(false);
         const modalAccessBySoftwareIsOpen = value(false);
 
@@ -114,7 +118,8 @@ export default createComponent({
 
         const modalEnterAccountId = value({
             modalIsOpen: false,
-            account: "",
+            account: null,
+            error: null as null | string,
             isBusy: false
         });
 
@@ -181,6 +186,14 @@ export default createComponent({
             }, 3000);
         }
 
+        // Update our local understand of what the private/public key pair is
+        // Called at the end of each access by software workflow before merging
+        // into enter account ID
+        function setPrivateKey(pk: string) {
+            privateKey.value = pk;
+            publicKey.value = decodePrivateKey(pk).publicKey.toString();
+        }
+
         function handleAccessByPhraseSubmit() {
             modalAccessByPhraseState.value.isBusy = true;
             // TODO: Decode private key from phrase
@@ -194,25 +207,61 @@ export default createComponent({
 
         function handleAccessByPrivateKeySubmit() {
             modalAccessByPrivateKeyState.value.isBusy = true;
-            store.commit(
-                SET_PRIVATE_KEY,
-                modalAccessByPrivateKeyState.value.privateKey
-            );
 
-            // Close  previous modal and open another one
-            modalAccessByPrivateKeyState.value.isBusy = false;
+            setPrivateKey(modalAccessByPrivateKeyState.value.privateKey);
+
+            // Close previous modal and open another one
             modalAccessByPrivateKeyState.value.modalIsOpen = false;
-            modalEnterAccountId.value.modalIsOpen = true;
+
+            setTimeout(() => {
+                modalAccessByPrivateKeyState.value.isBusy = false;
+                modalEnterAccountId.value.modalIsOpen = true;
+            }, 125);
         }
 
-        function openInterface(privateKey: string | null) {
-            console.log("privateKey:", privateKey);
-
+        function openInterface() {
             context.root.$router.push({ name: "interface" });
         }
 
-        function handleAccountIdSubmit() {
-            openInterface(null);
+        async function handleAccountIdSubmit() {
+            modalEnterAccountId.value.error = null;
+            modalEnterAccountId.value.isBusy = true;
+
+            const account = modalEnterAccountId.value.account;
+
+            if (account == null || privateKey.value == null) {
+                throw new Error("unexpected submission of EnterAccountID");
+            }
+
+            try {
+                const client = new Client({ account, key: privateKey.value });
+
+                // If getting account balance doesn't throw an error then we know that
+                // the account id and private key the user entered are valid
+                await client.getAccountBalance();
+
+                // Set Account and Client if `client.getBalance()` doesn't throw an error
+                store.commit(LOG_IN, {
+                    account: modalEnterAccountId.value.account,
+                    client,
+                    privateKey: privateKey.value,
+                    publicKey: publicKey.value
+                });
+
+                openInterface();
+            } catch {
+                // FIXME: Look at these atomic warnings
+                // FIXME: This should be a "This account is not associated with your private key" error but balance transactions
+                //        don't have their signatures checked
+
+                /* eslint-disable-next-line require-atomic-updates */
+                modalEnterAccountId.value.error =
+                    "This account does not exist in the network.";
+
+                // Only update isBusy if getting account balance failed
+                /* eslint-disable-next-line require-atomic-updates */
+                modalEnterAccountId.value.isBusy = false;
+            }
         }
 
         function handleDoesntHaveAccount() {
