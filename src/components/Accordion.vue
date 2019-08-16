@@ -45,7 +45,7 @@ a {
 
 .icon {
     color: var(--color-melbourne-cup);
-    flex: 0 0 24px;
+    flex-shrink: 0;
     transition: transform 0.3s linear;
 
     @media (prefers-reduced-motion) {
