@@ -30,13 +30,18 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import TextInput, {
-    Component as TextInputComponent
-} from "../components/TextInput.vue";
+import { createComponent, value } from "vue-function-api";
+import { SetupContext } from "vue-function-api/dist/types/vue";
+import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 
-export default Vue.extend({
+type Context = SetupContext & {
+    refs: {
+        input: HTMLInputElement;
+    };
+};
+
+export default createComponent({
     components: {
         TextInput,
         SwitchButton
@@ -44,23 +49,22 @@ export default Vue.extend({
     props: {
         value: { type: String, default: "" }
     },
-    data() {
-        return {
-            showPassword: false
-        };
-    },
-    methods: {
-        handleInput(password: string) {
-            this.$emit("input", password);
-        },
-        handleChangeShowPassword(showPassword: boolean) {
+    setup(props, context) {
+        const showPassword = value(false);
+
+        function handleInput(password: string) {
+            context.emit("input", password);
+        }
+
+        function handleChangeShowPassword(showPassword: boolean) {
             if (showPassword) {
                 // If we are now showing the password,
                 // focus the password input
-                // FIXME: How to remove the _ unknown _ hack ?
-                ((this.$refs.input as unknown) as TextInputComponent).focus();
+                (context as Context).refs.input.focus();
             }
         }
+
+        return { showPassword, handleInput, handleChangeShowPassword };
     }
 });
 </script>
@@ -102,8 +106,7 @@ export default Vue.extend({
 
 .password-input {
     padding-inline: 10px;
-    transition: max-height 0.3s ease;
-    transition: padding-top 0.3s ease;
+    transition: max-height 0.3s ease, padding-block-start 0.3s ease;
 
     @media screen and (prefers-reduced-motion: reduce) {
         transition: none;
