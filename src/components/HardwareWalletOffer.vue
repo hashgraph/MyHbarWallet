@@ -15,7 +15,9 @@
                 More information >
             </a>
         </div>
-        <img :src="image" class="logo-image" />
+        <a :href="moreInfo" rel="noopener" target="_blank">
+            <img :src="image" class="logo-image" />
+        </a>
     </div>
 </template>
 
