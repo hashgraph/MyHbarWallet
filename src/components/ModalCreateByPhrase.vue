@@ -94,6 +94,7 @@ export interface Component {
     words: Wrapper<string[]>;
     cachedIcon: Wrapper<string>;
     printerIcon: Wrapper<string>;
+    printModalIsOpen: Wrapper<boolean>;
     handlePrintModal: () => void;
     handleNumWordsChange: (numWords: number) => void;
     handlePasswordChange: (password: string) => void;
