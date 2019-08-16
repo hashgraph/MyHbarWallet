@@ -1,6 +1,6 @@
 <template>
     <div class="hardware-wallet-affiliates">
-        <PageTitle large title="Buy a Hardware wallet">
+        <PageTitle large title="Buy a Hardware Wallet">
             Purchase a hardware wallet for the highest security when accessing
             your crypto.
         </PageTitle>
@@ -96,7 +96,11 @@ export default createComponent({
 <style lang="postcss" scoped>
 .hardware-wallet-affiliates {
     background: var(--color-boysenberry-shadow);
-    padding: 100px 0 100px 0;
+    padding: 80px 0 80px 0;
+
+    @media (max-width: 425px) {
+        padding: 40px 0 40px 0;
+    }
 }
 
 .header {
