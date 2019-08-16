@@ -42,12 +42,12 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { createComponent } from "vue-function-api";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "@/components/MnemonicInput.vue";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         Button,
         Modal,

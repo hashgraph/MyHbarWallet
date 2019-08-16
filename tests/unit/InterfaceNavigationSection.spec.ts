@@ -23,24 +23,33 @@ describe("InterfaceNavigationSection", (): void => {
     const localVue = createLocalVue();
     localVue.use(Router);
 
-    const wrapper = mount(InterfaceNavigationSection, {
-        localVue,
-        router,
-        propsData: {
-            image: contractImage,
-            "image-active": contractImageActive,
-            title: "Contract",
-            routes
-        }
-    });
-
     it("renders", (): void => {
         expect.assertions(1);
+        const wrapper = mount(InterfaceNavigationSection, {
+            localVue,
+            router,
+            propsData: {
+                image: contractImage,
+                "image-active": contractImageActive,
+                title: "Contract",
+                routes
+            }
+        });
         expect(wrapper.find(".nav-title").text()).toMatch("Contract");
     });
 
     it("accepts click inputs and shows links", (): void => {
         expect.assertions(2);
+        const wrapper = mount(InterfaceNavigationSection, {
+            localVue,
+            router,
+            propsData: {
+                image: contractImage,
+                "image-active": contractImageActive,
+                title: "Contract",
+                routes
+            }
+        });
         const img = wrapper.find("img").attributes("src");
         expect(img).toBe(wrapper.vm.$props.image);
         wrapper.find(".nav-section-header").trigger("click");

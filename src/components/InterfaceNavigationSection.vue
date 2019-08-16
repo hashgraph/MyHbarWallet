@@ -1,9 +1,12 @@
 <template>
     <div class="nav-section">
         <div class="nav-section-header" @click="handleHeaderClick">
-            <img alt="" :src="isSectionActive ? imageActive : image" />
+            <img alt :src="isSectionActive ? imageActive : image" />
             <span class="nav-title">{{ title }}</span>
-            <MaterialDesignIcon :icon="icon" class="indicator" />
+            <MaterialDesignIcon
+                :icon="isSectionActive ? mdiChevronUp : mdiChevronDown"
+                class="indicator"
+            />
         </div>
         <template v-if="isSectionActive">
             <router-link
@@ -11,15 +14,14 @@
                 :key="item.route"
                 class="nav-item"
                 :to="{ name: item.name }"
+                >{{ item.label }}</router-link
             >
-                {{ item.label }}
-            </router-link>
         </template>
     </div>
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from "vue";
+import { createComponent, PropType, computed } from "vue-function-api";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
@@ -35,43 +37,39 @@ interface Props {
     routes: InterfaceNavigationItem[];
 }
 
-interface Computed {
-    icon: string;
-    isSectionActive: boolean;
-}
-
-export default Vue.extend<{}, {}, Computed, Props>({
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
     props: {
-        image: { type: String, required: true },
-        imageActive: { type: String, required: true },
-        title: { type: String, required: true },
-        routes: {
-            type: Array,
-            required: true
-        } as PropOptions<InterfaceNavigationItem[]>
+        image: (String as unknown) as PropType<string>,
+        imageActive: (String as unknown) as PropType<string>,
+        title: (String as unknown) as PropType<string>,
+        routes: (Array as unknown) as PropType<InterfaceNavigationItem[]>
     },
-    computed: {
-        isSectionActive(): boolean {
-            return this.routes.some(route => route.name === this.$route.name);
-        },
-        icon(): string {
-            return this.isSectionActive ? mdiChevronUp : mdiChevronDown;
-        }
-    },
-    methods: {
-        handleHeaderClick() {
-            const firstRoute = this.routes[0];
+    watch: {},
+    setup(props: Props, context) {
+        const isSectionActive = computed(() =>
+            props.routes.some(route => route.name === context.root.$route.name)
+        );
+
+        function handleHeaderClick() {
+            const firstRoute = props.routes[0];
 
             // If the first route is active, do nothing
-            if (firstRoute.name === this.$route.name) {
+            if (firstRoute.name === context.root.$route.name) {
                 return;
             }
 
-            this.$router.push({ name: firstRoute.name });
+            context.root.$router.push({ name: firstRoute.name });
         }
+
+        return {
+            isSectionActive,
+            mdiChevronUp,
+            mdiChevronDown,
+            handleHeaderClick
+        };
     }
 });
 </script>
