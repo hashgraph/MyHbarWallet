@@ -100,6 +100,10 @@ export default createComponent({
     font-weight: 700;
     margin-block-end: 20px;
     text-align: center;
+
+    @media (max-width: 290px) {
+        font-size: 30px;
+    }
 }
 
 .sub-title {

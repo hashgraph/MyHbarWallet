@@ -319,7 +319,6 @@ export default createComponent({
     margin: 0 auto;
     max-width: 620px;
     padding: 60px 0;
-    text-align: center;
 }
 
 .title-container {
@@ -332,6 +331,10 @@ export default createComponent({
     font-weight: 700;
     margin-block-end: 20px;
     text-align: center;
+
+    @media (max-width: 290px) {
+        font-size: 32px;
+    }
 }
 
 .sub-title {
