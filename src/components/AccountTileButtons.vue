@@ -3,7 +3,6 @@
         <!-- TODO: Add @click="openModal" to AccountTileButton where openModal opens your modal -->
         <AccountTileButton
             title="Hardware"
-            disabled
             content="Ledger wallet, FINNEY, Trezor, Digital bitbox, Secalot, KeepKey"
             :image="hardwareImage"
             @click="$emit('click', 'hardware')"
@@ -38,9 +37,17 @@ export default createComponent({
 <style lang="postcss" scoped>
 .tile-grid {
     display: grid;
-    grid-column-gap: 20px;
+    grid-gap: 20px;
     grid-template-columns: 210px 210px;
     justify-items: center;
+
+    @media (max-width: 600px) {
+        grid-template-columns: auto;
+
+        & * {
+            width: 100%;
+        }
+    }
 }
 
 .account-tile-button:last-child {

@@ -103,6 +103,12 @@ export default createComponent({
 
 .top {
     background-color: var(--color-white);
+
+    @media (max-width: 480px) {
+        & .banner-image {
+            display: none;
+        }
+    }
 }
 
 .page-container {
@@ -110,21 +116,6 @@ export default createComponent({
     max-width: 1024px;
     padding: 0 20px;
     text-align: start;
-
-    @media (min-width: 1025px) {
-        /* fixme: remove 80px when there is more content */
-        padding: 0 20px;
-    }
-
-    @media (max-width: 1024px) and (min-width: 415px) {
-        /* fixme: remove 80px when there is more content */
-        padding: 0 25px;
-    }
-
-    @media (max-width: 1024px) {
-        /* fixme: remove 80px when there is more content */
-        padding: 0 25px;
-    }
 }
 
 .banner {
@@ -133,10 +124,28 @@ export default createComponent({
     display: flex;
     padding: 30px;
     width: 100%;
+
+    @media (max-width: 810px) {
+        flex-direction: column;
+    }
+
+    @media (max-width: 350px) {
+        padding: 10px;
+    }
 }
 
 .top .banner {
     margin-block-end: 40px;
+
+    @media (max-width: 480px) {
+        margin-block-end: 0;
+    }
+}
+
+.top .page-container {
+    @media (max-width: 480px) {
+        padding-block-end: 25px;
+    }
 }
 
 .banner-content {
@@ -144,6 +153,10 @@ export default createComponent({
     font-family: Montserrat, sans-serif;
     font-size: 14px;
     text-align: start;
+
+    @media (max-width: 810px) {
+        margin-block-end: 20px;
+    }
 }
 
 .title {
@@ -153,6 +166,11 @@ export default createComponent({
     height: 45px;
     line-height: 100%;
     margin-block-end: 8px;
+
+    @media (max-width: 480px) {
+        font-size: 32px;
+        margin-block-end: 0;
+    }
 }
 
 .subtitle {
@@ -173,6 +191,8 @@ export default createComponent({
 
 .circle {
     background-color: var(--color-yankees-blue);
+    inset-block-end: -1px;
+    position: relative;
     width: 100%;
 }
 
@@ -193,11 +213,15 @@ export default createComponent({
 .about-subtitle {
     color: var(--color-white);
     margin-block-end: 30px;
-    width: 380px;
+    max-width: 380px;
 }
 
 .about-image {
     border-radius: 20px;
     height: 300px;
+
+    @media (max-width: 350px) {
+        height: 250px;
+    }
 }
 </style>

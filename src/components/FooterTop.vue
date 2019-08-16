@@ -184,6 +184,12 @@ export default createComponent({
     padding-block-end: 40px;
     padding-block-start: 30px;
     padding-inline: 20px;
+
+    @media (max-width: 900px) {
+        grid-row-gap: 25px;
+        grid-template-columns: auto;
+        padding-block-start: 0;
+    }
 }
 
 .footer-w-affiliate {

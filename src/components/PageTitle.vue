@@ -45,6 +45,10 @@ a {
     font-size: 30px;
     font-weight: 500;
     margin-block-end: 15px;
+
+    @media (max-width: 425px) {
+        font-size: 26px;
+    }
 }
 
 .title.large {

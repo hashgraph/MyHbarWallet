@@ -5,6 +5,7 @@
 @import "sanitize/forms";
 
 :root {
+    /* Colors */
     --color-admiralty: #434f61;
     --color-aggressive-salmon: #ff7795;
     --color-ashen-wind: #96a8b6;

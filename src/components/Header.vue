@@ -104,6 +104,10 @@ header {
     @media screen and (prefers-reduced-motion: reduce) {
         transition: none;
     }
+
+    @media screen and (max-width: 1025px) {
+        padding: 12px 20px;
+    }
 }
 
 .scrolled header {

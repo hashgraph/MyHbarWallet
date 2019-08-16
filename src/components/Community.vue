@@ -71,7 +71,8 @@ export default createComponent({
     padding: 80px 0;
 
     @media (max-width: 1024px) {
-        padding: 40px 0 60px;
+        /* Hide on smaller screens. */
+        display: none;
     }
 }
 

@@ -34,7 +34,6 @@ export default createComponent({
 <style lang="postcss" scoped>
 .customer-support-link {
     align-items: center;
-    align-self: center;
     color: var(--color-melbourne-cup);
     cursor: pointer;
     display: flex;

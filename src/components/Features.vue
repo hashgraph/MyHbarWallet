@@ -38,6 +38,10 @@ export default createComponent({
 <style lang="postcss" scoped>
 .wrap {
     padding: 85px 0;
+
+    @media (max-width: 500px) {
+        padding: 40px 0;
+    }
 }
 
 .feature-grid {
@@ -53,6 +57,10 @@ export default createComponent({
         grid-row-gap: 70px;
         grid-template-columns: auto;
         padding: 0 25px;
+    }
+
+    @media (max-width: 500px) {
+        grid-row-gap: 40px;
     }
 }
 </style>

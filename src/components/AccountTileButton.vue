@@ -6,9 +6,11 @@
     >
         <!--fixme: can remove div: tile-image if image sizes are normalized-->
         <img class="tile-image" :src="image" />
-        <div class="title">{{ title }}</div>
-        <div class="content">{{ content }}</div>
-        <div class="note">{{ note }}</div>
+        <div class="text">
+            <div class="title">{{ title }}</div>
+            <div class="content">{{ content }}</div>
+            <div class="note">{{ note }}</div>
+        </div>
     </div>
 </template>
 
@@ -93,9 +95,28 @@ export default createComponent({
     @media (prefers-reduced-motion) {
         transition: none;
     }
+
+    @media (max-width: 600px) {
+        flex-direction: row;
+    }
 }
 
 .tile-image {
     padding-block: 17.5px;
+}
+
+.text {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    @media (max-width: 600px) {
+        align-items: flex-start;
+
+        & .content {
+            text-align: start;
+        }
+    }
 }
 </style>

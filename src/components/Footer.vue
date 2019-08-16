@@ -141,6 +141,7 @@ footer {
 
     .copyright {
         order: 3;
+        text-align: center;
     }
 }
 </style>

@@ -27,11 +27,20 @@ export default createComponent({
 .feature {
     align-items: center;
     display: flex;
+
+    @media (max-width: 500px) {
+        flex-direction: column;
+    }
 }
 
 .image {
     margin-inline-end: 30px;
     width: 80px;
+
+    @media (max-width: 500px) {
+        margin-block-end: 30px;
+        margin-inline-end: 0;
+    }
 }
 
 .header {
