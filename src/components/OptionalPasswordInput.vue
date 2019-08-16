@@ -25,6 +25,9 @@
                 :tabindex="showPassword ? null : '-1'"
                 @input="handleInput"
             />
+            <div class="password-warning" :v-if="passwordWarning !== null">
+                <p>{{ passwordWarning }}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -47,7 +50,8 @@ export default createComponent({
         SwitchButton
     },
     props: {
-        value: { type: String, default: "" }
+        value: { type: String, default: "" },
+        passwordWarning: { type: String, default: null }
     },
     setup(props, context) {
         const showPassword = value(false);
@@ -123,5 +127,11 @@ export default createComponent({
     max-height: 800px;
     opacity: 1;
     padding-block-start: 30px;
+}
+
+.password-warning {
+    color: var(--color-china-blue);
+    margin-block-start: 20px;
+    padding: 0 10px;
 }
 </style>
