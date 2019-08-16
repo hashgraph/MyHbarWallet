@@ -85,7 +85,8 @@ module.exports = {
                     // Not supported in older Edge
                     "css-resize",
                     // Just a decoration
-                    "css-filters"
+                    "css-filters",
+                    "css-appearance"
                 ]
             }
         ],
