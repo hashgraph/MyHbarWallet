@@ -1,10 +1,9 @@
 <template>
     <CirclePage>
         <div class="wrap">
-            <div class="title-container">
-                <div class="title">Terms of Conditions</div>
-                <div class="sub-title">Last updated: May 10, 2018</div>
-            </div>
+            <PageTitle title="Terms of Conditions">
+                Last updated: May 10, 2018
+            </PageTitle>
 
             <div class="text-content">
                 <p>
@@ -74,11 +73,13 @@
 
 <script lang="ts">
 import CirclePage from "../components/CirclePage.vue";
+import PageTitle from "../components/PageTitle.vue";
 import { createComponent } from "vue-function-api";
 
 export default createComponent({
     components: {
-        CirclePage
+        CirclePage,
+        PageTitle
     }
 });
 </script>
@@ -90,45 +91,10 @@ export default createComponent({
     padding: 60px 0;
 }
 
-.title-container {
-    color: var(--color-washed-black);
-    margin-block-end: 70px;
-}
-
-.title {
-    font-size: 42px;
-    font-weight: 700;
-    margin-block-end: 20px;
-    text-align: center;
-
-    @media (max-width: 290px) {
-        font-size: 30px;
-    }
-}
-
-.sub-title {
-    font-size: 13px;
-    font-weight: 600;
-    text-align: center;
-}
-
 p {
     color: var(--color-china-blue);
     font-size: 14px;
     font-weight: 400;
     margin-block-end: 30px;
-}
-
-h1 {
-    font-size: 42px;
-    font-weight: 700;
-    margin-block-end: 20px;
-}
-
-h5 {
-    font-size: 13px;
-    font-weight: 600;
-    margin-block-start: 0;
-    padding-block-start: 0;
 }
 </style>
