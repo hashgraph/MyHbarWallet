@@ -27,7 +27,11 @@
         />
 
         <template v-slot:footer>
-            <Button label="Send Transaction" :disabled="false" />
+            <!-- FIXME: Pluralize appropriately -->
+            <Button
+                :label="amount > 0 ? `Send ${amount} Hbars` : 'Send Hbars'"
+                :disabled="false"
+            />
         </template>
     </InterfaceForm>
 </template>

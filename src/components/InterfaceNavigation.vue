@@ -12,8 +12,8 @@
             <InterfaceNavigationSection
                 :image="sendImage"
                 :image-active="sendImageActive"
-                title="Send"
-                :routes="sendRoutes"
+                title="Crypto"
+                :routes="cryptoRoutes"
             />
 
             <InterfaceNavigationSection
@@ -21,13 +21,6 @@
                 :image-active="contractImageActive"
                 title="Contract"
                 :routes="contractRoutes"
-            />
-
-            <InterfaceNavigationSection
-                :image="sendImage"
-                :image-active="sendImageActive"
-                title="Accounts"
-                :routes="accountRoutes"
             />
 
             <InterfaceNavigationSection
@@ -65,15 +58,14 @@ export default createComponent({
         MaterialDesignIcon
     },
     setup() {
-        const sendRoutes = [{ name: "send-transfer", label: "Send Transfer" }];
+        const cryptoRoutes = [
+            { name: "send-transfer", label: "Send Hbars" },
+            { name: "create-account-transaction", label: "Create Account" }
+        ];
 
         const contractRoutes = [
             { name: "interact-with-contract", label: "Interact with Contract" },
             { name: "deploy-contract", label: "Deploy Contract" }
-        ];
-
-        const accountRoutes = [
-            { name: "create-account-transaction", label: "Create Account" }
         ];
 
         const messageRoutes = [
@@ -94,13 +86,12 @@ export default createComponent({
 
         return {
             handleClick,
-            sendRoutes,
+            cryptoRoutes,
             sendImage,
             sendImageActive,
             contractRoutes,
             contractImage,
             contractImageActive,
-            accountRoutes,
             messageRoutes,
             messageImage,
             messageImageActive,

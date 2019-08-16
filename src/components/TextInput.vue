@@ -27,6 +27,7 @@
                         :type="keyboardType"
                         :tabindex="tabindex"
                         :step="step"
+                        :min="min"
                         @focusin="handleFocusIn"
                         @focusout="handleFocusOut"
                         @input="handleInput"
@@ -91,6 +92,7 @@ interface Props {
     tabindex: string;
     step: string;
     type: string;
+    min: number;
     action: string;
     compact: boolean;
     white: boolean;
@@ -131,6 +133,7 @@ export default createComponent({
         placeholder: (String as unknown) as PropType<string>,
         value: (String as unknown) as PropType<string>,
         label: (String as unknown) as PropType<string>,
+        min: (Number as unknown) as PropType<number>,
         tabindex: (String as unknown) as PropType<string>,
         step: (String as unknown) as PropType<string>,
         type: (String as unknown) as PropType<string>,
