@@ -1,10 +1,6 @@
 <template>
     <div class="account">
-        <IdenticonComponent
-            :value="rawPublicKey"
-            size="60"
-            class="account-image"
-        />
+        <Identicon :value="rawPublicKey" :size="60" class="account-image" />
         <div class="content">
             <div class="top">
                 <div class="title">
@@ -46,7 +42,7 @@ import { mdiQrcode, mdiContentCopy } from "@mdi/js";
 import Tooltip from "@/components/Tooltip.vue";
 import { writeToClipboard } from "@/clipboard";
 import { computed, createComponent, PropType } from "vue-function-api";
-import IdenticonComponent from "@/components/IdenticonComponent.vue";
+import Identicon from "@/components/Identicon.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
@@ -54,7 +50,7 @@ export default createComponent({
     components: {
         MaterialDesignIcon,
         Tooltip,
-        IdenticonComponent
+        Identicon
     },
     props: {
         shard: (Number as unknown) as PropType<number>,
@@ -95,7 +91,7 @@ export default createComponent({
 
 .account-image {
     align-self: flex-start;
-    border: 4px solid var(--color-white);
+    border: 3px solid var(--color-white);
     border-radius: 50%;
     flex-shrink: 0;
     margin-block-start: 10px;
