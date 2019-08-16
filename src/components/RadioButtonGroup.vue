@@ -14,7 +14,8 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from "vue";
+import { createComponent } from "vue-function-api";
+import { PropOptions } from "vue";
 import RadioButton from "../components/RadioButton.vue";
 
 interface Option {
@@ -23,13 +24,7 @@ interface Option {
     image: string;
 }
 
-interface Props {
-    selected: string | null;
-    name: string;
-    options: Option[];
-}
-
-export default Vue.extend<{}, {}, {}, Props>({
+export default createComponent({
     components: {
         RadioButton
     },

@@ -8,6 +8,7 @@ import RadioButton from "@/components/RadioButton.vue";
 describe("RadioButtonGroup.vue", (): void => {
     it("renders with a list", (): void => {
         expect.assertions(1);
+
         const name = "RadioButtonGroup";
         const options = [
             {
