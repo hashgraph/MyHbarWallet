@@ -6,49 +6,51 @@
             <span class="input-container">
                 <span v-if="prefix" class="prefix">{{ prefix }}</span>
 
-                <textarea
-                    v-if="multiline"
-                    class="text-area"
-                    :placeholder="placeholder"
-                    :tabindex="tabindex"
-                    :value="value"
-                    :rows="rows"
-                    :class="{ resize: resizable }"
-                    @focusin="handleFocusIn"
-                    @focusout="handleFocusOut"
-                    @input="handleInput"
-                />
-                <input
-                    v-else
-                    ref="input"
-                    :value="value"
-                    :placeholder="placeholder"
-                    :type="keyboardType"
-                    :tabindex="tabindex"
-                    :step="step"
-                    @focusin="handleFocusIn"
-                    @focusout="handleFocusOut"
-                    @input="handleInput"
-                />
+                <span class="input-wrapper">
+                    <textarea
+                        v-if="multiline"
+                        class="text-area"
+                        :placeholder="placeholder"
+                        :tabindex="tabindex"
+                        :value="value"
+                        :rows="rows"
+                        :class="{ resize: resizable }"
+                        @focusin="handleFocusIn"
+                        @focusout="handleFocusOut"
+                        @input="handleInput"
+                    />
+                    <input
+                        v-else
+                        ref="input"
+                        :value="value"
+                        :placeholder="placeholder"
+                        :type="keyboardType"
+                        :tabindex="tabindex"
+                        :step="step"
+                        @focusin="handleFocusIn"
+                        @focusout="handleFocusOut"
+                        @input="handleInput"
+                    />
+
+                    <span v-if="hasDecorations" class="decorations">
+                        <MaterialDesignIcon
+                            v-if="obscure"
+                            class="eye"
+                            :class="{ 'is-open': isEyeOpen }"
+                            :icon="eye"
+                            @click="handleClickEye"
+                        />
+
+                        <MaterialDesignIcon
+                            v-else-if="showValidation"
+                            class="checkmark"
+                            :class="{ 'is-valid': valid }"
+                            :icon="mdiCheckCircle"
+                        />
+                    </span>
+                </span>
 
                 <span v-if="suffix" class="suffix">{{ suffix }}</span>
-
-                <span v-if="hasDecorations" class="decorations">
-                    <MaterialDesignIcon
-                        v-if="obscure"
-                        class="eye"
-                        :class="{ 'is-open': isEyeOpen }"
-                        :icon="eye"
-                        @click="handleClickEye"
-                    />
-
-                    <MaterialDesignIcon
-                        v-else-if="showValidation"
-                        class="checkmark"
-                        :class="{ 'is-valid': valid }"
-                        :icon="mdiCheckCircle"
-                    />
-                </span>
             </span>
         </label>
 
@@ -287,7 +289,6 @@ input,
 textarea {
     border: 0;
     color: var(--color-washed-black);
-    flex-grow: 1;
     font-size: 14px;
     outline: none;
     padding: 20px;
@@ -296,6 +297,11 @@ textarea {
     &::placeholder {
         color: var(--color-basalt-grey);
     }
+}
+
+.input-wrapper {
+    flex-grow: 1;
+    position: relative;
 }
 
 .label-container {
@@ -319,7 +325,6 @@ textarea {
     display: flex;
     outline: none;
     overflow: hidden;
-    position: relative;
     width: 100%;
 }
 
@@ -392,7 +397,6 @@ textarea {
 
     & .decorations {
         /* TODO Fix */
-        padding-inline-end: 22%;
     }
 }
 
