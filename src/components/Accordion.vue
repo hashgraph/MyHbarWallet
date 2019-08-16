@@ -15,12 +15,11 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { value, createComponent } from "vue-function-api";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiChevronUp } from "@mdi/js";
-import { value } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         MaterialDesignIcon
     },
