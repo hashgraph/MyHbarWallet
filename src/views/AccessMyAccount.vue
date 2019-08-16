@@ -33,6 +33,7 @@
             v-model="modalPasswordState"
             @submit="handlePasswordSubmit"
         />
+
         <ModalEnterAccountId
             v-model="modalEnterAccountId"
             @submit="handleAccountIdSubmit"

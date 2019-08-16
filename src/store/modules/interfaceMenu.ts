@@ -10,7 +10,6 @@ export default {
     },
     getters: {
         isOpen: (state: State): boolean => {
-            debugger;
             return state.isOpen
         }
     },

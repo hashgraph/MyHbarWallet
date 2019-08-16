@@ -7,17 +7,13 @@
     >
         <div class="modal-contents">
             <qrcode-vue
-                :value="store.state.wallet.publicKey"
+                :value="publicKey"
                 size="180"
                 level="L"
                 class="pub-qr"
             />
 
-            <TextInput
-                compact
-                class="input key-input"
-                :value="store.state.wallet.publicKey"
-            />
+            <TextInput compact class="input key-input" :value="publicKey" />
 
             <Button
                 compact
