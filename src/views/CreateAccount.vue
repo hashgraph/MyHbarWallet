@@ -11,9 +11,9 @@
         </div>
         <FAQs />
         <ModalAccessByHardware v-model="modalAccessByHardwareIsOpen" />
-        <ModalAccessBySoftware
-            v-model="modalAccessBySoftwareIsOpen"
-            @submit="handleAccessBySoftwareSubmit"
+        <ModalCreateWithSoftware
+            v-model="modalCreateWithSoftwareIsOpen"
+            @submit="handleCreateWithSoftwareSubmit"
         />
         <ModalCreateByPhrase v-model="modalCreateByPhraseIsOpen" />
         <ModalCreateByKeystore v-model="modalCreateByKeystoreData" />
@@ -24,9 +24,9 @@
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "@/components/AccountTileButtons.vue";
 import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
-import ModalAccessBySoftware, {
-    AccessSoftwareOption
-} from "@/components/ModalAccessBySoftware.vue";
+import ModalCreateWithSoftware, {
+    CreateSoftwareOption
+} from "@/components/ModalCreateWithSoftware.vue";
 import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
 import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
 import PageTitle from "../components/PageTitle.vue";
@@ -38,14 +38,14 @@ export default createComponent({
         FAQs,
         AccountTileButtons,
         ModalAccessByHardware,
-        ModalAccessBySoftware,
+        ModalCreateWithSoftware,
         PageTitle,
         ModalCreateByPhrase,
         ModalCreateByKeystore
     },
     setup() {
         const modalAccessByHardwareIsOpen = value(false);
-        const modalAccessBySoftwareIsOpen = value(false);
+        const modalCreateWithSoftwareIsOpen = value(false);
         const modalCreateByPhraseIsOpen = value(false);
         const modalCreateByKeystoreData: Wrapper<CreateByKeystoreState> = value(
             {
@@ -58,19 +58,17 @@ export default createComponent({
             if (which === "hardware") {
                 modalAccessByHardwareIsOpen.value = true;
             } else if (which === "software") {
-                modalAccessBySoftwareIsOpen.value = true;
+                modalCreateWithSoftwareIsOpen.value = true;
             }
         }
 
-        function handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
-            modalAccessBySoftwareIsOpen.value = false;
+        function handleCreateWithSoftwareSubmit(which: CreateSoftwareOption) {
+            modalCreateWithSoftwareIsOpen.value = false;
 
             setTimeout(() => {
-                if (which === AccessSoftwareOption.File) {
+                if (which === CreateSoftwareOption.File) {
                     modalCreateByKeystoreData.value.modalIsOpen = true;
-                } else if (which === AccessSoftwareOption.Key) {
-                    modalCreateByPhraseIsOpen.value = true;
-                } else if (which === AccessSoftwareOption.Phrase) {
+                } else if (which === CreateSoftwareOption.Phrase) {
                     modalCreateByPhraseIsOpen.value = true;
                 }
             }, 125);
@@ -78,11 +76,11 @@ export default createComponent({
 
         return {
             modalAccessByHardwareIsOpen,
-            modalAccessBySoftwareIsOpen,
+            modalCreateWithSoftwareIsOpen,
             modalCreateByPhraseIsOpen,
             modalCreateByKeystoreData,
             handleClickTiles,
-            handleAccessBySoftwareSubmit
+            handleCreateWithSoftwareSubmit
         };
     }
 });
