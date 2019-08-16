@@ -51,7 +51,10 @@
         <Features />
         <FAQs />
         <Community />
-        <ModalForgotToLogOut v-model="modalForgotToLogOutIsOpen" />
+        <ModalForgotToLogOut
+            v-model="modalForgotToLogOutIsOpen"
+            @change="handleForgotToLogoutChange"
+        />
         <Alerts timeout="7000" />
     </div>
 </template>
@@ -64,7 +67,8 @@ import HomeTileButtons from "@/components/HomeTileButtons.vue";
 import circleImage from "@/assets/circle.png";
 import ModalForgotToLogOut from "@/components/ModalForgotToLogOut.vue";
 import Alerts from "@/components/Alerts.vue";
-import { computed, createComponent, onCreated, value } from "vue-function-api";
+import { computed, createComponent } from "vue-function-api";
+import store from "@/store";
 
 export default createComponent({
     components: {
@@ -76,19 +80,19 @@ export default createComponent({
         ModalForgotToLogOut
     },
     setup() {
-        // TODO: Use actual logged in state
-        const modalForgotToLogOutIsOpen = value(false);
-        const areWeLoggedIn = computed(() => {
-            return Math.random() > 0.5;
-        });
+        const modalForgotToLogOutIsOpen = computed(
+            () => store.getters.IS_LOGGED_IN,
+            value => value
+        );
 
-        onCreated(() => {
-            modalForgotToLogOutIsOpen.value = areWeLoggedIn.value;
-        });
+        function handleForgotToLogoutChange() {
+            modalForgotToLogOutIsOpen.value = false;
+        }
 
         return {
             circleImage,
-            modalForgotToLogOutIsOpen
+            modalForgotToLogOutIsOpen,
+            handleForgotToLogoutChange
         };
     }
 });

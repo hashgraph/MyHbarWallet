@@ -5,7 +5,7 @@ import MnemonicInput from "@/components/MnemonicInput.vue";
 describe("MnemonicInput.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
-    
+
     it("renders with 12 placeholders", (): void => {
         expect.assertions(2);
         const wrapper = shallowMount(MnemonicInput, {

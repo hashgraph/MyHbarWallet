@@ -23,7 +23,9 @@
             />
 
             <div class="link-container">
-                <span @click="handleHasAccount" class="link">Already have an Account ID?</span>
+                <span class="link" @click="handleHasAccount"
+                    >Already have an Account ID?</span
+                >
             </div>
         </div>
     </Modal>
@@ -33,7 +35,7 @@
 import Modal from "@/components/Modal.vue";
 import TextInput from "@/components/TextInput.vue";
 import Button from "@/components/Button.vue";
-import { createComponent, PropType } from "vue-function-api";
+import { createComponent, PropType, computed } from "vue-function-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "@/clipboard";
 import store from "@/store";
@@ -60,14 +62,23 @@ export default createComponent({
     },
     setup(props, context) {
         async function handleClickCopy() {
-            await writeToClipboard(store.state.crypto.publicKey);
+            const key = store.state.wallet.publicKey;
+            if (key != null) {
+                await writeToClipboard(key);
+            }
         }
 
         function handleHasAccount() {
             context.emit("hasAccount");
         }
 
+        const publicKey = computed(() => {
+            const key = store.state.wallet.publicKey;
+            return key == null ? "null" : key;
+        });
+
         return {
+            publicKey,
             handleClickCopy,
             handleHasAccount
         };

@@ -73,7 +73,7 @@ export default createComponent({
             { name: "verify-message", label: "Verify Message" }
         ];
 
-        const menuOpen = computed(() => store.state.interfaceMenu.isOpen);
+        const menuOpen = computed(() => store.getters.isOpen);
 
         const classObject = computed(() => {
             if (menuOpen.value) return "menu-open";

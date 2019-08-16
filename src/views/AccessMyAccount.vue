@@ -56,7 +56,6 @@
 <!-- TODO:  should go to password modal after getting keystore file -->
 
 <script lang="ts">
-import Vue from "vue";
 import FAQs from "@/components/FAQs.vue";
 import AccountTileButtons from "@/components/AccountTileButtons.vue";
 import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
@@ -73,8 +72,9 @@ import ModalPassword from "../components/ModalPassword.vue";
 import store from "@/store";
 import { SET_PRIVATE_KEY } from "@/store/mutations";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
+import { createComponent, value, Wrapper } from "vue-function-api";
 
-export default Vue.extend({
+export default createComponent({
     components: {
         FAQs,
         AccountTileButtons,
@@ -87,61 +87,64 @@ export default Vue.extend({
         ModalEnterAccountId,
         ModalRequestToCreateAccount
     },
-    data() {
-        return {
-            modalAccessByHardwareIsOpen: false,
-            modalAccessBySoftwareIsOpen: false,
-            modalAccessByPhraseState: {
-                modalIsOpen: false,
-                isBusy: false,
-                words: [],
-                numWords: MnemonicType.Words12,
-                password: ""
-            },
-            modalPasswordState: {
-                modalIsOpen: false,
-                password: "",
-                isBusy: false
-            },
-            modalAccessByPrivateKeyState: {
-                modalIsOpen: false,
-                privateKey: "",
-                isBusy: false
-            },
-            modalEnterAccountId: {
-                modalIsOpen: false,
-                account: "",
-                isBusy: false
-            },
-            modalRequestToCreateAccountIsOpen: false,
-            keystoreFileText: null as string | null
-        };
-    },
-    computed: {},
-    methods: {
-        handleClickTiles(which: string) {
+    setup(props, context) {
+        const modalAccessByHardwareIsOpen = value(false);
+        const modalAccessBySoftwareIsOpen = value(false);
+
+        const modalAccessByPhraseState = value({
+            modalIsOpen: false,
+            isBusy: false,
+            words: [],
+            numWords: MnemonicType.Words12,
+            password: ""
+        });
+
+        const modalPasswordState = value({
+            modalIsOpen: false,
+            password: "",
+            isBusy: false
+        });
+
+        const modalAccessByPrivateKeyState = value({
+            modalIsOpen: false,
+            privateKey: "",
+            isBusy: false
+        });
+
+        const modalEnterAccountId = value({
+            modalIsOpen: false,
+            account: "",
+            isBusy: false
+        });
+
+        const modalRequestToCreateAccountIsOpen = value(false);
+        const keystoreFileText: Wrapper<string | null> = value(null);
+
+        function handleClickTiles(which: string) {
             if (which === "hardware") {
-                this.modalAccessByHardwareIsOpen = true;
+                modalAccessByHardwareIsOpen.value = true;
             } else if (which === "software") {
-                this.modalAccessBySoftwareIsOpen = true;
+                modalAccessBySoftwareIsOpen.value = true;
             }
-        },
-        handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
-            this.modalAccessBySoftwareIsOpen = false;
+        }
+
+        function handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
+            modalAccessBySoftwareIsOpen.value = false;
 
             if (which === "file") {
-                (this.$refs.file as HTMLInputElement).click();
+                (context.refs.file as HTMLInputElement).click();
             } else {
                 setTimeout(() => {
                     if (which === AccessSoftwareOption.Phrase) {
-                        this.modalAccessByPhraseState.modalIsOpen = true;
+                        modalAccessByPhraseState.value.modalIsOpen = true;
                     } else if (which === AccessSoftwareOption.Key) {
-                        this.modalAccessByPrivateKeyState.modalIsOpen = true;
+                        modalAccessByPrivateKeyState.value.modalIsOpen = true;
                     }
                 }, 125);
             }
-        },
-        async loadTextFromFile(event: Event) {
+        }
+
+        async function loadTextFromFile(event: Event) {
             const target = event.target as HTMLInputElement;
 
             if (target.files == null) {
@@ -150,7 +153,7 @@ export default Vue.extend({
             }
 
             const file = target.files[0];
-            this.keystoreFileText = await new Promise<string>(
+            keystoreFileText.value = await new Promise<string>(
                 (resolve, reject) => {
                     const reader = new FileReader();
 
@@ -163,62 +166,83 @@ export default Vue.extend({
                 }
             );
 
-            this.modalPasswordState.modalIsOpen = true;
-        },
-        handlePasswordSubmit() {
-            this.modalPasswordState.isBusy = true;
+            modalPasswordState.value.modalIsOpen = true;
+        }
+
+        function handlePasswordSubmit() {
+            modalPasswordState.value.isBusy = true;
             // TODO: Decode private key from file
             setTimeout(() => {
                 // Close  previous modal and open another one
-                this.modalPasswordState.isBusy = false;
-                this.modalPasswordState.modalIsOpen = false;
-                this.modalEnterAccountId.modalIsOpen = true;
+                modalPasswordState.value.isBusy = false;
+                modalPasswordState.value.modalIsOpen = false;
+                modalEnterAccountId.value.modalIsOpen = true;
             }, 3000);
-        },
-        handleAccessByPhraseSubmit() {
-            this.modalAccessByPhraseState.isBusy = true;
+        }
+
+        function handleAccessByPhraseSubmit() {
+            modalAccessByPhraseState.value.isBusy = true;
             // TODO: Decode private key from phrase
             setTimeout(() => {
                 // Close  previous modal and open another one
-                this.modalAccessByPhraseState.isBusy = false;
-                this.modalAccessByPhraseState.modalIsOpen = false;
-                this.modalEnterAccountId.modalIsOpen = true;
-            }, 3000);
-        },
-        handleAccessByPrivateKeySubmit() {
-            this.modalAccessByPrivateKeyState.isBusy = true;
-            store.commit(
-                SET_PRIVATE_KEY,
-                this.modalAccessByPrivateKeyState.privateKey
-            );
-
-            setTimeout(() => {
-                // Close  previous modal and open another one
-                this.modalAccessByPrivateKeyState.isBusy = false;
-                this.modalAccessByPrivateKeyState.modalIsOpen = false;
-                this.modalEnterAccountId.modalIsOpen = true;
-            }, 3000);
-        },
-        handleAccountIdSubmit() {
-            this.modalEnterAccountId.isBusy = true;
-
-            this.openInterface(null);
-        },
-        handleDoesntHaveAccount() {
-            this.modalEnterAccountId.modalIsOpen = false;
-            this.modalRequestToCreateAccountIsOpen = true;
-        },
-        handleHasAccount() {
-            this.modalRequestToCreateAccountIsOpen = false;
-            this.modalEnterAccountId.modalIsOpen = true;
-        },
-        openInterface(privateKey: string | null) {
-            console.log("privateKey =", privateKey);
-
-            setTimeout(() => {
-                this.$router.push({ name: "interface" });
+                modalAccessByPhraseState.value.isBusy = false;
+                modalAccessByPhraseState.value.modalIsOpen = false;
+                modalEnterAccountId.value.modalIsOpen = true;
             }, 3000);
         }
+
+        function handleAccessByPrivateKeySubmit() {
+            modalAccessByPrivateKeyState.value.isBusy = true;
+            store.commit(
+                SET_PRIVATE_KEY,
+                modalAccessByPrivateKeyState.value.privateKey
+            );
+
+            // Close  previous modal and open another one
+            modalAccessByPrivateKeyState.value.isBusy = false;
+            modalAccessByPrivateKeyState.value.modalIsOpen = false;
+            modalEnterAccountId.value.modalIsOpen = true;
+        }
+
+        function openInterface(privateKey: string | null) {
+            console.log("privateKey:", privateKey);
+
+            context.root.$router.push({ name: "interface" });
+        }
+
+        function handleAccountIdSubmit() {
+            openInterface(null);
+        }
+
+        function handleDoesntHaveAccount() {
+            modalEnterAccountId.value.modalIsOpen = false;
+            modalRequestToCreateAccountIsOpen.value = true;
+        }
+
+        function handleHasAccount() {
+            modalRequestToCreateAccountIsOpen.value = false;
+            modalEnterAccountId.value.modalIsOpen = true;
+        }
+
+        return {
+            modalAccessByHardwareIsOpen,
+            modalAccessBySoftwareIsOpen,
+            modalAccessByPhraseState,
+            modalPasswordState,
+            modalAccessByPrivateKeyState,
+            modalEnterAccountId,
+            modalRequestToCreateAccountIsOpen,
+            keystoreFileText,
+            handleClickTiles,
+            handleAccessBySoftwareSubmit,
+            loadTextFromFile,
+            handlePasswordSubmit,
+            handleAccessByPhraseSubmit,
+            handleAccessByPrivateKeySubmit,
+            handleAccountIdSubmit,
+            handleDoesntHaveAccount,
+            handleHasAccount
+        };
     }
 });
 </script>

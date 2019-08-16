@@ -10,3 +10,6 @@ export const SET_ACCOUNT = "SET_CRYPTO_ACCOUNT";
 export const SET_PRIVATE_KEY = "SET_CRYPTO_PRIVATE_KEY";
 export const SET_PUBLIC_KEY = "SET_CRYPTO_PUBLIC_KEY";
 export const SET_CLIENT = "SET_CRYPTO_CLIENT";
+
+// Sync Actions which consist of multiple mutations
+export const LOG_OUT = "LOG_OUT";

@@ -73,7 +73,9 @@ export default createComponent({
             try {
                 // TODO: Remove `.toString()` when that is implemented on the sdk side
                 // For now this will do
-                const publicKey = decodePrivateKey(props.state.privateKey).publicKey.toString();
+                const publicKey = decodePrivateKey(
+                    props.state.privateKey
+                ).publicKey.toString();
                 store.commit(SET_PUBLIC_KEY, publicKey);
                 return true;
             } catch {

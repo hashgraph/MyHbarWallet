@@ -53,7 +53,6 @@ import TextInput, {
 import Button from "../components/Button.vue";
 import { SetupContext } from "vue-function-api/dist/types/vue";
 import { Client } from "hedera-sdk-js";
-import store from "@/store";
 import { SET_ACCOUNT, SET_CLIENT } from "@/store/mutations";
 
 export interface State {
@@ -100,7 +99,7 @@ export default createComponent({
             failed.value = null;
             context.emit("change", { ...props.state, isBusy: true });
             const parts = input.value.split(".");
-            const key = store.state.crypto.privateKey;
+            const key = context.root.$store.state.wallet.privateKey;
 
             try {
                 const account = {
@@ -108,6 +107,7 @@ export default createComponent({
                     realm: parseInt(parts[1]),
                     account: parseInt(parts[2])
                 };
+
                 const client = new Client({ account, key });
 
                 // If getting account balance doesn't throw an error then we know that
@@ -115,8 +115,10 @@ export default createComponent({
                 await client.getAccountBalance();
 
                 // Set Account and Client if `client.getBalance()` doesn't throw an error
-                store.commit(SET_ACCOUNT, account);
-                store.commit(SET_CLIENT, client);
+                context.root.$store.commit(SET_ACCOUNT, account.account);
+                context.root.$store.commit(SET_CLIENT, client);
+
+                console.log(context.root.$store.getters.IS_LOGGED_IN);
 
                 // Propagate change up to parent component
                 context.emit("submit", props.state);

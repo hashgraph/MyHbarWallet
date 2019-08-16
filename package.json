@@ -20,6 +20,7 @@
         "hedera-sdk-js": "git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js#85179cc05d9c1be9ea5dea54698f41ba0ff74b25",
         "jdenticon": "^2.2.0",
         "qrcode.vue": "^1.6.2",
+        "hedera-sdk-js": "git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js",
         "ua-parser-js": "^0.7.20",
         "vue": "^2.6.10",
         "vue-function-api": "^2.1.2",
