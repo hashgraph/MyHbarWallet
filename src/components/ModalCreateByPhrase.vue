@@ -27,7 +27,7 @@
                 <div class="text">Value</div>
                 <div class="spacer" />
                 <div class="random-button">
-                    <MaterialDesignIcon :size="16" :icon="mdiCached" />
+                    <MaterialDesignIcon :size="16" :icon="cachedIcon" />
                     Random
                 </div>
             </div>
@@ -94,6 +94,8 @@ export interface Component {
     words: Wrapper<string[]>;
     cachedIcon: Wrapper<string>;
     printerIcon: Wrapper<string>;
+    printModalIsOpen: Wrapper<boolean>;
+    handlePrintModal: () => void;
     handleNumWordsChange: (numWords: number) => void;
     handlePasswordChange: (password: string) => void;
 }
@@ -123,6 +125,7 @@ export default createComponent({
         const numberWords = value(12);
         const passwordValue = value("");
         const words = value([] as string[]);
+        const printModalIsOpen = value(false);
 
         const cachedIcon = computed(() => {
             return mdiCached;
@@ -139,12 +142,18 @@ export default createComponent({
             passwordValue.value = password;
         }
 
+        function handlePrintModal() {
+            printModalIsOpen.value = !printModalIsOpen.value;
+        }
+
         return {
             numberWords,
             passwordValue,
             words,
             cachedIcon,
             printerIcon,
+            printModalIsOpen,
+            handlePrintModal,
             handleNumWordsChange,
             handlePasswordChange
         };
