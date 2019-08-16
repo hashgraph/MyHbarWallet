@@ -6,7 +6,6 @@
         @change="this.$listeners.change"
     >
         <div class="modal-contents">
-            <!-- todo: decide on a desired error correction level -->
             <qrcode-vue
                 :value="publicKey"
                 size="180"
@@ -18,15 +17,13 @@
 
             <Button
                 compact
-                label="copy"
+                label="Copy"
                 class="modal-button"
                 @click="handleClickCopy"
             />
 
-            <div class="have-id">
-                <router-link to="/">
-                    I have my AccountId!
-                </router-link>
+            <div class="link-container">
+                <span class="link">Already have an Account ID?</span>
             </div>
         </div>
     </Modal>
@@ -77,27 +74,35 @@ export default createComponent({
 
 <style lang="postcss" scoped>
 .modal-contents {
+    align-items: center;
     display: flex;
-    flex-flow: column nowrap;
+    flex-direction: column;
 }
 
 .modal-button {
-    margin: 0 auto;
+    margin-block-start: 20px;
 }
 
 .key-input {
-    padding-block-end: 12px;
+    margin-block-start: 40px;
 }
 
-.pub-qr {
-    margin: 0 auto;
-    padding-block-end: 30px;
+.link-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-block-start: 20px;
 }
 
-.have-id {
+.link {
     color: var(--color-china-blue);
+    cursor: pointer;
     font-size: 14px;
-    margin: 0 auto;
-    padding-block-start: 12px;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
 }
 </style>

@@ -31,7 +31,7 @@
             </div>
 
             <div class="link-container">
-                <a href="#" class="link">Don't have an Account ID?</a>
+                <span class="link">Don't have an Account ID?</span>
             </div>
         </Modal>
     </div>
@@ -176,11 +176,12 @@ export default createComponent({
 
 .link {
     color: var(--color-china-blue);
+    cursor: pointer;
     font-size: 14px;
     text-decoration: none;
 
-    :hover,
-    :focus {
+    &:hover,
+    &:focus {
         text-decoration: underline;
     }
 }
