@@ -302,6 +302,18 @@ textarea {
     }
 }
 
+/* Hide Spinner */
+input[type="number"] {
+    -webkit-appearance: textfield;
+}
+
+/* Hide Spinner */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .input-wrapper {
     flex-grow: 1;
     position: relative;
