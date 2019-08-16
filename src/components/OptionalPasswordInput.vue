@@ -106,7 +106,7 @@ export default createComponent({
 
 .password-input {
     padding-inline: 10px;
-    transition: max-height, padding-block-start 0.3s ease;
+    transition: max-height 0.3s ease, padding-block-start 0.3s ease;
 
     @media screen and (prefers-reduced-motion: reduce) {
         transition: none;
