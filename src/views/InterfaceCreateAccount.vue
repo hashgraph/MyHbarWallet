@@ -94,15 +94,3 @@ export default createComponent({
     }
 });
 </script>
-
-<style scoped>
-.warning {
-    color: var(--color-lightish-red);
-    font-size: 14px;
-    margin-inline: 15px 7px;
-}
-
-.field {
-    margin-block-end: 30px;
-}
-</style>
