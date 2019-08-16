@@ -26,9 +26,63 @@
                 @input="handleInputPassword"
             />
 
+            <div
+                v-if="state.password.length > 0"
+                class="password-hint-container"
+            >
+                Password strength:
+                <span
+                    v-if="state.passwordStrength === 0"
+                    class="strength very-weak"
+                    >Very Weak</span
+                >
+                <span
+                    v-else-if="state.passwordStrength === 1"
+                    class="strength weak"
+                    >Weak</span
+                >
+                <span
+                    v-else-if="state.passwordStrength === 2"
+                    class="strength good"
+                    >Good</span
+                >
+                <span
+                    v-else-if="state.passwordStrength === 3"
+                    class="strength strong"
+                    >Strong</span
+                >
+                <span
+                    v-else-if="state.passwordStrength === 4"
+                    class="strength excellent"
+                    >Excellent</span
+                >
+            </div>
+
+            <div
+                v-if="state.password.length > 0 && state.password.length < 9"
+                class="password-hint-container"
+            >
+                The password field must be at least 9 characters
+            </div>
+
+            <div
+                v-if="state.password.length >= 9 && state.passwordStrength <= 3"
+            >
+                <div
+                    v-for="(suggestion, index) in state.passwordSuggestion
+                        .suggestions"
+                    :key="index"
+                    class="password-hint-container"
+                >
+                    {{ suggestion }}
+                </div>
+            </div>
+
             <div class="btn-container">
                 <Button
-                    :disabled="state.password.length < 9"
+                    :disabled="
+                        state.password.length < 9 && state.passwordStrength < 2
+                    "
                     :busy="state.isBusy"
                     class="btn"
                     label="Next"
@@ -48,11 +102,7 @@
 </template>
 
 <script lang="ts">
-import {
-    createComponent,
-    PropType,
-    watch
-} from "vue-function-api";
+import { createComponent, PropType, watch } from "vue-function-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
@@ -62,11 +112,13 @@ import TextInput, {
 import Button from "../components/Button.vue";
 import { mdiArrowRight } from "@mdi/js";
 import { SetupContext } from "vue-function-api/dist/types/vue";
-import zxcvbn, {ZXCVBNResult} from "zxcvbn";
+import zxcvbn, { ZXCVBNResult } from "zxcvbn";
 
 export interface State {
     modalIsOpen: boolean;
     password: string;
+    passwordStrength: number;
+    passwordSuggestion: string;
     isBusy: boolean;
 }
 
@@ -127,22 +179,23 @@ export default createComponent({
             }
         );
 
+        /**
+         * zxcvbn uses a scoring system based on ->
+         * 0 # too guessable: risky password. (guesses < 10^3)
+         * 1 # very guessable: protection from throttled online attacks. (guesses < 10^6)
+         * 2 # somewhat guessable: protection from unthrottled online attacks. (guesses < 10^8)
+         * 3 # safely unguessable: moderate protection from offline slow-hash scenario. (guesses < 10^10)
+         * 4 # very unguessable: strong protection from offline slow-hash scenario. (guesses >= 10^10)
+         */
         function handleInputPassword(value: string) {
-
             const passwordMetrics: ZXCVBNResult = zxcvbn(value, wordlist);
 
-            /**
-             0 # too guessable: risky password. (guesses < 10^3)
-             1 # very guessable: protection from throttled online attacks. (guesses < 10^6)
-             2 # somewhat guessable: protection from unthrottled online attacks. (guesses < 10^8)
-             3 # safely unguessable: moderate protection from offline slow-hash scenario. (guesses < 10^10)
-             4 # very unguessable: strong protection from offline slow-hash scenario. (guesses >= 10^10)
-             */
-            if (passwordMetrics.score < 2) {
-                context.emit("change", { ...props.state, password: value });
-            }
-
-            context.emit("change", { ...props.state, password: value });
+            context.emit("change", {
+                ...props.state,
+                password: value,
+                passwordStrength: passwordMetrics.score,
+                passwordSuggestion: passwordMetrics.feedback
+            });
         }
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
@@ -192,5 +245,38 @@ export default createComponent({
 .important {
     color: var(--color-lightish-red);
     font-weight: 500;
+}
+
+.strength {
+    font-weight: 600;
+    margin-inline-start: 10px;
+    text-align: start;
+}
+
+.very-weak {
+    color: var(--color-washed-black);
+}
+
+.weak {
+    color: var(--color-coral-red);
+}
+
+.good {
+    color: var(--color-bubble-bobble-p2);
+}
+
+.strong {
+    color: var(--color-melbourne-cup);
+}
+
+.excellent {
+    color: var(--color-melbourne-cup);
+}
+
+.password-hint-container {
+    color: var(--color-basalt-grey);
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    margin-block-start: 10px;
 }
 </style>
