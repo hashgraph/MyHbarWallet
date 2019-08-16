@@ -42,6 +42,11 @@ export default createComponent({
     display: flex;
     margin: 7px 0;
     padding: 26px 34px;
+
+    @media (max-width: 500px) {
+        align-items: flex-start;
+        flex-direction: column-reverse;
+    }
 }
 
 .offer-description {
@@ -61,6 +66,11 @@ export default createComponent({
     margin-inline-start: 30px;
     max-height: 42px;
     max-width: 140px;
+
+    @media (max-width: 500px) {
+        margin-inline-start: 0;
+        padding-block-end: 10px;
+    }
 }
 
 .cost-container {

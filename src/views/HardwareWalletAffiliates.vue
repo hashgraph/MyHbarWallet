@@ -1,6 +1,6 @@
 <template>
     <div class="hardware-wallet-affiliates">
-        <PageTitle large title="Buy a Hardware wallet">
+        <PageTitle large title="Buy a Hardware Wallet">
             Purchase a hardware wallet for the highest security when accessing
             your crypto.
         </PageTitle>
