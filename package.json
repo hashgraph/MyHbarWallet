@@ -18,7 +18,7 @@
         "@mdi/js": "^3.9.97",
         "bignumber.js": "^9.0.0",
         "qrcode.vue": "^1.6.2",
-        "hedera-sdk-js": "git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js",
+        "hedera-sdk-js": "git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js#85179cc05d9c1be9ea5dea54698f41ba0ff74b25",
         "jdenticon": "^2.2.0",
         "ua-parser-js": "^0.7.20",
         "vue": "^2.6.10",

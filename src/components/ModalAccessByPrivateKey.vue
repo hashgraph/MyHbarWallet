@@ -37,7 +37,7 @@ import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import { computed, createComponent, PropType, watch } from "vue-function-api";
 import { SetupContext } from "vue-function-api/dist/types/vue";
-import { decodeKey } from "hedera-sdk-js";
+import { decodePrivateKey } from "hedera-sdk-js";
 
 export interface State {
     modalIsOpen: boolean;
@@ -69,7 +69,7 @@ export default createComponent({
     setup(props, context) {
         const valid = computed(() => {
             try {
-                decodeKey(props.state.privateKey);
+                decodePrivateKey(props.state.privateKey);
                 return true;
             } catch {
                 return false;
