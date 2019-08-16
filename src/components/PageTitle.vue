@@ -18,27 +18,14 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-a {
-    color: var(--color-melbourne-cup);
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.access-my-account {
-    display: flex;
-    flex-direction: column;
-}
-
-.wrap {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    padding: 80px 0;
-}
-
 .title-container {
     margin-block-end: 50px;
     text-align: center;
+
+    @media (max-width: 425px) {
+        margin-block-end: 40px;
+        padding: 0 20px;
+    }
 }
 
 .title {
@@ -53,6 +40,10 @@ a {
 
 .title.large {
     font-size: 45px;
+
+    @media (max-width: 425px) {
+        font-size: 26px;
+    }
 }
 
 .subtitle {

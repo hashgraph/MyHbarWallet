@@ -96,7 +96,11 @@ export default createComponent({
 <style lang="postcss" scoped>
 .hardware-wallet-affiliates {
     background: var(--color-boysenberry-shadow);
-    padding: 100px 0 100px 0;
+    padding: 80px 0 80px 0;
+
+    @media (max-width: 425px) {
+        padding: 40px 0 40px 0;
+    }
 }
 
 .header {
