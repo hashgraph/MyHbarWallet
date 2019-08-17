@@ -42,6 +42,7 @@
 
         <ModalRequestToCreateAccount
             v-model="modalRequestToCreateAccountIsOpen"
+            :public-key="publicKey"
             @hasAccount="handleHasAccount"
         />
 
@@ -275,6 +276,7 @@ export default createComponent({
         }
 
         return {
+            publicKey,
             modalAccessByHardwareIsOpen,
             modalAccessBySoftwareIsOpen,
             modalAccessByPhraseState,

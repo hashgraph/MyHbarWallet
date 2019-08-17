@@ -66,8 +66,10 @@ export default createComponent({
             if (publickey.startsWith(ED25519_PREFIX, 0)) {
                 publickey = publickey.slice(ED25519_PREFIX.length);
             }
+
             return publickey;
         });
+
         const copyKey = async () => {
             await writeToClipboard(props.publicKey);
 

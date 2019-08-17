@@ -7,7 +7,7 @@
     >
         <div class="modal-contents">
             <qrcode-vue
-                :value="publicKey"
+                :value="publicKey || 'null'"
                 size="180"
                 level="L"
                 class="pub-qr"
@@ -58,11 +58,12 @@ export default createComponent({
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
+        publicKey: (String as unknown) as PropType<string>,
         event: (String as unknown) as PropType<string>
     },
     setup(props, context) {
         async function handleClickCopy() {
-            const key = store.state.wallet.publicKey;
+            const key = props.publicKey;
             if (key != null) {
                 await writeToClipboard(key);
             }
@@ -72,13 +73,7 @@ export default createComponent({
             context.emit("hasAccount");
         }
 
-        const publicKey = computed(() => {
-            const key = store.state.wallet.publicKey;
-            return key == null ? "null" : key;
-        });
-
         return {
-            publicKey,
             handleClickCopy,
             handleHasAccount
         };
