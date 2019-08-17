@@ -33,9 +33,17 @@
             v-model="modalPasswordState"
             @submit="handlePasswordSubmit"
         />
+
         <ModalEnterAccountId
             v-model="modalEnterAccountId"
             @submit="handleAccountIdSubmit"
+            @noAccount="handleDoesntHaveAccount"
+        />
+
+        <ModalRequestToCreateAccount
+            v-model="modalRequestToCreateAccountIsOpen"
+            :public-key="publicKey"
+            @hasAccount="handleHasAccount"
         />
 
         <input
@@ -50,7 +58,6 @@
 <!-- TODO:  should go to password modal after getting keystore file -->
 
 <script lang="ts">
-import { createComponent, value } from "vue-function-api";
 import FAQs from "@/components/FAQs.vue";
 import AccountTileButtons from "@/components/AccountTileButtons.vue";
 import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
@@ -65,7 +72,10 @@ import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalPassword from "../components/ModalPassword.vue";
 import store from "@/store";
-import { SET_PRIVATE_KEY } from "@/store/mutations";
+import { LOG_IN } from "@/store/mutations";
+import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
+import { createComponent, value, Wrapper } from "vue-function-api";
+import { Client, decodePrivateKey } from "hedera-sdk-js";
 
 export default createComponent({
     components: {
@@ -77,11 +87,16 @@ export default createComponent({
         ModalAccessByPrivateKey,
         PageTitle,
         ModalPassword,
-        ModalEnterAccountId
+        ModalEnterAccountId,
+        ModalRequestToCreateAccount
     },
     setup(props, context) {
+        const privateKey: Wrapper<string | null> = value(null);
+        const publicKey: Wrapper<string | null> = value(null);
+
         const modalAccessByHardwareIsOpen = value(false);
         const modalAccessBySoftwareIsOpen = value(false);
+
         const modalAccessByPhraseState = value({
             modalIsOpen: false,
             isBusy: false,
@@ -99,12 +114,16 @@ export default createComponent({
             privateKey: "",
             isBusy: false
         });
+
         const modalEnterAccountId = value({
             modalIsOpen: false,
-            account: "",
+            account: null,
+            error: null as null | string,
             isBusy: false
         });
-        const keystoreFileText = value(null as string | null);
+
+        const modalRequestToCreateAccountIsOpen = value(false);
+        const keystoreFileText: Wrapper<string | null> = value(null);
 
         function handleClickTiles(which: string) {
             if (which === "hardware") {
@@ -162,6 +181,15 @@ export default createComponent({
                 modalEnterAccountId.value.modalIsOpen = true;
             }, 3000);
         }
+
+        // Update our local understand of what the private/public key pair is
+        // Called at the end of each access by software workflow before merging
+        // into enter account ID
+        function setPrivateKey(pk: string) {
+            privateKey.value = pk;
+            publicKey.value = decodePrivateKey(pk).publicKey.toString();
+        }
+
         function handleAccessByPhraseSubmit() {
             modalAccessByPhraseState.value.isBusy = true;
             // TODO: Decode private key from phrase
@@ -172,48 +200,95 @@ export default createComponent({
                 modalEnterAccountId.value.modalIsOpen = true;
             }, 3000);
         }
+
         function handleAccessByPrivateKeySubmit() {
             modalAccessByPrivateKeyState.value.isBusy = true;
-            store.commit(
-                SET_PRIVATE_KEY,
-                modalAccessByPrivateKeyState.value.privateKey
-            );
+
+            setPrivateKey(modalAccessByPrivateKeyState.value.privateKey);
+
+            // Close previous modal and open another one
+            modalAccessByPrivateKeyState.value.modalIsOpen = false;
 
             setTimeout(() => {
-                // Close  previous modal and open another one
                 modalAccessByPrivateKeyState.value.isBusy = false;
-                modalAccessByPrivateKeyState.value.modalIsOpen = false;
                 modalEnterAccountId.value.modalIsOpen = true;
-            }, 3000);
+            }, 125);
         }
-        function openInterface(privateKey: string | null) {
-            console.log("privateKey =", privateKey);
 
-            setTimeout(() => {
-                context.root.$router.push({ name: "interface" });
-            }, 3000);
+        function openInterface() {
+            context.root.$router.push({ name: "interface" });
         }
-        function handleAccountIdSubmit() {
+
+        async function handleAccountIdSubmit() {
+            modalEnterAccountId.value.error = null;
             modalEnterAccountId.value.isBusy = true;
 
-            openInterface(null);
+            const account = modalEnterAccountId.value.account;
+
+            if (account == null || privateKey.value == null) {
+                throw new Error("unexpected submission of EnterAccountID");
+            }
+
+            try {
+                const client = new Client({ account, key: privateKey.value });
+
+                // If getting account balance doesn't throw an error then we know that
+                // the account id and private key the user entered are valid
+                await client.getAccountBalance();
+
+                // Set Account and Client if `client.getBalance()` doesn't throw an error
+                store.commit(LOG_IN, {
+                    account: modalEnterAccountId.value.account,
+                    client,
+                    privateKey: privateKey.value,
+                    publicKey: publicKey.value
+                });
+
+                openInterface();
+            } catch {
+                // FIXME: Look at these atomic warnings
+                // FIXME: This should be a "This account is not associated with your private key" error but balance transactions
+                //        don't have their signatures checked
+
+                /* eslint-disable-next-line require-atomic-updates */
+                modalEnterAccountId.value.error =
+                    "This account does not exist in the network.";
+
+                // Only update isBusy if getting account balance failed
+                /* eslint-disable-next-line require-atomic-updates */
+                modalEnterAccountId.value.isBusy = false;
+            }
+        }
+
+        function handleDoesntHaveAccount() {
+            modalEnterAccountId.value.modalIsOpen = false;
+            modalRequestToCreateAccountIsOpen.value = true;
+        }
+
+        function handleHasAccount() {
+            modalRequestToCreateAccountIsOpen.value = false;
+            modalEnterAccountId.value.modalIsOpen = true;
         }
 
         return {
+            publicKey,
             modalAccessByHardwareIsOpen,
-            modalAccessByPhraseState,
-            modalAccessByPrivateKeyState,
             modalAccessBySoftwareIsOpen,
-            modalEnterAccountId,
+            modalAccessByPhraseState,
             modalPasswordState,
+            modalAccessByPrivateKeyState,
+            modalEnterAccountId,
+            modalRequestToCreateAccountIsOpen,
             keystoreFileText,
+            handleClickTiles,
+            handleAccessBySoftwareSubmit,
+            loadTextFromFile,
+            handlePasswordSubmit,
             handleAccessByPhraseSubmit,
             handleAccessByPrivateKeySubmit,
-            handleAccessBySoftwareSubmit,
-            handleClickTiles,
-            handlePasswordSubmit,
             handleAccountIdSubmit,
-            loadTextFromFile
+            handleDoesntHaveAccount,
+            handleHasAccount
         };
     }
 });

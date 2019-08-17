@@ -9,7 +9,7 @@
 import { createComponent } from "vue-function-api";
 import Button from "@/components/Button.vue";
 import store from "@/store";
-import { SET_IS_OPEN } from "@/store/mutations";
+import { SET_INTERFACE_MENU_IS_OPEN } from "@/store/mutations";
 
 export default createComponent({
     props: {
@@ -20,7 +20,7 @@ export default createComponent({
     },
     setup() {
         function emitMenuOpen() {
-            store.commit(SET_IS_OPEN, true);
+            store.commit(SET_INTERFACE_MENU_IS_OPEN, true);
         }
         return { emitMenuOpen };
     }

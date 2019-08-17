@@ -69,6 +69,8 @@ export default createComponent({
     setup(props, context) {
         const valid = computed(() => {
             try {
+                // TODO: Perhaps debounce this?
+                // TODO: Find a clean way to re-use the derived public key back in AccessMyAccount
                 decodePrivateKey(props.state.privateKey);
                 return true;
             } catch {

@@ -32,7 +32,7 @@
                     <MaterialDesignIcon
                         class="refresh-icon"
                         :icon="mdiRefresh"
-                        @click="handleRefresh"
+                        @click="$emit('refresh')"
                     />
                 </Tooltip>
             </div>
@@ -62,6 +62,7 @@ export default createComponent({
         Tooltip
     },
     props: {
+        busy: (Boolean as unknown) as PropType<boolean>,
         balance: (Number as unknown) as PropType<number>
     },
     setup(props: Props) {
@@ -71,27 +72,10 @@ export default createComponent({
             return formatter.format(usd);
         });
 
-        const busy = value(false);
-
-        function handleRefresh() {
-            console.warn("todo: check balance");
-
-            busy.value = true;
-
-            console.log("busy: " + busy);
-
-            setTimeout(() => {
-                busy.value = false;
-                console.log("busy: " + busy);
-            }, 2000);
-        }
-
         return {
-            busy,
             mdiRefresh,
             mdiLoading,
             balanceUSD,
-            handleRefresh,
             walletHbar
         };
     }

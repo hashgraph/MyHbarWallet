@@ -6,7 +6,6 @@
             :key="alert.id"
             :message="alert.message"
             :level="alert.level"
-            :timeout="alert.timeout"
         />
     </transition-group>
 </template>
@@ -19,9 +18,6 @@ import { createComponent, computed } from "vue-function-api";
 export default createComponent({
     components: {
         Alert
-    },
-    props: {
-        timeout: { type: String, required: true }
     },
     setup() {
         const alerts = computed(() => {

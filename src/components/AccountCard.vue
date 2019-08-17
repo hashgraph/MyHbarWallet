@@ -43,6 +43,8 @@ import Tooltip from "@/components/Tooltip.vue";
 import { writeToClipboard } from "@/clipboard";
 import { computed, createComponent, PropType } from "vue-function-api";
 import Identicon from "@/components/Identicon.vue";
+import { ALERT } from "@/store/actions";
+import store from "@/store";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
@@ -64,11 +66,17 @@ export default createComponent({
             if (publickey.startsWith(ED25519_PREFIX, 0)) {
                 publickey = publickey.slice(ED25519_PREFIX.length);
             }
+
             return publickey;
         });
+
         const copyKey = async () => {
             await writeToClipboard(props.publicKey);
-            console.log("Copied");
+
+            store.dispatch(ALERT, {
+                level: "info",
+                message: "Copied"
+            });
         };
         return {
             mdiQrcode,

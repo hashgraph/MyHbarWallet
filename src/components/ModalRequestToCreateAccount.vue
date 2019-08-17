@@ -7,7 +7,7 @@
     >
         <div class="modal-contents">
             <qrcode-vue
-                :value="publicKey"
+                :value="publicKey || 'null'"
                 size="180"
                 level="L"
                 class="pub-qr"
@@ -23,25 +23,26 @@
             />
 
             <div class="link-container">
-                <span class="link">Already have an Account ID?</span>
+                <span class="link" @click="handleHasAccount"
+                    >Already have an Account ID?</span
+                >
             </div>
         </div>
     </Modal>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Modal from "@/components/Modal.vue";
 import TextInput from "@/components/TextInput.vue";
 import Button from "@/components/Button.vue";
-import { createComponent, PropType } from "vue-function-api";
+import { createComponent, PropType, computed } from "vue-function-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "@/clipboard";
+import store from "@/store";
 
 interface Props {
     isOpen: boolean;
     event: "change";
-    publicKey: string;
 }
 
 export default createComponent({
@@ -57,16 +58,24 @@ export default createComponent({
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
-        event: (String as unknown) as PropType<string>,
-        publicKey: (String as unknown) as PropType<string>
+        publicKey: (String as unknown) as PropType<string>,
+        event: (String as unknown) as PropType<string>
     },
-    setup(props) {
+    setup(props, context) {
         async function handleClickCopy() {
-            await writeToClipboard(props.publicKey);
+            const key = props.publicKey;
+            if (key != null) {
+                await writeToClipboard(key);
+            }
+        }
+
+        function handleHasAccount() {
+            context.emit("hasAccount");
         }
 
         return {
-            handleClickCopy
+            handleClickCopy,
+            handleHasAccount
         };
     }
 });

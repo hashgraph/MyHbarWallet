@@ -8,13 +8,18 @@
             <!-- todo: These are just placeholders for the actual items,
             which have not been merged into master yet -->
             <AccountCard
-                :realm="0"
-                :shard="0"
-                :account="305472"
+                :realm="account.realm"
+                :shard="account.shard"
+                :account="account.account"
                 class="info-account"
-                public-key="302a300506032b65700321002cc9e2d0c16c717476d4bbbfa3307a98cf0c41d7afc77c851e476b5921f3fb65"
+                :public-key="publicKey"
             />
-            <BalanceCard :balance="10" class="info-balance" />
+            <BalanceCard
+                :balance="balance"
+                :busy="balanceIsBusy"
+                class="info-balance"
+                @refresh="handleBalanceRefresh"
+            />
             <NetworkCard class="info-network" />
         </div>
     </div>
@@ -25,7 +30,9 @@ import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "@/components/NetworkCard.vue";
 import BalanceCard from "@/components/BalanceCard.vue";
 import AccountCard from "@/components/AccountCard.vue";
-import { createComponent } from "vue-function-api";
+import { createComponent, value, computed, watch } from "vue-function-api";
+import store from "../store";
+import { Session } from "../store/modules/wallet";
 
 export default createComponent({
     components: {
@@ -33,6 +40,44 @@ export default createComponent({
         NetworkCard,
         BalanceCard,
         AccountCard
+    },
+    setup() {
+        const publicKey = computed(() =>
+            store.state.wallet.session != null
+                ? store.state.wallet.session.publicKey
+                : null
+        );
+        const account = computed(() =>
+            store.state.wallet.session != null
+                ? store.state.wallet.session.account
+                : null
+        );
+
+        // FIXME: This should be NULL in the beginning
+        const balance = value(0);
+        const balanceIsBusy = value(false);
+
+        async function handleBalanceRefresh() {
+            const session = store.state.wallet.session;
+            if (session == null) return;
+
+            balanceIsBusy.value = true;
+
+            try {
+                const accountBalance: BigInt = await session.client.getAccountBalance();
+                balance.value = Number(accountBalance);
+            } finally {
+                balanceIsBusy.value = false;
+            }
+        }
+
+        return {
+            handleBalanceRefresh,
+            balanceIsBusy,
+            account,
+            publicKey,
+            balance
+        };
     }
 });
 </script>

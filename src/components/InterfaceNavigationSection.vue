@@ -29,7 +29,7 @@ import { createComponent, PropType, computed } from "vue-function-api";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import store from "@/store";
-import { SET_IS_OPEN } from "@/store/mutations";
+import { SET_INTERFACE_MENU_IS_OPEN } from "@/store/mutations";
 
 interface InterfaceNavigationItem {
     name: string;
@@ -71,7 +71,7 @@ export default createComponent({
         }
 
         function handleClick() {
-            store.commit(SET_IS_OPEN, false);
+            store.commit(SET_INTERFACE_MENU_IS_OPEN, false);
         }
 
         return {
