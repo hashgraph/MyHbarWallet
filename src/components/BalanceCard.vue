@@ -7,7 +7,7 @@
                     Balance
                 </div>
                 <div v-if="balance" class="subtitle" type="string">
-                    {{ balance }} ℏ
+                    {{ balanceHBar }} ℏ
                     <div class="usd-balance">/ {{ balanceUSD }}</div>
                 </div>
                 <div v-else class="subtitle-null" type="string">
@@ -64,9 +64,13 @@ export default createComponent({
         balance: (Number as unknown) as PropType<number>
     },
     setup(props: Props) {
+        const balanceHBar = computed(() => {
+            return props.balance / 100000000;
+        });
+
         const balanceUSD = computed(() => {
             // FIXME: once the unit store exists, use it
-            const usd = props.balance * 0.12;
+            const usd = balanceHBar.value * 0.12;
             return formatter.format(usd);
         });
 
@@ -74,7 +78,8 @@ export default createComponent({
             mdiRefresh,
             mdiLoading,
             balanceUSD,
-            walletHbar
+            walletHbar,
+            balanceHBar
         };
     }
 });
