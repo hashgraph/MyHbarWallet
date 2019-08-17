@@ -7,7 +7,7 @@
             type="number"
             action="Entire Balance"
             show-validation
-            :valid="amount.length > 0"
+            :valid="amount.length > 0 && amount[0] !== '-'"
             @action="handleClickEntireBalance"
         />
 
