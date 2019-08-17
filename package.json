@@ -24,7 +24,8 @@
         "vue": "^2.6.10",
         "vue-function-api": "^2.1.2",
         "vue-router": "^3.1.2",
-        "vuex": "^3.0.1"
+        "vuex": "^3.0.1",
+        "zxcvbn": "^4.4.2"
     },
     "devDependencies": {
         "@babel/core": "^7.5.5",
@@ -33,6 +34,7 @@
         "@types/jest": "^24.0.17",
         "@types/prettier": "1.18.2",
         "@types/ua-parser-js": "^0.7.33",
+        "@types/zxcvbn": "^4.4.0",
         "@vue/cli-plugin-babel": "^4.0.0-beta.3",
         "@vue/cli-plugin-eslint": "^4.0.0-beta.3",
         "@vue/cli-plugin-typescript": "^4.0.0-beta.3",

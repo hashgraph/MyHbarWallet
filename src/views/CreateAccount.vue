@@ -67,7 +67,9 @@ export default createComponent({
         > = value({
             modalIsOpen: false,
             password: "",
-            isBusy: false
+            isBusy: false,
+            passwordStrength: 0,
+            passwordSuggestion: ""
         });
 
         const modalDownloadKeystoreState: Wrapper<
