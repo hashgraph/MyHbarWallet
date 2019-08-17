@@ -98,5 +98,8 @@ module.exports = {
         "@typescript-eslint/no-var-requires": "error",
         "@typescript-eslint/prefer-namespace-keyword": "error",
         "@typescript-eslint/type-annotation-spacing": "error"
+
+        // Jest
+        // "jest/no-commented-out-tests": "warn"
     }
 };

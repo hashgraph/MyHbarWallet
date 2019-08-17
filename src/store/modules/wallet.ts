@@ -1,7 +1,4 @@
-import {
-    LOG_OUT,
-    LOG_IN
-} from "@/store/mutations";
+import { LOG_OUT, LOG_IN } from "@/store/mutations";
 import { Client } from "hedera-sdk-js";
 import { IS_LOGGED_IN } from "@/store/getters";
 
@@ -15,7 +12,7 @@ export interface Session {
     account: Id;
     privateKey: string;
     publicKey: string;
-    client: Client;   
+    client: Client;
 }
 
 export interface State {
@@ -24,13 +21,11 @@ export interface State {
 
 export default {
     state: {
-        session: null,
+        session: null
     },
     getters: {
         [IS_LOGGED_IN]: (state: State): boolean => {
-            return (
-                state.session != null
-            );
+            return state.session != null;
         }
     },
     mutations: {
