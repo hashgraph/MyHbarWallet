@@ -2,6 +2,7 @@
     <div class="mnemonic-phrase">
         <Modal
             title="Access by Mnemonic Phrase"
+            large
             :not-closable="state.isBusy"
             :is-open="state.modalIsOpen"
             @change="handleModalChangeIsOpen"
@@ -14,28 +15,12 @@
                 Please type in your mnemonic phrase
             </div>
 
-            <div class="value-switch">
-                <!-- TODO: Component that wraps this with the understanding of mnemonic types -->
-                <SwitchButton
-                    :checked="state.numWords"
-                    class="btn"
-                    :values="[12, 24]"
-                    @change="handleNumWordsChange"
-                />
-                <div class="text">Value</div>
-            </div>
-
             <MnemonicInput
                 class="phrase-input"
-                :words="state.numWords"
+                :words="24"
                 :value="state.words"
                 :editable="true"
                 @input="handleMnemonicInput"
-            />
-
-            <OptionalPasswordInput
-                :value="state.password"
-                @input="handlePasswordInput"
             />
 
             <Button
@@ -63,16 +48,9 @@ import Warning from "../components/Warning.vue";
 import OptionalPasswordInput from "../components/OptionalPasswordInput.vue";
 import { createComponent } from "vue-function-api";
 
-export enum MnemonicType {
-    Words12 = 12,
-    Words24 = 24
-}
-
 export interface State {
     modalIsOpen: boolean;
-    numWords: MnemonicType;
     words: string[];
-    password: string;
     isBusy: boolean;
 }
 
@@ -97,21 +75,13 @@ export default createComponent({
         function handleModalChangeIsOpen(isOpen: boolean) {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
-        function handleNumWordsChange(numWords: number) {
-            context.emit("change", { ...props.state, numWords });
-        }
         function handleMnemonicInput(words: string[]) {
             context.emit("change", { ...props.state, words });
-        }
-        function handlePasswordInput(password: string) {
-            context.emit("change", { ...props.state, password });
         }
 
         return {
             handleModalChangeIsOpen,
-            handleNumWordsChange,
-            handleMnemonicInput,
-            handlePasswordInput
+            handleMnemonicInput
         };
     }
 });
