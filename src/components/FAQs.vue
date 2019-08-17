@@ -91,7 +91,7 @@ a {
 .wrap {
     padding: 80px 0;
 
-    @media (max-width: 1025px) {
+    @media (max-width: 1024px) {
         padding: 50px 0;
     }
 }
@@ -102,7 +102,7 @@ a {
     max-width: 1024px;
     padding: 0 20px;
 
-    @media (max-width: 1025px) {
+    @media (max-width: 1024px) {
         padding: 0 25px;
     }
 }
@@ -113,7 +113,7 @@ a {
     flex-flow: row nowrap;
     justify-content: space-between;
 
-    @media (max-width: 1025px) {
+    @media (max-width: 1024px) {
         align-items: flex-start;
         flex-direction: column;
     }
@@ -142,7 +142,7 @@ a {
     display: flex;
     flex-flow: column nowrap;
 
-    @media (max-width: 1025px) {
+    @media (max-width: 1024px) {
         margin-block-start: 30px;
     }
 }

@@ -19,12 +19,12 @@
                 <Tooltip
                     class="action"
                     :pinnable="false"
-                    message="Account Qrcode"
+                    message="Account QR Code"
                 >
                     <MaterialDesignIcon class="qr-icon" :icon="mdiQrcode" />
                 </Tooltip>
                 <!-- TODO: Tie Copy/Error alert to copy -->
-                <Tooltip class="action" :pinnable="false" message="Copy">
+                <Tooltip class="action" :pinnable="false" message="Copy Key">
                     <MaterialDesignIcon
                         class="copy-icon"
                         :icon="mdiContentCopy"
@@ -95,6 +95,10 @@ export default createComponent({
     color: var(--color-white);
     display: flex;
     padding: 25px;
+
+    @media (max-width: 1024px) {
+        padding: 10px;
+    }
 }
 
 .account-image {
@@ -106,12 +110,23 @@ export default createComponent({
     margin-inline-end: 25px;
     user-select: none;
     width: 60px;
+
+    @media (max-width: 1024px) {
+        height: 41px;
+        margin-block-start: 0;
+        margin-inline-end: 0;
+        width: 41px;
+    }
 }
 
 .title {
     font-size: 22px;
     font-weight: 500;
     user-select: none;
+
+    @media (max-width: 1024px) {
+        display: none;
+    }
 }
 
 .subtitle {
@@ -132,12 +147,17 @@ export default createComponent({
         overflow: hidden;
         text-overflow: ellipsis;
         word-break: normal;
+
+        @media (max-width: 1024px) {
+            display: none;
+        }
     }
 }
 
 .actions {
     align-items: center;
     display: flex;
+    margin-inline-end: 8px;
 }
 
 .action {
@@ -151,7 +171,19 @@ export default createComponent({
 .content {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     justify-content: space-between;
     width: calc(100% - 60px - 25px);
+
+    @media (max-width: 1024px) {
+        flex-direction: row;
+    }
+}
+
+.top {
+    @media (max-width: 1024px) {
+        align-self: center;
+        margin-inline-start: 10px;
+    }
 }
 </style>

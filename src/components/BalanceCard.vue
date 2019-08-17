@@ -6,7 +6,6 @@
                 <div class="title">
                     Balance
                 </div>
-
                 <div v-if="balance" class="subtitle" type="string">
                     {{ balance }} ℏ
                     <div class="usd-balance">/ {{ balanceUSD }}</div>
@@ -16,7 +15,6 @@
                 </div>
             </div>
             <div class="actions">
-                <!-- TODO: add Chris's tooltip component? -->
                 <MaterialDesignIcon
                     v-if="busy"
                     class="spinner"
@@ -89,6 +87,10 @@ export default createComponent({
     color: var(--color-white);
     display: flex;
     padding: 25px;
+
+    @media (max-width: 1024px) {
+        padding: 20px;
+    }
 }
 
 img {
@@ -97,18 +99,29 @@ img {
     margin-inline-end: 25px;
     user-select: none;
     width: 60px;
+
+    @media (max-width: 1024px) {
+        display: none;
+    }
 }
 
 .title {
     font-size: 22px;
     font-weight: 500;
     user-select: none;
+
+    @media (max-width: 1024px) {
+        margin-block-end: 15px;
+    }
 }
 
 .subtitle {
     font-size: 22px;
-    margin-block-end: 15px;
     user-select: none;
+
+    @media (min-width: 1025px) {
+        margin-block-end: 15px;
+    }
 }
 
 .subtitle-null {
@@ -126,7 +139,12 @@ img {
 .content {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     justify-content: space-between;
+
+    @media (max-width: 1024px) {
+        flex-direction: row;
+    }
 }
 
 .actions {

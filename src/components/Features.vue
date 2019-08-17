@@ -53,7 +53,7 @@ export default createComponent({
     max-width: 1024px;
     padding: 0 20px;
 
-    @media (max-width: 1025px) {
+    @media (max-width: 1024px) {
         grid-row-gap: 70px;
         grid-template-columns: auto;
         padding: 0 25px;

@@ -105,7 +105,7 @@ header {
         transition: none;
     }
 
-    @media screen and (max-width: 1025px) {
+    @media screen and (max-width: 1024px) {
         padding: 12px 20px;
     }
 }
@@ -164,7 +164,7 @@ header {
     flex-grow: 1;
 }
 
-@media screen and (max-width: 1025px) {
+@media screen and (max-width: 1024px) {
     .links {
         max-width: 0;
         visibility: hidden;
