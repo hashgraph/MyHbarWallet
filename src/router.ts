@@ -101,12 +101,9 @@ export default new Router({
         {
             path: "/interface",
             component: Interface,
+            name: "interface",
+            redirect: { name: "send-transfer" },
             children: [
-                {
-                    path: "",
-                    name: "interface",
-                    redirect: { name: "send-transfer" }
-                },
                 {
                     path: "send-transfer",
                     name: "send-transfer",
@@ -140,6 +137,7 @@ export default new Router({
             ]
         }
     ],
+
     scrollBehavior(to, from, savedPosition): PositionResult {
         if (savedPosition) {
             return savedPosition;
@@ -151,4 +149,7 @@ export default new Router({
 
         return { x: 0, y: 0 };
     }
+
+
 });
+

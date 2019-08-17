@@ -54,6 +54,12 @@ export default createComponent({
     grid-template-columns: repeat(3, calc(100% * (1 / 3) - (30px / 3)));
     grid-template-rows: auto;
     padding: 20px;
+
+    @media (max-width: 1024px) {
+        grid-template-areas:
+            "info-account info-account info-account"
+            "main main main";
+    }
 }
 
 .main {
@@ -62,6 +68,7 @@ export default createComponent({
 }
 
 .info-account {
+    flex-grow: 1;
     flex-shrink: 0;
     grid-area: info-account;
 }
@@ -69,10 +76,22 @@ export default createComponent({
 .info-balance {
     flex-shrink: 0;
     grid-area: info-balance;
+
+    @media (max-width: 1024px) {
+        display: none;
+    }
 }
 
 .info-network {
     flex-shrink: 0;
     grid-area: info-network;
+
+    @media (max-width: 1024px) {
+        display: none;
+    }
+}
+
+.actions:first-child {
+    display: inline;
 }
 </style>

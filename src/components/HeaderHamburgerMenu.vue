@@ -1,21 +1,25 @@
 <template>
     <nav :class="{ 'nav-open': isOpen }">
+        <div v-if="inInterface" class="card-container">
+            <BalanceCard :balance="10" class="info-balance" />
+            <NetworkCard class="info-network" />
+        </div>
         <div class="link-block">
             <a href="/" @click="toggle">
                 <div class="link">Home</div>
-                <MaterialDesignIcon class="icon" :icon="icon" />
+                <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
             </a>
         </div>
         <div class="link-block">
             <a href="/#about" @click="toggle">
                 <div class="link">About</div>
-                <MaterialDesignIcon class="icon" :icon="icon" />
+                <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
             </a>
         </div>
         <div class="link-block">
             <a href="/#faqs" @click="toggle">
                 <div class="link">FAQs</div>
-                <MaterialDesignIcon class="icon" :icon="icon" />
+                <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
             </a>
         </div>
     </nav>
@@ -24,7 +28,10 @@
 <script lang="ts">
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiChevronRight } from "@mdi/js";
-import { createComponent, PropType } from "vue-function-api";
+import BalanceCard from "./BalanceCard.vue";
+import NetworkCard from "./NetworkCard.vue";
+
+import { createComponent, PropType, computed } from "vue-function-api";
 
 interface Props {
     isOpen: boolean;
@@ -32,20 +39,31 @@ interface Props {
 
 export default createComponent({
     components: {
-        MaterialDesignIcon
+        MaterialDesignIcon,
+        BalanceCard,
+        NetworkCard
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
     setup(props: Props, context) {
-        const icon = mdiChevronRight;
+        const inInterface = computed(() => {
+            const route = context.root.$route;
+
+            if (route.matched.length === 0) {
+                return false;
+            }
+
+            return route.matched[0].name === "interface";
+        });
 
         function toggle(): void {
             context.emit("toggle", !props.isOpen);
         }
         return {
-            icon,
-            toggle
+            toggle,
+            mdiChevronRight,
+            inInterface
         };
     }
 });
@@ -66,7 +84,7 @@ nav {
         transition: none;
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: 1025px) {
         position: absolute;
         visibility: hidden;
     }
@@ -119,5 +137,26 @@ a {
     flex-grow: 1;
     font-size: 16px;
     text-decoration: none;
+}
+
+.card-container {
+    border-bottom: 1px solid var(--color-boysenberry-shadow);
+    margin-inline-end: 10px;
+}
+
+.info-balance {
+    margin-block-end: 10px;
+
+    @media (min-width: 1025px) {
+        display: none;
+    }
+}
+
+.info-network {
+    margin-block-end: 10px;
+
+    @media (min-width: 1025px) {
+        display: none;
+    }
 }
 </style>
