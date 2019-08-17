@@ -230,7 +230,10 @@ export default createComponent({
             }
 
             try {
-                const client = new Client({ account, key: privateKey.value });
+                const client = new Client({
+                    account,
+                    privateKey: privateKey.value
+                });
 
                 // If getting account balance doesn't throw an error then we know that
                 // the account id and private key the user entered are valid
