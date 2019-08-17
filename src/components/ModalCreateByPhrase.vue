@@ -17,16 +17,9 @@
                 </div>
             </div>
             <div class="value-switch">
-                <!-- TODO: Component that wraps this with the understanding of mnemonic types -->
-                <SwitchButton
-                    :checked="numberWords"
-                    class="btn"
-                    :values="[12, 24]"
-                    @change="handleNumWordsChange"
-                />
                 <div class="text">Value</div>
                 <div class="spacer" />
-                <div class="random-button">
+                <div class="random-button" @click="randomizeMnemonic">
                     <MaterialDesignIcon :size="16" :icon="cachedIcon" />
                     Random
                 </div>
@@ -40,6 +33,7 @@
             />
 
             <HiddenPasswordInput
+                v-if="false"
                 :value="passwordValue"
                 password-warning="If you choose to include a password, understand you will ALWAYS need this password with your mnemonic phrase. You can not change it. It becomes a permanent part of your phrase. Read more about the password option here."
                 @input="handlePasswordChange"
@@ -51,7 +45,11 @@
                     label="I Wrote Down My Mnemonic Phrase"
                     @click="handleClick"
                 />
-                <ModalVerifyPhrase v-model="verifyPhraseData" />
+                <ModalVerifyPhrase
+                    v-model="verifyPhraseIsOpen"
+                    :words="words"
+                    @success="handleVerifySuccess"
+                />
                 <img
                     :src="printerIcon"
                     class="printer-button"
@@ -86,21 +84,26 @@ import ModalVerifyPhrase from "@/components/ModalVerifyPhrase.vue";
 import {
     computed,
     createComponent,
+    onMounted,
     PropType,
     value,
     Wrapper
 } from "vue-function-api";
+import { generateMnemonic, MnemonicResult } from "hedera-sdk-js/src/Keys";
 
 export interface Component {
-    numberWords: Wrapper<number>;
+    numberWords: number;
     passwordValue: Wrapper<string>;
     words: Wrapper<string[]>;
     cachedIcon: Wrapper<string>;
     printerIcon: Wrapper<string>;
     printModalIsOpen: Wrapper<boolean>;
+    verifyPhraseIsOpen: Wrapper<boolean>;
     handlePrintModal: () => void;
-    handleNumWordsChange: (numWords: number) => void;
+    handleClick: () => void;
     handlePasswordChange: (password: string) => void;
+    randomizeMnemonic: () => void;
+    handleVerifySuccess: () => void;
 }
 
 export default createComponent({
@@ -125,12 +128,16 @@ export default createComponent({
             boolean
         >
     },
-    setup(): Component {
-        const numberWords = value(12);
+    setup(props, context): Component {
+        const numberWords = 24;
         const passwordValue = value("");
-        const words = value([] as string[]);
+        const result: Wrapper<MnemonicResult | null> = value(null);
         const printModalIsOpen = value(false);
-        const verifyPhraseData = value({ isOpen: false, words: [] });
+        const verifyPhraseIsOpen = value(false);
+
+        const words = computed(() => {
+            return result.value ? result.value.mnemonic.split(" ") : [];
+        });
 
         const cachedIcon = computed(() => {
             return mdiCached;
@@ -138,11 +145,6 @@ export default createComponent({
         const printerIcon = computed(() => {
             return printIcon;
         });
-
-        function handleNumWordsChange(numWords: number) {
-            numberWords.value = numWords;
-            verifyPhraseData.value.words = words.value.slice(0, num);
-        }
 
         function handlePasswordChange(password: string) {
             passwordValue.value = password;
@@ -153,8 +155,21 @@ export default createComponent({
         }
 
         function handleClick() {
-            verifyPhraseData.value.isOpen = true;
+            verifyPhraseIsOpen.value = true;
         }
+
+        function randomizeMnemonic() {
+            result.value = generateMnemonic();
+        }
+
+        function handleVerifySuccess() {
+            verifyPhraseIsOpen.value = false;
+            context.emit("submit", result);
+        }
+
+        onMounted(() => {
+            randomizeMnemonic();
+        });
 
         return {
             numberWords,
@@ -163,11 +178,12 @@ export default createComponent({
             cachedIcon,
             printerIcon,
             printModalIsOpen,
-            verifyPhraseData,
+            verifyPhraseIsOpen,
             handlePrintModal,
-            handleNumWordsChange,
             handlePasswordChange,
-            handleClick
+            handleClick,
+            randomizeMnemonic,
+            handleVerifySuccess
         };
     }
 });
@@ -224,6 +240,7 @@ export default createComponent({
     color: var(--color-melbourne-cup);
     cursor: pointer;
     font-size: 14px;
+    user-select: none;
 }
 
 .important {

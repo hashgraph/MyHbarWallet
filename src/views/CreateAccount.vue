@@ -15,7 +15,10 @@
             v-model="modalCreateWithSoftwareIsOpen"
             @submit="handleCreateWithSoftwareSubmit"
         />
-        <ModalCreateByPhrase v-model="modalCreateByPhraseIsOpen" />
+        <ModalCreateByPhrase
+            v-model="modalCreateByPhraseIsOpen"
+            @submit="handleCreateByPhraseSubmit"
+        />
         <ModalCreateByKeystore
             v-model="modalCreateByKeystoreState"
             @submit="handleCreateByKeystoreSubmit"
@@ -119,6 +122,15 @@ export default createComponent({
             }, 125);
         }
 
+        function handleCreateByPhraseSubmit() {
+            // TODO: actually create the key via the function given from the modal
+            modalCreateByPhraseIsOpen.value = false;
+
+            setTimeout(() => {
+                modalSuccessIsOpen.value = true;
+            }, 125);
+        }
+
         return {
             modalAccessByHardwareIsOpen,
             modalCreateWithSoftwareIsOpen,
@@ -129,7 +141,8 @@ export default createComponent({
             handleClickTiles,
             handleCreateWithSoftwareSubmit,
             handleCreateByKeystoreSubmit,
-            handleDownloadKeystoreSubmit
+            handleDownloadKeystoreSubmit,
+            handleCreateByPhraseSubmit
         };
     }
 });
