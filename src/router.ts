@@ -64,7 +64,7 @@ Vue.use(Router);
 function RequireWallet(_to: any, _from: any, next: { (arg0: string): void; (): void }) {
     if(store.state.wallet.session == null) {
         return next("/");
-    };
+    }
 
     return next();
 }
