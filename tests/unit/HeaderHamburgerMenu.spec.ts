@@ -1,61 +1,44 @@
-/* eslint-disable jest/no-commented-out-tests */
-
-// import { createLocalVue, shallowMount } from "@vue/test-utils";
-// import HeaderHamburgerMenu from "../../src/components/HeaderHamburgerMenu.vue";
-// import HeaderHamburgerButton from "../../src/components/HeaderHamburgerButton.vue";
-// import { plugin as VueFunctionApi } from "vue-function-api";
+import { createLocalVue, shallowMount } from "@vue/test-utils";
+import HeaderHamburgerMenu from "../../src/components/HeaderHamburgerMenu.vue";
+import { plugin as VueFunctionApi, computed } from "vue-function-api";
+import Router from "vue-router";
+import router from "../../src/router";
 
 describe("HeaderHamburgerMenu.vue", (): void => {
-    // FIXME: Fix this ungodly mess
+
     it("renders", (): void => {
         expect.assertions(1);
+        const localVue = createLocalVue();
+        localVue.use(Router);
+        localVue.use(VueFunctionApi);
+        const wrapper = shallowMount(HeaderHamburgerMenu, {
+            localVue,
+            router,
+            methods: {
+                inInterface: jest.fn(() => false)
+            }
+        });
 
-        expect(true).toBe(true);
+
+        expect(wrapper.exists()).toBe(true);
+    });
+
+    it("opens with proper links", (): void => {
+        expect.assertions(3);
+        const localVue = createLocalVue();
+        localVue.use(Router);
+        localVue.use(VueFunctionApi);
+        const wrapper = shallowMount(HeaderHamburgerMenu, {
+            localVue,
+            router,
+            methods: {
+                inInterface: jest.fn(() => true)
+            }
+        });
+
+        expect(wrapper.find("nav").classes()).not.toContain("nav-open");
+        wrapper.setProps({ isOpen: true });
+        expect(wrapper.find("nav").classes()).toContain("nav-open");
+        expect(wrapper.find(".card-container").exists()).toBe(true)
     });
 });
-
-// describe("HeaderHamburgerMenu.vue", (): void => {
-//     const localVue = createLocalVue();
-//     localVue.use(VueFunctionApi);
-
-//     const wrapper = shallowMount(HeaderHamburgerMenu, {
-//         localVue
-//     });
-
-//     it("renders", (): void => {
-//         expect.assertions(1);
-
-//         expect(wrapper.isVisible()).toBe(true);
-//     });
-
-//     it("opens", (): void => {
-//         expect.assertions(2);
-
-//         expect(wrapper.find("nav").classes()).not.toContain("nav-open");
-//         wrapper.setProps({ isOpen: true });
-//         expect(wrapper.find("nav").classes()).toContain("nav-open");
-//     });
-// });
-
-// describe("HeaderHamburgerButton.vue", (): void => {
-//     const localVue = createLocalVue();
-//     localVue.use(VueFunctionApi);
-
-//     const wrapper = shallowMount(HeaderHamburgerButton, {
-//         localVue,
-//         propsData: {
-//             isOpen: false
-//         }
-//     });
-
-//     it("renders", (): void => {
-//         expect.assertions(1);
-//         expect(wrapper.isVisible()).toBe(true);
-//     });
-
-//     it("triggers", (): void => {
-//         expect.assertions(1);
-//         wrapper.find(".button-wrapper").trigger("click");
-//         expect(wrapper.emitted().toggle).toStrictEqual([[true]]);
-//     });
-// });
