@@ -64,9 +64,7 @@ import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
 import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "@/components/ModalAccessBySoftware.vue";
-import ModalAccessByPhrase, {
-    MnemonicType
-} from "@/components/ModalAccessByPhrase.vue";
+import ModalAccessByPhrase from "@/components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
@@ -101,7 +99,6 @@ export default createComponent({
             modalIsOpen: false,
             isBusy: false,
             words: [],
-            numWords: MnemonicType.Words12,
             password: ""
         });
 
