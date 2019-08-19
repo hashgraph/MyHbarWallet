@@ -9,9 +9,6 @@
                 <div class="title">
                     Success
                 </div>
-                <div class="description">
-                    Continue transaction with Web3 Wallet Provider.
-                </div>
                 <Button class="btn" label="Close" @click="handleClose" />
             </div>
         </Modal>
