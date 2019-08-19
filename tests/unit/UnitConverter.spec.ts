@@ -19,19 +19,34 @@ describe("UnitConverter.vue", (): void => {
     it("calculates different values and changes", (): void => {
         expect.assertions(7);
         expect(wrapper.vm.$data.valueRight).toBe("10");
-        wrapper.setData({ selectedLeft: "gigabar", valueLeft: "1000", selectedRight: "hbar"});
+        wrapper.setData({
+            selectedLeft: "gigabar",
+            valueLeft: "1000",
+            selectedRight: "hbar"
+        });
         expect(wrapper.vm.$data.valueRight).toBe("1000000000000");
-        wrapper.setData({ selectedLeft: "tinybar", valueLeft: "1000", selectedRight: "hbar"});
+        wrapper.setData({
+            selectedLeft: "tinybar",
+            valueLeft: "1000",
+            selectedRight: "hbar"
+        });
         expect(wrapper.vm.$data.valueRight).toBe("0.00001");
-        wrapper.setData({ selectedLeft: "gigabar", valueLeft: "1000", selectedRight: "tinybar"});
+        wrapper.setData({
+            selectedLeft: "gigabar",
+            valueLeft: "1000",
+            selectedRight: "tinybar"
+        });
         expect(wrapper.vm.$data.valueRight).toBe("1000000000000");
-        wrapper.setData({ selectedLeft: "gigabar", valueLeft: "1000", selectedRight: "millibar"});
+        wrapper.setData({
+            selectedLeft: "gigabar",
+            valueLeft: "1000",
+            selectedRight: "millibar"
+        });
         expect(wrapper.vm.$data.valueRight).toBe("100000000000000000000");
-        wrapper.setData({ selectedRight: "kilobar"});
+        wrapper.setData({ selectedRight: "kilobar" });
         expect(wrapper.vm.$data.valueLeft).toBe("100000000000000");
-        wrapper.setData({ selectedLeft: "microbar"});
+        wrapper.setData({ selectedLeft: "microbar" });
         expect(wrapper.vm.$data.valueRight).toBe("100000");
-
     });
 });
 

@@ -29,11 +29,17 @@
         <template v-slot:footer>
             <!-- FIXME: Pluralize appropriately -->
             <Button
+                :busy="isBusy"
                 :label="amount > 0 ? `Send ${truncate} Hbars` : 'Send Hbar'"
-                :disabled="false"
+                :disabled="!isIdValid || !isAmountValid"
                 @click="handleSendTransfer"
             />
         </template>
+
+        <ModalSendTransferSuccess
+            :open="successModalIsOpen"
+            @change="handleSuccessModalChange"
+        />
     </InterfaceForm>
 </template>
 
@@ -45,30 +51,36 @@ import { createComponent, value, computed } from "vue-function-api";
 import store from "@/store";
 import { AccountId } from "hedera-sdk-js/src/Client";
 import { ALERT } from "@/store/actions";
+import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 
 export default createComponent({
     components: {
         TextInput,
         InterfaceForm,
-        Button
+        Button,
+        ModalSendTransferSuccess
     },
     setup(): {} {
         const amount = value("0");
         const toAccount = value("");
         const idRegex = /^\d+\.\d+\.\d+$/;
+        const isBusy = value(false);
 
         const isIdValid = computed(() => idRegex.test(toAccount.value));
         const isAmountValid = computed(() => amount.value.length > 0);
+        const successModalIsOpen = value(false);
         const truncate = computed(() =>
             amount.value.length > 15
                 ? amount.value.substring(0, 13) + "..."
                 : amount.value
         );
+
         function handleClickEntireBalance() {
             console.log("handleClickEnterBalance");
         }
 
         async function handleSendTransfer() {
+            isBusy.value = true;
             if (store.state.wallet.session == null) {
                 throw new Error(
                     "Session should not be null if inside Send Transfer"
@@ -110,11 +122,9 @@ export default createComponent({
             try {
                 // transferCryptoTo(recipient: AccountId, amount: number | BigInt)
                 await client.transferCryptoTo(recipient, sendAmount);
-                store.dispatch(ALERT, {
-                    level: "info",
-                    message: "Sent crypto to " + toAccount.value
-                });
+                successModalIsOpen.value = true;
             } catch (error) {
+                isBusy.value = false;
                 console.log(error);
                 if (error.toString().includes("INVALID_ACCOUNT_ID")) {
                     store.dispatch(ALERT, {
@@ -137,14 +147,25 @@ export default createComponent({
                     });
                 }
             }
+
+            isBusy.value = false;
+        }
+
+        function handleSuccessModalChange(isOpen: boolean) {
+            successModalIsOpen.value = isOpen;
+            isBusy.value = false;
         }
 
         return {
             amount,
+            isBusy,
             toAccount,
             isIdValid,
+            isAmountValid,
+            successModalIsOpen,
             handleClickEntireBalance,
             handleSendTransfer,
+            handleSuccessModalChange,
             truncate
         };
     }

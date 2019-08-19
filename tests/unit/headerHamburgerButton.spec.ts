@@ -3,7 +3,6 @@ import HeaderHamburgerButton from "../../src/components/HeaderHamburgerButton.vu
 import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("HeaderHamburgerButton.vue", (): void => {
-
     it("renders", (): void => {
         const localVue = createLocalVue();
         localVue.use(VueFunctionApi);

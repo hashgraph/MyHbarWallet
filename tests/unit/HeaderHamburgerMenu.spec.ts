@@ -5,7 +5,6 @@ import Router from "vue-router";
 import router from "../../src/router";
 
 describe("HeaderHamburgerMenu.vue", (): void => {
-
     it("renders", (): void => {
         expect.assertions(1);
         const localVue = createLocalVue();
@@ -18,7 +17,6 @@ describe("HeaderHamburgerMenu.vue", (): void => {
                 inInterface: jest.fn(() => false)
             }
         });
-
 
         expect(wrapper.exists()).toBe(true);
     });
@@ -39,6 +37,6 @@ describe("HeaderHamburgerMenu.vue", (): void => {
         expect(wrapper.find("nav").classes()).not.toContain("nav-open");
         wrapper.setProps({ isOpen: true });
         expect(wrapper.find("nav").classes()).toContain("nav-open");
-        expect(wrapper.find(".card-container").exists()).toBe(true)
+        expect(wrapper.find(".card-container").exists()).toBe(true);
     });
 });
