@@ -29,7 +29,7 @@
         <template v-slot:footer>
             <!-- FIXME: Pluralize appropriately -->
             <Button
-                :label="amount > 0 ? `Send ${amount} Hbars` : 'Send Hbars'"
+                :label="amount > 0 ? `Send ${truncate} Hbars` : 'Send Hbar'"
                 :disabled="false"
                 @click="handleSendTransfer"
             />
@@ -59,7 +59,11 @@ export default createComponent({
 
         const isIdValid = computed(() => idRegex.test(toAccount.value));
         const isAmountValid = computed(() => amount.value.length > 0);
-
+        const truncate = computed(() =>
+            amount.value.length > 15
+                ? amount.value.substring(0, 13) + "..."
+                : amount.value
+        );
         function handleClickEntireBalance() {
             console.log("handleClickEnterBalance");
         }
@@ -140,7 +144,8 @@ export default createComponent({
             toAccount,
             isIdValid,
             handleClickEntireBalance,
-            handleSendTransfer
+            handleSendTransfer,
+            truncate
         };
     }
 });
