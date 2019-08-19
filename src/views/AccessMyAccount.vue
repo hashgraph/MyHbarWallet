@@ -81,6 +81,7 @@ import {
 } from "hedera-sdk-js";
 import { PrivateKey } from "hedera-sdk-js/src/Client";
 import { KeyPair } from "hedera-sdk-js/src/Keys";
+import { ALERT } from "@/store/actions";
 
 export default createComponent({
     components: {
@@ -213,10 +214,16 @@ export default createComponent({
                         modalAccessByPhraseState.value.isBusy = false;
                         modalAccessByPhraseState.value.modalIsOpen = false;
                         modalEnterAccountId.value.modalIsOpen = true;
+                        modalAccessByPhraseState.value.isValid = true;
                     }, 3000);
                 })
                 .catch(() => {
                     modalAccessByPhraseState.value.isBusy = false;
+
+                    store.dispatch(ALERT, {
+                        level: "error",
+                        message: "Invalid Mnemonic"
+                    });
 
                     modalAccessByPhraseState.value.isValid = false;
                 });
