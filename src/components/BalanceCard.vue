@@ -42,7 +42,7 @@
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiLoading, mdiRefresh } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
-import { computed, createComponent, PropType, value } from "vue-function-api";
+import { computed, createComponent, PropType } from "vue-function-api";
 import walletHbar from "../assets/wallet-hbar.svg";
 
 const formatter = new Intl.NumberFormat("en-US", {

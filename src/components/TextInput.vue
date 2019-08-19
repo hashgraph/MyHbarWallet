@@ -87,7 +87,7 @@ import { writeToClipboard } from "@/clipboard";
 
 interface Props {
     placeholder: string;
-    value: any;
+    value: string | number | boolean;
     label: string;
     tabindex: string;
     step: string;
