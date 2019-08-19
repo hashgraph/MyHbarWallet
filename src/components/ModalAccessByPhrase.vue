@@ -23,6 +23,10 @@
                 @input="handleMnemonicInput"
             />
 
+            <div v-if="state.isValid === false" class="error-message">
+                Error: Invalid mnemonic
+            </div>
+
             <Button
                 class="continue-btn"
                 label="Continue"
@@ -45,13 +49,13 @@ import MnemonicInput from "../components/MnemonicInput.vue";
 import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
-import OptionalPasswordInput from "../components/OptionalPasswordInput.vue";
 import { createComponent } from "vue-function-api";
 
 export interface State {
     modalIsOpen: boolean;
     words: string[];
     isBusy: boolean;
+    isValid: boolean;
 }
 
 export default createComponent({
@@ -61,8 +65,7 @@ export default createComponent({
         SwitchButton,
         Button,
         CustomerSupportLink,
-        Warning,
-        OptionalPasswordInput
+        Warning
     },
     model: {
         prop: "state",
@@ -123,5 +126,12 @@ export default createComponent({
     display: flex;
     font-size: 14px;
     justify-content: space-around;
+}
+
+.error-message {
+    color: var(--color-basalt-grey);
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
 }
 </style>

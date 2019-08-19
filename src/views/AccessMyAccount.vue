@@ -73,7 +73,14 @@ import store from "@/store";
 import { LOG_IN } from "@/store/mutations";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { createComponent, value, Wrapper } from "vue-function-api";
-import { Client, decodePrivateKey } from "hedera-sdk-js";
+import {
+    Client,
+    decodePrivateKey,
+    encodePrivateKey,
+    keyFromMnemonic
+} from "hedera-sdk-js";
+import { PrivateKey } from "hedera-sdk-js/src/Client";
+import { KeyPair } from "hedera-sdk-js/src/Keys";
 
 export default createComponent({
     components: {
@@ -99,7 +106,7 @@ export default createComponent({
             modalIsOpen: false,
             isBusy: false,
             words: [],
-            password: ""
+            isValid: true
         });
 
         const modalPasswordState = value({
@@ -191,15 +198,28 @@ export default createComponent({
             publicKey.value = decodePrivateKey(pk).publicKey.toString();
         }
 
-        function handleAccessByPhraseSubmit() {
+        async function handleAccessByPhraseSubmit() {
             modalAccessByPhraseState.value.isBusy = true;
-            // TODO: Decode private key from phrase
-            setTimeout(() => {
-                // Close  previous modal and open another one
-                modalAccessByPhraseState.value.isBusy = false;
-                modalAccessByPhraseState.value.modalIsOpen = false;
-                modalEnterAccountIdState.value.modalIsOpen = true;
-            }, 3000);
+
+            await keyFromMnemonic(
+                modalAccessByPhraseState.value.words.join(" ")
+            )
+                .then((keyPair: KeyPair) => {
+                    // fixme: this encodes the key... which is then re-decoded in the setPrivateKey function...
+                    setPrivateKey(encodePrivateKey(keyPair.privateKey));
+
+                    setTimeout(() => {
+                        // Close  previous modal and open another one
+                        modalAccessByPhraseState.value.isBusy = false;
+                        modalAccessByPhraseState.value.modalIsOpen = false;
+                        modalEnterAccountId.value.modalIsOpen = true;
+                    }, 3000);
+                })
+                .catch(() => {
+                    modalAccessByPhraseState.value.isBusy = false;
+
+                    modalAccessByPhraseState.value.isValid = false;
+                });
         }
 
         function handleAccessByPrivateKeySubmit() {
