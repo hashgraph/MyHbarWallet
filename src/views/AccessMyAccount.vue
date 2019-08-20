@@ -197,11 +197,11 @@ export default createComponent({
         }
 
         async function handleAccessByPhraseSubmit() {
-            const byPhraseState = modalAccessByPhraseState.value;
+            const accessByPhraseState = modalAccessByPhraseState.value;
 
-            byPhraseState.isBusy = true;
+            accessByPhraseState.isBusy = true;
 
-            const phrase = byPhraseState.words.join(" ");
+            const phrase = accessByPhraseState.words.join(" ");
 
             try {
                 const keyPair = await keyFromMnemonic(phrase);
@@ -210,19 +210,19 @@ export default createComponent({
                 publicKey.value = encodePublicKey(keyPair.publicKey);
 
                 // Close  previous modal and open another one
-                byPhraseState.isBusy = false;
-                byPhraseState.modalIsOpen = false;
+                accessByPhraseState.isBusy = false;
+                accessByPhraseState.modalIsOpen = false;
                 modalEnterAccountIdIsOpen.value = true;
-                byPhraseState.isValid = true;
+                accessByPhraseState.isValid = true;
             } catch {
-                byPhraseState.isBusy = false;
+                accessByPhraseState.isBusy = false;
 
                 store.dispatch(ALERT, {
                     level: "error",
                     message: "Invalid Mnemonic"
                 });
 
-                byPhraseState.isValid = false;
+                accessByPhraseState.isValid = false;
             }
         }
 

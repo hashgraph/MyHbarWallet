@@ -147,8 +147,6 @@ export default createComponent({
                     .build()
                     .executeForReceipt();
             } catch (error) {
-                // FIXME: Look at these atomic warnings
-
                 if (error instanceof Error) {
                     if (error.message === "PAYER_ACCOUNT_NOT_FOUND") {
                         errorMessage.value =
