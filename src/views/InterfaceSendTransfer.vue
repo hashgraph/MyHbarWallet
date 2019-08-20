@@ -6,6 +6,7 @@
             label="Amount"
             type="number"
             action="Entire Balance"
+            :suffix="Unit.Hbar"
             show-validation
             :valid="amount.length > 0 && amount[0] !== '-'"
             @action="handleClickEntireBalance"
@@ -24,6 +25,7 @@
             v-model="maxFee"
             label="Maximum Transaction Fee"
             show-validation
+            :suffix="Unit.Tinybar"
             :valid="true"
         />
 
@@ -54,6 +56,7 @@ import { AccountId } from "hedera-sdk-js/src/Client";
 import { ALERT } from "@/store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { CryptoTransferTransaction } from "hedera-sdk-js";
+import { Unit } from "@/components/UnitConverter.vue";
 
 export default createComponent({
     components: {
@@ -85,9 +88,7 @@ export default createComponent({
                 );
             }
 
-            amount.value = await store.state.wallet.session.client
-                .getAccountBalance()
-                .toString();
+            amount.value = (await store.state.wallet.session.client.getAccountBalance()).toString();
         }
 
         async function handleSendTransfer() {
@@ -185,6 +186,7 @@ export default createComponent({
             isIdValid,
             isAmountValid,
             successModalIsOpen,
+            Unit,
             handleClickEntireBalance,
             handleSendTransfer,
             handleSuccessModalChange,

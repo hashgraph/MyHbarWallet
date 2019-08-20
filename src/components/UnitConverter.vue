@@ -57,7 +57,7 @@ import BigNumber from "bignumber.js";
 
 import { createComponent, value, watch } from "vue-function-api";
 
-enum Unit {
+export enum Unit {
     Tinybar = "tinybar",
     Microbar = "microbar",
     Millibar = "millibar",
