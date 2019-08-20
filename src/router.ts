@@ -62,7 +62,6 @@ function InterfaceVerifyMessage(): Promise<
 Vue.use(Router);
 
 // auth function that redirects visitors who have not logged in back to the home route
-<<<<<<< HEAD
 function RequireWallet(
     _to: any,
     _from: any,
@@ -71,20 +70,10 @@ function RequireWallet(
     if (store.state.wallet.session == null) {
         return next("/");
     }
-=======
-function RequireWallet(_to: any, _from: any, next: { (arg0: string): void; (): void }) {
-    if(store.state.wallet.session == null) {
-        return next("/");
-    };
->>>>>>> add a require wallet check on interface
 
     return next();
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> add a require wallet check on interface
 export default new Router({
     mode: "history",
     base: process.env.BASE_URL,
