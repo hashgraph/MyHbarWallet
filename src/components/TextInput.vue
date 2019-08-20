@@ -87,7 +87,7 @@ import { writeToClipboard } from "@/clipboard";
 
 interface Props {
     placeholder: string;
-    value: any;
+    value: string | number | boolean;
     label: string;
     tabindex: string;
     step: string;
@@ -215,7 +215,7 @@ export default createComponent({
         }
 
         async function handleClickCopy() {
-            await writeToClipboard(props.value);
+            await writeToClipboard(props.value.toString());
         }
 
         function handleFocusIn() {

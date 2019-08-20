@@ -30,9 +30,8 @@ import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "@/components/NetworkCard.vue";
 import BalanceCard from "@/components/BalanceCard.vue";
 import AccountCard from "@/components/AccountCard.vue";
-import { createComponent, value, computed, watch } from "vue-function-api";
+import { createComponent, value, computed } from "vue-function-api";
 import store from "../store";
-import { Session } from "../store/modules/wallet";
 
 export default createComponent({
     components: {
