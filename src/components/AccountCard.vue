@@ -17,12 +17,15 @@
             <div class="actions">
                 <!-- TODO: implement QR Button -->
                 <Tooltip
-                    v-if="false"
                     class="action"
                     :pinnable="false"
                     message="Account QR Code"
                 >
-                    <MaterialDesignIcon class="qr-icon" :icon="mdiQrcode" />
+                    <MaterialDesignIcon
+                        class="qr-icon"
+                        :icon="mdiQrcode"
+                        @click="showQrCode"
+                    />
                 </Tooltip>
                 <!-- TODO: Tie Copy/Error alert to copy -->
                 <Tooltip class="action" :pinnable="false" message="Copy Key">
@@ -34,6 +37,10 @@
                 </Tooltip>
             </div>
         </div>
+        <ModalViewAccountQR
+            v-model="viewAccountQrCodeIsOpen"
+            :public-key="publicKey"
+        />
     </div>
 </template>
 
@@ -42,10 +49,11 @@ import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiQrcode, mdiContentCopy } from "@mdi/js";
 import Tooltip from "@/components/Tooltip.vue";
 import { writeToClipboard } from "@/clipboard";
-import { computed, createComponent, PropType } from "vue-function-api";
+import { computed, createComponent, PropType, value } from "vue-function-api";
 import Identicon from "@/components/Identicon.vue";
 import { ALERT } from "@/store/actions";
 import store from "@/store";
+import ModalViewAccountQR from "@/components/ModalViewAccountQR.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
@@ -53,7 +61,8 @@ export default createComponent({
     components: {
         MaterialDesignIcon,
         Tooltip,
-        Identicon
+        Identicon,
+        ModalViewAccountQR
     },
     props: {
         shard: (Number as unknown) as PropType<number>,
@@ -71,6 +80,8 @@ export default createComponent({
             return publickey;
         });
 
+        const viewAccountQrCodeIsOpen = value(false);
+
         const copyKey = async () => {
             await writeToClipboard(props.publicKey);
 
@@ -79,11 +90,18 @@ export default createComponent({
                 message: "Copied"
             });
         };
+
+        function showQrCode() {
+            viewAccountQrCodeIsOpen.value = true;
+        }
+
         return {
             mdiQrcode,
             mdiContentCopy,
             rawPublicKey,
-            copyKey
+            viewAccountQrCodeIsOpen,
+            copyKey,
+            showQrCode
         };
     }
 });
