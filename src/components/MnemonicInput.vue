@@ -85,6 +85,10 @@ export default createComponent({
     &.is-focused {
         border-color: var(--color-melbourne-cup);
     }
+
+    @media print {
+        border: none;
+    }
 }
 
 .number {

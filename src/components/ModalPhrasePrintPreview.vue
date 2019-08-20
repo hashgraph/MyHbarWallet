@@ -36,7 +36,12 @@
         </div>
 
         <div class="button-container">
-            <Button class="button-print" label="Print" outline />
+            <Button
+                class="button-print"
+                label="Print"
+                outline
+                @click="handleClickPrint"
+            />
         </div>
     </Modal>
 </template>
@@ -64,6 +69,15 @@ export default createComponent({
             // FIXME: Make required when we have data
             required: true
         }
+    },
+    setup() {
+        function handleClickPrint() {
+            window.print();
+        }
+
+        return {
+            handleClickPrint
+        };
     }
 });
 </script>
@@ -139,9 +153,17 @@ export default createComponent({
     flex-direction: column;
     flex-wrap: nowrap;
     margin-block-start: 30px;
+
+    @media print {
+        margin: 0;
+    }
 }
 
 .button-print {
     align-self: center;
+
+    @media print {
+        display: none;
+    }
 }
 </style>
