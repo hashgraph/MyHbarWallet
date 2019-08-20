@@ -215,7 +215,7 @@ export default createComponent({
         }
 
         async function handleClickCopy() {
-            await writeToClipboard(props.value);
+            await writeToClipboard(props.value.toString());
         }
 
         function handleFocusIn() {
