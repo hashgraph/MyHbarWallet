@@ -77,9 +77,9 @@ import {
     Client,
     decodePrivateKey,
     encodePrivateKey,
+    encodePublicKey,
     keyFromMnemonic
 } from "hedera-sdk-js";
-import { PrivateKey } from "hedera-sdk-js/src/Client";
 import { KeyPair } from "hedera-sdk-js/src/Keys";
 import { ALERT } from "@/store/actions";
 
@@ -201,21 +201,20 @@ export default createComponent({
 
         async function handleAccessByPhraseSubmit() {
             modalAccessByPhraseState.value.isBusy = true;
+            const phrase: string = modalAccessByPhraseState.value.words.join(
+                " "
+            );
 
-            await keyFromMnemonic(
-                modalAccessByPhraseState.value.words.join(" ")
-            )
+            keyFromMnemonic(phrase)
                 .then((keyPair: KeyPair) => {
-                    // fixme: this encodes the key... which is then re-decoded in the setPrivateKey function...
-                    setPrivateKey(encodePrivateKey(keyPair.privateKey));
+                    privateKey.value = encodePrivateKey(keyPair.privateKey);
+                    publicKey.value = encodePublicKey(keyPair.publicKey);
 
-                    setTimeout(() => {
-                        // Close  previous modal and open another one
-                        modalAccessByPhraseState.value.isBusy = false;
-                        modalAccessByPhraseState.value.modalIsOpen = false;
-                        modalEnterAccountId.value.modalIsOpen = true;
-                        modalAccessByPhraseState.value.isValid = true;
-                    }, 3000);
+                    // Close  previous modal and open another one
+                    modalAccessByPhraseState.value.isBusy = false;
+                    modalAccessByPhraseState.value.modalIsOpen = false;
+                    modalEnterAccountIdState.value.modalIsOpen = true;
+                    modalAccessByPhraseState.value.isValid = true;
                 })
                 .catch(() => {
                     modalAccessByPhraseState.value.isBusy = false;

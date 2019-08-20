@@ -8,7 +8,7 @@ import PrivacyPolicy from "./views/PrivacyPolicy.vue";
 import InterfaceCreateAccount from "@/views/InterfaceCreateAccount.vue";
 import TermsConditions from "./views/TermsConditions.vue";
 import { PositionResult } from "vue-router/types/router";
-import store from './store';
+import store from "./store";
 
 function ConvertUnits(): Promise<typeof import("./views/ConvertUnits.vue")> {
     return import(/* webpackChunkName: "units" */ "./views/ConvertUnits.vue");
@@ -61,14 +61,17 @@ function InterfaceVerifyMessage(): Promise<
 Vue.use(Router);
 
 // auth function that redirects visitors who have not logged in back to the home route
-function RequireWallet(_to: any, _from: any, next: { (arg0: string): void; (): void }) {
-    if(store.state.wallet.session == null) {
+function RequireWallet(
+    _to: any,
+    _from: any,
+    next: { (arg0: string): void; (): void }
+) {
+    if (store.state.wallet.session == null) {
         return next("/");
     }
 
     return next();
 }
-
 
 export default new Router({
     mode: "history",

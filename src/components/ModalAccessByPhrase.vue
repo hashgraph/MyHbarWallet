@@ -2,7 +2,6 @@
     <div class="mnemonic-phrase">
         <Modal
             title="Access by Mnemonic Phrase"
-            large
             :not-closable="state.isBusy"
             :is-open="state.modalIsOpen"
             @change="handleModalChangeIsOpen"
