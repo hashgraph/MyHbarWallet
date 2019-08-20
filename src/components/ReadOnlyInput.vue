@@ -11,19 +11,24 @@ import { PropType } from "vue";
 export default createComponent({
     props: {
         value: (String as unknown) as PropType<string>
-    },
-    setup() {}
+    }
 });
 </script>
 
 <style scoped lang="postcss">
-.value {
+.read-only-input {
     background-color: var(--color-peral);
     border: 2px solid var(--color-peral);
     border-radius: 4px;
-    color: var(--color-basalt-grey);
+    color: var(--color-washed-black);
     overflow: hidden;
     padding: 13px 15px;
+    width: 100%;
+}
+
+.value {
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
 }
 </style>

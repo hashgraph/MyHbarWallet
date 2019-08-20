@@ -13,7 +13,7 @@
                 class="pub-qr"
             />
 
-            <TextInput compact class="input key-input" :value="publicKey" />
+            <ReadOnlyInput class="key-input" :value="publicKey" />
 
             <Button
                 compact
@@ -38,6 +38,7 @@ import Button from "@/components/Button.vue";
 import { createComponent, PropType } from "vue-function-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "@/clipboard";
+import ReadOnlyInput from "@/components/ReadOnlyInput.vue";
 
 interface Props {
     isOpen: boolean;
@@ -49,7 +50,8 @@ export default createComponent({
         Modal,
         TextInput,
         Button,
-        QrcodeVue
+        QrcodeVue,
+        ReadOnlyInput
     },
     model: {
         prop: "isOpen",
