@@ -178,7 +178,12 @@ nav {
 }
 
 .logo {
+    color: var(--color-china-blue);
     padding-inline-start: 25px;
+
+    & > strong {
+        font-weight: 600;
+    }
 }
 
 .close {
