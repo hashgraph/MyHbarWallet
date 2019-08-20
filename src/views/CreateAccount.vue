@@ -28,7 +28,8 @@
             @submit="handleDownloadKeystoreSubmit"
         />
         <ModalEnterAccountId
-            v-model="modalEnterAccountIdState"
+            v-model="modalEnterAccountIdIsOpen"
+            :private-key="privateKey"
             @submit="handleAccountIdSubmit"
             @noAccount="handleDoesntHaveAccount"
         />
@@ -60,6 +61,7 @@ import { State as CreateByKeystoreState } from "../components/ModalCreateByKeyst
 import store from "@/store";
 import { LOG_IN } from "@/store/mutations";
 import { Client } from "hedera-sdk-js";
+import { Id } from "@/store/modules/wallet";
 
 export default createComponent({
     components: {
@@ -99,12 +101,7 @@ export default createComponent({
             isBusy: true
         });
 
-        const modalEnterAccountIdState = value({
-            modalIsOpen: false,
-            account: null,
-            error: null as null | string,
-            isBusy: false
-        });
+        const modalEnterAccountIdIsOpen = value(false);
 
         const modalRequestToCreateAccountIsOpen = value(false);
 
@@ -168,60 +165,25 @@ export default createComponent({
             context.root.$router.push({ name: "interface" });
         }
 
-        async function handleAccountIdSubmit() {
-            modalEnterAccountIdState.value.error = null;
-            modalEnterAccountIdState.value.isBusy = true;
+        async function handleAccountIdSubmit(client: Client, account: Id) {
+            store.commit(LOG_IN, {
+                account,
+                client,
+                privateKey: privateKey.value,
+                publicKey: publicKey.value
+            });
 
-            const account = modalEnterAccountIdState.value.account;
-
-            if (account == null || privateKey.value == null) {
-                throw new Error("unexpected submission of EnterAccountID");
-            }
-
-            try {
-                const client = new Client({
-                    account,
-                    privateKey: privateKey.value
-                });
-
-                // If getting account balance doesn't throw an error then we know that
-                // the account id and private key the user entered are valid
-                await client.getAccountBalance();
-
-                // Set Account and Client if `client.getBalance()` doesn't throw an error
-                store.commit(LOG_IN, {
-                    account: modalEnterAccountIdState.value.account,
-                    client,
-                    privateKey: privateKey.value,
-                    publicKey: publicKey.value
-                });
-
-                openInterface();
-            } catch (error) {
-                console.warn(error);
-
-                // FIXME: Look at these atomic warnings
-                // FIXME: This should be a "This account is not associated with your private key" error but balance transactions
-                //        don't have their signatures checked
-
-                /* eslint-disable-next-line require-atomic-updates */
-                modalEnterAccountIdState.value.error =
-                    "This account does not exist in the network.";
-
-                // Only update isBusy if getting account balance failed
-                /* eslint-disable-next-line require-atomic-updates */
-                modalEnterAccountIdState.value.isBusy = false;
-            }
+            openInterface();
         }
 
         function handleDoesntHaveAccount() {
-            modalEnterAccountIdState.value.modalIsOpen = false;
+            modalEnterAccountIdIsOpen.value = false;
             modalRequestToCreateAccountIsOpen.value = true;
         }
 
         function handleHasAccount() {
             modalRequestToCreateAccountIsOpen.value = false;
-            modalEnterAccountIdState.value.modalIsOpen = true;
+            modalEnterAccountIdIsOpen.value = true;
         }
 
         return {
@@ -236,12 +198,13 @@ export default createComponent({
             handleCreateByKeystoreSubmit,
             handleDownloadKeystoreSubmit,
             handleCreateByPhraseSubmit,
-            modalEnterAccountIdState,
+            modalEnterAccountIdIsOpen,
             modalRequestToCreateAccountIsOpen,
             handleAccountIdSubmit,
             handleHasAccount,
             handleDoesntHaveAccount,
-            publicKey
+            publicKey,
+            privateKey
         };
     }
 });

@@ -1,8 +1,8 @@
 <template>
     <div class="enter-account-id">
         <Modal
-            :is-open="state.modalIsOpen"
-            :not-closable="state.isBusy"
+            :is-open="isOpen"
+            :not-closable="isBusy"
             title="Enter Account ID"
             @change="handleModalChangeIsOpen"
         >
@@ -15,7 +15,7 @@
                 :value="input"
                 show-validation
                 :valid="valid"
-                :error="state.error"
+                :error="errorMessage"
                 placeholder="shard.realm.account"
                 @input="handleInput"
             />
@@ -25,8 +25,8 @@
                     class="btn"
                     label="Continue"
                     :disabled="!valid"
-                    :busy="state.isBusy"
-                    @click="$emit('submit')"
+                    :busy="isBusy"
+                    @click="handleSubmit"
                 />
             </div>
 
@@ -55,16 +55,14 @@ import TextInput, {
 import Button from "../components/Button.vue";
 import { SetupContext } from "vue-function-api/dist/types/vue";
 import { Id } from "@/store/modules/wallet";
-
-export interface State {
-    modalIsOpen: boolean;
-    account: Id | null;
-    isBusy: boolean;
-    error: string | null;
-}
+import { Client, CryptoTransferTransaction } from "hedera-sdk-js";
+import store from "@/store";
+import { LOG_IN } from "@/store/mutations";
 
 export interface Props {
-    state: State;
+    isOpen: boolean;
+    // Used to validate accuont ID
+    privateKey: string | null;
 }
 
 type Context = SetupContext & {
@@ -80,11 +78,12 @@ export default createComponent({
         Button
     },
     model: {
-        prop: "state",
+        prop: "isOpen",
         event: "change"
     },
     props: {
-        state: (Object as unknown) as PropType<State>
+        privateKey: (String as unknown) as PropType<string | null>,
+        isOpen: (Boolean as unknown) as PropType<boolean>
     },
     setup(props: Props, context) {
         const regex = /\d+\.\d+\.\d+/;
@@ -92,33 +91,84 @@ export default createComponent({
         const failed: Wrapper<string | null> = value(null);
         const valid = computed(() => regex.test(input.value));
 
+        const errorMessage = value<string | null>(null);
+        const isBusy = value(false);
+        const account = value<Id | null>(null);
+
         function handleInput(accountText: string) {
             input.value = accountText;
 
             if (valid.value) {
                 const parts = input.value.split(".");
-                const account = {
+                account.value = {
                     shard: parseInt(parts[0]),
                     realm: parseInt(parts[1]),
                     account: parseInt(parts[2])
                 };
-
-                context.emit("change", { ...props.state, account });
             } else {
-                context.emit("change", { ...props.state, account: null });
+                account.value = null;
             }
         }
 
         function handleModalChangeIsOpen(isOpen: boolean) {
-            context.emit("change", { ...props.state, modalIsOpen: isOpen });
+            context.emit("change", isOpen);
         }
 
         function handleDontHaveAccount() {
             context.emit("noAccount");
         }
 
+        async function handleSubmit() {
+            errorMessage.value = null;
+            isBusy.value = true;
+
+            if (account.value == null || props.privateKey == null) {
+                throw new Error("unexpected submission of EnterAccountID");
+            }
+
+            let client;
+
+            try {
+                client = new Client({
+                    account: account.value,
+                    privateKey: props.privateKey
+                });
+
+                // In Hedera, the signature map is checked BEFORE
+                // the valid duration. If we fail on the signature map
+                // then we know the account ID is mismatched to the private key.
+
+                await new CryptoTransferTransaction(client)
+                    .addSender(account.value, 0)
+                    // 0.0.3 is _A_ node and a system account
+                    .addRecipient({ realm: 0, shard: 0, account: 3 }, 0)
+                    .setTransactionFee(100_000)
+                    .setTransactionValidDuration(0)
+                    .build()
+                    .executeForReceipt();
+            } catch (error) {
+                // FIXME: Look at these atomic warnings
+
+                if (error instanceof Error) {
+                    if (error.message === "PAYER_ACCOUNT_NOT_FOUND") {
+                        errorMessage.value =
+                            "This account does not exist in the network.";
+                    } else if (error.message === "INVALID_SIGNATURE") {
+                        errorMessage.value =
+                            "This account is not associated with your private key.";
+                    } else {
+                        // This is actually good here
+                        context.emit("submit", client, account.value);
+                        return;
+                    }
+                }
+            } finally {
+                isBusy.value = false;
+            }
+        }
+
         watch(
-            () => props.state.modalIsOpen,
+            () => props.isOpen,
             (newVal: boolean) => {
                 if (newVal) {
                     (context as Context).refs.input.focus();
@@ -129,10 +179,13 @@ export default createComponent({
         return {
             input,
             valid,
+            errorMessage,
+            isBusy,
             failed,
             handleInput,
             handleModalChangeIsOpen,
-            handleDontHaveAccount
+            handleDontHaveAccount,
+            handleSubmit
         };
     }
 });
