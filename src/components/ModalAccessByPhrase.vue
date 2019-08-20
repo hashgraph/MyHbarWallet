@@ -14,29 +14,17 @@
                 Please type in your mnemonic phrase
             </div>
 
-            <div class="value-switch">
-                <!-- TODO: Component that wraps this with the understanding of mnemonic types -->
-                <SwitchButton
-                    :checked="state.numWords"
-                    class="btn"
-                    :values="[12, 24]"
-                    @change="handleNumWordsChange"
-                />
-                <div class="text">Value</div>
-            </div>
-
             <MnemonicInput
                 class="phrase-input"
-                :words="state.numWords"
+                :words="24"
                 :value="state.words"
                 :editable="true"
                 @input="handleMnemonicInput"
             />
 
-            <OptionalPasswordInput
-                :value="state.password"
-                @input="handlePasswordInput"
-            />
+            <div v-if="state.isValid === false" class="error-message">
+                Error: Invalid mnemonic
+            </div>
 
             <Button
                 class="continue-btn"
@@ -60,20 +48,13 @@ import MnemonicInput from "../components/MnemonicInput.vue";
 import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
-import OptionalPasswordInput from "../components/OptionalPasswordInput.vue";
 import { createComponent } from "vue-function-api";
-
-export enum MnemonicType {
-    Words12 = 12,
-    Words24 = 24
-}
 
 export interface State {
     modalIsOpen: boolean;
-    numWords: MnemonicType;
     words: string[];
-    password: string;
     isBusy: boolean;
+    isValid: boolean;
 }
 
 export default createComponent({
@@ -83,8 +64,7 @@ export default createComponent({
         SwitchButton,
         Button,
         CustomerSupportLink,
-        Warning,
-        OptionalPasswordInput
+        Warning
     },
     model: {
         prop: "state",
@@ -97,21 +77,13 @@ export default createComponent({
         function handleModalChangeIsOpen(isOpen: boolean) {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
-        function handleNumWordsChange(numWords: number) {
-            context.emit("change", { ...props.state, numWords });
-        }
         function handleMnemonicInput(words: string[]) {
             context.emit("change", { ...props.state, words });
-        }
-        function handlePasswordInput(password: string) {
-            context.emit("change", { ...props.state, password });
         }
 
         return {
             handleModalChangeIsOpen,
-            handleNumWordsChange,
-            handleMnemonicInput,
-            handlePasswordInput
+            handleMnemonicInput
         };
     }
 });
@@ -153,5 +125,12 @@ export default createComponent({
     display: flex;
     font-size: 14px;
     justify-content: space-around;
+}
+
+.error-message {
+    color: var(--color-basalt-grey);
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
 }
 </style>

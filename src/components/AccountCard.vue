@@ -143,9 +143,18 @@ export default createComponent({
     }
 
     &:nth-child(3) {
+        inset-block-end: 0;
         margin-block-end: 12px;
         overflow: hidden;
+        position: absolute;
         text-overflow: ellipsis;
+
+        /* intrinsic sizing for stretch not supported without prefix */
+        /* stylelint-disable */
+        width: stretch;
+        width: -webkit-fill-available;
+        width: -moz-available;
+        /* stylelint-enable */
         word-break: normal;
 
         @media (max-width: 1024px) {
@@ -181,9 +190,14 @@ export default createComponent({
 }
 
 .top {
+    /* Make room for second subtitle, the public key */
+    padding-block-end: 33px;
+    position: relative;
+
     @media (max-width: 1024px) {
         align-self: center;
         margin-inline-start: 10px;
+        padding-block-end: 0;
     }
 }
 </style>

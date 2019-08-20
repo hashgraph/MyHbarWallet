@@ -15,7 +15,10 @@
             v-model="modalCreateWithSoftwareIsOpen"
             @submit="handleCreateWithSoftwareSubmit"
         />
-        <ModalCreateByPhrase v-model="modalCreateByPhraseIsOpen" />
+        <ModalCreateByPhrase
+            v-model="modalCreateByPhraseIsOpen"
+            @submit="handleCreateByPhraseSubmit"
+        />
         <ModalCreateByKeystore
             v-model="modalCreateByKeystoreState"
             @submit="handleCreateByKeystoreSubmit"
@@ -24,7 +27,17 @@
             v-model="modalDownloadKeystoreState"
             @submit="handleDownloadKeystoreSubmit"
         />
-        <ModalSuccess v-model="modalSuccessIsOpen" />
+        <ModalEnterAccountId
+            v-model="modalEnterAccountIdIsOpen"
+            :private-key="privateKey"
+            @submit="handleAccountIdSubmit"
+            @noAccount="handleDoesntHaveAccount"
+        />
+        <ModalRequestToCreateAccount
+            v-model="modalRequestToCreateAccountIsOpen"
+            :public-key="publicKey"
+            @hasAccount="handleHasAccount"
+        />
     </div>
 </template>
 
@@ -32,6 +45,8 @@
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "@/components/AccountTileButtons.vue";
 import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
+import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
+import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import ModalCreateWithSoftware, {
     CreateSoftwareOption
 } from "@/components/ModalCreateWithSoftware.vue";
@@ -43,7 +58,10 @@ import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
 import PageTitle from "../components/PageTitle.vue";
 import { createComponent, value, Wrapper } from "vue-function-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
-import ModalSuccess from "../components/ModalSuccessCreatingKeyPair.vue";
+import store from "@/store";
+import { LOG_IN } from "@/store/mutations";
+import { Client } from "hedera-sdk-js";
+import { Id } from "@/store/modules/wallet";
 
 export default createComponent({
     components: {
@@ -55,9 +73,13 @@ export default createComponent({
         ModalCreateByPhrase,
         ModalCreateByKeystore,
         ModalDownloadKeystore,
-        ModalSuccess
+        ModalEnterAccountId,
+        ModalRequestToCreateAccount
     },
-    setup() {
+    setup(props, context) {
+        const privateKey: Wrapper<string | null> = value(null);
+        const publicKey: Wrapper<string | null> = value(null);
+
         const modalAccessByHardwareIsOpen = value(false);
         const modalCreateWithSoftwareIsOpen = value(false);
         const modalCreateByPhraseIsOpen = value(false);
@@ -78,6 +100,10 @@ export default createComponent({
             modalIsOpen: false,
             isBusy: true
         });
+
+        const modalEnterAccountIdIsOpen = value(false);
+
+        const modalRequestToCreateAccountIsOpen = value(false);
 
         function handleClickTiles(which: string) {
             if (which === "hardware") {
@@ -119,6 +145,47 @@ export default createComponent({
             }, 125);
         }
 
+        function handleCreateByPhraseSubmit(
+            newPrivateKey: string,
+            newPublicKey: string
+        ) {
+            modalCreateByPhraseIsOpen.value = false;
+
+            privateKey.value = newPrivateKey;
+            publicKey.value = newPublicKey;
+
+            console.log(newPrivateKey, newPublicKey);
+
+            setTimeout(() => {
+                modalRequestToCreateAccountIsOpen.value = true;
+            }, 125);
+        }
+
+        function openInterface() {
+            context.root.$router.push({ name: "interface" });
+        }
+
+        async function handleAccountIdSubmit(client: Client, account: Id) {
+            store.commit(LOG_IN, {
+                account,
+                client,
+                privateKey: privateKey.value,
+                publicKey: publicKey.value
+            });
+
+            openInterface();
+        }
+
+        function handleDoesntHaveAccount() {
+            modalEnterAccountIdIsOpen.value = false;
+            modalRequestToCreateAccountIsOpen.value = true;
+        }
+
+        function handleHasAccount() {
+            modalRequestToCreateAccountIsOpen.value = false;
+            modalEnterAccountIdIsOpen.value = true;
+        }
+
         return {
             modalAccessByHardwareIsOpen,
             modalCreateWithSoftwareIsOpen,
@@ -129,7 +196,15 @@ export default createComponent({
             handleClickTiles,
             handleCreateWithSoftwareSubmit,
             handleCreateByKeystoreSubmit,
-            handleDownloadKeystoreSubmit
+            handleDownloadKeystoreSubmit,
+            handleCreateByPhraseSubmit,
+            modalEnterAccountIdIsOpen,
+            modalRequestToCreateAccountIsOpen,
+            handleAccountIdSubmit,
+            handleHasAccount,
+            handleDoesntHaveAccount,
+            publicKey,
+            privateKey
         };
     }
 });

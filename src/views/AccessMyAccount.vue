@@ -35,7 +35,8 @@
         />
 
         <ModalEnterAccountId
-            v-model="modalEnterAccountId"
+            v-model="modalEnterAccountIdIsOpen"
+            :private-key="privateKey"
             @submit="handleAccountIdSubmit"
             @noAccount="handleDoesntHaveAccount"
         />
@@ -64,9 +65,7 @@ import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
 import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "@/components/ModalAccessBySoftware.vue";
-import ModalAccessByPhrase, {
-    MnemonicType
-} from "@/components/ModalAccessByPhrase.vue";
+import ModalAccessByPhrase from "@/components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
@@ -75,7 +74,16 @@ import store from "@/store";
 import { LOG_IN } from "@/store/mutations";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { createComponent, value, Wrapper } from "vue-function-api";
-import { Client, decodePrivateKey } from "hedera-sdk-js";
+import {
+    Client,
+    decodePrivateKey,
+    encodePrivateKey,
+    encodePublicKey,
+    keyFromMnemonic
+} from "hedera-sdk-js";
+import { Id } from "@/store/modules/wallet";
+import { KeyPair } from "hedera-sdk-js/src/Keys";
+import { ALERT } from "@/store/actions";
 
 export default createComponent({
     components: {
@@ -101,26 +109,22 @@ export default createComponent({
             modalIsOpen: false,
             isBusy: false,
             words: [],
-            numWords: MnemonicType.Words12,
-            password: ""
+            isValid: true
         });
+
         const modalPasswordState = value({
             modalIsOpen: false,
             password: "",
             isBusy: false
         });
+
         const modalAccessByPrivateKeyState = value({
             modalIsOpen: false,
             privateKey: "",
             isBusy: false
         });
 
-        const modalEnterAccountId = value({
-            modalIsOpen: false,
-            account: null,
-            error: null as null | string,
-            isBusy: false
-        });
+        const modalEnterAccountIdIsOpen = value(false);
 
         const modalRequestToCreateAccountIsOpen = value(false);
         const keystoreFileText: Wrapper<string | null> = value(null);
@@ -147,6 +151,7 @@ export default createComponent({
                 }, 125);
             }
         }
+
         async function loadTextFromFile(event: Event) {
             const target = event.target as HTMLInputElement;
 
@@ -171,6 +176,7 @@ export default createComponent({
 
             modalPasswordState.value.modalIsOpen = true;
         }
+
         function handlePasswordSubmit() {
             modalPasswordState.value.isBusy = true;
             // TODO: Decode private key from file
@@ -178,7 +184,7 @@ export default createComponent({
                 // Close  previous modal and open another one
                 modalPasswordState.value.isBusy = false;
                 modalPasswordState.value.modalIsOpen = false;
-                modalEnterAccountId.value.modalIsOpen = true;
+                modalEnterAccountIdIsOpen.value = true;
             }, 3000);
         }
 
@@ -190,15 +196,34 @@ export default createComponent({
             publicKey.value = decodePrivateKey(pk).publicKey.toString();
         }
 
-        function handleAccessByPhraseSubmit() {
-            modalAccessByPhraseState.value.isBusy = true;
-            // TODO: Decode private key from phrase
-            setTimeout(() => {
+        async function handleAccessByPhraseSubmit() {
+            const accessByPhraseState = modalAccessByPhraseState.value;
+
+            accessByPhraseState.isBusy = true;
+
+            const phrase = accessByPhraseState.words.join(" ");
+
+            try {
+                const keyPair = await keyFromMnemonic(phrase);
+
+                privateKey.value = encodePrivateKey(keyPair.privateKey);
+                publicKey.value = encodePublicKey(keyPair.publicKey);
+
                 // Close  previous modal and open another one
-                modalAccessByPhraseState.value.isBusy = false;
-                modalAccessByPhraseState.value.modalIsOpen = false;
-                modalEnterAccountId.value.modalIsOpen = true;
-            }, 3000);
+                accessByPhraseState.isBusy = false;
+                accessByPhraseState.modalIsOpen = false;
+                modalEnterAccountIdIsOpen.value = true;
+                accessByPhraseState.isValid = true;
+            } catch {
+                accessByPhraseState.isBusy = false;
+
+                store.dispatch(ALERT, {
+                    level: "error",
+                    message: "Invalid Mnemonic"
+                });
+
+                accessByPhraseState.isValid = false;
+            }
         }
 
         function handleAccessByPrivateKeySubmit() {
@@ -211,7 +236,7 @@ export default createComponent({
 
             setTimeout(() => {
                 modalAccessByPrivateKeyState.value.isBusy = false;
-                modalEnterAccountId.value.modalIsOpen = true;
+                modalEnterAccountIdIsOpen.value = true;
             }, 125);
         }
 
@@ -219,68 +244,36 @@ export default createComponent({
             context.root.$router.push({ name: "interface" });
         }
 
-        async function handleAccountIdSubmit() {
-            modalEnterAccountId.value.error = null;
-            modalEnterAccountId.value.isBusy = true;
+        async function handleAccountIdSubmit(client: Client, account: Id) {
+            store.commit(LOG_IN, {
+                account,
+                client,
+                privateKey: privateKey.value,
+                publicKey: publicKey.value
+            });
 
-            const account = modalEnterAccountId.value.account;
-
-            if (account == null || privateKey.value == null) {
-                throw new Error("unexpected submission of EnterAccountID");
-            }
-
-            try {
-                const client = new Client({
-                    account,
-                    privateKey: privateKey.value
-                });
-
-                // If getting account balance doesn't throw an error then we know that
-                // the account id and private key the user entered are valid
-                await client.getAccountBalance();
-
-                // Set Account and Client if `client.getBalance()` doesn't throw an error
-                store.commit(LOG_IN, {
-                    account: modalEnterAccountId.value.account,
-                    client,
-                    privateKey: privateKey.value,
-                    publicKey: publicKey.value
-                });
-
-                openInterface();
-            } catch {
-                // FIXME: Look at these atomic warnings
-                // FIXME: This should be a "This account is not associated with your private key" error but balance transactions
-                //        don't have their signatures checked
-
-                /* eslint-disable-next-line require-atomic-updates */
-                modalEnterAccountId.value.error =
-                    "This account does not exist in the network.";
-
-                // Only update isBusy if getting account balance failed
-                /* eslint-disable-next-line require-atomic-updates */
-                modalEnterAccountId.value.isBusy = false;
-            }
+            openInterface();
         }
 
         function handleDoesntHaveAccount() {
-            modalEnterAccountId.value.modalIsOpen = false;
+            modalEnterAccountIdIsOpen.value = false;
             modalRequestToCreateAccountIsOpen.value = true;
         }
 
         function handleHasAccount() {
             modalRequestToCreateAccountIsOpen.value = false;
-            modalEnterAccountId.value.modalIsOpen = true;
+            modalEnterAccountIdIsOpen.value = true;
         }
 
         return {
             publicKey,
+            privateKey,
             modalAccessByHardwareIsOpen,
             modalAccessBySoftwareIsOpen,
             modalAccessByPhraseState,
             modalPasswordState,
             modalAccessByPrivateKeyState,
-            modalEnterAccountId,
+            modalEnterAccountIdIsOpen,
             modalRequestToCreateAccountIsOpen,
             keystoreFileText,
             handleClickTiles,

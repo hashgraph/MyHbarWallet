@@ -62,7 +62,7 @@ export default createComponent({
         words: {
             type: Array,
             // FIXME: Make required when we have data
-            default: () => ["", "", "", "", "", "", "", "", "", "", "", ""]
+            required: true
         }
     }
 });

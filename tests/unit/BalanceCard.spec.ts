@@ -26,6 +26,6 @@ describe("BalanceCard.vue", (): void => {
         wrapper.setProps({
             balance: 1
         });
-        expect(wrapper.find(".usd-balance").text()).toBe("/ $0.12");
+        expect(wrapper.find(".usd-balance").text()).toBe("/ $0.00");
     });
 });
