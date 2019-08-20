@@ -46,7 +46,7 @@
         "babel-core": "7.0.0-bridge.0",
         "babel-eslint": "^10.0.1",
         "cssnano-preset-advanced": "^4.0.7",
-        "eslint": "^6.2.0",
+        "eslint": "^6.2.1",
         "eslint-import-resolver-typescript": "JounQin/eslint-import-resolver-typescript#feat/resolve_dts",
         "eslint-import-resolver-webpack": "^0.11.1",
         "eslint-plugin-compat": "^3.3.0",
