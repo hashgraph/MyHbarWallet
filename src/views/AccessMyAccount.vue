@@ -64,9 +64,7 @@ import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
 import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "@/components/ModalAccessBySoftware.vue";
-import ModalAccessByPhrase, {
-    MnemonicType
-} from "@/components/ModalAccessByPhrase.vue";
+import ModalAccessByPhrase from "@/components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
@@ -75,7 +73,15 @@ import store from "@/store";
 import { LOG_IN } from "@/store/mutations";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { createComponent, value, Wrapper } from "vue-function-api";
-import { Client, decodePrivateKey } from "hedera-sdk-js";
+import {
+    Client,
+    decodePrivateKey,
+    encodePrivateKey,
+    encodePublicKey,
+    keyFromMnemonic
+} from "hedera-sdk-js";
+import { KeyPair } from "hedera-sdk-js/src/Keys";
+import { ALERT } from "@/store/actions";
 
 export default createComponent({
     components: {
@@ -101,8 +107,7 @@ export default createComponent({
             modalIsOpen: false,
             isBusy: false,
             words: [],
-            numWords: MnemonicType.Words12,
-            password: ""
+            isValid: true
         });
 
         const modalPasswordState = value({
@@ -194,15 +199,33 @@ export default createComponent({
             publicKey.value = decodePrivateKey(pk).publicKey.toString();
         }
 
-        function handleAccessByPhraseSubmit() {
+        async function handleAccessByPhraseSubmit() {
             modalAccessByPhraseState.value.isBusy = true;
-            // TODO: Decode private key from phrase
-            setTimeout(() => {
-                // Close  previous modal and open another one
-                modalAccessByPhraseState.value.isBusy = false;
-                modalAccessByPhraseState.value.modalIsOpen = false;
-                modalEnterAccountIdState.value.modalIsOpen = true;
-            }, 3000);
+            const phrase: string = modalAccessByPhraseState.value.words.join(
+                " "
+            );
+
+            keyFromMnemonic(phrase)
+                .then((keyPair: KeyPair) => {
+                    privateKey.value = encodePrivateKey(keyPair.privateKey);
+                    publicKey.value = encodePublicKey(keyPair.publicKey);
+
+                    // Close  previous modal and open another one
+                    modalAccessByPhraseState.value.isBusy = false;
+                    modalAccessByPhraseState.value.modalIsOpen = false;
+                    modalEnterAccountIdState.value.modalIsOpen = true;
+                    modalAccessByPhraseState.value.isValid = true;
+                })
+                .catch(() => {
+                    modalAccessByPhraseState.value.isBusy = false;
+
+                    store.dispatch(ALERT, {
+                        level: "error",
+                        message: "Invalid Mnemonic"
+                    });
+
+                    modalAccessByPhraseState.value.isValid = false;
+                });
         }
 
         function handleAccessByPrivateKeySubmit() {
