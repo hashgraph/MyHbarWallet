@@ -35,7 +35,7 @@
         />
 
         <ModalEnterAccountId
-            v-model="modalEnterAccountId"
+            v-model="modalEnterAccountIdState"
             @submit="handleAccountIdSubmit"
             @noAccount="handleDoesntHaveAccount"
         />
@@ -104,18 +104,20 @@ export default createComponent({
             numWords: MnemonicType.Words12,
             password: ""
         });
+
         const modalPasswordState = value({
             modalIsOpen: false,
             password: "",
             isBusy: false
         });
+
         const modalAccessByPrivateKeyState = value({
             modalIsOpen: false,
             privateKey: "",
             isBusy: false
         });
 
-        const modalEnterAccountId = value({
+        const modalEnterAccountIdState = value({
             modalIsOpen: false,
             account: null,
             error: null as null | string,
@@ -147,6 +149,7 @@ export default createComponent({
                 }, 125);
             }
         }
+
         async function loadTextFromFile(event: Event) {
             const target = event.target as HTMLInputElement;
 
@@ -171,6 +174,7 @@ export default createComponent({
 
             modalPasswordState.value.modalIsOpen = true;
         }
+
         function handlePasswordSubmit() {
             modalPasswordState.value.isBusy = true;
             // TODO: Decode private key from file
@@ -178,7 +182,7 @@ export default createComponent({
                 // Close  previous modal and open another one
                 modalPasswordState.value.isBusy = false;
                 modalPasswordState.value.modalIsOpen = false;
-                modalEnterAccountId.value.modalIsOpen = true;
+                modalEnterAccountIdState.value.modalIsOpen = true;
             }, 3000);
         }
 
@@ -197,7 +201,7 @@ export default createComponent({
                 // Close  previous modal and open another one
                 modalAccessByPhraseState.value.isBusy = false;
                 modalAccessByPhraseState.value.modalIsOpen = false;
-                modalEnterAccountId.value.modalIsOpen = true;
+                modalEnterAccountIdState.value.modalIsOpen = true;
             }, 3000);
         }
 
@@ -211,7 +215,7 @@ export default createComponent({
 
             setTimeout(() => {
                 modalAccessByPrivateKeyState.value.isBusy = false;
-                modalEnterAccountId.value.modalIsOpen = true;
+                modalEnterAccountIdState.value.modalIsOpen = true;
             }, 125);
         }
 
@@ -220,10 +224,10 @@ export default createComponent({
         }
 
         async function handleAccountIdSubmit() {
-            modalEnterAccountId.value.error = null;
-            modalEnterAccountId.value.isBusy = true;
+            modalEnterAccountIdState.value.error = null;
+            modalEnterAccountIdState.value.isBusy = true;
 
-            const account = modalEnterAccountId.value.account;
+            const account = modalEnterAccountIdState.value.account;
 
             if (account == null || privateKey.value == null) {
                 throw new Error("unexpected submission of EnterAccountID");
@@ -241,7 +245,7 @@ export default createComponent({
 
                 // Set Account and Client if `client.getBalance()` doesn't throw an error
                 store.commit(LOG_IN, {
-                    account: modalEnterAccountId.value.account,
+                    account: modalEnterAccountIdState.value.account,
                     client,
                     privateKey: privateKey.value,
                     publicKey: publicKey.value
@@ -254,23 +258,23 @@ export default createComponent({
                 //        don't have their signatures checked
 
                 /* eslint-disable-next-line require-atomic-updates */
-                modalEnterAccountId.value.error =
+                modalEnterAccountIdState.value.error =
                     "This account does not exist in the network.";
 
                 // Only update isBusy if getting account balance failed
                 /* eslint-disable-next-line require-atomic-updates */
-                modalEnterAccountId.value.isBusy = false;
+                modalEnterAccountIdState.value.isBusy = false;
             }
         }
 
         function handleDoesntHaveAccount() {
-            modalEnterAccountId.value.modalIsOpen = false;
+            modalEnterAccountIdState.value.modalIsOpen = false;
             modalRequestToCreateAccountIsOpen.value = true;
         }
 
         function handleHasAccount() {
             modalRequestToCreateAccountIsOpen.value = false;
-            modalEnterAccountId.value.modalIsOpen = true;
+            modalEnterAccountIdState.value.modalIsOpen = true;
         }
 
         return {
@@ -280,7 +284,7 @@ export default createComponent({
             modalAccessByPhraseState,
             modalPasswordState,
             modalAccessByPrivateKeyState,
-            modalEnterAccountId,
+            modalEnterAccountIdState,
             modalRequestToCreateAccountIsOpen,
             keystoreFileText,
             handleClickTiles,

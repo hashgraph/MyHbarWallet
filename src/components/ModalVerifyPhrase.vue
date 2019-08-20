@@ -14,17 +14,17 @@
                     v-for="index in words.length"
                     :key="index"
                     :class="{
-                        readonly: isDisabled(index),
-                        'is-focused': focused === index
+                        readonly: isDisabled(index - 1),
+                        'is-focused': focused === index - 1
                     }"
                 >
                     <span class="number">{{ index }}.</span>
                     <input
                         class="word"
-                        :readonly="isDisabled(index)"
-                        :value="valueForIndex(index)"
-                        :data-index="index"
-                        :tabindex="isDisabled(index) ? -1 : null"
+                        :readonly="isDisabled(index - 1)"
+                        :value="valueForIndex(index - 1)"
+                        :data-index="index - 1"
+                        :tabindex="isDisabled(index - 1) ? -1 : null"
                         @focus="handleFocus"
                         @input="handleInput"
                     />
@@ -76,8 +76,11 @@ export default createComponent({
 
         function randomizeEmpties() {
             const newMap = new Map<number, string>([]);
+
             while (newMap.size < 5) {
-                const num = Math.floor(Math.random() * props.words.length);
+                const num = Math.floor(
+                    Math.random() * (props.words.length - 1)
+                );
                 if (!newMap.has(num)) {
                     newMap.set(num, "");
                 }
@@ -105,25 +108,22 @@ export default createComponent({
 
         function valueForIndex(index: number) {
             return isDisabled(index)
-                ? props.words[index - 1]
+                ? props.words[index]
                 : inputMap.value.get(index);
         }
 
         function handleVerify() {
             for (const [index, value] of inputMap.value.entries()) {
-                if (props.words[index - 1] !== value) {
-                    console.log(
-                        `expected ${props.words[index - 1]}, got ${value}`
-                    );
+                if (props.words[index] !== value) {
                     store.dispatch(ALERT, {
-                        message: "Incorrect mnemonic",
+                        message: "Memonic does not match",
                         level: "error"
                     });
+
                     return;
                 }
             }
 
-            console.log("mnemonic should be correct");
             context.emit("success");
         }
 
@@ -215,5 +215,11 @@ label.is-focused .number {
 .btn-container {
     display: flex;
     justify-content: center;
+}
+
+.prompt {
+    color: var(--color-china-blue);
+    font-size: 14px;
+    margin-block-end: 30px;
 }
 </style>

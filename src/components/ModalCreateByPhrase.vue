@@ -17,7 +17,6 @@
                 </div>
             </div>
             <div class="value-switch">
-                <div class="text">Value</div>
                 <div class="spacer" />
                 <div class="random-button" @click="randomizeMnemonic">
                     <MaterialDesignIcon :size="16" :icon="cachedIcon" />
@@ -41,6 +40,7 @@
 
             <div class="continue-btn-container">
                 <Button
+                    :busy="isBusy"
                     class="continue-btn"
                     label="I Wrote Down My Mnemonic Phrase"
                     @click="handleClick"
@@ -55,7 +55,11 @@
                     class="printer-button"
                     @click="handlePrintModal"
                 />
-                <ModalPhrasePrintPreview v-model="printModalIsOpen" />
+
+                <ModalPhrasePrintPreview
+                    v-model="printModalIsOpen"
+                    :words="words"
+                />
             </div>
 
             <div class="warning-container">
@@ -89,22 +93,12 @@ import {
     value,
     Wrapper
 } from "vue-function-api";
-import { generateMnemonic, MnemonicResult } from "hedera-sdk-js/src/Keys";
-
-export interface Component {
-    numberWords: number;
-    passwordValue: Wrapper<string>;
-    words: Wrapper<string[]>;
-    cachedIcon: Wrapper<string>;
-    printerIcon: Wrapper<string>;
-    printModalIsOpen: Wrapper<boolean>;
-    verifyPhraseIsOpen: Wrapper<boolean>;
-    handlePrintModal: () => void;
-    handleClick: () => void;
-    handlePasswordChange: (password: string) => void;
-    randomizeMnemonic: () => void;
-    handleVerifySuccess: () => void;
-}
+import {
+    generateMnemonic,
+    MnemonicResult,
+    KeyResult,
+    encodePublicKey
+} from "hedera-sdk-js/src/Keys";
 
 export default createComponent({
     components: {
@@ -128,8 +122,9 @@ export default createComponent({
             boolean
         >
     },
-    setup(props, context): Component {
+    setup(props, context) {
         const numberWords = 24;
+        const isBusy = value(false);
         const passwordValue = value("");
         const result: Wrapper<MnemonicResult | null> = value(null);
         const printModalIsOpen = value(false);
@@ -162,9 +157,21 @@ export default createComponent({
             result.value = generateMnemonic();
         }
 
-        function handleVerifySuccess() {
+        async function handleVerifySuccess() {
+            if (result.value == null) return;
+
+            isBusy.value = true;
             verifyPhraseIsOpen.value = false;
-            context.emit("submit", result);
+
+            const key: KeyResult = await result.value.generateKey();
+
+            isBusy.value = false;
+
+            context.emit(
+                "submit",
+                key.keyString,
+                encodePublicKey(key.publicKey)
+            );
         }
 
         onMounted(() => {
@@ -175,6 +182,7 @@ export default createComponent({
             numberWords,
             passwordValue,
             words,
+            isBusy,
             cachedIcon,
             printerIcon,
             printModalIsOpen,
