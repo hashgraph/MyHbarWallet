@@ -5,7 +5,7 @@
         large
         @change="this.$listeners.change"
     >
-        <p class="title">Signing Address</p>
+        <p class="title">Signing Key</p>
         <div class="item account">
             <img
                 class="account-image"
