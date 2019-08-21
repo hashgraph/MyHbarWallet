@@ -9,6 +9,7 @@
             :valid="validBalance"
             suffix="Hbar"
             :error="userBalanceError"
+            type="number"
         />
 
         <TextInput
@@ -26,6 +27,7 @@
             show-validation
             suffix="Tinybar"
             :error="maxFeeError"
+            type="number"
         />
 
         <template v-slot:footer>

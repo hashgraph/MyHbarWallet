@@ -4,6 +4,7 @@ import { IS_LOGGED_IN } from "@/store/getters";
 import { ActionContext } from "vuex";
 import { RootState } from "..";
 import { REFRESH_BALANCE } from "../actions";
+import { state } from "vue-function-api";
 
 const SET_BALANCE = "wallet#set_balance";
 
