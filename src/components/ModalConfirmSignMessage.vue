@@ -14,9 +14,10 @@
             <span class="account-key"> {{ rawPublicKey }} </span>
         </div>
         <p class="title">Message</p>
-        <div class="item">{{ message }}</div>
+        <ReadOnlyInput class="item" :value="message" />
         <p class="title">Message in hex</p>
-        <div class="item">{{ hexMessage }}</div>
+        <ReadOnlyInput class="item" :value="hexMessage" />
+
         <div class="center">
             <Button label="Confirm Signing" @click="handleConfirm"></Button>
         </div>
@@ -27,13 +28,15 @@ import { createComponent, PropType, computed } from "vue-function-api";
 
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
+import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
 export default createComponent({
     components: {
         Modal,
-        Button
+        Button,
+        ReadOnlyInput
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
