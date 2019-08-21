@@ -5,29 +5,46 @@
         title="Request to Create Account"
         @change="this.$listeners.change"
     >
-        <div class="modal-contents">
-            <qrcode-vue
-                :value="publicKey || 'null'"
-                size="180"
-                level="L"
-                class="pub-qr"
-            />
+        <template v-slot:banner>
+            <Warning>
+                <template v-slot:title>
+                    Instructions
+                </template>
+                <template>
+                    <p>
+                        Provide this QR Code to a friend with a Hedera Account.
+                    </p>
+                    <p>They can invite you to join the network.</p>
+                </template>
+            </Warning>
+        </template>
+        <template>
+            <form
+                class="modal-request-to-create-account"
+                @submit.prevent="$emit('submit', optionSelected)"
+            >
+                <qrcode-vue
+                    :value="publicKey || 'null'"
+                    size="180"
+                    level="L"
+                    class="pub-qr"
+                />
 
-            <ReadOnlyInput class="key-input" :value="publicKey" />
+                <ReadOnlyInput class="key-input" :value="publicKey" />
 
-            <Button
-                compact
-                label="Copy"
-                class="modal-button"
-                @click="handleClickCopy"
-            />
-
-            <div class="link-container">
-                <span class="link" @click="handleHasAccount"
-                    >Already have an Account ID?</span
-                >
-            </div>
-        </div>
+                <Button
+                    compact
+                    label="Copy"
+                    class="modal-button"
+                    @click="handleClickCopy"
+                />
+                <div class="link-container">
+                    <span class="link" @click="handleHasAccount"
+                        >Already have an Account ID?</span
+                    >
+                </div>
+            </form>
+        </template>
     </Modal>
 </template>
 
@@ -39,6 +56,7 @@ import { createComponent, PropType } from "vue-function-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "@/clipboard";
 import ReadOnlyInput from "@/components/ReadOnlyInput.vue";
+import Warning from "@/components/Warning.vue";
 
 interface Props {
     isOpen: boolean;
@@ -51,7 +69,8 @@ export default createComponent({
         TextInput,
         Button,
         QrcodeVue,
-        ReadOnlyInput
+        ReadOnlyInput,
+        Warning
     },
     model: {
         prop: "isOpen",
@@ -83,14 +102,18 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.modal-contents {
-    align-items: center;
+.modal-request-to-create-account {
+    align-items: stretch;
     display: flex;
     flex-direction: column;
 }
 
 .modal-button {
     margin-block-start: 20px;
+}
+
+.pub-qr {
+    align-self: center;
 }
 
 .key-input {

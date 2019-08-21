@@ -8,7 +8,7 @@
         </div>
         <div class="text">
             <div class="title">
-                {{ title }}
+                <slot name="title">{{ title }}</slot>
             </div>
             <div class="message">
                 <slot>
