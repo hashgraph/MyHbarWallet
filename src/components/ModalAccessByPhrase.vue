@@ -22,10 +22,6 @@
                     @input="handleMnemonicInput"
                 />
 
-                <div v-if="state.isValid === false" class="error-message">
-                    Error: Invalid mnemonic
-                </div>
-
                 <Button
                     class="continue-btn"
                     label="Continue"
