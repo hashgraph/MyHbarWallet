@@ -55,6 +55,7 @@ import { AccountCreateTransaction, decodePublicKey } from "hedera-sdk-js";
 import { ALERT } from "@/store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { getValueOfUnit, Unit } from "@/components/UnitConverter.vue";
+import { BigNumber } from "bignumber.js";
 
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
@@ -73,6 +74,7 @@ export default createComponent({
         const isBusy = value(false);
         const successModalIsOpen = value(false);
         const maxFeeError: Wrapper<string | null> = value(null);
+        const account: Wrapper<string | null> = value(null);
 
         // 5 is used a default starting balance
         const validBalance = computed(() => {
@@ -100,8 +102,11 @@ export default createComponent({
                 }
 
                 const client = store.state.wallet.session.client;
-                const balance =
-                    parseFloat(userBalance.value) * getValueOfUnit(Unit.Hbar);
+                const balance = BigInt(
+                    new BigNumber(parseFloat(userBalance.value)).multipliedBy(
+                        getValueOfUnit(Unit.Hbar)
+                    )
+                );
                 const fee = parseInt(maxFee.value);
                 const key = decodePublicKey(publicKey.value);
 
@@ -121,16 +126,15 @@ export default createComponent({
 
                 // accountIdIntermediate must be AccountID
                 // get shard, realm, account separately and construct a new object
-                const account = {
-                    shard: accountIdIntermediate.getShardnum(),
-                    realm: accountIdIntermediate.getRealmnum(),
-                    account: accountIdIntermediate.getAccountnum()
-                };
+                account.value =
+                    accountIdIntermediate.getShardnum() +
+                    "." +
+                    accountIdIntermediate.getRealmnum() +
+                    "." +
+                    accountIdIntermediate.getAccountnum();
 
                 // If creating account succeeds then remove all the error
                 maxFeeError.value = null;
-
-                console.log(account);
             } catch (error) {
                 console.log(error);
 
@@ -161,6 +165,7 @@ export default createComponent({
             publicKey,
             maxFee,
             maxFeeError,
+            account,
             validBalance,
             validKey,
             validMaxFee,
