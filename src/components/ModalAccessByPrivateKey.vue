@@ -82,6 +82,7 @@ export default createComponent({
             }
         });
 
+        // TODO: When this button does something, change to value, set in error handling try catch
         const errorMessage = computed(() => {
             if (!valid) {
                 return "Invalid Private Key";
