@@ -9,6 +9,7 @@
             :suffix="Unit.Hbar"
             show-validation
             :valid="isAmountValid"
+            :error="amountErrorMessage"
             @action="handleClickEntireBalance"
         />
 
@@ -18,6 +19,7 @@
             label="To Account"
             show-validation
             :valid="isIdValid"
+            :error="idErrorMessage"
             can-copy
         />
 
@@ -27,6 +29,7 @@
             show-validation
             :suffix="Unit.Tinybar"
             :valid="true"
+            :error="txFeeErrorMessage"
         />
 
         <template v-slot:footer>
@@ -79,6 +82,10 @@ export default createComponent({
         const idRegex = /^\d+\.\d+\.\d+$/;
         const isBusy = value(false);
         const maxFee = value("100000");
+
+        const idErrorMessage = value("");
+        const amountErrorMessage = value("");
+        const txFeeErrorMessage = value("");
 
         const isIdValid = computed(() => idRegex.test(toAccount.value));
         const isAmountValid = computed(() => Number(amount.value) > 0);
@@ -147,30 +154,24 @@ export default createComponent({
                 successModalIsOpen.value = true;
             } catch (error) {
                 isBusy.value = false;
-                console.log(error);
+                idErrorMessage.value = "";
+                amountErrorMessage.value = "";
+
                 if (error.toString().includes("INVALID_ACCOUNT_ID")) {
-                    store.dispatch(ALERT, {
-                        level: "error",
-                        message: "Invalid reipient Account ID"
-                    });
+                    idErrorMessage.value = "Account ID not found on network";
                 } else if (
                     error
                         .toString()
                         .includes("ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS")
                 ) {
-                    store.dispatch(ALERT, {
-                        level: "error",
-                        message: "Cannot send hbars to yourself"
-                    });
+                    idErrorMessage.value = "Cannot send HBar to yourself";
                 } else if (error.toString().includes("INSUFFICIENT_TX_FEE")) {
-                    store.dispatch(ALERT, {
-                        level: "error",
-                        message: "Insufficient transaction fee"
-                    });
+                    txFeeErrorMessage.value =
+                        "Insufficient Transaction Fee Amount";
                 } else {
                     store.dispatch(ALERT, {
                         level: "error",
-                        message: "Failed to send hbars"
+                        message: "Transaction Failed"
                     });
                 }
             } finally {
@@ -186,10 +187,13 @@ export default createComponent({
         return {
             amount,
             maxFee,
+            txFeeErrorMessage,
             isBusy,
             toAccount,
             isIdValid,
+            idErrorMessage,
             isAmountValid,
+            amountErrorMessage,
             successModalIsOpen,
             Unit,
             handleClickEntireBalance,

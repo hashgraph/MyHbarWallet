@@ -154,8 +154,6 @@ export default createComponent({
             privateKey.value = newPrivateKey;
             publicKey.value = newPublicKey;
 
-            console.log(newPrivateKey, newPublicKey);
-
             setTimeout(() => {
                 modalRequestToCreateAccountIsOpen.value = true;
             }, 125);

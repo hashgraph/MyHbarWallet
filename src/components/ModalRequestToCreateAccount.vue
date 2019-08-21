@@ -11,17 +11,16 @@
                     Instructions
                 </template>
                 <template>
-                    <p>
-                        Provide this QR Code to a friend with a Hedera Account.
-                    </p>
-                    <p>They can invite you to join the network.</p>
+                    Provide your public key (this QR Code or the copied text) to
+                    a friend on the hedera network. They can invite you to join
+                    the network.
                 </template>
             </Warning>
         </template>
         <template>
             <form
                 class="modal-request-to-create-account"
-                @submit.prevent="$emit('submit', optionSelected)"
+                @submit.prevent="$emit('submit')"
             >
                 <qrcode-vue
                     :value="publicKey || 'null'"
