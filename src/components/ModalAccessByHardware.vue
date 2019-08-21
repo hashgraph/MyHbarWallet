@@ -4,7 +4,7 @@
         title="Access by hardware"
         @change="this.$listeners.change"
     >
-        <div class="modal-access-by-hardware">
+        <form class="modal-access-by-hardware" @submit.prevent="">
             <RadioButtonGroup
                 v-model="optionSelected"
                 name="hardware-access-option"
@@ -16,7 +16,7 @@
                 label="Choose a Hardware"
             />
             <CustomerSupportLink />
-        </div>
+        </form>
     </Modal>
 </template>
 

@@ -7,7 +7,7 @@
         <template>
             <form
                 class="modal-issue-information"
-                @submit.stop.prevent="handleSubmit"
+                @submit.prevent="handleSubmit"
             >
                 <TextInput
                     v-model="browser"
@@ -37,9 +37,7 @@
                     placeholder="Describe the issue"
                     resizable
                 />
-                <!-- <a :href="sendLink"> -->
                 <Button label="Send" class="send-button" :compact="true" />
-                <!-- </a> -->
             </form>
         </template>
     </Modal>
@@ -55,8 +53,7 @@ import {
     PropType,
     value,
     computed,
-    watch,
-    onUpdated
+    watch
 } from "vue-function-api";
 
 function createLink(

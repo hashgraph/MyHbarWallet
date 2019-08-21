@@ -13,25 +13,25 @@
             <div class="instruction">
                 Please type in your mnemonic phrase
             </div>
+            <form @submit.prevent="$emit('submit')">
+                <MnemonicInput
+                    class="phrase-input"
+                    :words="24"
+                    :value="state.words"
+                    :editable="true"
+                    @input="handleMnemonicInput"
+                />
 
-            <MnemonicInput
-                class="phrase-input"
-                :words="24"
-                :value="state.words"
-                :editable="true"
-                @input="handleMnemonicInput"
-            />
+                <div v-if="state.isValid === false" class="error-message">
+                    Error: Invalid mnemonic
+                </div>
 
-            <div v-if="state.isValid === false" class="error-message">
-                Error: Invalid mnemonic
-            </div>
-
-            <Button
-                class="continue-btn"
-                label="Continue"
-                :busy="state.isBusy"
-                @click="$emit('submit')"
-            />
+                <Button
+                    class="continue-btn"
+                    label="Continue"
+                    :busy="state.isBusy"
+                />
+            </form>
 
             <div class="support">
                 <CustomerSupportLink />

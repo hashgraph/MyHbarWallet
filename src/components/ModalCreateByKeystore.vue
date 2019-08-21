@@ -17,79 +17,85 @@
                     />
                 </div>
             </div>
+            <form @submit.prevent="$emit('submit', state.password)">
+                <TextInput
+                    ref="input"
+                    :value="state.password"
+                    placeholder="Please Enter At Least 9 Characters"
+                    obscure
+                    @input="handleInputPassword"
+                />
 
-            <TextInput
-                ref="input"
-                :value="state.password"
-                placeholder="Please Enter At Least 9 Characters"
-                obscure
-                @input="handleInputPassword"
-            />
-
-            <div
-                v-if="state.password.length > 0"
-                class="password-hint-container"
-            >
-                Password strength:
-                <span
-                    v-if="state.passwordStrength === 0"
-                    class="strength very-weak"
-                    >Very Weak</span
-                >
-                <span
-                    v-else-if="state.passwordStrength === 1"
-                    class="strength weak"
-                    >Weak</span
-                >
-                <span
-                    v-else-if="state.passwordStrength === 2"
-                    class="strength good"
-                    >Good</span
-                >
-                <span
-                    v-else-if="state.passwordStrength === 3"
-                    class="strength strong"
-                    >Strong</span
-                >
-                <span
-                    v-else-if="state.passwordStrength === 4"
-                    class="strength excellent"
-                    >Excellent</span
-                >
-            </div>
-
-            <div
-                v-if="state.password.length > 0 && state.password.length < 9"
-                class="password-hint-container"
-            >
-                The password field must be at least 9 characters
-            </div>
-
-            <div
-                v-if="state.password.length >= 9 && state.passwordStrength <= 3"
-            >
                 <div
-                    v-for="(suggestion, index) in state.passwordSuggestion
-                        .suggestions"
-                    :key="index"
+                    v-if="state.password.length > 0"
                     class="password-hint-container"
                 >
-                    {{ suggestion }}
+                    Password strength:
+                    <span
+                        v-if="state.passwordStrength === 0"
+                        class="strength very-weak"
+                        >Very Weak</span
+                    >
+                    <span
+                        v-else-if="state.passwordStrength === 1"
+                        class="strength weak"
+                        >Weak</span
+                    >
+                    <span
+                        v-else-if="state.passwordStrength === 2"
+                        class="strength good"
+                        >Good</span
+                    >
+                    <span
+                        v-else-if="state.passwordStrength === 3"
+                        class="strength strong"
+                        >Strong</span
+                    >
+                    <span
+                        v-else-if="state.passwordStrength === 4"
+                        class="strength excellent"
+                        >Excellent</span
+                    >
                 </div>
-            </div>
 
-            <div class="btn-container">
-                <Button
-                    :disabled="
-                        state.password.length < 9 && state.passwordStrength < 2
+                <div
+                    v-if="
+                        state.password.length > 0 && state.password.length < 9
                     "
-                    :busy="state.isBusy"
-                    class="btn"
-                    label="Next"
-                    :trailing-icon="mdiArrowRight"
-                    @click="$emit('submit', state.password)"
-                />
-            </div>
+                    class="password-hint-container"
+                >
+                    The password field must be at least 9 characters
+                </div>
+
+                <div
+                    v-if="
+                        state.password.length >= 9 &&
+                            state.passwordStrength <= 3
+                    "
+                >
+                    <div
+                        v-for="(suggestion, index) in state.passwordSuggestion
+                            .suggestions"
+                        :key="index"
+                        class="password-hint-container"
+                    >
+                        {{ suggestion }}
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <Button
+                        :disabled="
+                            state.password.length < 9 &&
+                                state.passwordStrength < 2
+                        "
+                        :busy="state.isBusy"
+                        class="btn"
+                        label="Next"
+                        :trailing-icon="mdiArrowRight"
+                    />
+                </div>
+            </form>
 
             <p class="footer">
                 <span class="important"> DO NOT FORGET</span> to save your
