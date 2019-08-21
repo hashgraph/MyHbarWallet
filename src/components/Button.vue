@@ -6,6 +6,7 @@
             compact,
             danger
         }"
+        type="submit"
         :disabled="disabled"
         v-on="disabled ? null : $listeners"
     >

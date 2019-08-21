@@ -144,7 +144,10 @@
                 0.0.1001
             </div>
         </div>
-        <ModalCustomerService v-model="modalCustomerServiceIsOpen" />
+        <ModalCustomerService
+            :key="$route.fullPath"
+            v-model="modalCustomerServiceIsOpen"
+        />
     </div>
 </template>
 
