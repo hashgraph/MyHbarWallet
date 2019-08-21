@@ -17,6 +17,7 @@
             <div class="actions">
                 <!-- TODO: implement QR Button -->
                 <Tooltip
+                    v-if="false"
                     class="action"
                     :pinnable="false"
                     message="Account QR Code"

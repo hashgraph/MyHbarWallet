@@ -6,9 +6,9 @@
                 <div class="title">
                     Balance
                 </div>
-                <div v-if="balance" class="subtitle" type="string">
-                    {{ balanceHBar }} ℏ
-                    <div class="usd-balance">/ {{ balanceUSD }}</div>
+                <div v-if="hasFetchedBalance" class="subtitle" type="string">
+                    <div class="hbar-balance">{{ balanceHBar }} ℏ</div>
+                    <div class="usd-balance">{{ balanceUSD }}</div>
                 </div>
                 <div v-else class="subtitle-null" type="string">
                     Unknown
@@ -16,7 +16,7 @@
             </div>
             <div class="actions">
                 <MaterialDesignIcon
-                    v-if="busy"
+                    v-if="isBusy"
                     class="spinner"
                     :icon="mdiLoading"
                     spin
@@ -30,7 +30,7 @@
                     <MaterialDesignIcon
                         class="refresh-icon"
                         :icon="mdiRefresh"
-                        @click="$emit('refresh')"
+                        @click="handleRefreshBalance"
                     />
                 </Tooltip>
             </div>
@@ -42,8 +42,10 @@
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiLoading, mdiRefresh } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
-import { computed, createComponent, PropType } from "vue-function-api";
+import { computed, createComponent, PropType, value } from "vue-function-api";
 import walletHbar from "../assets/wallet-hbar.svg";
+import store from "../store";
+import { REFRESH_BALANCE } from "../store/actions";
 
 const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -59,24 +61,42 @@ export default createComponent({
         MaterialDesignIcon,
         Tooltip
     },
-    props: {
-        busy: (Boolean as unknown) as PropType<boolean>,
-        balance: (Number as unknown) as PropType<number>
-    },
     setup(props: Props) {
+        const isBusy = value(false);
+        const hasFetchedBalance = computed(
+            () => store.state.wallet.balance != null
+        );
+
         const balanceHBar = computed(() => {
-            return props.balance / 100000000;
+            const hbar = Number(store.state.wallet.balance || 0) / 100000000;
+            return hbar < 0.0001 ? hbar : hbar.toFixed(4);
         });
 
         const balanceUSD = computed(() => {
             // FIXME: once the unit store exists, use it
-            const usd = balanceHBar.value * 0.12;
+            const usd =
+                (Number(store.state.wallet.balance || 0) / 100000000) * 0.12;
             return formatter.format(usd);
         });
+
+        async function handleRefreshBalance() {
+            isBusy.value = true;
+
+            try {
+                await store.dispatch(REFRESH_BALANCE);
+            } finally {
+                setTimeout(() => {
+                    isBusy.value = false;
+                }, 75);
+            }
+        }
 
         return {
             mdiRefresh,
             mdiLoading,
+            isBusy,
+            hasFetchedBalance,
+            handleRefreshBalance,
             balanceUSD,
             walletHbar,
             balanceHBar
@@ -121,7 +141,8 @@ img {
 }
 
 .subtitle {
-    font-size: 22px;
+    font-size: 18px;
+    font-weight: 500;
     user-select: none;
 
     @media (min-width: 1025px) {
@@ -132,7 +153,7 @@ img {
 .subtitle-null {
     font-size: 14px;
     font-weight: 300;
-    margin-block-end: 27px;
+    margin-block-end: 42px;
 }
 
 .refresh-icon {
@@ -158,8 +179,11 @@ img {
 }
 
 .usd-balance {
-    display: inline;
-    font-size: 13px;
+    font-size: 14px;
     opacity: 0.75;
+}
+
+.spinner {
+    margin-block-start: 4px;
 }
 </style>

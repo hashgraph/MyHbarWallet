@@ -191,9 +191,9 @@ export default createComponent({
         // Update our local understand of what the private/public key pair is
         // Called at the end of each access by software workflow before merging
         // into enter account ID
-        function setPrivateKey(pk: string) {
-            privateKey.value = pk;
-            publicKey.value = decodePrivateKey(pk).publicKey.toString();
+        function setKeyPair(keyPair: KeyPair) {
+            privateKey.value = encodePrivateKey(keyPair.privateKey);
+            publicKey.value = encodePublicKey(keyPair.publicKey);
         }
 
         async function handleAccessByPhraseSubmit() {
@@ -204,10 +204,7 @@ export default createComponent({
             const phrase = accessByPhraseState.words.join(" ");
 
             try {
-                const keyPair = await keyFromMnemonic(phrase);
-
-                privateKey.value = encodePrivateKey(keyPair.privateKey);
-                publicKey.value = encodePublicKey(keyPair.publicKey);
+                setKeyPair(await keyFromMnemonic(phrase));
 
                 // Close  previous modal and open another one
                 accessByPhraseState.isBusy = false;
@@ -229,7 +226,9 @@ export default createComponent({
         function handleAccessByPrivateKeySubmit() {
             modalAccessByPrivateKeyState.value.isBusy = true;
 
-            setPrivateKey(modalAccessByPrivateKeyState.value.privateKey);
+            setKeyPair(
+                decodePrivateKey(modalAccessByPrivateKeyState.value.privateKey)
+            );
 
             // Close previous modal and open another one
             modalAccessByPrivateKeyState.value.modalIsOpen = false;

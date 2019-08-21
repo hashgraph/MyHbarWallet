@@ -7,7 +7,10 @@
                     Network
                 </div>
                 <div class="subtitle">
-                    mirror.mainnet.aech.io (mainnet)
+                    testnet
+                </div>
+                <div class="subtitle">
+                    0.testnet.hedera.com
                 </div>
             </div>
             <div class="actions">
@@ -52,6 +55,7 @@ export default createComponent({
 
 img {
     align-self: flex-start;
+    flex-shrink: 0;
     margin-block-start: 10px;
     margin-inline-end: 25px;
     user-select: none;
@@ -77,8 +81,10 @@ img {
     user-select: none;
 
     @media (min-width: 1025px) {
-        margin-block-end: 12px;
-        opacity: 0.8;
+        & + .subtitle {
+            margin-block-end: 12px;
+            opacity: 0.5;
+        }
     }
 }
 

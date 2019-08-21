@@ -45,8 +45,8 @@ export default createComponent({
     },
     props: {
         open: Boolean,
-        toAccount: Object,
-        amount: Number
+        toAccount: String,
+        amount: String
     },
     setup(props, context): object {
         function handleModalChange(isOpen: boolean) {

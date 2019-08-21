@@ -8,7 +8,7 @@
             action="Entire Balance"
             :suffix="Unit.Hbar"
             show-validation
-            :valid="amount.length > 0 && amount[0] !== '-'"
+            :valid="isAmountValid"
             @action="handleClickEntireBalance"
         />
 
@@ -75,7 +75,7 @@ export default createComponent({
         const maxFee = value("100000");
 
         const isIdValid = computed(() => idRegex.test(toAccount.value));
-        const isAmountValid = computed(() => amount.value.length > 0);
+        const isAmountValid = computed(() => Number(amount.value) > 0);
         const successModalIsOpen = value(false);
         const truncate = computed(() =>
             amount.value.length > 15
@@ -84,13 +84,8 @@ export default createComponent({
         );
 
         async function handleClickEntireBalance() {
-            if (store.state.wallet.session == null) {
-                throw new Error(
-                    "Session should not be null if inside Send Transfer"
-                );
-            }
-
-            amount.value = (await store.state.wallet.session.client.getAccountBalance()).toString();
+            const hbar = Number(store.state.wallet.balance || 0) / 100000000;
+            amount.value = hbar.toString();
         }
 
         async function handleSendTransfer() {
@@ -102,6 +97,7 @@ export default createComponent({
                         "Session should not be null if inside Send Transfer"
                     );
                 }
+
                 const client = store.state.wallet.session.client;
                 const parts = toAccount.value.split(".");
 
@@ -110,6 +106,7 @@ export default createComponent({
                         level: "error",
                         message: "Invalid amount"
                     });
+
                     return;
                 }
 
@@ -118,29 +115,29 @@ export default createComponent({
                         level: "error",
                         message: "Invalid recipient Account ID"
                     });
+
                     return;
                 }
+
                 const recipient: AccountId = {
                     shard: parseInt(parts[0]),
                     realm: parseInt(parts[1]),
                     account: parseInt(parts[2])
                 };
 
-                const sendAmount = parseInt(amount.value);
-                if (sendAmount === 0) {
-                    store.dispatch(ALERT, {
-                        level: "error",
-                        message: "Cannot send 0 hbars"
-                    });
-                    return;
-                }
+                const sendAmount = BigInt(amount.value);
+                const sendAmountTinybar = sendAmount * BigInt(100000000);
 
                 await new CryptoTransferTransaction(client)
-                    .addSender(store.state.wallet.session.account, sendAmount)
-                    .addRecipient(recipient, sendAmount)
+                    .addSender(
+                        store.state.wallet.session.account,
+                        sendAmountTinybar
+                    )
+                    .addRecipient(recipient, sendAmountTinybar)
                     .setTransactionFee(parseInt(maxFee.value))
                     .build()
                     .executeForReceipt();
+
                 successModalIsOpen.value = true;
             } catch (error) {
                 isBusy.value = false;
