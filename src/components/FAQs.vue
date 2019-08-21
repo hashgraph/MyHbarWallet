@@ -10,7 +10,7 @@
                             tri-tip porchetta
                         </div>
                     </div>
-                    <CustomerSupportLink />
+                    <CustomerSupportLink class="customer-support-link" />
                 </div>
                 <div class="cards">
                     <Accordion>
@@ -145,5 +145,9 @@ a {
     @media (max-width: 1024px) {
         margin-block-start: 30px;
     }
+}
+
+.customer-support-link {
+    align-self: initial;
 }
 </style>
