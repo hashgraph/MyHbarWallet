@@ -2,6 +2,7 @@
     <Modal
         :is-open="isOpen"
         :large="false"
+        not-closable
         title="Request to Create Account"
         @change="this.$listeners.change"
     >
