@@ -33,7 +33,6 @@
         />
 
         <template v-slot:footer>
-            <!-- FIXME: Pluralize appropriately -->
             <Button
                 :busy="isBusy"
                 :label="
