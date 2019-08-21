@@ -39,6 +39,7 @@ export default createComponent({
     cursor: pointer;
     display: flex;
     font-size: 14px;
+    justify-content: center;
     text-align: center;
 
     &:hover,
