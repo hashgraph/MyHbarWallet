@@ -1,10 +1,10 @@
 import { LOG_OUT, LOG_IN } from "@/store/mutations";
 import { Client } from "hedera-sdk-js";
 import { IS_LOGGED_IN } from "@/store/getters";
-import { ActionContext } from 'vuex';
-import { RootState } from '..';
-import { REFRESH_BALANCE } from '../actions';
-import { state } from 'vue-function-api';
+import { ActionContext } from "vuex";
+import { RootState } from "..";
+import { REFRESH_BALANCE } from "../actions";
+import { state } from "vue-function-api";
 
 const SET_BALANCE = "wallet#set_balance";
 
@@ -29,7 +29,7 @@ export interface State {
 export default {
     state: {
         session: null,
-        balance: null,
+        balance: null
     },
     getters: {
         [IS_LOGGED_IN]: (state: State): boolean => {
@@ -49,7 +49,10 @@ export default {
         }
     },
     actions: {
-        async [REFRESH_BALANCE]({ commit, state }: ActionContext<State, RootState>): Promise<void> {
+        async [REFRESH_BALANCE]({
+            commit,
+            state
+        }: ActionContext<State, RootState>): Promise<void> {
             if (state.session == null) {
                 console.warn("attempt to refresh balance with a null session");
                 return;
