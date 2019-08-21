@@ -95,11 +95,11 @@ export default createComponent({
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    setup(props) {
+    setup(props, context) {
         const ua = new UAParser(navigator.userAgent);
         const platform = value(ua.getOS.name);
         const browser = value(ua.getBrowser().name || "");
-        const url = value(location.pathname);
+        const url = value(context.root.$route.fullPath);
         const description = value("");
         const device = value("");
         const accountId = value("");
@@ -119,11 +119,13 @@ export default createComponent({
             window.open(sendLink.value);
         }
 
-        // onUpdated(() => {
-        //     url.value = location.pathname;
-        // });
-
-        // watch(() => props.isOpen, () => (url.value = location.pathname));
+        // When the route is updated, reset the path value
+        watch(
+            () => context.root.$route.fullPath,
+            () => {
+                url.value = context.root.$route.fullPath;
+            }
+        );
 
         return {
             platform,
