@@ -9,30 +9,32 @@
                 Please enter and fill out the empty boxes below to verify your
                 mnemonic phrase key.
             </div>
-            <div class="mnemonic">
-                <label
-                    v-for="index in words.length"
-                    :key="index"
-                    :class="{
-                        readonly: isDisabled(index - 1),
-                        'is-focused': focused === index - 1
-                    }"
-                >
-                    <span class="number">{{ index }}.</span>
-                    <input
-                        class="word"
-                        :readonly="isDisabled(index - 1)"
-                        :value="valueForIndex(index - 1)"
-                        :data-index="index - 1"
-                        :tabindex="isDisabled(index - 1) ? -1 : null"
-                        @focus="handleFocus"
-                        @input="handleInput"
-                    />
-                </label>
-            </div>
-            <div class="btn-container">
-                <Button label="Verify" @click="handleVerify" />
-            </div>
+            <form @submit.prevent="handleVerify">
+                <div class="mnemonic">
+                    <label
+                        v-for="index in words.length"
+                        :key="index"
+                        :class="{
+                            readonly: isDisabled(index - 1),
+                            'is-focused': focused === index - 1
+                        }"
+                    >
+                        <span class="number">{{ index }}.</span>
+                        <input
+                            class="word"
+                            :readonly="isDisabled(index - 1)"
+                            :value="valueForIndex(index - 1)"
+                            :data-index="index - 1"
+                            :tabindex="isDisabled(index - 1) ? -1 : null"
+                            @focus="handleFocus"
+                            @input="handleInput"
+                        />
+                    </label>
+                </div>
+                <div class="btn-container">
+                    <Button label="Verify" />
+                </div>
+            </form>
         </Modal>
     </div>
 </template>

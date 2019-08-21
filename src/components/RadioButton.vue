@@ -1,7 +1,8 @@
 <template>
-    <label class="radio-button" :class="{ selected }">
+    <label class="radio-button" :for="value" :class="{ selected }">
         <img alt="" class="icon" :src="image" />
         <input
+            :id="value"
             type="radio"
             :name="name"
             :value="value"
@@ -93,7 +94,7 @@ export default createComponent({
 }
 
 .input {
+    opacity: 0;
     position: absolute;
-    visibility: hidden;
 }
 </style>

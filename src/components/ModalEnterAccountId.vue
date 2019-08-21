@@ -6,29 +6,30 @@
             title="Enter Account ID"
             @change="handleModalChangeIsOpen"
         >
-            <div class="label">
-                Bacon ipsum dolor amet jerky
-            </div>
+            <form @submit.stop.prevent="handleSubmit">
+                <div class="label">
+                    Bacon ipsum dolor amet jerky
+                </div>
 
-            <TextInput
-                ref="input"
-                :value="input"
-                show-validation
-                :valid="valid"
-                :error="errorMessage"
-                placeholder="shard.realm.account"
-                @input="handleInput"
-            />
-
-            <div class="btn-container">
-                <Button
-                    class="btn"
-                    label="Continue"
-                    :disabled="!valid"
-                    :busy="isBusy"
-                    @click="handleSubmit"
+                <TextInput
+                    ref="input"
+                    :value="input"
+                    show-validation
+                    :valid="valid"
+                    :error="errorMessage"
+                    placeholder="shard.realm.account"
+                    @input="handleInput"
                 />
-            </div>
+
+                <div class="btn-container">
+                    <Button
+                        class="btn"
+                        label="Continue"
+                        :disabled="!valid"
+                        :busy="isBusy"
+                    />
+                </div>
+            </form>
 
             <div class="link-container">
                 <span class="link" @click="handleDontHaveAccount">

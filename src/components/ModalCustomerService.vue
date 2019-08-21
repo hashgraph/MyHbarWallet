@@ -5,44 +5,40 @@
         @change="this.$listeners.change"
     >
         <template>
-            <div class="modal-issue-information">
+            <form
+                class="modal-issue-information"
+                @submit.prevent="handleSubmit"
+            >
                 <TextInput
+                    v-model="browser"
                     class="issue-item"
                     placeholder="Browser"
-                    :value="browser"
-                    @input="handleBrowserInput"
                 />
                 <TextInput
+                    v-model="platform"
                     class="issue-item"
                     placeholder="Operating System"
-                    :value="platform"
-                    @input="handlePlatformInput"
                 />
                 <TextInput
+                    v-model="device"
                     class="issue-item"
                     placeholder="Device/Wallet type (if any)"
-                    :value="device"
-                    @input="handleDeviceInput"
                 />
                 <TextInput
+                    v-model="accountId"
                     class="issue-item"
                     placeholder="Account ID (if any)"
-                    :value="accountId"
-                    @input="handleAccountIdInput"
                 />
-                <TextInput class="issue-item" placeholder="URL" :value="url" />
+                <TextInput v-model="url" class="issue-item" placeholder="URL" />
                 <TextInput
+                    v-model="description"
                     multiline
                     class="issue-item"
                     placeholder="Describe the issue"
                     resizable
-                    :value="description"
-                    @input="handleDescriptionInput"
                 />
-                <a :href="sendLink">
-                    <Button label="Send" class="send-button" :compact="true" />
-                </a>
-            </div>
+                <Button label="Send" class="send-button" :compact="true" />
+            </form>
         </template>
     </Modal>
 </template>
@@ -52,7 +48,13 @@ import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import TextInput from "../components/TextInput.vue";
 import { UAParser } from "ua-parser-js";
-import { createComponent, PropType, value, computed } from "vue-function-api";
+import {
+    createComponent,
+    PropType,
+    value,
+    computed,
+    watch
+} from "vue-function-api";
 
 function createLink(
     url: string,
@@ -90,33 +92,14 @@ export default createComponent({
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    setup() {
+    setup(props, context) {
         const ua = new UAParser(navigator.userAgent);
         const platform = value(ua.getOS.name);
         const browser = value(ua.getBrowser().name || "");
-        const url = value(location.pathname);
+        const url = value(context.root.$route.fullPath);
         const description = value("");
         const device = value("");
         const accountId = value("");
-        function handleBrowserInput(input: string) {
-            browser.value = input;
-        }
-
-        function handlePlatformInput(input: string) {
-            platform.value = input;
-        }
-
-        function handleDeviceInput(input: string) {
-            device.value = input;
-        }
-
-        function handleAccountIdInput(input: string) {
-            accountId.value = input;
-        }
-
-        function handleDescriptionInput(input: string) {
-            description.value = input;
-        }
 
         const sendLink = computed(() =>
             createLink(
@@ -129,6 +112,18 @@ export default createComponent({
             )
         );
 
+        function handleSubmit() {
+            window.open(sendLink.value);
+        }
+
+        // When the route is updated, reset the path value
+        watch(
+            () => context.root.$route.fullPath,
+            () => {
+                url.value = context.root.$route.fullPath;
+            }
+        );
+
         return {
             platform,
             browser,
@@ -137,11 +132,7 @@ export default createComponent({
             accountId,
             description,
             sendLink,
-            handleBrowserInput,
-            handlePlatformInput,
-            handleDeviceInput,
-            handleAccountIdInput,
-            handleDescriptionInput
+            handleSubmit
         };
     }
 });

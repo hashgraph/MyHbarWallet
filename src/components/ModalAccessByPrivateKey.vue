@@ -8,7 +8,10 @@
         <template v-slot:banner>
             <Warning />
         </template>
-        <div class="modal-access-by-private-key">
+        <form
+            class="modal-access-by-private-key"
+            @submit.prevent="$emit('submit')"
+        >
             <TextInput
                 ref="input"
                 placeholder="Enter Private Key"
@@ -20,10 +23,9 @@
                 label="Access Account"
                 :busy="state.isBusy"
                 :disabled="!valid"
-                @click="$emit('submit')"
             />
             <CustomerSupportLink />
-        </div>
+        </form>
     </Modal>
 </template>
 

@@ -8,7 +8,10 @@
             <Warning />
         </template>
         <template>
-            <div class="modal-access-by-software">
+            <form
+                class="modal-access-by-software"
+                @submit.prevent="$emit('submit', optionSelected)"
+            >
                 <RadioButtonGroup
                     v-model="optionSelected"
                     name="software-access-option"
@@ -23,13 +26,9 @@
                         Purchase a hardware wallet....
                     </router-link>
                 </div>
-                <Button
-                    :disabled="optionSelected == null"
-                    label="Continue"
-                    @click="$emit('submit', optionSelected)"
-                />
+                <Button :disabled="optionSelected == null" label="Continue" />
                 <CustomerSupportLink class="support-link" />
-            </div>
+            </form>
         </template>
     </Modal>
 </template>

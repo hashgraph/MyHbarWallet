@@ -9,19 +9,20 @@
             <template v-slot:banner>
                 <Warning />
             </template>
-            <TextInput
-                class="input"
-                placeholder="Enter Password"
-                obscure
-                @input="handleInputChange"
-            />
-            <Button
-                class="btn"
-                :busy="state.isBusy"
-                label="Access Wallet"
-                :disabled="state.password === ''"
-                @click="submit"
-            />
+            <form @submit.prevent="submit">
+                <TextInput
+                    class="input"
+                    placeholder="Enter Password"
+                    obscure
+                    @input="handleInputChange"
+                />
+                <Button
+                    class="btn"
+                    :busy="state.isBusy"
+                    label="Access Wallet"
+                    :disabled="state.password === ''"
+                />
+            </form>
         </Modal>
     </div>
 </template>
