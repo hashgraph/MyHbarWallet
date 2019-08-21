@@ -146,6 +146,10 @@ export default createComponent({
     @media screen and (prefers-reduced-motion: reduce) {
         transition: none;
     }
+
+    @media print {
+        box-shadow: none;
+    }
 }
 
 .modal.large {
@@ -164,6 +168,10 @@ header {
     font-size: 20px;
     justify-content: space-between;
     padding: 14px;
+
+    @media print {
+        display: none;
+    }
 }
 
 .title {
@@ -184,9 +192,17 @@ header {
     @media (max-width: 415px) {
         padding: 20px;
     }
+
+    @media print {
+        padding: 0;
+    }
 }
 
 .modal.large .content-container {
     padding: 30px;
+
+    @media print {
+        padding: 0;
+    }
 }
 </style>
