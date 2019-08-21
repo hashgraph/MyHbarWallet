@@ -33,7 +33,13 @@
             <!-- FIXME: Pluralize appropriately -->
             <Button
                 :busy="isBusy"
-                :label="amount > 0 ? `Send ${truncate} Hbars` : 'Send Hbar'"
+                :label="
+                    amount > 0
+                        ? amount === 1
+                            ? 'Send 1 Hbar'
+                            : `Send ${truncate} Hbars`
+                        : 'Send Hbar'
+                "
                 :disabled="!isIdValid || !isAmountValid"
                 @click="handleSendTransfer"
             />
