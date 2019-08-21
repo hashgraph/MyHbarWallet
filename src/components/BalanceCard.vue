@@ -42,7 +42,7 @@
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 import { mdiLoading, mdiRefresh } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
-import { computed, createComponent, PropType, value } from "vue-function-api";
+import { computed, createComponent, value } from "vue-function-api";
 import walletHbar from "../assets/wallet-hbar.svg";
 import store from "../store";
 import { REFRESH_BALANCE } from "../store/actions";
@@ -52,16 +52,12 @@ const formatter = new Intl.NumberFormat("en-US", {
     currency: "USD"
 });
 
-interface Props {
-    balance: number;
-}
-
 export default createComponent({
     components: {
         MaterialDesignIcon,
         Tooltip
     },
-    setup(props: Props) {
+    setup() {
         const isBusy = value(false);
         const hasFetchedBalance = computed(
             () => store.state.wallet.balance != null
