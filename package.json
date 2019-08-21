@@ -15,7 +15,7 @@
         "@fortawesome/fontawesome-svg-core": "^1.2.21",
         "@fortawesome/free-solid-svg-icons": "^5.10.1",
         "@fortawesome/vue-fontawesome": "^0.1.6",
-        "@mdi/js": "^4.0.96",
+        "@mdi/js": "^4.1.95",
         "bignumber.js": "^9.0.0",
         "hedera-sdk-js": "git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js#ae15b80c99529e4fd38d2395bc104d1a142dbfe1",
         "jdenticon": "^2.2.0",
