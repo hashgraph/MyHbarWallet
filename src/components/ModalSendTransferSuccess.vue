@@ -3,13 +3,24 @@
         <Modal :is-open="open" hide-decoration @change="handleModalChange">
             <div class="container">
                 <MaterialDesignIcon
-                    class="check"
-                    :icon="mdiCheckCircleOutline"
+                    class="large-checkbox"
+                    :icon="mdiCheck"
+                    :size="200"
                 />
                 <div class="title">
                     Success
                 </div>
-                <Button class="btn" label="Close" @click="handleClose" />
+                <div class="description">
+                    Transferred <strong>{{ amount }}</strong> hbar to account
+                    <strong>{{ toAccount }}</strong
+                    >.
+                </div>
+                <Button
+                    class="btn"
+                    outline
+                    label="Dismiss"
+                    @click="handleClose"
+                />
             </div>
         </Modal>
     </div>
@@ -19,7 +30,7 @@
 import { createComponent } from "vue-function-api";
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
-import { mdiCheckCircleOutline } from "@mdi/js";
+import { mdiCheck } from "@mdi/js";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
 export default createComponent({
@@ -33,7 +44,9 @@ export default createComponent({
         event: "change"
     },
     props: {
-        open: Boolean
+        open: Boolean,
+        toAccount: Object,
+        amount: Number
     },
     setup(props, context): object {
         function handleModalChange(isOpen: boolean) {
@@ -47,7 +60,7 @@ export default createComponent({
         return {
             handleModalChange,
             handleClose,
-            mdiCheckCircleOutline
+            mdiCheck
         };
     }
 });
@@ -76,10 +89,12 @@ export default createComponent({
     margin-block-start: 40px;
 }
 
-.check {
+.large-checkbox {
+    border-color: var(--color-melbourne-cup);
+    border-radius: 1200px;
+    border-style: solid;
     color: var(--color-melbourne-cup);
-    height: 146px;
-    margin-block-end: 15px;
-    width: 146px;
+    margin-block-end: 25px;
+    padding: 15px;
 }
 </style>

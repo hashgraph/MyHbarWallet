@@ -41,6 +41,8 @@
 
         <ModalSendTransferSuccess
             :open="successModalIsOpen"
+            :to-account="toAccount"
+            :amount="amount"
             @change="handleSuccessModalChange"
         />
     </InterfaceForm>
