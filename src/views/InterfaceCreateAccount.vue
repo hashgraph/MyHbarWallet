@@ -5,7 +5,7 @@
             has-input
             label="Initial Balance"
             show-validation
-            :min="0"
+            :min="1"
             :valid="validBalance"
             suffix="Hbar"
             type="number"
@@ -26,6 +26,7 @@
             show-validation
             suffix="Tinybar"
             type="number"
+            :error="maxFeeError"
         />
 
         <template v-slot:footer>
@@ -48,7 +49,7 @@
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
-import { computed, createComponent, value } from "vue-function-api";
+import { computed, createComponent, value, Wrapper } from "vue-function-api";
 import store from "@/store";
 import { AccountCreateTransaction, decodePublicKey } from "hedera-sdk-js";
 import { ALERT } from "@/store/actions";
@@ -67,15 +68,16 @@ export default createComponent({
     setup() {
         // fixme: get actual user balance
         const userBalance = value("10");
-        const maxFee = value("1000000");
+        const maxFee = value("100000000");
         const publicKey = value("");
         const isBusy = value(false);
         const successModalIsOpen = value(false);
+        const maxFeeError: Wrapper<string | null> = value(null);
 
         // 5 is used a default starting balance
         const validBalance = computed(() => {
             try {
-                return parseInt(userBalance.value) >= 0;
+                return parseFloat(userBalance.value) > 0;
             } catch {
                 return false;
             }
@@ -125,14 +127,24 @@ export default createComponent({
                     account: accountIdIntermediate.getAccountnum()
                 };
 
+                // If creating account succeeds then remove all the error
+                maxFeeError.value = null;
+
                 console.log(account);
             } catch (error) {
                 console.log(error);
 
-                store.dispatch(ALERT, {
-                    level: "error",
-                    message: "Failed to create new account"
-                });
+                if (error instanceof Error) {
+                    if (error.message === "INSUFFICIENT_TX_FEE") {
+                        maxFeeError.value =
+                            "Insufficient maximum transaction fee";
+                    } else {
+                        store.dispatch(ALERT, {
+                            level: "error",
+                            message: "Failed to create account"
+                        });
+                    }
+                }
             } finally {
                 isBusy.value = false;
             }
@@ -148,6 +160,7 @@ export default createComponent({
             userBalance,
             publicKey,
             maxFee,
+            maxFeeError,
             validBalance,
             validKey,
             validMaxFee,
