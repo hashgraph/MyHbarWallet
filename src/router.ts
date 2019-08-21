@@ -114,11 +114,6 @@ export default new Router({
             component: TermsConditions
         },
         {
-            path: "/404",
-            name: "404",
-            component: Error404
-        },
-        {
             path: "/interface",
             beforeEnter: RequireWallet,
             component: Interface,
@@ -156,6 +151,11 @@ export default new Router({
                     component: InterfaceVerifyMessage
                 }
             ]
+        },
+        {
+            path: "*",
+            name: "404",
+            component: Error404
         }
     ],
 

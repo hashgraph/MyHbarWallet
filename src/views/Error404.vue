@@ -1,11 +1,9 @@
 <template>
     <div class="error-404">
-        <div class="background">
-            <div class="error-container">
-                <div class="error-code">404</div>
-                <div class="error-description">
-                    Oops! Looks like you're lost.
-                </div>
+        <div class="error-container">
+            <div class="error-code">404</div>
+            <div class="error-description">
+                Oops! Looks like you're lost.
             </div>
         </div>
     </div>
@@ -20,14 +18,14 @@ export default createComponent({
 </script>
 
 <style scoped lang="postcss">
-.background {
+.error-404 {
     align-items: center;
-    background-color: var(--color-yankees-blue);
     background-image: url("../assets/sky.jpg");
     background-position: 50%;
+    background-repeat: no-repeat;
     background-size: cover;
     display: flex;
-    height: 700px;
+    height: 100%;
     justify-content: center;
 }
 
