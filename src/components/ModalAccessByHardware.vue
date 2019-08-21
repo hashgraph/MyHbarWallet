@@ -8,7 +8,7 @@
             <RadioButtonGroup
                 v-model="optionSelected"
                 name="hardware-access-option"
-                :options="options"
+                :options="options.filter(option => option.supported)"
             />
             <Button
                 :disabled="optionSelected.length === 0"
@@ -51,31 +51,37 @@ export default createComponent({
         const optionSelected = value("");
         const options = [
             {
+                supported: false,
                 label: "Ledger",
                 value: "ledger",
                 image: imageLedger
             },
             {
+                supported: false,
                 label: "FINNEY",
                 value: "finney",
                 image: imageFinney
             },
             {
+                supported: false,
                 label: "Digital Bitbox",
                 value: "bitbox",
                 image: imageBitbox
             },
             {
+                supported: true,
                 label: "Trezor",
                 value: "trezor",
                 image: imageTrezor
             },
             {
+                supported: false,
                 label: "Secalot",
                 value: "secalot",
                 image: imageSecalot
             },
             {
+                supported: false,
                 label: "KeepKey",
                 value: "keepkey",
                 image: imageKeepKey

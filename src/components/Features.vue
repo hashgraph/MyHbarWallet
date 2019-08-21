@@ -3,13 +3,11 @@
         <div class="wrap">
             <div class="feature-grid">
                 <Feature :image="wallet" title="Join MyHederaWallet">
-                    Access the Hedera Hashgraph's original and most-trusted
-                    wallet client, now with a host of features all contained in
-                    an elegant, easy-to-use interface.
+                    Access Hedera Hashgraph's most-trusted wallet client.
                 </Feature>
                 <Feature :image="hardware" title="Hardware Wallet Support">
-                    MHW offers support for all major hardware wallets, including
-                    Ledger, Trezor, and many more.
+                    MHW currently offers support for only Trezor but all major
+                    hardware wallets are on the roadmap to be supported.
                 </Feature>
             </div>
         </div>

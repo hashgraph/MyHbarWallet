@@ -37,6 +37,9 @@ export default createComponent({
 }
 
 .main {
+    display: flex;
+    flex-direction: column;
+
     /* to force the footer to the bottom of the page. */
     flex-grow: 1;
 

@@ -2,7 +2,7 @@
     <div class="tile-grid">
         <AccountTileButton
             title="Hardware"
-            content="Ledger wallet, FINNEY, Trezor, Digital bitbox, Secalot, KeepKey"
+            content="Trezor (support for more wallets in development)"
             :image="hardwareImage"
             @click="$emit('click', 'hardware')"
         />

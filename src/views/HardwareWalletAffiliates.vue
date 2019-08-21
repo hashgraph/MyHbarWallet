@@ -5,16 +5,18 @@
             your crypto.
         </PageTitle>
         <div class="offers">
-            <HardwareWalletOffer
-                v-for="offer of offers"
-                :key="offer.moreInfo"
-                :currency="offer.currency"
-                :cost="offer.cost"
-                :image="offer.image"
-                :more-info="offer.moreInfo"
-                :description="offer.description"
-            >
-            </HardwareWalletOffer>
+            <template v-for="offer of offers">
+                <HardwareWalletOffer
+                    v-if="offer.supported"
+                    :key="offer.moreInfo"
+                    :currency="offer.currency"
+                    :cost="offer.cost"
+                    :image="offer.image"
+                    :more-info="offer.moreInfo"
+                    :description="offer.description"
+                >
+                </HardwareWalletOffer>
+            </template>
         </div>
     </div>
 </template>
@@ -38,14 +40,18 @@ export default createComponent({
     setup() {
         const offers = [
             {
+                supported: false,
                 currency: "$",
                 cost: "59.00",
                 image: ledgerImage,
-                moreInfo: "https://www.ledger.com/?r=fa4b",
+                // TODO: Get affiliate code for Ledger
+                // moreInfo: "https://www.ledger.com/?r=fa4b",
+                moreInfo: "https://www.ledger.com",
                 description:
                     "A light, yet solid multicurrency hardware wallet for cryptocurrencies. It is easy to carry everywhere thanks to its USB format."
             },
             {
+                supported: false,
                 currency: "$",
                 cost: "999.00",
                 image: finneyImage,
@@ -54,6 +60,7 @@ export default createComponent({
                 description: "Uncompromised Security In a Blockchain Smartphone"
             },
             {
+                supported: false,
                 currency: "€",
                 cost: "44.00",
                 image: bitboxImage,
@@ -62,14 +69,18 @@ export default createComponent({
                     "Our aim is to equip you for independence, with ease, in the digital world."
             },
             {
+                supported: true,
                 currency: "€",
                 cost: "83.49",
                 image: trezorImage,
-                moreInfo: "https://trezor.io/?offer_id=12&aff_id=2029",
+                // TODO: Get affiliate code for Trezor
+                // moreInfo: "https://trezor.io/?offer_id=12&aff_id=2029",
+                moreInfo: "https://shop.trezor.io/product/trezor-one-white",
                 description:
                     "The most trusted hardware wallet in the world. Get yours today!"
             },
             {
+                supported: false,
                 currency: "$",
                 cost: "50.00",
                 image: secalotImage,
@@ -78,6 +89,7 @@ export default createComponent({
                     "Your all-in-one digital security companion. it is a small USB dongle that packs a wide range of features."
             },
             {
+                supported: false,
                 currency: "€",
                 cost: "79.00",
                 image: keepkeyImage,
@@ -96,6 +108,7 @@ export default createComponent({
 <style lang="postcss" scoped>
 .hardware-wallet-affiliates {
     background: var(--color-boysenberry-shadow);
+    flex: 1;
     padding: 80px 0 80px 0;
 
     @media (max-width: 425px) {

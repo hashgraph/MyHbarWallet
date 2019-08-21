@@ -30,9 +30,8 @@
                         <template v-slot:content>
                             MHW supports many different wallet types including
                             hardware wallets, such as the Ledger Nano S or
-                            Trezor, and third-party wallets like MetaMask. We
-                            are also open for anyone to use their H wallets with
-                            the appropriate information.
+                            Trezor. We are also open for anyone to use their H
+                            wallets with the appropriate information.
                         </template>
                     </Accordion>
                     <Accordion>

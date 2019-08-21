@@ -140,7 +140,8 @@
             </div>
             <div class="donation">
                 <img class="hbar-icon" src="../assets/icon-hbar-outline2.svg" />
-                0.0.1050
+                <!-- TODO: Figure out who we are donating to -->
+                0.0.1001
             </div>
         </div>
         <ModalCustomerService v-model="modalCustomerServiceIsOpen" />
@@ -235,10 +236,12 @@ export default createComponent({
 
 .hbar-icon {
     height: 28px;
-    margin-inline-end: 5px;
+    margin-inline-end: 8px;
 }
 
 .donation {
+    align-items: center;
     color: var(--color-melbourne-cup);
+    display: flex;
 }
 </style>

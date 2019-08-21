@@ -26,6 +26,7 @@
             </div>
             <div class="social">
                 <a
+                    v-if="false"
                     rel="noopener"
                     target="_blank"
                     href="https://www.facebook.com/hashgraph/"
@@ -34,6 +35,7 @@
                     <MaterialDesignIcon class="social-icon" :icon="facebook" />
                 </a>
                 <a
+                    v-if="false"
                     rel="noopener"
                     target="_blank"
                     href="https://twitter.com/hashgraph"
@@ -44,7 +46,7 @@
                 <a
                     rel="noopener"
                     target="_blank"
-                    href="https://www.github.com/hashgraph/myhbarwallet"
+                    href="https://www.github.com/hashgraph/MyHederaWallet"
                     class="social-link"
                 >
                     <MaterialDesignIcon class="social-icon" :icon="github" />
