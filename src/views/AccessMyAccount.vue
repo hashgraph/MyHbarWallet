@@ -189,7 +189,6 @@ export default createComponent({
         async function handlePasswordSubmit() {
             const pwState = modalPasswordState.value;
             pwState.isBusy = true;
-            // TODO: Decode private key from file
 
             if (keystoreFileArray.value == null) {
                 throw new Error(

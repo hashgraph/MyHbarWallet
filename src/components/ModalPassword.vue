@@ -9,9 +9,9 @@
             <template v-slot:banner>
                 <Warning />
             </template>
-            <form @submit.prevent="$emit('submit', state.password)">
+            <form @submit.prevent="handleSubmit">
                 <TextInput
-                    ref="input"
+                    class="input"
                     :value="state.password"
                     placeholder="Please Enter At Least 9 Characters"
                     obscure
@@ -21,7 +21,7 @@
                     class="btn"
                     :busy="state.isBusy"
                     label="Access Wallet"
-                    :disabled="state.password === ''"
+                    :disabled="disabled"
                 />
             </form>
         </Modal>
@@ -33,7 +33,7 @@ import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
-import { createComponent, PropType } from "vue-function-api";
+import { computed, createComponent, PropType } from "vue-function-api";
 
 export interface State {
     modalIsOpen: boolean;
@@ -60,17 +60,29 @@ export default createComponent({
         event: "change"
     },
     setup(props: Props, context) {
-        function handleInputChange(value: string) {
-            context.emit("change", { ...props.state, password: value });
-        }
+        const disabled = computed(() => {
+            return (
+                props.state.password === "" || props.state.password.length < 9
+            );
+        });
 
         function handleModalChangeIsOpen(isOpen: boolean) {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
 
+        function handleInputChange(value: string) {
+            context.emit("change", { ...props.state, password: value });
+        }
+
+        function handleSubmit() {
+            context.emit("submit", props.state);
+        }
+
         return {
+            disabled,
+            handleModalChangeIsOpen,
             handleInputChange,
-            handleModalChangeIsOpen
+            handleSubmit
         };
     }
 });
