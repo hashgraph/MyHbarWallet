@@ -215,6 +215,7 @@ export default createComponent({
                     message: "Invalid Password"
                 });
             }
+            // TODO: Text input validation red box for incorrect password with @input to unred it
         }
 
         async function handleAccessByPhraseSubmit() {

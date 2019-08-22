@@ -43,9 +43,11 @@
             </div>
 
             <div class="button-container">
+                <!-- If we are busy we should not be able be able to click the button -->
                 <Button
                     label="Download Keystore File"
                     :busy="state.isBusy"
+                    :disabled="state.isBusy"
                     class="download-button"
                     @click="$emit('submit')"
                 />
