@@ -19,7 +19,7 @@ describe("ModalPassword.vue", (): void => {
         expect(wrapper.find(".modal-password").isVisible()).toBe(true);
     });
 
-    it("renders a disabled button when the password is empty", (): void => {
+    it("renders a disabled button when the password less than 9 characters", (): void => {
         expect.assertions(1);
         const state = { modalIsOpen: false, password: "", isBusy: false };
         const wrapper = mount(ModalPassword, {
@@ -34,11 +34,11 @@ describe("ModalPassword.vue", (): void => {
         );
     });
 
-    it("renders an enabled button when the password is not empty", (): void => {
+    it("renders an enabled button when the password is greater than 9 characters", (): void => {
         expect.assertions(1);
         const state = {
             modalIsOpen: false,
-            password: "nonempty",
+            password: "123456789",
             isBusy: false
         };
 
