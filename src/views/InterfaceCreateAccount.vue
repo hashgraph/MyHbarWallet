@@ -8,7 +8,6 @@
             :min="1"
             :valid="validBalance"
             suffix="Hbar"
-            type="number"
             :error="userBalanceError"
         />
 
@@ -26,7 +25,6 @@
             :min="0"
             show-validation
             suffix="Tinybar"
-            type="number"
             :error="maxFeeError"
         />
 
@@ -85,14 +83,7 @@ export default createComponent({
 
         // 5 is used a default starting balance
         const validBalance = computed(() => {
-            try {
-                return (
-                    userBalanceRegex.test(userBalance.value) &&
-                    new BigNumber(userBalance.value).gt(0)
-                );
-            } catch {
-                return false;
-            }
+            return userBalanceRegex.test(userBalance.value);
         });
         const validKey = computed(
             () =>
@@ -119,8 +110,6 @@ export default createComponent({
                 );
                 const fee = BigInt(maxFee.value);
                 const key = decodePublicKey(publicKey.value);
-
-                console.log(fee);
 
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client
