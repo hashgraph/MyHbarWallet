@@ -37,8 +37,15 @@ import {
 import { mdiClose } from "@mdi/js";
 import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
 
-function setModalIsOpenOnBody(isOpen: boolean) {
-    document.body.classList.toggle("modal-is-open", isOpen);
+const modalIds: number[] = [];
+let nextModalId = 0;
+
+function modalIsTop(id: number) {
+    return modalIds[modalIds.length - 1] === id;
+}
+
+function setModalIsOpenOnBody() {
+    document.body.classList.toggle("modal-is-open", modalIds.length !== 0);
 }
 
 interface Props {
@@ -69,8 +76,11 @@ export default createComponent({
     },
 
     setup(props: Props, context) {
+        const id = nextModalId++;
+
         function handleClose() {
-            if (!props.notClosable) {
+            if (!props.notClosable && modalIsTop(id)) {
+                modalIds.pop();
                 context.emit("change", false);
             }
         }
@@ -83,16 +93,30 @@ export default createComponent({
         }
 
         onCreated(() => {
-            setModalIsOpenOnBody(props.isOpen);
             window.addEventListener("keydown", handleWindowKeyDown);
         });
 
         onBeforeDestroy(() => {
-            setModalIsOpenOnBody(false);
+            setModalIsOpenOnBody();
             window.removeEventListener("keydown", handleWindowKeyDown);
         });
 
-        watch(() => props.isOpen, setModalIsOpenOnBody);
+        watch(
+            () => props.isOpen,
+            (isOpen, prevIsOpen) => {
+                const hasOpened = isOpen && !prevIsOpen;
+                const hasClosed = !isOpen && prevIsOpen;
+
+                if (hasOpened) modalIds.push(id);
+
+                // NOTE: Not sure if the second half of condition is necessary
+                if (hasClosed && modalIsTop(id)) {
+                    modalIds.pop();
+                }
+
+                setModalIsOpenOnBody();
+            }
+        );
 
         return {
             mdiClose,
