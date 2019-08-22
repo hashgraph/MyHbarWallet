@@ -60,7 +60,7 @@ import { createComponent, value, Wrapper } from "vue-function-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
 import store from "@/store";
 import { LOG_IN } from "@/store/mutations";
-import { Client } from "hedera-sdk-js";
+import { Client, encodePrivateKey, encodePublicKey } from "hedera-sdk-js";
 import { Id } from "@/store/modules/wallet";
 import { createKeystore, generateKey } from "hedera-sdk-js/src/Keys";
 
@@ -157,6 +157,13 @@ export default createComponent({
                 context.root.$el.append(keyStoreLink);
                 keyStoreLink.click();
                 context.root.$el.removeChild(keyStoreLink);
+
+                privateKey.value = encodePrivateKey(key.privateKey);
+                publicKey.value = encodePublicKey(key.publicKey);
+
+                setTimeout(() => {
+                    modalRequestToCreateAccountIsOpen.value = true;
+                }, 125);
             } catch (error) {
                 console.log(error);
             }
