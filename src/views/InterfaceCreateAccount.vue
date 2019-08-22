@@ -7,7 +7,7 @@
             show-validation
             :min="1"
             :valid="validBalance"
-            suffix="Hbar"
+            :suffix="Unit.Hbar"
             :error="userBalanceError"
             type="number"
         />
@@ -25,7 +25,7 @@
             :valid="validMaxFee"
             :min="0"
             show-validation
-            suffix="Tinybar"
+            :suffix="Unit.Tinybar"
             :error="maxFeeError"
             type="number"
         />
