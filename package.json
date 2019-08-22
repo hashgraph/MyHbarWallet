@@ -11,7 +11,7 @@
         "test": "npm-run-all test:unit",
         "test:unit": "vue-cli-service test:unit",
         "firebase:deploy": "firebase deploy",
-        "deploy": "npm-run-all test build deploy"
+        "deploy": "npm-run-all test build firebase:deploy"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.21",
