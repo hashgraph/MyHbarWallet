@@ -40,7 +40,7 @@
 
         <ModalCreateAccountSuccess
             v-model="successModalIsOpen"
-            account-id="todo: 0.0.52"
+            :account-id="account"
             @change="handleSuccessModalChange"
         />
     </InterfaceForm>
@@ -136,6 +136,8 @@ export default createComponent({
 
                 // If creating account succeeds then remove all the error
                 maxFeeError.value = null;
+
+                successModalIsOpen.value = true;
             } catch (error) {
                 console.log(error);
 
