@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Router from "vue-router";
+import Router, { Route } from "vue-router";
 import Home from "./views/Home.vue";
 import AccessMyAccount from "./views/AccessMyAccount.vue";
 import CreateAccount from "./views/CreateAccount.vue";
@@ -63,10 +63,10 @@ Vue.use(Router);
 
 // auth function that redirects visitors who have not logged in back to the home route
 function RequireWallet(
-    _to: any,
-    _from: any,
+    _to: Route,
+    _from: Route,
     next: { (arg0: string): void; (): void }
-) {
+): void {
     if (store.state.wallet.session == null) {
         return next("/");
     }

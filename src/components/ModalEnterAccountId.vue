@@ -57,8 +57,6 @@ import Button from "../components/Button.vue";
 import { SetupContext } from "vue-function-api/dist/types/vue";
 import { Id } from "@/store/modules/wallet";
 import { Client, CryptoTransferTransaction } from "hedera-sdk-js";
-import store from "@/store";
-import { LOG_IN } from "@/store/mutations";
 
 export interface Props {
     isOpen: boolean;

@@ -77,7 +77,7 @@ const unitMap: Map<Unit, number> = new Map([
     [Unit.Gigabar, 100000000000000000]
 ]);
 
-function getValueOfUnit(unit: Unit): BigNumber {
+export function getValueOfUnit(unit: Unit): BigNumber {
     return new BigNumber(unitMap.get(unit) || 0);
 }
 
