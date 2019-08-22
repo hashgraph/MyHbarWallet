@@ -35,7 +35,7 @@
         />
         <ModalRequestToCreateAccount
             v-model="modalRequestToCreateAccountIsOpen"
-            :public-key="publicKey"
+            :public-key="privateKey.value.publicKey"
             @hasAccount="handleHasAccount"
         />
     </div>
@@ -60,8 +60,9 @@ import { createComponent, value, Wrapper } from "vue-function-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
 import store from "@/store";
 import { LOG_IN } from "@/store/mutations";
-import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "hedera-sdk-js";
+import { Client, Ed25519PrivateKey } from "hedera-sdk-js";
 import { Id } from "@/store/modules/wallet";
+import { ALERT } from "@/store/actions";
 
 export default createComponent({
     components: {
@@ -78,7 +79,6 @@ export default createComponent({
     },
     setup(props, context) {
         const privateKey: Wrapper<Ed25519PrivateKey | null> = value(null);
-        const publicKey: Wrapper<Ed25519PublicKey | null> = value(null);
 
         const modalAccessByHardwareIsOpen = value(false);
         const modalCreateWithSoftwareIsOpen = value(false);
@@ -125,56 +125,60 @@ export default createComponent({
             }, 125);
         }
 
-        function handleCreateByKeystoreSubmit() {
+        const keyFile: Wrapper<Uint8Array | null> = value(null);
+        const keyStoreLink: Wrapper<HTMLAnchorElement | null> = value(null);
+
+        async function handleCreateByKeystoreSubmit() {
             modalCreateByKeystoreState.value.modalIsOpen = false;
 
             setTimeout(() => {
                 modalDownloadKeystoreState.value.modalIsOpen = true;
             }, 125);
-
-            setTimeout(() => {
-                modalDownloadKeystoreState.value.isBusy = false;
-            }, 5000);
-        }
-
-        async function handleDownloadKeystoreSubmit() {
-            modalDownloadKeystoreState.value.modalIsOpen = false;
             try {
-                const key = await Ed25519PrivateKey.generate();
-                const keyFile = await key.createKeystore(
+                privateKey.value = await Ed25519PrivateKey.generate();
+                keyFile.value = await privateKey.value.createKeystore(
                     modalCreateByKeystoreState.value.password
                 );
+                if (keyFile.value == null) {
+                    throw new Error(
+                        "This shouldn't be possible, but we got a null from key.value.createKeystore"
+                    );
+                }
 
-                const keyStoreBlob = new Blob([keyFile.buffer]);
+                modalDownloadKeystoreState.value.isBusy = false;
+                const keyStoreBlob = new Blob([keyFile.value.buffer]);
                 const keyStoreUrl = URL.createObjectURL(keyStoreBlob);
 
-                const keyStoreLink = document.createElement("a");
-                keyStoreLink.href = keyStoreUrl;
-                keyStoreLink.download = "keystore-" + new Date().toISOString();
-
-                context.root.$el.append(keyStoreLink);
-                keyStoreLink.click();
-                context.root.$el.removeChild(keyStoreLink);
-
-                privateKey.value = key;
-                publicKey.value = key.publicKey;
-
-                setTimeout(() => {
-                    modalRequestToCreateAccountIsOpen.value = true;
-                }, 125);
+                keyStoreLink.value = document.createElement("a");
+                keyStoreLink.value.href = keyStoreUrl;
+                keyStoreLink.value.download =
+                    "keystore-" + new Date().toISOString();
             } catch (error) {
                 console.log(error);
+                store.dispatch(ALERT, {
+                    level: "error",
+                    message: "Unable to Download"
+                });
             }
+        }
+
+        function handleDownloadKeystoreSubmit() {
+            context.root.$el.append(keyStoreLink.value as HTMLAnchorElement);
+            if (keyStoreLink.value != null) keyStoreLink.value.click();
+            context.root.$el.removeChild(
+                keyStoreLink.value as HTMLAnchorElement
+            );
+
+            setTimeout(() => modalRequestToCreateAccountIsOpen.value = true, 125);
+            modalDownloadKeystoreState.value.modalIsOpen = false;
         }
 
         function handleCreateByPhraseSubmit(
             newPrivateKey: Ed25519PrivateKey,
-            newPublicKey: Ed25519PublicKey
         ) {
             modalCreateByPhraseIsOpen.value = false;
 
             privateKey.value = newPrivateKey;
-            publicKey.value = newPublicKey;
 
             setTimeout(() => {
                 modalRequestToCreateAccountIsOpen.value = true;
@@ -189,8 +193,7 @@ export default createComponent({
             store.commit(LOG_IN, {
                 account,
                 client,
-                privateKey: privateKey.value,
-                publicKey: publicKey.value
+                privateKey: privateKey.value
             });
 
             openInterface();
@@ -223,7 +226,6 @@ export default createComponent({
             handleAccountIdSubmit,
             handleHasAccount,
             handleDoesntHaveAccount,
-            publicKey,
             privateKey
         };
     }
