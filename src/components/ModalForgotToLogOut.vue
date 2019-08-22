@@ -1,10 +1,5 @@
 <template>
-    <Modal
-        :is-open="isOpen"
-        title="Oops"
-        :hide-decoration="true"
-        :not-closable="true"
-    >
+    <Modal :is-open="isOpen" title="Oops" hide-decoration not-closable>
         <div class="modal-forgot-to-logout">
             <span>Oops!</span>
             <p>

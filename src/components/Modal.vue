@@ -10,6 +10,7 @@
             <header v-if="!hideDecoration">
                 <span class="title">{{ title }}</span>
                 <MaterialDesignIcon
+                    v-if="!notClosable"
                     class="close"
                     :icon="mdiClose"
                     @click="handleClose"
@@ -76,7 +77,7 @@ export default createComponent({
 
         function handleWindowKeyDown(event: KeyboardEvent) {
             // ESCAPE (27)
-            if (props.isOpen && event.keyCode == 27) {
+            if (!props.notClosable && props.isOpen && event.keyCode == 27) {
                 handleClose();
             }
         }

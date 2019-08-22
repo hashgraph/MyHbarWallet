@@ -2,7 +2,7 @@
     <div class="enter-account-id">
         <Modal
             :is-open="isOpen"
-            :not-closable="isBusy"
+            not-closable
             title="Enter Account ID"
             @change="handleModalChangeIsOpen"
         >
