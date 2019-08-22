@@ -84,6 +84,7 @@ import {
 import { Id } from "@/store/modules/wallet";
 import { KeyPair } from "hedera-sdk-js/src/Keys";
 import { ALERT } from "@/store/actions";
+import { loadKeystore } from "hedera-sdk-js/src/Keys";
 
 export default createComponent({
     components: {
@@ -127,7 +128,7 @@ export default createComponent({
         const modalEnterAccountIdIsOpen = value(false);
 
         const modalRequestToCreateAccountIsOpen = value(false);
-        const keystoreFileText: Wrapper<string | null> = value(null);
+        const keystoreFileArray: Wrapper<Uint8Array | null> = value(null);
 
         function handleClickTiles(which: string) {
             if (which === "hardware") {
@@ -161,31 +162,24 @@ export default createComponent({
             }
 
             const file = target.files[0];
-            keystoreFileText.value = await new Promise<string>(
+            const keyStoreArrayBuff = await new Promise<ArrayBuffer>(
                 (resolve, reject) => {
                     const reader = new FileReader();
 
                     reader.addEventListener("error", reject);
                     reader.addEventListener("loadend", (): void => {
-                        resolve(reader.result as string);
+                        resolve(reader.result as ArrayBuffer);
                     });
 
-                    reader.readAsText(file);
+                    reader.readAsArrayBuffer(file);
                 }
             );
 
             modalPasswordState.value.modalIsOpen = true;
-        }
 
-        function handlePasswordSubmit() {
-            modalPasswordState.value.isBusy = true;
-            // TODO: Decode private key from file
-            setTimeout(() => {
-                // Close  previous modal and open another one
-                modalPasswordState.value.isBusy = false;
-                modalPasswordState.value.modalIsOpen = false;
-                modalEnterAccountIdIsOpen.value = true;
-            }, 3000);
+            const keyStoreFileU8 = new Uint8Array(keyStoreArrayBuff);
+
+            keystoreFileArray.value = keyStoreFileU8;
         }
 
         // Update our local understand of what the private/public key pair is
@@ -194,6 +188,32 @@ export default createComponent({
         function setKeyPair(keyPair: KeyPair) {
             privateKey.value = encodePrivateKey(keyPair.privateKey);
             publicKey.value = encodePublicKey(keyPair.publicKey);
+        }
+
+        async function handlePasswordSubmit() {
+            const pwState = modalPasswordState.value;
+            pwState.isBusy = true;
+            // TODO: Decode private key from file
+
+            try {
+                setKeyPair(
+                    await loadKeystore(
+                        keystoreFileArray.value as Uint8Array,
+                        modalPasswordState.value.password
+                    )
+                );
+                // Close  previous modal and open another one
+                pwState.isBusy = false;
+                pwState.modalIsOpen = false;
+                modalEnterAccountIdIsOpen.value = true;
+            } catch {
+                pwState.isBusy = false;
+
+                store.dispatch(ALERT, {
+                    level: "error",
+                    message: "Invalid Password"
+                });
+            }
         }
 
         async function handleAccessByPhraseSubmit() {
@@ -274,7 +294,6 @@ export default createComponent({
             modalAccessByPrivateKeyState,
             modalEnterAccountIdIsOpen,
             modalRequestToCreateAccountIsOpen,
-            keystoreFileText,
             handleClickTiles,
             handleAccessBySoftwareSubmit,
             loadTextFromFile,

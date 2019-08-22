@@ -62,6 +62,7 @@ import store from "@/store";
 import { LOG_IN } from "@/store/mutations";
 import { Client } from "hedera-sdk-js";
 import { Id } from "@/store/modules/wallet";
+import { createKeystore, generateKey } from "hedera-sdk-js/src/Keys";
 
 export default createComponent({
     components: {
@@ -137,12 +138,28 @@ export default createComponent({
             }, 5000);
         }
 
-        function handleDownloadKeystoreSubmit() {
+        async function handleDownloadKeystoreSubmit() {
             modalDownloadKeystoreState.value.modalIsOpen = false;
+            try {
+                const key = await generateKey();
+                const keyFile = await createKeystore(
+                    key.privateKey,
+                    modalCreateByKeystoreState.value.password
+                );
 
-            setTimeout(() => {
-                modalSuccessIsOpen.value = true;
-            }, 125);
+                const keyStoreBlob = new Blob([keyFile.buffer]);
+                const keyStoreUrl = URL.createObjectURL(keyStoreBlob);
+
+                const keyStoreLink = document.createElement("a");
+                keyStoreLink.href = keyStoreUrl;
+                keyStoreLink.download = "keystore-" + new Date().toISOString();
+
+                context.root.$el.append(keyStoreLink);
+                keyStoreLink.click();
+                context.root.$el.removeChild(keyStoreLink);
+            } catch (error) {
+                console.log(error);
+            }
         }
 
         function handleCreateByPhraseSubmit(
