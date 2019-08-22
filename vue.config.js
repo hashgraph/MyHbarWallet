@@ -2,6 +2,10 @@
 const path = require("path");
 
 module.exports = {
+    css: {
+        // Turn on CSS source maps in development
+        sourceMap: process.env.NODE_ENV !== "production"
+    },
     chainWebpack(config) {
         // Use a standard HTML template instead of rolling our own (which is default)
         // https://github.com/jaketrent/html-webpack-template#basic-usage
