@@ -64,17 +64,12 @@ export default createComponent({
             context.emit("change", { ...props.state, password: value });
         }
 
-        function submit() {
-            context.emit("submit", props.state);
-        }
-
         function handleModalChangeIsOpen(isOpen: boolean) {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
 
         return {
             handleInputChange,
-            submit,
             handleModalChangeIsOpen
         };
     }
