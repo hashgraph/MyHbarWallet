@@ -28,6 +28,7 @@
                         :tabindex="tabindex"
                         :step="step"
                         :min="min"
+                        :autocomplete="autocompleteDisabled ? 'off' : 'on'"
                         @focusin="handleFocusIn"
                         @focusout="handleFocusOut"
                         @input="handleInput"
@@ -99,6 +100,7 @@ interface Props {
     obscure: boolean;
     canClear: boolean;
     canCopy: boolean;
+    autocompleteDisabled: boolean;
     showValidation: boolean;
     valid: boolean;
     error: string;
@@ -144,6 +146,7 @@ export default createComponent({
         resizable: (Boolean as unknown) as PropType<boolean>,
         canClear: (Boolean as unknown) as PropType<boolean>,
         canCopy: (Boolean as unknown) as PropType<boolean>,
+        autocompleteDisabled: (Boolean as unknown) as PropType<boolean>,
 
         // Whether to hide the text being edited (e.g., for passwords).
         obscure: (Boolean as unknown) as PropType<boolean>,
