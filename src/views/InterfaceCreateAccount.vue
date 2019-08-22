@@ -9,6 +9,7 @@
             :valid="validBalance"
             suffix="Hbar"
             type="number"
+            :error="userBalanceError"
         />
 
         <TextInput
@@ -74,13 +75,21 @@ export default createComponent({
         const publicKey = value("");
         const isBusy = value(false);
         const successModalIsOpen = value(false);
+        const userBalanceError: Wrapper<string | null> = value(null);
         const maxFeeError: Wrapper<string | null> = value(null);
         const account: Wrapper<string | null> = value(null);
+
+        // Using regex to validate user input
+        const userBalanceRegex = /^0*(\d{1,9})(\.\d{1,9})?$/;
+        const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
 
         // 5 is used a default starting balance
         const validBalance = computed(() => {
             try {
-                return parseFloat(userBalance.value) > 0;
+                return (
+                    userBalanceRegex.test(userBalance.value) &&
+                    new BigNumber(userBalance.value).gt(0)
+                );
             } catch {
                 return false;
             }
@@ -90,7 +99,7 @@ export default createComponent({
                 publicKey.value.startsWith(ED25519_PREFIX) &&
                 publicKey.value.length == 88
         );
-        const validMaxFee = computed(() => parseInt(maxFee.value) > 0);
+        const validMaxFee = computed(() => maxFeeRegex.test(maxFee.value));
 
         async function handleCreateAccount() {
             isBusy.value = true;
@@ -108,8 +117,10 @@ export default createComponent({
                         getValueOfUnit(Unit.Hbar)
                     )
                 );
-                const fee = parseInt(maxFee.value);
+                const fee = BigInt(maxFee.value);
                 const key = decodePublicKey(publicKey.value);
+
+                console.log(fee);
 
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client
@@ -135,6 +146,7 @@ export default createComponent({
                     accountIdIntermediate.getAccountnum();
 
                 // If creating account succeeds then remove all the error
+                userBalanceError.value = null;
                 maxFeeError.value = null;
 
                 successModalIsOpen.value = true;
@@ -145,6 +157,9 @@ export default createComponent({
                     if (error.message === "INSUFFICIENT_TX_FEE") {
                         maxFeeError.value =
                             "Insufficient maximum transaction fee";
+                    } else if (error.message === "INSUFFICIENT_PAYER_BALANCE") {
+                        userBalanceError.value = "Insufficient Payer Balance";
+                        maxFeeError.value = "Insufficient Payer Balance";
                     } else {
                         store.dispatch(ALERT, {
                             level: "error",
@@ -166,6 +181,7 @@ export default createComponent({
             successModalIsOpen,
             userBalance,
             publicKey,
+            userBalanceError,
             maxFee,
             maxFeeError,
             account,
