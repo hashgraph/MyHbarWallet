@@ -38,8 +38,9 @@
             />
         </template>
 
-        <ModalSendTransferSuccess
+        <ModalCreateAccountSuccess
             v-model="successModalIsOpen"
+            account-id="todo: 0.0.52"
             @change="handleSuccessModalChange"
         />
     </InterfaceForm>
@@ -53,7 +54,7 @@ import { computed, createComponent, value, Wrapper } from "vue-function-api";
 import store from "@/store";
 import { AccountCreateTransaction, decodePublicKey } from "hedera-sdk-js";
 import { ALERT } from "@/store/actions";
-import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
+import ModalCreateAccountSuccess from "@/components/ModalCreateAccountSuccess.vue";
 import { getValueOfUnit, Unit } from "@/components/UnitConverter.vue";
 import { BigNumber } from "bignumber.js";
 
@@ -64,7 +65,7 @@ export default createComponent({
         TextInput,
         InterfaceForm,
         Button,
-        ModalSendTransferSuccess
+        ModalCreateAccountSuccess
     },
     setup() {
         // fixme: get actual user balance
