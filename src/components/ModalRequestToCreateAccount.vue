@@ -56,6 +56,8 @@ import { writeToClipboard } from "@/clipboard";
 import ReadOnlyInput from "@/components/ReadOnlyInput.vue";
 import Warning from "@/components/Warning.vue";
 import { Ed25519PublicKey } from "hedera-sdk-js";
+import { ALERT } from "@/store/actions";
+import store from "@/store";
 
 export default createComponent({
     components: {
@@ -80,6 +82,7 @@ export default createComponent({
             const key = props.publicKey;
             if (key != null) {
                 await writeToClipboard(key.toString());
+                store.dispatch(ALERT, { message: "Copied", level: "info" });
             }
         }
 
