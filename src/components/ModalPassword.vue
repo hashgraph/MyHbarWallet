@@ -9,10 +9,11 @@
             <template v-slot:banner>
                 <Warning />
             </template>
-            <form @submit.prevent="submit">
+            <form @submit.prevent="$emit('submit', state.password)">
                 <TextInput
-                    class="input"
-                    placeholder="Enter Password"
+                    ref="input"
+                    :value="state.password"
+                    placeholder="Please Enter At Least 9 Characters"
                     obscure
                     @input="handleInputChange"
                 />
