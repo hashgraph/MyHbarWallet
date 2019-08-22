@@ -56,7 +56,6 @@
             v-model="modalForgotToLogOutIsOpen"
             @change="handleForgotToLogoutChange"
         />
-        <Alerts timeout="7000" />
     </div>
 </template>
 
@@ -67,7 +66,6 @@ import Community from "@/components/Community.vue";
 import HomeTileButtons from "@/components/HomeTileButtons.vue";
 import circleImage from "@/assets/circle.png";
 import ModalForgotToLogOut from "@/components/ModalForgotToLogOut.vue";
-import Alerts from "@/components/Alerts.vue";
 import { createComponent, computed } from "vue-function-api";
 import store from "@/store";
 
@@ -77,7 +75,6 @@ export default createComponent({
         HomeTileButtons,
         Features,
         Community,
-        Alerts,
         ModalForgotToLogOut
     },
     setup() {
