@@ -1,19 +1,9 @@
 <template>
-    <Modal
-        :is-open="isOpen"
-        :large="false"
-        title="Address"
-        @change="this.$listeners.change"
-    >
+    <Modal :is-open="isOpen" title="Address" @change="this.$listeners.change">
         <div class="modal-contents">
-            <qrcode-vue
-                :value="publicKey || 'null'"
-                size="200"
-                level="L"
-                class="pub-qr"
-            />
+            <qrcode-vue :value="key" size="200" level="L" class="pub-qr" />
 
-            <ReadOnlyInput class="key-input" :value="publicKey" />
+            <ReadOnlyInput class="key-input" :value="key" />
 
             <div class="copy-button" @click="handleClickCopy">
                 Copy
@@ -26,9 +16,10 @@
 import Modal from "@/components/Modal.vue";
 import ReadOnlyInput from "@/components/ReadOnlyInput.vue";
 import Button from "@/components/Button.vue";
-import { createComponent, PropType, computed } from "vue-function-api";
+import { createComponent, PropType, value, watch } from "vue-function-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "@/clipboard";
+import store from "@/store";
 
 interface Props {
     isOpen: boolean;
@@ -48,14 +39,14 @@ export default createComponent({
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
-        publicKey: (String as unknown) as PropType<string>,
         event: (String as unknown) as PropType<string>
     },
     setup(props, context) {
+        const key = value("null");
+
         async function handleClickCopy() {
-            const key = props.publicKey;
-            if (key != null) {
-                await writeToClipboard(key);
+            if (key.value != "null") {
+                await writeToClipboard(key.value);
             }
         }
 
@@ -63,7 +54,17 @@ export default createComponent({
             context.emit("hasAccount");
         }
 
+        watch(
+            () => props.isOpen,
+            (newVal: boolean) => {
+                if (newVal && store.state.wallet.session != null) {
+                    key.value = store.state.wallet.session.publicKey;
+                }
+            }
+        );
+
         return {
+            key,
             handleClickCopy,
             handleHasAccount
         };

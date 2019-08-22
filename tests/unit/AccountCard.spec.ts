@@ -6,7 +6,6 @@ describe("AccountCard.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
 
-
     const wrapper = shallowMount(AccountCard, {
         localVue,
         propsData: {

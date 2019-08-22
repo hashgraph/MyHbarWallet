@@ -16,11 +16,7 @@
             </div>
             <div class="actions">
                 <!-- TODO: implement QR Button -->
-                <Tooltip
-                    class="action"
-                    :pinnable="false"
-                    message="Account QR Code"
-                >
+                <Tooltip class="action" message="Account QR Code">
                     <MaterialDesignIcon
                         class="qr-icon"
                         :icon="mdiQrcode"
@@ -28,7 +24,7 @@
                     />
                 </Tooltip>
                 <!-- TODO: Tie Copy/Error alert to copy -->
-                <Tooltip class="action" :pinnable="false" message="Copy Key">
+                <Tooltip class="action" message="Copy Key">
                     <MaterialDesignIcon
                         class="copy-icon"
                         :icon="mdiContentCopy"
@@ -37,10 +33,7 @@
                 </Tooltip>
             </div>
         </div>
-        <ModalViewAccountQR
-            v-model="viewAccountQrCodeIsOpen"
-            :public-key="publicKey"
-        />
+        <ModalViewAccountQR v-model="viewAccountQrCodeIsOpen" />
     </div>
 </template>
 
