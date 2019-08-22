@@ -6,18 +6,11 @@
         title="Request to Create Account"
         @change="this.$listeners.change"
     >
-        <template v-slot:banner>
-            <Warning>
-                <template v-slot:title>
-                    Instructions
-                </template>
-                <template>
-                    Provide your public key (this QR Code or the copied text) to
-                    a friend on the hedera network. They can invite you to join
-                    the network.
-                </template>
-            </Warning>
-        </template>
+        <div class="instructions">
+            Provide your public key (this QR Code or the copied text) to a
+            friend on the hedera network. They can invite you to join the
+            network.
+        </div>
         <template>
             <form
                 class="modal-request-to-create-account"
@@ -138,5 +131,11 @@ export default createComponent({
     &:focus {
         text-decoration: underline;
     }
+}
+
+.instructions {
+    color: var(--color-china-blue);
+    font-size: 14px;
+    margin-block-end: 30px;
 }
 </style>
