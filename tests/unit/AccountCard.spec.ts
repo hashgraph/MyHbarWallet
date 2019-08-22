@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import { shallowMount, mount, createLocalVue } from "@vue/test-utils";
 import AccountCard from "../../src/components/AccountCard.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
@@ -6,7 +6,7 @@ describe("AccountCard.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
 
-    const wrapper = mount(AccountCard, {
+    const wrapper = shallowMount(AccountCard, {
         localVue,
         propsData: {
             realm: 0,
