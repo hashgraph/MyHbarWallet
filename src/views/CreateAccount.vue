@@ -34,8 +34,9 @@
             @noAccount="handleDoesntHaveAccount"
         />
         <ModalRequestToCreateAccount
+            v-if="privateKey != null"
             v-model="modalRequestToCreateAccountIsOpen"
-            :public-key="privateKey.value.publicKey"
+            :public-key="privateKey.publicKey"
             @hasAccount="handleHasAccount"
         />
     </div>
@@ -139,7 +140,7 @@ export default createComponent({
                 keyFile.value = await privateKey.value.createKeystore(
                     modalCreateByKeystoreState.value.password
                 );
-                if (keyFile.value == null) {
+                if (privateKey.value == null || keyFile.value == null) {
                     throw new Error(
                         "This shouldn't be possible, but we got a null from key.value.createKeystore"
                     );
@@ -175,13 +176,14 @@ export default createComponent({
                 keyStoreLink.value as HTMLAnchorElement
             );
 
-            setTimeout(() => modalRequestToCreateAccountIsOpen.value = true, 125);
+            setTimeout(
+                () => (modalRequestToCreateAccountIsOpen.value = true),
+                125
+            );
             modalDownloadKeystoreState.value.modalIsOpen = false;
         }
 
-        function handleCreateByPhraseSubmit(
-            newPrivateKey: Ed25519PrivateKey,
-        ) {
+        function handleCreateByPhraseSubmit(newPrivateKey: Ed25519PrivateKey) {
             modalCreateByPhraseIsOpen.value = false;
 
             privateKey.value = newPrivateKey;

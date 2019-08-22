@@ -60,7 +60,7 @@ export default createComponent({
     setup(props, context) {
         const key = computed(() =>
             store.state.wallet.session
-                ? store.state.wallet.session.publicKey
+                ? store.state.wallet.session.privateKey.publicKey
                 : null
         );
 
