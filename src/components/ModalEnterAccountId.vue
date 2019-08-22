@@ -56,12 +56,15 @@ import TextInput, {
 import Button from "../components/Button.vue";
 import { SetupContext } from "vue-function-api/dist/types/vue";
 import { Id } from "@/store/modules/wallet";
-import { Client, CryptoTransferTransaction } from "hedera-sdk-js";
+import {
+    Client,
+    CryptoTransferTransaction,
+    Ed25519PrivateKey
+} from "hedera-sdk-js";
 
 export interface Props {
     isOpen: boolean;
-    // Used to validate accuont ID
-    privateKey: string | null;
+    privateKey: Ed25519PrivateKey | null;
 }
 
 type Context = SetupContext & {
@@ -81,7 +84,7 @@ export default createComponent({
         event: "change"
     },
     props: {
-        privateKey: (String as unknown) as PropType<string | null>,
+        privateKey: (Object as unknown) as PropType<Ed25519PrivateKey | null>,
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
     setup(props: Props, context) {
@@ -129,8 +132,10 @@ export default createComponent({
 
             try {
                 client = new Client({
-                    account: account.value,
-                    privateKey: props.privateKey
+                    operator: {
+                        account: account.value,
+                        privateKey: props.privateKey.toString()
+                    }
                 });
 
                 // In Hedera, the signature map is checked BEFORE

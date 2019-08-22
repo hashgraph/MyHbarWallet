@@ -15,7 +15,7 @@
             <TextInput
                 ref="input"
                 placeholder="Enter Private Key"
-                :value="state.privateKey"
+                :value="state.rawPrivateKey"
                 :valid="valid"
                 :error="errorMessage"
                 @input="handlePrivateKeyInput"
@@ -41,11 +41,11 @@ import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import { computed, createComponent, PropType, watch } from "vue-function-api";
 import { SetupContext } from "vue-function-api/dist/types/vue";
-import { decodePrivateKey } from "hedera-sdk-js";
+import { Ed25519PrivateKey } from "hedera-sdk-js";
 
 export interface State {
     modalIsOpen: boolean;
-    privateKey: string;
+    rawPrivateKey: string;
     isBusy: boolean;
 }
 
@@ -72,12 +72,18 @@ export default createComponent({
     },
     setup(props, context) {
         const valid = computed(() => {
+            if (props.state.rawPrivateKey.length === 0) {
+                // Back out now if we have an empty value
+                return false;
+            }
+
             try {
                 // TODO: Perhaps debounce this?
                 // TODO: Find a clean way to re-use the derived public key back in AccessMyAccount
-                decodePrivateKey(props.state.privateKey);
+                Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;
-            } catch {
+            } catch (error) {
+                console.warn(error);
                 return false;
             }
         });
@@ -94,8 +100,8 @@ export default createComponent({
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
 
-        function handlePrivateKeyInput(privateKey: string) {
-            context.emit("change", { ...props.state, privateKey });
+        function handlePrivateKeyInput(rawPrivateKey: string) {
+            context.emit("change", { ...props.state, rawPrivateKey });
         }
 
         // Focus the single text input when the modal is opened

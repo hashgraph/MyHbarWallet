@@ -66,7 +66,9 @@ import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "@/components/ModalAccessBySoftware.vue";
 import ModalAccessByPhrase from "@/components/ModalAccessByPhrase.vue";
-import ModalAccessByPrivateKey from "@/components/ModalAccessByPrivateKey.vue";
+import ModalAccessByPrivateKey, {
+    State as ModalAccessByPrivateKeyState
+} from "@/components/ModalAccessByPrivateKey.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalPassword from "../components/ModalPassword.vue";
@@ -74,17 +76,9 @@ import store from "@/store";
 import { LOG_IN } from "@/store/mutations";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { createComponent, value, Wrapper } from "vue-function-api";
-import {
-    Client,
-    decodePrivateKey,
-    encodePrivateKey,
-    encodePublicKey,
-    keyFromMnemonic
-} from "hedera-sdk-js";
+import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "hedera-sdk-js";
 import { Id } from "@/store/modules/wallet";
-import { KeyPair } from "hedera-sdk-js/src/Keys";
 import { ALERT } from "@/store/actions";
-import { loadKeystore } from "hedera-sdk-js/src/Keys";
 
 export default createComponent({
     components: {
@@ -100,8 +94,8 @@ export default createComponent({
         ModalRequestToCreateAccount
     },
     setup(props, context) {
-        const privateKey: Wrapper<string | null> = value(null);
-        const publicKey: Wrapper<string | null> = value(null);
+        const privateKey: Wrapper<Ed25519PrivateKey | null> = value(null);
+        const publicKey: Wrapper<Ed25519PublicKey | null> = value(null);
 
         const modalAccessByHardwareIsOpen = value(false);
         const modalAccessBySoftwareIsOpen = value(false);
@@ -119,9 +113,11 @@ export default createComponent({
             isBusy: false
         });
 
-        const modalAccessByPrivateKeyState = value({
+        const modalAccessByPrivateKeyState = value<
+            ModalAccessByPrivateKeyState
+        >({
             modalIsOpen: false,
-            privateKey: "",
+            rawPrivateKey: "",
             isBusy: false
         });
 
@@ -185,9 +181,9 @@ export default createComponent({
         // Update our local understand of what the private/public key pair is
         // Called at the end of each access by software workflow before merging
         // into enter account ID
-        function setKeyPair(keyPair: KeyPair) {
-            privateKey.value = encodePrivateKey(keyPair.privateKey);
-            publicKey.value = encodePublicKey(keyPair.publicKey);
+        function setPrivateKey(newPrivateKey: Ed25519PrivateKey) {
+            privateKey.value = newPrivateKey;
+            publicKey.value = newPrivateKey.publicKey;
         }
 
         async function handlePasswordSubmit() {
@@ -195,10 +191,16 @@ export default createComponent({
             pwState.isBusy = true;
             // TODO: Decode private key from file
 
+            if (keystoreFileArray.value == null) {
+                throw new Error(
+                    "unexepcted keystore password submission before submission of keystore file"
+                );
+            }
+
             try {
-                setKeyPair(
-                    await loadKeystore(
-                        keystoreFileArray.value as Uint8Array,
+                setPrivateKey(
+                    await Ed25519PrivateKey.fromKeystore(
+                        keystoreFileArray.value,
                         modalPasswordState.value.password
                     )
                 );
@@ -224,7 +226,7 @@ export default createComponent({
             const phrase = accessByPhraseState.words.join(" ");
 
             try {
-                setKeyPair(await keyFromMnemonic(phrase));
+                setPrivateKey(await Ed25519PrivateKey.fromMnemonic(phrase));
 
                 // Close  previous modal and open another one
                 accessByPhraseState.isBusy = false;
@@ -246,8 +248,10 @@ export default createComponent({
         function handleAccessByPrivateKeySubmit() {
             modalAccessByPrivateKeyState.value.isBusy = true;
 
-            setKeyPair(
-                decodePrivateKey(modalAccessByPrivateKeyState.value.privateKey)
+            setPrivateKey(
+                Ed25519PrivateKey.fromString(
+                    modalAccessByPrivateKeyState.value.rawPrivateKey
+                )
             );
 
             // Close previous modal and open another one

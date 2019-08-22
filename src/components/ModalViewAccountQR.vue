@@ -1,9 +1,19 @@
 <template>
     <Modal :is-open="isOpen" title="Address" @change="this.$listeners.change">
         <div class="modal-contents">
-            <qrcode-vue :value="key" size="200" level="L" class="pub-qr" />
+            <qrcode-vue
+                v-if="key"
+                :value="key.toString()"
+                size="200"
+                level="L"
+                class="pub-qr"
+            />
 
-            <ReadOnlyInput class="key-input" :value="key" />
+            <ReadOnlyInput
+                v-if="key"
+                class="key-input"
+                :value="key.toString()"
+            />
 
             <div class="copy-button" @click="handleClickCopy">
                 Copy
@@ -16,7 +26,13 @@
 import Modal from "@/components/Modal.vue";
 import ReadOnlyInput from "@/components/ReadOnlyInput.vue";
 import Button from "@/components/Button.vue";
-import { createComponent, PropType, value, watch } from "vue-function-api";
+import {
+    createComponent,
+    PropType,
+    value,
+    watch,
+    computed
+} from "vue-function-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "@/clipboard";
 import store from "@/store";
@@ -42,26 +58,21 @@ export default createComponent({
         event: (String as unknown) as PropType<string>
     },
     setup(props, context) {
-        const key = value("null");
+        const key = computed(() =>
+            store.state.wallet.session
+                ? store.state.wallet.session.publicKey
+                : null
+        );
 
         async function handleClickCopy() {
-            if (key.value != "null") {
-                await writeToClipboard(key.value);
+            if (key.value != null) {
+                await writeToClipboard(key.value.toString());
             }
         }
 
         function handleHasAccount() {
             context.emit("hasAccount");
         }
-
-        watch(
-            () => props.isOpen,
-            (newVal: boolean) => {
-                if (newVal && store.state.wallet.session != null) {
-                    key.value = store.state.wallet.session.publicKey;
-                }
-            }
-        );
 
         return {
             key,

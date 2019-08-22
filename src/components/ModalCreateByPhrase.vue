@@ -96,8 +96,7 @@ import {
 import {
     generateMnemonic,
     MnemonicResult,
-    KeyResult,
-    encodePublicKey
+    Ed25519PrivateKey
 } from "hedera-sdk-js/src/Keys";
 
 export default createComponent({
@@ -163,15 +162,11 @@ export default createComponent({
             isBusy.value = true;
             verifyPhraseIsOpen.value = false;
 
-            const key: KeyResult = await result.value.generateKey();
+            const key: Ed25519PrivateKey = await result.value.generateKey();
 
             isBusy.value = false;
 
-            context.emit(
-                "submit",
-                key.keyString,
-                encodePublicKey(key.publicKey)
-            );
+            context.emit("submit", key);
         }
 
         onMounted(() => {

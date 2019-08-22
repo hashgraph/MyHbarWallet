@@ -53,7 +53,7 @@ import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import { computed, createComponent, value, Wrapper } from "vue-function-api";
 import store from "@/store";
-import { AccountCreateTransaction, decodePublicKey } from "hedera-sdk-js";
+import { AccountCreateTransaction, Ed25519PublicKey } from "hedera-sdk-js";
 import { ALERT } from "@/store/actions";
 import ModalCreateAccountSuccess from "@/components/ModalCreateAccountSuccess.vue";
 import { getValueOfUnit, Unit } from "@/components/UnitConverter.vue";
@@ -111,7 +111,7 @@ export default createComponent({
                     )
                 );
                 const fee = BigInt(maxFee.value);
-                const key = decodePublicKey(publicKey.value);
+                const key = Ed25519PublicKey.fromString(publicKey.value);
 
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client

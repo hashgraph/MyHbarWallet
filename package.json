@@ -17,7 +17,7 @@
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "@mdi/js": "^4.1.95",
         "bignumber.js": "^9.0.0",
-        "hedera-sdk-js": "git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js#fc9772679e87e566b44b0fe8c9b5eba96951501c",
+        "hedera-sdk-js": "git+ssh://git@gitlab.launchbadge.com:hedera/hedera-sdk-js#ea196c13d08556e36a07af3bfb5b2e1d77f2816c",
         "jdenticon": "^2.2.0",
         "qrcode.vue": "^1.6.2",
         "ua-parser-js": "^0.7.20",

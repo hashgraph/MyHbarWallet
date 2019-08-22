@@ -1,5 +1,5 @@
 import { LOG_OUT, LOG_IN } from "@/store/mutations";
-import { Client } from "hedera-sdk-js";
+import { Client, Ed25519PublicKey, Ed25519PrivateKey } from "hedera-sdk-js";
 import { IS_LOGGED_IN } from "@/store/getters";
 import { ActionContext } from "vuex";
 import { RootState } from "..";
@@ -16,8 +16,8 @@ export interface Id {
 
 export interface Session {
     account: Id;
-    privateKey: string;
-    publicKey: string;
+    privateKey: Ed25519PrivateKey;
+    publicKey: Ed25519PublicKey;
     client: Client;
 }
 

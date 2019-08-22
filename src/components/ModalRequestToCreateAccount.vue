@@ -24,13 +24,18 @@
                 @submit.prevent="$emit('submit')"
             >
                 <qrcode-vue
-                    :value="publicKey || 'null'"
+                    v-if="publicKey"
+                    :value="publicKey.toString()"
                     size="180"
                     level="L"
                     class="pub-qr"
                 />
 
-                <ReadOnlyInput class="key-input" :value="publicKey" />
+                <ReadOnlyInput
+                    v-if="publicKey"
+                    class="key-input"
+                    :value="publicKey.toString()"
+                />
 
                 <Button
                     compact
@@ -57,11 +62,7 @@ import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "@/clipboard";
 import ReadOnlyInput from "@/components/ReadOnlyInput.vue";
 import Warning from "@/components/Warning.vue";
-
-interface Props {
-    isOpen: boolean;
-    event: "change";
-}
+import { Ed25519PublicKey } from "hedera-sdk-js";
 
 export default createComponent({
     components: {
@@ -78,14 +79,14 @@ export default createComponent({
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
-        publicKey: (String as unknown) as PropType<string>,
+        publicKey: (Object as unknown) as PropType<Ed25519PublicKey>,
         event: (String as unknown) as PropType<string>
     },
     setup(props, context) {
         async function handleClickCopy() {
             const key = props.publicKey;
             if (key != null) {
-                await writeToClipboard(key);
+                await writeToClipboard(key.toString());
             }
         }
 

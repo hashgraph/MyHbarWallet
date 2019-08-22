@@ -43,7 +43,7 @@ export default createComponent({
     setup() {
         const publicKey = computed(() =>
             store.state.wallet.session != null
-                ? store.state.wallet.session.publicKey
+                ? store.state.wallet.session.publicKey.toString()
                 : null
         );
         const account = computed(() =>

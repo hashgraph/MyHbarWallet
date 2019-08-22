@@ -17,6 +17,7 @@
             />
 
             <InterfaceNavigationSection
+                v-if="false"
                 :image="contractImage"
                 :image-active="contractImageActive"
                 title="Contract"
@@ -24,6 +25,7 @@
             />
 
             <InterfaceNavigationSection
+                v-if="false"
                 :image="messageImage"
                 :image-active="messageImageActive"
                 title="Message"

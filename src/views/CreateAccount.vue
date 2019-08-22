@@ -60,9 +60,8 @@ import { createComponent, value, Wrapper } from "vue-function-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
 import store from "@/store";
 import { LOG_IN } from "@/store/mutations";
-import { Client, encodePrivateKey, encodePublicKey } from "hedera-sdk-js";
+import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "hedera-sdk-js";
 import { Id } from "@/store/modules/wallet";
-import { createKeystore, generateKey } from "hedera-sdk-js/src/Keys";
 
 export default createComponent({
     components: {
@@ -78,8 +77,8 @@ export default createComponent({
         ModalRequestToCreateAccount
     },
     setup(props, context) {
-        const privateKey: Wrapper<string | null> = value(null);
-        const publicKey: Wrapper<string | null> = value(null);
+        const privateKey: Wrapper<Ed25519PrivateKey | null> = value(null);
+        const publicKey: Wrapper<Ed25519PublicKey | null> = value(null);
 
         const modalAccessByHardwareIsOpen = value(false);
         const modalCreateWithSoftwareIsOpen = value(false);
@@ -141,9 +140,8 @@ export default createComponent({
         async function handleDownloadKeystoreSubmit() {
             modalDownloadKeystoreState.value.modalIsOpen = false;
             try {
-                const key = await generateKey();
-                const keyFile = await createKeystore(
-                    key.privateKey,
+                const key = await Ed25519PrivateKey.generate();
+                const keyFile = await key.createKeystore(
                     modalCreateByKeystoreState.value.password
                 );
 
@@ -158,8 +156,8 @@ export default createComponent({
                 keyStoreLink.click();
                 context.root.$el.removeChild(keyStoreLink);
 
-                privateKey.value = encodePrivateKey(key.privateKey);
-                publicKey.value = encodePublicKey(key.publicKey);
+                privateKey.value = key;
+                publicKey.value = key.publicKey;
 
                 setTimeout(() => {
                     modalRequestToCreateAccountIsOpen.value = true;
@@ -170,8 +168,8 @@ export default createComponent({
         }
 
         function handleCreateByPhraseSubmit(
-            newPrivateKey: string,
-            newPublicKey: string
+            newPrivateKey: Ed25519PrivateKey,
+            newPublicKey: Ed25519PublicKey
         ) {
             modalCreateByPhraseIsOpen.value = false;
 
