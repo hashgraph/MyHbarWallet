@@ -9,7 +9,9 @@
         "lint:js": "vue-cli-service lint",
         "lint:css": "stylelint --fix 'src/**/*.vue' 'src/**/*.css'",
         "test": "npm-run-all test:unit",
-        "test:unit": "vue-cli-service test:unit"
+        "test:unit": "vue-cli-service test:unit",
+        "firebase:deploy": "firebase deploy",
+        "deploy": "npm-run-all test build deploy"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.21",
