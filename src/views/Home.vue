@@ -56,7 +56,6 @@
             v-model="modalForgotToLogOutIsOpen"
             @change="handleForgotToLogoutChange"
         />
-        <Alerts timeout="7000" />
     </div>
 </template>
 
