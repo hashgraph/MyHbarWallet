@@ -14,7 +14,7 @@
                 :readonly="!editable"
                 :data-index="index"
                 :tabindex="editable ? null : -1"
-                :autocomplete-disabled="true"
+                autocomplete-disabled
                 @input="handleInput"
                 @focus="handleFocus"
             />
