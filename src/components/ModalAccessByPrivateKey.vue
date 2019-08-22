@@ -16,6 +16,8 @@
                 ref="input"
                 placeholder="Enter Private Key"
                 :value="state.privateKey"
+                :valid="valid"
+                :error="errorMessage"
                 @input="handlePrivateKeyInput"
             />
             <Button
@@ -80,6 +82,14 @@ export default createComponent({
             }
         });
 
+        // TODO: When this button does something, change to value, set in error handling try catch
+        const errorMessage = computed(() => {
+            if (!valid) {
+                return "Invalid Private Key";
+            }
+            return "";
+        });
+
         function handleModalChangeIsOpen(isOpen: boolean) {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
@@ -100,6 +110,7 @@ export default createComponent({
 
         return {
             valid,
+            errorMessage,
             handleModalChangeIsOpen,
             handlePrivateKeyInput
         };

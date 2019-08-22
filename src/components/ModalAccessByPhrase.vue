@@ -28,7 +28,6 @@
                     :busy="state.isBusy"
                 />
             </form>
-
             <div class="support">
                 <CustomerSupportLink />
             </div>
@@ -121,12 +120,5 @@ export default createComponent({
     display: flex;
     font-size: 14px;
     justify-content: space-around;
-}
-
-.error-message {
-    color: var(--color-basalt-grey);
-    font-family: Montserrat, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
 }
 </style>
