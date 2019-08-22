@@ -164,7 +164,13 @@ export default createComponent({
 
         function handleDownloadKeystoreSubmit() {
             context.root.$el.append(keyStoreLink.value as HTMLAnchorElement);
-            if (keyStoreLink.value != null) keyStoreLink.value.click();
+            // Neither keystorelink or key should ever be null if we got to this point, however this is
+            // mostly a sanity check.
+            if (keyStoreLink.value == null || privateKey.value == null) {
+                return;
+            }
+
+            keyStoreLink.value.click();
             context.root.$el.removeChild(
                 keyStoreLink.value as HTMLAnchorElement
             );
