@@ -25,6 +25,7 @@ export default createComponent({
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
+    flex-grow: 1;
     height: 100%;
     justify-content: center;
 }
