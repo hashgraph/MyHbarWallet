@@ -3,7 +3,7 @@ import { Client, Ed25519PrivateKey } from "@hashgraph/sdk";
 import { IS_LOGGED_IN } from "../../store/getters";
 import { ActionContext } from "vuex";
 import { RootState } from "..";
-import { REFRESH_BALANCE } from "../actions";
+import { REFRESH_BALANCE, LOG_IN as LOG_IN_ACTION } from "../actions";
 
 const SET_BALANCE = "wallet#set_balance";
 
@@ -59,6 +59,13 @@ export default {
             const balance = await state.session.client.getAccountBalance();
 
             commit(SET_BALANCE, balance);
+        },
+        async [LOG_IN_ACTION](
+            { dispatch, commit }: ActionContext<State, RootState>,
+            session: Session
+        ): Promise<void> {
+            commit(LOG_IN, session);
+            await dispatch(REFRESH_BALANCE);
         }
     }
 };
