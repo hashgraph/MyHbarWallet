@@ -65,7 +65,9 @@ export default createComponent({
 
         const balanceHBar = computed(() => {
             const hbar = Number(store.state.wallet.balance || 0) / 100000000;
-            return hbar < 0.0001 ? hbar : hbar.toFixed(4);
+            return formatter
+                .format(Number(hbar < 0.0001 ? hbar : hbar.toFixed(4)))
+                .split("$")[1];
         });
 
         const balanceUSD = computed(() => {
