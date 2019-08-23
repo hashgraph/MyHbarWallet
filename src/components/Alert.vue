@@ -94,8 +94,8 @@ export default createComponent({
     }
 
     @media (max-width: 425px) {
-        height: 50px;
         margin-block-start: 0;
+        min-height: 50px;
         padding: 6px 10px;
         width: calc(100% - 10px);
     }
