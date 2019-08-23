@@ -7,9 +7,13 @@ describe("UnitConverter.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
 
-    const wrapper = shallowMount(UnitConverter, { localVue });
+    const wrapper = shallowMount(UnitConverter, {
+        localVue
+    });
 
-    wrapper.setData({ valueLeft: "1000000000" });
+    wrapper.setData({
+        valueLeft: "1000000000"
+    });
 
     it("renders", (): void => {
         expect.assertions(1);
@@ -43,9 +47,13 @@ describe("UnitConverter.vue", (): void => {
             selectedRight: "millibar"
         });
         expect(wrapper.vm.$data.valueRight).toBe("100000000000000000000");
-        wrapper.setData({ selectedRight: "kilobar" });
+        wrapper.setData({
+            selectedRight: "kilobar"
+        });
         expect(wrapper.vm.$data.valueLeft).toBe("100000000000000");
-        wrapper.setData({ selectedLeft: "microbar" });
+        wrapper.setData({
+            selectedLeft: "microbar"
+        });
         expect(wrapper.vm.$data.valueRight).toBe("100000");
     });
 });
@@ -53,7 +61,9 @@ describe("UnitConverter.vue", (): void => {
 describe("ConvertUnits.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueFunctionApi);
-    const wrapper = shallowMount(ConvertUnits, { localVue });
+    const wrapper = shallowMount(ConvertUnits, {
+        localVue
+    });
 
     it("renders", (): void => {
         expect.assertions(1);

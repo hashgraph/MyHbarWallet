@@ -11,7 +11,9 @@ describe("SwitchButton.vue", (): void => {
         const handler = jest.fn();
         const wrapper = shallowMount(SwitchButton, {
             localVue,
-            propsData: { checked: false },
+            propsData: {
+                checked: false
+            },
             listeners: {
                 change: handler
             }

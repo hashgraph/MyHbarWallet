@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import Feature from "@/components/Feature.vue";
+import Feature from "../components/Feature.vue";
 import wallet from "../assets/icon-wallet.svg";
 import hardware from "../assets/icon-hardware.svg";
 import { createComponent } from "vue-function-api";

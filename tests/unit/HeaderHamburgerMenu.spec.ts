@@ -35,7 +35,9 @@ describe("HeaderHamburgerMenu.vue", (): void => {
         });
 
         expect(wrapper.find("nav").classes()).not.toContain("nav-open");
-        wrapper.setProps({ isOpen: true });
+        wrapper.setProps({
+            isOpen: true
+        });
         expect(wrapper.find("nav").classes()).toContain("nav-open");
         expect(wrapper.find(".card-container").exists()).toBe(true);
     });

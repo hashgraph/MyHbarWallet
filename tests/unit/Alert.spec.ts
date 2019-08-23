@@ -23,7 +23,10 @@ describe("Alert", (): void => {
 
     it("dynamically changes message and style", (): void => {
         expect.assertions(2);
-        wrapper.setProps({ message: "test2", level: "success" });
+        wrapper.setProps({
+            message: "test2",
+            level: "success"
+        });
         expect(wrapper.find("div").classes()).toContain("success");
         expect(wrapper.find(".message").text()).toContain("test2");
     });

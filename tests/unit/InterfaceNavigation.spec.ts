@@ -9,7 +9,9 @@ describe("InterfaceNavigation", (): void => {
 
     it("renders with children components", (): void => {
         expect.assertions(1);
-        const wrapper = shallowMount(InterfaceNavigation, { localVue });
+        const wrapper = shallowMount(InterfaceNavigation, {
+            localVue
+        });
         expect(wrapper.find(InterfaceNavigationSection).exists()).toBe(true);
     });
 });

@@ -60,14 +60,14 @@
 </template>
 
 <script lang="ts">
-import Features from "@/components/Features.vue";
-import FAQs from "@/components/FAQs.vue";
-import Community from "@/components/Community.vue";
-import HomeTileButtons from "@/components/HomeTileButtons.vue";
-import circleImage from "@/assets/circle.png";
-import ModalForgotToLogOut from "@/components/ModalForgotToLogOut.vue";
+import Features from "../components/Features.vue";
+import FAQs from "../components/FAQs.vue";
+import Community from "../components/Community.vue";
+import HomeTileButtons from "../components/HomeTileButtons.vue";
+import circleImage from "../assets/circle.png";
+import ModalForgotToLogOut from "../components/ModalForgotToLogOut.vue";
 import { createComponent, computed } from "vue-function-api";
-import store from "@/store";
+import store from "../store";
 
 export default createComponent({
     components: {

@@ -66,8 +66,8 @@
 
 <script lang="ts">
 import { createComponent } from "vue-function-api";
-import Accordion from "@/components/Accordion.vue";
-import CustomerSupportLink from "@/components/CustomerSupportLink.vue";
+import Accordion from "../components/Accordion.vue";
+import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 
 export default createComponent({
     components: {

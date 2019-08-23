@@ -55,7 +55,7 @@ import TextInput, {
 } from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import { SetupContext } from "vue-function-api/dist/types/vue";
-import { Id } from "@/store/modules/wallet";
+import { Id } from "../store/modules/wallet";
 import {
     Client,
     CryptoTransferTransaction,

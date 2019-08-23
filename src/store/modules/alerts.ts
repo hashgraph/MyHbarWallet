@@ -1,6 +1,6 @@
-import { RootState } from "@/store";
-import { ADD_ALERT, REMOVE_ALERT } from "@/store/mutations";
-import { ALERT } from "@/store/actions";
+import { RootState } from "../../store";
+import { ADD_ALERT, REMOVE_ALERT } from "../../store/mutations";
+import { ALERT } from "../../store/actions";
 import { ActionContext } from "vuex";
 
 let alertId = 0;

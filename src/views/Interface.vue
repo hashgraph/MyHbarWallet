@@ -6,7 +6,7 @@
                 <router-view />
             </div>
             <!-- todo: These are just placeholders for the actual items,
-            which have not been merged into master yet -->
+which have not been merged into master yet -->
             <AccountCard
                 :realm="account.realm"
                 :shard="account.shard"
@@ -27,9 +27,9 @@
 
 <script lang="ts">
 import InterfaceNavigation from "../components/InterfaceNavigation.vue";
-import NetworkCard from "@/components/NetworkCard.vue";
-import BalanceCard from "@/components/BalanceCard.vue";
-import AccountCard from "@/components/AccountCard.vue";
+import NetworkCard from "../components/NetworkCard.vue";
+import BalanceCard from "../components/BalanceCard.vue";
+import AccountCard from "../components/AccountCard.vue";
 import { createComponent, value, computed } from "vue-function-api";
 import store from "../store";
 

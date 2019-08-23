@@ -1,5 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
-import ReadOnlyInput from "@/components/ReadOnlyInput.vue";
+import ReadOnlyInput from "../../src/components/ReadOnlyInput.vue";
 
 describe("ReadOnlyInput.vue", (): void => {
     it("renders", (): void => {

@@ -31,7 +31,7 @@ import { createComponent } from "vue-function-api";
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import { mdiCheck } from "@mdi/js";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 
 export default createComponent({
     components: {

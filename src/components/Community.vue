@@ -42,12 +42,12 @@
 
 <script lang="ts">
 import { createComponent } from "vue-function-api";
-import CommunitySocialIcon from "@/components/CommunitySocialIcon.vue";
-import facebookSocial from "@/assets/facebook.png";
-import twitterSocial from "@/assets/twitter.jpg";
-import mediumSocial from "@/assets/medium.png";
-import redditSocial from "@/assets/reddit.svg";
-import githubSocial from "@/assets/github.png";
+import CommunitySocialIcon from "../components/CommunitySocialIcon.vue";
+import facebookSocial from "../assets/facebook.png";
+import twitterSocial from "../assets/twitter.jpg";
+import mediumSocial from "../assets/medium.png";
+import redditSocial from "../assets/reddit.svg";
+import githubSocial from "../assets/github.png";
 
 export default createComponent({
     components: {

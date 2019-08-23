@@ -58,8 +58,8 @@
 
 <script lang="ts">
 import { mdiFacebook, mdiGithubCircle, mdiTwitter } from "@mdi/js";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
-import FooterTop from "@/components/FooterTop.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
+import FooterTop from "../components/FooterTop.vue";
 import { createComponent, computed } from "vue-function-api";
 
 export default createComponent({

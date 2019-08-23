@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts">
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiAlertCircle } from "@mdi/js";
-import Tooltip from "@/components/Tooltip.vue";
+import Tooltip from "../components/Tooltip.vue";
 import { createComponent } from "vue-function-api";
 
 export default createComponent({

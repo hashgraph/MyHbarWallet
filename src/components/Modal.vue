@@ -35,7 +35,7 @@ import {
     onBeforeDestroy
 } from "vue-function-api";
 import { mdiClose } from "@mdi/js";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 
 const modalIds: number[] = [];
 let nextModalId = 0;

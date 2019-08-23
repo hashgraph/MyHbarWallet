@@ -59,26 +59,26 @@
 <!-- TODO:  should go to password modal after getting keystore file -->
 
 <script lang="ts">
-import FAQs from "@/components/FAQs.vue";
-import AccountTileButtons from "@/components/AccountTileButtons.vue";
-import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
+import FAQs from "../components/FAQs.vue";
+import AccountTileButtons from "../components/AccountTileButtons.vue";
+import ModalAccessByHardware from "../components/ModalAccessByHardware.vue";
 import ModalAccessBySoftware, {
     AccessSoftwareOption
-} from "@/components/ModalAccessBySoftware.vue";
-import ModalAccessByPhrase from "@/components/ModalAccessByPhrase.vue";
+} from "../components/ModalAccessBySoftware.vue";
+import ModalAccessByPhrase from "../components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey, {
     State as ModalAccessByPrivateKeyState
-} from "@/components/ModalAccessByPrivateKey.vue";
+} from "../components/ModalAccessByPrivateKey.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalPassword from "../components/ModalPassword.vue";
-import store from "@/store";
-import { LOG_IN } from "@/store/mutations";
+import store from "../store";
+import { LOG_IN } from "../store/mutations";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { createComponent, value, Wrapper } from "vue-function-api";
 import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
-import { Id } from "@/store/modules/wallet";
-import { ALERT } from "@/store/actions";
+import { Id } from "../store/modules/wallet";
+import { ALERT } from "../store/actions";
 
 export default createComponent({
     components: {

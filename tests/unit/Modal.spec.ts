@@ -22,7 +22,9 @@ describe("Modal.vue", (): void => {
 
     it("closes", (): void => {
         expect.assertions(1);
-        wrapper.setProps({ isOpen: false });
+        wrapper.setProps({
+            isOpen: false
+        });
         expect(wrapper.find("div").classes()).not.toContain("is-open");
     });
 });

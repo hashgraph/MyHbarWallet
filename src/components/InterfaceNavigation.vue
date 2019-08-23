@@ -48,9 +48,9 @@ import contractImage from "../assets/contract.svg";
 import contractImageActive from "../assets/contract-active.svg";
 import messageImage from "../assets/message.svg";
 import messageImageActive from "../assets/message-active.svg";
-import store from "@/store";
-import { SET_INTERFACE_MENU_IS_OPEN } from "@/store/mutations";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import store from "../store";
+import { SET_INTERFACE_MENU_IS_OPEN } from "../store/mutations";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiClose } from "@mdi/js";
 import { createComponent, computed } from "vue-function-api";
 

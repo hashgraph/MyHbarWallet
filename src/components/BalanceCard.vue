@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiLoading, mdiRefresh } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
 import { computed, createComponent, value } from "vue-function-api";

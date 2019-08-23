@@ -1,13 +1,15 @@
 import { shallowMount } from "@vue/test-utils";
 import Button from "../../src/components/Button.vue";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../../src/components/MaterialDesignIcon.vue";
 
 describe("Button.vue", (): void => {
     it("renders", (): void => {
         expect.assertions(1);
         const label = "Choose a Hardware";
         const wrapper = shallowMount(Button, {
-            propsData: { label }
+            propsData: {
+                label
+            }
         });
 
         expect(wrapper.text()).toMatch(label);
@@ -17,7 +19,10 @@ describe("Button.vue", (): void => {
         expect.assertions(2);
         const label = "Choose a Hardware";
         const wrapper = shallowMount(Button, {
-            propsData: { label, busy: true }
+            propsData: {
+                label,
+                busy: true
+            }
         });
 
         expect(wrapper.text()).not.toMatch(label);
@@ -28,8 +33,12 @@ describe("Button.vue", (): void => {
         expect.assertions(1);
         const handler = jest.fn();
         const wrapper = shallowMount(Button, {
-            propsData: { label: "" },
-            listeners: { click: handler }
+            propsData: {
+                label: ""
+            },
+            listeners: {
+                click: handler
+            }
         });
 
         wrapper.trigger("click");

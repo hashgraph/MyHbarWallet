@@ -1,7 +1,7 @@
 import { createLocalVue, mount, shallowMount } from "@vue/test-utils";
 import TextInput from "../../src/components/TextInput.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../../src/components/MaterialDesignIcon.vue";
 
 describe("TextInput.vue", (): void => {
     const localVue = createLocalVue();
@@ -12,7 +12,9 @@ describe("TextInput.vue", (): void => {
         const value = "12345";
         const wrapper = shallowMount(TextInput, {
             localVue,
-            propsData: { value }
+            propsData: {
+                value
+            }
         });
 
         const inputElement = wrapper.find("input").element as HTMLInputElement;
@@ -26,7 +28,10 @@ describe("TextInput.vue", (): void => {
         const value = "super-secure-password";
         const wrapper = mount(TextInput, {
             localVue,
-            propsData: { obscure: true, value }
+            propsData: {
+                obscure: true,
+                value
+            }
         });
 
         let inputElement = wrapper.find("input").element as HTMLInputElement;
@@ -45,7 +50,10 @@ describe("TextInput.vue", (): void => {
 
         const wrapper = shallowMount(TextInput, {
             localVue,
-            propsData: { obscure: true, value },
+            propsData: {
+                obscure: true,
+                value
+            },
             listeners: {
                 input(newValue: string): void {
                     value = newValue;

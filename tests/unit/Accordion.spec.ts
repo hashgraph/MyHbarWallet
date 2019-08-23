@@ -1,5 +1,5 @@
 import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
-import Accordion from "@/components/Accordion.vue";
+import Accordion from "../../src/components/Accordion.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("Accordion.vue", (): void => {

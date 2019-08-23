@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { createComponent, computed, PropType } from "vue-function-api";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import {
     mdiClose,
     mdiCloseCircleOutline,
@@ -23,8 +23,8 @@ import {
     mdiAlertOutline,
     mdiCheckCircleOutline
 } from "@mdi/js";
-import { REMOVE_ALERT } from "@/store/mutations";
-import store from "@/store";
+import { REMOVE_ALERT } from "../store/mutations";
+import store from "../store";
 
 interface Props {
     id: number;

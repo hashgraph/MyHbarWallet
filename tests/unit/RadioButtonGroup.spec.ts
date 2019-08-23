@@ -1,9 +1,9 @@
 import { shallowMount, mount } from "@vue/test-utils";
-import RadioButtonGroup from "@/components/RadioButtonGroup.vue";
-import imageKey from "@/assets/button-key.svg";
-import imagePhrase from "@/assets/button-phrase.svg";
-import imageFile from "@/assets/button-file.svg";
-import RadioButton from "@/components/RadioButton.vue";
+import RadioButtonGroup from "../../src/components/RadioButtonGroup.vue";
+import imageKey from "../../src/assets/button-key.svg";
+import imagePhrase from "../../src/assets/button-phrase.svg";
+import imageFile from "../../src/assets/button-file.svg";
+import RadioButton from "../../src/components/RadioButton.vue";
 
 describe("RadioButtonGroup.vue", (): void => {
     it("renders with a list", (): void => {

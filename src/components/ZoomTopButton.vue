@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { mdiChevronUp } from "@mdi/js";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { computed, createComponent, value } from "vue-function-api";
 
 export default createComponent({

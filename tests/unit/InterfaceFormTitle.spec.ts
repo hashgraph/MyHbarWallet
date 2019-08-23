@@ -1,5 +1,5 @@
 import { createLocalVue, shallowMount } from "@vue/test-utils";
-import InterfaceFormTitle from "@/components/InterfaceFormTitle.vue";
+import InterfaceFormTitle from "../../src/components/InterfaceFormTitle.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("InterfaceForm.vue", (): void => {

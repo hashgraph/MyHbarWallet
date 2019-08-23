@@ -5,7 +5,7 @@ import AccessMyAccount from "./views/AccessMyAccount.vue";
 import CreateAccount from "./views/CreateAccount.vue";
 import HardwareWalletAffiliates from "./views/HardwareWalletAffiliates.vue";
 import PrivacyPolicy from "./views/PrivacyPolicy.vue";
-import InterfaceCreateAccount from "@/views/InterfaceCreateAccount.vue";
+import InterfaceCreateAccount from "./views/InterfaceCreateAccount.vue";
 import TermsConditions from "./views/TermsConditions.vue";
 import Error404 from "./views/Error404.vue";
 import { PositionResult } from "vue-router/types/router";
@@ -23,7 +23,8 @@ function InterfaceSendTransfer(): Promise<
     typeof import("./views/InterfaceSendTransfer.vue")
 > {
     return import(
-        /* webpackChunkName: "interface" */ "./views/InterfaceSendTransfer.vue"
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceSendTransfer.vue"
     );
 }
 
@@ -31,7 +32,8 @@ function InterfaceDeployContract(): Promise<
     typeof import("./views/InterfaceDeployContract.vue")
 > {
     return import(
-        /* webpackChunkName: "interface" */ "./views/InterfaceDeployContract.vue"
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceDeployContract.vue"
     );
 }
 
@@ -39,7 +41,8 @@ function InterfaceInteractWithContract(): Promise<
     typeof import("./views/InterfaceInteractWithContract.vue")
 > {
     return import(
-        /* webpackChunkName: "interface" */ "./views/InterfaceInteractWithContract.vue"
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceInteractWithContract.vue"
     );
 }
 
@@ -47,7 +50,8 @@ function InterfaceSignMessage(): Promise<
     typeof import("./views/InterfaceSignMessage.vue")
 > {
     return import(
-        /* webpackChunkName: "interface" */ "./views/InterfaceSignMessage.vue"
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceSignMessage.vue"
     );
 }
 
@@ -55,7 +59,8 @@ function InterfaceVerifyMessage(): Promise<
     typeof import("./views/InterfaceVerifyMessage.vue")
 > {
     return import(
-        /* webpackChunkName: "interface" */ "./views/InterfaceVerifyMessage.vue"
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceVerifyMessage.vue"
     );
 }
 
@@ -65,7 +70,10 @@ Vue.use(Router);
 function RequireWallet(
     _to: Route,
     _from: Route,
-    next: { (arg0: string): void; (): void }
+    next: {
+        (arg0: string): void;
+        (): void;
+    }
 ): void {
     if (store.state.wallet.session == null) {
         return next("/");
@@ -118,7 +126,9 @@ export default new Router({
             beforeEnter: RequireWallet,
             component: Interface,
             name: "interface",
-            redirect: { name: "send-transfer" },
+            redirect: {
+                name: "send-transfer"
+            },
             children: [
                 {
                     path: "send-transfer",
@@ -165,9 +175,14 @@ export default new Router({
         }
 
         if (to.hash) {
-            return { selector: to.hash };
+            return {
+                selector: to.hash
+            };
         }
 
-        return { x: 0, y: 0 };
+        return {
+            x: 0,
+            y: 0
+        };
     }
 });
