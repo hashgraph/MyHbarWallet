@@ -26,27 +26,28 @@
                     class="pub-qr"
                 />
 
-                <div class="pub-container">
-                    <ReadOnlyInput
-                        v-if="publicKey"
-                        class="key-input"
-                        :value="publicKey.toString()"
+                <ReadOnlyInput
+                    v-if="publicKey"
+                    class="key-input"
+                    :value="publicKey.toString()"
+                />
+
+                <div class="buttons">
+                    <Button
+                        compact
+                        label="Copy Public Key"
+                        class="button"
+                        @click="handleClickCopy"
                     />
 
                     <Button
                         compact
-                        label="Copy"
-                        class="copy-button"
-                        @click="handleClickCopy"
+                        outline
+                        label="I have an Account ID"
+                        class="button"
+                        @click="handleHasAccount"
                     />
                 </div>
-
-                <Button
-                    compact
-                    outline
-                    label="I have an Account ID"
-                    @click="handleHasAccount"
-                />
             </form>
         </template>
     </Modal>
@@ -106,47 +107,25 @@ export default createComponent({
 
 <style lang="postcss" scoped>
 .modal-request-to-create-account {
-    align-items: stretch;
+    align-items: center;
     display: flex;
     flex-direction: column;
 }
 
-.pub-container {
-    display: flex;
-    margin-block: 40px;
+.key-input {
+    margin-block: 20px;
     user-select: none;
-}
-
-.copy-button {
-    flex-shrink: 1;
-}
-
-.pub-qr {
-    align-self: center;
-}
-
-.link-container {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    margin-block-start: 20px;
-}
-
-.link {
-    color: var(--color-china-blue);
-    cursor: pointer;
-    font-size: 14px;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-        text-decoration: underline;
-    }
 }
 
 .instructions {
     color: var(--color-china-blue);
     font-size: 14px;
     margin-block-end: 30px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 </style>
