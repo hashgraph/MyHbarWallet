@@ -62,10 +62,10 @@ import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
 import { createComponent, value, computed } from "vue-function-api";
 import store from "@/store";
-import { AccountId } from "hedera-sdk-js/src/Client";
+import { AccountId } from "@hashgraph/sdk/src/Client";
 import { ALERT } from "@/store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
-import { CryptoTransferTransaction } from "hedera-sdk-js";
+import { CryptoTransferTransaction } from "@hashgraph/sdk";
 import { Unit } from "@/components/UnitConverter.vue";
 
 export default createComponent({

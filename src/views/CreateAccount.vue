@@ -61,7 +61,7 @@ import { createComponent, value, Wrapper } from "vue-function-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
 import store from "@/store";
 import { LOG_IN } from "@/store/mutations";
-import { Client, Ed25519PrivateKey } from "hedera-sdk-js";
+import { Client, Ed25519PrivateKey } from "@hashgraph/sdk";
 import { Id } from "@/store/modules/wallet";
 import { ALERT } from "@/store/actions";
 

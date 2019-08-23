@@ -55,7 +55,7 @@ import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "@/clipboard";
 import ReadOnlyInput from "@/components/ReadOnlyInput.vue";
 import Warning from "@/components/Warning.vue";
-import { Ed25519PublicKey } from "hedera-sdk-js";
+import { Ed25519PublicKey } from "@hashgraph/sdk";
 import { ALERT } from "@/store/actions";
 import store from "@/store";
 

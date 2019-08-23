@@ -60,7 +60,7 @@ import {
     Client,
     CryptoTransferTransaction,
     Ed25519PrivateKey
-} from "hedera-sdk-js";
+} from "@hashgraph/sdk";
 
 export interface Props {
     isOpen: boolean;

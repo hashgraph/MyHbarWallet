@@ -53,7 +53,7 @@ import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import { computed, createComponent, value, Wrapper } from "vue-function-api";
 import store from "@/store";
-import { AccountCreateTransaction, Ed25519PublicKey } from "hedera-sdk-js";
+import { AccountCreateTransaction, Ed25519PublicKey } from "@hashgraph/sdk";
 import { ALERT } from "@/store/actions";
 import ModalCreateAccountSuccess from "@/components/ModalCreateAccountSuccess.vue";
 import { getValueOfUnit, Unit } from "@/components/UnitConverter.vue";

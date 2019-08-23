@@ -1,5 +1,5 @@
 import { LOG_OUT, LOG_IN } from "@/store/mutations";
-import { Client, Ed25519PrivateKey } from "hedera-sdk-js";
+import { Client, Ed25519PrivateKey } from "@hashgraph/sdk";
 import { IS_LOGGED_IN } from "@/store/getters";
 import { ActionContext } from "vuex";
 import { RootState } from "..";

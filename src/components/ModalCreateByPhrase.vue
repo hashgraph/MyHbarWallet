@@ -97,7 +97,7 @@ import {
     generateMnemonic,
     MnemonicResult,
     Ed25519PrivateKey
-} from "hedera-sdk-js/src/Keys";
+} from "@hashgraph/sdk/src/Keys";
 
 export default createComponent({
     components: {

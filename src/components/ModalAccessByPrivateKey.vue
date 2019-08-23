@@ -41,7 +41,7 @@ import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import { computed, createComponent, PropType, watch } from "vue-function-api";
 import { SetupContext } from "vue-function-api/dist/types/vue";
-import { Ed25519PrivateKey } from "hedera-sdk-js";
+import { Ed25519PrivateKey } from "@hashgraph/sdk";
 
 export interface State {
     modalIsOpen: boolean;
