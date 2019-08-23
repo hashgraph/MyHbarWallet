@@ -29,8 +29,8 @@
             @submit="handleAccessBySoftwareSubmit"
         />
 
-        <ModalPassword
-            v-model="modalPasswordState"
+        <ModalKeystoreFilePassword
+            v-model="ModalKeystoreFilePasswordState"
             @submit="handlePasswordSubmit"
         />
 
@@ -71,7 +71,7 @@ import ModalAccessByPrivateKey, {
 } from "../components/ModalAccessByPrivateKey.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
-import ModalPassword from "../components/ModalPassword.vue";
+import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
 import store from "../store";
 import { LOG_IN } from "../store/mutations";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
@@ -89,7 +89,7 @@ export default createComponent({
         ModalAccessByPhrase,
         ModalAccessByPrivateKey,
         PageTitle,
-        ModalPassword,
+        ModalKeystoreFilePassword,
         ModalEnterAccountId,
         ModalRequestToCreateAccount
     },
@@ -107,7 +107,7 @@ export default createComponent({
             isValid: true
         });
 
-        const modalPasswordState = value({
+        const ModalKeystoreFilePasswordState = value({
             modalIsOpen: false,
             password: "",
             isBusy: false
@@ -171,7 +171,7 @@ export default createComponent({
                 }
             );
 
-            modalPasswordState.value.modalIsOpen = true;
+            ModalKeystoreFilePasswordState.value.modalIsOpen = true;
 
             const keyStoreFileU8 = new Uint8Array(keyStoreArrayBuff);
 
@@ -187,7 +187,7 @@ export default createComponent({
         }
 
         async function handlePasswordSubmit() {
-            const pwState = modalPasswordState.value;
+            const pwState = ModalKeystoreFilePasswordState.value;
             pwState.isBusy = true;
 
             if (keystoreFileArray.value == null) {
@@ -200,7 +200,7 @@ export default createComponent({
                 setPrivateKey(
                     await Ed25519PrivateKey.fromKeystore(
                         keystoreFileArray.value,
-                        modalPasswordState.value.password
+                        ModalKeystoreFilePasswordState.value.password
                     )
                 );
                 // Close  previous modal and open another one
@@ -294,7 +294,7 @@ export default createComponent({
             modalAccessByHardwareIsOpen,
             modalAccessBySoftwareIsOpen,
             modalAccessByPhraseState,
-            modalPasswordState,
+            ModalKeystoreFilePasswordState,
             modalAccessByPrivateKeyState,
             modalEnterAccountIdIsOpen,
             modalRequestToCreateAccountIsOpen,
