@@ -50,7 +50,7 @@ import {
 import Modal from "./Modal.vue";
 import Button from "../components/Button.vue";
 import store from "../store";
-import { ALERT } from "../store/actions.ts";
+import { ALERT } from "../store/actions";
 import TextInput from "../components/TextInput.vue";
 
 interface Props {
