@@ -7,9 +7,15 @@
         @change="this.$listeners.change"
     >
         <div class="instructions">
-            Provide your public key (this QR Code or the copied text) to a
-            friend on the hedera network. They can invite you to join the
-            network.
+            <div>
+                Provide your public key (available below as QR or text) to
+                someone you trust with an account on the Hedera network.
+            </div>
+            <div>
+                They can use your public key to create an account for you. Once
+                they do so, record your new account ID in a safe place, then
+                click "I have an Account ID" below to continue.
+            </div>
         </div>
         <template>
             <form
@@ -30,16 +36,20 @@
                     :value="publicKey.toString()"
                 />
 
-                <Button
-                    compact
-                    label="Copy"
-                    class="modal-button"
-                    @click="handleClickCopy"
-                />
-                <div class="link-container">
-                    <span class="link" @click="handleHasAccount"
-                        >Already have an Account ID?</span
-                    >
+                <div class="buttons">
+                    <Button
+                        compact
+                        outline
+                        label="I have an Account ID"
+                        class="button"
+                        @click="handleHasAccount"
+                    />
+                    <Button
+                        compact
+                        label="Copy Public Key"
+                        class="button"
+                        @click="handleClickCopy"
+                    />
                 </div>
             </form>
         </template>
@@ -99,46 +109,51 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
+button {
+    width: 200px;
+
+    @media (max-width: 425px) {
+        width: 100%;
+
+        &:last-child {
+            margin-block-end: 15px;
+        }
+    }
+}
+
 .modal-request-to-create-account {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-button {
-    margin-block-start: 20px;
-}
-
-.pub-qr {
-    align-self: center;
-}
-
-.key-input {
-    margin-block-start: 40px;
-}
-
-.link-container {
     align-items: center;
     display: flex;
-    justify-content: center;
-    margin-block-start: 20px;
-}
-
-.link {
-    color: var(--color-china-blue);
-    cursor: pointer;
-    font-size: 14px;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-        text-decoration: underline;
-    }
+    flex-direction: column;
 }
 
 .instructions {
     color: var(--color-china-blue);
     font-size: 14px;
-    margin-block-end: 30px;
+
+    & div {
+        padding-block-end: 15px;
+    }
+}
+
+.pub-qr {
+    padding-block-end: 40px;
+    padding-block-start: 25px;
+}
+
+.key-input {
+    user-select: none;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-block-start: 40px;
+    width: 100%;
+
+    @media (max-width: 425px) {
+        align-items: center;
+        flex-direction: column-reverse;
+    }
 }
 </style>
