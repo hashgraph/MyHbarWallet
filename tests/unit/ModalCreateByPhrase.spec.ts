@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import { plugin as VueFunctionApi } from "vue-function-api";
-import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
+import ModalCreateByPhrase from "../../src/components/ModalCreateByPhrase.vue";
 
 describe("ModalCreateByPhrase.vue", (): void => {
     it("renders", (): void => {
