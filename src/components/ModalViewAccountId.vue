@@ -18,10 +18,6 @@
             <div class="account-id">
                 {{ accountId }}
             </div>
-
-            <div class="copy-button" @click="handleClickCopy">
-                Copy
-            </div>
         </div>
     </Modal>
 </template>
@@ -67,20 +63,8 @@ export default createComponent({
                 : null;
         });
 
-        async function handleClickCopy() {
-            if (accountId.value != null) {
-                await writeToClipboard(accountId.value.toString());
-            }
-        }
-
-        function handleHasAccount() {
-            context.emit("hasAccount");
-        }
-
         return {
-            accountId,
-            handleClickCopy,
-            handleHasAccount
+            accountId
         };
     }
 });
@@ -91,7 +75,8 @@ export default createComponent({
     align-items: center;
     display: flex;
     flex-direction: column;
-    margin-block-start: 40px;
+    margin-block-end: 80px;
+    margin-block-start: 80px;
 }
 
 .account-id {
@@ -99,20 +84,5 @@ export default createComponent({
     font-size: 26px;
     justify-content: center;
     margin-block-start: 20px;
-}
-
-.copy-button {
-    align-items: center;
-    color: var(--color-melbourne-cup);
-    cursor: pointer;
-    display: flex;
-    font-family: Montserrat, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    justify-content: center;
-    margin-block-end: 20px;
-    margin-block-start: 20px;
-    text-decoration: none;
-    user-select: none;
 }
 </style>
