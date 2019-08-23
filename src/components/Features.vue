@@ -2,7 +2,7 @@
     <div class="features">
         <div class="wrap">
             <div class="feature-grid">
-                <Feature :image="wallet" title="Join MyHederaWallet">
+                <Feature :image="wallet" title="Join MyHbarWallet">
                     Access Hedera Hashgraph's most-trusted wallet client.
                 </Feature>
                 <Feature :image="hardware" title="Hardware Wallet Support">

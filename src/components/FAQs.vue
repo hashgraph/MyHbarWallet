@@ -18,9 +18,9 @@
                             How do I create a new account?
                         </template>
                         <template v-slot:content>
-                            MyHederaWallet (MHW) offers three ways to create a
-                            new H wallet. These are via Keystore file,
-                            Passphrase, or Private Key.
+                            MyHbarWallet (MHW) offers three ways to create a new
+                            H wallet. These are via Keystore file, Passphrase,
+                            or Private Key.
                         </template>
                     </Accordion>
                     <Accordion>

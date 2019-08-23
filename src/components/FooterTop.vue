@@ -135,7 +135,7 @@
                 MHW? Donate!
             </div>
             <div class="item">
-                MyHederaWallet is open-source and free to the community. Your
+                MyHbarWallet is open-source and free to the community. Your
                 donations go a long way towards making that possible.
             </div>
             <div class="donation">

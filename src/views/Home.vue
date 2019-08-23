@@ -11,7 +11,7 @@
                             Original Wallet
                         </div>
                         <div class="subtitle">
-                            MyHederaWallet is a free, client-side interface
+                            MyHbarWallet is a free, client-side interface
                             helping you interact with Hedera hashgraph. Our
                             easy-to-use, open-source platform allows you to
                             generate wallets, interact with smart contracts, and
@@ -30,9 +30,9 @@
             <div class="page-container">
                 <div class="banner">
                     <div class="banner-content">
-                        <div class="about-title">About MyHederaWallet</div>
+                        <div class="about-title">About MyHbarWallet</div>
                         <div class="about-subtitle">
-                            MyHederaWallet puts Hedera Hashgraph at your
+                            MyHbarWallet puts Hedera Hashgraph at your
                             fingertips. Bacon ipsum dolor amet shank swine beef
                             ribs kevin chicken, jowl prosciutto flank shankle
                             tenderloin burgdoggen leberkas sausage pork belly.
