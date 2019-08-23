@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { value, createComponent } from "vue-function-api";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiChevronUp } from "@mdi/js";
 
 export default createComponent({

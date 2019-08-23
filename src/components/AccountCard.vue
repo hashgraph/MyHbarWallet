@@ -38,15 +38,15 @@
 </template>
 
 <script lang="ts">
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiQrcode, mdiContentCopy } from "@mdi/js";
-import Tooltip from "@/components/Tooltip.vue";
-import { writeToClipboard } from "@/clipboard";
+import Tooltip from "../components/Tooltip.vue";
+import { writeToClipboard } from "../clipboard";
 import { computed, createComponent, PropType, value } from "vue-function-api";
-import Identicon from "@/components/Identicon.vue";
-import { ALERT } from "@/store/actions";
-import store from "@/store";
-import ModalViewAccountQR from "@/components/ModalViewAccountQR.vue";
+import Identicon from "../components/Identicon.vue";
+import { ALERT } from "../store/actions";
+import store from "../store";
+import ModalViewAccountQR from "../components/ModalViewAccountQR.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 

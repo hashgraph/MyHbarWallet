@@ -26,10 +26,10 @@
 
 <script lang="ts">
 import { createComponent, PropType, computed } from "vue-function-api";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
-import store from "@/store";
-import { SET_INTERFACE_MENU_IS_OPEN } from "@/store/mutations";
+import store from "../store";
+import { SET_INTERFACE_MENU_IS_OPEN } from "../store/mutations";
 
 interface InterfaceNavigationItem {
     name: string;

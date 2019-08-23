@@ -75,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiEye, mdiEyeOutline, mdiCheckCircle } from "@mdi/js";
 import {
     createComponent,
@@ -84,7 +84,7 @@ import {
     PropType,
     Wrapper
 } from "vue-function-api";
-import { writeToClipboard } from "@/clipboard";
+import { writeToClipboard } from "../clipboard";
 
 interface Props {
     placeholder: string;

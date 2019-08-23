@@ -1,6 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
-import ModalSuccessCreatingKeyPair from "@/components/ModalSuccessCreatingKeyPair.vue";
-import Modal from "@/components/Modal.vue";
+import ModalSuccessCreatingKeyPair from "../../src/components/ModalSuccessCreatingKeyPair.vue";
+import Modal from "../../src/components/Modal.vue";
 
 describe("ModalSuccessCreatingKeyPair.vue", (): void => {
     it("renders", (): void => {
@@ -13,7 +13,9 @@ describe("ModalSuccessCreatingKeyPair.vue", (): void => {
 
         expect(wrapper.find(Modal).props().isOpen).toBe(false);
 
-        wrapper.setProps({ isOpen: true });
+        wrapper.setProps({
+            isOpen: true
+        });
         expect(wrapper.find(Modal).props().isOpen).toBe(true);
     });
 

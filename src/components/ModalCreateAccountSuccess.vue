@@ -18,12 +18,12 @@
 
 <script lang="ts">
 import { createComponent, PropType } from "vue-function-api";
-import { writeToClipboard } from "@/clipboard";
+import { writeToClipboard } from "../clipboard";
 import { mdiCheck } from "@mdi/js";
-import Modal from "@/components/Modal.vue";
-import ReadOnlyInput from "@/components/ReadOnlyInput.vue";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
-import Button from "@/components/Button.vue";
+import Modal from "../components/Modal.vue";
+import ReadOnlyInput from "../components/ReadOnlyInput.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
+import Button from "../components/Button.vue";
 
 export default createComponent({
     components: {

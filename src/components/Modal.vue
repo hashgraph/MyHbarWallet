@@ -35,7 +35,7 @@ import {
     onBeforeDestroy
 } from "vue-function-api";
 import { mdiClose } from "@mdi/js";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 
 function setModalIsOpenOnBody(isOpen: boolean) {
     document.body.classList.toggle("modal-is-open", isOpen);

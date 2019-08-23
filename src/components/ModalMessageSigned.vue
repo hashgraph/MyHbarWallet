@@ -13,7 +13,7 @@ import { createComponent, PropType } from "vue-function-api";
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import TextInput from "../components/TextInput.vue";
-import { writeToClipboard } from "@/clipboard";
+import { writeToClipboard } from "../clipboard";
 
 export default createComponent({
     components: {

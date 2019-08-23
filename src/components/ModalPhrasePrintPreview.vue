@@ -50,7 +50,7 @@
 import { createComponent } from "vue-function-api";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
-import Mnemonic from "@/components/MnemonicInput.vue";
+import Mnemonic from "../components/MnemonicInput.vue";
 
 export default createComponent({
     components: {

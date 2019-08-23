@@ -150,7 +150,7 @@
 
 <script lang="ts">
 import { createComponent, value } from "vue-function-api";
-import ModalCustomerService from "@/components/ModalCustomerService.vue";
+import ModalCustomerService from "../components/ModalCustomerService.vue";
 
 export default createComponent({
     components: {

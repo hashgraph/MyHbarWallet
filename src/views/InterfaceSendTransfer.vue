@@ -61,12 +61,12 @@ import TextInput from "../components/TextInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
 import { createComponent, value, computed } from "vue-function-api";
-import store from "@/store";
+import store from "../store";
 import { AccountId } from "@hashgraph/sdk/src/Client";
-import { ALERT } from "@/store/actions";
+import { ALERT } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { CryptoTransferTransaction } from "@hashgraph/sdk";
-import { Unit } from "@/components/UnitConverter.vue";
+import { Unit } from "../components/UnitConverter.vue";
 
 export default createComponent({
     components: {

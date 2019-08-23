@@ -30,8 +30,8 @@
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import { createComponent, PropType } from "vue-function-api";
-import store from "@/store";
-import { LOG_OUT } from "@/store/mutations";
+import store from "../store";
+import { LOG_OUT } from "../store/mutations";
 
 interface Props {
     isOpen: boolean;

@@ -84,7 +84,7 @@ import InfoButton from "../components/InfoButton.vue";
 import ModalPhrasePrintPreview from "../components/ModalPhrasePrintPreview.vue";
 import printIcon from "../assets/icon-printer.svg";
 import { mdiCached } from "@mdi/js";
-import ModalVerifyPhrase from "@/components/ModalVerifyPhrase.vue";
+import ModalVerifyPhrase from "../components/ModalVerifyPhrase.vue";
 import {
     computed,
     createComponent,

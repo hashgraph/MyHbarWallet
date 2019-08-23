@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
-import Tooltip from "@/components/Tooltip.vue";
+import Tooltip from "../../src/components/Tooltip.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
 describe("Tooltip.vue", (): void => {

@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiCheckCircle } from "@mdi/js";
 import { createComponent, computed } from "vue-function-api";
 

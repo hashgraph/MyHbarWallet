@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
-import FAQs from "@/components/FAQs.vue";
-import Accordion from "@/components/Accordion.vue";
-import CustomerSupportLink from "@/components/CustomerSupportLink.vue";
+import FAQs from "../../src/components/FAQs.vue";
+import Accordion from "../../src/components/Accordion.vue";
+import CustomerSupportLink from "../../src/components/CustomerSupportLink.vue";
 
 describe("FAQs.vue", (): void => {
     it("renders", (): void => {

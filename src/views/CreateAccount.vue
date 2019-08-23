@@ -44,13 +44,13 @@
 
 <script lang="ts">
 import FAQs from "../components/FAQs.vue";
-import AccountTileButtons from "@/components/AccountTileButtons.vue";
-import ModalAccessByHardware from "@/components/ModalAccessByHardware.vue";
+import AccountTileButtons from "../components/AccountTileButtons.vue";
+import ModalAccessByHardware from "../components/ModalAccessByHardware.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import ModalCreateWithSoftware, {
     CreateSoftwareOption
-} from "@/components/ModalCreateWithSoftware.vue";
+} from "../components/ModalCreateWithSoftware.vue";
 import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
 import ModalDownloadKeystore, {
     State as DownloadKeystoreState
@@ -59,11 +59,11 @@ import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
 import PageTitle from "../components/PageTitle.vue";
 import { createComponent, value, Wrapper } from "vue-function-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
-import store from "@/store";
-import { LOG_IN } from "@/store/mutations";
+import store from "../store";
+import { LOG_IN } from "../store/mutations";
 import { Client, Ed25519PrivateKey } from "@hashgraph/sdk";
-import { Id } from "@/store/modules/wallet";
-import { ALERT } from "@/store/actions";
+import { Id } from "../store/modules/wallet";
+import { ALERT } from "../store/actions";
 
 export default createComponent({
     components: {

@@ -6,8 +6,12 @@ describe("OptionalPasswordInput", (): void => {
         propsData: {
             value: ""
         },
-        data(): { showPassword: boolean } {
-            return { showPassword: true };
+        data(): {
+            showPassword: boolean;
+        } {
+            return {
+                showPassword: true
+            };
         },
         methods: {
             handleInput: (_: string) => {

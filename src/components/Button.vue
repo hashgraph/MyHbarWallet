@@ -30,7 +30,7 @@
 <script lang="ts">
 import { createComponent } from "vue-function-api";
 import { mdiLoading } from "@mdi/js";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 
 export default createComponent({
     components: {

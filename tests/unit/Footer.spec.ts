@@ -1,8 +1,8 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
-import Footer from "@/components/Footer.vue";
+import Footer from "../../src/components/Footer.vue";
 import { plugin as VueFunctionApi } from "vue-function-api";
-import MaterialDesignIcon from "@/components/MaterialDesignIcon.vue";
-import FooterTop from "@/components/FooterTop.vue";
+import MaterialDesignIcon from "../../src/components/MaterialDesignIcon.vue";
+import FooterTop from "../../src/components/FooterTop.vue";
 import VueRouter from "vue-router";
 
 describe("Footer.vue", (): void => {

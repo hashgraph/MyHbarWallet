@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import { plugin as VueFunctionApi } from "vue-function-api";
-import MnemonicInput from "@/components/MnemonicInput.vue";
+import MnemonicInput from "../../src/components/MnemonicInput.vue";
 
 describe("MnemonicInput.vue", (): void => {
     const localVue = createLocalVue();

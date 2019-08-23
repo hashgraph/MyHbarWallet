@@ -141,12 +141,12 @@ type Context = SetupContext & {
 // some common words that might be thrown into a password and make it less secure
 // todo: audit and add/remove words
 /*
-    The optional user_inputs argument is an array of strings that zxcvbn will treat as an extra dictionary.
-    This can be whatever list of strings you like, but is meant for user inputs from
-    other fields of the form, like name and email. That way a password that includes a user's personal information
-    can be heavily penalized. This list is also good for site-specific vocabulary — Acme Brick Co. might want to
-    include ['acme', 'brick', 'acmebrick', etc].
- */
+The optional user_inputs argument is an array of strings that zxcvbn will treat as an extra dictionary.
+This can be whatever list of strings you like, but is meant for user inputs from
+other fields of the form, like name and email. That way a password that includes a user's personal information
+can be heavily penalized. This list is also good for site-specific vocabulary — Acme Brick Co. might want to
+include ['acme', 'brick', 'acmebrick', etc].
+*/
 const wordlist: string[] = [
     "hedera",
     "Hedera",

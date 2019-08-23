@@ -1,4 +1,4 @@
-import ModalPassword from "@/components/ModalPassword.vue";
+import ModalPassword from "../../src/components/ModalPassword.vue";
 import { createLocalVue, shallowMount, mount } from "@vue/test-utils";
 import { plugin as VueFunctionApi } from "vue-function-api";
 
@@ -8,7 +8,11 @@ describe("ModalPassword.vue", (): void => {
 
     it("renders", (): void => {
         expect.assertions(1);
-        const state = { modalIsOpen: false, password: "", isBusy: false };
+        const state = {
+            modalIsOpen: false,
+            password: "",
+            isBusy: false
+        };
         const wrapper = shallowMount(ModalPassword, {
             localVue,
             propsData: {
@@ -21,7 +25,11 @@ describe("ModalPassword.vue", (): void => {
 
     it("renders a disabled button when the password less than 9 characters", (): void => {
         expect.assertions(1);
-        const state = { modalIsOpen: false, password: "", isBusy: false };
+        const state = {
+            modalIsOpen: false,
+            password: "",
+            isBusy: false
+        };
         const wrapper = mount(ModalPassword, {
             localVue,
             propsData: {

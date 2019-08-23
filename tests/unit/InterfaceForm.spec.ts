@@ -1,6 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
-import InterfaceForm from "@/components/InterfaceForm.vue";
-import InterfaceFormTitle from "@/components/InterfaceFormTitle.vue";
+import InterfaceForm from "../../src/components/InterfaceForm.vue";
+import InterfaceFormTitle from "../../src/components/InterfaceFormTitle.vue";
 
 describe("InterfaceForm.vue", (): void => {
     it("renders", (): void => {

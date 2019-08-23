@@ -11,8 +11,8 @@
 </template>
 
 <script lang="ts">
-import store from "@/store";
-import Alert from "@/components/Alert.vue";
+import store from "../store";
+import Alert from "../components/Alert.vue";
 import { createComponent, computed } from "vue-function-api";
 
 export default createComponent({
