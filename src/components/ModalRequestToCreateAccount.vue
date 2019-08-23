@@ -7,11 +7,15 @@
         @change="this.$listeners.change"
     >
         <div class="instructions">
-            Provide your public key (available below as QR or text) to someone
-            you trust with an account on the Hedera network. They can use your
-            public key to create an account for you. Once they do so, record
-            your new account ID in a safe place, then click "I have an Account
-            ID" below to continue.
+            <div>
+                Provide your public key (available below as QR or text) to
+                someone you trust with an account on the Hedera network.
+            </div>
+            <div>
+                They can use your public key to create an account for you. Once
+                they do so, record your new account ID in a safe place, then
+                click "I have an Account ID" below to continue.
+            </div>
         </div>
         <template>
             <form
@@ -35,17 +39,16 @@
                 <div class="buttons">
                     <Button
                         compact
-                        label="Copy Public Key"
-                        class="button"
-                        @click="handleClickCopy"
-                    />
-
-                    <Button
-                        compact
                         outline
                         label="I have an Account ID"
                         class="button"
                         @click="handleHasAccount"
+                    />
+                    <Button
+                        compact
+                        label="Copy Public Key"
+                        class="button"
+                        @click="handleClickCopy"
                     />
                 </div>
             </form>
@@ -106,26 +109,51 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
+button {
+    width: 200px;
+
+    @media (max-width: 425px) {
+        width: 100%;
+
+        &:last-child {
+            margin-block-end: 15px;
+        }
+    }
+}
+
 .modal-request-to-create-account {
     align-items: center;
     display: flex;
     flex-direction: column;
 }
 
-.key-input {
-    margin-block: 20px;
-    user-select: none;
-}
-
 .instructions {
     color: var(--color-china-blue);
     font-size: 14px;
-    margin-block-end: 30px;
+
+    & div {
+        padding-block-end: 15px;
+    }
+}
+
+.pub-qr {
+    padding-block-end: 40px;
+    padding-block-start: 25px;
+}
+
+.key-input {
+    user-select: none;
 }
 
 .buttons {
     display: flex;
     justify-content: space-between;
+    margin-block-start: 40px;
     width: 100%;
+
+    @media (max-width: 425px) {
+        align-items: center;
+        flex-direction: column-reverse;
+    }
 }
 </style>
