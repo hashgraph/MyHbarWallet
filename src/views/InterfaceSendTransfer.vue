@@ -4,7 +4,7 @@
             v-model="amount"
             has-input
             label="Amount"
-            type="number"
+            type="string"
             action="Entire Balance"
             :suffix="Unit.Hbar"
             show-validation
@@ -35,13 +35,7 @@
         <template v-slot:footer>
             <Button
                 :busy="isBusy"
-                :label="
-                    amount > 0
-                        ? amount === 1
-                            ? 'Send 1 Hbar'
-                            : `Send ${truncate} Hbars`
-                        : 'Send Hbar'
-                "
+                :label="buttonLabel"
                 :disabled="!isIdValid || !isAmountValid"
                 @click="handleSendTransfer"
             />
@@ -60,13 +54,20 @@
 import TextInput from "../components/TextInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
-import { createComponent, value, computed } from "vue-function-api";
+import {
+    createComponent,
+    value,
+    computed,
+    watch,
+    Wrapper
+} from "vue-function-api";
 import store from "../store";
 import { AccountId } from "@hashgraph/sdk/src/Client";
 import { ALERT } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { CryptoTransferTransaction } from "@hashgraph/sdk";
-import { Unit } from "../components/UnitConverter.vue";
+import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
+import BigNumber from "bignumber.js";
 
 export default createComponent({
     components: {
@@ -75,10 +76,21 @@ export default createComponent({
         Button,
         ModalSendTransferSuccess
     },
-    setup(): {} {
+    setup() {
         const amount = value("0");
+        const amountBigN: Wrapper<BigNumber | null> = value(
+            new BigNumber(amount.value)
+        );
+        watch(
+            () => amount.value,
+            () => {
+                amountBigN.value = new BigNumber(amount.value);
+            }
+        );
+
         const toAccount = value("");
         const idRegex = /^\d+\.\d+\.\d+$/;
+        const amountRegex = /^0*(\d{1,9})(\.\d{1,9})?$/;
         const isBusy = value(false);
         const maxFee = value("100000");
 
@@ -87,7 +99,13 @@ export default createComponent({
         const txFeeErrorMessage = value("");
 
         const isIdValid = computed(() => idRegex.test(toAccount.value));
-        const isAmountValid = computed(() => Number(amount.value) > 0);
+        const isAmountValid = computed(() => {
+            if (amountBigN.value == null) return false;
+            return (
+                amountBigN.value.isGreaterThan(new BigNumber(0)) &&
+                amountRegex.test(amount.value)
+            );
+        });
         const successModalIsOpen = value(false);
         const truncate = computed(() =>
             amount.value.length > 15
@@ -95,8 +113,22 @@ export default createComponent({
                 : amount.value
         );
 
+        const buttonLabel = computed(() =>
+            amountBigN.value != null
+                ? amountBigN.value.isGreaterThan(new BigNumber(0))
+                    ? "Send " + truncate.value + " Hbars"
+                    : "Send Hbar"
+                : "Send Hbar"
+        );
+
         async function handleClickEntireBalance() {
-            const hbar = Number(store.state.wallet.balance || 0) / 100000000;
+            const balance = value(store.state.wallet.balance);
+            if (balance.value == null) {
+                return;
+            }
+            const hbar = new BigNumber(balance.value.toString()).dividedBy(
+                getValueOfUnit(Unit.Hbar)
+            );
             amount.value = hbar.toString();
         }
 
@@ -185,6 +217,7 @@ export default createComponent({
 
         return {
             amount,
+            buttonLabel,
             maxFee,
             txFeeErrorMessage,
             isBusy,

@@ -9,7 +9,7 @@
             :valid="validBalance"
             :suffix="Unit.Hbar"
             :error="userBalanceError"
-            type="number"
+            type="string"
         />
 
         <TextInput
@@ -51,7 +51,13 @@
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
-import { computed, createComponent, value, Wrapper } from "vue-function-api";
+import {
+    computed,
+    createComponent,
+    value,
+    Wrapper,
+    watch
+} from "vue-function-api";
 import store from "../store";
 import { AccountCreateTransaction, Ed25519PublicKey } from "@hashgraph/sdk";
 import { ALERT } from "../store/actions";
@@ -71,6 +77,15 @@ export default createComponent({
     setup() {
         // fixme: get actual user balance
         const userBalance = value("10");
+        const userBalanceBigN: Wrapper<BigNumber | null> = value(
+            new BigNumber(userBalance.value)
+        );
+        watch(
+            () => userBalance.value,
+            () => {
+                userBalanceBigN.value = new BigNumber(userBalance.value);
+            }
+        );
         const maxFee = value("100000000");
         const publicKey = value("");
         const isBusy = value(false);
@@ -105,18 +120,23 @@ export default createComponent({
                 }
 
                 const client = store.state.wallet.session.client;
-                const balance = BigInt(
-                    new BigNumber(parseFloat(userBalance.value)).multipliedBy(
-                        getValueOfUnit(Unit.Hbar)
-                    )
-                );
+                if (userBalanceBigN.value == null)
+                    throw new Error(
+                        "User Balance should not be null if creating account"
+                    );
+                const balance = new BigNumber(
+                    userBalanceBigN.value
+                ).multipliedBy(getValueOfUnit(Unit.Hbar));
                 const fee = BigInt(maxFee.value);
                 const key = Ed25519PublicKey.fromString(publicKey.value);
-
+                if (balance == null)
+                    throw new Error(
+                        "User Balance should not be null if creating account"
+                    );
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client
                 )
-                    .setInitialBalance(balance)
+                    .setInitialBalance(BigInt(balance))
                     .setTransactionFee(fee)
                     .setKey(key)
                     .build()
