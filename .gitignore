@@ -23,3 +23,7 @@ yarn-error.log*
 
 # Firebase
 .firebase/
+
+# Nightwatch
+tests/e2e/reports
+selenium*.log

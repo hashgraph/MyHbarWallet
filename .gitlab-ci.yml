@@ -20,7 +20,7 @@ test:
 
     script:
         - yarn lint
-        - yarn test
+        - yarn test:unit
         - yarn build
 
     only:
