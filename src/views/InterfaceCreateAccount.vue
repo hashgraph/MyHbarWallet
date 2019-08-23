@@ -180,7 +180,8 @@ export default createComponent({
             validKey,
             validMaxFee,
             handleCreateAccount,
-            handleSuccessModalChange
+            handleSuccessModalChange,
+            Unit
         };
     }
 });
