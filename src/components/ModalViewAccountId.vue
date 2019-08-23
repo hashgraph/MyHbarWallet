@@ -1,19 +1,23 @@
 <template>
-    <Modal :is-open="isOpen" title="Address" @change="this.$listeners.change">
+    <Modal
+        :is-open="isOpen"
+        hide-decoration
+        compact
+        title="Account Id"
+        no-decoration
+        @change="this.$listeners.change"
+    >
         <div class="modal-contents">
             <qrcode-vue
-                v-if="key"
-                :value="key.toString()"
+                :value="accountId"
                 size="200"
                 level="L"
                 class="pub-qr"
             />
 
-            <ReadOnlyInput
-                v-if="key"
-                class="key-input"
-                :value="key.toString()"
-            />
+            <div class="account-id">
+                {{ accountId }}
+            </div>
 
             <div class="copy-button" @click="handleClickCopy">
                 Copy
@@ -26,16 +30,11 @@
 import Modal from "../components/Modal.vue";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import Button from "../components/Button.vue";
-import {
-    createComponent,
-    PropType,
-    value,
-    watch,
-    computed
-} from "vue-function-api";
+import { createComponent, PropType, computed } from "vue-function-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "../clipboard";
 import store from "../store";
+import { Id } from "../store/modules/wallet";
 
 interface Props {
     isOpen: boolean;
@@ -58,15 +57,19 @@ export default createComponent({
         event: (String as unknown) as PropType<string>
     },
     setup(props, context) {
-        const key = computed(() =>
-            store.state.wallet.session
-                ? store.state.wallet.session.privateKey.publicKey
-                : null
-        );
+        const accountId = computed(() => {
+            const accountId: Id | null = store.state.wallet.session
+                ? store.state.wallet.session.account
+                : null;
+
+            return accountId
+                ? `${accountId.shard}.${accountId.realm}.${accountId.account}`
+                : null;
+        });
 
         async function handleClickCopy() {
-            if (key.value != null) {
-                await writeToClipboard(key.value.toString());
+            if (accountId.value != null) {
+                await writeToClipboard(accountId.value.toString());
             }
         }
 
@@ -75,7 +78,7 @@ export default createComponent({
         }
 
         return {
-            key,
+            accountId,
             handleClickCopy,
             handleHasAccount
         };
@@ -88,9 +91,13 @@ export default createComponent({
     align-items: center;
     display: flex;
     flex-direction: column;
+    margin-block-start: 40px;
 }
 
-.key-input {
+.account-id {
+    color: var(--color-basalt-grey);
+    font-size: 26px;
+    justify-content: center;
     margin-block-start: 20px;
 }
 
@@ -103,6 +110,7 @@ export default createComponent({
     font-size: 14px;
     font-weight: 500;
     justify-content: center;
+    margin-block-end: 20px;
     margin-block-start: 20px;
     text-decoration: none;
     user-select: none;
