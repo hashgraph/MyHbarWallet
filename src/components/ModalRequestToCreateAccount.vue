@@ -7,9 +7,11 @@
         @change="this.$listeners.change"
     >
         <div class="instructions">
-            Provide your public key (this QR Code or the copied text) to a
-            friend on the hedera network. They can invite you to join the
-            network.
+            Provide your public key (available below as QR or text) to someone
+            you trust with an account on the Hedera network. They can use your
+            public key to create an account for you. Once they do so, record
+            your new account ID in a safe place, then click "I have an Account
+            ID" below to continue.
         </div>
         <template>
             <form
@@ -24,23 +26,27 @@
                     class="pub-qr"
                 />
 
-                <ReadOnlyInput
-                    v-if="publicKey"
-                    class="key-input"
-                    :value="publicKey.toString()"
-                />
+                <div class="pub-container">
+                    <ReadOnlyInput
+                        v-if="publicKey"
+                        class="key-input"
+                        :value="publicKey.toString()"
+                    />
+
+                    <Button
+                        compact
+                        label="Copy"
+                        class="copy-button"
+                        @click="handleClickCopy"
+                    />
+                </div>
 
                 <Button
                     compact
-                    label="Copy"
-                    class="modal-button"
-                    @click="handleClickCopy"
+                    outline
+                    label="I have an Account ID"
+                    @click="handleHasAccount"
                 />
-                <div class="link-container">
-                    <span class="link" @click="handleHasAccount"
-                        >Already have an Account ID?</span
-                    >
-                </div>
             </form>
         </template>
     </Modal>
@@ -105,16 +111,18 @@ export default createComponent({
     flex-direction: column;
 }
 
-.modal-button {
-    margin-block-start: 20px;
+.pub-container {
+    display: flex;
+    margin-block: 40px;
+    user-select: none;
+}
+
+.copy-button {
+    flex-shrink: 1;
 }
 
 .pub-qr {
     align-self: center;
-}
-
-.key-input {
-    margin-block-start: 40px;
 }
 
 .link-container {
