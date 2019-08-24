@@ -4,8 +4,8 @@
             <div class="title-wrap">
                 <div class="page-title">Convert Units</div>
                 <div class="page-subtitle">
-                    Our helpful conversion tool and ether unit reference allow
-                    you to calculate the total cost of your transactions.
+                    Our helpful conversion tool and hbar unit reference allow
+                    you to calculate your total transaction cost.
                 </div>
             </div>
 
