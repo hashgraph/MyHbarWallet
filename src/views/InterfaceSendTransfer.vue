@@ -1,5 +1,5 @@
 <template>
-    <InterfaceForm title="Send Transfer">
+    <InterfaceForm title="Send">
         <TextInput
             v-model="amount"
             has-input
@@ -23,6 +23,7 @@
         />
 
         <TextInput
+            v-if="false"
             v-model="maxFee"
             label="Maximum Transaction Fee"
             show-validation
@@ -91,10 +92,13 @@ export default createComponent({
                 amountRegex.test(amount.value)
             );
         });
+
         const isMaxFeeValid = computed(() => {
             return maxFeeRegex.test(maxFee.value);
         });
+
         const successModalIsOpen = value(false);
+
         const truncate = computed(() =>
             amount.value.length > 15
                 ? amount.value.substring(0, 13) + "..."
@@ -160,12 +164,18 @@ export default createComponent({
                 await new CryptoTransferTransaction(client)
                     .addSender(store.state.wallet.session.account, sendAmount)
                     .addRecipient(recipient, sendAmount)
-                    .setTransactionFee(parseInt(maxFee.value))
+                    // To send 1 tinybar the fee is ~85_150
+                    // To send 360 gigabar the fee ~85_500
+                    // So setting the limit to 85_500 _should_ be more
+                    // then enough for most transactions
+                    .setTransactionFee(85_500)
                     .build()
                     .executeForReceipt();
 
                 successModalIsOpen.value = true;
             } catch (error) {
+                console.log(error);
+
                 isBusy.value = false;
                 idErrorMessage.value = "";
                 amountErrorMessage.value = "";
