@@ -86,6 +86,19 @@ export default createComponent({
     padding: 6px 20px;
     user-select: none;
     width: 325px;
+
+    @media (max-width: 1024px) {
+        min-height: 50px;
+        padding: 6px 10px;
+        width: 200px;
+    }
+
+    @media (max-width: 425px) {
+        margin-block-start: 0;
+        min-height: 50px;
+        padding: 6px 10px;
+        width: calc(100% - 10px);
+    }
 }
 
 .close {
