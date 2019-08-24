@@ -18,6 +18,6 @@ describe("Header.vue", (): void => {
             router
         });
 
-        expect(wrapper.text()).toMatch("MyHederaWallet  Home About FAQs");
+        expect(wrapper.text()).toMatch("MyHbarWallet  Home About FAQs");
     });
 });

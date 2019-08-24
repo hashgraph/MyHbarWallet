@@ -2,7 +2,7 @@
     <div v-scroll="onScroll" :class="{ scrolled }" class="header-container">
         <header>
             <router-link to="/" class="link">
-                <div class="logo">My<strong>Hedera</strong>Wallet</div>
+                <div class="logo">My<strong>Hbar</strong>Wallet</div>
             </router-link>
             <div class="spacer"></div>
             <div class="links">

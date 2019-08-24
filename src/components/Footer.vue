@@ -46,7 +46,7 @@
                 <a
                     rel="noopener"
                     target="_blank"
-                    href="https://www.github.com/hashgraph/MyHederaWallet"
+                    href="https://www.github.com/hashgraph/MyHbarWallet"
                     class="social-link"
                 >
                     <MaterialDesignIcon class="social-icon" :icon="github" />
