@@ -4,9 +4,9 @@
         :class="{ 'is-open': isOpen }"
         role="dialog"
         aria-modal="true"
-        @click="handleClose"
+        @mousedown.self="handleClose"
     >
-        <div class="modal" :class="{ large: large }" @click.stop="">
+        <div class="modal" :class="{ large: large }">
             <header v-if="!hideDecoration">
                 <span class="title">{{ title }}</span>
                 <MaterialDesignIcon
