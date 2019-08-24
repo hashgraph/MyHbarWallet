@@ -9,7 +9,6 @@
             :valid="validBalance"
             :suffix="Unit.Hbar"
             :error="userBalanceError"
-            type="string"
         />
 
         <TextInput
@@ -27,7 +26,6 @@
             show-validation
             :suffix="Unit.Tinybar"
             :error="maxFeeError"
-            type="number"
         />
 
         <template v-slot:footer>
@@ -77,15 +75,6 @@ export default createComponent({
     setup() {
         // fixme: get actual user balance
         const userBalance = value("10");
-        const userBalanceBigN: Wrapper<BigNumber | null> = value(
-            new BigNumber(userBalance.value)
-        );
-        watch(
-            () => userBalance.value,
-            () => {
-                userBalanceBigN.value = new BigNumber(userBalance.value);
-            }
-        );
         const maxFee = value("100000000");
         const publicKey = value("");
         const isBusy = value(false);
@@ -95,7 +84,7 @@ export default createComponent({
         const account: Wrapper<string | null> = value(null);
 
         // Using regex to validate user input
-        const userBalanceRegex = /^0*(\d{1,9})(\.\d{1,9})?$/;
+        const userBalanceRegex = /^0*\d+(\.\d{1,9})?$/;
         const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
 
         // 5 is used a default starting balance
@@ -113,6 +102,10 @@ export default createComponent({
             isBusy.value = true;
 
             try {
+                if (!validBalance || !validKey || !validMaxFee) {
+                    return;
+                }
+
                 if (store.state.wallet.session == null) {
                     throw new Error(
                         "Session should not be null if inside Create Account Interface"
@@ -120,23 +113,18 @@ export default createComponent({
                 }
 
                 const client = store.state.wallet.session.client;
-                if (userBalanceBigN.value == null)
-                    throw new Error(
-                        "User Balance should not be null if creating account"
-                    );
-                const balance = new BigNumber(
-                    userBalanceBigN.value
-                ).multipliedBy(getValueOfUnit(Unit.Hbar));
+
+                const balance = BigInt(
+                    new BigNumber(userBalance.value).multipliedBy(
+                        getValueOfUnit(Unit.Hbar)
+                    )
+                );
                 const fee = BigInt(maxFee.value);
                 const key = Ed25519PublicKey.fromString(publicKey.value);
-                if (balance == null)
-                    throw new Error(
-                        "User Balance should not be null if creating account"
-                    );
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client
                 )
-                    .setInitialBalance(BigInt(balance))
+                    .setInitialBalance(balance)
                     .setTransactionFee(fee)
                     .setKey(key)
                     .build()
