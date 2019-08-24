@@ -33,7 +33,7 @@
                 </Tooltip>
             </div>
         </div>
-        <ModalViewAccountQR v-model="viewAccountQrCodeIsOpen" />
+        <ModalViewAccountId v-model="viewAccountQrCodeIsOpen" />
     </div>
 </template>
 
@@ -46,7 +46,7 @@ import { computed, createComponent, PropType, value } from "vue-function-api";
 import Identicon from "../components/Identicon.vue";
 import { ALERT } from "../store/actions";
 import store from "../store";
-import ModalViewAccountQR from "../components/ModalViewAccountQR.vue";
+import ModalViewAccountId from "../components/ModalViewAccountId.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
@@ -55,7 +55,7 @@ export default createComponent({
         MaterialDesignIcon,
         Tooltip,
         Identicon,
-        ModalViewAccountQR
+        ModalViewAccountId
     },
     props: {
         shard: (Number as unknown) as PropType<number>,
