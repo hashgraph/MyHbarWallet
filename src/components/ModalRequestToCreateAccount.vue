@@ -8,13 +8,12 @@
     >
         <div class="instructions">
             <div>
-                Provide your public key (available below as QR or text) to
-                someone you trust with an account on the Hedera network.
+                Provide your public key (this QR code or the copied text) to an
+                existing account owner on the Hedera network.
             </div>
             <div>
-                They can use your public key to create an account for you. Once
-                they do so, record your new account ID in a safe place, then
-                click "I have an Account ID" below to continue.
+                They must create and fund your account, then provide you with
+                your new account ID.
             </div>
         </div>
         <template>
