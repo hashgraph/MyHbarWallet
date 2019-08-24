@@ -2,7 +2,6 @@
     <div class="enter-account-id">
         <Modal
             :is-open="isOpen"
-            not-closable
             title="Enter Account ID"
             @change="handleModalChangeIsOpen"
         >
@@ -88,7 +87,7 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
     setup(props: Props, context) {
-        const regex = /\d+\.\d+\.\d+/;
+        const regex = /^\d+\.\d+\.\d+$/;
         const input = value("");
         const failed: Wrapper<string | null> = value(null);
         const valid = computed(() => regex.test(input.value));
