@@ -73,12 +73,11 @@ import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
 import store from "../store";
-import { LOG_IN } from "../store/mutations";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { createComponent, value, Wrapper } from "vue-function-api";
 import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
-import { ALERT } from "../store/actions";
+import { ALERT, LOG_IN } from "../store/actions";
 
 export default createComponent({
     components: {
@@ -268,7 +267,7 @@ export default createComponent({
         }
 
         async function handleAccountIdSubmit(client: Client, account: Id) {
-            store.commit(LOG_IN, {
+            store.dispatch(LOG_IN, {
                 account,
                 client,
                 privateKey: privateKey.value,
