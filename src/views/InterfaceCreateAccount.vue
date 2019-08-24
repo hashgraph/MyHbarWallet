@@ -9,7 +9,6 @@
             :valid="validBalance"
             :suffix="Unit.Hbar"
             :error="userBalanceError"
-            type="number"
         />
 
         <TextInput
@@ -27,7 +26,6 @@
             show-validation
             :suffix="Unit.Tinybar"
             :error="maxFeeError"
-            type="number"
         />
 
         <template v-slot:footer>
@@ -80,12 +78,16 @@ export default createComponent({
         const account: Wrapper<string | null> = value(null);
 
         // Using regex to validate user input
-        const userBalanceRegex = /^0*(\d{1,9})(\.\d{1,9})?$/;
+        const userBalanceRegex = /^0*\d+(\.\d{1,9})?$/;
         const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
 
         // 5 is used a default starting balance
         const validBalance = computed(() => {
-            return userBalanceRegex.test(userBalance.value);
+            return (
+                new BigNumber(userBalance.value).isGreaterThan(
+                    new BigNumber(0)
+                ) && userBalanceRegex.test(userBalance.value)
+            );
         });
         const validKey = computed(
             () =>
@@ -98,6 +100,10 @@ export default createComponent({
             isBusy.value = true;
 
             try {
+                if (!validBalance || !validKey || !validMaxFee) {
+                    return;
+                }
+
                 if (store.state.wallet.session == null) {
                     throw new Error(
                         "Session should not be null if inside Create Account Interface"
@@ -105,14 +111,24 @@ export default createComponent({
                 }
 
                 const client = store.state.wallet.session.client;
+
                 const balance = BigInt(
-                    new BigNumber(parseFloat(userBalance.value)).multipliedBy(
+                    new BigNumber(userBalance.value).multipliedBy(
                         getValueOfUnit(Unit.Hbar)
                     )
                 );
+
+                if (
+                    store.state.wallet.balance != null &&
+                    store.state.wallet.balance <= balance
+                ) {
+                    userBalanceError.value =
+                        "Amount is greater than current balance";
+                    return;
+                }
+
                 const fee = BigInt(maxFee.value);
                 const key = Ed25519PublicKey.fromString(publicKey.value);
-
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client
                 )

@@ -4,7 +4,6 @@
             v-model="amount"
             has-input
             label="Amount"
-            type="number"
             action="Entire Balance"
             :suffix="Unit.Hbar"
             show-validation
@@ -35,13 +34,7 @@
         <template v-slot:footer>
             <Button
                 :busy="isBusy"
-                :label="
-                    amount > 0
-                        ? amount === 1
-                            ? 'Send 1 Hbar'
-                            : `Send ${truncate} Hbars`
-                        : 'Send Hbar'
-                "
+                :label="buttonLabel"
                 :disabled="!isIdValid || !isAmountValid"
                 @click="handleSendTransfer"
             />
@@ -66,7 +59,8 @@ import { AccountId } from "@hashgraph/sdk/src/Client";
 import { ALERT } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { CryptoTransferTransaction } from "@hashgraph/sdk";
-import { Unit } from "../components/UnitConverter.vue";
+import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
+import BigNumber from "bignumber.js";
 
 export default createComponent({
     components: {
@@ -75,7 +69,11 @@ export default createComponent({
         Button,
         ModalSendTransferSuccess
     },
-    setup(): {} {
+    setup() {
+        // Using regex to validate user input
+        const amountRegex = /^0*\d+(\.\d{1,9})?$/;
+        const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
+
         const amount = value("0");
         const toAccount = value("");
         const idRegex = /^\d+\.\d+\.\d+$/;
@@ -87,7 +85,15 @@ export default createComponent({
         const txFeeErrorMessage = value("");
 
         const isIdValid = computed(() => idRegex.test(toAccount.value));
-        const isAmountValid = computed(() => Number(amount.value) > 0);
+        const isAmountValid = computed(() => {
+            return (
+                new BigNumber(amount.value).isGreaterThan(new BigNumber(0)) &&
+                amountRegex.test(amount.value)
+            );
+        });
+        const isMaxFeeValid = computed(() => {
+            return maxFeeRegex.test(maxFee.value);
+        });
         const successModalIsOpen = value(false);
         const truncate = computed(() =>
             amount.value.length > 15
@@ -95,8 +101,20 @@ export default createComponent({
                 : amount.value
         );
 
+        const buttonLabel = computed(() =>
+            new BigNumber(amount.value).isGreaterThan(new BigNumber(0))
+                ? "Send " + truncate.value + " Hbars"
+                : "Send Hbar"
+        );
+
         async function handleClickEntireBalance() {
-            const hbar = Number(store.state.wallet.balance || 0) / 100000000;
+            const balance = value(store.state.wallet.balance);
+            if (balance.value == null) {
+                return;
+            }
+            const hbar = new BigNumber(balance.value.toString()).dividedBy(
+                getValueOfUnit(Unit.Hbar)
+            );
             amount.value = hbar.toString();
         }
 
@@ -104,6 +122,11 @@ export default createComponent({
             isBusy.value = true;
 
             try {
+                // TODO: Annotate error for each field
+                if (!isAmountValid || !isIdValid || !isMaxFeeValid) {
+                    return;
+                }
+
                 if (store.state.wallet.session == null) {
                     throw new Error(
                         "Session should not be null if inside Send Transfer"
@@ -113,39 +136,30 @@ export default createComponent({
                 const client = store.state.wallet.session.client;
                 const parts = toAccount.value.split(".");
 
-                if (!isAmountValid.value) {
-                    store.dispatch(ALERT, {
-                        level: "error",
-                        message: "Invalid amount"
-                    });
-
-                    return;
-                }
-
-                if (!isIdValid.value) {
-                    store.dispatch(ALERT, {
-                        level: "error",
-                        message: "Invalid recipient Account ID"
-                    });
-
-                    return;
-                }
-
                 const recipient: AccountId = {
                     shard: parseInt(parts[0]),
                     realm: parseInt(parts[1]),
                     account: parseInt(parts[2])
                 };
 
-                const sendAmount = BigInt(amount.value);
-                const sendAmountTinybar = sendAmount * BigInt(100000000);
+                const sendAmount = BigInt(
+                    new BigNumber(amount.value).multipliedBy(
+                        getValueOfUnit(Unit.Hbar)
+                    )
+                );
+
+                if (
+                    store.state.wallet.balance != null &&
+                    store.state.wallet.balance <= sendAmount
+                ) {
+                    amountErrorMessage.value =
+                        "Amount is greater than current balance";
+                    return;
+                }
 
                 await new CryptoTransferTransaction(client)
-                    .addSender(
-                        store.state.wallet.session.account,
-                        sendAmountTinybar
-                    )
-                    .addRecipient(recipient, sendAmountTinybar)
+                    .addSender(store.state.wallet.session.account, sendAmount)
+                    .addRecipient(recipient, sendAmount)
                     .setTransactionFee(parseInt(maxFee.value))
                     .build()
                     .executeForReceipt();
@@ -185,6 +199,7 @@ export default createComponent({
 
         return {
             amount,
+            buttonLabel,
             maxFee,
             txFeeErrorMessage,
             isBusy,
