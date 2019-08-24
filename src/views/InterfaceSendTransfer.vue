@@ -4,7 +4,6 @@
             v-model="amount"
             has-input
             label="Amount"
-            type="string"
             action="Entire Balance"
             :suffix="Unit.Hbar"
             show-validation
@@ -54,13 +53,7 @@
 import TextInput from "../components/TextInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
-import {
-    createComponent,
-    value,
-    computed,
-    watch,
-    Wrapper
-} from "vue-function-api";
+import { createComponent, value, computed } from "vue-function-api";
 import store from "../store";
 import { AccountId } from "@hashgraph/sdk/src/Client";
 import { ALERT } from "../store/actions";
@@ -77,20 +70,13 @@ export default createComponent({
         ModalSendTransferSuccess
     },
     setup() {
-        const amount = value("0");
-        const amountBigN: Wrapper<BigNumber | null> = value(
-            new BigNumber(amount.value)
-        );
-        watch(
-            () => amount.value,
-            () => {
-                amountBigN.value = new BigNumber(amount.value);
-            }
-        );
+        // Using regex to validate user input
+        const amountRegex = /^0*\d+(\.\d{1,9})?$/;
+        const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
 
+        const amount = value("0");
         const toAccount = value("");
         const idRegex = /^\d+\.\d+\.\d+$/;
-        const amountRegex = /^0*(\d{1,9})(\.\d{1,9})?$/;
         const isBusy = value(false);
         const maxFee = value("100000");
 
@@ -100,11 +86,13 @@ export default createComponent({
 
         const isIdValid = computed(() => idRegex.test(toAccount.value));
         const isAmountValid = computed(() => {
-            if (amountBigN.value == null) return false;
             return (
-                amountBigN.value.isGreaterThan(new BigNumber(0)) &&
+                new BigNumber(amount.value).isGreaterThan(new BigNumber(0)) &&
                 amountRegex.test(amount.value)
             );
+        });
+        const isMaxFeeValid = computed(() => {
+            return maxFeeRegex.test(maxFee.value);
         });
         const successModalIsOpen = value(false);
         const truncate = computed(() =>
@@ -114,10 +102,8 @@ export default createComponent({
         );
 
         const buttonLabel = computed(() =>
-            amountBigN.value != null
-                ? amountBigN.value.isGreaterThan(new BigNumber(0))
-                    ? "Send " + truncate.value + " Hbars"
-                    : "Send Hbar"
+            new BigNumber(amount.value).isGreaterThan(new BigNumber(0))
+                ? "Send " + truncate.value + " Hbars"
                 : "Send Hbar"
         );
 
@@ -136,6 +122,11 @@ export default createComponent({
             isBusy.value = true;
 
             try {
+                // TODO: Annotate error for each field
+                if (!isAmountValid || !isIdValid || !isMaxFeeValid) {
+                    return;
+                }
+
                 if (store.state.wallet.session == null) {
                     throw new Error(
                         "Session should not be null if inside Send Transfer"
@@ -145,39 +136,30 @@ export default createComponent({
                 const client = store.state.wallet.session.client;
                 const parts = toAccount.value.split(".");
 
-                if (!isAmountValid.value) {
-                    store.dispatch(ALERT, {
-                        level: "error",
-                        message: "Invalid amount"
-                    });
-
-                    return;
-                }
-
-                if (!isIdValid.value) {
-                    store.dispatch(ALERT, {
-                        level: "error",
-                        message: "Invalid recipient Account ID"
-                    });
-
-                    return;
-                }
-
                 const recipient: AccountId = {
                     shard: parseInt(parts[0]),
                     realm: parseInt(parts[1]),
                     account: parseInt(parts[2])
                 };
 
-                const sendAmount = BigInt(amount.value);
-                const sendAmountTinybar = sendAmount * BigInt(100000000);
+                const sendAmount = BigInt(
+                    new BigNumber(amount.value).multipliedBy(
+                        getValueOfUnit(Unit.Hbar)
+                    )
+                );
+
+                if (
+                    store.state.wallet.balance != null &&
+                    store.state.wallet.balance <= sendAmount
+                ) {
+                    amountErrorMessage.value =
+                        "Amount is greater than current balance";
+                    return;
+                }
 
                 await new CryptoTransferTransaction(client)
-                    .addSender(
-                        store.state.wallet.session.account,
-                        sendAmountTinybar
-                    )
-                    .addRecipient(recipient, sendAmountTinybar)
+                    .addSender(store.state.wallet.session.account, sendAmount)
+                    .addRecipient(recipient, sendAmount)
                     .setTransactionFee(parseInt(maxFee.value))
                     .build()
                     .executeForReceipt();

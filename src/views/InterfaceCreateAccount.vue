@@ -49,13 +49,7 @@
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
-import {
-    computed,
-    createComponent,
-    value,
-    Wrapper,
-    watch
-} from "vue-function-api";
+import { computed, createComponent, value, Wrapper } from "vue-function-api";
 import store from "../store";
 import { AccountCreateTransaction, Ed25519PublicKey } from "@hashgraph/sdk";
 import { ALERT } from "../store/actions";
@@ -89,7 +83,11 @@ export default createComponent({
 
         // 5 is used a default starting balance
         const validBalance = computed(() => {
-            return userBalanceRegex.test(userBalance.value);
+            return (
+                new BigNumber(userBalance.value).isGreaterThan(
+                    new BigNumber(0)
+                ) && userBalanceRegex.test(userBalance.value)
+            );
         });
         const validKey = computed(
             () =>
@@ -119,6 +117,16 @@ export default createComponent({
                         getValueOfUnit(Unit.Hbar)
                     )
                 );
+
+                if (
+                    store.state.wallet.balance != null &&
+                    store.state.wallet.balance <= balance
+                ) {
+                    userBalanceError.value =
+                        "Amount is greater than current balance";
+                    return;
+                }
+
                 const fee = BigInt(maxFee.value);
                 const key = Ed25519PublicKey.fromString(publicKey.value);
                 const accountIdIntermediate = (await new AccountCreateTransaction(
