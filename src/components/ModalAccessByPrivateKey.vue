@@ -78,8 +78,6 @@ export default createComponent({
             }
 
             try {
-                // TODO: Perhaps debounce this?
-                // TODO: Find a clean way to re-use the derived public key back in AccessMyAccount
                 Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;
             } catch (error) {
@@ -88,7 +86,6 @@ export default createComponent({
             }
         });
 
-        // TODO: When this button does something, change to value, set in error handling try catch
         const errorMessage = computed(() => {
             if (!valid) {
                 return "Invalid Private Key";

@@ -15,7 +15,6 @@
             </div>
             <div class="actions">
                 <Tooltip :pinnable="false" message="Change Network">
-                    <!--FIXME: Disabling button until it can do something -->
                     <button v-if="false" class="change">Change</button>
                 </Tooltip>
             </div>

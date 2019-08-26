@@ -71,7 +71,6 @@ export default createComponent({
         });
 
         const balanceUSD = computed(() => {
-            // FIXME: once the unit store exists, use it
             const usd =
                 (Number(store.state.wallet.balance || 0) / 100000000) * 0.12;
             return formatter.format(usd);

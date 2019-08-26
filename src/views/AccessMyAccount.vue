@@ -56,8 +56,6 @@
     </div>
 </template>
 
-<!-- TODO:  should go to password modal after getting keystore file -->
-
 <script lang="ts">
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "../components/AccountTileButtons.vue";
@@ -214,7 +212,6 @@ export default createComponent({
                     message: "Invalid Password"
                 });
             }
-            // TODO: Text input validation red box for incorrect password with @input to unred it
         }
 
         async function handleAccessByPhraseSubmit() {

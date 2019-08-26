@@ -15,7 +15,6 @@
                 </div>
             </div>
             <div class="actions">
-                <!-- TODO: implement QR Button -->
                 <Tooltip class="action" message="Account QR Code">
                     <MaterialDesignIcon
                         class="qr-icon"
@@ -23,7 +22,6 @@
                         @click="showQrCode"
                     />
                 </Tooltip>
-                <!-- TODO: Tie Copy/Error alert to copy -->
                 <Tooltip class="action" message="Copy Key">
                     <MaterialDesignIcon
                         class="copy-icon"

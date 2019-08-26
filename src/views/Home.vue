@@ -50,7 +50,6 @@
         </div>
         <Features />
         <FAQs />
-        <!-- TODO: Show community once we have more of one -->
         <Community v-if="false" />
         <ModalForgotToLogOut
             v-model="modalForgotToLogOutIsOpen"

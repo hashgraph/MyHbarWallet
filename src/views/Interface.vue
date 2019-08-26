@@ -52,7 +52,6 @@ export default createComponent({
                 : null
         );
 
-        // FIXME: This should be NULL in the beginning
         const balance = value(0);
         const balanceIsBusy = value(false);
 

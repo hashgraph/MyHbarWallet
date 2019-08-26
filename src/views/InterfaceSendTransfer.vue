@@ -126,7 +126,6 @@ export default createComponent({
             isBusy.value = true;
 
             try {
-                // TODO: Annotate error for each field
                 if (!isAmountValid || !isIdValid || !isMaxFeeValid) {
                     return;
                 }
