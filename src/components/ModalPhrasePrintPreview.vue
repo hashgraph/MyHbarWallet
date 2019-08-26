@@ -8,7 +8,7 @@
         <div class="logo-contents">
             <div class="header-container">
                 <span class="header">
-                    My<strong>Hedera</strong>Wallet
+                    My<strong>Hbar</strong>Wallet
                 </span>
                 <span class="sub-header">Mnemonic Phrase</span>
             </div>
