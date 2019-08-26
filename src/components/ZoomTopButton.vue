@@ -29,7 +29,6 @@ export default createComponent({
         }
 
         function handleWindowScroll() {
-            // FIXME: 150 should be in a common file somewhere
             isActive.value = window.scrollY > 150;
         }
 

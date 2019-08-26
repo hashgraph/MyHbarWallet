@@ -66,7 +66,6 @@ export default createComponent({
         isOpen: { type: Boolean },
         words: {
             type: Array,
-            // FIXME: Make required when we have data
             required: true
         }
     },

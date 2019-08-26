@@ -140,7 +140,6 @@
             </div>
             <div class="donation">
                 <img class="hbar-icon" src="../assets/icon-hbar-outline2.svg" />
-                <!-- TODO: Figure out who we are donating to -->
                 0.0.1001
             </div>
         </div>

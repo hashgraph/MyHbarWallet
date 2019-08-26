@@ -42,7 +42,6 @@ export default createComponent({
         prop: "selected",
         event: "change"
     },
-    // TODO: https://github.com/vuejs/vue-function-api/pull/16
     props: {
         selected: (String as unknown) as PropType<string>,
         options: (Array as unknown) as PropType<string[]>

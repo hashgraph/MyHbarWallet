@@ -44,8 +44,6 @@ export default createComponent({
                 currency: "$",
                 cost: "59.00",
                 image: ledgerImage,
-                // TODO: Get affiliate code for Ledger
-                // moreInfo: "https://www.ledger.com/?r=fa4b",
                 moreInfo: "https://www.ledger.com",
                 description:
                     "A light, yet solid multicurrency hardware wallet for cryptocurrencies. It is easy to carry everywhere thanks to its USB format."
@@ -73,8 +71,6 @@ export default createComponent({
                 currency: "€",
                 cost: "83.49",
                 image: trezorImage,
-                // TODO: Get affiliate code for Trezor
-                // moreInfo: "https://trezor.io/?offer_id=12&aff_id=2029",
                 moreInfo: "https://shop.trezor.io/product/trezor-one-white",
                 description:
                     "The most trusted hardware wallet in the world. Get yours today!"

@@ -100,8 +100,6 @@ footer {
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
-
-    /* FIXME: Move to main.css with a good name so we can share this value */
     max-width: 1024px;
     padding: 0 20px;
 }

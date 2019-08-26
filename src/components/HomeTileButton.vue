@@ -2,12 +2,10 @@
     <router-link class="home-tile-button" :to="{ name: route }">
         <img class="tile-image" :src="image" />
         <div class="content">
-            <!-- TODO: This should likely be an hN at some point -->
             <div class="title">{{ title }}</div>
             <div class="message">{{ content }}</div>
             <div v-if="action" class="action-label">
                 {{ action }}
-                <!-- FIXME: Use material design icons to get a proper long arrow -->
                 <MaterialDesignIcon class="action-icon" :icon="rightArrow" />
             </div>
         </div>

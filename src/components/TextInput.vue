@@ -412,10 +412,6 @@ input[type="number"]::-webkit-inner-spin-button {
     & textarea {
         border-right: 1px solid var(--color-jupiter);
     }
-
-    & .decorations {
-        /* TODO Fix */
-    }
 }
 
 /* Is Multiline */
