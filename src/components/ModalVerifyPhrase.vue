@@ -43,9 +43,8 @@
 import {
     createComponent,
     PropType,
-    value,
-    watch,
-    Wrapper
+    reactive,
+    watch
 } from "@vue/composition-api";
 import Modal from "./Modal.vue";
 import Button from "../components/Button.vue";
@@ -73,8 +72,8 @@ export default createComponent({
         words: (Array as unknown) as PropType<string[]>
     },
     setup(props: Props, context) {
-        const inputMap: Wrapper<Map<number, string>> = value(new Map([]));
-        const focused = value<number | null>(null);
+        let inputMap = reactive<Map<number, string>>(new Map([]));
+        let focused = reactive<number | null>(null);
 
         function randomizeEmpties() {
             const newMap = new Map<number, string>([]);
@@ -87,14 +86,14 @@ export default createComponent({
                     newMap.set(num, "");
                 }
             }
-            inputMap.value = newMap;
+            inputMap = newMap;
         }
 
         watch(
             () => props.isOpen,
             (isOpen, oldIsOpen) => {
                 if (isOpen && !oldIsOpen) {
-                    focused.value = null;
+                    focused = null;
                     randomizeEmpties();
                 }
             }
@@ -105,17 +104,15 @@ export default createComponent({
         }
 
         function isDisabled(index: number) {
-            return !inputMap.value.has(index);
+            return !inputMap.has(index);
         }
 
         function valueForIndex(index: number) {
-            return isDisabled(index)
-                ? props.words[index]
-                : inputMap.value.get(index);
+            return isDisabled(index) ? props.words[index] : inputMap.get(index);
         }
 
         function handleVerify() {
-            for (const [index, value] of inputMap.value.entries()) {
+            for (const [index, value] of inputMap.entries()) {
                 if (props.words[index] !== value) {
                     store.dispatch(ALERT, {
                         message: "Memonic does not match",
@@ -134,7 +131,7 @@ export default createComponent({
             const index = Number.parseInt(target.dataset.index || "0", 10);
 
             if (!isDisabled(index)) {
-                focused.value = index;
+                focused = index;
             }
         }
 
@@ -142,7 +139,7 @@ export default createComponent({
             const target = event.target as HTMLInputElement;
             const index = Number.parseInt(target.dataset.index || "0", 10);
 
-            inputMap.value.set(index, target.value);
+            inputMap.set(index, target.value);
         }
 
         return {
