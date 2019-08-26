@@ -79,10 +79,10 @@ import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiEye, mdiEyeOutline, mdiCheckCircle } from "@mdi/js";
 import {
     createComponent,
-    value,
+    reactive,
+    Ref,
     computed,
-    PropType,
-    Wrapper
+    PropType
 } from "@vue/composition-api";
 import { writeToClipboard } from "../clipboard";
 
@@ -111,20 +111,20 @@ interface Props {
 }
 
 export interface Component {
-    isEyeOpen: Wrapper<boolean>;
-    keyboardType: Wrapper<string>;
-    eye: Wrapper<string>;
+    isEyeOpen: boolean;
+    keyboardType: Ref<string>;
+    eye: Ref<string>;
     mdiCheckCircle: string;
-    classObject: Wrapper<{ [key: string]: boolean }>;
+    classObject: Ref<{ [key: string]: boolean }>;
     focus: () => void;
-    rows: Wrapper<number>;
+    rows: Ref<number>;
     handleClickEye: () => void;
     handleInput: (event: Event) => void;
     handleClickCopy: () => void;
     handleClickClear: () => void;
     handleFocusIn: () => void;
     handleFocusOut: () => void;
-    hasDecorations: Wrapper<boolean>;
+    hasDecorations: Ref<boolean>;
 }
 
 export default createComponent({
@@ -165,13 +165,13 @@ export default createComponent({
     },
     setup(props: Props, context): Component {
         // If the eye is open to show the obscured text anyway
-        const isEyeOpen = value(false);
+        let isEyeOpen = reactive(false);
 
-        const hasFocus = value(false);
+        let hasFocus = false;
 
         const keyboardType = computed(() => {
             if (props.type) return props.type;
-            if (props.obscure && !isEyeOpen.value) return "password";
+            if (props.obscure && !isEyeOpen) return "password";
 
             return "text";
         });
@@ -179,7 +179,7 @@ export default createComponent({
         const rows = computed(() => (props.compact ? 2 : 8));
 
         const eye = computed(() => {
-            return isEyeOpen.value ? mdiEye : mdiEyeOutline;
+            return isEyeOpen ? mdiEye : mdiEyeOutline;
         });
 
         const hasDecorations = computed(
@@ -191,7 +191,7 @@ export default createComponent({
                 "is-compact": props.compact,
                 "is-white": props.white,
                 "is-multiline": props.multiline,
-                "has-focus": hasFocus.value,
+                "has-focus": hasFocus,
                 "has-label": props.label != null,
                 "has-error": props.error != null && props.error != "",
                 "has-prefix": props.prefix != null,
@@ -204,7 +204,7 @@ export default createComponent({
         }
 
         function handleClickEye() {
-            isEyeOpen.value = !isEyeOpen.value;
+            isEyeOpen = !isEyeOpen;
             focus();
         }
 
@@ -222,11 +222,11 @@ export default createComponent({
         }
 
         function handleFocusIn() {
-            hasFocus.value = true;
+            hasFocus = true;
         }
 
         function handleFocusOut() {
-            hasFocus.value = false;
+            hasFocus = false;
         }
 
         return {
