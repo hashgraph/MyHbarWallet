@@ -17,9 +17,8 @@
 <script lang="ts">
 import {
     computed,
-    onBeforeDestroy,
-    onCreated,
-    value,
+    onBeforeMount,
+    reactive,
     createComponent
 } from "@vue/composition-api";
 
@@ -30,37 +29,35 @@ export default createComponent({
     },
     setup(props) {
         // data
-        const hovered = value(false);
-        const pinned = value(false);
+        let hovered = reactive(false);
+        let pinned = reactive(false);
 
         // computed
         const active = computed((): boolean => {
             if (!props.pinnable) {
-                return hovered.value;
+                return hovered;
             } else {
-                return hovered.value || pinned.value;
+                return hovered || pinned;
             }
         });
 
         // methods
         const handleMouseOver = () => {
-            hovered.value = true;
+            hovered = true;
         };
         const handleMouseOut = () => {
-            hovered.value = false;
+            hovered = false;
         };
         const handleTogglePinned = () => {
-            pinned.value = !pinned.value;
+            pinned = !pinned;
         };
         const handleCloseOnWindowClick = () => {
-            pinned.value = false;
+            pinned = false;
         };
 
-        // lifecycle
-        onCreated(() => {
-            window.addEventListener("click", handleCloseOnWindowClick);
-        });
-        onBeforeDestroy(() => {
+        window.addEventListener("click", handleCloseOnWindowClick);
+
+        onBeforeMount(() => {
             window.removeEventListener("click", handleCloseOnWindowClick);
         });
 
