@@ -83,7 +83,7 @@ import {
     computed,
     PropType,
     Wrapper
-} from "vue-function-api";
+} from "@vue/composition-api";
 import { writeToClipboard } from "../clipboard";
 
 interface Props {

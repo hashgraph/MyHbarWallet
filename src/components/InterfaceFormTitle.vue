@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import store from "../store";
 import { SET_INTERFACE_MENU_IS_OPEN } from "../store/mutations";

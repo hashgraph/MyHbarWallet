@@ -46,7 +46,7 @@ import {
     value,
     watch,
     Wrapper
-} from "vue-function-api";
+} from "@vue/composition-api";
 import Modal from "./Modal.vue";
 import Button from "../components/Button.vue";
 import store from "../store";

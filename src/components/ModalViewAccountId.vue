@@ -26,7 +26,7 @@
 import Modal from "../components/Modal.vue";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import Button from "../components/Button.vue";
-import { createComponent, PropType, computed } from "vue-function-api";
+import { createComponent, PropType, computed } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "../clipboard";
 import store from "../store";

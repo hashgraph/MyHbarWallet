@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import serviceBell from "../assets/help-center.svg";
-import { createComponent, value } from "vue-function-api";
+import { createComponent, value } from "@vue/composition-api";
 
 import ModalCustomerService from "../components/ModalCustomerService.vue";
 

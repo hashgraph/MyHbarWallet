@@ -1,10 +1,10 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Tooltip from "../../src/components/Tooltip.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("Tooltip.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     it("opens tooltip on click for pinnable", (): void => {
         expect.assertions(3);

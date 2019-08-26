@@ -33,7 +33,7 @@ import {
     PropType,
     onCreated,
     onBeforeDestroy
-} from "vue-function-api";
+} from "@vue/composition-api";
 import { mdiClose } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 

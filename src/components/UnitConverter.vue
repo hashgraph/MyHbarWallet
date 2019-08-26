@@ -55,7 +55,7 @@ import Select from "./Select.vue";
 import TextInput from "./TextInput.vue";
 import BigNumber from "bignumber.js";
 
-import { createComponent, value, watch } from "vue-function-api";
+import { createComponent, value, watch } from "@vue/composition-api";
 
 export enum Unit {
     Tinybar = "tinybar",

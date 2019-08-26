@@ -1,10 +1,10 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import Select from "../../src/components/Select.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("Select.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
     const wrapper = mount(Select, {
         localVue,
         propsData: {

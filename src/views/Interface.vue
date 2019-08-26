@@ -30,7 +30,7 @@ import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "../components/NetworkCard.vue";
 import BalanceCard from "../components/BalanceCard.vue";
 import AccountCard from "../components/AccountCard.vue";
-import { createComponent, value, computed } from "vue-function-api";
+import { createComponent, value, computed } from "@vue/composition-api";
 import store from "../store";
 
 export default createComponent({

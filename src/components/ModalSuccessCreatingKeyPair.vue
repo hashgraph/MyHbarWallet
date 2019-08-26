@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import PageTitle from "../components/PageTitle.vue";

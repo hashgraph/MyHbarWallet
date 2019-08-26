@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value, Wrapper } from "vue-function-api";
+import { createComponent, value, Wrapper } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imagePhrase from "../assets/button-phrase.svg";

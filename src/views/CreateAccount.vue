@@ -57,7 +57,7 @@ import ModalDownloadKeystore, {
 } from "../components/ModalDownloadKeystore.vue";
 import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
 import PageTitle from "../components/PageTitle.vue";
-import { createComponent, value, Wrapper } from "vue-function-api";
+import { createComponent, value, Wrapper } from "@vue/composition-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
 import store from "../store";
 import { Client, Ed25519PrivateKey } from "@hashgraph/sdk";

@@ -33,7 +33,7 @@ import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
-import { computed, createComponent, PropType } from "vue-function-api";
+import { computed, createComponent, PropType } from "@vue/composition-api";
 
 export interface State {
     modalIsOpen: boolean;

@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { computed, createComponent, value } from "vue-function-api";
+import { computed, createComponent, value } from "@vue/composition-api";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";

@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 import InterfaceFormTitle from "../components/InterfaceFormTitle.vue";
 
 export default createComponent({

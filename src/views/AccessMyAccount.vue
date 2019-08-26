@@ -72,7 +72,7 @@ import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
 import store from "../store";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
-import { createComponent, value, Wrapper } from "vue-function-api";
+import { createComponent, value, Wrapper } from "@vue/composition-api";
 import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
 import { ALERT, LOG_IN } from "../store/actions";

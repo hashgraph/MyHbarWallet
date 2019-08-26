@@ -2,11 +2,11 @@ import { shallowMount, createLocalVue } from "@vue/test-utils";
 import RadioButton from "../../src/components/RadioButton.vue";
 import imageKey from "../../src/assets/button-key.svg";
 import MaterialDesignIcon from "../../src/components/MaterialDesignIcon.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("RadioButton.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     it("renders, contains expected properties", (): void => {
         expect.assertions(4);

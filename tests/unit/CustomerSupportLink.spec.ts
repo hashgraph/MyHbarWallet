@@ -1,10 +1,10 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import CustomerSupportLink from "../../src/components/CustomerSupportLink.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("CustomerSupportLink.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
         expect.assertions(1);

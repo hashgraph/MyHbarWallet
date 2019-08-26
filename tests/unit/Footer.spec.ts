@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Footer from "../../src/components/Footer.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 import MaterialDesignIcon from "../../src/components/MaterialDesignIcon.vue";
 import FooterTop from "../../src/components/FooterTop.vue";
 import VueRouter from "vue-router";
@@ -11,7 +11,7 @@ describe("Footer.vue", (): void => {
 
         const localVue = createLocalVue();
         localVue.use(VueRouter);
-        localVue.use(VueFunctionApi);
+        localVue.use(VueCompositionApi);
 
         const wrapper = shallowMount(Footer, {
             localVue,

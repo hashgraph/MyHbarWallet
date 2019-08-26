@@ -20,7 +20,7 @@
 import AccountTileButton from "../components/AccountTileButton.vue";
 import hardwareImage from "../assets/button-hardware.svg";
 import softwareImage from "../assets/button-software.svg";
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
     components: {

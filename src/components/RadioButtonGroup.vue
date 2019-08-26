@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 import { PropOptions } from "vue";
 import RadioButton from "../components/RadioButton.vue";
 

@@ -39,8 +39,13 @@ import TextInput, {
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
-import { computed, createComponent, PropType, watch } from "vue-function-api";
-import { SetupContext } from "vue-function-api/dist/types/vue";
+import {
+    computed,
+    createComponent,
+    PropType,
+    watch
+} from "@vue/composition-api";
+import { SetupContext } from "@vue/composition-api/dist/types/vue";
 import { Ed25519PrivateKey } from "@hashgraph/sdk";
 
 export interface State {

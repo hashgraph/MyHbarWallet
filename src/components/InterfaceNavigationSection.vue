@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, computed } from "vue-function-api";
+import { createComponent, PropType, computed } from "@vue/composition-api";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import store from "../store";

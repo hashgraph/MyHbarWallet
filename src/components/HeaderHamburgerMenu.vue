@@ -31,7 +31,7 @@ import { mdiChevronRight } from "@mdi/js";
 import BalanceCard from "./BalanceCard.vue";
 import NetworkCard from "./NetworkCard.vue";
 
-import { createComponent, PropType, computed } from "vue-function-api";
+import { createComponent, PropType, computed } from "@vue/composition-api";
 
 interface Props {
     isOpen: boolean;

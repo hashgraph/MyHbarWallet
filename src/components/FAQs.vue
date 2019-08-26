@@ -65,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 import Accordion from "../components/Accordion.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 

@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 import { mdiAlertOutline } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 

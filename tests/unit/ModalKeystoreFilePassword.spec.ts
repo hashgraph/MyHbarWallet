@@ -1,10 +1,10 @@
 import ModalPassword from "../../src/components/ModalKeystoreFilePassword.vue";
 import { createLocalVue, shallowMount, mount } from "@vue/test-utils";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("ModalKeystoreFilePassword.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
         expect.assertions(1);

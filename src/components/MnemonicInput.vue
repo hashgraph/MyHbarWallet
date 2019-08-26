@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value } from "vue-function-api";
+import { createComponent, value } from "@vue/composition-api";
 
 export default createComponent({
     props: {

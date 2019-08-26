@@ -20,12 +20,12 @@
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "@hashgraph/sdk": "^0.1.0",
         "@mdi/js": "^4.1.95",
+        "@vue/composition-api": "^0.2.1",
         "bignumber.js": "^9.0.0",
         "jdenticon": "^2.2.0",
         "qrcode.vue": "^1.6.2",
         "ua-parser-js": "^0.7.20",
         "vue": "^2.6.10",
-        "vue-function-api": "^2.1.2",
         "vue-router": "^3.1.2",
         "vuex": "^3.0.1",
         "zxcvbn": "^4.4.2"

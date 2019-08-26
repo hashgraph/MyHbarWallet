@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import Tooltip from "./Tooltip.vue";
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 import hbar from "../assets/icon-hbar-outline.svg";
 
 export default createComponent({

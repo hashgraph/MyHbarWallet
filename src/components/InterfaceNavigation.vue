@@ -52,7 +52,7 @@ import store from "../store";
 import { SET_INTERFACE_MENU_IS_OPEN } from "../store/mutations";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiClose } from "@mdi/js";
-import { createComponent, computed } from "vue-function-api";
+import { createComponent, computed } from "@vue/composition-api";
 
 export default createComponent({
     components: {

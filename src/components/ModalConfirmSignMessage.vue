@@ -24,7 +24,7 @@
     </Modal>
 </template>
 <script lang="ts">
-import { createComponent, PropType, computed } from "vue-function-api";
+import { createComponent, PropType, computed } from "@vue/composition-api";
 
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";

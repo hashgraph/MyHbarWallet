@@ -33,8 +33,8 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value } from "vue-function-api";
-import { SetupContext } from "vue-function-api/dist/types/vue";
+import { createComponent, value } from "@vue/composition-api";
+import { SetupContext } from "@vue/composition-api/dist/types/vue";
 import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 

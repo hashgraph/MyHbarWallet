@@ -54,7 +54,7 @@
 import TextInput from "../components/TextInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
-import { createComponent, value, computed } from "vue-function-api";
+import { createComponent, value, computed } from "@vue/composition-api";
 import store from "../store";
 import { AccountId } from "@hashgraph/sdk/src/Client";
 import { ALERT } from "../store/actions";

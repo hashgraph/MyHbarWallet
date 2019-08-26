@@ -1,11 +1,11 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import UnitConverter from "../../src/components/UnitConverter.vue";
 import ConvertUnits from "../../src/views/ConvertUnits.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("UnitConverter.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     const wrapper = shallowMount(UnitConverter, {
         localVue
@@ -60,7 +60,7 @@ describe("UnitConverter.vue", (): void => {
 
 describe("ConvertUnits.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
     const wrapper = shallowMount(ConvertUnits, {
         localVue
     });

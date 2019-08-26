@@ -1,10 +1,10 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 import MnemonicInput from "../../src/components/MnemonicInput.vue";
 
 describe("MnemonicInput.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     it("renders with 12 placeholders", (): void => {
         expect.assertions(2);

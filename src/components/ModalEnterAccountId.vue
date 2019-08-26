@@ -47,13 +47,13 @@ import {
     watch,
     PropType,
     Wrapper
-} from "vue-function-api";
+} from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import TextInput, {
     Component as TextInputComponent
 } from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
-import { SetupContext } from "vue-function-api/dist/types/vue";
+import { SetupContext } from "@vue/composition-api/dist/types/vue";
 import { Id } from "../store/modules/wallet";
 import {
     Client,

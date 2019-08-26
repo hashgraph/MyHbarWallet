@@ -1,11 +1,11 @@
 import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
 import Accordion from "../../src/components/Accordion.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("Accordion.vue", (): void => {
     const title = "Title";
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
         expect.assertions(1);

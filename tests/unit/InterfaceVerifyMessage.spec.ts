@@ -1,10 +1,10 @@
 import { createLocalVue, mount, shallowMount } from "@vue/test-utils";
 import InterfaceVerifyMessage from "../../src/views/InterfaceVerifyMessage.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("InterfaceVerifyMessage.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
         expect.hasAssertions();

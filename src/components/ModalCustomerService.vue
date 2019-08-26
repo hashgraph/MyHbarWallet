@@ -54,7 +54,7 @@ import {
     value,
     computed,
     watch
-} from "vue-function-api";
+} from "@vue/composition-api";
 
 function createLink(
     url: string,

@@ -13,7 +13,7 @@
 <script lang="ts">
 import store from "../store";
 import Alert from "../components/Alert.vue";
-import { createComponent, computed } from "vue-function-api";
+import { createComponent, computed } from "@vue/composition-api";
 
 export default createComponent({
     components: {

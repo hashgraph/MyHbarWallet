@@ -1,10 +1,10 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 import Alert from "../../src/components/Alert.vue";
 
 describe("Alert", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     const wrapper = shallowMount(Alert, {
         localVue,

@@ -108,7 +108,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, watch } from "vue-function-api";
+import { createComponent, PropType, watch } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
@@ -117,7 +117,7 @@ import TextInput, {
 } from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import { mdiArrowRight } from "@mdi/js";
-import { SetupContext } from "vue-function-api/dist/types/vue";
+import { SetupContext } from "@vue/composition-api/dist/types/vue";
 import zxcvbn, { ZXCVBNResult } from "zxcvbn";
 
 export interface State {

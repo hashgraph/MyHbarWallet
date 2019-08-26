@@ -1,11 +1,11 @@
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import HeaderHamburgerButton from "../../src/components/HeaderHamburgerButton.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("HeaderHamburgerButton.vue", (): void => {
     it("renders", (): void => {
         const localVue = createLocalVue();
-        localVue.use(VueFunctionApi);
+        localVue.use(VueCompositionApi);
         const wrapper = shallowMount(HeaderHamburgerButton, {
             localVue,
             propsData: {
@@ -19,7 +19,7 @@ describe("HeaderHamburgerButton.vue", (): void => {
 
     it("triggers", (): void => {
         const localVue = createLocalVue();
-        localVue.use(VueFunctionApi);
+        localVue.use(VueCompositionApi);
 
         const wrapper = shallowMount(HeaderHamburgerButton, {
             localVue,

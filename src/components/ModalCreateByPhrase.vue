@@ -92,7 +92,7 @@ import {
     PropType,
     value,
     Wrapper
-} from "vue-function-api";
+} from "@vue/composition-api";
 import {
     generateMnemonic,
     MnemonicResult,

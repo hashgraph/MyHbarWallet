@@ -2,11 +2,11 @@ import { createLocalVue, shallowMount } from "@vue/test-utils";
 import ZoomTopButton from "../../src/components/ZoomTopButton.vue";
 import MaterialDesignIcon from "../../src/components/MaterialDesignIcon.vue";
 import "../../src/directives";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("ZoomTopButton", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     it("isn't active at first", (): void => {
         expect.assertions(1);

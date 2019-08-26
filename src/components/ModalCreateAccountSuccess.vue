@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType } from "vue-function-api";
+import { createComponent, PropType } from "@vue/composition-api";
 import { writeToClipboard } from "../clipboard";
 import { mdiCheck } from "@mdi/js";
 import Modal from "../components/Modal.vue";

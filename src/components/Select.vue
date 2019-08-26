@@ -27,7 +27,7 @@ import {
     onCreated,
     PropType,
     onBeforeDestroy
-} from "vue-function-api";
+} from "@vue/composition-api";
 
 interface Props {
     options: string[];

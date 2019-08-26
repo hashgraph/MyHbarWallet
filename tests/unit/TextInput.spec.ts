@@ -1,11 +1,11 @@
 import { createLocalVue, mount, shallowMount } from "@vue/test-utils";
 import TextInput from "../../src/components/TextInput.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 import MaterialDesignIcon from "../../src/components/MaterialDesignIcon.vue";
 
 describe("TextInput.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
         expect.assertions(2);

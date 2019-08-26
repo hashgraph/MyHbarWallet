@@ -1,10 +1,10 @@
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import InterfaceFormTitle from "../../src/components/InterfaceFormTitle.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("InterfaceForm.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
         expect.assertions(1);

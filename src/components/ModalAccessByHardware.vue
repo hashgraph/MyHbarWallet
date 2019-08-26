@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value } from "vue-function-api";
+import { createComponent, value } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imageLedger from "../assets/button-ledger.svg";

@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import HeaderHamburgerMenu from "../../src/components/HeaderHamburgerMenu.vue";
-import { plugin as VueFunctionApi, computed } from "vue-function-api";
+import { plugin as VueCompositionApi, computed } from "@vue/composition-api";
 import Router from "vue-router";
 import router from "../../src/router";
 
@@ -9,7 +9,7 @@ describe("HeaderHamburgerMenu.vue", (): void => {
         expect.assertions(1);
         const localVue = createLocalVue();
         localVue.use(Router);
-        localVue.use(VueFunctionApi);
+        localVue.use(VueCompositionApi);
         const wrapper = shallowMount(HeaderHamburgerMenu, {
             localVue,
             router,
@@ -25,7 +25,7 @@ describe("HeaderHamburgerMenu.vue", (): void => {
         expect.assertions(3);
         const localVue = createLocalVue();
         localVue.use(Router);
-        localVue.use(VueFunctionApi);
+        localVue.use(VueCompositionApi);
         const wrapper = shallowMount(HeaderHamburgerMenu, {
             localVue,
             router,

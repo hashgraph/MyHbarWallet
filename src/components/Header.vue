@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import Button from "../components/Button.vue";
-import { createComponent, value } from "vue-function-api";
+import { createComponent, value } from "@vue/composition-api";
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
 

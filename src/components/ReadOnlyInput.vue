@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 import { PropType } from "vue";
 
 export default createComponent({

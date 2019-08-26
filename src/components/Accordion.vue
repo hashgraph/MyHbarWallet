@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { value, createComponent } from "vue-function-api";
+import { reactive, createComponent } from "@vue/composition-api";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiChevronUp } from "@mdi/js";
 
@@ -24,12 +24,14 @@ export default createComponent({
         MaterialDesignIcon
     },
     setup() {
-        const expanded = value(false);
+        const state = reactive({ expanded: false });
+
         const toggle = () => {
-            expanded.value = !expanded.value;
+            state.expanded = !state.expanded;
         };
+
         return {
-            expanded,
+            ...state,
             mdiChevronUp,
             toggle
         };

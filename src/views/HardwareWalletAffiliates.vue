@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 import HardwareWalletOffer from "../components/HardwareWalletOffer.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ledgerImage from "../assets/logo-ledger.png";

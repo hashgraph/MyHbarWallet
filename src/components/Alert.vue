@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, PropType } from "vue-function-api";
+import { createComponent, computed, PropType } from "@vue/composition-api";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import {
     mdiClose,

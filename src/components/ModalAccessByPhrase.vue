@@ -43,7 +43,7 @@ import MnemonicInput from "../components/MnemonicInput.vue";
 import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 
 export interface State {
     modalIsOpen: boolean;

@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType } from "vue-function-api";
+import { createComponent, PropType } from "@vue/composition-api";
 
 export default createComponent({
     props: {

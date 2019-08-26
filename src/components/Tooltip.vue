@@ -21,7 +21,7 @@ import {
     onCreated,
     value,
     createComponent
-} from "vue-function-api";
+} from "@vue/composition-api";
 
 export default createComponent({
     props: {

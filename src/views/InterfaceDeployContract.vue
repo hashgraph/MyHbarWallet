@@ -39,7 +39,11 @@ import InterfaceForm from "../components/InterfaceForm.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 
-import { createComponent, value as vueValue, computed } from "vue-function-api";
+import {
+    createComponent,
+    value as vueValue,
+    computed
+} from "@vue/composition-api";
 
 export default createComponent({
     components: {

@@ -22,7 +22,7 @@
 <script lang="ts">
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiCheckCircle } from "@mdi/js";
-import { createComponent, computed } from "vue-function-api";
+import { createComponent, computed } from "@vue/composition-api";
 
 export default createComponent({
     components: {

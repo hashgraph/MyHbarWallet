@@ -40,7 +40,12 @@ import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiQrcode, mdiContentCopy } from "@mdi/js";
 import Tooltip from "../components/Tooltip.vue";
 import { writeToClipboard } from "../clipboard";
-import { computed, createComponent, PropType, value } from "vue-function-api";
+import {
+    computed,
+    createComponent,
+    PropType,
+    value
+} from "@vue/composition-api";
 import Identicon from "../components/Identicon.vue";
 import { ALERT } from "../store/actions";
 import store from "../store";

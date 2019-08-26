@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "../components/MnemonicInput.vue";

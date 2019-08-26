@@ -148,7 +148,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value } from "vue-function-api";
+import { createComponent, value } from "@vue/composition-api";
 import ModalCustomerService from "../components/ModalCustomerService.vue";
 
 export default createComponent({

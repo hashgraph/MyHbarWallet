@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-import { computed, createComponent } from "vue-function-api";
-import { PropType } from "vue-function-api/dist/ts-api";
+import { computed, createComponent } from "@vue/composition-api";
+import { PropType } from "@vue/composition-api/dist/ts-api";
 
 interface Props {
     checked: boolean | string | number;

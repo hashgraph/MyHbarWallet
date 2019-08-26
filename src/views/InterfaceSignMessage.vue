@@ -41,7 +41,7 @@ import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import ModalConfirmSignMessage from "../components/ModalConfirmSignMessage.vue";
 import ModalMessageSigned from "../components/ModalMessageSigned.vue";
-import { createComponent, watch, value } from "vue-function-api";
+import { createComponent, watch, value } from "@vue/composition-api";
 
 export default createComponent({
     name: "InterfaceSignMessage",

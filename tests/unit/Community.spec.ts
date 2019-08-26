@@ -1,11 +1,11 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import CommunitySocialIcon from "../../src/components/CommunitySocialIcon.vue";
 import Community from "../../src/components/Community.vue";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("Community.vue", (): void => {
     const localVue = createLocalVue();
-    localVue.use(VueFunctionApi);
+    localVue.use(VueCompositionApi);
     it("renders", (): void => {
         expect.assertions(1);
         const wrapper = shallowMount(Community, {

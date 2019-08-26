@@ -4,7 +4,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, PropType } from "vue-function-api";
+import { createComponent, computed, PropType } from "@vue/composition-api";
 
 // Must turn off observe setting BEFORE importing this module.. someone shoot me
 // @ts-ignore

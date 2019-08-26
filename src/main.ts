@@ -3,10 +3,10 @@ import "./directives";
 import Vue, { VNode } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { plugin as VueFunctionApi } from "vue-function-api";
+import VueCompositionApi from "@vue/composition-api";
 
 // Globally install the Vue3 Function API
-Vue.use(VueFunctionApi);
+Vue.use(VueCompositionApi);
 
 new Vue({
     router,
