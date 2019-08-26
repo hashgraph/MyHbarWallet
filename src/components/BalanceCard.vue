@@ -42,7 +42,7 @@
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiLoading, mdiRefresh } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
-import { computed, createComponent, value } from "@vue/composition-api";
+import { computed, createComponent, reactive } from "@vue/composition-api";
 import walletHbar from "../assets/wallet-hbar.svg";
 import store from "../store";
 import { REFRESH_BALANCE } from "../store/actions";
@@ -58,7 +58,7 @@ export default createComponent({
         Tooltip
     },
     setup() {
-        const isBusy = value(false);
+        let isBusy = reactive(false);
         const hasFetchedBalance = computed(
             () => store.state.wallet.balance != null
         );
@@ -77,13 +77,13 @@ export default createComponent({
         });
 
         async function handleRefreshBalance() {
-            isBusy.value = true;
+            isBusy = true;
 
             try {
                 await store.dispatch(REFRESH_BALANCE);
             } finally {
                 setTimeout(() => {
-                    isBusy.value = false;
+                    isBusy = false;
                 }, 75);
             }
         }
