@@ -44,7 +44,7 @@ import {
     computed,
     createComponent,
     PropType,
-    value
+    reactive
 } from "@vue/composition-api";
 import Identicon from "../components/Identicon.vue";
 import { ALERT } from "../store/actions";
@@ -76,7 +76,7 @@ export default createComponent({
             return publickey;
         });
 
-        const viewAccountQrCodeIsOpen = value(false);
+        let viewAccountQrCodeIsOpen = reactive(false);
 
         const copyKey = async () => {
             await writeToClipboard(props.publicKey);
@@ -88,7 +88,7 @@ export default createComponent({
         };
 
         function showQrCode() {
-            viewAccountQrCodeIsOpen.value = true;
+            viewAccountQrCodeIsOpen = true;
         }
 
         return {
