@@ -76,11 +76,11 @@ export default createComponent({
         function handleMnemonicInput(words: string[]) {
             context.emit("change", { ...props.state, words });
         }
-x
+
         const areFieldsFilled = computed(() => {
             if (props.state.words.length == 24) {
                 for (const word of props.state.words) {
-                    if (word == "") {
+                    if (word == "" || word == null) {
                         return false;
                     }
                 }
