@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value } from "@vue/composition-api";
+import { createComponent, reactive } from "@vue/composition-api";
 import { SetupContext } from "@vue/composition-api/dist/types/vue";
 import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
@@ -54,7 +54,7 @@ export default createComponent({
         passwordWarning: { type: String, default: null }
     },
     setup(props, context) {
-        const showPassword = value(false);
+        const showPassword = reactive(false);
 
         function handleInput(password: string) {
             context.emit("input", password);
