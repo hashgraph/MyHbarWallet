@@ -22,11 +22,10 @@ import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import {
     createComponent,
-    value,
+    reactive,
     computed,
-    onCreated,
     PropType,
-    onBeforeDestroy
+    onBeforeUnmount
 } from "@vue/composition-api";
 
 interface Props {
@@ -47,10 +46,10 @@ export default createComponent({
         options: (Array as unknown) as PropType<string[]>
     },
     setup(props: Props, context) {
-        const dropdownIsOpen = value(false);
+        let dropdownIsOpen = reactive(false);
 
         const dropdownIcon = computed(() => {
-            if (dropdownIsOpen.value) {
+            if (dropdownIsOpen) {
                 return mdiChevronUp;
             }
 
@@ -58,24 +57,22 @@ export default createComponent({
         });
 
         function handleCloseOnWindowClick() {
-            dropdownIsOpen.value = false;
+            dropdownIsOpen = false;
         }
 
-        onCreated(() => {
-            window.addEventListener("click", handleCloseOnWindowClick);
-        });
+        window.addEventListener("click", handleCloseOnWindowClick);
 
-        onBeforeDestroy(() => {
+        onBeforeUnmount(() => {
             window.removeEventListener("click", handleCloseOnWindowClick);
         });
 
         function toggleDropdown() {
-            dropdownIsOpen.value = !dropdownIsOpen.value;
+            dropdownIsOpen = !dropdownIsOpen;
         }
 
         function handleOptionClick(option: string) {
             context.emit("change", option);
-            dropdownIsOpen.value = false;
+            dropdownIsOpen = false;
         }
 
         return {
