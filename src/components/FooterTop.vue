@@ -148,7 +148,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value } from "@vue/composition-api";
+import { createComponent, reactive } from "@vue/composition-api";
 import ModalCustomerService from "../components/ModalCustomerService.vue";
 
 export default createComponent({
@@ -156,11 +156,11 @@ export default createComponent({
         ModalCustomerService
     },
     setup() {
-        const modalCustomerServiceIsOpen = value(false);
+        let modalCustomerServiceIsOpen = reactive(false);
         const hasAffiliates = false;
 
         function handleButtonClick() {
-            modalCustomerServiceIsOpen.value = !modalCustomerServiceIsOpen.value;
+            modalCustomerServiceIsOpen = !modalCustomerServiceIsOpen;
         }
 
         return {
