@@ -11,14 +11,14 @@
 <script lang="ts">
 import { mdiChevronUp } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
-import { computed, createComponent, value } from "@vue/composition-api";
+import { computed, createComponent, ref } from "@vue/composition-api";
 
 export default createComponent({
     components: {
         MaterialDesignIcon
     },
     setup() {
-        const isActive = value(false);
+        const isActive = ref(false);
 
         const classObject = computed(() => {
             return { "is-active": isActive.value };
