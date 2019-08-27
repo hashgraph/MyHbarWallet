@@ -24,7 +24,12 @@
     </Modal>
 </template>
 <script lang="ts">
-import { createComponent, PropType, computed } from "@vue/composition-api";
+import {
+    createComponent,
+    PropType,
+    computed,
+    SetupContext
+} from "@vue/composition-api";
 
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
@@ -49,7 +54,7 @@ export default createComponent({
             message: string;
             publicKey: string;
         },
-        context
+        context: SetupContext
     ) {
         const rawPublicKey = computed(() => {
             let publickey = props.publicKey;
@@ -104,7 +109,7 @@ export default createComponent({
     border: 0 solid var(--color-white);
     border-radius: 50%;
     flex-shrink: 0;
-    margin-inline-end: 10px;
+    margin-inline-end: 20px;
     user-select: none;
 }
 

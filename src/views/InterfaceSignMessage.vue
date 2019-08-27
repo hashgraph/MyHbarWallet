@@ -8,28 +8,34 @@
 
         <div class="text-input-container">
             <TextInput
-                v-model="message"
+                v-model="state.message"
                 label="Message"
                 type="text"
-                :error="enableErr ? 'The message field is required' : null"
+                :error="
+                    state.enableErr ? 'The message field is required' : null
+                "
                 multiline
             />
         </div>
 
         <template v-slot:footer>
-            <Button :disabled="!signable" label="Sign" @click="onSignClicked" />
+            <Button
+                :disabled="!state.signable"
+                label="Sign"
+                @click="onSignClicked"
+            />
         </template>
         <ModalConfirmSignMessage
-            :message="message"
+            :message="state.message"
             public-key="302a300506032b65700321002cc9e2d0c16c717476d4bbbfa3307a98cf0c41d7afc77c851e476b5921f3fb65"
-            :is-open="confirmSignIsOpen"
+            :is-open="state.confirmSignIsOpen"
             @change="handleConfirmModalChanged"
             @confirm="handleConfirmModalConfirm"
         />
         <!-- value should be a json thing, not `message` -->
         <ModalMessageSigned
-            :is-open="signedModalIsOpen"
-            :value="message"
+            :is-open="state.signedModalIsOpen"
+            :value="state.message"
             @change="handleSignedModalChanged"
         />
     </InterfaceForm>
@@ -80,7 +86,7 @@ export default createComponent({
 
         watch(
             () => state.message,
-            val => {
+            (val: string) => {
                 state.signable = val != null;
                 state.enableErr = val === "";
             }
