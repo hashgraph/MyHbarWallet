@@ -78,11 +78,13 @@ export default createComponent({
 
         const isHome = computed(() => {
             // This conditional is required for unit tests to passs
-            if (context.root.$route != null) {
-                return context.root.$route.name === "home";
-            } else {
-                return false;
+            if (context.root != null) {
+                if (context.root.$route != null) {
+                    return context.root.$route.name === "home";
+                }
             }
+
+            return false;
         });
 
         return {

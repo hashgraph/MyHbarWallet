@@ -55,7 +55,7 @@ export default createComponent({
         const inInterface = computed(() => {
             const route = context.root.$route;
 
-            if (route.matched.length === 0) {
+            if (route == null || route.matched.length === 0) {
                 return false;
             }
 
