@@ -49,6 +49,9 @@ module.exports = {
         // https://eslint.org/docs/rules/object-shorthand
         "object-shorthand": ["error", "always"],
 
+        // This often has false positives?
+        "require-atomic-updates": "warn",
+
         // Vue
         // https://eslint.vuejs.org/rules/#uncategorized
         "vue/array-bracket-spacing": "error",
