@@ -51,9 +51,9 @@ import { UAParser } from "ua-parser-js";
 import {
     createComponent,
     PropType,
-    value,
     computed,
-    watch
+    watch,
+    reactive
 } from "@vue/composition-api";
 
 function createLink(
@@ -94,21 +94,23 @@ export default createComponent({
     },
     setup(props, context) {
         const ua = new UAParser(navigator.userAgent);
-        const platform = value(ua.getOS.name);
-        const browser = value(ua.getBrowser().name || "");
-        const url = value(context.root.$route.fullPath);
-        const description = value("");
-        const device = value("");
-        const accountId = value("");
+        const state = reactive({
+            platform: ua.getOS.name,
+            browser: ua.getBrowser().name || "",
+            url: context.root.$route.fullPath,
+            description: "",
+            device: "",
+            accountId: ""
+        });
 
         const sendLink = computed(() =>
             createLink(
-                url.value,
-                platform.value,
-                browser.value,
-                device.value,
-                accountId.value,
-                description.value
+                state.url,
+                state.platform,
+                state.browser,
+                state.device,
+                state.accountId,
+                state.description
             )
         );
 
@@ -120,17 +122,12 @@ export default createComponent({
         watch(
             () => context.root.$route.fullPath,
             () => {
-                url.value = context.root.$route.fullPath;
+                state.url = context.root.$route.fullPath;
             }
         );
 
         return {
-            platform,
-            browser,
-            url,
-            device,
-            accountId,
-            description,
+            state,
             sendLink,
             handleSubmit
         };
