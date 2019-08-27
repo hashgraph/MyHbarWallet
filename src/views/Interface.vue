@@ -96,7 +96,7 @@ export default createComponent({
         "info-account info-balance info-network"
         "main main main";
     grid-template-columns: repeat(3, calc(100% * (1 / 3) - (30px / 3)));
-    grid-template-rows: auto;
+    grid-template-rows: min-content 1fr;
     padding: 20px;
 
     @media (max-width: 1024px) {
