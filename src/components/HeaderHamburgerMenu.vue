@@ -31,7 +31,12 @@ import { mdiChevronRight } from "@mdi/js";
 import BalanceCard from "./BalanceCard.vue";
 import NetworkCard from "./NetworkCard.vue";
 
-import { createComponent, PropType, computed } from "@vue/composition-api";
+import {
+    createComponent,
+    PropType,
+    computed,
+    SetupContext
+} from "@vue/composition-api";
 
 interface Props {
     isOpen: boolean;
@@ -46,7 +51,7 @@ export default createComponent({
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    setup(props: Props, context) {
+    setup(props: Props, context: SetupContext) {
         const inInterface = computed(() => {
             const route = context.root.$route;
 
