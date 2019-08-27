@@ -10,33 +10,33 @@
             <AccountTileButtons @click="handleClickTiles" />
         </div>
         <FAQs />
-        <ModalAccessByHardware v-model="modalAccessByHardwareIsOpen" />
+        <ModalAccessByHardware v-model="state.modalAccessByHardwareIsOpen" />
         <ModalCreateWithSoftware
-            v-model="modalCreateWithSoftwareIsOpen"
+            v-model="state.modalCreateWithSoftwareIsOpen"
             @submit="handleCreateWithSoftwareSubmit"
         />
         <ModalCreateByPhrase
-            v-model="modalCreateByPhraseIsOpen"
+            v-model="state.modalCreateByPhraseIsOpen"
             @submit="handleCreateByPhraseSubmit"
         />
         <ModalCreateByKeystore
-            v-model="modalCreateByKeystoreState"
+            v-model="state.modalCreateByKeystoreState"
             @submit="handleCreateByKeystoreSubmit"
         />
         <ModalDownloadKeystore
-            v-model="modalDownloadKeystoreState"
+            v-model="state.modalDownloadKeystoreState"
             @submit="handleDownloadKeystoreSubmit"
         />
         <ModalEnterAccountId
-            v-model="modalEnterAccountIdIsOpen"
-            :private-key="privateKey"
+            v-model="state.modalEnterAccountIdIsOpen"
+            :private-key="state.privateKey"
             @submit="handleAccountIdSubmit"
             @noAccount="handleDoesntHaveAccount"
         />
         <ModalRequestToCreateAccount
-            v-if="privateKey != null"
-            v-model="modalRequestToCreateAccountIsOpen"
-            :public-key="privateKey.publicKey"
+            v-if="state.privateKey != null"
+            v-model="state.modalRequestToCreateAccountIsOpen"
+            :public-key="state.privateKey.publicKey"
             @hasAccount="handleHasAccount"
         />
     </div>
@@ -57,12 +57,28 @@ import ModalDownloadKeystore, {
 } from "../components/ModalDownloadKeystore.vue";
 import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
 import PageTitle from "../components/PageTitle.vue";
-import { createComponent, value, Wrapper } from "@vue/composition-api";
+import { createComponent, reactive, ref } from "@vue/composition-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
 import store from "../store";
 import { Client, Ed25519PrivateKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
 import { ALERT, LOG_IN } from "../store/actions";
+
+interface State {
+    privateKey: Ed25519PrivateKey | null;
+
+    modalAccessByHardwareIsOpen: boolean;
+    modalCreateWithSoftwareIsOpen: boolean;
+    modalCreateByPhraseIsOpen: boolean;
+    modalSuccessIsOpen: boolean;
+    modalEnterAccountIdIsOpen: boolean;
+    modalRequestToCreateAccountIsOpen: boolean;
+
+    modalCreateByKeystoreState: CreateByKeystoreState;
+    modalDownloadKeystoreState: DownloadKeystoreState;
+
+    keyFile: Uint8Array | null;
+}
 
 export default createComponent({
     components: {
@@ -78,84 +94,82 @@ export default createComponent({
         ModalRequestToCreateAccount
     },
     setup(props, context) {
-        const privateKey: Wrapper<Ed25519PrivateKey | null> = value(null);
-
-        const modalAccessByHardwareIsOpen = value(false);
-        const modalCreateWithSoftwareIsOpen = value(false);
-        const modalCreateByPhraseIsOpen = value(false);
-        const modalSuccessIsOpen = value(false);
-        const modalCreateByKeystoreState: Wrapper<
-            CreateByKeystoreState
-        > = value({
-            modalIsOpen: false,
-            password: "",
-            isBusy: false,
-            passwordStrength: 0,
-            passwordSuggestion: ""
+        const state = reactive<State>({
+            keyFile: null,
+            modalAccessByHardwareIsOpen: false,
+            modalCreateByKeystoreState: {
+                modalIsOpen: false,
+                password: "",
+                isBusy: false,
+                passwordStrength: 0,
+                passwordSuggestion: ""
+            },
+            modalCreateByPhraseIsOpen: false,
+            modalCreateWithSoftwareIsOpen: false,
+            modalDownloadKeystoreState: {
+                modalIsOpen: false,
+                isBusy: true
+            },
+            modalEnterAccountIdIsOpen: false,
+            modalRequestToCreateAccountIsOpen: false,
+            modalSuccessIsOpen: false,
+            privateKey: null
         });
 
-        const modalDownloadKeystoreState: Wrapper<
-            DownloadKeystoreState
-        > = value({
-            modalIsOpen: false,
-            isBusy: true
-        });
-
-        const modalEnterAccountIdIsOpen = value(false);
-
-        const modalRequestToCreateAccountIsOpen = value(false);
+        const keyStoreLink = ref<HTMLAnchorElement | null>(null);
 
         function handleClickTiles(which: string) {
             if (which === "hardware") {
-                modalAccessByHardwareIsOpen.value = true;
+                state.modalAccessByHardwareIsOpen = true;
             } else if (which === "software") {
-                modalCreateWithSoftwareIsOpen.value = true;
+                state.modalCreateWithSoftwareIsOpen = true;
             }
         }
 
         function handleCreateWithSoftwareSubmit(which: CreateSoftwareOption) {
-            modalCreateWithSoftwareIsOpen.value = false;
+            state.modalCreateWithSoftwareIsOpen = false;
 
             setTimeout(() => {
                 if (which === CreateSoftwareOption.File) {
-                    modalCreateByKeystoreState.value.modalIsOpen = true;
+                    state.modalCreateByKeystoreState.modalIsOpen = true;
                 } else if (which === CreateSoftwareOption.Phrase) {
-                    modalCreateByPhraseIsOpen.value = true;
+                    state.modalCreateByPhraseIsOpen = true;
                 }
             }, 125);
         }
 
-        const keyFile: Wrapper<Uint8Array | null> = value(null);
-        const keyStoreLink: Wrapper<HTMLAnchorElement | null> = value(null);
-
         async function handleCreateByKeystoreSubmit() {
-            modalCreateByKeystoreState.value.modalIsOpen = false;
+            state.modalCreateByKeystoreState.modalIsOpen = false;
 
             setTimeout(() => {
-                modalDownloadKeystoreState.value.modalIsOpen = true;
+                state.modalDownloadKeystoreState.modalIsOpen = true;
             }, 125);
             try {
-                privateKey.value = await Ed25519PrivateKey.generate();
-                keyFile.value = await privateKey.value.createKeystore(
-                    modalCreateByKeystoreState.value.password
+                state.privateKey = await Ed25519PrivateKey.generate();
+                state.keyFile = await state.privateKey.createKeystore(
+                    state.modalCreateByKeystoreState.password
                 );
-                if (privateKey.value == null || keyFile.value == null) {
+                if (state.keyFile == null) {
                     throw new Error(
                         "This shouldn't be possible, but we got a null from key.value.createKeystore"
                     );
                 }
 
-                modalDownloadKeystoreState.value.isBusy = false;
-                const keyStoreBlob = new Blob([keyFile.value.buffer]);
+                state.modalDownloadKeystoreState.isBusy = false;
+                const keyStoreBlob = new Blob([
+                    state.keyFile.buffer as Uint8Array
+                ]);
                 const keyStoreUrl = URL.createObjectURL(keyStoreBlob);
 
-                keyStoreLink.value = document.createElement("a");
+                keyStoreLink.value = document.createElement(
+                    "a"
+                ) as HTMLAnchorElement;
                 keyStoreLink.value.href = keyStoreUrl;
                 keyStoreLink.value.download =
                     "keystore-" + new Date().toISOString();
             } catch (error) {
                 console.log(error);
-                store.dispatch(ALERT, {
+                await store.dispatch(ALERT, {
                     level: "error",
                     message: "Unable to Download"
                 });
@@ -163,10 +177,10 @@ export default createComponent({
         }
 
         function handleDownloadKeystoreSubmit() {
-            context.root.$el.append(keyStoreLink.value as HTMLAnchorElement);
+            context.root.$el.append(keyStoreLink.value);
             // Neither keystorelink or key should ever be null if we got to this point, however this is
             // mostly a sanity check.
-            if (keyStoreLink.value == null || privateKey.value == null) {
+            if (keyStoreLink.value == null || state.privateKey == null) {
                 return;
             }
 
@@ -176,19 +190,19 @@ export default createComponent({
             );
 
             setTimeout(
-                () => (modalRequestToCreateAccountIsOpen.value = true),
+                () => (state.modalRequestToCreateAccountIsOpen = true),
                 125
             );
-            modalDownloadKeystoreState.value.modalIsOpen = false;
+            state.modalDownloadKeystoreState.modalIsOpen = false;
         }
 
         function handleCreateByPhraseSubmit(newPrivateKey: Ed25519PrivateKey) {
-            modalCreateByPhraseIsOpen.value = false;
+            state.modalCreateByPhraseIsOpen = false;
 
-            privateKey.value = newPrivateKey;
+            state.privateKey = newPrivateKey;
 
             setTimeout(() => {
-                modalRequestToCreateAccountIsOpen.value = true;
+                state.modalRequestToCreateAccountIsOpen = true;
             }, 125);
         }
 
@@ -197,43 +211,35 @@ export default createComponent({
         }
 
         async function handleAccountIdSubmit(client: Client, account: Id) {
-            store.dispatch(LOG_IN, {
+            await store.dispatch(LOG_IN, {
                 account,
                 client,
-                privateKey: privateKey.value
+                privateKey: state.privateKey
             });
 
             openInterface();
         }
 
         function handleDoesntHaveAccount() {
-            modalEnterAccountIdIsOpen.value = false;
-            modalRequestToCreateAccountIsOpen.value = true;
+            state.modalEnterAccountIdIsOpen = false;
+            state.modalRequestToCreateAccountIsOpen = true;
         }
 
         function handleHasAccount() {
-            modalRequestToCreateAccountIsOpen.value = false;
-            modalEnterAccountIdIsOpen.value = true;
+            state.modalRequestToCreateAccountIsOpen = false;
+            state.modalEnterAccountIdIsOpen = true;
         }
 
         return {
-            modalAccessByHardwareIsOpen,
-            modalCreateWithSoftwareIsOpen,
-            modalCreateByPhraseIsOpen,
-            modalDownloadKeystoreState,
-            modalCreateByKeystoreState,
-            modalSuccessIsOpen,
+            state,
             handleClickTiles,
             handleCreateWithSoftwareSubmit,
             handleCreateByKeystoreSubmit,
             handleDownloadKeystoreSubmit,
             handleCreateByPhraseSubmit,
-            modalEnterAccountIdIsOpen,
-            modalRequestToCreateAccountIsOpen,
             handleAccountIdSubmit,
             handleHasAccount,
-            handleDoesntHaveAccount,
-            privateKey
+            handleDoesntHaveAccount
         };
     }
 });
