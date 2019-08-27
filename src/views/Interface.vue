@@ -15,8 +15,8 @@ which have not been merged into master yet -->
                 :public-key="publicKey"
             />
             <BalanceCard
-                :balance="balance"
-                :busy="balanceIsBusy"
+                :balance="state.balance"
+                :busy="state.balanceIsBusy"
                 class="info-balance"
                 @refresh="handleBalanceRefresh"
             />
