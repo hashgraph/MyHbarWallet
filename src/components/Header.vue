@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import Button from "../components/Button.vue";
-import { createComponent, value } from "@vue/composition-api";
+import { createComponent, reactive } from "@vue/composition-api";
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
 
@@ -44,15 +44,15 @@ export default createComponent({
         HeaderHamburgerButton
     },
     setup() {
-        const scrolled = value(false);
-        const isHamburgerOpen = value(false);
+        let scrolled = reactive(false);
+        let isHamburgerOpen = reactive(false);
 
         function onScroll() {
-            scrolled.value = window.scrollY > 150;
+            scrolled = window.scrollY > 150;
         }
 
         function toggle() {
-            isHamburgerOpen.value = !isHamburgerOpen.value;
+            isHamburgerOpen = !isHamburgerOpen;
         }
 
         return {
