@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
-import { computed, createComponent, PropType } from "vue-function-api";
+import { computed, createComponent, PropType } from "@vue/composition-api";
 
 export default createComponent({
     components: {
