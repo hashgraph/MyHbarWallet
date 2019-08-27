@@ -79,10 +79,11 @@ import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiEye, mdiEyeOutline, mdiCheckCircle } from "@mdi/js";
 import {
     createComponent,
-    reactive,
     Ref,
     computed,
-    PropType
+    PropType,
+    ref,
+    reactive
 } from "@vue/composition-api";
 import { writeToClipboard } from "../clipboard";
 
@@ -111,7 +112,10 @@ interface Props {
 }
 
 export interface Component {
-    isEyeOpen: boolean;
+    input: Ref<HTMLInputElement | null>;
+    state: {
+        isEyeOpen: boolean;
+    };
     keyboardType: Ref<string>;
     eye: Ref<string>;
     mdiCheckCircle: string;
@@ -165,13 +169,15 @@ export default createComponent({
     },
     setup(props: Props, context): Component {
         // If the eye is open to show the obscured text anyway
-        let isEyeOpen = reactive(false);
-
+        const state = reactive({
+            isEyeOpen: false
+        });
         let hasFocus = false;
+        const input = ref<HTMLInputElement | null>(null);
 
         const keyboardType = computed(() => {
             if (props.type) return props.type;
-            if (props.obscure && !isEyeOpen) return "password";
+            if (props.obscure && !state.isEyeOpen) return "password";
 
             return "text";
         });
@@ -179,7 +185,7 @@ export default createComponent({
         const rows = computed(() => (props.compact ? 2 : 8));
 
         const eye = computed(() => {
-            return isEyeOpen ? mdiEye : mdiEyeOutline;
+            return state.isEyeOpen ? mdiEye : mdiEyeOutline;
         });
 
         const hasDecorations = computed(
@@ -200,11 +206,13 @@ export default createComponent({
         });
 
         function focus() {
-            (context.refs.input as HTMLInputElement).focus();
+            if (input.value != null) {
+                input.value.focus();
+            }
         }
 
         function handleClickEye() {
-            isEyeOpen = !isEyeOpen;
+            state.isEyeOpen = !state.isEyeOpen;
             focus();
         }
 
@@ -230,7 +238,8 @@ export default createComponent({
         }
 
         return {
-            isEyeOpen,
+            input,
+            state,
             keyboardType,
             eye,
             mdiCheckCircle,
