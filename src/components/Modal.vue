@@ -31,8 +31,7 @@ import {
     createComponent,
     watch,
     PropType,
-    onCreated,
-    onBeforeDestroy
+    onUnmounted
 } from "@vue/composition-api";
 import { mdiClose } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
@@ -92,11 +91,9 @@ export default createComponent({
             }
         }
 
-        onCreated(() => {
-            window.addEventListener("keydown", handleWindowKeyDown);
-        });
+        window.addEventListener("keydown", handleWindowKeyDown);
 
-        onBeforeDestroy(() => {
+        onUnmounted(() => {
             setModalIsOpenOnBody();
             window.removeEventListener("keydown", handleWindowKeyDown);
         });
