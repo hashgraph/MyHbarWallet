@@ -42,18 +42,17 @@
 <script lang="ts">
 import {
     createComponent,
-    value,
     computed,
     watch,
     PropType,
-    Wrapper
+    reactive,
+    ref
 } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import TextInput, {
     Component as TextInputComponent
 } from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
-import { SetupContext } from "@vue/composition-api/dist/types/vue";
 import { Id } from "../store/modules/wallet";
 import {
     Client,
@@ -66,11 +65,13 @@ export interface Props {
     privateKey: Ed25519PrivateKey | null;
 }
 
-type Context = SetupContext & {
-    refs: {
-        input: TextInputComponent;
-    };
-};
+interface State {
+    input: string;
+    failed: string | null;
+    errorMessage: string | null;
+    isBusy: boolean;
+    account: Id | null;
+}
 
 export default createComponent({
     components: {
@@ -87,27 +88,31 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
     setup(props: Props, context) {
-        const regex = /^\d+\.\d+\.\d+$/;
-        const input = value("");
-        const failed: Wrapper<string | null> = value(null);
-        const valid = computed(() => regex.test(input.value));
+        const state = reactive<State>({
+            input: "",
+            failed: null,
+            errorMessage: null,
+            isBusy: false,
+            account: null
+        });
 
-        const errorMessage = value<string | null>(null);
-        const isBusy = value(false);
-        const account = value<Id | null>(null);
+        const regex = /^\d+\.\d+\.\d+$/;
+        const valid = computed(() => regex.test(state.input));
+
+        const input = ref<HTMLInputElement | null>(null);
 
         function handleInput(accountText: string) {
-            input.value = accountText;
+            state.input = accountText;
 
             if (valid.value) {
-                const parts = input.value.split(".");
-                account.value = {
+                const parts = state.input.split(".");
+                state.account = {
                     shard: parseInt(parts[0]),
                     realm: parseInt(parts[1]),
                     account: parseInt(parts[2])
                 };
             } else {
-                account.value = null;
+                state.account = null;
             }
         }
 
@@ -120,10 +125,10 @@ export default createComponent({
         }
 
         async function handleSubmit() {
-            errorMessage.value = null;
-            isBusy.value = true;
+            state.errorMessage = null;
+            state.isBusy = true;
 
-            if (account.value == null || props.privateKey == null) {
+            if (state.account == null || props.privateKey == null) {
                 throw new Error("unexpected submission of EnterAccountID");
             }
 
@@ -132,7 +137,7 @@ export default createComponent({
             try {
                 client = new Client({
                     operator: {
-                        account: account.value,
+                        account: state.account,
                         privateKey: props.privateKey.toString()
                     }
                 });
@@ -142,7 +147,7 @@ export default createComponent({
                 // then we know the account ID is mismatched to the private key.
 
                 await new CryptoTransferTransaction(client)
-                    .addSender(account.value, 0)
+                    .addSender(state.account, 0)
                     // 0.0.3 is _A_ node and a system account
                     .addRecipient({ realm: 0, shard: 0, account: 3 }, 0)
                     .setTransactionFee(100_000)
@@ -152,37 +157,35 @@ export default createComponent({
             } catch (error) {
                 if (error instanceof Error) {
                     if (error.message === "PAYER_ACCOUNT_NOT_FOUND") {
-                        errorMessage.value =
+                        state.errorMessage =
                             "This account does not exist in the network.";
                     } else if (error.message === "INVALID_SIGNATURE") {
-                        errorMessage.value =
+                        state.errorMessage =
                             "This account is not associated with your private key.";
                     } else {
                         // This is actually good here
-                        context.emit("submit", client, account.value);
+                        context.emit("submit", client, state.account);
                         return;
                     }
                 }
             } finally {
-                isBusy.value = false;
+                state.isBusy = false;
             }
         }
 
         watch(
             () => props.isOpen,
             (newVal: boolean) => {
-                if (newVal) {
-                    (context as Context).refs.input.focus();
+                if (newVal && input.value != null) {
+                    input.value.focus();
                 }
             }
         );
 
         return {
-            input,
+            state,
             valid,
-            errorMessage,
-            isBusy,
-            failed,
+            input,
             handleInput,
             handleModalChangeIsOpen,
             handleDontHaveAccount,
