@@ -41,6 +41,12 @@ import Button from "../components/Button.vue";
 
 import { createComponent, reactive, computed } from "@vue/composition-api";
 
+interface State {
+    byteCodeIsValid: boolean;
+    interfaceIsValid: boolean;
+    maxFeeIsValid: boolean;
+}
+
 export default createComponent({
     components: {
         InterfaceForm,
@@ -48,7 +54,7 @@ export default createComponent({
         Button
     },
     setup() {
-        const state = reactive({
+        const state = reactive<State>({
             byteCodeIsValid: false,
             interfaceIsValid: false,
             maxFeeIsValid: false

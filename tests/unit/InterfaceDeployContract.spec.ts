@@ -14,7 +14,7 @@ describe("InterFaceDeployContract", (): void => {
 
         expect(wrapper.findAll(TextInput)).toHaveLength(3);
     });
-    it("disables button without propper input", (): void => {
+    it("disables button without proper input", (): void => {
         expect.assertions(1);
         const wrapper = shallowMount(InterFaceDeployContract, {
             components: {
