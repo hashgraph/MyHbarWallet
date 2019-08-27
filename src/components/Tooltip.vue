@@ -28,31 +28,32 @@ export default createComponent({
         pinnable: { type: Boolean, required: false }
     },
     setup(props) {
-        // data
-        let hovered = reactive(false);
-        let pinned = reactive(false);
+        const state = reactive({
+            hovered: false,
+            pinned: false
+        });
 
         // computed
         const active = computed((): boolean => {
             if (!props.pinnable) {
-                return hovered;
+                return state.hovered;
             } else {
-                return hovered || pinned;
+                return state.hovered || state.pinned;
             }
         });
 
         // methods
         const handleMouseOver = () => {
-            hovered = true;
+            state.hovered = true;
         };
         const handleMouseOut = () => {
-            hovered = false;
+            state.hovered = false;
         };
         const handleTogglePinned = () => {
-            pinned = !pinned;
+            state.pinned = !state.pinned;
         };
         const handleCloseOnWindowClick = () => {
-            pinned = false;
+            state.pinned = false;
         };
 
         window.addEventListener("click", handleCloseOnWindowClick);
