@@ -43,7 +43,12 @@
 
 <script lang="ts">
 import Button from "../components/Button.vue";
-import { createComponent, computed, reactive } from "@vue/composition-api";
+import {
+    createComponent,
+    computed,
+    reactive,
+    SetupContext
+} from "@vue/composition-api";
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
 
@@ -53,7 +58,7 @@ export default createComponent({
         HeaderHamburgerMenu,
         HeaderHamburgerButton
     },
-    setup(props, context) {
+    setup(context: SetupContext) {
         const state = reactive({
             scrolled: false,
             isHamburgerOpen: false
