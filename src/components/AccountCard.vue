@@ -31,7 +31,7 @@
                 </Tooltip>
             </div>
         </div>
-        <ModalViewAccountId v-model="viewAccountQrCodeIsOpen" />
+        <ModalViewAccountId v-model="state.viewAccountQrCodeIsOpen" />
     </div>
 </template>
 
@@ -76,7 +76,9 @@ export default createComponent({
             return publickey;
         });
 
-        let viewAccountQrCodeIsOpen = reactive(false);
+        const state = reactive({
+            viewAccountQrCodeIsOpen: false
+        });
 
         const copyKey = async () => {
             await writeToClipboard(props.publicKey);
@@ -88,14 +90,14 @@ export default createComponent({
         };
 
         function showQrCode() {
-            viewAccountQrCodeIsOpen = true;
+            state.viewAccountQrCodeIsOpen = true;
         }
 
         return {
             mdiQrcode,
             mdiContentCopy,
             rawPublicKey,
-            viewAccountQrCodeIsOpen,
+            state,
             copyKey,
             showQrCode
         };

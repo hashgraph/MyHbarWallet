@@ -16,7 +16,7 @@
             </div>
             <div class="actions">
                 <MaterialDesignIcon
-                    v-if="isBusy"
+                    v-if="state.isBusy"
                     class="spinner"
                     :icon="mdiLoading"
                     spin
@@ -58,7 +58,10 @@ export default createComponent({
         Tooltip
     },
     setup() {
-        let isBusy = reactive(false);
+        const state = reactive({
+            isBusy: false
+        });
+
         const hasFetchedBalance = computed(
             () => store.state.wallet.balance != null
         );
@@ -77,13 +80,13 @@ export default createComponent({
         });
 
         async function handleRefreshBalance() {
-            isBusy = true;
+            state.isBusy = true;
 
             try {
                 await store.dispatch(REFRESH_BALANCE);
             } finally {
                 setTimeout(() => {
-                    isBusy = false;
+                    state.isBusy = false;
                 }, 75);
             }
         }
@@ -91,7 +94,7 @@ export default createComponent({
         return {
             mdiRefresh,
             mdiLoading,
-            isBusy,
+            state,
             hasFetchedBalance,
             handleRefreshBalance,
             balanceUSD,
