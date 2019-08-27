@@ -15,7 +15,7 @@
 <script lang="ts">
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiMinus } from "@mdi/js";
-import { createComponent, PropType } from "@vue/composition-api";
+import { createComponent, PropType, SetupContext } from "@vue/composition-api";
 
 interface Props {
     isOpen: boolean;
@@ -28,7 +28,7 @@ export default createComponent({
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    setup(props: Props, context) {
+    setup(props: Props, context: SetupContext) {
         const icon = mdiMinus;
 
         function style(ind: string): string {
