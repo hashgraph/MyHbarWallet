@@ -1,40 +1,40 @@
 <template>
     <InterfaceForm title="Send">
         <TextInput
-            v-model="amount"
+            v-model="state.amount"
             has-input
             label="Amount"
             action="Entire Balance"
             :suffix="Unit.Hbar"
             show-validation
             :valid="isAmountValid"
-            :error="amountErrorMessage"
+            :error="state.amountErrorMessage"
             @action="handleClickEntireBalance"
         />
 
         <TextInput
-            v-model="toAccount"
+            v-model="state.toAccount"
             placeholder="shard.realm.account"
             label="To Account"
             show-validation
-            :valid="isIdValid"
-            :error="idErrorMessage"
+            :valid="state.isIdValid"
+            :error="state.idErrorMessage"
             can-copy
         />
 
         <TextInput
             v-if="false"
-            v-model="maxFee"
+            v-model="state.maxFee"
             label="Maximum Transaction Fee"
             show-validation
             :suffix="Unit.Tinybar"
             :valid="true"
-            :error="txFeeErrorMessage"
+            :error="state.txFeeErrorMessage"
         />
 
         <template v-slot:footer>
             <Button
-                :busy="isBusy"
+                :busy="state.isBusy"
                 :label="buttonLabel"
                 :disabled="!isIdValid || !isAmountValid"
                 @click="handleSendTransfer"
@@ -42,9 +42,9 @@
         </template>
 
         <ModalSendTransferSuccess
-            :open="successModalIsOpen"
-            :to-account="toAccount"
-            :amount="amount"
+            :open="state.successModalIsOpen"
+            :to-account="state.toAccount"
+            :amount="state.amount"
             @change="handleSuccessModalChange"
         />
     </InterfaceForm>
@@ -54,7 +54,7 @@
 import TextInput from "../components/TextInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
-import { createComponent, value, computed } from "@vue/composition-api";
+import { createComponent, reactive, computed } from "@vue/composition-api";
 import store from "../store";
 import { AccountId } from "@hashgraph/sdk/src/Client";
 import { ALERT } from "../store/actions";
@@ -75,55 +75,56 @@ export default createComponent({
         const amountRegex = /^0*\d+(\.\d{1,9})?$/;
         const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
 
-        const amount = value("0");
-        const toAccount = value("");
+        const state = reactive({
+            amount: "0",
+            toAccount: "",
+            isBusy: false,
+            maxFee: "100000",
+            idErrorMessage: "",
+            amountErrorMessage: "",
+            txFeeErrorMessage: "",
+            successModalIsOpen: false
+        });
+
         const idRegex = /^\d+\.\d+\.\d+$/;
-        const isBusy = value(false);
-        const maxFee = value("100000");
 
-        const idErrorMessage = value("");
-        const amountErrorMessage = value("");
-        const txFeeErrorMessage = value("");
-
-        const isIdValid = computed(() => idRegex.test(toAccount.value));
+        const isIdValid = computed(() => idRegex.test(state.toAccount));
         const isAmountValid = computed(() => {
             return (
-                new BigNumber(amount.value).isGreaterThan(new BigNumber(0)) &&
-                amountRegex.test(amount.value)
+                new BigNumber(state.amount).isGreaterThan(new BigNumber(0)) &&
+                amountRegex.test(state.amount)
             );
         });
 
         const isMaxFeeValid = computed(() => {
-            return maxFeeRegex.test(maxFee.value);
+            return maxFeeRegex.test(state.maxFee);
         });
 
-        const successModalIsOpen = value(false);
-
         const truncate = computed(() =>
-            amount.value.length > 15
-                ? amount.value.substring(0, 13) + "..."
-                : amount.value
+            state.amount.length > 15
+                ? state.amount.substring(0, 13) + "..."
+                : state.amount
         );
 
         const buttonLabel = computed(() =>
-            new BigNumber(amount.value).isGreaterThan(new BigNumber(0))
-                ? "Send " + truncate.value + " Hbars"
+            new BigNumber(state.amount).isGreaterThan(new BigNumber(0))
+                ? "Send " + truncate + " Hbars"
                 : "Send Hbar"
         );
 
         async function handleClickEntireBalance() {
-            const balance = value(store.state.wallet.balance);
-            if (balance.value == null) {
+            const balance = store.state.wallet.balance;
+            if (balance == null) {
                 return;
             }
-            const hbar = new BigNumber(balance.value.toString()).dividedBy(
+            const hbar = new BigNumber(balance.toString()).dividedBy(
                 getValueOfUnit(Unit.Hbar)
             );
-            amount.value = hbar.toString();
+            state.amount = hbar.toString();
         }
 
         async function handleSendTransfer() {
-            isBusy.value = true;
+            state.isBusy = true;
 
             try {
                 if (!isAmountValid || !isIdValid || !isMaxFeeValid) {
@@ -137,7 +138,7 @@ export default createComponent({
                 }
 
                 const client = store.state.wallet.session.client;
-                const parts = toAccount.value.split(".");
+                const parts = state.toAccount.split(".");
 
                 const recipient: AccountId = {
                     shard: parseInt(parts[0]),
@@ -146,7 +147,7 @@ export default createComponent({
                 };
 
                 const sendAmount = BigInt(
-                    new BigNumber(amount.value).multipliedBy(
+                    new BigNumber(state.amount).multipliedBy(
                         getValueOfUnit(Unit.Hbar)
                     )
                 );
@@ -155,7 +156,7 @@ export default createComponent({
                     store.state.wallet.balance != null &&
                     store.state.wallet.balance <= sendAmount
                 ) {
-                    amountErrorMessage.value =
+                    state.amountErrorMessage =
                         "Amount is greater than current balance";
                     return;
                 }
@@ -171,24 +172,31 @@ export default createComponent({
                     .build()
                     .executeForReceipt();
 
-                successModalIsOpen.value = true;
+                // eslint-disable-next-line require-atomic-updates
+                state.successModalIsOpen = true;
             } catch (error) {
                 console.log(error);
 
-                isBusy.value = false;
-                idErrorMessage.value = "";
-                amountErrorMessage.value = "";
+                // eslint-disable-next-line require-atomic-updates
+                state.isBusy = false;
+                // eslint-disable-next-line require-atomic-updates
+                state.idErrorMessage = "";
+                // eslint-disable-next-line require-atomic-updates
+                state.amountErrorMessage = "";
 
                 if (error.toString().includes("INVALID_ACCOUNT_ID")) {
-                    idErrorMessage.value = "Account ID not found on network";
+                    // eslint-disable-next-line require-atomic-updates
+                    state.idErrorMessage = "Account ID not found on network";
                 } else if (
                     error
                         .toString()
                         .includes("ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS")
                 ) {
-                    idErrorMessage.value = "Cannot send HBar to yourself";
+                    // eslint-disable-next-line require-atomic-updates
+                    state.idErrorMessage = "Cannot send HBar to yourself";
                 } else if (error.toString().includes("INSUFFICIENT_TX_FEE")) {
-                    txFeeErrorMessage.value =
+                    // eslint-disable-next-line require-atomic-updates
+                    state.txFeeErrorMessage =
                         "Insufficient Transaction Fee Amount";
                 } else {
                     store.dispatch(ALERT, {
@@ -197,27 +205,21 @@ export default createComponent({
                     });
                 }
             } finally {
-                isBusy.value = false;
+                // eslint-disable-next-line require-atomic-updates
+                state.isBusy = false;
             }
         }
 
         function handleSuccessModalChange(isOpen: boolean) {
-            successModalIsOpen.value = isOpen;
-            isBusy.value = false;
+            state.successModalIsOpen = isOpen;
+            state.isBusy = false;
         }
 
         return {
-            amount,
+            state,
             buttonLabel,
-            maxFee,
-            txFeeErrorMessage,
-            isBusy,
-            toAccount,
             isIdValid,
-            idErrorMessage,
             isAmountValid,
-            amountErrorMessage,
-            successModalIsOpen,
             Unit,
             handleClickEntireBalance,
             handleSendTransfer,
