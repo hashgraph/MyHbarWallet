@@ -49,7 +49,7 @@ export default createComponent({
             }
 
             const newValues = props.value.slice();
-            newValues[index - 1] = target.value;
+            newValues[index - 1] = target.value.trim();
 
             context.emit("input", newValues);
         }
