@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { computed, createComponent, value } from "@vue/composition-api";
+import { computed, createComponent, reactive } from "@vue/composition-api";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
@@ -33,14 +33,15 @@ export default createComponent({
         Button
     },
     setup() {
-        const signature = value("");
-        const busy = value(false);
+        const state = reactive({
+            signature: "",
+            busy: false
+        });
 
-        const isValid = computed(() => signature.value.length !== 0);
+        const isValid = computed(() => state.signature.length !== 0);
 
         return {
-            signature,
-            busy,
+            state,
             isValid
         };
     }
