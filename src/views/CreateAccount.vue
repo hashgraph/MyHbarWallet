@@ -98,7 +98,7 @@ export default createComponent({
         ModalEnterAccountId,
         ModalRequestToCreateAccount
     },
-    setup(_: object, context: SetupContext) {
+    setup(props: object, context: SetupContext) {
         const state = reactive<State>({
             keyFile: null,
             modalAccessByHardwareIsOpen: false,

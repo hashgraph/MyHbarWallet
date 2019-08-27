@@ -43,7 +43,14 @@ export default createComponent({
         message: (String as unknown) as PropType<string>,
         publicKey: (String as unknown) as PropType<string>
     },
-    setup(props, context) {
+    setup(
+        props: {
+            isOpen: boolean;
+            message: string;
+            publicKey: string;
+        },
+        context
+    ) {
         const rawPublicKey = computed(() => {
             let publickey = props.publicKey;
             if (publickey.startsWith(ED25519_PREFIX, 0)) {

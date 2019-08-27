@@ -14,10 +14,10 @@ describe("OptionalPasswordInput", (): void => {
             };
         },
         methods: {
-            handleInput: (_: string) => {
+            handleInput: (): void => {
                 return;
             },
-            handleChangeShowPassword: (_: boolean) => {
+            handleChangeShowPassword: (): void => {
                 return;
             }
         }

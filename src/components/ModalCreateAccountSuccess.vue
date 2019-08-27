@@ -40,7 +40,13 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>,
         accountId: (String as unknown) as PropType<string>
     },
-    setup(props, context) {
+    setup(
+        props: {
+            isOpen: boolean;
+            accountId: string;
+        },
+        context
+    ) {
         function handleCopy() {
             writeToClipboard(props.accountId);
         }

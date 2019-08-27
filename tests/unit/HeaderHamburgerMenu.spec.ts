@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import HeaderHamburgerMenu from "../../src/components/HeaderHamburgerMenu.vue";
-import { plugin as VueCompositionApi, computed } from "@vue/composition-api";
+import VueCompositionApi from "@vue/composition-api";
 import Router from "vue-router";
 import router from "../../src/router";
 
@@ -14,7 +14,7 @@ describe("HeaderHamburgerMenu.vue", (): void => {
             localVue,
             router,
             methods: {
-                inInterface: jest.fn(() => false)
+                inInterface: jest.fn((): boolean => false)
             }
         });
 
@@ -30,7 +30,7 @@ describe("HeaderHamburgerMenu.vue", (): void => {
             localVue,
             router,
             methods: {
-                inInterface: jest.fn(() => true)
+                inInterface: jest.fn((): boolean => true)
             }
         });
 

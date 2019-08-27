@@ -25,7 +25,13 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>,
         value: (String as unknown) as PropType<string>
     },
-    setup(props, context) {
+    setup(
+        props: {
+            isOpen: boolean;
+            value: string;
+        },
+        context
+    ) {
         async function handleClickCopy() {
             await writeToClipboard(props.value);
             context.emit("change", false);

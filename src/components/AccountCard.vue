@@ -69,7 +69,7 @@ export default createComponent({
     setup(props) {
         const rawPublicKey = computed(() => {
             let publickey = props.publicKey;
-            if (publickey.startsWith(ED25519_PREFIX, 0)) {
+            if (publickey != null && publickey.startsWith(ED25519_PREFIX, 0)) {
                 publickey = publickey.slice(ED25519_PREFIX.length);
             }
 
@@ -81,7 +81,9 @@ export default createComponent({
         });
 
         const copyKey = async () => {
-            await writeToClipboard(props.publicKey);
+            await writeToClipboard(
+                props.publicKey == null ? "" : props.publicKey
+            );
 
             store.dispatch(ALERT, {
                 level: "info",

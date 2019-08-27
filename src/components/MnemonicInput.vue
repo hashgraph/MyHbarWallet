@@ -44,6 +44,10 @@ export default createComponent({
             const target = event.target as HTMLInputElement;
             const index = Number.parseInt(target.dataset.index || "0", 10);
 
+            if (props.value == null) {
+                return;
+            }
+
             const newValues = props.value.slice();
             newValues[index - 1] = target.value;
 

@@ -4,6 +4,8 @@ import contractImage from "../../src/assets/contract.svg";
 import contractImageActive from "../../src/assets/contract-active.svg";
 import router from "../../src/router";
 import Router from "vue-router";
+import VueCompositionApi from "@vue/composition-api";
+import Vue from "vue";
 
 describe("InterfaceNavigationSection", (): void => {
     // Mock-out `window.scrollTo`
@@ -24,6 +26,7 @@ describe("InterfaceNavigationSection", (): void => {
 
     const localVue = createLocalVue();
     localVue.use(Router);
+    localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
         expect.assertions(1);
@@ -53,7 +56,7 @@ describe("InterfaceNavigationSection", (): void => {
             }
         });
         const img = wrapper.find("img").attributes("src");
-        expect(img).toBe(wrapper.vm.$props.image);
+        expect(img).toBe((wrapper.vm as Vue).$props.image);
         wrapper.find(".nav-section-header").trigger("click");
         expect(img).toBe(contractImageActive);
     });

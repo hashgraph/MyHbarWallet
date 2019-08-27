@@ -75,7 +75,7 @@ export default createComponent({
     props: {
         state: (Object as unknown) as PropType<State>
     },
-    setup(props, context) {
+    setup(props: { state: State }, context) {
         const valid = computed(() => {
             if (props.state.rawPrivateKey.length === 0) {
                 // Back out now if we have an empty value
