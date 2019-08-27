@@ -16,7 +16,7 @@
                         :key="index"
                         :class="{
                             readonly: isDisabled(index - 1),
-                            'is-focused': focused === index - 1
+                            'is-focused': state.focused === index - 1
                         }"
                     >
                         <span class="number">{{ index }}.</span>
@@ -72,8 +72,10 @@ export default createComponent({
         words: (Array as unknown) as PropType<string[]>
     },
     setup(props: Props, context) {
-        let inputMap = reactive<Map<number, string>>(new Map([]));
-        let focused = reactive<number | null>(null);
+        let inputMap: Map<number, string> = new Map();
+        const state = reactive({
+            focused: null as number | null
+        });
 
         function randomizeEmpties() {
             const newMap = new Map<number, string>([]);
@@ -93,7 +95,7 @@ export default createComponent({
             () => props.isOpen,
             (isOpen, oldIsOpen) => {
                 if (isOpen && !oldIsOpen) {
-                    focused = null;
+                    state.focused = null;
                     randomizeEmpties();
                 }
             }
@@ -131,7 +133,7 @@ export default createComponent({
             const index = Number.parseInt(target.dataset.index || "0", 10);
 
             if (!isDisabled(index)) {
-                focused = index;
+                state.focused = index;
             }
         }
 
@@ -143,13 +145,12 @@ export default createComponent({
         }
 
         return {
-            inputMap,
+            state,
             handleModalChangeIsOpen,
             valueForIndex,
             handleVerify,
             isDisabled,
             handleFocus,
-            focused,
             handleInput
         };
     }
