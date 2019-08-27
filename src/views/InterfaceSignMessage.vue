@@ -49,6 +49,14 @@ import ModalConfirmSignMessage from "../components/ModalConfirmSignMessage.vue";
 import ModalMessageSigned from "../components/ModalMessageSigned.vue";
 import { createComponent, reactive, watch } from "@vue/composition-api";
 
+interface State {
+    message: string | null;
+    signable: boolean;
+    enableErr: boolean;
+    confirmSignIsOpen: boolean;
+    signedModalIsOpen: boolean;
+}
+
 export default createComponent({
     name: "InterfaceSignMessage",
     components: {
@@ -59,7 +67,7 @@ export default createComponent({
         ModalMessageSigned
     },
     setup() {
-        const state = reactive({
+        const state = reactive<State>({
             message: null,
             signable: true,
             enableErr: false,
@@ -86,7 +94,7 @@ export default createComponent({
 
         watch(
             () => state.message,
-            (val: string) => {
+            (val: string | null) => {
                 state.signable = val != null;
                 state.enableErr = val === "";
             }
