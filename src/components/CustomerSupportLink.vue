@@ -1,7 +1,7 @@
 <template>
     <div class="customer-support-link" @click="handleButtonClick">
         <img alt="" :src="serviceBell" /> Customer Support
-        <ModalCustomerService v-model="modalCustomerServiceIsOpen" />
+        <ModalCustomerService v-model="state.modalCustomerServiceIsOpen" />
     </div>
 </template>
 
@@ -16,14 +16,16 @@ export default createComponent({
         ModalCustomerService
     },
     setup() {
-        let modalCustomerServiceIsOpen = reactive(false);
+        const state = reactive({
+            modalCustomerServiceIsOpen: false
+        });
 
         function handleButtonClick() {
-            modalCustomerServiceIsOpen = !modalCustomerServiceIsOpen;
+            state.modalCustomerServiceIsOpen = !state.modalCustomerServiceIsOpen;
         }
 
         return {
-            modalCustomerServiceIsOpen,
+            state,
             serviceBell,
             handleButtonClick
         };

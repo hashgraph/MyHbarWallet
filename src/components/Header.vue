@@ -1,5 +1,9 @@
 <template>
-    <div v-scroll="onScroll" :class="{ scrolled }" class="header-container">
+    <div
+        v-scroll="onScroll"
+        :class="{ scrolled: state.scrolled }"
+        class="header-container"
+    >
         <header>
             <router-link to="/" class="link">
                 <div class="logo">My<strong>Hbar</strong>Wallet</div>
@@ -15,10 +19,10 @@
                 >
             </div>
             <HeaderHamburgerButton
-                :is-open="isHamburgerOpen"
+                :is-open="state.isHamburgerOpen"
                 @toggle="toggle"
             />
-            <div v-if="scrolled" class="button-container">
+            <div v-if="state.scrolled" class="button-container">
                 <router-link class="btn" :to="{ name: 'create-account' }">
                     <Button label="Create Account" compact outline />
                 </router-link>
@@ -27,7 +31,10 @@
                 </router-link>
             </div>
         </header>
-        <HeaderHamburgerMenu :is-open="isHamburgerOpen" @toggle="toggle" />
+        <HeaderHamburgerMenu
+            :is-open="state.isHamburgerOpen"
+            @toggle="toggle"
+        />
     </div>
 </template>
 
@@ -44,20 +51,21 @@ export default createComponent({
         HeaderHamburgerButton
     },
     setup() {
-        let scrolled = reactive(false);
-        let isHamburgerOpen = reactive(false);
+        const state = reactive({
+            scrolled: false,
+            isHamburgerOpen: false
+        });
 
         function onScroll() {
-            scrolled = window.scrollY > 150;
+            state.scrolled = window.scrollY > 150;
         }
 
         function toggle() {
-            isHamburgerOpen = !isHamburgerOpen;
+            state.isHamburgerOpen = !state.isHamburgerOpen;
         }
 
         return {
-            scrolled,
-            isHamburgerOpen,
+            state,
             onScroll,
             toggle
         };

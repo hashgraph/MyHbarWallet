@@ -1,5 +1,5 @@
 <template>
-    <div class="accordion" :class="{ expanded }">
+    <div class="accordion" :class="{ expanded: state.expanded }">
         <div class="title" @click="toggle">
             <div class="title-text">
                 <slot name="title"></slot>
@@ -31,7 +31,7 @@ export default createComponent({
         };
 
         return {
-            ...state,
+            state,
             mdiChevronUp,
             toggle
         };

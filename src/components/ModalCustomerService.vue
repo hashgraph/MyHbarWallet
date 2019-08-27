@@ -10,28 +10,32 @@
                 @submit.prevent="handleSubmit"
             >
                 <TextInput
-                    v-model="browser"
+                    v-model="state.browser"
                     class="issue-item"
                     placeholder="Browser"
                 />
                 <TextInput
-                    v-model="platform"
+                    v-model="state.platform"
                     class="issue-item"
                     placeholder="Operating System"
                 />
                 <TextInput
-                    v-model="device"
+                    v-model="state.device"
                     class="issue-item"
                     placeholder="Device/Wallet type (if any)"
                 />
                 <TextInput
-                    v-model="accountId"
+                    v-model="state.accountId"
                     class="issue-item"
                     placeholder="Account ID (if any)"
                 />
-                <TextInput v-model="url" class="issue-item" placeholder="URL" />
                 <TextInput
-                    v-model="description"
+                    v-model="state.url"
+                    class="issue-item"
+                    placeholder="URL"
+                />
+                <TextInput
+                    v-model="state.description"
                     multiline
                     class="issue-item"
                     placeholder="Describe the issue"
