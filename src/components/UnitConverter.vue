@@ -4,14 +4,14 @@
             <div class="block-left">
                 <div class="select-block">
                     <Select
-                        v-model="selectedLeft"
+                        v-model="state.selectedLeft"
                         :options="options"
                         :left="true"
                     />
                 </div>
                 <div>
                     <TextInput
-                        v-model="valueLeft"
+                        v-model="state.valueLeft"
                         compact
                         white
                         type="number"
@@ -30,14 +30,14 @@
             <div class="block-right">
                 <div class="select-block">
                     <Select
-                        v-model="selectedRight"
+                        v-model="state.selectedRight"
                         :options="options"
                         :left="false"
                     />
                 </div>
                 <div>
                     <TextInput
-                        v-model="valueRight"
+                        v-model="state.valueRight"
                         compact
                         white
                         type="number"
@@ -55,7 +55,7 @@ import Select from "./Select.vue";
 import TextInput from "./TextInput.vue";
 import BigNumber from "bignumber.js";
 
-import { createComponent, value, watch } from "@vue/composition-api";
+import { createComponent, watch, reactive, Ref } from "@vue/composition-api";
 
 export enum Unit {
     Tinybar = "tinybar",
@@ -91,56 +91,74 @@ function convertFromTo(amt: string, from: Unit, to: Unit): string {
         .toFixed();
 }
 
+interface State {
+    selectedLeft: Unit;
+    selectedRight: Unit;
+    valueLeft: string;
+    valueRight: string;
+    options: Unit[];
+}
+
 export default createComponent({
     components: {
         Select,
         TextInput
     },
     setup() {
-        const selectedLeft = value(Unit.Tinybar);
-        const selectedRight = value(Unit.Hbar);
-        const valueLeft = value("100000000");
-        const valueRight = value("1");
-        const options = Object.values(Unit);
-
-        watch(valueLeft, newValue => {
-            valueRight.value = convertFromTo(
-                newValue,
-                selectedLeft.value,
-                selectedRight.value
-            );
+        const state = reactive<State>({
+            selectedLeft: Unit.Tinybar,
+            selectedRight: Unit.Hbar,
+            valueLeft: "100000000",
+            valueRight: "1",
+            options: Object.values(Unit)
         });
 
-        watch(valueRight, newValue => {
-            valueLeft.value = convertFromTo(
-                newValue,
-                selectedRight.value,
-                selectedLeft.value
-            );
-        });
+        watch(
+            () => state.valueLeft,
+            (newValue: string) => {
+                state.valueRight = convertFromTo(
+                    newValue,
+                    state.selectedLeft,
+                    state.selectedRight
+                );
+            }
+        );
 
-        watch(selectedLeft, newValue => {
-            valueRight.value = convertFromTo(
-                valueLeft.value,
-                newValue,
-                selectedRight.value
-            );
-        });
+        watch(
+            () => state.valueRight,
+            (newValue: string) => {
+                state.valueLeft = convertFromTo(
+                    newValue,
+                    state.selectedRight,
+                    state.selectedLeft
+                );
+            }
+        );
 
-        watch(selectedRight, newValue => {
-            valueLeft.value = convertFromTo(
-                valueRight.value,
-                newValue,
-                selectedLeft.value
-            );
-        });
+        watch(
+            () => state.selectedLeft,
+            (newValue: Unit) => {
+                state.valueRight = convertFromTo(
+                    state.valueLeft,
+                    newValue,
+                    state.selectedRight
+                );
+            }
+        );
+
+        watch(
+            () => state.selectedRight,
+            (newValue: Unit) => {
+                state.valueLeft = convertFromTo(
+                    state.valueRight,
+                    newValue,
+                    state.selectedLeft
+                );
+            }
+        );
 
         return {
-            selectedLeft,
-            selectedRight,
-            valueLeft,
-            valueRight,
-            options
+            state
         };
     }
 });
