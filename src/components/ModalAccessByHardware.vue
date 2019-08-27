@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value } from "@vue/composition-api";
+import { createComponent, reactive } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imageLedger from "../assets/button-ledger.svg";
@@ -48,7 +48,7 @@ export default createComponent({
         isOpen: { type: Boolean }
     },
     setup() {
-        const optionSelected = value("");
+        const optionSelected = reactive("");
         const options = [
             {
                 supported: false,

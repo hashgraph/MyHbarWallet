@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value } from "@vue/composition-api";
+import { createComponent, reactive } from "@vue/composition-api";
 
 export default createComponent({
     props: {
@@ -32,7 +32,7 @@ export default createComponent({
         value: (Array as unknown) as string[]
     },
     setup(props, context) {
-        const focused = value<number | null>(null);
+        let focused = reactive<number | null>(null);
         function handleInput(event: Event) {
             const target = event.target as HTMLInputElement;
             const index = Number.parseInt(target.dataset.index || "0", 10);
@@ -50,7 +50,7 @@ export default createComponent({
             }
 
             const target = event.target as HTMLInputElement;
-            focused.value = Number.parseInt(target.dataset.index || "0", 10);
+            focused = Number.parseInt(target.dataset.index || "0", 10);
         }
 
         return {

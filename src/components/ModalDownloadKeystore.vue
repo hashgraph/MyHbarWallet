@@ -57,19 +57,19 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import noLoseIcon from "../assets/icon-no-lose.svg";
 import noShareIcon from "../assets/icon-no-share.svg";
 import makeBackupIcon from "../assets/icon-make-backup.svg";
+import { createComponent } from "@vue/composition-api";
 
 export interface State {
     modalIsOpen: boolean;
     isBusy: boolean;
 }
 
-export default Vue.extend({
+export default createComponent({
     components: {
         Modal,
         Button
@@ -81,21 +81,17 @@ export default Vue.extend({
     props: {
         state: { type: Object, required: true }
     },
-    computed: {
-        noLoseIcon() {
-            return noLoseIcon;
-        },
-        noShareIcon() {
-            return noShareIcon;
-        },
-        makeBackupIcon() {
-            return makeBackupIcon;
+    setup(props, context) {
+        function handleModalChangeIsOpen(isOpen: boolean) {
+            context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
-    },
-    methods: {
-        handleModalChangeIsOpen(isOpen: boolean) {
-            this.$emit("change", { ...this.state, modalIsOpen: isOpen });
-        }
+
+        return {
+            noLoseIcon,
+            noShareIcon,
+            makeBackupIcon,
+            handleModalChangeIsOpen
+        };
     }
 });
 </script>
