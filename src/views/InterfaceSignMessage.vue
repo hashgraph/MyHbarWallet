@@ -41,7 +41,7 @@ import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import ModalConfirmSignMessage from "../components/ModalConfirmSignMessage.vue";
 import ModalMessageSigned from "../components/ModalMessageSigned.vue";
-import { createComponent, watch, value } from "@vue/composition-api";
+import { createComponent, reactive, watch } from "@vue/composition-api";
 
 export default createComponent({
     name: "InterfaceSignMessage",
@@ -53,48 +53,44 @@ export default createComponent({
         ModalMessageSigned
     },
     setup() {
-        const message = value(null);
-        const signable = value(true);
-        const enableErr = value(false);
-        const confirmSignIsOpen = value(false);
-        const signedModalIsOpen = value(false);
+        const state = reactive({
+            message: null,
+            signable: true,
+            enableErr: false,
+            confirmSignIsOpen: false,
+            signedModalIsOpen: false
+        });
+
         function onSignClicked() {
-            confirmSignIsOpen.value = true;
+            state.confirmSignIsOpen = true;
         }
 
         function handleSignedModalChanged(value: boolean) {
-            signedModalIsOpen.value = value;
+            state.signedModalIsOpen = value;
         }
 
         function handleConfirmModalChanged(value: boolean) {
-            confirmSignIsOpen.value = value;
+            state.confirmSignIsOpen = value;
         }
 
         function handleConfirmModalConfirm() {
-            confirmSignIsOpen.value = false;
-            signedModalIsOpen.value = true;
+            state.confirmSignIsOpen = false;
+            state.signedModalIsOpen = true;
         }
 
         watch(
-            () => message.value,
+            () => state.message,
             val => {
-                if (val) signable.value = true;
-                else signable.value = false;
-
-                if (val === "") enableErr.value = true;
-                else enableErr.value = false;
+                state.signable = val != null;
+                state.enableErr = val === "";
             }
         );
 
         return {
-            message,
-            signable,
-            enableErr,
+            state,
             onSignClicked,
-            confirmSignIsOpen,
-            signedModalIsOpen,
-            handleConfirmModalChanged,
             handleSignedModalChanged,
+            handleConfirmModalChanged,
             handleConfirmModalConfirm
         };
     }
