@@ -8,7 +8,7 @@
             label="Byte Code"
             class="deploy-contract-form-item"
             show-validation
-            :valid="byteCodeIsValid"
+            :valid="state.byteCodeIsValid"
         />
 
         <TextInput
@@ -18,14 +18,14 @@
             label="ABI/JSON Interface"
             class="deploy-contract-form-item"
             show-validation
-            :valid="interfaceIsValid"
+            :valid="state.interfaceIsValid"
         />
 
         <TextInput
             label="Maximum Transaction Fee"
             class="deploy-contract-form-item"
             show-validation
-            :valid="maxFeeIsValid"
+            :valid="state.maxFeeIsValid"
         />
 
         <template v-slot:footer>
@@ -39,11 +39,7 @@ import InterfaceForm from "../components/InterfaceForm.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 
-import {
-    createComponent,
-    value as vueValue,
-    computed
-} from "@vue/composition-api";
+import { createComponent, reactive, computed } from "@vue/composition-api";
 
 export default createComponent({
     components: {
@@ -52,18 +48,20 @@ export default createComponent({
         Button
     },
     setup() {
-        const byteCodeIsValid = vueValue(false);
-        const interfaceIsValid = vueValue(false);
-        const maxFeeIsValid = vueValue(false);
+        const state = reactive({
+            byteCodeIsValid: false,
+            interfaceIsValid: false,
+            maxFeeIsValid: false
+        });
 
         const signable = computed(
             (): boolean =>
-                byteCodeIsValid.value &&
-                interfaceIsValid.value &&
-                maxFeeIsValid.value
+                state.byteCodeIsValid &&
+                state.interfaceIsValid &&
+                state.maxFeeIsValid
         );
 
-        return { byteCodeIsValid, interfaceIsValid, maxFeeIsValid, signable };
+        return { state, signable };
     }
 });
 </script>
