@@ -83,7 +83,7 @@
                     rel="noopener"
                     target="_blank"
                     class="link"
-                    href="https://trezor.io/"
+                    href="https://shop.trezor.io/?offer_id=10&aff_id=3302"
                 >
                     Trezor
                 </a>

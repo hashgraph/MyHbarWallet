@@ -71,7 +71,7 @@ export default createComponent({
                 currency: "€",
                 cost: "83.49",
                 image: trezorImage,
-                moreInfo: "https://shop.trezor.io/product/trezor-one-white",
+                moreInfo: "https://shop.trezor.io/?offer_id=10&aff_id=3302",
                 description:
                     "The most trusted hardware wallet in the world. Get yours today!"
             },
