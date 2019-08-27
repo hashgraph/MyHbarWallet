@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { computed, createComponent, value } from "@vue/composition-api";
+import { computed, createComponent, reactive } from "@vue/composition-api";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
@@ -46,14 +46,16 @@ export default createComponent({
         const arrowRight = mdiArrowRight;
         const idRegex = /^\d+\.\d+\.\d+$/;
 
-        const contractId = value("");
-        const abi = value("");
+        const state = reactive({
+            contractId: "",
+            abi: ""
+        });
 
-        const isIdValid = computed(() => idRegex.test(contractId.value));
+        const isIdValid = computed(() => idRegex.test(state.contractId));
 
         const isJsonValid = computed(() => {
             try {
-                JSON.parse(abi.value);
+                JSON.parse(state.abi);
                 return true;
             } catch (error) {
                 return false;
@@ -65,8 +67,7 @@ export default createComponent({
 
         return {
             arrowRight,
-            contractId,
-            abi,
+            state,
             isIdValid,
             isJsonValid,
             isFormValid
