@@ -1,5 +1,9 @@
 <template>
-    <div class="select" :class="{ 'is-open': dropdownIsOpen }" @click.stop="">
+    <div
+        class="select"
+        :class="{ 'is-open': state.dropdownIsOpen }"
+        @click.stop=""
+    >
         <div class="select-value-container" @click="toggleDropdown">
             <div class="select-value">{{ selected }}</div>
             <MaterialDesignIcon class="icon" :icon="dropdownIcon" />
@@ -25,12 +29,18 @@ import {
     reactive,
     computed,
     PropType,
-    onBeforeUnmount
+    onBeforeUnmount,
+    Ref
 } from "@vue/composition-api";
+import { Computed } from "vuex";
 
 interface Props {
     options: string[];
     selected: string;
+}
+
+interface State {
+    dropdownIsOpen: boolean;
 }
 
 export default createComponent({
@@ -46,10 +56,12 @@ export default createComponent({
         options: (Array as unknown) as PropType<string[]>
     },
     setup(props: Props, context) {
-        let dropdownIsOpen = reactive(false);
+        const state = reactive<State>({
+            dropdownIsOpen: false
+        });
 
         const dropdownIcon = computed(() => {
-            if (dropdownIsOpen) {
+            if (state.dropdownIsOpen) {
                 return mdiChevronUp;
             }
 
@@ -57,7 +69,7 @@ export default createComponent({
         });
 
         function handleCloseOnWindowClick() {
-            dropdownIsOpen = false;
+            state.dropdownIsOpen = false;
         }
 
         window.addEventListener("click", handleCloseOnWindowClick);
@@ -67,16 +79,16 @@ export default createComponent({
         });
 
         function toggleDropdown() {
-            dropdownIsOpen = !dropdownIsOpen;
+            state.dropdownIsOpen = !state.dropdownIsOpen;
         }
 
         function handleOptionClick(option: string) {
             context.emit("change", option);
-            dropdownIsOpen = false;
+            state.dropdownIsOpen = false;
         }
 
         return {
-            dropdownIsOpen,
+            state,
             dropdownIcon,
             toggleDropdown,
             handleOptionClick
