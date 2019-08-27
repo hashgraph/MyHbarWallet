@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, value, Wrapper } from "@vue/composition-api";
+import { createComponent, reactive } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imagePhrase from "../assets/button-phrase.svg";
@@ -64,9 +64,7 @@ export default createComponent({
         isOpen: { type: Boolean }
     },
     setup() {
-        const optionSelected: Wrapper<CreateSoftwareOption | null> = value(
-            null
-        );
+        const optionSelected = reactive<CreateSoftwareOption | null>(null);
 
         const options = [
             {
