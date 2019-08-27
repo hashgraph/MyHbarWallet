@@ -12,10 +12,10 @@
 
                 <TextInput
                     ref="input"
-                    :value="input"
+                    :value="state.input"
                     show-validation
                     :valid="valid"
-                    :error="errorMessage"
+                    :error="state.errorMessage"
                     placeholder="shard.realm.account"
                     @input="handleInput"
                 />
@@ -25,7 +25,7 @@
                         class="btn"
                         label="Continue"
                         :disabled="!valid"
-                        :busy="isBusy"
+                        :busy="state.isBusy"
                     />
                 </div>
             </form>

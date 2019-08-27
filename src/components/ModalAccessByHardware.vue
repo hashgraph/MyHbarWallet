@@ -6,12 +6,12 @@
     >
         <form class="modal-access-by-hardware" @submit.prevent="">
             <RadioButtonGroup
-                v-model="optionSelected"
+                v-model="state.optionSelected"
                 name="hardware-access-option"
                 :options="options.filter(option => option.supported)"
             />
             <Button
-                :disabled="optionSelected.length === 0"
+                :disabled="state.optionSelected.length === 0"
                 class="button-choose-a-hardware"
                 label="Choose a Hardware"
             />
@@ -48,7 +48,10 @@ export default createComponent({
         isOpen: { type: Boolean }
     },
     setup() {
-        const optionSelected = reactive("");
+        const state = reactive({
+            optionSelected: ""
+        });
+
         const options = [
             {
                 supported: false,
@@ -89,7 +92,7 @@ export default createComponent({
         ];
 
         return {
-            optionSelected,
+            state,
             options
         };
     }

@@ -78,8 +78,7 @@ export default createComponent({
     },
     setup() {
         const modalForgotToLogOutIsOpen = computed(
-            () => store.getters.IS_LOGGED_IN,
-            value => value
+            () => store.getters.IS_LOGGED_IN
         );
 
         function handleForgotToLogoutChange() {

@@ -4,7 +4,7 @@
             v-for="index in words"
             :key="index"
             class="list-item"
-            :class="{ 'is-focused': focused === index }"
+            :class="{ 'is-focused': state.focused === index }"
         >
             <span class="number">{{ index }}.</span>
 
@@ -23,16 +23,23 @@
 </template>
 
 <script lang="ts">
-import { createComponent, reactive } from "@vue/composition-api";
+import { createComponent, PropType, reactive } from "@vue/composition-api";
+
+interface State {
+    focused: number | null;
+}
 
 export default createComponent({
     props: {
         editable: (Boolean as unknown) as boolean,
         words: (Number as unknown) as number,
-        value: (Array as unknown) as string[]
+        value: (Array as unknown) as PropType<string[]>
     },
     setup(props, context) {
-        let focused = reactive<number | null>(null);
+        const state = reactive<State>({
+            focused: null
+        });
+
         function handleInput(event: Event) {
             const target = event.target as HTMLInputElement;
             const index = Number.parseInt(target.dataset.index || "0", 10);
@@ -50,11 +57,11 @@ export default createComponent({
             }
 
             const target = event.target as HTMLInputElement;
-            focused = Number.parseInt(target.dataset.index || "0", 10);
+            state.focused = Number.parseInt(target.dataset.index || "0", 10);
         }
 
         return {
-            focused,
+            state,
             handleInput,
             handleFocus
         };

@@ -38,7 +38,7 @@
                         <MaterialDesignIcon
                             v-if="obscure"
                             class="eye"
-                            :class="{ 'is-open': isEyeOpen }"
+                            :class="{ 'is-open': state.isEyeOpen }"
                             :icon="eye"
                             @click="handleClickEye"
                         />
@@ -170,9 +170,9 @@ export default createComponent({
     setup(props: Props, context): Component {
         // If the eye is open to show the obscured text anyway
         const state = reactive({
-            isEyeOpen: false
+            isEyeOpen: false,
+            hasFocus: false
         });
-        let hasFocus = false;
         const input = ref<HTMLInputElement | null>(null);
 
         const keyboardType = computed(() => {
@@ -197,7 +197,7 @@ export default createComponent({
                 "is-compact": props.compact,
                 "is-white": props.white,
                 "is-multiline": props.multiline,
-                "has-focus": hasFocus,
+                "has-focus": state.hasFocus,
                 "has-label": props.label != null,
                 "has-error": props.error != null && props.error != "",
                 "has-prefix": props.prefix != null,
@@ -230,11 +230,11 @@ export default createComponent({
         }
 
         function handleFocusIn() {
-            hasFocus = true;
+            state.hasFocus = true;
         }
 
         function handleFocusOut() {
-            hasFocus = false;
+            state.hasFocus = false;
         }
 
         return {
