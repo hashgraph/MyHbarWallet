@@ -69,7 +69,7 @@ export default createComponent({
     props: {
         state: { type: Object, required: true } as PropOptions<State>
     },
-    setup(props, context) {
+    setup(props: { state: State }, context) {
         function handleModalChangeIsOpen(isOpen: boolean) {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
@@ -80,7 +80,7 @@ export default createComponent({
         const areFieldsFilled = computed(() => {
             if (props.state.words.length == 24) {
                 for (const word of props.state.words) {
-                    if (word == "" || word == null) {
+                    if (!word || word.length === 0) {
                         return false;
                     }
                 }
