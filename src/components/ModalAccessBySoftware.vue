@@ -42,7 +42,7 @@ import imageFile from "../assets/button-file.svg";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
-import { createComponent, value } from "@vue/composition-api";
+import { createComponent, reactive } from "@vue/composition-api";
 
 export enum AccessSoftwareOption {
     File = "file",
@@ -66,7 +66,7 @@ export default createComponent({
         isOpen: { type: Boolean }
     },
     setup() {
-        const optionSelected = value(null);
+        const optionSelected = reactive(null);
 
         const options = [
             {
