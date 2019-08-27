@@ -1,36 +1,36 @@
 <template>
     <InterfaceForm title="Create Account">
         <TextInput
-            v-model="userBalance"
+            v-model="state.userBalance"
             has-input
             label="Initial Balance"
             show-validation
             :min="1"
             :valid="validBalance"
             :suffix="Unit.Hbar"
-            :error="userBalanceError"
+            :error="state.userBalanceError"
         />
 
         <TextInput
-            v-model="publicKey"
+            v-model="state.publicKey"
             label="Public Key"
             show-validation
             :valid="validKey"
         />
 
         <TextInput
-            v-model="maxFee"
+            v-model="state.maxFee"
             label="Maximum Transaction Fee"
             :valid="validMaxFee"
             :min="0"
             show-validation
             :suffix="Unit.Tinybar"
-            :error="maxFeeError"
+            :error="state.maxFeeError"
         />
 
         <template v-slot:footer>
             <Button
-                :busy="isBusy"
+                :busy="state.isBusy"
                 :disabled="!validKey || !validBalance || !validMaxFee"
                 label="Create Account"
                 @click="handleCreateAccount"
@@ -39,7 +39,7 @@
 
         <ModalCreateAccountSuccess
             v-model="successModalIsOpen"
-            :account-id="account"
+            :account-id="state.account"
             @change="handleSuccessModalChange"
         />
     </InterfaceForm>
@@ -49,12 +49,7 @@
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
-import {
-    computed,
-    createComponent,
-    value,
-    Wrapper
-} from "@vue/composition-api";
+import { computed, createComponent, reactive, Ref } from "@vue/composition-api";
 import store from "../store";
 import { AccountCreateTransaction, Ed25519PublicKey } from "@hashgraph/sdk";
 import { ALERT } from "../store/actions";
@@ -64,6 +59,18 @@ import { BigNumber } from "bignumber.js";
 
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
+
+interface State {
+    userBalance: string;
+    maxFee: string;
+    publicKey: string;
+    isBusy: boolean;
+    successModalIsOpen: boolean;
+    userBalanceError: string | null;
+    maxFeeError: string | null;
+    account: string | null;
+}
+
 export default createComponent({
     components: {
         TextInput,
@@ -72,15 +79,16 @@ export default createComponent({
         ModalCreateAccountSuccess
     },
     setup() {
-        // fixme: get actual user balance
-        const userBalance = value("10");
-        const maxFee = value("100000000");
-        const publicKey = value("");
-        const isBusy = value(false);
-        const successModalIsOpen = value(false);
-        const userBalanceError: Wrapper<string | null> = value(null);
-        const maxFeeError: Wrapper<string | null> = value(null);
-        const account: Wrapper<string | null> = value(null);
+        const state = reactive<State>({
+            userBalance: "0",
+            maxFee: "100000000",
+            publicKey: "",
+            isBusy: false,
+            successModalIsOpen: false,
+            userBalanceError: null,
+            maxFeeError: null,
+            account: null
+        });
 
         // Using regex to validate user input
         const userBalanceRegex = /^0*\d+(\.\d{1,9})?$/;
@@ -89,20 +97,20 @@ export default createComponent({
         // 5 is used a default starting balance
         const validBalance = computed(() => {
             return (
-                new BigNumber(userBalance.value).isGreaterThan(
+                new BigNumber(state.userBalance).isGreaterThan(
                     new BigNumber(0)
-                ) && userBalanceRegex.test(userBalance.value)
+                ) && userBalanceRegex.test(state.userBalance)
             );
         });
         const validKey = computed(
             () =>
-                publicKey.value.startsWith(ED25519_PREFIX) &&
-                publicKey.value.length == 88
+                state.publicKey.startsWith(ED25519_PREFIX) &&
+                state.publicKey.length == 88
         );
-        const validMaxFee = computed(() => maxFeeRegex.test(maxFee.value));
+        const validMaxFee = computed(() => maxFeeRegex.test(state.maxFee));
 
         async function handleCreateAccount() {
-            isBusy.value = true;
+            state.isBusy = true;
 
             try {
                 if (!validBalance || !validKey || !validMaxFee) {
@@ -118,7 +126,7 @@ export default createComponent({
                 const client = store.state.wallet.session.client;
 
                 const balance = BigInt(
-                    new BigNumber(userBalance.value).multipliedBy(
+                    new BigNumber(state.userBalance).multipliedBy(
                         getValueOfUnit(Unit.Hbar)
                     )
                 );
@@ -127,13 +135,13 @@ export default createComponent({
                     store.state.wallet.balance != null &&
                     store.state.wallet.balance <= balance
                 ) {
-                    userBalanceError.value =
+                    state.userBalanceError =
                         "Amount is greater than current balance";
                     return;
                 }
 
-                const fee = BigInt(maxFee.value);
-                const key = Ed25519PublicKey.fromString(publicKey.value);
+                const fee = BigInt(state.maxFee);
+                const key = Ed25519PublicKey.fromString(state.publicKey);
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client
                 )
@@ -148,55 +156,49 @@ export default createComponent({
                     throw new Error("Account Id returned is null");
                 }
 
-                // accountIdIntermediate must be AccountID
-                // get shard, realm, account separately and construct a new object
-                account.value =
+                // state.accountIdIntermediate must be AccountID
+                // get shard, realm, state.account separately and construct a new object
+                state.account =
                     accountIdIntermediate.getShardnum() +
                     "." +
                     accountIdIntermediate.getRealmnum() +
                     "." +
                     accountIdIntermediate.getAccountnum();
 
-                // If creating account succeeds then remove all the error
-                userBalanceError.value = null;
-                maxFeeError.value = null;
+                // If creating state.account succeeds then remove all the error
+                state.userBalanceError = null;
+                state.maxFeeError = null;
 
-                successModalIsOpen.value = true;
+                state.successModalIsOpen = true;
             } catch (error) {
                 console.log(error);
 
                 if (error instanceof Error) {
                     if (error.message === "INSUFFICIENT_TX_FEE") {
-                        maxFeeError.value =
+                        state.maxFeeError =
                             "Insufficient maximum transaction fee";
                     } else if (error.message === "INSUFFICIENT_PAYER_BALANCE") {
-                        userBalanceError.value = "Insufficient Payer Balance";
-                        maxFeeError.value = "Insufficient Payer Balance";
+                        state.userBalanceError = "Insufficient Payer Balance";
+                        state.maxFeeError = "Insufficient Payer Balance";
                     } else {
                         store.dispatch(ALERT, {
                             level: "error",
-                            message: "Failed to create account"
+                            message: "Failed to create state.account"
                         });
                     }
                 }
             } finally {
-                isBusy.value = false;
+                state.isBusy = false;
             }
         }
+
         function handleSuccessModalChange(isOpen: boolean) {
-            successModalIsOpen.value = isOpen;
-            isBusy.value = false;
+            state.successModalIsOpen = isOpen;
+            state.isBusy = false;
         }
 
         return {
-            isBusy,
-            successModalIsOpen,
-            userBalance,
-            publicKey,
-            userBalanceError,
-            maxFee,
-            maxFeeError,
-            account,
+            state,
             validBalance,
             validKey,
             validMaxFee,
