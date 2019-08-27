@@ -30,7 +30,7 @@ import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "../components/NetworkCard.vue";
 import BalanceCard from "../components/BalanceCard.vue";
 import AccountCard from "../components/AccountCard.vue";
-import { createComponent, value, computed } from "@vue/composition-api";
+import { createComponent, computed, reactive } from "@vue/composition-api";
 import store from "../store";
 
 export default createComponent({
@@ -52,29 +52,30 @@ export default createComponent({
                 : null
         );
 
-        const balance = value(0);
-        const balanceIsBusy = value(false);
+        const state = reactive({
+            balance: 0,
+            balanceIsBusy: false
+        });
 
         async function handleBalanceRefresh() {
             const session = store.state.wallet.session;
             if (session == null) return;
 
-            balanceIsBusy.value = true;
+            state.balanceIsBusy = true;
 
             try {
                 const accountBalance: BigInt = await session.client.getAccountBalance();
-                balance.value = Number(accountBalance);
+                state.balance = Number(accountBalance);
             } finally {
-                balanceIsBusy.value = false;
+                state.balanceIsBusy = false;
             }
         }
 
         return {
+            state,
             handleBalanceRefresh,
-            balanceIsBusy,
             account,
-            publicKey,
-            balance
+            publicKey
         };
     }
 });
