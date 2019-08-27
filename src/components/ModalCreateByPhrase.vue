@@ -26,27 +26,27 @@
 
             <MnemonicInput
                 class="phrase-input"
-                :words="numberWords"
+                :words="state.numberWords"
                 :value="words"
                 :editable="false"
             />
 
             <HiddenPasswordInput
                 v-if="false"
-                :value="passwordValue"
+                :value="state.passwordValue"
                 password-warning="If you choose to include a password, understand you will ALWAYS need this password with your mnemonic phrase. You can not change it. It becomes a permanent part of your phrase."
                 @input="handlePasswordChange"
             />
 
             <div class="continue-btn-container">
                 <Button
-                    :busy="isBusy"
+                    :busy="state.isBusy"
                     class="continue-btn"
                     label="I Wrote Down My Mnemonic Phrase"
                     @click="handleClick"
                 />
                 <ModalVerifyPhrase
-                    v-model="verifyPhraseIsOpen"
+                    v-model="state.verifyPhraseIsOpen"
                     :words="words"
                     @success="handleVerifySuccess"
                 />
@@ -57,7 +57,7 @@
                 />
 
                 <ModalPhrasePrintPreview
-                    v-model="printModalIsOpen"
+                    v-model="state.printModalIsOpen"
                     :words="words"
                 />
             </div>
@@ -90,8 +90,7 @@ import {
     createComponent,
     onMounted,
     PropType,
-    value,
-    Wrapper
+    reactive
 } from "@vue/composition-api";
 import {
     generateMnemonic,
@@ -123,14 +122,16 @@ export default createComponent({
     },
     setup(props, context) {
         const numberWords = 24;
-        const isBusy = value(false);
-        const passwordValue = value("");
-        const result: Wrapper<MnemonicResult | null> = value(null);
-        const printModalIsOpen = value(false);
-        const verifyPhraseIsOpen = value(false);
+        const state = reactive({
+            isBusy: false,
+            passwordValue: "",
+            result: null as MnemonicResult | null,
+            printModalIsOpen: false,
+            verifyPhraseIsOpen: false
+        });
 
         const words = computed(() => {
-            return result.value ? result.value.mnemonic.split(" ") : [];
+            return state.result ? state.result.mnemonic.split(" ") : [];
         });
 
         const cachedIcon = computed(() => {
@@ -141,30 +142,31 @@ export default createComponent({
         });
 
         function handlePasswordChange(password: string) {
-            passwordValue.value = password;
+            state.passwordValue = password;
         }
 
         function handlePrintModal() {
-            printModalIsOpen.value = !printModalIsOpen.value;
+            state.printModalIsOpen = !state.printModalIsOpen;
         }
 
         function handleClick() {
-            verifyPhraseIsOpen.value = true;
+            state.verifyPhraseIsOpen = true;
         }
 
         function randomizeMnemonic() {
-            result.value = generateMnemonic();
+            state.result = generateMnemonic();
         }
 
         async function handleVerifySuccess() {
-            if (result.value == null) return;
+            if (state.result == null) return;
 
-            isBusy.value = true;
-            verifyPhraseIsOpen.value = false;
+            state.isBusy = true;
+            state.verifyPhraseIsOpen = false;
 
-            const key: Ed25519PrivateKey = await result.value.generateKey();
+            const key: Ed25519PrivateKey = await state.result.generateKey();
 
-            isBusy.value = false;
+            // eslint-disable-next-line require-atomic-updates
+            state.isBusy = false;
 
             context.emit("submit", key);
         }
@@ -174,14 +176,11 @@ export default createComponent({
         });
 
         return {
+            state,
             numberWords,
-            passwordValue,
             words,
-            isBusy,
             cachedIcon,
             printerIcon,
-            printModalIsOpen,
-            verifyPhraseIsOpen,
             handlePrintModal,
             handlePasswordChange,
             handleClick,
