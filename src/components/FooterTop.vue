@@ -143,7 +143,7 @@
                 0.0.1001
             </div>
         </div>
-        <ModalCustomerService v-model="modalCustomerServiceIsOpen" />
+        <ModalCustomerService v-model="state.modalCustomerServiceIsOpen" />
     </div>
 </template>
 
@@ -156,15 +156,17 @@ export default createComponent({
         ModalCustomerService
     },
     setup() {
-        let modalCustomerServiceIsOpen = reactive(false);
+        const state = reactive({
+            modalCustomerServiceIsOpen: false
+        });
         const hasAffiliates = false;
 
         function handleButtonClick() {
-            modalCustomerServiceIsOpen = !modalCustomerServiceIsOpen;
+            state.modalCustomerServiceIsOpen = !state.modalCustomerServiceIsOpen;
         }
 
         return {
-            modalCustomerServiceIsOpen,
+            state,
             handleButtonClick,
             hasAffiliates
         };
