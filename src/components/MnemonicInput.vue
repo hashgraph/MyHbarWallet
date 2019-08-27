@@ -41,15 +41,18 @@ export default createComponent({
         });
 
         function handleInput(event: Event) {
-            const target = event.target as HTMLInputElement;
-            const index = Number.parseInt(target.dataset.index || "0", 10);
-
             if (props.value == null) {
                 return;
             }
 
+            const target = event.target as HTMLInputElement;
             const newValues = props.value.slice();
-            newValues[index - 1] = target.value.trim();
+            const index = Number.parseInt(target.dataset.index!, 10) - 1;
+
+            const splitString = target.value.trim().split(" ");
+            splitString.forEach((item, i) => {
+                newValues[index + i] = item;
+            });
 
             context.emit("input", newValues);
         }
