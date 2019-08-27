@@ -10,10 +10,10 @@
         <template>
             <form
                 class="modal-access-by-software"
-                @submit.prevent="$emit('submit', optionSelected)"
+                @submit.prevent="$emit('submit', state.optionSelected)"
             >
                 <RadioButtonGroup
-                    v-model="optionSelected"
+                    v-model="state.optionSelected"
                     name="software-access-option"
                     :options="options"
                 />
@@ -26,7 +26,10 @@
                         Purchase a hardware wallet....
                     </router-link>
                 </div>
-                <Button :disabled="optionSelected == null" label="Continue" />
+                <Button
+                    :disabled="state.optionSelected == null"
+                    label="Continue"
+                />
                 <CustomerSupportLink class="support-link" />
             </form>
         </template>
@@ -48,6 +51,10 @@ export enum CreateSoftwareOption {
     Phrase = "phrase"
 }
 
+interface State {
+    selectedOption: CreateSoftwareOption | null;
+}
+
 export default createComponent({
     components: {
         RadioButtonGroup,
@@ -64,7 +71,9 @@ export default createComponent({
         isOpen: { type: Boolean }
     },
     setup() {
-        const optionSelected = reactive<CreateSoftwareOption | null>(null);
+        const state = reactive<State>({
+            selectedOption: null
+        });
 
         const options = [
             {
@@ -80,7 +89,7 @@ export default createComponent({
         ];
 
         return {
-            optionSelected,
+            state,
             options
         };
     }
