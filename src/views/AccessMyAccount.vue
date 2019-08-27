@@ -13,37 +13,37 @@
         <FAQs />
 
         <ModalAccessByPrivateKey
-            v-model="modalAccessByPrivateKeyState"
+            v-model="state.modalAccessByPrivateKeyState"
             @submit="handleAccessByPrivateKeySubmit"
         />
 
         <ModalAccessByPhrase
-            v-model="modalAccessByPhraseState"
+            v-model="state.modalAccessByPhraseState"
             @submit="handleAccessByPhraseSubmit"
         />
 
-        <ModalAccessByHardware v-model="modalAccessByHardwareIsOpen" />
+        <ModalAccessByHardware v-model="state.modalAccessByHardwareIsOpen" />
 
         <ModalAccessBySoftware
-            v-model="modalAccessBySoftwareIsOpen"
+            v-model="state.modalAccessBySoftwareIsOpen"
             @submit="handleAccessBySoftwareSubmit"
         />
 
         <ModalKeystoreFilePassword
-            v-model="ModalKeystoreFilePasswordState"
+            v-model="state.modalKeystoreFilePasswordState"
             @submit="handlePasswordSubmit"
         />
 
         <ModalEnterAccountId
-            v-model="modalEnterAccountIdIsOpen"
-            :private-key="privateKey"
+            v-model="state.modalEnterAccountIdIsOpen"
+            :private-key="state.privateKey"
             @submit="handleAccountIdSubmit"
             @noAccount="handleDoesntHaveAccount"
         />
 
         <ModalRequestToCreateAccount
-            v-model="modalRequestToCreateAccountIsOpen"
-            :public-key="publicKey"
+            v-model="state.modalRequestToCreateAccountIsOpen"
+            :public-key="state.publicKey"
             @hasAccount="handleHasAccount"
         />
 
@@ -72,7 +72,12 @@ import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
 import store from "../store";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
-import { createComponent, value, Wrapper } from "@vue/composition-api";
+import {
+    createComponent,
+    reactive,
+    ref,
+    SetupContext
+} from "@vue/composition-api";
 import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
 import { ALERT, LOG_IN } from "../store/actions";
@@ -90,57 +95,55 @@ export default createComponent({
         ModalEnterAccountId,
         ModalRequestToCreateAccount
     },
-    setup(props, context) {
-        const privateKey: Wrapper<Ed25519PrivateKey | null> = value(null);
-        const publicKey: Wrapper<Ed25519PublicKey | null> = value(null);
-
-        const modalAccessByHardwareIsOpen = value(false);
-        const modalAccessBySoftwareIsOpen = value(false);
-
-        const modalAccessByPhraseState = value({
-            modalIsOpen: false,
-            isBusy: false,
-            words: [],
-            isValid: true
+    setup(props: object, context: SetupContext) {
+        const state = reactive({
+            privateKey: null as Ed25519PrivateKey | null,
+            publicKey: null as Ed25519PublicKey | null,
+            modalAccessByHardwareIsOpen: false,
+            modalAccessBySoftwareIsOpen: false,
+            modalAccessByPhraseState: {
+                modalIsOpen: false,
+                isBusy: false,
+                words: [],
+                isValid: true
+            },
+            modalKeystoreFilePasswordState: {
+                modalIsOpen: false,
+                password: "",
+                isBusy: false
+            },
+            modalAccessByPrivateKeyState: {
+                modalIsOpen: false,
+                rawPrivateKey: "",
+                isBusy: false
+            },
+            modalEnterAccountIdIsOpen: false,
+            modalRequestToCreateAccountIsOpen: false,
+            keystoreFileArray: null as Uint8Array | null
         });
 
-        const ModalKeystoreFilePasswordState = value({
-            modalIsOpen: false,
-            password: "",
-            isBusy: false
-        });
-
-        const modalAccessByPrivateKeyState = value<
-            ModalAccessByPrivateKeyState
-        >({
-            modalIsOpen: false,
-            rawPrivateKey: "",
-            isBusy: false
-        });
-
-        const modalEnterAccountIdIsOpen = value(false);
-
-        const modalRequestToCreateAccountIsOpen = value(false);
-        const keystoreFileArray: Wrapper<Uint8Array | null> = value(null);
+        const file = ref<HTMLInputElement | null>(null);
 
         function handleClickTiles(which: string) {
             if (which === "hardware") {
-                modalAccessByHardwareIsOpen.value = true;
+                state.modalAccessByHardwareIsOpen = true;
             } else if (which === "software") {
-                modalAccessBySoftwareIsOpen.value = true;
+                state.modalAccessBySoftwareIsOpen = true;
             }
         }
         function handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
-            modalAccessBySoftwareIsOpen.value = false;
+            state.modalAccessBySoftwareIsOpen = false;
 
             if (which === "file") {
-                (context.refs.file as HTMLInputElement).click();
+                if (file.value != null) {
+                    file.value.click();
+                }
             } else {
                 setTimeout(() => {
                     if (which === AccessSoftwareOption.Phrase) {
-                        modalAccessByPhraseState.value.modalIsOpen = true;
+                        state.modalAccessByPhraseState.modalIsOpen = true;
                     } else if (which === AccessSoftwareOption.Key) {
-                        modalAccessByPrivateKeyState.value.modalIsOpen = true;
+                        state.modalAccessByPrivateKeyState.modalIsOpen = true;
                     }
                 }, 125);
             }
@@ -168,26 +171,24 @@ export default createComponent({
                 }
             );
 
-            ModalKeystoreFilePasswordState.value.modalIsOpen = true;
+            state.modalKeystoreFilePasswordState.modalIsOpen = true;
 
-            const keyStoreFileU8 = new Uint8Array(keyStoreArrayBuff);
-
-            keystoreFileArray.value = keyStoreFileU8;
+            state.keystoreFileArray = new Uint8Array(keyStoreArrayBuff);
         }
 
         // Update our local understand of what the private/public key pair is
         // Called at the end of each access by software workflow before merging
         // into enter account ID
         function setPrivateKey(newPrivateKey: Ed25519PrivateKey) {
-            privateKey.value = newPrivateKey;
-            publicKey.value = newPrivateKey.publicKey;
+            state.privateKey = newPrivateKey;
+            state.publicKey = newPrivateKey.publicKey;
         }
 
         async function handlePasswordSubmit() {
-            const pwState = ModalKeystoreFilePasswordState.value;
+            const pwState = state.modalKeystoreFilePasswordState;
             pwState.isBusy = true;
 
-            if (keystoreFileArray.value == null) {
+            if (state.keystoreFileArray == null) {
                 throw new Error(
                     "unexepcted keystore password submission before submission of keystore file"
                 );
@@ -196,14 +197,14 @@ export default createComponent({
             try {
                 setPrivateKey(
                     await Ed25519PrivateKey.fromKeystore(
-                        keystoreFileArray.value,
-                        ModalKeystoreFilePasswordState.value.password
+                        state.keystoreFileArray as Uint8Array,
+                        state.modalKeystoreFilePasswordState.password
                     )
                 );
                 // Close  previous modal and open another one
                 pwState.isBusy = false;
                 pwState.modalIsOpen = false;
-                modalEnterAccountIdIsOpen.value = true;
+                state.modalEnterAccountIdIsOpen = true;
             } catch {
                 pwState.isBusy = false;
 
@@ -215,7 +216,7 @@ export default createComponent({
         }
 
         async function handleAccessByPhraseSubmit() {
-            const accessByPhraseState = modalAccessByPhraseState.value;
+            const accessByPhraseState = state.modalAccessByPhraseState;
 
             accessByPhraseState.isBusy = true;
 
@@ -227,7 +228,7 @@ export default createComponent({
                 // Close  previous modal and open another one
                 accessByPhraseState.isBusy = false;
                 accessByPhraseState.modalIsOpen = false;
-                modalEnterAccountIdIsOpen.value = true;
+                state.modalEnterAccountIdIsOpen = true;
                 accessByPhraseState.isValid = true;
             } catch {
                 accessByPhraseState.isBusy = false;
@@ -242,20 +243,20 @@ export default createComponent({
         }
 
         function handleAccessByPrivateKeySubmit() {
-            modalAccessByPrivateKeyState.value.isBusy = true;
+            state.modalAccessByPrivateKeyState.isBusy = true;
 
             setPrivateKey(
                 Ed25519PrivateKey.fromString(
-                    modalAccessByPrivateKeyState.value.rawPrivateKey
+                    state.modalAccessByPrivateKeyState.rawPrivateKey
                 )
             );
 
             // Close previous modal and open another one
-            modalAccessByPrivateKeyState.value.modalIsOpen = false;
+            state.modalAccessByPrivateKeyState.modalIsOpen = false;
 
             setTimeout(() => {
-                modalAccessByPrivateKeyState.value.isBusy = false;
-                modalEnterAccountIdIsOpen.value = true;
+                state.modalAccessByPrivateKeyState.isBusy = false;
+                state.modalEnterAccountIdIsOpen = true;
             }, 125);
         }
 
@@ -267,33 +268,26 @@ export default createComponent({
             store.dispatch(LOG_IN, {
                 account,
                 client,
-                privateKey: privateKey.value,
-                publicKey: publicKey.value
+                privateKey: state.privateKey,
+                publicKey: state.publicKey
             });
 
             openInterface();
         }
 
         function handleDoesntHaveAccount() {
-            modalEnterAccountIdIsOpen.value = false;
-            modalRequestToCreateAccountIsOpen.value = true;
+            state.modalEnterAccountIdIsOpen = false;
+            state.modalRequestToCreateAccountIsOpen = true;
         }
 
         function handleHasAccount() {
-            modalRequestToCreateAccountIsOpen.value = false;
-            modalEnterAccountIdIsOpen.value = true;
+            state.modalRequestToCreateAccountIsOpen = false;
+            state.modalEnterAccountIdIsOpen = true;
         }
 
         return {
-            publicKey,
-            privateKey,
-            modalAccessByHardwareIsOpen,
-            modalAccessBySoftwareIsOpen,
-            modalAccessByPhraseState,
-            ModalKeystoreFilePasswordState,
-            modalAccessByPrivateKeyState,
-            modalEnterAccountIdIsOpen,
-            modalRequestToCreateAccountIsOpen,
+            state,
+            file,
             handleClickTiles,
             handleAccessBySoftwareSubmit,
             loadTextFromFile,
