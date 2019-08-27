@@ -64,8 +64,6 @@ function InterfaceVerifyMessage(): Promise<
     );
 }
 
-Vue.use(Router);
-
 // auth function that redirects visitors who have not logged in back to the home route
 function RequireWallet(
     _to: Route,

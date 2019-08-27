@@ -25,7 +25,12 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, computed } from "@vue/composition-api";
+import {
+    createComponent,
+    PropType,
+    computed,
+    SetupContext
+} from "@vue/composition-api";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import store from "../store";
@@ -54,7 +59,7 @@ export default createComponent({
         routes: (Array as unknown) as PropType<InterfaceNavigationItem[]>
     },
     watch: {},
-    setup(props: Props, context) {
+    setup(props: Props, context: SetupContext) {
         const isSectionActive = computed(() =>
             props.routes.some(route => route.name === context.root.$route.name)
         );

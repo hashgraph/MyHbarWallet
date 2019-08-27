@@ -1,48 +1,43 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount, createLocalVue } from "@vue/test-utils";
 import Button from "../../src/components/Button.vue";
-import MaterialDesignIcon from "../../src/components/MaterialDesignIcon.vue";
+import VueCompositionApi from "@vue/composition-api";
 
 describe("Button.vue", (): void => {
+    const localVue = createLocalVue();
+    localVue.use(VueCompositionApi);
+
     it("renders", (): void => {
         expect.assertions(1);
-        const label = "Choose a Hardware";
-        const wrapper = shallowMount(Button, {
+
+        const wrapper = mount(Button, {
+            localVue,
             propsData: {
-                label
+                label: "Choose a Hardware"
             }
         });
 
-        expect(wrapper.text()).toMatch(label);
+        expect(wrapper).toMatchInlineSnapshot(`
+            <button type="submit" class=""><span>Choose a Hardware</span>
+              <!----></button>
+        `);
     });
 
     it("renders a loading spinner when busy", (): void => {
-        expect.assertions(2);
-        const label = "Choose a Hardware";
-        const wrapper = shallowMount(Button, {
+        expect.assertions(1);
+
+        const wrapper = mount(Button, {
+            localVue,
             propsData: {
-                label,
+                label: "Choose a Hardware",
                 busy: true
             }
         });
 
-        expect(wrapper.text()).not.toMatch(label);
-        expect(wrapper.contains(MaterialDesignIcon)).toBe(true);
-    });
-
-    it("triggers a click handler when clicked", (): void => {
-        expect.assertions(1);
-        const handler = jest.fn();
-        const wrapper = shallowMount(Button, {
-            propsData: {
-                label: ""
-            },
-            listeners: {
-                click: handler
-            }
-        });
-
-        wrapper.trigger("click");
-
-        expect(handler).toHaveBeenCalledTimes(1);
+        expect(wrapper).toMatchInlineSnapshot(`
+            <button type="submit" class="busy"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
+              </svg>
+              <!----></button>
+        `);
     });
 });
