@@ -76,7 +76,8 @@ import {
     createComponent,
     reactive,
     ref,
-    SetupContext
+    SetupContext,
+    watch
 } from "@vue/composition-api";
 import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
@@ -122,6 +123,34 @@ export default createComponent({
             keystoreFileArray: null as Uint8Array | null
         });
 
+        function resetState() {
+            state.privateKey = null as Ed25519PrivateKey | null;
+            state.publicKey = null as Ed25519PublicKey | null;
+            state.modalAccessByHardwareIsOpen = false;
+            state.modalAccessBySoftwareIsOpen = false;
+            state.modalAccessByPhraseState = {
+                modalIsOpen: false,
+                isBusy: false,
+                words: [],
+                isValid: true
+            };
+            state.modalKeystoreFilePasswordState = {
+                modalIsOpen: false,
+                password: "",
+                isBusy: false
+            };
+
+            state.modalAccessByPrivateKeyState = {
+                modalIsOpen: false,
+                rawPrivateKey: "",
+                isBusy: false
+            };
+
+            state.modalEnterAccountIdIsOpen = false;
+            state.modalRequestToCreateAccountIsOpen = false;
+            state.keystoreFileArray = null as Uint8Array | null;
+        }
+
         const file = ref<HTMLInputElement | null>(null);
 
         function handleClickTiles(which: string) {
@@ -141,9 +170,18 @@ export default createComponent({
             } else {
                 setTimeout(() => {
                     if (which === AccessSoftwareOption.Phrase) {
-                        state.modalAccessByPhraseState.modalIsOpen = true;
+                        state.modalAccessByPhraseState = {
+                            modalIsOpen: true,
+                            isBusy: false,
+                            words: [],
+                            isValid: true
+                        };
                     } else if (which === AccessSoftwareOption.Key) {
-                        state.modalAccessByPrivateKeyState.modalIsOpen = true;
+                        state.modalAccessByPrivateKeyState = {
+                            modalIsOpen: true,
+                            rawPrivateKey: "",
+                            isBusy: false
+                        };
                     }
                 }, 125);
             }
@@ -171,8 +209,11 @@ export default createComponent({
                 }
             );
 
-            state.modalKeystoreFilePasswordState.modalIsOpen = true;
-
+            state.modalKeystoreFilePasswordState = {
+                modalIsOpen: true,
+                password: "",
+                isBusy: false
+            };
             state.keystoreFileArray = new Uint8Array(keyStoreArrayBuff);
         }
 
