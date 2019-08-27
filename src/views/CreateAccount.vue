@@ -57,7 +57,12 @@ import ModalDownloadKeystore, {
 } from "../components/ModalDownloadKeystore.vue";
 import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
 import PageTitle from "../components/PageTitle.vue";
-import { createComponent, reactive, ref } from "@vue/composition-api";
+import {
+    createComponent,
+    reactive,
+    ref,
+    SetupContext
+} from "@vue/composition-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
 import store from "../store";
 import { Client, Ed25519PrivateKey } from "@hashgraph/sdk";
@@ -93,7 +98,7 @@ export default createComponent({
         ModalEnterAccountId,
         ModalRequestToCreateAccount
     },
-    setup(props, context) {
+    setup(_: object, context: SetupContext) {
         const state = reactive<State>({
             keyFile: null,
             modalAccessByHardwareIsOpen: false,
@@ -177,7 +182,7 @@ export default createComponent({
         }
 
         function handleDownloadKeystoreSubmit() {
-            context.root.$el.append(keyStoreLink.value);
+            context.root.$el.append(keyStoreLink.value as Node);
             // Neither keystorelink or key should ever be null if we got to this point, however this is
             // mostly a sanity check.
             if (keyStoreLink.value == null || state.privateKey == null) {
