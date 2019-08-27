@@ -54,7 +54,7 @@ export default createComponent({
             message: string;
             publicKey: string;
         },
-        context: SetupContext
+        context
     ) {
         const rawPublicKey = computed(() => {
             let publickey = props.publicKey;
