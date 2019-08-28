@@ -69,18 +69,12 @@ import {
 import Modal from "../components/Modal.vue";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
+import { USDCurrencyFormatter } from "../formatter";
 
 export interface Item {
     description: string;
     value: BigNumber | string;
 }
-
-// TODO: Extract this into it's own file because it's used in more than one place
-// here and BalanceCard.vue
-const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD"
-});
 
 export default createComponent({
     components: {
@@ -125,7 +119,7 @@ export default createComponent({
 
         return {
             total,
-            formatter,
+            USDCurrencyFormatter,
             BigNumber,
             handleCancel,
             handleSubmit
