@@ -8,15 +8,11 @@ describe("Warning.vue", (): void => {
 
     it("renders", (): void => {
         expect.assertions(2);
-        const title = "NOT RECOMMENDED";
         const wrapper = shallowMount(Warning, {
-            propsData: {
-                title
-            },
             localVue
         });
 
         expect(wrapper.isVisible()).toBe(true);
-        expect(wrapper.text()).toMatch(title);
+        expect(wrapper.find(".title").element).not.toBeNull();
     });
 });

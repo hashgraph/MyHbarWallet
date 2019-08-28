@@ -1,5 +1,11 @@
 <template>
     <InterfaceForm title="Create Account">
+        <Notice :symbol="mdiHelpCircleOutline">
+            To create an account, you need the public key of the person
+            requesting an account and you need to fund the new account with some
+            amount of hbars.
+        </Notice>
+
         <TextInput
             v-model="state.userBalance"
             has-input
@@ -16,16 +22,6 @@
             label="Public Key"
             show-validation
             :valid="validKey"
-        />
-
-        <TextInput
-            v-model="state.maxFee"
-            label="Maximum Transaction Fee"
-            :valid="validMaxFee"
-            :min="0"
-            show-validation
-            :suffix="Unit.Tinybar"
-            :error="state.maxFeeError"
         />
 
         <template v-slot:footer>
@@ -56,6 +52,8 @@ import { ALERT } from "../store/actions";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
 import { getValueOfUnit, Unit } from "../components/UnitConverter.vue";
 import { BigNumber } from "bignumber.js";
+import { mdiHelpCircleOutline } from "@mdi/js";
+import Notice from "../components/Notice.vue";
 
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
@@ -76,7 +74,8 @@ export default createComponent({
         TextInput,
         InterfaceForm,
         Button,
-        ModalCreateAccountSuccess
+        ModalCreateAccountSuccess,
+        Notice
     },
     setup() {
         const state = reactive<State>({
@@ -204,7 +203,8 @@ export default createComponent({
             validMaxFee,
             handleCreateAccount,
             handleSuccessModalChange,
-            Unit
+            Unit,
+            mdiHelpCircleOutline
         };
     }
 });
