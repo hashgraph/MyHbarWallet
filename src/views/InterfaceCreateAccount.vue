@@ -103,7 +103,7 @@ export default createComponent({
             publicKey: "",
             isBusy: false,
             successModalIsOpen: false,
-            summaryIsOpen: true,
+            summaryIsOpen: false,
             items: SUMMARY_TEMPLATE,
             userBalanceError: null,
             maxFeeError: null,

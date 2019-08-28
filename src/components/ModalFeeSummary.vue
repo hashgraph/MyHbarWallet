@@ -117,9 +117,13 @@ export default createComponent({
             context.emit("submit");
         }
 
+        const formatter = computed(() => {
+            return USDCurrencyFormatter;
+        });
+
         return {
             total,
-            USDCurrencyFormatter,
+            formatter,
             BigNumber,
             handleCancel,
             handleSubmit
