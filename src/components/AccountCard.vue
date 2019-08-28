@@ -10,9 +10,6 @@
                     <span>{{ shard }}.{{ realm }}.</span
                     ><strong>{{ account }}</strong>
                 </div>
-                <div class="subtitle">
-                    {{ rawPublicKey }}
-                </div>
             </div>
             <div class="actions">
                 <Tooltip class="action" message="Account QR Code">
@@ -22,24 +19,27 @@
                         @click="showQrCode"
                     />
                 </Tooltip>
-                <Tooltip class="action" message="Copy Key">
+                <Tooltip class="action" message="Public Key">
                     <MaterialDesignIcon
                         class="copy-icon"
-                        :icon="mdiContentCopy"
-                        @click="copyKey"
+                        :icon="mdiKey"
+                        @click="showPublicKey"
                     />
                 </Tooltip>
             </div>
         </div>
         <ModalViewAccountId v-model="state.viewAccountQrCodeIsOpen" />
+        <ModalViewPublicKey
+            v-model="state.viewPublicKeyIsOpen"
+            :public-key="publicKey"
+        />
     </div>
 </template>
 
 <script lang="ts">
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
-import { mdiQrcode, mdiContentCopy } from "@mdi/js";
+import { mdiQrcode, mdiKey } from "@mdi/js";
 import Tooltip from "../components/Tooltip.vue";
-import { writeToClipboard } from "../clipboard";
 import {
     computed,
     createComponent,
@@ -47,9 +47,8 @@ import {
     reactive
 } from "@vue/composition-api";
 import Identicon from "../components/Identicon.vue";
-import { ALERT } from "../store/actions";
-import store from "../store";
 import ModalViewAccountId from "../components/ModalViewAccountId.vue";
+import ModalViewPublicKey from "./ModalViewPublicKey.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
@@ -58,7 +57,8 @@ export default createComponent({
         MaterialDesignIcon,
         Tooltip,
         Identicon,
-        ModalViewAccountId
+        ModalViewAccountId,
+        ModalViewPublicKey
     },
     props: {
         shard: (Number as unknown) as PropType<number>,
@@ -77,18 +77,12 @@ export default createComponent({
         });
 
         const state = reactive({
-            viewAccountQrCodeIsOpen: false
+            viewAccountQrCodeIsOpen: false,
+            viewPublicKeyIsOpen: false
         });
 
-        const copyKey = async () => {
-            await writeToClipboard(
-                props.publicKey == null ? "" : props.publicKey
-            );
-
-            store.dispatch(ALERT, {
-                level: "info",
-                message: "Copied"
-            });
+        const showPublicKey = () => {
+            state.viewPublicKeyIsOpen = true;
         };
 
         function showQrCode() {
@@ -97,10 +91,10 @@ export default createComponent({
 
         return {
             mdiQrcode,
-            mdiContentCopy,
+            mdiKey,
             rawPublicKey,
             state,
-            copyKey,
+            showPublicKey,
             showQrCode
         };
     }
