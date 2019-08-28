@@ -2,7 +2,6 @@
     <div class="modal-create-by-mnemonic-phrase">
         <Modal
             :is-open="state.modalIsOpen"
-            not-closable
             title="By Keystore File"
             @change="handleModalChangeIsOpen"
         >
