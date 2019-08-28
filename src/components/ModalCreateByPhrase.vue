@@ -26,7 +26,7 @@
 
             <MnemonicInput
                 class="phrase-input"
-                :words="state.numberWords"
+                :words="24"
                 :value="words"
                 :editable="false"
             />
