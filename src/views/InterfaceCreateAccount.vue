@@ -29,7 +29,7 @@
                 :busy="state.isBusy"
                 :disabled="!validKey || !validBalance || !validMaxFee"
                 label="Create Account"
-                @click="handleCreateAccount"
+                @click="handleShowSummary"
             />
         </template>
 
@@ -37,6 +37,13 @@
             :is-open="state.successModalIsOpen"
             :account-id="state.account"
             @change="handleSuccessModalChange"
+        />
+
+        <ModalFeeSummary
+            v-model="state.summaryIsOpen"
+            :items="state.items"
+            :title="summaryTitle"
+            @submit="handleCreateAccount"
         />
     </InterfaceForm>
 </template>
@@ -50,6 +57,7 @@ import store from "../store";
 import { AccountCreateTransaction, Ed25519PublicKey } from "@hashgraph/sdk";
 import { ALERT } from "../store/actions";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
+import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { getValueOfUnit, Unit } from "../components/UnitConverter.vue";
 import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
@@ -58,12 +66,22 @@ import Notice from "../components/Notice.vue";
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
 
+const ESTIMATED_FEE = new BigNumber(100_000);
+
+const SUMMARY_TEMPLATE = [
+    { description: "Initial Balance", value: new BigNumber(0) },
+    { description: "Public Key", value: "" },
+    { description: "Estimated Fee", value: ESTIMATED_FEE }
+] as Item[];
+
 interface State {
     userBalance: string;
     maxFee: string;
     publicKey: string;
     isBusy: boolean;
     successModalIsOpen: boolean;
+    summaryIsOpen: boolean;
+    items: Item[];
     userBalanceError: string | null;
     maxFeeError: string | null;
     account: string | null;
@@ -75,7 +93,8 @@ export default createComponent({
         InterfaceForm,
         Button,
         ModalCreateAccountSuccess,
-        Notice
+        Notice,
+        ModalFeeSummary
     },
     setup() {
         const state = reactive<State>({
@@ -84,6 +103,8 @@ export default createComponent({
             publicKey: "",
             isBusy: false,
             successModalIsOpen: false,
+            summaryIsOpen: true,
+            items: SUMMARY_TEMPLATE,
             userBalanceError: null,
             maxFeeError: null,
             account: null
@@ -107,6 +128,10 @@ export default createComponent({
                 state.publicKey.length == 88
         );
         const validMaxFee = computed(() => maxFeeRegex.test(state.maxFee));
+
+        const summaryTitle = computed(
+            () => "Creating account with balance " + state.userBalance + " ℏ"
+        );
 
         async function handleCreateAccount() {
             state.isBusy = true;
@@ -196,12 +221,20 @@ export default createComponent({
             state.isBusy = false;
         }
 
+        function handleShowSummary() {
+            state.items[0].value = new BigNumber(state.userBalance);
+            state.items[1].value = "..." + state.publicKey.substring(65);
+            state.summaryIsOpen = true;
+        }
+
         return {
             state,
+            summaryTitle,
             validBalance,
             validKey,
             validMaxFee,
             handleCreateAccount,
+            handleShowSummary,
             handleSuccessModalChange,
             Unit,
             mdiHelpCircleOutline

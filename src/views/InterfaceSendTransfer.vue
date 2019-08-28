@@ -51,7 +51,7 @@
         <ModalFeeSummary
             v-model="state.summaryIsOpen"
             :items="state.items"
-            :title="state.summaryTitle"
+            :title="summaryTitle"
             @submit="handleSendTransfer"
         />
     </InterfaceForm>
@@ -71,7 +71,7 @@ import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 
-const ESTIMATED_FEE = 85_500;
+const ESTIMATED_FEE = new BigNumber(85_500);
 
 const SUMMARY_TEMPLATE = [
     { description: "Transfer Amount", value: new BigNumber(0) },
@@ -101,7 +101,6 @@ export default createComponent({
             txFeeErrorMessage: "",
             successModalIsOpen: false,
             summaryIsOpen: false,
-            summaryTitle: "",
             items: SUMMARY_TEMPLATE
         });
 
@@ -131,11 +130,9 @@ export default createComponent({
                 : "Send Hbar"
         );
 
-        function getSummaryTitle() {
-            return (
-                "Sending " + state.amount + " ℏ to account " + state.toAccount
-            );
-        }
+        const summaryTitle = computed(
+            () => "Sending " + state.amount + " ℏ to account " + state.toAccount
+        );
 
         async function handleClickEntireBalance() {
             const balance = store.state.wallet.balance;
@@ -149,7 +146,6 @@ export default createComponent({
         }
 
         function handleShowSummary() {
-            state.summaryTitle = getSummaryTitle();
             state.items[0].value = new BigNumber(state.amount);
             state.summaryIsOpen = true;
         }
@@ -248,6 +244,7 @@ export default createComponent({
 
         return {
             state,
+            summaryTitle,
             buttonLabel,
             isIdValid,
             isAmountValid,

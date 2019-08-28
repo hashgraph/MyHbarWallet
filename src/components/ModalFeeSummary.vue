@@ -19,12 +19,18 @@
                             {{ item.description }}:
                         </span>
                     </strong>
-                    <span :key="item.value.toString()" class="item-value"
+                    <span
+                        v-if="item.value instanceof BigNumber"
+                        :key="item.value.toString()"
+                        class="item-value"
                         >{{
                             formatter.format(item.value).split("$")[1]
                         }}
                         ℏ</span
                     >
+                    <span v-else :key="item.value" class="item-value">
+                        {{ item.value }}
+                    </span>
                 </template>
 
                 <strong><span class="item-description">Total:</span></strong>
@@ -68,7 +74,7 @@ import Button from "../components/Button.vue";
 
 export interface Item {
     description: string;
-    value: BigNumber;
+    value: BigNumber | string;
 }
 
 // TODO: Extract this into it's own file because it's used in more than one place
@@ -100,8 +106,11 @@ export default createComponent({
         const total = computed(() => {
             let total = new BigNumber(0);
 
+            // Only add to total if value is a BigNumber
             for (const item of props.items) {
-                total = total.plus(item.value);
+                if (item.value instanceof BigNumber) {
+                    total = total.plus(item.value);
+                }
             }
 
             return total;
@@ -119,6 +128,7 @@ export default createComponent({
         return {
             total,
             formatter,
+            BigNumber,
             handleCancel,
             handleSubmit
         };
@@ -150,7 +160,7 @@ export default createComponent({
 .buttons {
     display: flex;
     justify-content: space-between;
-    margin-block-start: 20px;
+    margin-block-start: 40px;
     width: 100%;
 
     @media (max-width: 425px) {
@@ -174,7 +184,7 @@ export default createComponent({
 .separator {
     background-color: var(--color-basalt-grey);
     height: 1px;
-    margin-block: 12px 15px;
+    margin-block: 17.5px;
     width: 100%;
 }
 </style>
