@@ -9,27 +9,30 @@
 
             <div class="summary">
                 <template v-for="item in items">
-                    <span :key="item.key" class="item-description">
-                        {{ item.description }}:
-                    </span>
-                    <span
-                        v-if="item.value instanceof BigNumber"
-                        :key="item.key"
-                        class="item-value"
-                        >{{
-                            formatter.format(item.value).split("$")[1]
-                        }}
-                        ℏ</span
-                    >
-                    <span v-else :key="item.key" class="item-value">
-                        {{ item.value }}
-                    </span>
+                    <div :key="item.key" class="item">
+                        <span class="item-description">
+                            {{ item.description }}:
+                        </span>
+                        <span
+                            v-if="item.value instanceof BigNumber"
+                            :key="item.key"
+                            class="item-value"
+                            >{{
+                                formatter.format(item.value).split("$")[1]
+                            }}
+                            ℏ</span
+                        >
+                        <span v-else class="item-value">
+                            {{ item.value }}
+                        </span>
+                    </div>
                 </template>
-
-                <strong><span class="item-description">Total:</span></strong>
-                <span class="item-value"
-                    >{{ formatter.format(total).split("$")[1] }} ℏ</span
-                >
+                <div class="item">
+                    <span class="item-description">Total:</span>
+                    <span class="item-value">
+                        {{ formatter.format(total).split("$")[1] }} ℏ
+                    </span>
+                </div>
             </div>
 
             <div class="buttons">
@@ -63,7 +66,7 @@ import { USDCurrencyFormatter } from "../formatter";
 
 export interface Item {
     description: string;
-    value: BigNumber | BigInt | string;
+    value: BigNumber | string;
 }
 
 export interface KeyedItem extends Item {
@@ -143,8 +146,14 @@ export default createComponent({
 
 .summary {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     width: 100%;
+}
+
+.item {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
 }
 
 .item-description {

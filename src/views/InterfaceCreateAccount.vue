@@ -41,7 +41,7 @@
         />
 
         <ModalFeeSummary
-            v-model="state.summaryIsOpen"
+            v-model="state.summaryModalIsOpen"
             :items="summaryItems"
             :title="summaryTitle"
             @submit="handleCreateAccount"
@@ -67,7 +67,7 @@ import Notice from "../components/Notice.vue";
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
 
-const ESTIMATED_FEE = BigInt(100_000);
+const ESTIMATED_FEE = new BigNumber(100_000);
 
 // Summary Items
 const summaryItems = [
@@ -85,7 +85,7 @@ interface State {
     publicKey: string;
     isBusy: boolean;
     successModalIsOpen: boolean;
-    summaryIsOpen: boolean;
+    summaryModalIsOpen: boolean;
     keyError: string | null;
     userBalanceError: string | null;
     maxFeeError: string | null;
@@ -108,7 +108,7 @@ export default createComponent({
             publicKey: "",
             isBusy: false,
             successModalIsOpen: false,
-            summaryIsOpen: false,
+            summaryModalIsOpen: false,
             keyError: null,
             userBalanceError: null,
             maxFeeError: null,
@@ -237,7 +237,7 @@ export default createComponent({
         function handleShowSummary() {
             summaryItems[0].value = new BigNumber(state.userBalance);
             summaryItems[1].value = "..." + state.publicKey.substring(65);
-            state.summaryIsOpen = true;
+            state.summaryModalIsOpen = true;
         }
 
         return {

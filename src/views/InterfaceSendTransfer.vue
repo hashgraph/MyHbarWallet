@@ -71,7 +71,7 @@ import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 
-const ESTIMATED_FEE = BigInt(85_500);
+const ESTIMATED_FEE = new BigNumber(85_500);
 
 const summaryItems = [
     { description: "Transfer Amount", value: new BigNumber(0) },
@@ -187,6 +187,7 @@ export default createComponent({
                     return;
                 }
 
+                // TODO: SDK BigInt v BigNumber
                 await new CryptoTransferTransaction(client)
                     .addSender(store.state.wallet.session.account, sendAmount)
                     .addRecipient(recipient, sendAmount)
@@ -194,7 +195,7 @@ export default createComponent({
                     // To send 360 gigabar the fee ~85_500
                     // So setting the limit to 85_500 _should_ be more
                     // then enough for most transactions
-                    .setTransactionFee(ESTIMATED_FEE)
+                    .setTransactionFee(85_500)
                     .build()
                     .executeForReceipt();
 
