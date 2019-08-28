@@ -136,7 +136,13 @@ export default createComponent({
 
             setTimeout(() => {
                 if (which === CreateSoftwareOption.File) {
-                    state.modalCreateByKeystoreState.modalIsOpen = true;
+                    state.modalCreateByKeystoreState = {
+                        modalIsOpen: true,
+                        password: "",
+                        isBusy: false,
+                        passwordStrength: 0,
+                        passwordSuggestion: ""
+                    };
                 } else if (which === CreateSoftwareOption.Phrase) {
                     state.modalCreateByPhraseIsOpen = true;
                 }
