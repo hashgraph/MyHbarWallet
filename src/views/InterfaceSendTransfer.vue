@@ -37,7 +37,7 @@
                 :busy="state.isBusy"
                 :label="buttonLabel"
                 :disabled="!isIdValid || !isAmountValid"
-                @click="handleSendTransfer"
+                @click="handleShowSummary"
             />
         </template>
 
@@ -46,6 +46,13 @@
             :to-account="state.toAccount"
             :amount="state.amount"
             @change="handleSuccessModalChange"
+        />
+
+        <ModalFeeSummary
+            v-model="state.summaryIsOpen"
+            :items="state.items"
+            :title="state.summaryTitle"
+            @submit="handleSendTransfer"
         />
     </InterfaceForm>
 </template>
@@ -62,13 +69,22 @@ import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue
 import { CryptoTransferTransaction } from "@hashgraph/sdk";
 import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
 import BigNumber from "bignumber.js";
+import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+
+const ESTIMATED_FEE = 85_500;
+
+const SUMMARY_TEMPLATE = [
+    { description: "Transfer Amount", value: new BigNumber(0) },
+    { description: "Estimated Fee", value: ESTIMATED_FEE }
+] as Item[];
 
 export default createComponent({
     components: {
         TextInput,
         InterfaceForm,
         Button,
-        ModalSendTransferSuccess
+        ModalSendTransferSuccess,
+        ModalFeeSummary
     },
     setup() {
         // Using regex to validate user input
@@ -79,11 +95,14 @@ export default createComponent({
             amount: "0",
             toAccount: "",
             isBusy: false,
-            maxFee: "100000",
+            maxFee: ESTIMATED_FEE.toString(),
             idErrorMessage: "",
             amountErrorMessage: "",
             txFeeErrorMessage: "",
-            successModalIsOpen: false
+            successModalIsOpen: false,
+            summaryIsOpen: false,
+            summaryTitle: "",
+            items: SUMMARY_TEMPLATE
         });
 
         const idRegex = /^\d+\.\d+\.\d+$/;
@@ -100,17 +119,23 @@ export default createComponent({
             return maxFeeRegex.test(state.maxFee);
         });
 
-        const truncate = computed(() =>
+        const truncate = computed((): string =>
             state.amount.length > 15
                 ? state.amount.substring(0, 13) + "..."
                 : state.amount
         );
 
-        const buttonLabel = computed(() =>
+        const buttonLabel = computed((): string =>
             new BigNumber(state.amount).isGreaterThan(new BigNumber(0))
-                ? "Send " + truncate + " Hbars"
+                ? "Send " + truncate.value + " Hbars"
                 : "Send Hbar"
         );
+
+        function getSummaryTitle() {
+            return (
+                "Sending " + state.amount + " ℏ to account " + state.toAccount
+            );
+        }
 
         async function handleClickEntireBalance() {
             const balance = store.state.wallet.balance;
@@ -121,6 +146,12 @@ export default createComponent({
                 getValueOfUnit(Unit.Hbar)
             );
             state.amount = hbar.toString();
+        }
+
+        function handleShowSummary() {
+            state.summaryTitle = getSummaryTitle();
+            state.items[0].value = new BigNumber(state.amount);
+            state.summaryIsOpen = true;
         }
 
         async function handleSendTransfer() {
@@ -221,6 +252,7 @@ export default createComponent({
             isIdValid,
             isAmountValid,
             Unit,
+            handleShowSummary,
             handleClickEntireBalance,
             handleSendTransfer,
             handleSuccessModalChange,
