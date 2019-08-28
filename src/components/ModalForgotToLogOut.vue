@@ -1,5 +1,11 @@
 <template>
-    <Modal :is-open="isOpen" title="Oops" hide-decoration not-closable>
+    <Modal
+        :is-open="isOpen"
+        title="Oops"
+        hide-decoration
+        not-closable
+        @change="this.$listeners.change"
+    >
         <div class="modal-forgot-to-logout">
             <span>Oops!</span>
             <p>
@@ -8,13 +14,12 @@
                 back to your account.
             </p>
             <div class="button-group">
-                <router-link to="/interface">
-                    <Button
-                        class="button-go-back"
-                        label="Go back"
-                        :outline="true"
-                    />
-                </router-link>
+                <Button
+                    class="button-go-back"
+                    label="Go back"
+                    :outline="true"
+                    @click="handleGoBack"
+                />
                 <Button
                     class="button-logout"
                     label="Log Out of Account"
@@ -27,11 +32,13 @@
 </template>
 
 <script lang="ts">
+import Vue from "vue";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import { createComponent, PropType } from "@vue/composition-api";
 import store from "../store";
 import { LOG_OUT } from "../store/mutations";
+import router from "../router";
 
 interface Props {
     isOpen: boolean;
@@ -50,12 +57,19 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
     setup(props: Props, ctx) {
+        function handleGoBack() {
+            ctx.emit("change", false);
+            // have to wait till next tick so modal gives us back the scrollbar
+            Vue.nextTick(() => router.push({ name: "interface" }));
+        }
+
         function handleClickLogOut() {
             store.commit(LOG_OUT);
             ctx.emit("change", false);
         }
 
         return {
+            handleGoBack,
             handleClickLogOut
         };
     }

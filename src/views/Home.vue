@@ -51,10 +51,7 @@
         <Features />
         <FAQs />
         <Community v-if="false" />
-        <ModalForgotToLogOut
-            v-model="modalForgotToLogOutIsOpen"
-            @change="handleForgotToLogoutChange"
-        />
+        <ModalForgotToLogOut v-model="state.modalForgotToLogOutIsOpen" />
     </div>
 </template>
 
@@ -65,7 +62,7 @@ import Community from "../components/Community.vue";
 import HomeTileButtons from "../components/HomeTileButtons.vue";
 import circleImage from "../assets/circle.png";
 import ModalForgotToLogOut from "../components/ModalForgotToLogOut.vue";
-import { createComponent, computed } from "@vue/composition-api";
+import { createComponent, reactive } from "@vue/composition-api";
 import store from "../store";
 
 export default createComponent({
@@ -77,18 +74,13 @@ export default createComponent({
         ModalForgotToLogOut
     },
     setup() {
-        const modalForgotToLogOutIsOpen = computed(
-            () => store.getters.IS_LOGGED_IN
-        );
-
-        function handleForgotToLogoutChange() {
-            modalForgotToLogOutIsOpen.value = false;
-        }
+        const state = reactive({
+            modalForgotToLogOutIsOpen: store.getters.IS_LOGGED_IN
+        });
 
         return {
             circleImage,
-            modalForgotToLogOutIsOpen,
-            handleForgotToLogoutChange
+            state
         };
     }
 });
