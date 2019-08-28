@@ -1,7 +1,7 @@
 <template>
     <div>
         <div :class="classObject" class="side-nav-top">
-            <div class="logo">My<strong>Hedera</strong>Wallet</div>
+            <div class="logo">My<strong>Hbar</strong>Wallet</div>
             <MaterialDesignIcon
                 class="close"
                 :icon="mdiClose"
