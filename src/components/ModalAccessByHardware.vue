@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, reactive } from "@vue/composition-api";
+import { createComponent, reactive, watch } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imageLedger from "../assets/button-ledger.svg";
@@ -47,7 +47,7 @@ export default createComponent({
     props: {
         isOpen: { type: Boolean }
     },
-    setup() {
+    setup(props: { isOpen: boolean }) {
         const state = reactive({
             optionSelected: ""
         });
@@ -90,6 +90,15 @@ export default createComponent({
                 image: imageKeepKey
             }
         ];
+
+        watch(
+            () => props.isOpen,
+            (newVal: boolean) => {
+                if (newVal) {
+                    state.optionSelected = "";
+                }
+            }
+        );
 
         return {
             state,

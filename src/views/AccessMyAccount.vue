@@ -76,7 +76,8 @@ import {
     createComponent,
     reactive,
     ref,
-    SetupContext
+    SetupContext,
+    watch
 } from "@vue/composition-api";
 import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
@@ -172,7 +173,6 @@ export default createComponent({
             );
 
             state.modalKeystoreFilePasswordState.modalIsOpen = true;
-
             state.keystoreFileArray = new Uint8Array(keyStoreArrayBuff);
         }
 

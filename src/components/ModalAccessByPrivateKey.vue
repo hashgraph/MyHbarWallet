@@ -111,6 +111,10 @@ export default createComponent({
             () => props.state.modalIsOpen,
             (newVal: boolean) => {
                 if (newVal) {
+                    context.emit("change", {
+                        ...props.state,
+                        rawPrivateKey: ""
+                    });
                     (context as Context).refs.input.focus();
                 }
             }

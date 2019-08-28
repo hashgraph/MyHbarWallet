@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, reactive } from "@vue/composition-api";
+import { createComponent, reactive, watch } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imagePhrase from "../assets/button-phrase.svg";
@@ -52,7 +52,7 @@ export enum CreateSoftwareOption {
 }
 
 interface State {
-    selectedOption: CreateSoftwareOption | null;
+    optionSelected: CreateSoftwareOption | null;
 }
 
 export default createComponent({
@@ -70,9 +70,9 @@ export default createComponent({
     props: {
         isOpen: { type: Boolean }
     },
-    setup() {
+    setup(props: { isOpen: boolean }) {
         const state = reactive<State>({
-            selectedOption: null
+            optionSelected: null
         });
 
         const options = [
@@ -87,6 +87,15 @@ export default createComponent({
                 image: imagePhrase
             }
         ];
+
+        watch(
+            () => props.isOpen,
+            (newVal: boolean) => {
+                if (newVal) {
+                    state.optionSelected = null;
+                }
+            }
+        );
 
         return {
             state,

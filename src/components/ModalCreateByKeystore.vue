@@ -180,6 +180,12 @@ export default createComponent({
             () => props.state.modalIsOpen,
             (newVal: boolean) => {
                 if (newVal) {
+                    context.emit("change", {
+                        ...props.state,
+                        password: "",
+                        passwordStrength: 0,
+                        passwordSuggestion: ""
+                    });
                     (context as Context).refs.input.focus();
                 }
             }
