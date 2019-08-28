@@ -82,6 +82,7 @@ import {
 import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
 import { ALERT, LOG_IN } from "../store/actions";
+import Vue from "vue";
 
 export default createComponent({
     components: {
@@ -204,7 +205,7 @@ export default createComponent({
                 // Close  previous modal and open another one
                 pwState.isBusy = false;
                 pwState.modalIsOpen = false;
-                state.modalEnterAccountIdIsOpen = true;
+                Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
             } catch {
                 pwState.isBusy = false;
 
@@ -228,7 +229,7 @@ export default createComponent({
                 // Close  previous modal and open another one
                 accessByPhraseState.isBusy = false;
                 accessByPhraseState.modalIsOpen = false;
-                state.modalEnterAccountIdIsOpen = true;
+                Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
                 accessByPhraseState.isValid = true;
             } catch {
                 accessByPhraseState.isBusy = false;
@@ -280,12 +281,14 @@ export default createComponent({
 
         function handleDoesntHaveAccount() {
             state.modalEnterAccountIdIsOpen = false;
-            state.modalRequestToCreateAccountIsOpen = true;
+            Vue.nextTick(
+                () => (state.modalRequestToCreateAccountIsOpen = true)
+            );
         }
 
         function handleHasAccount() {
             state.modalRequestToCreateAccountIsOpen = false;
-            state.modalEnterAccountIdIsOpen = true;
+            Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
         }
 
         return {
