@@ -128,6 +128,7 @@ export default createComponent({
             context.emit("submit");
         }
 
+        // TODO: can I just be returned? under what circumstances?
         const formatter = ref(USDCurrencyFormatter);
 
         return {
