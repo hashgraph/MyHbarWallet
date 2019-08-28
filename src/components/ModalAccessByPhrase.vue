@@ -44,7 +44,7 @@ import MnemonicInput from "../components/MnemonicInput.vue";
 import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
-import { computed, createComponent } from "@vue/composition-api";
+import { computed, createComponent, watch } from "@vue/composition-api";
 
 export interface State {
     modalIsOpen: boolean;
@@ -87,6 +87,16 @@ export default createComponent({
                 return true;
             }
         });
+
+        // Watch for the modal state to change, and clear input when the modal is reopened
+        watch(
+            () => props.state.modalIsOpen,
+            (newVal: boolean) => {
+                if (newVal) {
+                    context.emit("change", { ...props.state, words: [] });
+                }
+            }
+        );
 
         return {
             handleModalChangeIsOpen,

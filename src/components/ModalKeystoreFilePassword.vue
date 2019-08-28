@@ -33,7 +33,12 @@ import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
-import { computed, createComponent, PropType } from "@vue/composition-api";
+import {
+    computed,
+    createComponent,
+    PropType,
+    watch
+} from "@vue/composition-api";
 
 export interface State {
     modalIsOpen: boolean;
@@ -77,6 +82,15 @@ export default createComponent({
         function handleSubmit() {
             context.emit("submit", props.state);
         }
+
+        watch(
+            () => props.state.modalIsOpen,
+            (newVal: boolean) => {
+                if (newVal) {
+                    context.emit("change", { ...props.state, password: "" });
+                }
+            }
+        );
 
         return {
             disabled,

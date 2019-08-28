@@ -176,6 +176,8 @@ export default createComponent({
             () => props.isOpen,
             (newVal: boolean) => {
                 if (newVal && input.value != null) {
+                    // Clear input everytime we reopen this modal
+                    state.input = "";
                     input.value.focus();
                 }
             }
