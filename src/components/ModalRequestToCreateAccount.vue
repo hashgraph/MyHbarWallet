@@ -17,42 +17,40 @@
             </div>
         </div>
 
-        <template>
-            <form
-                class="modal-request-to-create-account"
-                @submit.prevent="$emit('submit')"
-            >
-                <qrcode-vue
-                    v-if="publicKey"
-                    :value="publicKey.toString()"
-                    size="180"
-                    level="L"
-                    class="pub-qr"
-                />
+        <form
+            class="modal-request-to-create-account"
+            @submit.prevent="$emit('submit')"
+        >
+            <qrcode-vue
+                v-if="publicKey"
+                :value="publicKey.toString()"
+                size="180"
+                level="L"
+                class="pub-qr"
+            />
 
-                <ReadOnlyInput
-                    v-if="publicKey"
-                    class="key-input"
-                    :value="publicKey.toString()"
-                />
+            <ReadOnlyInput
+                v-if="publicKey"
+                multiline
+                :value="publicKey.toString()"
+            />
 
-                <div class="buttons">
-                    <Button
-                        compact
-                        outline
-                        label="I have an Account ID"
-                        class="button"
-                        @click="handleHasAccount"
-                    />
-                    <Button
-                        compact
-                        label="Copy Public Key"
-                        class="button"
-                        @click="handleClickCopy"
-                    />
-                </div>
-            </form>
-        </template>
+            <div class="buttons">
+                <Button
+                    compact
+                    outline
+                    label="Copy Public Key"
+                    class="button"
+                    @click="handleClickCopy"
+                />
+                <Button
+                    compact
+                    label="I have an Account ID"
+                    class="button"
+                    @click="handleHasAccount"
+                />
+            </div>
+        </form>
     </Modal>
 </template>
 
@@ -139,10 +137,6 @@ export default createComponent({
 .pub-qr {
     padding-block-end: 40px;
     padding-block-start: 25px;
-}
-
-.key-input {
-    user-select: none;
 }
 
 .buttons {

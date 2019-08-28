@@ -1,6 +1,6 @@
 <template>
     <div class="read-only-input">
-        <div class="value">{{ value }}</div>
+        <div :class="{ value: !multiline }">{{ value }}</div>
     </div>
 </template>
 
@@ -10,7 +10,8 @@ import { PropType } from "vue";
 
 export default createComponent({
     props: {
-        value: (String as unknown) as PropType<string>
+        value: (String as unknown) as PropType<string>,
+        multiline: (Boolean as unknown) as PropType<boolean>
     }
 });
 </script>
@@ -21,7 +22,8 @@ export default createComponent({
     border: 2px solid var(--color-peral);
     border-radius: 4px;
     color: var(--color-washed-black);
-    overflow: hidden;
+    font-family: monospace;
+    font-size: 14px;
     padding: 13px 15px;
     width: 100%;
 }
