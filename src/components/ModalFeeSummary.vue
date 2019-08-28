@@ -1,11 +1,6 @@
 <template>
     <div class="modal-fee-summary">
-        <Modal
-            :is-open="isOpen"
-            title="Transaction Summary"
-            not-closable
-            @change="this.$listeners.change"
-        >
+        <Modal :is-open="isOpen" title="Transaction Summary" not-closable>
             <div class="summary-title">
                 {{ title }}
             </div>
@@ -14,19 +9,19 @@
 
             <div class="summary">
                 <template v-for="item in items">
-                    <span :key="item.description" class="item-description">
+                    <span :key="item.key" class="item-description">
                         {{ item.description }}:
                     </span>
                     <span
                         v-if="item.value instanceof BigNumber"
-                        :key="item.value.toString()"
+                        :key="item.key"
                         class="item-value"
                         >{{
                             formatter.format(item.value).split("$")[1]
                         }}
                         ℏ</span
                     >
-                    <span v-else :key="item.value" class="item-value">
+                    <span v-else :key="item.key" class="item-value">
                         {{ item.value }}
                     </span>
                 </template>
@@ -60,12 +55,7 @@
 </template>
 
 <script lang="ts">
-import {
-    computed,
-    createComponent,
-    PropType,
-    SetupContext
-} from "@vue/composition-api";
+import { computed, createComponent, SetupContext } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
@@ -73,7 +63,16 @@ import { USDCurrencyFormatter } from "../formatter";
 
 export interface Item {
     description: string;
-    value: BigNumber | string;
+    value: BigNumber | BigInt | string;
+}
+
+export interface KeyedItem extends Item {
+    key: string;
+}
+
+let KEY = 0;
+function nextItemKey() {
+    return (KEY += 1);
 }
 
 export default createComponent({
@@ -86,12 +85,12 @@ export default createComponent({
         event: "change"
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        items: (Array as unknown) as PropType<Item[]>,
-        title: (String as unknown) as PropType<string>
+        isOpen: Boolean,
+        items: Array,
+        title: String
     },
     setup(
-        props: { isOpen: boolean; items: Item[] },
+        props: { isOpen: boolean; items: KeyedItem[]; title: string },
         context: SetupContext
     ): object {
         // Compute the total
@@ -99,9 +98,13 @@ export default createComponent({
             let total = new BigNumber(0);
 
             // Only add to total if value is a BigNumber
-            for (const item of props.items) {
-                if (item.value instanceof BigNumber) {
-                    total = total.plus(item.value);
+            // Assign key to each item
+            if (props.items != null) {
+                for (const item of props.items) {
+                    item.key = "Item" + nextItemKey();
+                    if (item.value instanceof BigNumber) {
+                        total = total.plus(item.value);
+                    }
                 }
             }
 

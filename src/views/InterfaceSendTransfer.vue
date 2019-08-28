@@ -50,7 +50,7 @@
 
         <ModalFeeSummary
             v-model="state.summaryIsOpen"
-            :items="state.items"
+            :items="summaryItems"
             :title="summaryTitle"
             @submit="handleSendTransfer"
         />
@@ -71,12 +71,16 @@ import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 
-const ESTIMATED_FEE = new BigNumber(85_500);
+const ESTIMATED_FEE = BigInt(85_500);
 
-const SUMMARY_TEMPLATE = [
+const summaryItems = [
     { description: "Transfer Amount", value: new BigNumber(0) },
     { description: "Estimated Fee", value: ESTIMATED_FEE }
 ] as Item[];
+
+const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
+const amountRegex = /^0*\d+(\.\d{1,9})?$/;
+const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
 
 export default createComponent({
     components: {
@@ -87,10 +91,6 @@ export default createComponent({
         ModalFeeSummary
     },
     setup() {
-        // Using regex to validate user input
-        const amountRegex = /^0*\d+(\.\d{1,9})?$/;
-        const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
-
         const state = reactive({
             amount: "0",
             toAccount: "",
@@ -100,13 +100,12 @@ export default createComponent({
             amountErrorMessage: "",
             txFeeErrorMessage: "",
             successModalIsOpen: false,
-            summaryIsOpen: false,
-            items: SUMMARY_TEMPLATE
+            summaryIsOpen: false
         });
 
-        const idRegex = /^\d+\.\d+\.\d+$/;
-
-        const isIdValid = computed(() => idRegex.test(state.toAccount));
+        const isIdValid = computed(() =>
+            shardRealmAccountRegex.test(state.toAccount)
+        );
         const isAmountValid = computed(() => {
             return (
                 new BigNumber(state.amount).isGreaterThan(new BigNumber(0)) &&
@@ -146,7 +145,7 @@ export default createComponent({
         }
 
         function handleShowSummary() {
-            state.items[0].value = new BigNumber(state.amount);
+            summaryItems[0].value = new BigNumber(state.amount);
             state.summaryIsOpen = true;
         }
 
@@ -195,7 +194,7 @@ export default createComponent({
                     // To send 360 gigabar the fee ~85_500
                     // So setting the limit to 85_500 _should_ be more
                     // then enough for most transactions
-                    .setTransactionFee(85_500)
+                    .setTransactionFee(ESTIMATED_FEE)
                     .build()
                     .executeForReceipt();
 
@@ -245,6 +244,7 @@ export default createComponent({
         return {
             state,
             summaryTitle,
+            summaryItems,
             buttonLabel,
             isIdValid,
             isAmountValid,

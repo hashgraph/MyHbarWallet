@@ -22,6 +22,7 @@
             label="Public Key"
             show-validation
             :valid="validKey"
+            :error="state.keyError"
         />
 
         <template v-slot:footer>
@@ -41,7 +42,7 @@
 
         <ModalFeeSummary
             v-model="state.summaryIsOpen"
-            :items="state.items"
+            :items="summaryItems"
             :title="summaryTitle"
             @submit="handleCreateAccount"
         />
@@ -66,13 +67,17 @@ import Notice from "../components/Notice.vue";
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
 
-const ESTIMATED_FEE = new BigNumber(100_000);
+const ESTIMATED_FEE = BigInt(100_000);
 
-const SUMMARY_TEMPLATE = [
+// Summary Items
+const summaryItems = [
     { description: "Initial Balance", value: new BigNumber(0) },
     { description: "Public Key", value: "" },
     { description: "Estimated Fee", value: ESTIMATED_FEE }
 ] as Item[];
+
+const userBalanceRegex = /^0*\d+(\.\d{1,9})?$/;
+const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
 
 interface State {
     userBalance: string;
@@ -81,7 +86,7 @@ interface State {
     isBusy: boolean;
     successModalIsOpen: boolean;
     summaryIsOpen: boolean;
-    items: Item[];
+    keyError: string | null;
     userBalanceError: string | null;
     maxFeeError: string | null;
     account: string | null;
@@ -104,17 +109,12 @@ export default createComponent({
             isBusy: false,
             successModalIsOpen: false,
             summaryIsOpen: false,
-            items: SUMMARY_TEMPLATE,
+            keyError: null,
             userBalanceError: null,
             maxFeeError: null,
             account: null
         });
 
-        // Using regex to validate user input
-        const userBalanceRegex = /^0*\d+(\.\d{1,9})?$/;
-        const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
-
-        // 5 is used a default starting balance
         const validBalance = computed(() => {
             return (
                 new BigNumber(state.userBalance).isGreaterThan(
@@ -122,6 +122,7 @@ export default createComponent({
                 ) && userBalanceRegex.test(state.userBalance)
             );
         });
+
         const validKey = computed(
             () =>
                 state.publicKey.startsWith(ED25519_PREFIX) &&
@@ -138,7 +139,19 @@ export default createComponent({
 
             try {
                 if (!validBalance || !validKey || !validMaxFee) {
-                    return;
+                    if (!validBalance) {
+                        state.userBalanceError = "Invalid Balance";
+                    }
+                    if (!validKey) {
+                        state.keyError = "Invalid Key";
+                    }
+                    if (!validMaxFee) {
+                        state.maxFeeError = "Invalid Max Fee";
+                    }
+                } else {
+                    state.userBalanceError = null;
+                    state.keyError = null;
+                    state.maxFeeError = null;
                 }
 
                 if (store.state.wallet.session == null) {
@@ -222,14 +235,15 @@ export default createComponent({
         }
 
         function handleShowSummary() {
-            state.items[0].value = new BigNumber(state.userBalance);
-            state.items[1].value = "..." + state.publicKey.substring(65);
+            summaryItems[0].value = new BigNumber(state.userBalance);
+            summaryItems[1].value = "..." + state.publicKey.substring(65);
             state.summaryIsOpen = true;
         }
 
         return {
             state,
             summaryTitle,
+            summaryItems,
             validBalance,
             validKey,
             validMaxFee,

@@ -6,22 +6,179 @@ describe("ModalFeeSummary.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
 
-    it("renders", (): void => {
+    it("renders open with empty list", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(ModalFeeSummary, {
-            localVue
+            localVue,
+            propsData: {
+                title: "TItle",
+                isOpen: true,
+                items: []
+            }
+        });
+
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="modal-fee-summary">
+              <div role="dialog" aria-modal="true" class="modal-background is-open">
+                <div class="modal">
+                  <header><span class="title">Transaction Summary</span>
+                    <!---->
+                  </header>
+                  <div class="main">
+                    <div class="content-container">
+                      <div class="summary-title">
+                        TItle
+                      </div>
+                      <div class="separator"></div>
+                      <div class="summary"> <strong><span class="item-description">Total:</span></strong> <span class="item-value">0.00 ℏ</span></div>
+                      <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
+                          <!----></button> <button type="submit" class="button compact"><span>Continue</span>
+                          <!----></button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        `);
+    });
+
+    it("renders closed with empty list", (): void => {
+        expect.assertions(1);
+
+        const wrapper = mount(ModalFeeSummary, {
+            localVue,
+            propsData: {
+                title: "TItle",
+                isOpen: false,
+                items: []
+            }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-fee-summary">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
-                  <header><span class="title"></span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
-                      <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
-                    </svg></header>
+                  <header><span class="title">Transaction Summary</span>
+                    <!---->
+                  </header>
                   <div class="main">
-                    <div class="content-container"></div>
+                    <div class="content-container">
+                      <div class="summary-title">
+                        TItle
+                      </div>
+                      <div class="separator"></div>
+                      <div class="summary"> <strong><span class="item-description">Total:</span></strong> <span class="item-value">0.00 ℏ</span></div>
+                      <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
+                          <!----></button> <button type="submit" class="button compact"><span>Continue</span>
+                          <!----></button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        `);
+    });
+
+    it("renders open with list", (): void => {
+        expect.assertions(1);
+
+        const wrapper = mount(ModalFeeSummary, {
+            localVue,
+            propsData: {
+                title: "TItle",
+                isOpen: true,
+                items: [
+                    { description: "Description", value: "Value" },
+                    { description: "Description", value: "Value" },
+                    { description: "Description", value: "Value" }
+                ]
+            }
+        });
+
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="modal-fee-summary">
+              <div role="dialog" aria-modal="true" class="modal-background is-open">
+                <div class="modal">
+                  <header><span class="title">Transaction Summary</span>
+                    <!---->
+                  </header>
+                  <div class="main">
+                    <div class="content-container">
+                      <div class="summary-title">
+                        TItle
+                      </div>
+                      <div class="separator"></div>
+                      <div class="summary"><span class="item-description">
+                                Description:
+                            </span> <span class="item-value">
+                                Value
+                            </span><span class="item-description">
+                                Description:
+                            </span> <span class="item-value">
+                                Value
+                            </span><span class="item-description">
+                                Description:
+                            </span> <span class="item-value">
+                                Value
+                            </span> <strong><span class="item-description">Total:</span></strong> <span class="item-value">0.00 ℏ</span></div>
+                      <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
+                          <!----></button> <button type="submit" class="button compact"><span>Continue</span>
+                          <!----></button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        `);
+    });
+
+    it("renders closed with list", (): void => {
+        expect.assertions(1);
+
+        const wrapper = mount(ModalFeeSummary, {
+            localVue,
+            propsData: {
+                title: "TItle",
+                isOpen: false,
+                items: [
+                    { description: "Description", value: "Value" },
+                    { description: "Description", value: "Value" },
+                    { description: "Description", value: "Value" }
+                ]
+            }
+        });
+
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="modal-fee-summary">
+              <div role="dialog" aria-modal="true" class="modal-background">
+                <div class="modal">
+                  <header><span class="title">Transaction Summary</span>
+                    <!---->
+                  </header>
+                  <div class="main">
+                    <div class="content-container">
+                      <div class="summary-title">
+                        TItle
+                      </div>
+                      <div class="separator"></div>
+                      <div class="summary"><span class="item-description">
+                                Description:
+                            </span> <span class="item-value">
+                                Value
+                            </span><span class="item-description">
+                                Description:
+                            </span> <span class="item-value">
+                                Value
+                            </span><span class="item-description">
+                                Description:
+                            </span> <span class="item-value">
+                                Value
+                            </span> <strong><span class="item-description">Total:</span></strong> <span class="item-value">0.00 ℏ</span></div>
+                      <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
+                          <!----></button> <button type="submit" class="button compact"><span>Continue</span>
+                          <!----></button></div>
+                    </div>
                   </div>
                 </div>
               </div>
