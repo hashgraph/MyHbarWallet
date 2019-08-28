@@ -17,7 +17,7 @@
                     href="https://github.com/hashgraph/myhbarwallet"
                     class="link"
                 >
-                    v0.0.0+000000
+                    v{{ version }}+{{ hash }}
                 </a>
             </div>
             <div class="copyright">
@@ -61,6 +61,10 @@ import { mdiFacebook, mdiGithubCircle, mdiTwitter } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import FooterTop from "../components/FooterTop.vue";
 import { createComponent, computed } from "@vue/composition-api";
+// Both of these are defined in vue.config.js.
+// VERSION reads from package.json and COMMIT_HASH is git rev-parse --short HEAD output
+declare const VERSION: string;
+declare const COMMIT_HASH: string;
 
 export default createComponent({
     components: {
@@ -82,7 +86,9 @@ export default createComponent({
             facebook,
             twitter,
             github,
-            currentYear
+            currentYear,
+            version: VERSION,
+            hash: COMMIT_HASH
         };
     }
 });
