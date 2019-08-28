@@ -23,7 +23,12 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, reactive } from "@vue/composition-api";
+import {
+    createComponent,
+    PropType,
+    reactive,
+    SetupContext
+} from "@vue/composition-api";
 
 interface State {
     focused: number | null;
@@ -35,9 +40,16 @@ export default createComponent({
         words: (Number as unknown) as number,
         value: (Array as unknown) as PropType<string[]>
     },
-    setup(props, context) {
+    setup(
+        props: {
+            editable: boolean;
+            word: number;
+            value: string[];
+        },
+        context: SetupContext
+    ) {
         const state = reactive<State>({
-            focused: null
+            focused: null as number | null
         });
 
         function handleInput(event: Event) {
