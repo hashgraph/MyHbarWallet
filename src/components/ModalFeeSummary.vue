@@ -14,11 +14,9 @@
 
             <div class="summary">
                 <template v-for="item in items">
-                    <strong :key="item.description">
-                        <span class="item-description">
-                            {{ item.description }}:
-                        </span>
-                    </strong>
+                    <span :key="item.description" class="item-description">
+                        {{ item.description }}:
+                    </span>
                     <span
                         v-if="item.value instanceof BigNumber"
                         :key="item.value.toString()"
