@@ -58,7 +58,10 @@ export default createComponent({
         HeaderHamburgerMenu,
         HeaderHamburgerButton
     },
-    setup(context: SetupContext) {
+    // Even though props is not used, we must have `context`
+    // as the second arguement otherwise it will take the place of
+    // props implicitly and NOT complain you're casting it to `SetupContext`
+    setup(props: object, context: SetupContext) {
         const state = reactive({
             scrolled: false,
             isHamburgerOpen: false
@@ -69,6 +72,7 @@ export default createComponent({
         }
 
         function handleReturnClick() {
+            console.log(context.root);
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
