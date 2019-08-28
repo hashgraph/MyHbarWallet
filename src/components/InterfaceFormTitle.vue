@@ -45,7 +45,7 @@ button {
     min-width: 10px;
     padding: 8px 12px;
 
-    @media (min-width: 1258px) {
+    @media (min-width: 1259px) {
         display: none;
     }
 }
