@@ -16,6 +16,7 @@
                 your new account ID.
             </div>
         </div>
+
         <template>
             <form
                 class="modal-request-to-create-account"
@@ -108,7 +109,7 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-button {
+.button {
     width: 200px;
 
     @media (max-width: 425px) {

@@ -1,42 +1,40 @@
 <template>
-    <div class="enter-account-id">
-        <Modal
-            :is-open="isOpen"
-            title="Enter Account ID"
-            @change="handleModalChangeIsOpen"
-        >
-            <form @submit.stop.prevent="handleSubmit">
-                <div class="label">
-                    Bacon ipsum dolor amet jerky
-                </div>
+    <Modal
+        :is-open="isOpen"
+        title="Enter Account ID"
+        @change="handleModalChangeIsOpen"
+    >
+        <form @submit.stop.prevent="handleSubmit">
+            <TextInput
+                ref="input"
+                :value="state.input"
+                show-validation
+                :valid="valid"
+                :error="state.errorMessage"
+                placeholder="shard.realm.account"
+                @input="handleInput"
+            />
 
-                <TextInput
-                    ref="input"
-                    :value="state.input"
-                    show-validation
-                    :valid="valid"
-                    :error="state.errorMessage"
-                    placeholder="shard.realm.account"
-                    @input="handleInput"
+            <div class="buttons">
+                <Button
+                    compact
+                    outline
+                    label="No Account ID?"
+                    class="button"
+                    type="button"
+                    @click="handleDontHaveAccount"
                 />
-
-                <div class="btn-container">
-                    <Button
-                        class="btn"
-                        label="Continue"
-                        :disabled="!valid"
-                        :busy="state.isBusy"
-                    />
-                </div>
-            </form>
-
-            <div class="link-container">
-                <span class="link" @click="handleDontHaveAccount">
-                    Don't have an Account ID?
-                </span>
+                <Button
+                    compact
+                    label="Continue"
+                    class="button"
+                    type="submit"
+                    :disabled="!valid"
+                    :busy="state.isBusy"
+                />
             </div>
-        </Modal>
-    </div>
+        </form>
+    </Modal>
 </template>
 
 <script lang="ts">
@@ -96,8 +94,9 @@ export default createComponent({
             account: null
         });
 
-        const regex = /^\d+\.\d+\.\d+$/;
-        const valid = computed(() => regex.test(state.input));
+        const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
+
+        const valid = computed(() => shardRealmAccountRegex.test(state.input));
 
         const input = ref<HTMLInputElement | null>(null);
 
@@ -196,35 +195,27 @@ export default createComponent({
 </script>
 
 <style scoped lang="postcss">
-.label {
-    color: var(--color-china-blue);
-    font-size: 14px;
-    margin-block-end: 10px;
+.button {
+    width: 200px;
+
+    @media (max-width: 425px) {
+        width: 100%;
+
+        &:last-child {
+            margin-block-end: 15px;
+        }
+    }
 }
 
-.btn-container {
-    align-items: center;
+.buttons {
     display: flex;
-    justify-content: center;
-    padding: 20px;
+    justify-content: space-between;
+    margin-block-start: 40px;
     width: 100%;
-}
 
-.link-container {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-}
-
-.link {
-    color: var(--color-china-blue);
-    cursor: pointer;
-    font-size: 14px;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-        text-decoration: underline;
+    @media (max-width: 425px) {
+        align-items: center;
+        flex-direction: column-reverse;
     }
 }
 </style>

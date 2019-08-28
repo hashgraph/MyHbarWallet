@@ -32,7 +32,7 @@ export default createComponent({
 
 .error-container {
     align-items: center;
-    color: white;
+    color: var(--color-white);
     display: flex;
     flex-direction: column;
     justify-content: center;
