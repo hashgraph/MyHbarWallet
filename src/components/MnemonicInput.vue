@@ -9,12 +9,15 @@
             <span class="number">{{ index }}.</span>
 
             <input
+                type="text"
                 class="word"
                 :value="value.length < index ? '' : value[index - 1]"
                 :readonly="!editable"
                 :data-index="index"
                 :tabindex="editable ? null : -1"
-                autocomplete-disabled
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
                 @input="handleInput"
                 @focus="handleFocus"
             />
