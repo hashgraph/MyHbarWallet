@@ -1,10 +1,10 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import ModalSuccessCreatingKeyPair from "../../src/components/ModalSuccessCreatingKeyPair.vue";
+import ModalCreateKeyPairSuccess from "../../src/components/ModalCreateKeyPairSuccess.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueRouter from "vue-router";
 import router from "../../src/router";
 
-describe("ModalSuccessCreatingKeyPair.vue", (): void => {
+describe("ModalCreateKeyPairSuccess.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     localVue.use(VueRouter);
@@ -12,7 +12,7 @@ describe("ModalSuccessCreatingKeyPair.vue", (): void => {
     it("renders", (): void => {
         expect.assertions(1);
 
-        const wrapper = mount(ModalSuccessCreatingKeyPair, {
+        const wrapper = mount(ModalCreateKeyPairSuccess, {
             localVue,
             router,
             propsData: {
