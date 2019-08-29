@@ -7,10 +7,10 @@
                     Network
                 </div>
                 <div class="subtitle">
-                    testnet
+                    {{ networkName }}
                 </div>
                 <div class="subtitle">
-                    0.testnet.hedera.com
+                    {{ networkAddress }}
                 </div>
             </div>
             <div class="actions">
@@ -26,6 +26,7 @@
 import Tooltip from "./Tooltip.vue";
 import { createComponent } from "@vue/composition-api";
 import hbar from "../assets/icon-hbar-outline.svg";
+import settings from "../settings";
 
 export default createComponent({
     components: {
@@ -33,7 +34,9 @@ export default createComponent({
     },
     setup() {
         return {
-            hbar
+            hbar,
+            networkName: settings.network.name,
+            networkAddress: settings.network.address
         };
     }
 });

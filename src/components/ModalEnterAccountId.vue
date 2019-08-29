@@ -57,6 +57,7 @@ import {
     CryptoTransferTransaction,
     Ed25519PrivateKey
 } from "@hashgraph/sdk";
+import settings from "../settings";
 
 export interface Props {
     isOpen: boolean;
@@ -135,6 +136,7 @@ export default createComponent({
 
             try {
                 client = new Client({
+                    url: settings.network.proxy,
                     operator: {
                         account: state.account,
                         privateKey: props.privateKey.toString()
