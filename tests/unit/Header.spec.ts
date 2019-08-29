@@ -20,11 +20,13 @@ describe("Header.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="header-container">
-              <header><a href="/" class="link router-link-exact-active router-link-active">
+              <header class="header"><a href="/" class="link router-link-exact-active router-link-active">
                   <div class="logo">My<strong>Hbar</strong>Wallet</div>
                 </a>
                 <div class="spacer"></div>
-                <div class="links"><a href="/" class="link router-link-exact-active router-link-active">Home</a> <a href="/#about" class="link">About</a> <a href="/#faqs" class="link">FAQs</a></div>
+                <div class="links"><a href="/" class="link router-link-exact-active router-link-active">Home</a> <a href="/#about" class="link">About</a> <a href="/#faqs" class="link">
+                    FAQs
+                  </a></div>
                 <div class="button-wrapper">
                   <div class="bar-1"><svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                       <path d="M19,13H5V11H19V13Z"></path>

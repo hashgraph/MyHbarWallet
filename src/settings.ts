@@ -10,6 +10,6 @@ export default {
         proxy: "https://grpc-web.myhederawallet.com",
         address: "0.testnet.hedera.com:50211",
         node: "0.0.3",
-        name: "testnet",
+        name: "testnet"
     }
-}
+};

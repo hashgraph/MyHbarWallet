@@ -17,9 +17,9 @@
                 <router-link :to="{ name: 'home', hash: '#about' }" class="link"
                     >About</router-link
                 >
-                <router-link :to="{ name: 'home', hash: '#faqs' }" class="link"
-                    >FAQs</router-link
-                >
+                <router-link :to="{ name: 'home', hash: '#faqs' }" class="link">
+                    FAQs
+                </router-link>
             </div>
             <HeaderHamburgerButton
                 :is-open="state.isHamburgerOpen"
@@ -91,9 +91,20 @@ export default createComponent({
             return false;
         });
 
+        const isInterface = computed(() => {
+            // This conditional is required for unit tests to passs
+            if (context.root != null) {
+                if (context.root.$route != null) {
+                    return context.root.$route.path.startsWith("/interface");
+                }
+            }
+
+            return false;
+        });
+
         const headerClasses = computed(() => {
-            if (isHome.value) {
-                return "header home";
+            if (isInterface.value) {
+                return "header interface";
             } else return "header";
         });
 
@@ -144,7 +155,7 @@ export default createComponent({
     /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
     transition: padding 0.3s ease;
 
-    &.home {
+    &:not(.interface) {
         max-width: 1024px;
     }
 
