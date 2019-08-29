@@ -34,7 +34,7 @@
         </template>
 
         <ModalCreateAccountSuccess
-            v-model="state.successModalIsOpen"
+            :is-open="state.successModalIsOpen"
             :account-id="state.account"
             @change="handleSuccessModalChange"
         />

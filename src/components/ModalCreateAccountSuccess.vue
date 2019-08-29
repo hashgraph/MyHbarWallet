@@ -1,6 +1,11 @@
 <template>
     <div class="create-account-success">
-        <Modal :is-open="isOpen" not-closable hide-decoration>
+        <Modal
+            :is-open="isOpen"
+            not-closable
+            hide-decoration
+            @change="this.$listeners.change"
+        >
             <div class="container">
                 <MaterialDesignIcon
                     class="large-checkbox"
@@ -33,10 +38,6 @@ export default createComponent({
         MaterialDesignIcon,
         ReadOnlyInput,
         Button
-    },
-    model: {
-        prop: "isOpen",
-        event: "change"
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
