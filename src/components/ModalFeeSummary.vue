@@ -155,6 +155,8 @@ export default createComponent({
 
 .item-value {
     color: var(--color-china-blue);
+    font-family: monospace;
+    font-size: 16px;
 }
 
 .buttons {
