@@ -22,7 +22,11 @@ export default function format(input: string): string {
 
     if (fraction != null) {
         let trailingCnt = 0;
-        for(let i = fraction.length - 1; i >= 0 && fraction.charAt(i) == '0'; i--) {
+        for (
+            let i = fraction.length - 1;
+            i >= 0 && fraction.charAt(i) == "0";
+            i--
+        ) {
             trailingCnt++;
         }
         fraction = fraction.substring(0, fraction.length - trailingCnt);

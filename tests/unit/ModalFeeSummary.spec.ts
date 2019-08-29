@@ -32,9 +32,7 @@ describe("ModalFeeSummary.vue", (): void => {
                       </div>
                       <div class="separator"></div>
                       <div class="summary">
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">
-                                0.00 ℏ
-                            </span></div>
+                        <div class="item"><span class="item-description">Total:</span> <span class="item-value"> 0 ℏ </span></div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -73,9 +71,7 @@ describe("ModalFeeSummary.vue", (): void => {
                       </div>
                       <div class="separator"></div>
                       <div class="summary">
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">
-                                0.00 ℏ
-                            </span></div>
+                        <div class="item"><span class="item-description">Total:</span> <span class="item-value"> 0 ℏ </span></div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -133,9 +129,7 @@ describe("ModalFeeSummary.vue", (): void => {
                                 </span> <span class="item-value">
                                     Value
                                 </span></div>
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">
-                                0.00 ℏ
-                            </span></div>
+                        <div class="item"><span class="item-description">Total:</span> <span class="item-value"> 0 ℏ </span></div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -193,9 +187,7 @@ describe("ModalFeeSummary.vue", (): void => {
                                 </span> <span class="item-value">
                                     Value
                                 </span></div>
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">
-                                0.00 ℏ
-                            </span></div>
+                        <div class="item"><span class="item-description">Total:</span> <span class="item-value"> 0 ℏ </span></div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
