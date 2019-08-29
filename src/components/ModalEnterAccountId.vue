@@ -163,10 +163,18 @@ export default createComponent({
                     } else if (error.message === "INVALID_SIGNATURE") {
                         state.errorMessage =
                             "This account is not associated with your private key.";
-                    } else {
+                    } else if (
+                        error.message === "Response closed without headers"
+                    ) {
+                        state.errorMessage =
+                            "Could not reach the network. Check your connection" +
+                            " and try again.";
+                    } else if (error.message === "TRANSACTION_EXPIRED") {
                         // This is actually good here
                         context.emit("submit", client, state.account);
                         return;
+                    } else {
+                        throw error;
                     }
                 }
             } finally {
