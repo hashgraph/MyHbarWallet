@@ -5,7 +5,7 @@
             title="Public Key"
             @change="this.$listeners.change"
         >
-            <ReadOnlyInput :value="publicKey" />
+            <ReadOnlyInput multiline :value="publicKey" />
             <div class="container">
                 <Button label="Copy" @click="handleCopy" />
             </div>
