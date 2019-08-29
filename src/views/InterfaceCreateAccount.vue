@@ -63,11 +63,12 @@ import { getValueOfUnit, Unit } from "../components/UnitConverter.vue";
 import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
+import format from "../formatter";
 
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
 
-const ESTIMATED_FEE = new BigNumber(100_000);
+const ESTIMATED_FEE = new BigNumber(0.000_100_000);
 
 // Summary Items
 const summaryItems = [
@@ -76,7 +77,7 @@ const summaryItems = [
     { description: "Estimated Fee", value: ESTIMATED_FEE }
 ] as Item[];
 
-const userBalanceRegex = /^0*\d+(\.\d{1,9})?$/;
+const userBalanceRegex = /^0*(\d+\.?(\d{1,9}?)?)0*$/;
 const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
 
 interface State {
@@ -131,7 +132,10 @@ export default createComponent({
         const validMaxFee = computed(() => maxFeeRegex.test(state.maxFee));
 
         const summaryTitle = computed(
-            () => "Creating account with balance " + state.userBalance + " ℏ"
+            () =>
+                "Creating account with balance " +
+                format(new BigNumber(state.userBalance).toString()) +
+                " ℏ"
         );
 
         async function handleCreateAccount() {
