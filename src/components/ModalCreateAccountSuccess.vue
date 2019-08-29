@@ -1,15 +1,22 @@
 <template>
     <div class="create-account-success">
-        <Modal :is-open="isOpen" not-closable hide-decoration>
+        <Modal
+            :is-open="isOpen"
+            not-closable
+            hide-decoration
+            @change="this.$listeners.change"
+        >
             <div class="container">
                 <MaterialDesignIcon
                     class="large-checkbox"
                     :size="200"
                     :icon="mdiCheck"
                 />
-                <div class="title">Success</div>
+                <div class="title">
+                    Success
+                </div>
                 <ReadOnlyInput class="center" :value="accountId" />
-                <Button compact class="btn" label="Copy" @click="handleCopy" />
+                <Button outline class="btn" label="Copy" @click="handleCopy" />
                 <div class="close" @click="handleClose">Dismiss</div>
             </div>
         </Modal>
@@ -33,10 +40,6 @@ export default createComponent({
         MaterialDesignIcon,
         ReadOnlyInput,
         Button
-    },
-    model: {
-        prop: "isOpen",
-        event: "change"
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
@@ -72,10 +75,7 @@ export default createComponent({
     align-items: center;
     display: flex;
     flex-direction: column;
-}
-
-.btn {
-    margin-block-start: 20px;
+    justify-content: center;
 }
 
 .title {
@@ -85,13 +85,21 @@ export default createComponent({
     margin-block-end: 20px;
 }
 
+.center {
+    text-align: center;
+}
+
+.btn {
+    margin-block-start: 40px;
+}
+
 .large-checkbox {
     border-color: var(--color-melbourne-cup);
     border-radius: 1200px;
     border-style: solid;
     color: var(--color-melbourne-cup);
-    margin-block-end: 15px;
-    padding: 25px;
+    margin-block-end: 25px;
+    padding: 15px;
 }
 
 .close {
@@ -103,9 +111,5 @@ export default createComponent({
         cursor: pointer;
         text-decoration: underline;
     }
-}
-
-.center {
-    text-align: center;
 }
 </style>

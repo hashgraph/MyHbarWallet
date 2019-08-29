@@ -1,6 +1,10 @@
 <template>
     <div class="modal-send-transfer-success">
-        <Modal :is-open="open" hide-decoration @change="handleModalChange">
+        <Modal
+            :is-open="isOpen"
+            hide-decoration
+            @change="this.$listeners.change"
+        >
             <div class="container">
                 <MaterialDesignIcon
                     class="large-checkbox"
@@ -39,26 +43,17 @@ export default createComponent({
         Button,
         MaterialDesignIcon
     },
-    model: {
-        prop: "open",
-        event: "change"
-    },
     props: {
-        open: Boolean,
+        isOpen: Boolean,
         toAccount: String,
         amount: String
     },
     setup(props, context): object {
-        function handleModalChange(isOpen: boolean) {
-            context.emit("change", isOpen);
-        }
-
         function handleClose() {
             context.emit("change", false);
         }
 
         return {
-            handleModalChange,
             handleClose,
             mdiCheck
         };

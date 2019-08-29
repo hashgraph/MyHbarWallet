@@ -42,7 +42,7 @@
         </template>
 
         <ModalSendTransferSuccess
-            :open="state.successModalIsOpen"
+            :is-open="state.successModalIsOpen"
             :to-account="state.toAccount"
             :amount="state.amount"
             @change="handleSuccessModalChange"
