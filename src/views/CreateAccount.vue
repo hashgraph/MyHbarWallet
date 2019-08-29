@@ -68,6 +68,7 @@ import store from "../store";
 import { Client, Ed25519PrivateKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
 import { ALERT, LOG_IN } from "../store/actions";
+import Vue from "vue";
 
 interface State {
     privateKey: Ed25519PrivateKey | null;
@@ -230,12 +231,14 @@ export default createComponent({
 
         function handleDoesntHaveAccount() {
             state.modalEnterAccountIdIsOpen = false;
-            state.modalRequestToCreateAccountIsOpen = true;
+            Vue.nextTick(
+                () => (state.modalRequestToCreateAccountIsOpen = true)
+            );
         }
 
         function handleHasAccount() {
             state.modalRequestToCreateAccountIsOpen = false;
-            state.modalEnterAccountIdIsOpen = true;
+            Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
         }
 
         return {
