@@ -24,6 +24,8 @@ import Modal from "../components/Modal.vue";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import Button from "../components/Button.vue";
+import store from "../store";
+import { ALERT } from "../store/actions";
 
 export default createComponent({
     components: {
@@ -48,6 +50,7 @@ export default createComponent({
         context
     ) {
         function handleCopy() {
+            store.dispatch(ALERT, { message: "Copied", level: "info" });
             writeToClipboard(props.accountId);
         }
 
