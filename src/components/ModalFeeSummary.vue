@@ -17,10 +17,7 @@
                             v-if="item.value instanceof BigNumber"
                             :key="item.key"
                             class="item-value"
-                            >{{
-                                formatter.format(item.value).split("$")[1]
-                            }}
-                            ℏ</span
+                            >{{ format(item.value) }} ℏ</span
                         >
                         <span v-else class="item-value">
                             {{ item.value }}
@@ -29,9 +26,7 @@
                 </template>
                 <div class="item">
                     <span class="item-description">Total:</span>
-                    <span class="item-value">
-                        {{ formatter.format(total).split("$")[1] }} ℏ
-                    </span>
+                    <span class="item-value"> {{ format(total) }} ℏ </span>
                 </div>
             </div>
 
@@ -67,7 +62,7 @@ import {
 import Modal from "../components/Modal.vue";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
-import { USDCurrencyFormatter } from "../formatter";
+import format from "../formatter";
 
 export interface Item {
     description: string;
@@ -128,12 +123,9 @@ export default createComponent({
             context.emit("submit");
         }
 
-        // TODO: can I just be returned? under what circumstances?
-        const formatter = ref(USDCurrencyFormatter);
-
         return {
             total,
-            formatter,
+            format,
             BigNumber,
             handleCancel,
             handleSubmit
@@ -146,6 +138,7 @@ export default createComponent({
 .summary-title {
     color: var(--color-washed-black);
     font-size: 18px;
+    text-overflow: ellipsis;
 }
 
 .summary {

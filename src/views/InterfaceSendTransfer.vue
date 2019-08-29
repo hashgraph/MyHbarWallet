@@ -70,8 +70,9 @@ import { CryptoTransferTransaction } from "@hashgraph/sdk";
 import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+import format from "../formatter";
 
-const ESTIMATED_FEE = new BigNumber(85_500);
+const ESTIMATED_FEE = new BigNumber(0.000_085_500);
 
 const summaryItems = [
     { description: "Transfer Amount", value: new BigNumber(0) },
@@ -130,7 +131,11 @@ export default createComponent({
         );
 
         const summaryTitle = computed(
-            () => "Sending " + state.amount + " ℏ to account " + state.toAccount
+            () =>
+                "Sending " +
+                format(state.amount) +
+                " ℏ to account " +
+                state.toAccount
         );
 
         async function handleClickEntireBalance() {
