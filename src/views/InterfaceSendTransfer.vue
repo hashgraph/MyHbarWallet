@@ -17,7 +17,7 @@
             placeholder="shard.realm.account"
             label="To Account"
             show-validation
-            :valid="state.isIdValid"
+            :valid="isIdValid"
             :error="state.idErrorMessage"
             can-copy
         />
