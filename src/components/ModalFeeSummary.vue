@@ -53,12 +53,7 @@
 </template>
 
 <script lang="ts">
-import {
-    computed,
-    createComponent,
-    SetupContext,
-    ref
-} from "@vue/composition-api";
+import { computed, createComponent, SetupContext } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";

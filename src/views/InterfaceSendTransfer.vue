@@ -80,7 +80,7 @@ const summaryItems = [
 ] as Item[];
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
-const amountRegex = /^0*\d+(\.\d{1,9})?$/;
+const amountRegex = /^0*(\d+\.?(\d{1,9}?)?)0*$/;
 const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
 
 export default createComponent({
@@ -118,10 +118,14 @@ export default createComponent({
             return maxFeeRegex.test(state.maxFee);
         });
 
+        const amount = computed(() =>
+            format(new BigNumber(state.amount).toString())
+        );
+
         const truncate = computed((): string =>
-            state.amount.length > 15
-                ? state.amount.substring(0, 13) + "..."
-                : state.amount
+            amount.value.length > 15
+                ? amount.value.substring(0, 13) + "..."
+                : amount.value
         );
 
         const buttonLabel = computed((): string =>
@@ -131,11 +135,7 @@ export default createComponent({
         );
 
         const summaryTitle = computed(
-            () =>
-                "Sending " +
-                format(state.amount) +
-                " ℏ to account " +
-                state.toAccount
+            () => "Sending " + amount.value + " ℏ to account " + state.toAccount
         );
 
         async function handleClickEntireBalance() {
