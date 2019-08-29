@@ -4,7 +4,7 @@
         :class="{ scrolled: state.scrolled }"
         class="header-container"
     >
-        <header>
+        <header :class="headerClasses">
             <div v-if="isHome" class="link" @click="handleReturnClick">
                 <div class="logo">My<strong>Hbar</strong>Wallet</div>
             </div>
@@ -91,11 +91,18 @@ export default createComponent({
             return false;
         });
 
+        const headerClasses = computed(() => {
+            if (isHome.value) {
+                return "header home";
+            } else return "header";
+        });
+
         return {
             state,
             onScroll,
             toggle,
             isHome,
+            headerClasses,
             handleReturnClick
         };
     }
@@ -128,15 +135,18 @@ export default createComponent({
     }
 }
 
-header {
+.header {
     display: flex;
     margin: 0 auto;
-    max-width: 1024px;
     padding: 12px 45px;
 
     /* Animating padding to match MEW */
     /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
     transition: padding 0.3s ease;
+
+    &.home {
+        max-width: 1024px;
+    }
 
     @media screen and (prefers-reduced-motion: reduce) {
         transition: none;
