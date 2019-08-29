@@ -133,12 +133,13 @@ export default createComponent({
                 state.modalAccessBySoftwareIsOpen = true;
             }
         }
+
         function handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
             state.modalAccessBySoftwareIsOpen = false;
 
             if (which === "file") {
                 if (file.value != null) {
-                    file.value.click();
+                    file.value.click(); // triggers loadTextFromFile via hidden input @click
                 }
             } else {
                 setTimeout(() => {
@@ -160,6 +161,7 @@ export default createComponent({
             }
 
             const file = target.files[0];
+
             const keyStoreArrayBuff = await new Promise<ArrayBuffer>(
                 (resolve, reject) => {
                     const reader = new FileReader();
@@ -173,6 +175,7 @@ export default createComponent({
                 }
             );
 
+            target.value = ""; // change back to initial state to garauntee that click fires next time
             state.modalKeystoreFilePasswordState.modalIsOpen = true;
             state.keystoreFileArray = new Uint8Array(keyStoreArrayBuff);
         }
