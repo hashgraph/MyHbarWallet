@@ -19,6 +19,10 @@ module.exports = {
     globals: {
         "ts-jest": {
             babelConfig: true
-        }
+        },
+        // HACK: These are used to make the footer unit test pass due
+        // to the use of webpack DefinePlugin
+        VERSION: "1.1.1",
+        COMMIT_HASH: "placeholderhash"
     }
 };

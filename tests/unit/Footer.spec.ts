@@ -1,4 +1,4 @@
-import { shallowMount, createLocalVue } from "@vue/test-utils";
+import { createLocalVue, shallowMount } from "@vue/test-utils";
 import Footer from "../../src/components/Footer.vue";
 import VueCompositionApi from "@vue/composition-api";
 import MaterialDesignIcon from "../../src/components/MaterialDesignIcon.vue";
