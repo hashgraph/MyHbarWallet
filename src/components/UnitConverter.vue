@@ -5,7 +5,7 @@
                 <div class="select-block">
                     <Select
                         v-model="state.selectedLeft"
-                        :options="options"
+                        :options="state.options"
                         :left="true"
                     />
                 </div>
@@ -31,7 +31,7 @@
                 <div class="select-block">
                     <Select
                         v-model="state.selectedRight"
-                        :options="options"
+                        :options="state.options"
                         :left="false"
                     />
                 </div>
