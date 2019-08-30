@@ -103,6 +103,7 @@ export default createComponent({
         grid-template-areas:
             "info-account info-account info-account"
             "main main main";
+        grid-template-columns: 1fr;
     }
 }
 
