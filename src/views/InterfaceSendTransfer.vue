@@ -70,7 +70,7 @@ import { CryptoTransferTransaction } from "@hashgraph/sdk";
 import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
-import format from "../formatter";
+import format, { hbarAmountRegex } from "../formatter";
 
 const ESTIMATED_FEE = new BigNumber(0.000_085_500);
 
@@ -80,8 +80,6 @@ const summaryItems = [
 ] as Item[];
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
-const amountRegex = /^0*(\d+\.?(\d{1,9}?)?)0*$/;
-const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
 
 export default createComponent({
     components: {
@@ -110,12 +108,8 @@ export default createComponent({
         const isAmountValid = computed(() => {
             return (
                 new BigNumber(state.amount).isGreaterThan(new BigNumber(0)) &&
-                amountRegex.test(state.amount)
+                hbarAmountRegex.test(state.amount)
             );
-        });
-
-        const isMaxFeeValid = computed(() => {
-            return maxFeeRegex.test(state.maxFee);
         });
 
         const amount = computed(() =>
@@ -158,7 +152,7 @@ export default createComponent({
             state.isBusy = true;
 
             try {
-                if (!isAmountValid || !isIdValid || !isMaxFeeValid) {
+                if (!isAmountValid || !isIdValid) {
                     return;
                 }
 
