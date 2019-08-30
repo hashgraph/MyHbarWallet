@@ -13,6 +13,7 @@
                 <TextInput
                     class="input"
                     :value="state.password"
+                    :error="state.error"
                     placeholder="Please Enter At Least 9 Characters"
                     obscure
                     @input="handleInputChange"
@@ -43,6 +44,7 @@ import {
 export interface State {
     modalIsOpen: boolean;
     password: string;
+    error: string | null;
     isBusy: boolean;
 }
 
@@ -76,6 +78,7 @@ export default createComponent({
         }
 
         function handleInputChange(value: string) {
+            props.state.error = null;
             context.emit("change", { ...props.state, password: value });
         }
 
