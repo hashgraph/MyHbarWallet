@@ -1,10 +1,21 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
+const package = require("./package.json");
+const webpack = require("webpack");
+const hash = require("child_process").execSync("git rev-parse --short HEAD");
 
 module.exports = {
     css: {
         // Turn on CSS source maps in development
         sourceMap: process.env.NODE_ENV !== "production"
+    },
+    configureWebpack: {
+        plugins: [
+            new webpack.DefinePlugin({
+                VERSION: `"${package.version.toString()}"`,
+                COMMIT_HASH: `"${hash.toString().trim()}"`
+            })
+        ]
     },
     chainWebpack(config) {
         // Use a standard HTML template instead of rolling our own (which is default)
