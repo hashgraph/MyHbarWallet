@@ -37,7 +37,7 @@
                 :busy="state.isBusy"
                 :label="buttonLabel"
                 :disabled="!isIdValid || !isAmountValid"
-                @click="handleSendTransfer"
+                @click="handleShowSummary"
             />
         </template>
 
@@ -46,6 +46,13 @@
             :to-account="state.toAccount"
             :amount="state.amount"
             @change="handleSuccessModalChange"
+        />
+
+        <ModalFeeSummary
+            v-model="state.summaryIsOpen"
+            :items="summaryItems"
+            :title="summaryTitle"
+            @submit="handleSendTransfer"
         />
     </InterfaceForm>
 </template>
@@ -62,54 +69,67 @@ import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue
 import { CryptoTransferTransaction } from "@hashgraph/sdk";
 import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
 import BigNumber from "bignumber.js";
+import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+import format, { hbarAmountRegex } from "../formatter";
+
+const ESTIMATED_FEE = new BigNumber(0.000_085_500);
+
+const summaryItems = [
+    { description: "Transfer Amount", value: new BigNumber(0) },
+    { description: "Estimated Fee", value: ESTIMATED_FEE }
+] as Item[];
+
+const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
 
 export default createComponent({
     components: {
         TextInput,
         InterfaceForm,
         Button,
-        ModalSendTransferSuccess
+        ModalSendTransferSuccess,
+        ModalFeeSummary
     },
     setup() {
-        // Using regex to validate user input
-        const amountRegex = /^0*\d+(\.\d{1,9})?$/;
-        const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
-
         const state = reactive({
             amount: "0",
             toAccount: "",
             isBusy: false,
-            maxFee: "100000",
+            maxFee: ESTIMATED_FEE.toString(),
             idErrorMessage: "",
             amountErrorMessage: "",
             txFeeErrorMessage: "",
-            successModalIsOpen: false
+            successModalIsOpen: false,
+            summaryIsOpen: false
         });
 
-        const idRegex = /^\d+\.\d+\.\d+$/;
-
-        const isIdValid = computed(() => idRegex.test(state.toAccount));
+        const isIdValid = computed(() =>
+            shardRealmAccountRegex.test(state.toAccount)
+        );
         const isAmountValid = computed(() => {
             return (
                 new BigNumber(state.amount).isGreaterThan(new BigNumber(0)) &&
-                amountRegex.test(state.amount)
+                hbarAmountRegex.test(state.amount)
             );
         });
 
-        const isMaxFeeValid = computed(() => {
-            return maxFeeRegex.test(state.maxFee);
-        });
-
-        const truncate = computed(() =>
-            state.amount.length > 15
-                ? state.amount.substring(0, 13) + "..."
-                : state.amount
+        const amount = computed(() =>
+            format(new BigNumber(state.amount).toString())
         );
 
-        const buttonLabel = computed(() =>
+        const truncate = computed((): string =>
+            amount.value.length > 15
+                ? amount.value.substring(0, 13) + "..."
+                : amount.value
+        );
+
+        const buttonLabel = computed((): string =>
             new BigNumber(state.amount).isGreaterThan(new BigNumber(0))
-                ? "Send " + truncate + " Hbars"
+                ? "Send " + truncate.value + " Hbars"
                 : "Send Hbar"
+        );
+
+        const summaryTitle = computed(
+            () => "Sending " + amount.value + " ℏ to account " + state.toAccount
         );
 
         async function handleClickEntireBalance() {
@@ -123,11 +143,16 @@ export default createComponent({
             state.amount = hbar.toString();
         }
 
+        function handleShowSummary() {
+            summaryItems[0].value = new BigNumber(state.amount);
+            state.summaryIsOpen = true;
+        }
+
         async function handleSendTransfer() {
             state.isBusy = true;
 
             try {
-                if (!isAmountValid || !isIdValid || !isMaxFeeValid) {
+                if (!isAmountValid || !isIdValid) {
                     return;
                 }
 
@@ -161,6 +186,7 @@ export default createComponent({
                     return;
                 }
 
+                // TODO: SDK BigInt v BigNumber
                 await new CryptoTransferTransaction(client)
                     .addSender(store.state.wallet.session.account, sendAmount)
                     .addRecipient(recipient, sendAmount)
@@ -217,10 +243,13 @@ export default createComponent({
 
         return {
             state,
+            summaryTitle,
+            summaryItems,
             buttonLabel,
             isIdValid,
             isAmountValid,
             Unit,
+            handleShowSummary,
             handleClickEntireBalance,
             handleSendTransfer,
             handleSuccessModalChange,

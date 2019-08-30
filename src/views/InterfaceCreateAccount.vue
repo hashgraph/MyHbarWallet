@@ -22,14 +22,15 @@
             label="Public Key"
             show-validation
             :valid="validKey"
+            :error="state.keyError"
         />
 
         <template v-slot:footer>
             <Button
                 :busy="state.isBusy"
-                :disabled="!validKey || !validBalance || !validMaxFee"
+                :disabled="!validKey || !validBalance"
                 label="Create Account"
-                @click="handleCreateAccount"
+                @click="handleShowSummary"
             />
         </template>
 
@@ -37,6 +38,13 @@
             :is-open="state.successModalIsOpen"
             :account-id="state.account"
             @change="handleSuccessModalChange"
+        />
+
+        <ModalFeeSummary
+            v-model="state.summaryModalIsOpen"
+            :items="summaryItems"
+            :title="summaryTitle"
+            @submit="handleCreateAccount"
         />
     </InterfaceForm>
 </template>
@@ -50,22 +58,33 @@ import store from "../store";
 import { AccountCreateTransaction, Ed25519PublicKey } from "@hashgraph/sdk";
 import { ALERT } from "../store/actions";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
+import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { getValueOfUnit, Unit } from "../components/UnitConverter.vue";
 import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
+import format, { hbarAmountRegex } from "../formatter";
 
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
 
+const ESTIMATED_FEE = new BigNumber(0.000_100_000);
+
+// Summary Items
+const summaryItems = [
+    { description: "Initial Balance", value: new BigNumber(0) },
+    { description: "Public Key", value: "" },
+    { description: "Estimated Fee", value: ESTIMATED_FEE }
+] as Item[];
+
 interface State {
     userBalance: string;
-    maxFee: string;
     publicKey: string;
     isBusy: boolean;
     successModalIsOpen: boolean;
+    summaryModalIsOpen: boolean;
+    keyError: string | null;
     userBalanceError: string | null;
-    maxFeeError: string | null;
     account: string | null;
 }
 
@@ -75,47 +94,60 @@ export default createComponent({
         InterfaceForm,
         Button,
         ModalCreateAccountSuccess,
-        Notice
+        Notice,
+        ModalFeeSummary
     },
     setup() {
         const state = reactive<State>({
             userBalance: "0",
-            maxFee: "100000000",
             publicKey: "",
             isBusy: false,
             successModalIsOpen: false,
+            summaryModalIsOpen: false,
+            keyError: null,
             userBalanceError: null,
-            maxFeeError: null,
             account: null
         });
 
-        // Using regex to validate user input
-        const userBalanceRegex = /^0*\d+(\.\d{1,9})?$/;
-        const maxFeeRegex = /^0*[1-9]\d{0,17}$/;
-
-        // 5 is used a default starting balance
         const validBalance = computed(() => {
             return (
                 new BigNumber(state.userBalance).isGreaterThan(
                     new BigNumber(0)
-                ) && userBalanceRegex.test(state.userBalance)
+                ) && hbarAmountRegex.test(state.userBalance)
             );
         });
+
         const validKey = computed(
             () =>
                 state.publicKey.startsWith(ED25519_PREFIX) &&
                 state.publicKey.length == 88
         );
-        const validMaxFee = computed(() => maxFeeRegex.test(state.maxFee));
+
+        const summaryTitle = computed(
+            () =>
+                "Creating account with balance " +
+                format(new BigNumber(state.userBalance).toString()) +
+                " ℏ"
+        );
 
         async function handleCreateAccount() {
             state.isBusy = true;
 
-            try {
-                if (!validBalance || !validKey || !validMaxFee) {
-                    return;
+            if (!validBalance || !validKey) {
+                if (!validBalance) {
+                    state.userBalanceError = "Invalid Balance";
                 }
+                if (!validKey) {
+                    state.keyError = "Invalid Key";
+                }
+                state.isBusy = false;
+                return;
+            } else {
+                state.userBalanceError = null;
+                state.keyError = null;
+            }
 
+            try {
                 if (store.state.wallet.session == null) {
                     throw new Error(
                         "Session should not be null if inside Create Account Interface"
@@ -139,7 +171,7 @@ export default createComponent({
                     return;
                 }
 
-                const fee = BigInt(state.maxFee);
+                const fee = BigInt(ESTIMATED_FEE);
                 const key = Ed25519PublicKey.fromString(state.publicKey);
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client
@@ -166,19 +198,14 @@ export default createComponent({
 
                 // If creating state.account succeeds then remove all the error
                 state.userBalanceError = null;
-                state.maxFeeError = null;
 
                 state.successModalIsOpen = true;
             } catch (error) {
                 console.log(error);
 
                 if (error instanceof Error) {
-                    if (error.message === "INSUFFICIENT_TX_FEE") {
-                        state.maxFeeError =
-                            "Insufficient maximum transaction fee";
-                    } else if (error.message === "INSUFFICIENT_PAYER_BALANCE") {
+                    if (error.message === "INSUFFICIENT_PAYER_BALANCE") {
                         state.userBalanceError = "Insufficient Payer Balance";
-                        state.maxFeeError = "Insufficient Payer Balance";
                     } else {
                         store.dispatch(ALERT, {
                             level: "error",
@@ -196,12 +223,20 @@ export default createComponent({
             state.isBusy = false;
         }
 
+        function handleShowSummary() {
+            summaryItems[0].value = new BigNumber(state.userBalance);
+            summaryItems[1].value = "..." + state.publicKey.substring(65);
+            state.summaryModalIsOpen = true;
+        }
+
         return {
             state,
+            summaryTitle,
+            summaryItems,
             validBalance,
             validKey,
-            validMaxFee,
             handleCreateAccount,
+            handleShowSummary,
             handleSuccessModalChange,
             Unit,
             mdiHelpCircleOutline
