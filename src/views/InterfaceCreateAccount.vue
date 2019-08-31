@@ -157,10 +157,8 @@ export default createComponent({
 
                 const client = store.state.wallet.session.client;
 
-                const balance = BigInt(
-                    new BigNumber(state.userBalance).multipliedBy(
-                        getValueOfUnit(Unit.Hbar)
-                    )
+                const balance = new BigNumber(state.userBalance).multipliedBy(
+                    getValueOfUnit(Unit.Hbar)
                 );
 
                 if (
@@ -172,7 +170,7 @@ export default createComponent({
                     return;
                 }
 
-                const fee = BigInt(ESTIMATED_FEE);
+                const fee = ESTIMATED_FEE;
                 const key = Ed25519PublicKey.fromString(state.publicKey);
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client

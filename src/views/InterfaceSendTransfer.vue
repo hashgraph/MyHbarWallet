@@ -171,10 +171,8 @@ export default createComponent({
                     account: parseInt(parts[2])
                 };
 
-                const sendAmount = BigInt(
-                    new BigNumber(state.amount).multipliedBy(
-                        getValueOfUnit(Unit.Hbar)
-                    )
+                const sendAmount = new BigNumber(state.amount).multipliedBy(
+                    getValueOfUnit(Unit.Hbar)
                 );
 
                 if (
