@@ -175,7 +175,7 @@ export default createComponent({
                 }
             );
 
-            target.value = ""; // change back to initial state to garauntee that click fires next time
+            target.value = ""; // change back to initial state to gaurantee that click fires next time
             state.modalKeystoreFilePasswordState.modalIsOpen = true;
             state.keystoreFileArray = new Uint8Array(keyStoreArrayBuff);
         }
