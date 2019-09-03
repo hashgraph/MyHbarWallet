@@ -1,6 +1,5 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import Vuex from "vuex";
 import ModalViewAccountId from "../../src/components/ModalViewAccountId.vue";
 import store from "../../src/store";
 
@@ -10,7 +9,6 @@ describe("ModalViewAccountId.vue", (): void => {
 
         const localVue = createLocalVue();
         localVue.use(VueCompositionApi);
-        localVue.use(Vuex);
 
         const onChange = jest.fn();
 
@@ -36,7 +34,6 @@ describe("ModalViewAccountId.vue", (): void => {
 
         const localVue = createLocalVue();
         localVue.use(VueCompositionApi);
-        localVue.use(Vuex);
 
         const onChange = jest.fn();
 
