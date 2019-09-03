@@ -118,7 +118,7 @@ export default createComponent({
             )
         );
 
-        function handleSubmit() {
+        function handleSubmit(): void {
             window.open(sendLink.value);
         }
 

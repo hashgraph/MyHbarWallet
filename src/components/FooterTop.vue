@@ -161,7 +161,7 @@ export default createComponent({
         });
         const hasAffiliates = false;
 
-        function handleButtonClick() {
+        function handleButtonClick(): void {
             state.modalCustomerServiceIsOpen = !state.modalCustomerServiceIsOpen;
         }
 

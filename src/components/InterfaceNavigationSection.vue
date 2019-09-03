@@ -64,7 +64,7 @@ export default createComponent({
             props.routes.some(route => route.name === context.root.$route.name)
         );
 
-        function handleHeaderClick() {
+        function handleHeaderClick(): void {
             const firstRoute = props.routes[0];
 
             // If the first route is active, do nothing
@@ -75,7 +75,7 @@ export default createComponent({
             context.root.$router.push({ name: firstRoute.name });
         }
 
-        function handleClick() {
+        function handleClick(): void {
             store.commit(SET_INTERFACE_MENU_IS_OPEN, false);
         }
 

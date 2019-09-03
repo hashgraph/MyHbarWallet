@@ -69,7 +69,7 @@ export interface KeyedItem extends Item {
 }
 
 let KEY = 0;
-function nextItemKey() {
+function nextItemKey(): void {
     return (KEY += 1);
 }
 
@@ -109,11 +109,11 @@ export default createComponent({
             return total;
         });
 
-        function handleCancel() {
+        function handleCancel(): void {
             context.emit("change", false);
         }
 
-        function handleSubmit() {
+        function handleSubmit(): void {
             context.emit("change", false);
             context.emit("submit");
         }

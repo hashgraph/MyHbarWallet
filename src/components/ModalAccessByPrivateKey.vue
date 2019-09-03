@@ -98,11 +98,11 @@ export default createComponent({
             return "";
         });
 
-        function handleModalChangeIsOpen(isOpen: boolean) {
+        function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
 
-        function handlePrivateKeyInput(rawPrivateKey: string) {
+        function handlePrivateKeyInput(rawPrivateKey: string): void {
             context.emit("change", { ...props.state, rawPrivateKey });
         }
 

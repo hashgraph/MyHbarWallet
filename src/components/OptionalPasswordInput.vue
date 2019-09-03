@@ -56,11 +56,11 @@ export default createComponent({
     setup(props, context) {
         const showPassword = reactive(false);
 
-        function handleInput(password: string) {
+        function handleInput(password: string): void {
             context.emit("input", password);
         }
 
-        function handleChangeShowPassword(showPassword: boolean) {
+        function handleChangeShowPassword(showPassword: boolean): void {
             if (showPassword) {
                 // If we are now showing the password,
                 // focus the password input

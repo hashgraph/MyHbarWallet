@@ -86,7 +86,7 @@ export default createComponent({
         event: (String as unknown) as PropType<string>
     },
     setup(props, context) {
-        async function handleClickCopy() {
+        async function handleClickCopy(): Promise<void> {
             const key = props.publicKey;
             if (key != null) {
                 await writeToClipboard(key.toString());
@@ -94,7 +94,7 @@ export default createComponent({
             }
         }
 
-        function handleHasAccount() {
+        function handleHasAccount(): void {
             context.emit("hasAccount");
         }
 

@@ -52,12 +52,12 @@ export default createComponent({
         },
         context
     ) {
-        function handleCopy() {
+        function handleCopy(): void {
             store.dispatch(ALERT, { message: "Copied", level: "info" });
             writeToClipboard(props.accountId);
         }
 
-        function handleClose() {
+        function handleClose(): void {
             context.emit("change", false);
         }
 

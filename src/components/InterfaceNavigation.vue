@@ -82,7 +82,7 @@ export default createComponent({
             else return "menu-closed";
         });
 
-        function handleClick() {
+        function handleClick(): void {
             store.commit(SET_INTERFACE_MENU_IS_OPEN, false);
         }
 

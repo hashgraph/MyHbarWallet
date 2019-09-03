@@ -91,7 +91,7 @@ export default createComponent({
             }
         ];
 
-        function handleSubmit() {
+        function handleSubmit(): void {
             context.emit("submit", state.optionSelected);
         }
 

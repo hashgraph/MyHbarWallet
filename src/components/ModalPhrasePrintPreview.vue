@@ -70,7 +70,7 @@ export default createComponent({
         }
     },
     setup() {
-        function handleClickPrint() {
+        function handleClickPrint(): void {
             window.print();
         }
 

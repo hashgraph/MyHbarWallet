@@ -7,8 +7,9 @@
 import { createComponent, computed, PropType } from "@vue/composition-api";
 
 // Must turn off observe setting BEFORE importing this module.. someone shoot me
-// @ts-ignore
-window["jdenticon_config"] = { replaceMode: "never" };
+((window as unknown) as { jdenticon_config: { replaceMode: string } })[
+    "jdenticon_config"
+] = { replaceMode: "never" };
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const jdenticon = require("jdenticon");
 

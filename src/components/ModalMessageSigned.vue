@@ -32,7 +32,7 @@ export default createComponent({
         },
         context
     ) {
-        async function handleClickCopy() {
+        async function handleClickCopy(): Promise<void> {
             await writeToClipboard(props.value);
             context.emit("change", false);
         }

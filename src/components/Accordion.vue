@@ -26,9 +26,9 @@ export default createComponent({
     setup() {
         const state = reactive({ expanded: false });
 
-        const toggle = () => {
+        function toggle(): void {
             state.expanded = !state.expanded;
-        };
+        }
 
         return {
             state,

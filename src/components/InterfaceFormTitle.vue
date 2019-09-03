@@ -19,7 +19,7 @@ export default createComponent({
         Button
     },
     setup() {
-        function emitMenuOpen() {
+        function emitMenuOpen(): void {
             store.commit(SET_INTERFACE_MENU_IS_OPEN, true);
         }
         return { emitMenuOpen };

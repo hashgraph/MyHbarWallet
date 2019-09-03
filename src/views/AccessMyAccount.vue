@@ -64,9 +64,7 @@ import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "../components/ModalAccessBySoftware.vue";
 import ModalAccessByPhrase from "../components/ModalAccessByPhrase.vue";
-import ModalAccessByPrivateKey, {
-    State as ModalAccessByPrivateKeyState
-} from "../components/ModalAccessByPrivateKey.vue";
+import ModalAccessByPrivateKey from "../components/ModalAccessByPrivateKey.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
@@ -76,8 +74,7 @@ import {
     createComponent,
     reactive,
     ref,
-    SetupContext,
-    watch
+    SetupContext
 } from "@vue/composition-api";
 import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
@@ -126,14 +123,16 @@ export default createComponent({
 
         const file = ref<HTMLInputElement | null>(null);
 
-        function handleClickTiles(which: string) {
+        function handleClickTiles(which: string): void {
             if (which === "hardware") {
                 state.modalAccessByHardwareIsOpen = true;
             } else if (which === "software") {
                 state.modalAccessBySoftwareIsOpen = true;
             }
         }
-        function handleAccessBySoftwareSubmit(which: AccessSoftwareOption) {
+        function handleAccessBySoftwareSubmit(
+            which: AccessSoftwareOption
+        ): void {
             state.modalAccessBySoftwareIsOpen = false;
 
             if (which === "file") {
@@ -151,7 +150,7 @@ export default createComponent({
             }
         }
 
-        async function loadTextFromFile(event: Event) {
+        async function loadTextFromFile(event: Event): void {
             const target = event.target as HTMLInputElement;
 
             if (target.files == null) {
@@ -180,12 +179,12 @@ export default createComponent({
         // Update our local understand of what the private/public key pair is
         // Called at the end of each access by software workflow before merging
         // into enter account ID
-        function setPrivateKey(newPrivateKey: Ed25519PrivateKey) {
+        function setPrivateKey(newPrivateKey: Ed25519PrivateKey): void {
             state.privateKey = newPrivateKey;
             state.publicKey = newPrivateKey.publicKey;
         }
 
-        async function handlePasswordSubmit() {
+        async function handlePasswordSubmit(): Promise<void> {
             const pwState = state.modalKeystoreFilePasswordState;
             pwState.isBusy = true;
 
@@ -216,7 +215,7 @@ export default createComponent({
             }
         }
 
-        async function handleAccessByPhraseSubmit() {
+        async function handleAccessByPhraseSubmit(): Promise<void> {
             const accessByPhraseState = state.modalAccessByPhraseState;
 
             accessByPhraseState.isBusy = true;
@@ -243,7 +242,7 @@ export default createComponent({
             }
         }
 
-        function handleAccessByPrivateKeySubmit() {
+        function handleAccessByPrivateKeySubmit(): void {
             state.modalAccessByPrivateKeyState.isBusy = true;
 
             setPrivateKey(
@@ -261,11 +260,14 @@ export default createComponent({
             }, 125);
         }
 
-        function openInterface() {
+        function openInterface(): void {
             context.root.$router.push({ name: "interface" });
         }
 
-        async function handleAccountIdSubmit(client: Client, account: Id) {
+        async function handleAccountIdSubmit(
+            client: Client,
+            account: Id
+        ): void {
             // Make sure there are no open modals when we navigate
             state.modalEnterAccountIdIsOpen = false;
 
@@ -279,14 +281,14 @@ export default createComponent({
             openInterface();
         }
 
-        function handleDoesntHaveAccount() {
+        function handleDoesntHaveAccount(): void {
             state.modalEnterAccountIdIsOpen = false;
             Vue.nextTick(
                 () => (state.modalRequestToCreateAccountIsOpen = true)
             );
         }
 
-        function handleHasAccount() {
+        function handleHasAccount(): void {
             state.modalRequestToCreateAccountIsOpen = false;
             Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
         }

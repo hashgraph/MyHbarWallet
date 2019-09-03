@@ -59,14 +59,14 @@ export default createComponent({
             return publickey;
         });
 
-        function hexEncode(str: string) {
+        function hexEncode(str: string): void {
             return unescape(encodeURIComponent(str))
                 .split("")
                 .map(v => v.charCodeAt(0).toString(16))
                 .join("");
         }
 
-        function handleConfirm() {
+        function handleConfirm(): void {
             context.emit("confirm");
         }
 

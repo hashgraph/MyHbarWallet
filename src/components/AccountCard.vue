@@ -52,6 +52,13 @@ import ModalViewPublicKey from "./ModalViewPublicKey.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
+interface Props {
+    shard: number;
+    realm: number;
+    account: number;
+    publicKey: string;
+}
+
 export default createComponent({
     components: {
         MaterialDesignIcon,
@@ -66,7 +73,7 @@ export default createComponent({
         account: (Number as unknown) as PropType<number>,
         publicKey: (String as unknown) as PropType<string>
     },
-    setup(props) {
+    setup(props: Props) {
         const rawPublicKey = computed(() => {
             let publickey = props.publicKey;
             if (publickey != null && publickey.startsWith(ED25519_PREFIX, 0)) {
@@ -81,11 +88,11 @@ export default createComponent({
             viewPublicKeyIsOpen: false
         });
 
-        const showPublicKey = () => {
+        function showPublicKey(): void {
             state.viewPublicKeyIsOpen = true;
-        };
+        }
 
-        function showQrCode() {
+        function showQrCode(): void {
             state.viewAccountQrCodeIsOpen = true;
         }
 

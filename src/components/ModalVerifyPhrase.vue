@@ -77,7 +77,7 @@ export default createComponent({
             focused: null as number | null
         });
 
-        function randomizeEmpties() {
+        function randomizeEmpties(): void {
             const newMap = new Map<number, string>([]);
 
             while (newMap.size < 5) {
@@ -105,15 +105,15 @@ export default createComponent({
             context.emit("change", isOpen);
         }
 
-        function isDisabled(index: number) {
+        function isDisabled(index: number): void {
             return !inputMap.has(index);
         }
 
-        function valueForIndex(index: number) {
+        function valueForIndex(index: number): void {
             return isDisabled(index) ? props.words[index] : inputMap.get(index);
         }
 
-        function handleVerify() {
+        function handleVerify(): void {
             for (const [index, value] of inputMap.entries()) {
                 if (props.words[index] !== value) {
                     store.dispatch(ALERT, {
@@ -128,7 +128,7 @@ export default createComponent({
             context.emit("success");
         }
 
-        function handleFocus(event: Event) {
+        function handleFocus(event: Event): void {
             const target = event.target as HTMLInputElement;
             const index = Number.parseInt(target.dataset.index || "0", 10);
 
@@ -137,7 +137,7 @@ export default createComponent({
             }
         }
 
-        function handleInput(event: Event) {
+        function handleInput(event: Event): void {
             const target = event.target as HTMLInputElement;
             const index = Number.parseInt(target.dataset.index || "0", 10);
 

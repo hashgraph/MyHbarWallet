@@ -67,16 +67,16 @@ export default createComponent({
             isHamburgerOpen: false
         });
 
-        function onScroll() {
+        function onScroll(): void {
             state.scrolled = window.scrollY > 150;
         }
 
-        function handleReturnClick() {
+        function handleReturnClick(): void {
             console.log(context.root);
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
-        function toggle() {
+        function toggle(): void {
             state.isHamburgerOpen = !state.isHamburgerOpen;
         }
 

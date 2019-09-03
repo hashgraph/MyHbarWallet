@@ -141,23 +141,23 @@ export default createComponent({
             return printIcon;
         });
 
-        function handlePasswordChange(password: string) {
+        function handlePasswordChange(password: string): void {
             state.passwordValue = password;
         }
 
-        function handlePrintModal() {
+        function handlePrintModal(): void {
             state.printModalIsOpen = !state.printModalIsOpen;
         }
 
-        function handleClick() {
+        function handleClick(): void {
             state.verifyPhraseIsOpen = true;
         }
 
-        function randomizeMnemonic() {
+        function randomizeMnemonic(): void {
             state.result = generateMnemonic();
         }
 
-        async function handleVerifySuccess() {
+        async function handleVerifySuccess(): Promise<void> {
             if (state.result == null) return;
 
             state.isBusy = true;

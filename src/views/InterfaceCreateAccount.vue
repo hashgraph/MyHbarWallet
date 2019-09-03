@@ -130,7 +130,7 @@ export default createComponent({
                 " ℏ"
         );
 
-        async function handleCreateAccount() {
+        async function handleCreateAccount(): Promise<void> {
             state.isBusy = true;
 
             if (!validBalance || !validKey) {
@@ -218,12 +218,12 @@ export default createComponent({
             }
         }
 
-        function handleSuccessModalChange(isOpen: boolean) {
+        function handleSuccessModalChange(isOpen: boolean): void {
             state.successModalIsOpen = isOpen;
             state.isBusy = false;
         }
 
-        function handleShowSummary() {
+        function handleShowSummary(): void {
             summaryItems[0].value = new BigNumber(state.userBalance);
             summaryItems[1].value = "..." + state.publicKey.substring(65);
             state.summaryModalIsOpen = true;

@@ -205,35 +205,35 @@ export default createComponent({
             };
         });
 
-        function focus() {
+        function focus(): void {
             if (input.value != null) {
                 input.value.focus();
             }
         }
 
-        function handleClickEye() {
+        function handleClickEye(): void {
             state.isEyeOpen = !state.isEyeOpen;
             focus();
         }
 
-        function handleInput(event: Event) {
+        function handleInput(event: Event): void {
             const input = event.target as HTMLTextAreaElement;
             context.emit("input", input.value);
         }
 
-        function handleClickClear() {
+        function handleClickClear(): void {
             context.emit("input", "");
         }
 
-        async function handleClickCopy() {
+        async function handleClickCopy(): Promise<void> {
             await writeToClipboard(props.value.toString());
         }
 
-        function handleFocusIn() {
+        function handleFocusIn(): void {
             state.hasFocus = true;
         }
 
-        function handleFocusOut() {
+        function handleFocusOut(): void {
             state.hasFocus = false;
         }
 

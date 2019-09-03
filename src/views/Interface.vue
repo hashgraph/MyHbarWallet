@@ -57,7 +57,7 @@ export default createComponent({
             balanceIsBusy: false
         });
 
-        async function handleBalanceRefresh() {
+        async function handleBalanceRefresh(): Promise<void> {
             const session = store.state.wallet.session;
             if (session == null) return;
 

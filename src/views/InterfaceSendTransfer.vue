@@ -132,7 +132,7 @@ export default createComponent({
             () => "Sending " + amount.value + " ℏ to account " + state.toAccount
         );
 
-        async function handleClickEntireBalance() {
+        async function handleClickEntireBalance(): Promise<void> {
             const balance = store.state.wallet.balance;
             if (balance == null) {
                 return;
@@ -143,12 +143,12 @@ export default createComponent({
             state.amount = hbar.toString();
         }
 
-        function handleShowSummary() {
+        function handleShowSummary(): void {
             summaryItems[0].value = new BigNumber(state.amount);
             state.summaryIsOpen = true;
         }
 
-        async function handleSendTransfer() {
+        async function handleSendTransfer(): Promise<void> {
             state.isBusy = true;
 
             try {
@@ -236,7 +236,7 @@ export default createComponent({
             }
         }
 
-        function handleSuccessModalChange(isOpen: boolean) {
+        function handleSuccessModalChange(isOpen: boolean): void {
             state.successModalIsOpen = isOpen;
             state.isBusy = false;
         }

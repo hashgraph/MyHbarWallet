@@ -70,10 +70,10 @@ export default createComponent({
         state: { type: Object, required: true } as PropOptions<State>
     },
     setup(props: { state: State }, context) {
-        function handleModalChangeIsOpen(isOpen: boolean) {
+        function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
-        function handleMnemonicInput(words: string[]) {
+        function handleMnemonicInput(words: string[]): void {
             context.emit("change", { ...props.state, words });
         }
 

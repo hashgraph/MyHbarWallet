@@ -39,11 +39,11 @@ import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 const modalIds: number[] = [];
 let nextModalId = 0;
 
-function modalIsTop(id: number) {
+function modalIsTop(id: number): void {
     return modalIds[modalIds.length - 1] === id;
 }
 
-function setModalIsOpenOnBody() {
+function setModalIsOpenOnBody(): void {
     document.body.classList.toggle("modal-is-open", modalIds.length !== 0);
 }
 
@@ -77,14 +77,14 @@ export default createComponent({
     setup(props: Props, context) {
         const id = nextModalId++;
 
-        function handleClose() {
+        function handleClose(): void {
             if (!props.notClosable && modalIsTop(id)) {
                 modalIds.pop();
                 context.emit("change", false);
             }
         }
 
-        function handleWindowKeyDown(event: KeyboardEvent) {
+        function handleWindowKeyDown(event: KeyboardEvent): void {
             // ESCAPE (27)
             if (!props.notClosable && props.isOpen && event.keyCode == 27) {
                 handleClose();

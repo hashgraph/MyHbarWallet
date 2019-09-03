@@ -24,11 +24,11 @@ export default createComponent({
             return { "is-active": isActive.value };
         });
 
-        function handleClick() {
+        function handleClick(): void {
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
-        function handleWindowScroll() {
+        function handleWindowScroll(): void {
             isActive.value = window.scrollY > 150;
         }
 

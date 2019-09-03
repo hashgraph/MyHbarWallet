@@ -30,9 +30,8 @@ import {
     computed,
     PropType,
     onBeforeUnmount,
-    Ref
+    SetupContext
 } from "@vue/composition-api";
-import { Computed } from "vuex";
 
 interface Props {
     options: string[];
@@ -55,7 +54,7 @@ export default createComponent({
         selected: (String as unknown) as PropType<string>,
         options: (Array as unknown) as PropType<string[]>
     },
-    setup(props: Props, context) {
+    setup(props: Props, context: SetupContext) {
         const state = reactive<State>({
             dropdownIsOpen: false
         });
@@ -68,7 +67,7 @@ export default createComponent({
             return mdiChevronDown;
         });
 
-        function handleCloseOnWindowClick() {
+        function handleCloseOnWindowClick(): void {
             state.dropdownIsOpen = false;
         }
 
@@ -78,11 +77,11 @@ export default createComponent({
             window.removeEventListener("click", handleCloseOnWindowClick);
         });
 
-        function toggleDropdown() {
+        function toggleDropdown(): void {
             state.dropdownIsOpen = !state.dropdownIsOpen;
         }
 
-        function handleOptionClick(option: string) {
+        function handleOptionClick(option: string): void {
             context.emit("change", option);
             state.dropdownIsOpen = false;
         }

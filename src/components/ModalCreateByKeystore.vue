@@ -199,7 +199,7 @@ export default createComponent({
          * 3 # safely unguessable: moderate protection from offline slow-hash scenario. (guesses < 10^10)
          * 4 # very unguessable: strong protection from offline slow-hash scenario. (guesses >= 10^10)
          */
-        function handleInputPassword(value: string) {
+        function handleInputPassword(value: string): void {
             const passwordMetrics: ZXCVBNResult = zxcvbn(value, wordlist);
 
             context.emit("change", {

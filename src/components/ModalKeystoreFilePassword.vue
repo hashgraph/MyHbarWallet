@@ -71,15 +71,15 @@ export default createComponent({
             );
         });
 
-        function handleModalChangeIsOpen(isOpen: boolean) {
+        function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
 
-        function handleInputChange(value: string) {
+        function handleInputChange(value: string): void {
             context.emit("change", { ...props.state, password: value });
         }
 
-        function handleSubmit() {
+        function handleSubmit(): void {
             context.emit("submit", props.state);
         }
 

@@ -44,12 +44,11 @@ import {
     watch,
     PropType,
     reactive,
-    ref
+    ref,
+    SetupContext
 } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
-import TextInput, {
-    Component as TextInputComponent
-} from "../components/TextInput.vue";
+import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import { Id } from "../store/modules/wallet";
 import {
@@ -86,7 +85,7 @@ export default createComponent({
         privateKey: (Object as unknown) as PropType<Ed25519PrivateKey | null>,
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    setup(props: Props, context) {
+    setup(props: Props, context: SetupContext) {
         const state = reactive<State>({
             input: "",
             failed: null,
@@ -101,7 +100,7 @@ export default createComponent({
 
         const input = ref<HTMLInputElement | null>(null);
 
-        function handleInput(accountText: string) {
+        function handleInput(accountText: string): void {
             state.input = accountText;
 
             if (valid.value) {
@@ -116,15 +115,15 @@ export default createComponent({
             }
         }
 
-        function handleModalChangeIsOpen(isOpen: boolean) {
+        function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", isOpen);
         }
 
-        function handleDontHaveAccount() {
+        function handleDontHaveAccount(): void {
             context.emit("noAccount");
         }
 
-        async function handleSubmit() {
+        async function handleSubmit(): Promise<void> {
             state.errorMessage = null;
             state.isBusy = true;
 

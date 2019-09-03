@@ -55,7 +55,7 @@ export default createComponent({
             focused: null as number | null
         });
 
-        function handleInput(event: Event) {
+        function handleInput(event: Event): void {
             if (props.value == null) {
                 return;
             }
@@ -72,7 +72,7 @@ export default createComponent({
             context.emit("input", newValues);
         }
 
-        function handleFocus(event: Event) {
+        function handleFocus(event: Event): void {
             if (!props.editable) {
                 // Non-editable controls should not set focus
                 return;

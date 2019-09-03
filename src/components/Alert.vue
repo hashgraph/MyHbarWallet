@@ -56,9 +56,9 @@ export default createComponent({
             }
         });
 
-        const destroyMe = () => {
+        function destroyMe(): void {
             store.commit(REMOVE_ALERT, props.id);
-        };
+        }
 
         return {
             messageIcon,

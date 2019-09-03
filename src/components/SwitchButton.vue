@@ -43,7 +43,7 @@ export default createComponent({
             return props.checked === props.values[1];
         });
 
-        function handleChange(event: Event) {
+        function handleChange(event: Event): void {
             const checked = (event.target as HTMLInputElement).checked;
 
             if (props.values == null) {

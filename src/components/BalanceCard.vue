@@ -73,7 +73,7 @@ export default createComponent({
             return format(String(usd));
         });
 
-        async function handleRefreshBalance() {
+        async function handleRefreshBalance(): Promise<void> {
             state.isBusy = true;
 
             try {

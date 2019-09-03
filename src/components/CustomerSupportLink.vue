@@ -20,7 +20,7 @@ export default createComponent({
             modalCustomerServiceIsOpen: false
         });
 
-        function handleButtonClick() {
+        function handleButtonClick(): void {
             state.modalCustomerServiceIsOpen = !state.modalCustomerServiceIsOpen;
         }
 

@@ -22,12 +22,17 @@ import {
     createComponent
 } from "@vue/composition-api";
 
+interface Props {
+    message: string;
+    pinnable: boolean;
+}
+
 export default createComponent({
     props: {
         message: { type: String, required: true },
         pinnable: { type: Boolean, required: false }
     },
-    setup(props) {
+    setup(props: Props) {
         const state = reactive({
             hovered: false,
             pinned: false
@@ -43,18 +48,21 @@ export default createComponent({
         });
 
         // methods
-        const handleMouseOver = () => {
+        function handleMouseOver(): void {
             state.hovered = true;
-        };
-        const handleMouseOut = () => {
+        }
+
+        function handleMouseOut(): void {
             state.hovered = false;
-        };
-        const handleTogglePinned = () => {
+        }
+
+        function handleTogglePinned(): void {
             state.pinned = !state.pinned;
-        };
-        const handleCloseOnWindowClick = () => {
+        }
+
+        function handleCloseOnWindowClick(): void {
             state.pinned = false;
-        };
+        }
 
         window.addEventListener("click", handleCloseOnWindowClick);
 

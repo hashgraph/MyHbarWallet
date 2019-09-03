@@ -124,7 +124,7 @@ export default createComponent({
 
         const keyStoreLink = ref<HTMLAnchorElement | null>(null);
 
-        function handleClickTiles(which: string) {
+        function handleClickTiles(which: string): void {
             if (which === "hardware") {
                 state.modalAccessByHardwareIsOpen = true;
             } else if (which === "software") {
@@ -132,7 +132,9 @@ export default createComponent({
             }
         }
 
-        function handleCreateWithSoftwareSubmit(which: CreateSoftwareOption) {
+        function handleCreateWithSoftwareSubmit(
+            which: CreateSoftwareOption
+        ): void {
             state.modalCreateWithSoftwareIsOpen = false;
 
             setTimeout(() => {
@@ -144,7 +146,7 @@ export default createComponent({
             }, 125);
         }
 
-        async function handleCreateByKeystoreSubmit() {
+        async function handleCreateByKeystoreSubmit(): Promise<void> {
             state.modalCreateByKeystoreState.modalIsOpen = false;
 
             setTimeout(() => {
@@ -182,7 +184,7 @@ export default createComponent({
             }
         }
 
-        function handleDownloadKeystoreSubmit() {
+        function handleDownloadKeystoreSubmit(): void {
             context.root.$el.append(keyStoreLink.value as Node);
             // Neither keystorelink or key should ever be null if we got to this point, however this is
             // mostly a sanity check.
@@ -202,7 +204,9 @@ export default createComponent({
             state.modalDownloadKeystoreState.modalIsOpen = false;
         }
 
-        function handleCreateByPhraseSubmit(newPrivateKey: Ed25519PrivateKey) {
+        function handleCreateByPhraseSubmit(
+            newPrivateKey: Ed25519PrivateKey
+        ): void {
             state.modalCreateByPhraseIsOpen = false;
 
             state.privateKey = newPrivateKey;
@@ -212,11 +216,14 @@ export default createComponent({
             }, 125);
         }
 
-        function openInterface() {
+        function openInterface(): void {
             context.root.$router.push({ name: "interface" });
         }
 
-        async function handleAccountIdSubmit(client: Client, account: Id) {
+        async function handleAccountIdSubmit(
+            client: Client,
+            account: Id
+        ): void {
             // Make sure there are no open modals when we navigate
             state.modalEnterAccountIdIsOpen = false;
 
@@ -229,14 +236,14 @@ export default createComponent({
             openInterface();
         }
 
-        function handleDoesntHaveAccount() {
+        function handleDoesntHaveAccount(): void {
             state.modalEnterAccountIdIsOpen = false;
             Vue.nextTick(
                 () => (state.modalRequestToCreateAccountIsOpen = true)
             );
         }
 
-        function handleHasAccount() {
+        function handleHasAccount(): void {
             state.modalRequestToCreateAccountIsOpen = false;
             Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
         }

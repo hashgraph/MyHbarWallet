@@ -49,7 +49,7 @@ export default createComponent({
         amount: String
     },
     setup(props, context): object {
-        function handleClose() {
+        function handleClose(): void {
             context.emit("change", false);
         }
 

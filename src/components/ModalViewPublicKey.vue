@@ -22,6 +22,11 @@ import { ALERT } from "../store/actions";
 import store from "../store";
 import Button from "./Button.vue";
 
+interface Props {
+    isOpen: boolean;
+    publicKey: string;
+}
+
 export default createComponent({
     components: {
         Modal,
@@ -36,8 +41,8 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>,
         publicKey: (String as unknown) as PropType<string>
     },
-    setup(props) {
-        const handleCopy = async () => {
+    setup(props: Props) {
+        async function handleCopy(): Promise<void> {
             await writeToClipboard(
                 props.publicKey == null ? "" : props.publicKey
             );
@@ -46,7 +51,7 @@ export default createComponent({
                 level: "info",
                 message: "Copied"
             });
-        };
+        }
 
         return { handleCopy };
     }
