@@ -48,6 +48,9 @@ export default createComponent({
     padding-block-end: 40px;
     text-decoration: none;
 
+    /* so the shadow appears over the image directly below this */
+    z-index: 1;
+
     @media (min-width: 1025px) {
         transition: transform 0.3s ease;
 
