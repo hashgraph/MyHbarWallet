@@ -68,6 +68,7 @@ import format, { hbarAmountRegex } from "../formatter";
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
 
+// TODO: SDK BigInt --> BigNumber
 const ESTIMATED_FEE = new BigNumber(0.000_100_000);
 
 // Summary Items
@@ -209,7 +210,7 @@ export default createComponent({
                     } else {
                         store.dispatch(ALERT, {
                             level: "error",
-                            message: "Failed to create state.account"
+                            message: "Failed to create account"
                         });
                     }
                 }
