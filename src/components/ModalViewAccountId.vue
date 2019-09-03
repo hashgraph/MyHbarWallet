@@ -1,10 +1,8 @@
 <template>
     <Modal
+        :large="false"
         :is-open="isOpen"
-        hide-decoration
-        compact
-        title="Account Id"
-        no-decoration
+        title="Account ID"
         @change="this.$listeners.change"
     >
         <div class="modal-contents">
@@ -15,9 +13,14 @@
                 class="pub-qr"
             />
 
-            <div class="account-id">
-                {{ accountId }}
-            </div>
+            <ReadOnlyInput class="account-id" :value="accountId" />
+
+            <Button
+                compact
+                label="Copy Account ID"
+                class="button"
+                @click="handleClickCopy"
+            />
         </div>
     </Modal>
 </template>
@@ -30,6 +33,8 @@ import { createComponent, PropType, computed } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import store from "../store";
 import { Id } from "../store/modules/wallet";
+import { writeToClipboard } from "../clipboard";
+import { ALERT } from "../store/actions";
 
 interface Props {
     isOpen: boolean;
@@ -60,8 +65,17 @@ export default createComponent({
                 : "";
         });
 
+        async function handleClickCopy(): Promise<void> {
+            const id = accountId.value;
+            if (id != null) {
+                await writeToClipboard(id);
+                store.dispatch(ALERT, { message: "Copied", level: "info" });
+            }
+        }
+
         return {
-            accountId
+            accountId,
+            handleClickCopy
         };
     }
 });
@@ -72,14 +86,24 @@ export default createComponent({
     align-items: center;
     display: flex;
     flex-direction: column;
-    margin-block-end: 80px;
-    margin-block-start: 80px;
+}
+
+.pub-qr {
+    margin-block-end: 40px;
 }
 
 .account-id {
     color: var(--color-basalt-grey);
     font-size: 26px;
-    justify-content: center;
-    margin-block-start: 20px;
+    margin-block-end: 40px;
+    text-align: center;
+}
+
+.button {
+    width: 200px;
+
+    @media (max-width: 425px) {
+        width: 100%;
+    }
 }
 </style>
