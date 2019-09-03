@@ -8,7 +8,7 @@
         />
         <AccountTileButton
             title="Software"
-            content="Lorem ipsum dolor sit amet, consectetur"
+            content="Keystore file, Private key, Mnemonic phrase"
             :image="softwareImage"
             note="Not Recommended"
             @click="$emit('click', 'software')"
