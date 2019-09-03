@@ -64,7 +64,7 @@ import Button from "../components/Button.vue";
 import { createComponent, reactive, computed } from "@vue/composition-api";
 import store from "../store";
 import { AccountId } from "@hashgraph/sdk/src/Client";
-import { ALERT } from "../store/actions";
+import { ALERT, REFRESH_BALANCE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { CryptoTransferTransaction } from "@hashgraph/sdk";
 import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
@@ -194,6 +194,9 @@ export default createComponent({
                     .setTransactionFee(ESTIMATED_FEE)
                     .build()
                     .executeForReceipt();
+
+                // Refresh Balance
+                store.commit(REFRESH_BALANCE);
 
                 // eslint-disable-next-line require-atomic-updates
                 state.successModalIsOpen = true;
