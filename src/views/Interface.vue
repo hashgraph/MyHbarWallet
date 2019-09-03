@@ -5,9 +5,8 @@
             <div class="main">
                 <router-view />
             </div>
-            <!-- todo: These are just placeholders for the actual items,
-which have not been merged into master yet -->
             <AccountCard
+                v-if="account"
                 :realm="account.realm"
                 :shard="account.shard"
                 :account="account.account"

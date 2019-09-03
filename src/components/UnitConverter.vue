@@ -5,7 +5,7 @@
                 <div class="select-block">
                     <Select
                         v-model="state.selectedLeft"
-                        :options="state.options"
+                        :options="options"
                         :left="true"
                     />
                 </div>
@@ -31,7 +31,7 @@
                 <div class="select-block">
                     <Select
                         v-model="state.selectedRight"
-                        :options="state.options"
+                        :options="options"
                         :left="false"
                     />
                 </div>
@@ -95,7 +95,6 @@ interface State {
     selectedRight: Unit;
     valueLeft: string;
     valueRight: string;
-    options: Unit[];
 }
 
 export default createComponent({
@@ -104,12 +103,13 @@ export default createComponent({
         TextInput
     },
     setup() {
+        const options = Object.values(Unit);
+
         const state = reactive<State>({
             selectedLeft: Unit.Tinybar,
             selectedRight: Unit.Hbar,
             valueLeft: "100000000",
-            valueRight: "1",
-            options: Object.values(Unit)
+            valueRight: "1"
         });
 
         watch(
@@ -157,7 +157,8 @@ export default createComponent({
         );
 
         return {
-            state
+            state,
+            options
         };
     }
 });

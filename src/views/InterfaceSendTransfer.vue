@@ -5,7 +5,7 @@
             has-input
             label="Amount"
             action="Entire Balance"
-            :suffix="Unit.Hbar"
+            :suffix="hbarSuffix"
             show-validation
             :valid="isAmountValid"
             :error="state.amountErrorMessage"
@@ -27,7 +27,7 @@
             v-model="state.maxFee"
             label="Maximum Transaction Fee"
             show-validation
-            :suffix="Unit.Tinybar"
+            :suffix="tinybarSuffix"
             :valid="true"
             :error="state.txFeeErrorMessage"
         />
@@ -246,7 +246,8 @@ export default createComponent({
             buttonLabel,
             isIdValid,
             isAmountValid,
-            Unit,
+            hbarSuffix: Unit.Hbar,
+            tinybarSuffix: Unit.Tinybar,
             handleShowSummary,
             handleClickEntireBalance,
             handleSendTransfer,
