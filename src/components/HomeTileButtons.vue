@@ -11,7 +11,7 @@
 
         <HomeTileButton
             title="Access My Account"
-            content="Send or swap your ETH and tokens, purchase ENS domains, interact with smart contracts, and more! This is where the magic happens."
+            content="Manage an account, send or receive hbars, create new accounts, and more!"
             :image="unlock"
             route="access-my-account"
             action="Access Now"
