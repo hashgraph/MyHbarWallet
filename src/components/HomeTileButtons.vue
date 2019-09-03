@@ -1,9 +1,8 @@
 <template>
     <div class="tile-grid">
-        <!-- fixme: Edit wallet image to add Hedera logo and padding in the image file like MEW's -->
         <HomeTileButton
             title="Create A New Wallet"
-            content="Obtain an ETH address and generate your private key. Saving and safekeeping the key will be your responsibility."
+            content="Generate your private key and obtain an account ID. Key saving and security is your responsibility."
             :image="wallet"
             route="create-account"
             action="Get Started"
