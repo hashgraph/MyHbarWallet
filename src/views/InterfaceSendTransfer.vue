@@ -22,16 +22,6 @@
             can-copy
         />
 
-        <TextInput
-            v-if="false"
-            v-model="state.maxFee"
-            label="Maximum Transaction Fee"
-            show-validation
-            :suffix="tinybarSuffix"
-            :valid="true"
-            :error="state.txFeeErrorMessage"
-        />
-
         <template v-slot:footer>
             <Button
                 :busy="state.isBusy"
@@ -72,12 +62,15 @@ import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import format, { hbarAmountRegex } from "../formatter";
 
-// Transactions between 1 HBar and 360 GBar cost between 85_100 and 85_500 Hbar
-const ESTIMATED_FEE = new BigNumber(0.000_085_500);
+// Transactions between 1 HBar and 360 GBar cost between 85_100 and 85_500 Tinybar
+const ESTIMATED_FEE_HBAR = new BigNumber(0.000_085_500);
+const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
+    getValueOfUnit(Unit.Tinybar)
+);
 
 const summaryItems = [
     { description: "Transfer Amount", value: new BigNumber(0) },
-    { description: "Estimated Fee", value: ESTIMATED_FEE }
+    { description: "Estimated Fee", value: ESTIMATED_FEE_HBAR }
 ] as Item[];
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
@@ -95,10 +88,9 @@ export default createComponent({
             amount: "",
             toAccount: "",
             isBusy: false,
-            maxFee: ESTIMATED_FEE.toString(),
+            maxFee: ESTIMATED_FEE_HBAR.toString(),
             idErrorMessage: "",
             amountErrorMessage: "",
-            txFeeErrorMessage: "",
             successModalIsOpen: false,
             summaryIsOpen: false
         });
@@ -142,7 +134,7 @@ export default createComponent({
 
             const hbar = new BigNumber(balance.toString())
                 .dividedBy(getValueOfUnit(Unit.Hbar))
-                .minus(ESTIMATED_FEE);
+                .minus(ESTIMATED_FEE_HBAR);
 
             state.amount = hbar.toString();
         }
@@ -175,13 +167,14 @@ export default createComponent({
                     account: parseInt(parts[2])
                 };
 
-                const sendAmount = new BigNumber(state.amount).multipliedBy(
-                    getValueOfUnit(Unit.Hbar)
-                );
+                const sendAmountTinybar = new BigNumber(
+                    state.amount
+                ).multipliedBy(getValueOfUnit(Unit.Hbar));
 
                 if (
                     store.state.wallet.balance != null &&
-                    store.state.wallet.balance < sendAmount.plus(ESTIMATED_FEE)
+                    store.state.wallet.balance <
+                        sendAmountTinybar.plus(ESTIMATED_FEE_TINYBAR)
                 ) {
                     state.amountErrorMessage =
                         "Amount plus fee is greater than current balance";
@@ -189,14 +182,17 @@ export default createComponent({
                 }
 
                 await new CryptoTransferTransaction(client)
-                    .addSender(store.state.wallet.session.account, sendAmount)
-                    .addRecipient(recipient, sendAmount)
-                    .setTransactionFee(ESTIMATED_FEE)
+                    .addSender(
+                        store.state.wallet.session.account,
+                        sendAmountTinybar
+                    )
+                    .addRecipient(recipient, sendAmountTinybar)
+                    .setTransactionFee(ESTIMATED_FEE_TINYBAR)
                     .build()
                     .executeForReceipt();
 
                 // Refresh Balance
-                store.commit(REFRESH_BALANCE);
+                store.dispatch(REFRESH_BALANCE);
 
                 // eslint-disable-next-line require-atomic-updates
                 state.successModalIsOpen = true;
@@ -220,10 +216,6 @@ export default createComponent({
                 ) {
                     // eslint-disable-next-line require-atomic-updates
                     state.idErrorMessage = "Cannot send HBar to yourself";
-                } else if (error.toString().includes("INSUFFICIENT_TX_FEE")) {
-                    // eslint-disable-next-line require-atomic-updates
-                    state.txFeeErrorMessage =
-                        "Insufficient Transaction Fee Amount";
                 } else {
                     store.dispatch(ALERT, {
                         level: "error",
