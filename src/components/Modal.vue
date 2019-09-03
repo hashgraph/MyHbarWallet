@@ -39,7 +39,7 @@ import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 const modalIds: number[] = [];
 let nextModalId = 0;
 
-function modalIsTop(id: number): void {
+function modalIsTop(id: number): boolean {
     return modalIds[modalIds.length - 1] === id;
 }
 
