@@ -72,6 +72,7 @@ import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import format, { hbarAmountRegex } from "../formatter";
 
+// Transactions between 1 HBar and 360 GBar cost between 85_100 and 85_500 Hbar
 const ESTIMATED_FEE = new BigNumber(0.000_085_500);
 
 const summaryItems = [
@@ -134,9 +135,11 @@ export default createComponent({
 
         async function handleClickEntireBalance(): Promise<void> {
             const balance = store.state.wallet.balance;
+
             if (balance == null) {
                 return;
             }
+
             const hbar = new BigNumber(balance.toString())
                 .dividedBy(getValueOfUnit(Unit.Hbar))
                 .minus(ESTIMATED_FEE);
@@ -178,21 +181,16 @@ export default createComponent({
 
                 if (
                     store.state.wallet.balance != null &&
-                    store.state.wallet.balance < sendAmount + ESTIMATED_FEE
+                    store.state.wallet.balance < sendAmount.plus(ESTIMATED_FEE)
                 ) {
                     state.amountErrorMessage =
                         "Amount plus fee is greater than current balance";
                     return;
                 }
 
-                // TODO: SDK BigInt v BigNumber
                 await new CryptoTransferTransaction(client)
                     .addSender(store.state.wallet.session.account, sendAmount)
                     .addRecipient(recipient, sendAmount)
-                    // To send 1 tinybar the fee is ~85_150
-                    // To send 360 gigabar the fee ~85_500
-                    // So setting the limit to 85_500 _should_ be more
-                    // then enough for most transactions
                     .setTransactionFee(ESTIMATED_FEE)
                     .build()
                     .executeForReceipt();
