@@ -45,7 +45,12 @@ import imageFile from "../assets/button-file.svg";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
-import { createComponent, reactive, watch } from "@vue/composition-api";
+import {
+    createComponent,
+    reactive,
+    watch,
+    SetupContext
+} from "@vue/composition-api";
 
 export enum AccessSoftwareOption {
     File = "file",
@@ -68,7 +73,7 @@ export default createComponent({
     props: {
         isOpen: { type: Boolean }
     },
-    setup(props: { isOpen: boolean }, context) {
+    setup(props: { isOpen: boolean }, context: SetupContext) {
         const state = reactive({
             optionSelected: null
         });

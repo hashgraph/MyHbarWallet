@@ -61,11 +61,15 @@ import Button from "../components/Button.vue";
 import noLoseIcon from "../assets/icon-no-lose.svg";
 import noShareIcon from "../assets/icon-no-share.svg";
 import makeBackupIcon from "../assets/icon-make-backup.svg";
-import { createComponent } from "@vue/composition-api";
+import { createComponent, SetupContext } from "@vue/composition-api";
 
 export interface State {
     modalIsOpen: boolean;
     isBusy: boolean;
+}
+
+interface Props {
+    state: State;
 }
 
 export default createComponent({
@@ -80,7 +84,7 @@ export default createComponent({
     props: {
         state: { type: Object, required: true }
     },
-    setup(props, context) {
+    setup(props: Props, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }

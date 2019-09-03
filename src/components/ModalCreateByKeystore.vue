@@ -108,7 +108,12 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, watch } from "@vue/composition-api";
+import {
+    createComponent,
+    PropType,
+    watch,
+    SetupContext
+} from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
@@ -117,7 +122,6 @@ import TextInput, {
 } from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import { mdiArrowRight } from "@mdi/js";
-import { SetupContext } from "@vue/composition-api/dist/types/vue";
 import zxcvbn, { ZXCVBNResult } from "zxcvbn";
 
 export interface State {
@@ -174,7 +178,7 @@ export default createComponent({
     props: {
         state: (Object as unknown) as PropType<State>
     },
-    setup(props: Props, context) {
+    setup(props: Props, context: SetupContext) {
         // Focus the single text input when the modal is opened
         watch(
             () => props.state.modalIsOpen,
@@ -186,6 +190,7 @@ export default createComponent({
                         passwordStrength: 0,
                         passwordSuggestion: ""
                     });
+
                     (context as Context).refs.input.focus();
                 }
             }
@@ -199,6 +204,7 @@ export default createComponent({
          * 3 # safely unguessable: moderate protection from offline slow-hash scenario. (guesses < 10^10)
          * 4 # very unguessable: strong protection from offline slow-hash scenario. (guesses >= 10^10)
          */
+
         function handleInputPassword(value: string): void {
             const passwordMetrics: ZXCVBNResult = zxcvbn(value, wordlist);
 

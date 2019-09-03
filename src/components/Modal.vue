@@ -31,7 +31,8 @@ import {
     createComponent,
     watch,
     PropType,
-    onUnmounted
+    onUnmounted,
+    SetupContext
 } from "@vue/composition-api";
 import { mdiClose } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
@@ -74,7 +75,7 @@ export default createComponent({
         large: (Boolean as unknown) as PropType<boolean>
     },
 
-    setup(props: Props, context) {
+    setup(props: Props, context: SetupContext) {
         const id = nextModalId++;
 
         function handleClose(): void {
@@ -100,7 +101,7 @@ export default createComponent({
 
         watch(
             () => props.isOpen,
-            (isOpen, prevIsOpen) => {
+            (isOpen: boolean, prevIsOpen: boolean) => {
                 const hasOpened = isOpen && !prevIsOpen;
                 const hasClosed = !isOpen && prevIsOpen;
 

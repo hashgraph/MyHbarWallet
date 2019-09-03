@@ -42,10 +42,10 @@ import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import {
     computed,
     createComponent,
+    SetupContext,
     PropType,
     watch
 } from "@vue/composition-api";
-import { SetupContext } from "@vue/composition-api/dist/types/vue";
 import { Ed25519PrivateKey } from "@hashgraph/sdk";
 
 export interface State {
@@ -75,7 +75,7 @@ export default createComponent({
     props: {
         state: (Object as unknown) as PropType<State>
     },
-    setup(props: { state: State }, context) {
+    setup(props: { state: State }, context: SetupContext) {
         const valid = computed(() => {
             if (props.state.rawPrivateKey.length === 0) {
                 // Back out now if we have an empty value

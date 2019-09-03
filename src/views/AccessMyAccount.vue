@@ -151,7 +151,7 @@ export default createComponent({
             }
         }
 
-        async function loadTextFromFile(event: Event): void {
+        async function loadTextFromFile(event: Event): Promise<void> {
             const target = event.target as HTMLInputElement;
 
             if (target.files == null) {
@@ -266,7 +266,7 @@ export default createComponent({
         async function handleAccountIdSubmit(
             client: Client,
             account: Id
-        ): void {
+        ): Promise<void> {
             // Make sure there are no open modals when we navigate
             state.modalEnterAccountIdIsOpen = false;
 

@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType } from "@vue/composition-api";
+import { createComponent, PropType, SetupContext } from "@vue/composition-api";
 import { writeToClipboard } from "../clipboard";
 import { mdiCheck } from "@mdi/js";
 import Modal from "../components/Modal.vue";
@@ -50,7 +50,7 @@ export default createComponent({
             isOpen: boolean;
             accountId: string;
         },
-        context
+        context: SetupContext
     ) {
         function handleCopy(): void {
             store.dispatch(ALERT, { message: "Copied", level: "info" });

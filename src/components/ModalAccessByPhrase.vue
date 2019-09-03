@@ -44,7 +44,12 @@ import MnemonicInput from "../components/MnemonicInput.vue";
 import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
-import { computed, createComponent, watch } from "@vue/composition-api";
+import {
+    computed,
+    createComponent,
+    watch,
+    SetupContext
+} from "@vue/composition-api";
 
 export interface State {
     modalIsOpen: boolean;
@@ -69,7 +74,7 @@ export default createComponent({
     props: {
         state: { type: Object, required: true } as PropOptions<State>
     },
-    setup(props: { state: State }, context) {
+    setup(props: { state: State }, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }

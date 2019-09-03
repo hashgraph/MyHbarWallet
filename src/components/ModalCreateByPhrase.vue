@@ -90,13 +90,18 @@ import {
     createComponent,
     onMounted,
     PropType,
-    reactive
+    reactive,
+    SetupContext
 } from "@vue/composition-api";
 import {
     generateMnemonic,
     MnemonicResult,
     Ed25519PrivateKey
 } from "@hashgraph/sdk/src/Keys";
+
+interface Props {
+    isOpen: boolean;
+}
 
 export default createComponent({
     components: {
@@ -120,7 +125,7 @@ export default createComponent({
             boolean
         >
     },
-    setup(props, context) {
+    setup(props: Props, context: SetupContext) {
         const numberWords = 24;
         const state = reactive({
             isBusy: false,

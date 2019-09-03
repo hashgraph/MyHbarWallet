@@ -64,7 +64,7 @@ export default createComponent({
             return publickey;
         });
 
-        function hexEncode(str: string): void {
+        function hexEncode(str: string): string {
             return unescape(encodeURIComponent(str))
                 .split("")
                 .map(v => v.charCodeAt(0).toString(16))

@@ -223,7 +223,7 @@ export default createComponent({
         async function handleAccountIdSubmit(
             client: Client,
             account: Id
-        ): void {
+        ): Promise<void> {
             // Make sure there are no open modals when we navigate
             state.modalEnterAccountIdIsOpen = false;
 

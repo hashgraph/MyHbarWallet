@@ -44,7 +44,8 @@ import {
     createComponent,
     PropType,
     reactive,
-    watch
+    watch,
+    SetupContext
 } from "@vue/composition-api";
 import Modal from "./Modal.vue";
 import Button from "../components/Button.vue";
@@ -71,7 +72,7 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>,
         words: (Array as unknown) as PropType<string[]>
     },
-    setup(props: Props, context) {
+    setup(props: Props, context: SetupContext) {
         let inputMap: Map<number, string> = new Map();
         const state = reactive({
             focused: null as number | null
@@ -93,7 +94,7 @@ export default createComponent({
 
         watch(
             () => props.isOpen,
-            (isOpen, oldIsOpen) => {
+            (isOpen: boolean, oldIsOpen: boolean) => {
                 if (isOpen && !oldIsOpen) {
                     state.focused = null;
                     randomizeEmpties();
@@ -105,12 +106,14 @@ export default createComponent({
             context.emit("change", isOpen);
         }
 
-        function isDisabled(index: number): void {
+        function isDisabled(index: number): boolean {
             return !inputMap.has(index);
         }
 
-        function valueForIndex(index: number): void {
-            return isDisabled(index) ? props.words[index] : inputMap.get(index);
+        function valueForIndex(index: number): string {
+            return isDisabled(index)
+                ? props.words[index]
+                : inputMap.get(index) || "";
         }
 
         function handleVerify(): void {

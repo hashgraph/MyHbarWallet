@@ -69,7 +69,7 @@ export interface KeyedItem extends Item {
 }
 
 let KEY = 0;
-function nextItemKey(): void {
+function nextItemKey(): number {
     return (KEY += 1);
 }
 
