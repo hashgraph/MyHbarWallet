@@ -780,13 +780,14 @@
   dependencies:
     "@hapi/hoek" "8.x.x"
 
-"@hashgraph/sdk@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-0.1.0.tgz#d35b75c8eb6aaf5cbb0356089337e8f06501cc82"
-  integrity sha512-6Ra4FhWoiSP98up2aTIjAvw21ISpFtkktuuysEoDkkaMbLi6XivbcrQ1FkTKxF9C5NTCzShfaNpzTf6Kh5t1PA==
+"@hashgraph/sdk@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-0.2.0.tgz#02174f13906bfd482dde4cd578543ecb4ab0041e"
+  integrity sha512-lfVegGlzAdu2rgQVZlN+u/rCTaZOposajr+uYl19VV1oSNVsjk82vINx4uDsUU1tSEObE2kbSV3RKtZY0b5J2g==
   dependencies:
     "@improbable-eng/grpc-web" "0.11.0"
     "@types/google-protobuf" "^3.2.7"
+    bignumber.js "^9.0.0"
     bip39 "^3.0.2"
     google-protobuf "^3.6.1"
     tweetnacl "^1.0.1"
