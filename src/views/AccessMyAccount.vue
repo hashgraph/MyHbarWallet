@@ -109,6 +109,7 @@ export default createComponent({
             modalKeystoreFilePasswordState: {
                 modalIsOpen: false,
                 password: "",
+                error: null as string | null,
                 isBusy: false
             },
             modalAccessByPrivateKeyState: {
@@ -207,11 +208,7 @@ export default createComponent({
                 Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
             } catch {
                 pwState.isBusy = false;
-
-                store.dispatch(ALERT, {
-                    level: "error",
-                    message: "Invalid Password"
-                });
+                pwState.error = "Invalid Password";
             }
         }
 

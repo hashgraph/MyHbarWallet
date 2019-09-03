@@ -13,6 +13,7 @@
                 <TextInput
                     class="input"
                     :value="state.password"
+                    :error="state.error"
                     placeholder="Please Enter At Least 9 Characters"
                     obscure
                     @input="handleInputChange"
@@ -37,12 +38,14 @@ import {
     computed,
     createComponent,
     PropType,
-    watch
+    watch,
+    SetupContext
 } from "@vue/composition-api";
 
 export interface State {
     modalIsOpen: boolean;
     password: string;
+    error: string | null;
     isBusy: boolean;
 }
 
@@ -64,7 +67,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    setup(props: Props, context) {
+    setup(props: Props, context: SetupContext) {
         const disabled = computed(() => {
             return (
                 props.state.password === "" || props.state.password.length < 9
@@ -76,6 +79,7 @@ export default createComponent({
         }
 
         function handleInputChange(value: string): void {
+            props.state.error = null;
             context.emit("change", { ...props.state, password: value });
         }
 
