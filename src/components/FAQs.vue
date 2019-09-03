@@ -6,8 +6,7 @@
                     <div class="title">
                         <div class="title-text">FAQs</div>
                         <div class="subtitle-text">
-                            Bacon ipsum dolor amet jerky venison short ribs
-                            tri-tip porchetta
+                            Answers to most frequently asked questions.
                         </div>
                     </div>
                     <CustomerSupportLink class="customer-support-link" />
@@ -18,9 +17,10 @@
                             How do I create a new account?
                         </template>
                         <template v-slot:content>
-                            MyHbarWallet (MHW) offers three ways to create a new
-                            H wallet. These are via Keystore file, Passphrase,
-                            or Private Key.
+                            MyHederaWallet (MHW) offers three ways to create a
+                            new H wallet. These are via Keystore file,
+                            Passphrase, or Private Key. Pair the keys with an
+                            account ID to start transacting hbar.
                         </template>
                     </Accordion>
                     <Accordion>
@@ -29,9 +29,9 @@
                         </template>
                         <template v-slot:content>
                             MHW supports many different wallet types including
-                            hardware wallets, such as the Ledger Nano S or
-                            Trezor. We are also open for anyone to use their H
-                            wallets with the appropriate information.
+                            hardware wallets, such as Trezor. We are also open
+                            for anyone to use their H wallets with the
+                            appropriate information.
                         </template>
                     </Accordion>
                     <Accordion>
