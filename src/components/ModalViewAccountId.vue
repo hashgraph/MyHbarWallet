@@ -66,7 +66,7 @@ export default createComponent({
                 : "";
         });
 
-        async function handleClickCopy() {
+        async function handleClickCopy(): Promise<void> {
             const id = accountId.value;
             if (id != null) {
                 await writeToClipboard(id);
