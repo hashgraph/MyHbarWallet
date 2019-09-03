@@ -137,9 +137,10 @@ export default createComponent({
             if (balance == null) {
                 return;
             }
-            const hbar = new BigNumber(balance.toString()).dividedBy(
-                getValueOfUnit(Unit.Hbar)
-            );
+            const hbar = new BigNumber(balance.toString())
+                .dividedBy(getValueOfUnit(Unit.Hbar))
+                .minus(ESTIMATED_FEE);
+
             state.amount = hbar.toString();
         }
 
@@ -177,10 +178,10 @@ export default createComponent({
 
                 if (
                     store.state.wallet.balance != null &&
-                    store.state.wallet.balance <= sendAmount
+                    store.state.wallet.balance < sendAmount + ESTIMATED_FEE
                 ) {
                     state.amountErrorMessage =
-                        "Amount is greater than current balance";
+                        "Amount plus fee is greater than current balance";
                     return;
                 }
 
@@ -192,7 +193,7 @@ export default createComponent({
                     // To send 360 gigabar the fee ~85_500
                     // So setting the limit to 85_500 _should_ be more
                     // then enough for most transactions
-                    .setTransactionFee(85_500)
+                    .setTransactionFee(ESTIMATED_FEE)
                     .build()
                     .executeForReceipt();
 
