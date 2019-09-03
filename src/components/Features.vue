@@ -3,7 +3,8 @@
         <div class="wrap">
             <div class="feature-grid">
                 <Feature :image="wallet" title="Join MyHbarWallet">
-                    Access Hedera Hashgraph's most-trusted wallet client.
+                    Access Hedera™ with the #1 Hbar Wallet with an elegant and
+                    easy-to-use interface.
                 </Feature>
                 <Feature :image="hardware" title="Hardware Wallet Support">
                     MHW currently offers support for only Trezor but all major
