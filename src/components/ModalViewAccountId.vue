@@ -17,7 +17,6 @@
 
             <Button
                 compact
-                outline
                 label="Copy Account ID"
                 class="button"
                 @click="handleClickCopy"

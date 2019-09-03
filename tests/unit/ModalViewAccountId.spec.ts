@@ -36,7 +36,7 @@ describe("ModalViewAccountId.vue", (): void => {
                       <div value="" level="L" background="#fff" foreground="#000" class="pub-qr"><canvas height="200" width="200" style="width: 200px; height: 200px;"></canvas></div>
                       <div class="read-only-input account-id">
                         <div class="value"></div>
-                      </div> <button type="submit" class="button outline compact"><span>Copy Account ID</span>
+                      </div> <button type="submit" class="button compact"><span>Copy Account ID</span>
                         <!----></button>
                     </div>
                   </div>
@@ -80,7 +80,7 @@ describe("ModalViewAccountId.vue", (): void => {
                       <div value="" level="L" background="#fff" foreground="#000" class="pub-qr"><canvas height="200" width="200" style="width: 200px; height: 200px;"></canvas></div>
                       <div class="read-only-input account-id">
                         <div class="value"></div>
-                      </div> <button type="submit" class="button outline compact"><span>Copy Account ID</span>
+                      </div> <button type="submit" class="button compact"><span>Copy Account ID</span>
                         <!----></button>
                     </div>
                   </div>
