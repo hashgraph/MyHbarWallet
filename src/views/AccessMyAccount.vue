@@ -208,7 +208,7 @@ export default createComponent({
                 Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
             } catch {
                 pwState.isBusy = false;
-                pwState.error = "Invalid Password";
+                pwState.error = "Invalid password";
             }
         }
 
