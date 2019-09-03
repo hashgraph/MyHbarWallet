@@ -17,7 +17,7 @@
                 placeholder="Enter Private Key"
                 :value="state.rawPrivateKey"
                 :valid="valid"
-                :error="errorMessage"
+                show-validation
                 @input="handlePrivateKeyInput"
             />
             <Button
@@ -86,16 +86,18 @@ export default createComponent({
                 Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;
             } catch (error) {
-                console.warn(error);
-                return false;
+                if (error instanceof Error) {
+                    // The exception message changes depending on the input
+                    if (
+                        error.message ===
+                        "invalid private key: " + props.state.rawPrivateKey
+                    ) {
+                        return false;
+                    } else {
+                        throw error;
+                    }
+                }
             }
-        });
-
-        const errorMessage = computed(() => {
-            if (!valid) {
-                return "Invalid Private Key";
-            }
-            return "";
         });
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
@@ -122,7 +124,6 @@ export default createComponent({
 
         return {
             valid,
-            errorMessage,
             handleModalChangeIsOpen,
             handlePrivateKeyInput
         };
