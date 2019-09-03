@@ -11,6 +11,7 @@ module.exports = {
         sourceMap: process.env.NODE_ENV !== "production"
     },
     configureWebpack: {
+        target: "web",
         plugins: [
             new webpack.DefinePlugin({
                 VERSION: `"${package.version.toString()}"`,
