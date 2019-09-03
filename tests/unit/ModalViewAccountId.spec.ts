@@ -1,7 +1,7 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalViewAccountId from "../../src/components/ModalViewAccountId.vue";
 import Vuex from "vuex";
+import ModalViewAccountId from "../../src/components/ModalViewAccountId.vue";
 import store from "../../src/store";
 
 describe("ModalViewAccountId.vue", (): void => {
@@ -11,12 +11,11 @@ describe("ModalViewAccountId.vue", (): void => {
         const localVue = createLocalVue();
         localVue.use(VueCompositionApi);
         localVue.use(Vuex);
-        const localStore = new Vuex.Store(store);
 
         const onChange = jest.fn();
 
         const wrapper = mount(ModalViewAccountId, {
-            localStore,
+            store,
             localVue,
             propsData: {
                 isOpen: true,
@@ -38,12 +37,11 @@ describe("ModalViewAccountId.vue", (): void => {
         const localVue = createLocalVue();
         localVue.use(VueCompositionApi);
         localVue.use(Vuex);
-        const localStore = new Vuex.Store(store);
 
         const onChange = jest.fn();
 
         const wrapper = mount(ModalViewAccountId, {
-            localStore,
+            store,
             localVue,
             propsData: {
                 isOpen: false,
