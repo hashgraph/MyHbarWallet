@@ -9,9 +9,8 @@
         <div class="modal-forgot-to-logout">
             <span>Oops!</span>
             <p>
-                It seems like you forgot to logout of your account. For the
-                security of your account, please log to continue. Otherwise, go
-                back to your account.
+                Looks like you forgot to log out of your account! For your
+                security, either log out, or return to your account.
             </p>
             <div class="button-group">
                 <Button
