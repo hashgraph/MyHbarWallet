@@ -34,6 +34,7 @@ import { Id } from "../store/modules/wallet";
 interface Props {
     isOpen: boolean;
     event: "change";
+    value: Id | null;
 }
 
 export default createComponent({
@@ -48,18 +49,15 @@ export default createComponent({
         event: "change"
     },
     props: {
+        value: (Object as unknown) as PropType<Id | null>,
         isOpen: (Boolean as unknown) as PropType<boolean>,
         event: (String as unknown) as PropType<string>
     },
-    setup() {
+    setup(props: Props) {
         const accountId = computed(() => {
-            const accountId: Id | null = store.state.wallet.session
-                ? store.state.wallet.session.account
-                : null;
-
-            return accountId
-                ? `${accountId.shard}.${accountId.realm}.${accountId.account}`
-                : null;
+            return props.value
+                ? `${props.value.shard}.${props.value.realm}.${props.value.account}`
+                : "";
         });
 
         return {

@@ -28,7 +28,10 @@
                 </Tooltip>
             </div>
         </div>
-        <ModalViewAccountId v-model="state.viewAccountQrCodeIsOpen" />
+        <ModalViewAccountId
+            v-model="state.viewAccountQrCodeIsOpen"
+            :value="{ shard, realm, account }"
+        />
         <ModalViewPublicKey
             v-model="state.viewPublicKeyIsOpen"
             :public-key="publicKey"
