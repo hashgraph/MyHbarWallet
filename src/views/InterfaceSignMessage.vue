@@ -75,19 +75,19 @@ export default createComponent({
             signedModalIsOpen: false
         });
 
-        function onSignClicked() {
+        function onSignClicked(): void {
             state.confirmSignIsOpen = true;
         }
 
-        function handleSignedModalChanged(value: boolean) {
+        function handleSignedModalChanged(value: boolean): void {
             state.signedModalIsOpen = value;
         }
 
-        function handleConfirmModalChanged(value: boolean) {
+        function handleConfirmModalChanged(value: boolean): void {
             state.confirmSignIsOpen = value;
         }
 
-        function handleConfirmModalConfirm() {
+        function handleConfirmModalConfirm(): void {
             state.confirmSignIsOpen = false;
             state.signedModalIsOpen = true;
         }

@@ -1,3 +1,4 @@
+/* eslint-env node */
 module.exports = {
     moduleFileExtensions: ["js", "jsx", "json", "vue", "ts", "tsx"],
     transform: {

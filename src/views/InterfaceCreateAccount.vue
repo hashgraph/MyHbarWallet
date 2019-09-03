@@ -53,7 +53,7 @@
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
-import { computed, createComponent, reactive, Ref } from "@vue/composition-api";
+import { computed, createComponent, reactive } from "@vue/composition-api";
 import store from "../store";
 import { AccountCreateTransaction, Ed25519PublicKey } from "@hashgraph/sdk";
 import { ALERT } from "../store/actions";
