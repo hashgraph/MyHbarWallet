@@ -4,17 +4,13 @@
             <div class="page-container">
                 <div class="banner">
                     <div class="banner-content">
-                        <div class="title">
-                            Hedera's
-                        </div>
-                        <div class="title">
-                            Original Wallet
-                        </div>
+                        <div class="title">The #1</div>
+                        <div class="title">Hbar Wallet</div>
                         <div class="subtitle">
                             MyHbarWallet is a free, client-side interface
-                            helping you interact with Hedera hashgraph. Our
+                            helping you interact with Hedera Hashgraph. Our
                             easy-to-use, open-source platform allows you to
-                            generate wallets, interact with smart contracts, and
+                            generate keys, create accounts, transfer hbars, and
                             so much more.
                         </div>
                     </div>
@@ -32,12 +28,12 @@
                     <div class="banner-content">
                         <div class="about-title">About MyHbarWallet</div>
                         <div class="about-subtitle">
-                            MyHbarWallet puts Hedera Hashgraph at your
-                            fingertips. Bacon ipsum dolor amet shank swine beef
-                            ribs kevin chicken, jowl prosciutto flank shankle
-                            tenderloin burgdoggen leberkas sausage pork belly.
-                            Bresaola flank beef meatball fatback ground round,
-                            pancetta jerky porchetta.
+                            MyHbarWallet is a clone of one of the most popular
+                            wallets on Ethereum. We took that approach because
+                            it was open source and people already are familiar
+                            with the interface and processes. We want
+                            MyHbarWallet to be the simplest and most intuitive
+                            interface to Hedera Hashgraph.
                         </div>
                     </div>
                     <img
