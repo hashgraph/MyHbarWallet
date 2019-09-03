@@ -4,6 +4,7 @@ import { IS_LOGGED_IN } from "../../store/getters";
 import { ActionContext } from "vuex";
 import { RootState } from "..";
 import { REFRESH_BALANCE, LOG_IN as LOG_IN_ACTION } from "../actions";
+import BigNumber from "bignumber.js";
 
 const SET_BALANCE = "wallet#set_balance";
 
@@ -21,7 +22,7 @@ export interface Session {
 
 export interface State {
     session: Session | null;
-    balance: BigInt | null;
+    balance: BigNumber | null;
 }
 
 export default {
@@ -42,7 +43,7 @@ export default {
             state.session = null;
             state.balance = null;
         },
-        [SET_BALANCE](state: State, balance: BigInt): void {
+        [SET_BALANCE](state: State, balance: BigNumber): void {
             state.balance = balance;
         }
     },

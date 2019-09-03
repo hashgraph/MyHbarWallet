@@ -14,12 +14,7 @@ which have not been merged into master yet -->
                 class="info-account"
                 :public-key="publicKey"
             />
-            <BalanceCard
-                :balance="state.balance"
-                :busy="state.balanceIsBusy"
-                class="info-balance"
-                @refresh="handleBalanceRefresh"
-            />
+            <BalanceCard class="info-balance" />
             <NetworkCard class="info-network" />
         </div>
     </div>
@@ -30,7 +25,7 @@ import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "../components/NetworkCard.vue";
 import BalanceCard from "../components/BalanceCard.vue";
 import AccountCard from "../components/AccountCard.vue";
-import { createComponent, computed, reactive } from "@vue/composition-api";
+import { computed, createComponent } from "@vue/composition-api";
 import store from "../store";
 
 export default createComponent({
@@ -52,28 +47,7 @@ export default createComponent({
                 : null
         );
 
-        const state = reactive({
-            balance: 0,
-            balanceIsBusy: false
-        });
-
-        async function handleBalanceRefresh(): Promise<void> {
-            const session = store.state.wallet.session;
-            if (session == null) return;
-
-            state.balanceIsBusy = true;
-
-            try {
-                const accountBalance: BigInt = await session.client.getAccountBalance();
-                state.balance = Number(accountBalance);
-            } finally {
-                state.balanceIsBusy = false;
-            }
-        }
-
         return {
-            state,
-            handleBalanceRefresh,
             account,
             publicKey
         };

@@ -7,8 +7,8 @@
                     Balance
                 </div>
                 <div v-if="hasFetchedBalance" class="subtitle" type="string">
-                    <div class="hbar-balance">{{ balanceHBar }} ℏ</div>
-                    <div class="usd-balance">{{ balanceUSD }}</div>
+                    <div class="hbar-balance">{{ balanceHBarFormatted }} ℏ</div>
+                    <div class="usd-balance">{{ balanceUSDFormatted }}</div>
                 </div>
                 <div v-else class="subtitle-null" type="string">
                     Unknown
@@ -47,6 +47,7 @@ import walletHbar from "../assets/wallet-hbar.svg";
 import store from "../store";
 import { REFRESH_BALANCE } from "../store/actions";
 import format from "../formatter";
+import BigNumber from "bignumber.js";
 
 export default createComponent({
     components: {
@@ -62,15 +63,23 @@ export default createComponent({
             () => store.state.wallet.balance != null
         );
 
-        const balanceHBar = computed(() => {
-            const hbar = Number(store.state.wallet.balance || 0) / 100000000;
-            return format(String(hbar < 0.0001 ? hbar : hbar.toFixed(4)));
+        const balanceHbar = computed(() =>
+            (store.state.wallet.balance || new BigNumber(0)).div(100000000)
+        );
+
+        const balanceHBarFormatted = computed(() => {
+            const balance = balanceHbar.value;
+            console.log(balance);
+            return format(
+                String(
+                    balance.isLessThan(0.0001) ? balance : balance.toFixed(4)
+                )
+            );
         });
 
-        const balanceUSD = computed(() => {
-            const usd =
-                (Number(store.state.wallet.balance || 0) / 100000000) * 0.12;
-            return format(String(usd));
+        const balanceUSDFormatted = computed(() => {
+            const balanceUSD = balanceHbar.value.multipliedBy(0.12);
+            return format(String(balanceUSD.toFormat()));
         });
 
         async function handleRefreshBalance(): Promise<void> {
@@ -88,12 +97,13 @@ export default createComponent({
         return {
             mdiRefresh,
             mdiLoading,
+            walletHbar,
             state,
             hasFetchedBalance,
             handleRefreshBalance,
-            balanceUSD,
-            walletHbar,
-            balanceHBar
+            balanceHbar,
+            balanceHBarFormatted,
+            balanceUSDFormatted
         };
     }
 });

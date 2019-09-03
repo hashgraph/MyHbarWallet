@@ -1,7 +1,7 @@
 <template>
     <nav :class="{ 'nav-open': isOpen }">
         <div v-if="inInterface" class="card-container">
-            <BalanceCard :balance="10" class="info-balance" />
+            <BalanceCard class="info-balance" />
             <NetworkCard class="info-network" />
         </div>
         <div class="link-block">
