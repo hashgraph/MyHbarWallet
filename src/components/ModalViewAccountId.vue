@@ -31,7 +31,6 @@ import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import Button from "../components/Button.vue";
 import { createComponent, PropType, computed } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
-import store from "../store";
 import { Id } from "../store/modules/wallet";
 import { writeToClipboard } from "../clipboard";
 import { ALERT } from "../store/actions";
