@@ -100,7 +100,7 @@ export default createComponent({
     },
     setup() {
         const state = reactive<State>({
-            userBalance: "0",
+            userBalance: "",
             publicKey: "",
             isBusy: false,
             successModalIsOpen: false,

@@ -91,7 +91,7 @@ export default createComponent({
     },
     setup() {
         const state = reactive({
-            amount: "0",
+            amount: "",
             toAccount: "",
             isBusy: false,
             maxFee: ESTIMATED_FEE.toString(),
