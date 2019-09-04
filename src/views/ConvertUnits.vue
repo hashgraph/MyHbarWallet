@@ -21,7 +21,7 @@
                         <tbody>
                             <tr v-for="hu in hbarUnitRef" :key="hu.key">
                                 <td>{{ hu.name }}</td>
-                                <template v-if="true">
+                                <template>
                                     <div class="sub-row-container">
                                         <td class="amount">
                                             {{ hu.amount }} {{ hu.symbol }}
@@ -30,14 +30,6 @@
                                             {{ hu.amountInHbar }} ℏ
                                         </td>
                                     </div>
-                                </template>
-                                <template v-else>
-                                    <td class="amount">
-                                        {{ hu.amount }} {{ hu.symbol }}
-                                    </td>
-                                    <td class="amount-hbar">
-                                        {{ hu.amountInHbar }} ℏ
-                                    </td>
                                 </template>
                             </tr>
                         </tbody>
@@ -185,6 +177,10 @@ tr > td:first-child {
 .sub-row-container > td:last-child {
     @media (max-width: 414px) {
         text-align: end;
+    }
+
+    @media (max-width: 336px) {
+        white-space: nowrap;
     }
 }
 
