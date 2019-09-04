@@ -20,8 +20,11 @@ const availableNetworks: { [key: string]: NetworkSettings } = {
     }
 }
 
-const selectedNetwork = process.env.HEDERA_NETWORK || "testnet";
+// HEDERA_NETWORK is defined in vue.config.js
+// Populated from the HEDERA_NETWORK env variable
+// Defaults to "testnet"
+declare const HEDERA_NETWORK: string;
 
 export default {
-    network: availableNetworks[selectedNetwork]!,
+    network: availableNetworks[HEDERA_NETWORK]!,
 };
