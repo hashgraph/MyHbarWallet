@@ -200,8 +200,6 @@ export default createComponent({
 
                 state.successModalIsOpen = true;
             } catch (error) {
-                console.log(error);
-
                 if (error instanceof Error) {
                     if (error.message === "INSUFFICIENT_PAYER_BALANCE") {
                         state.userBalanceError = "Insufficient Payer Balance";

@@ -69,7 +69,6 @@ export default createComponent({
 
         const balanceHBarFormatted = computed(() => {
             const balance = balanceHbar.value;
-            console.log(balance);
             return format(
                 String(
                     balance.isLessThan(0.0001) ? balance : balance.toFixed(4)

@@ -72,7 +72,6 @@ export default createComponent({
         }
 
         function handleReturnClick(): void {
-            console.log(context.root);
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
