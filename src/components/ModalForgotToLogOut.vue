@@ -57,14 +57,12 @@ export default createComponent({
     },
     setup(props: Props, ctx) {
         function handleGoBack(): void {
-            ctx.emit("change", false);
             // have to wait till next tick so modal gives us back the scrollbar
             Vue.nextTick(() => router.push({ name: "interface" }));
         }
 
         function handleClickLogOut(): void {
             store.commit(LOG_OUT);
-            ctx.emit("change", false);
         }
 
         return {
