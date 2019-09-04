@@ -55,19 +55,15 @@
 <script lang="ts">
 import Select from "./Select.vue";
 import TextInput from "./TextInput.vue";
-import { Unit, convert, getValueOfUnit } from "../units";
+import { Unit, convert } from "../units";
 import { createComponent, reactive } from "@vue/composition-api";
+import BigNumber from "bignumber.js";
 
 interface State {
     selectedLeft: Unit;
     selectedRight: Unit;
     valueLeft: string;
     valueRight: string;
-}
-
-function nanCheck(amt: string): string {
-    if (amt == "NaN") return "";
-    return amt;
 }
 
 export default createComponent({
@@ -88,68 +84,77 @@ export default createComponent({
         });
 
         function handleSelect(): void {
-            state.valueRight = nanCheck(
-                convert(
-                    state.valueLeft,
-                    state.selectedLeft,
-                    state.selectedRight,
-                    false
-                )
+            state.valueRight = convert(
+                state.valueLeft,
+                state.selectedLeft,
+                state.selectedRight,
+                false
+            );
+        }
+
+        // TODO: A generalization of this function would be very useful for a general-purpose [AmountInput] component
+        function boundInput(
+            event: Event,
+            inputValue: string,
+            stateValue: string
+        ): void {
+            // If the computed value from the round-trip from {input} -> left -> right
+            // is different than {input} then we should replace {input} so as
+            // to prevent typing more
+
+            const computedValueNum = new BigNumber(stateValue);
+            const valueNum = new BigNumber(inputValue);
+
+            if (!computedValueNum.eq(valueNum)) {
+                // Computed value is different from input value; replace
+                (event.target as HTMLInputElement).value = stateValue;
+            } else {
+                // Strip non-digit chars from input
+                (event.target as HTMLInputElement).value = inputValue.replace(
+                    /[^\d.]/,
+                    ""
+                );
+            }
+        }
+
+        function computeValueLeft(): void {
+            state.valueLeft = convert(
+                state.valueRight,
+                state.selectedRight,
+                state.selectedLeft,
+                false
+            );
+        }
+
+        function computeValueRight(): void {
+            state.valueRight = convert(
+                state.valueLeft,
+                state.selectedLeft,
+                state.selectedRight,
+                false
             );
         }
 
         function handleInputValueLeft(value: string, event: Event): void {
             if (!numericRegex.test(value)) value = state.valueLeft;
 
-            state.valueRight = nanCheck(
-                convert(value, state.selectedLeft, state.selectedRight, false)
-            );
+            state.valueLeft = value;
 
-            state.valueLeft = nanCheck(
-                convert(
-                    state.valueRight,
-                    state.selectedRight,
-                    state.selectedLeft,
-                    false
-                )
-            );
+            computeValueRight();
+            computeValueLeft();
 
-            if (
-                state.valueLeft.includes(".") &&
-                state.valueLeft
-                    .toString()
-                    .substring(state.valueLeft.indexOf(".")).length >=
-                    getValueOfUnit(state.selectedLeft).toFixed.length
-            )
-                (event.target as HTMLInputElement).value = state.valueLeft;
+            boundInput(event, value, state.valueLeft);
         }
 
         function handleInputValueRight(value: string, event: Event): void {
             if (!numericRegex.test(value)) value = state.valueRight;
 
-            state.valueLeft = nanCheck(
-                convert(value, state.selectedRight, state.selectedLeft, false)
-            );
+            state.valueRight = value;
 
-            state.valueRight = nanCheck(
-                convert(
-                    state.valueLeft,
-                    state.selectedLeft,
-                    state.selectedRight,
-                    false
-                )
-            );
+            computeValueLeft();
+            computeValueRight();
 
-            if (
-                state.valueRight.includes(".") &&
-                state.valueRight
-                    .toString()
-                    .substring(state.valueRight.indexOf(".")).length -
-                    1 >=
-                    getValueOfUnit(state.selectedRight).toFixed().length - 1
-            ) {
-                (event.target as HTMLInputElement).value = state.valueRight;
-            }
+            boundInput(event, value, state.valueRight);
         }
 
         return {

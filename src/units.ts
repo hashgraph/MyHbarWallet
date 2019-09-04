@@ -38,10 +38,12 @@ export function convert(
             rounding ? BigNumber.ROUND_HALF_CEIL : BigNumber.ROUND_FLOOR
         )
         // Convert to requested unit
-        .dividedBy(getValueOfUnit(to))
-        .toFixed();
+        .dividedBy(getValueOfUnit(to));
 
-    // console.log("[convert]", amount, "from", from, "to", to, "=", result);
+    // If the result is NaN, return an empty string
+    if (result.isNaN()) {
+        return "";
+    }
 
-    return result;
+    return result.toFixed();
 }
