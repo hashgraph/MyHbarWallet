@@ -60,7 +60,7 @@ import { CryptoTransferTransaction } from "@hashgraph/sdk";
 import { Unit, getValueOfUnit } from "../units";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
-import format, { hbarAmountRegex } from "../formatter";
+import { formatHbar, hbarAmountRegex } from "../formatter";
 
 // Transactions between 1 HBar and 360 GBar **DID** cost between 85_100 and 85_500 Tinybar
 // With some additional trial-error, 900_000 Tinybar seems to cover everything
@@ -107,7 +107,7 @@ export default createComponent({
         });
 
         const amount = computed(() =>
-            format(new BigNumber(state.amount).toString())
+            formatHbar(new BigNumber(state.amount).toString())
         );
 
         const truncate = computed((): string =>

@@ -13,20 +13,14 @@
                         <span class="item-description">
                             {{ item.description }}:
                         </span>
-                        <span
-                            v-if="item.value instanceof BigNumber"
-                            :key="item.key"
-                            class="item-value"
-                            >{{ format(item.value) }} ℏ</span
-                        >
-                        <span v-else class="item-value">
-                            {{ item.value }}
+                        <span :key="item.key" class="item-value">
+                            {{ formatHbar(item.value) }} ℏ
                         </span>
                     </div>
                 </template>
                 <div class="item">
                     <span class="item-description">Total:</span>
-                    <span class="item-value"> {{ format(total) }} ℏ </span>
+                    <span class="item-value">{{ formatHbar(total) }} ℏ</span>
                 </div>
             </div>
 
@@ -57,11 +51,11 @@ import { computed, createComponent, SetupContext } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
-import format from "../formatter";
+import { formatHbar } from "../formatter";
 
 export interface Item {
     description: string;
-    value: BigNumber | string;
+    value: BigNumber;
 }
 
 export interface KeyedItem extends Item {
@@ -100,9 +94,7 @@ export default createComponent({
             if (props.items != null) {
                 for (const item of props.items) {
                     item.key = "Item" + nextItemKey();
-                    if (item.value instanceof BigNumber) {
-                        total = total.plus(item.value);
-                    }
+                    total = total.plus(item.value);
                 }
             }
 
@@ -120,8 +112,7 @@ export default createComponent({
 
         return {
             total,
-            format,
-            BigNumber,
+            formatHbar,
             handleCancel,
             handleSubmit
         };
