@@ -7,16 +7,17 @@
                         v-model="state.selectedLeft"
                         :options="options"
                         :left="true"
+                        @change="handleSelect"
                     />
                 </div>
                 <div>
                     <TextInput
-                        v-model="state.valueLeft"
+                        :value="state.valueLeft"
                         compact
                         white
-                        type="number"
                         step="any"
                         placeholder="Amount"
+                        @input="handleInputValueLeft"
                     />
                 </div>
             </div>
@@ -33,16 +34,17 @@
                         v-model="state.selectedRight"
                         :options="options"
                         :left="false"
+                        @change="handleSelect"
                     />
                 </div>
                 <div>
                     <TextInput
-                        v-model="state.valueRight"
+                        :value="state.valueRight"
                         compact
                         white
-                        type="number"
                         step="any"
                         placeholder="Amount"
+                        @input="handleInputValueRight"
                     />
                 </div>
             </div>
@@ -53,42 +55,9 @@
 <script lang="ts">
 import Select from "./Select.vue";
 import TextInput from "./TextInput.vue";
+import { Unit, convert } from "../units";
+import { createComponent, reactive } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
-import { createComponent, watch, reactive } from "@vue/composition-api";
-
-export enum Unit {
-    Tinybar = "tinybar",
-    Microbar = "microbar",
-    Millibar = "millibar",
-    Hbar = "hbar",
-    Kilobar = "kilobar",
-    Megabar = "megabar",
-    Gigabar = "gigabar"
-}
-
-const unitMap: Map<Unit, number> = new Map([
-    [Unit.Tinybar, 1],
-    [Unit.Microbar, 100],
-    [Unit.Millibar, 100000],
-    [Unit.Hbar, 100000000],
-    [Unit.Kilobar, 100000000000],
-    [Unit.Megabar, 100000000000000],
-    [Unit.Gigabar, 100000000000000000]
-]);
-
-export function getValueOfUnit(unit: Unit): BigNumber {
-    return new BigNumber(unitMap.get(unit) || 0);
-}
-
-function convertFromTo(amt: string, from: Unit, to: Unit): string {
-    const x = new BigNumber(amt);
-    const y = getValueOfUnit(from);
-    const z = getValueOfUnit(to);
-    return x
-        .multipliedBy(y)
-        .dividedBy(z)
-        .toFixed();
-}
 
 interface State {
     selectedLeft: Unit;
@@ -105,6 +74,8 @@ export default createComponent({
     setup() {
         const options = Object.values(Unit);
 
+        const numericRegex = /^\d*\.?\d*$/;
+
         const state = reactive<State>({
             selectedLeft: Unit.Tinybar,
             selectedRight: Unit.Hbar,
@@ -112,53 +83,86 @@ export default createComponent({
             valueRight: "1"
         });
 
-        watch(
-            () => state.valueLeft,
-            (newValue: string) => {
-                state.valueRight = convertFromTo(
-                    newValue,
-                    state.selectedLeft,
-                    state.selectedRight
-                );
-            }
-        );
+        function handleSelect(): void {
+            state.valueRight = convert(
+                state.valueLeft,
+                state.selectedLeft,
+                state.selectedRight,
+                false
+            );
+        }
 
-        watch(
-            () => state.valueRight,
-            (newValue: string) => {
-                state.valueLeft = convertFromTo(
-                    newValue,
-                    state.selectedRight,
-                    state.selectedLeft
-                );
-            }
-        );
+        // TODO: A generalization of this function would be very useful for a general-purpose [AmountInput] component
+        function boundInput(
+            event: Event,
+            inputValue: string,
+            stateValue: string
+        ): void {
+            // If the computed value from the round-trip from {input} -> left -> right
+            // is different than {input} then we should replace {input} so as
+            // to prevent typing more
 
-        watch(
-            () => state.selectedLeft,
-            (newValue: Unit) => {
-                state.valueRight = convertFromTo(
-                    state.valueLeft,
-                    newValue,
-                    state.selectedRight
-                );
-            }
-        );
+            const computedValueNum = new BigNumber(stateValue);
+            const valueNum = new BigNumber(inputValue);
 
-        watch(
-            () => state.selectedRight,
-            (newValue: Unit) => {
-                state.valueLeft = convertFromTo(
-                    state.valueRight,
-                    newValue,
-                    state.selectedLeft
+            if (!computedValueNum.eq(valueNum)) {
+                // Computed value is different from input value; replace
+                (event.target as HTMLInputElement).value = stateValue;
+            } else {
+                // Strip non-digit chars from input
+                (event.target as HTMLInputElement).value = inputValue.replace(
+                    /[^\d.]/,
+                    ""
                 );
             }
-        );
+        }
+
+        function computeValueLeft(): void {
+            state.valueLeft = convert(
+                state.valueRight,
+                state.selectedRight,
+                state.selectedLeft,
+                false
+            );
+        }
+
+        function computeValueRight(): void {
+            state.valueRight = convert(
+                state.valueLeft,
+                state.selectedLeft,
+                state.selectedRight,
+                false
+            );
+        }
+
+        function handleInputValueLeft(value: string, event: Event): void {
+            if (!numericRegex.test(value)) value = state.valueLeft;
+
+            state.valueLeft = value;
+
+            computeValueRight();
+            computeValueLeft();
+
+            boundInput(event, value, state.valueLeft);
+        }
+
+        function handleInputValueRight(value: string, event: Event): void {
+            if (!numericRegex.test(value)) value = state.valueRight;
+
+            state.valueRight = value;
+
+            computeValueLeft();
+            computeValueRight();
+
+            boundInput(event, value, state.valueRight);
+        }
 
         return {
             state,
-            options
+            options,
+            handleInputValueRight,
+            handleInputValueLeft,
+            handleSelect
         };
     }
 });

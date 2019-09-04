@@ -59,7 +59,7 @@ import { AccountCreateTransaction, Ed25519PublicKey } from "@hashgraph/sdk";
 import { ALERT } from "../store/actions";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
-import { getValueOfUnit, Unit } from "../components/UnitConverter.vue";
+import { getValueOfUnit, Unit } from "../units";
 import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
