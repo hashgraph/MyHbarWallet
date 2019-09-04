@@ -62,10 +62,11 @@ import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import format, { hbarAmountRegex } from "../formatter";
 
-// Transactions between 1 HBar and 360 GBar cost between 85_100 and 85_500 Tinybar
-const ESTIMATED_FEE_HBAR = new BigNumber(0.000_085_500);
+// Transactions between 1 HBar and 360 GBar **DID** cost between 85_100 and 85_500 Tinybar
+// With some additional trial-error, 900_000 Tinybar seems to cover everything
+const ESTIMATED_FEE_HBAR = new BigNumber(0.000_900_000);
 const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
-    getValueOfUnit(Unit.Tinybar)
+    getValueOfUnit(Unit.Hbar)
 );
 
 const summaryItems = [
@@ -173,8 +174,9 @@ export default createComponent({
 
                 if (
                     store.state.wallet.balance != null &&
-                    store.state.wallet.balance <
+                    store.state.wallet.balance.isLessThan(
                         sendAmountTinybar.plus(ESTIMATED_FEE_TINYBAR)
+                    )
                 ) {
                     state.amountErrorMessage =
                         "Amount plus fee is greater than current balance";
