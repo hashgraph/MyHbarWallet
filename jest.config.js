@@ -25,6 +25,7 @@ module.exports = {
         // HACK: These are used to make the footer unit test pass due
         // to the use of webpack DefinePlugin
         VERSION: "1.1.1",
-        COMMIT_HASH: "placeholderhash"
+        COMMIT_HASH: "placeholderhash",
+        HEDERA_NETWORK: "testnet",
     }
 };
