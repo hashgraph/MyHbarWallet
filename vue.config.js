@@ -16,7 +16,7 @@ module.exports = {
             new webpack.DefinePlugin({
                 VERSION: `"${package.version.toString()}"`,
                 COMMIT_HASH: `"${hash.toString().trim()}"`,
-                HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
+                HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`
             })
         ]
     },

@@ -16,9 +16,9 @@ const availableNetworks: { [key: string]: NetworkSettings } = {
         proxy: "https://mainnet.grpc-web.myhederawallet.com",
         address: "35.237.200.180:50211",
         node: "0.0.3",
-        name: "mainnet",
+        name: "mainnet"
     }
-}
+};
 
 // HEDERA_NETWORK is defined in vue.config.js
 // Populated from the HEDERA_NETWORK env variable
@@ -26,5 +26,5 @@ const availableNetworks: { [key: string]: NetworkSettings } = {
 declare const HEDERA_NETWORK: string;
 
 export default {
-    network: availableNetworks[HEDERA_NETWORK]!,
+    network: availableNetworks[HEDERA_NETWORK]!
 };

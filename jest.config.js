@@ -26,6 +26,6 @@ module.exports = {
         // to the use of webpack DefinePlugin
         VERSION: "1.1.1",
         COMMIT_HASH: "placeholderhash",
-        HEDERA_NETWORK: "testnet",
+        HEDERA_NETWORK: "testnet"
     }
 };
