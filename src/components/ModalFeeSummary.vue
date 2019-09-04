@@ -146,6 +146,10 @@ export default createComponent({
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+
+    &:not(:last-child) {
+        margin-block-end: 2px;
+    }
 }
 
 .item-description {
@@ -184,7 +188,7 @@ export default createComponent({
 }
 
 .separator {
-    background-color: var(--color-basalt-grey);
+    border-bottom: 1px solid var(--color-jupiter);
     height: 1px;
     margin-block: 17.5px;
     width: 100%;
