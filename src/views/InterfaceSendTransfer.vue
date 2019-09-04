@@ -22,16 +22,6 @@
             can-copy
         />
 
-        <TextInput
-            v-if="false"
-            v-model="state.maxFee"
-            label="Maximum Transaction Fee"
-            show-validation
-            :suffix="tinybarSuffix"
-            :valid="true"
-            :error="state.txFeeErrorMessage"
-        />
-
         <template v-slot:footer>
             <Button
                 :busy="state.isBusy"
@@ -64,7 +54,7 @@ import Button from "../components/Button.vue";
 import { createComponent, reactive, computed } from "@vue/composition-api";
 import store from "../store";
 import { AccountId } from "@hashgraph/sdk/src/Client";
-import { ALERT } from "../store/actions";
+import { ALERT, REFRESH_BALANCE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { CryptoTransferTransaction } from "@hashgraph/sdk";
 import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
@@ -72,11 +62,16 @@ import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import format, { hbarAmountRegex } from "../formatter";
 
-const ESTIMATED_FEE = new BigNumber(0.000_085_500);
+// Transactions between 1 HBar and 360 GBar **DID** cost between 85_100 and 85_500 Tinybar
+// With some additional trial-error, 900_000 Tinybar seems to cover everything
+const ESTIMATED_FEE_HBAR = new BigNumber(0.000_900_000);
+const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
+    getValueOfUnit(Unit.Hbar)
+);
 
 const summaryItems = [
     { description: "Transfer Amount", value: new BigNumber(0) },
-    { description: "Estimated Fee", value: ESTIMATED_FEE }
+    { description: "Estimated Fee", value: ESTIMATED_FEE_HBAR }
 ] as Item[];
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
@@ -94,10 +89,9 @@ export default createComponent({
             amount: "",
             toAccount: "",
             isBusy: false,
-            maxFee: ESTIMATED_FEE.toString(),
+            maxFee: ESTIMATED_FEE_HBAR.toString(),
             idErrorMessage: "",
             amountErrorMessage: "",
-            txFeeErrorMessage: "",
             successModalIsOpen: false,
             summaryIsOpen: false
         });
@@ -134,12 +128,15 @@ export default createComponent({
 
         async function handleClickEntireBalance(): Promise<void> {
             const balance = store.state.wallet.balance;
+
             if (balance == null) {
                 return;
             }
-            const hbar = new BigNumber(balance.toString()).dividedBy(
-                getValueOfUnit(Unit.Hbar)
-            );
+
+            const hbar = new BigNumber(balance.toString())
+                .dividedBy(getValueOfUnit(Unit.Hbar))
+                .minus(ESTIMATED_FEE_HBAR);
+
             state.amount = hbar.toString();
         }
 
@@ -171,30 +168,33 @@ export default createComponent({
                     account: parseInt(parts[2])
                 };
 
-                const sendAmount = new BigNumber(state.amount).multipliedBy(
-                    getValueOfUnit(Unit.Hbar)
-                );
+                const sendAmountTinybar = new BigNumber(
+                    state.amount
+                ).multipliedBy(getValueOfUnit(Unit.Hbar));
 
                 if (
                     store.state.wallet.balance != null &&
-                    store.state.wallet.balance <= sendAmount
+                    store.state.wallet.balance.isLessThan(
+                        sendAmountTinybar.plus(ESTIMATED_FEE_TINYBAR)
+                    )
                 ) {
                     state.amountErrorMessage =
-                        "Amount is greater than current balance";
+                        "Amount plus fee is greater than current balance";
                     return;
                 }
 
-                // TODO: SDK BigInt v BigNumber
                 await new CryptoTransferTransaction(client)
-                    .addSender(store.state.wallet.session.account, sendAmount)
-                    .addRecipient(recipient, sendAmount)
-                    // To send 1 tinybar the fee is ~85_150
-                    // To send 360 gigabar the fee ~85_500
-                    // So setting the limit to 85_500 _should_ be more
-                    // then enough for most transactions
-                    .setTransactionFee(85_500)
+                    .addSender(
+                        store.state.wallet.session.account,
+                        sendAmountTinybar
+                    )
+                    .addRecipient(recipient, sendAmountTinybar)
+                    .setTransactionFee(ESTIMATED_FEE_TINYBAR)
                     .build()
                     .executeForReceipt();
+
+                // Refresh Balance
+                store.dispatch(REFRESH_BALANCE);
 
                 // eslint-disable-next-line require-atomic-updates
                 state.successModalIsOpen = true;
@@ -218,10 +218,6 @@ export default createComponent({
                 ) {
                     // eslint-disable-next-line require-atomic-updates
                     state.idErrorMessage = "Cannot send HBar to yourself";
-                } else if (error.toString().includes("INSUFFICIENT_TX_FEE")) {
-                    // eslint-disable-next-line require-atomic-updates
-                    state.txFeeErrorMessage =
-                        "Insufficient Transaction Fee Amount";
                 } else {
                     store.dispatch(ALERT, {
                         level: "error",
