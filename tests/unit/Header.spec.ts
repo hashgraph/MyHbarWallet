@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import { createLocalVue, mount } from "@vue/test-utils";
 import Header from "../../src/components/Header.vue";
 import VueRouter from "vue-router";
 import router from "../../src/router";

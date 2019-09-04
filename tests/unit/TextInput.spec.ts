@@ -1,30 +1,31 @@
-import { createLocalVue, mount, shallowMount } from "@vue/test-utils";
+import { createLocalVue, mount } from "@vue/test-utils";
 import TextInput from "../../src/components/TextInput.vue";
 import VueCompositionApi from "@vue/composition-api";
-import MaterialDesignIcon from "../../src/components/MaterialDesignIcon.vue";
 
 describe("TextInput.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
-        expect.assertions(2);
         const value = "12345";
-        const wrapper = shallowMount(TextInput, {
+        const wrapper = mount(TextInput, {
             localVue,
             propsData: {
                 value
             }
         });
 
-        const inputElement = wrapper.find("input").element as HTMLInputElement;
-
-        expect(inputElement.getAttribute("type")).toBe("text");
-        expect(inputElement.value).toBe(value);
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="text-input"><label class="label-container">
+                <!----> <span class="input-container"><!----> <span class="input-wrapper"><input type="text" autocomplete="on"> <!----></span>
+                <!----></span></label>
+              <!---->
+              <!---->
+            </div>
+        `);
     });
 
-    it("renders a password securely (and allows to toggle visibility)", (): void => {
-        expect.assertions(2);
+    it("renders a password", (): void => {
         const value = "super-secure-password";
         const wrapper = mount(TextInput, {
             localVue,
@@ -34,47 +35,32 @@ describe("TextInput.vue", (): void => {
             }
         });
 
-        let inputElement = wrapper.find("input").element as HTMLInputElement;
-        expect(inputElement.getAttribute("type")).toBe("password");
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="text-input"><label class="label-container">
+                <!----> <span class="input-container"><!----> <span class="input-wrapper"><input type="password" autocomplete="on"> <span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="eye"><path d="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z"></path></svg></span></span>
+                <!----></span></label>
+              <!---->
+              <!---->
+            </div>
+        `);
 
         // Expose the password
         wrapper.find(".eye").trigger("click");
 
-        inputElement = wrapper.find("input").element as HTMLInputElement;
-        expect(inputElement.getAttribute("type")).toBe("text");
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="text-input"><label class="label-container">
+                <!----> <span class="input-container"><!----> <span class="input-wrapper"><input type="text" autocomplete="on"> <span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="eye is-open"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg></span></span>
+                <!----></span></label>
+              <!---->
+              <!---->
+            </div>
+        `);
     });
 
-    it("forwards input event from HTML input", (): void => {
-        expect.assertions(1);
-        let value = "";
-
-        const wrapper = shallowMount(TextInput, {
-            localVue,
-            propsData: {
-                obscure: true,
-                value
-            },
-            listeners: {
-                input(newValue: string): void {
-                    value = newValue;
-                }
-            }
-        });
-
-        const newValue = "12345";
-
-        // Trigger an INPUT event (user typing on keyboard)
-        (wrapper.find("input").element as HTMLInputElement).value = newValue;
-        wrapper.find("input").trigger("input");
-
-        expect(value).toBe(newValue);
-    });
-
-    it("render textarea when multiline", (): void => {
-        expect.assertions(2);
+    it("renders multiline", (): void => {
         const placeholder = "placeholder text";
         const value = "textarea text";
-        const wrapper = shallowMount(TextInput, {
+        const wrapper = mount(TextInput, {
             localVue,
             propsData: {
                 multiline: true,
@@ -83,17 +69,19 @@ describe("TextInput.vue", (): void => {
             }
         });
 
-        const textAreaElement = wrapper.find("textarea")
-            .element as HTMLTextAreaElement;
-
-        expect(textAreaElement.getAttribute("placeholder")).toBe(placeholder);
-        expect(textAreaElement.value).toBe(value);
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="text-input is-multiline"><label class="label-container">
+                <!----> <span class="input-container"><!----> <span class="input-wrapper"><textarea placeholder="placeholder text" rows="8" class="text-area"></textarea> <!----></span>
+                <!----></span></label>
+              <!---->
+              <!---->
+            </div>
+        `);
     });
 
-    it("renders label when it's not null", (): void => {
-        expect.assertions(2);
+    it("renders label", (): void => {
         const label = "label text";
-        const wrapper = shallowMount(TextInput, {
+        const wrapper = mount(TextInput, {
             localVue,
             propsData: {
                 multiline: true,
@@ -101,12 +89,20 @@ describe("TextInput.vue", (): void => {
             }
         });
 
-        expect(wrapper.contains(".label")).toBe(true);
-        expect(wrapper.find(".label").text()).toBe(label);
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="text-input is-multiline has-label"><label class="label-container"><span class="label">label text</span> <span class="input-container"><!----> <span class="input-wrapper"><textarea rows="8" class="text-area"></textarea> <!----></span>
+                <!----></span></label>
+              <div class="actions">
+                <!---->
+                <!---->
+                <!---->
+              </div>
+              <!---->
+            </div>
+        `);
     });
 
-    it("renders validation indicator when showValidation is true", (): void => {
-        expect.assertions(1);
+    it("renders validation indicator", (): void => {
         const showValidation = true;
         const valid = true;
         const wrapper = mount(TextInput, {
@@ -118,12 +114,17 @@ describe("TextInput.vue", (): void => {
             }
         });
 
-        expect(wrapper.contains(MaterialDesignIcon)).toBe(true);
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="text-input is-multiline"><label class="label-container">
+                <!----> <span class="input-container"><!----> <span class="input-wrapper"><textarea rows="8" class="text-area"></textarea> <span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark is-valid"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></span>
+                <!----></span></label>
+              <!---->
+              <!---->
+            </div>
+        `);
     });
 
-    it("renders copy action when canCopy is true", (): void => {
-        expect.assertions(1);
-        const copyText = "Copy";
+    it("renders copy action", (): void => {
         const canCopy = true;
         const wrapper = mount(TextInput, {
             localVue,
@@ -134,16 +135,23 @@ describe("TextInput.vue", (): void => {
             }
         });
 
-        expect(
-            wrapper
-                .findAll(".action")
-                .filter((e): boolean => e.text() === copyText)
-        ).toHaveLength(1);
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="text-input is-multiline has-label"><label class="label-container">
+                <!----> <span class="input-container"><!----> <span class="input-wrapper"><textarea rows="8" class="text-area"></textarea> <!----></span>
+                <!----></span></label>
+              <div class="actions">
+                <!---->
+                <!---->
+                <div class="action">
+                  Copy
+                </div>
+              </div>
+              <!---->
+            </div>
+        `);
     });
 
-    it("renders clear action when canClear is true", (): void => {
-        expect.assertions(1);
-        const clearText = "Clear";
+    it("renders clear action", (): void => {
         const canClear = true;
         const wrapper = mount(TextInput, {
             localVue,
@@ -154,71 +162,23 @@ describe("TextInput.vue", (): void => {
             }
         });
 
-        expect(
-            wrapper
-                .findAll(".action")
-                .filter((e): boolean => e.text() === clearText)
-        ).toHaveLength(1);
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="text-input is-multiline has-label"><label class="label-container">
+                <!----> <span class="input-container"><!----> <span class="input-wrapper"><textarea rows="8" class="text-area"></textarea> <!----></span>
+                <!----></span></label>
+              <div class="actions">
+                <!---->
+                <div class="action">
+                  Clear
+                </div>
+                <!---->
+              </div>
+              <!---->
+            </div>
+        `);
     });
 
-    it("does not render validation indicator when showValidation is false", (): void => {
-        expect.assertions(1);
-        const showValidation = false;
-        const valid = true;
-        const wrapper = mount(TextInput, {
-            localVue,
-            propsData: {
-                multiline: true,
-                showValidation,
-                valid
-            }
-        });
-
-        expect(wrapper.contains(MaterialDesignIcon)).toBe(false);
-    });
-
-    it("does not render copy action when canCopy is false", (): void => {
-        expect.assertions(1);
-        const copyText = "Copy";
-        const canCopy = false;
-        const wrapper = mount(TextInput, {
-            localVue,
-            propsData: {
-                multiline: true,
-                label: "",
-                canCopy
-            }
-        });
-
-        expect(
-            wrapper
-                .findAll(".action")
-                .filter((e): boolean => e.text() === copyText)
-        ).toHaveLength(0);
-    });
-
-    it("does not render clear action when canClear is false", (): void => {
-        expect.assertions(1);
-        const clearText = "Clear";
-        const canClear = false;
-        const wrapper = mount(TextInput, {
-            localVue,
-            propsData: {
-                multiline: true,
-                label: "",
-                canClear
-            }
-        });
-
-        expect(
-            wrapper
-                .findAll(".action")
-                .filter((e): boolean => e.text() === clearText)
-        ).toHaveLength(0);
-    });
-
-    it("renders error message when it isn't null", (): void => {
-        expect.assertions(1);
+    it("renders error message", (): void => {
         const error = "ERROR: foo";
         const wrapper = mount(TextInput, {
             localVue,
@@ -230,6 +190,15 @@ describe("TextInput.vue", (): void => {
             }
         });
 
-        expect(wrapper.find(".error").text()).toBe(error);
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="text-input is-multiline has-error"><label class="label-container">
+                <!----> <span class="input-container"><!----> <span class="input-wrapper"><textarea rows="8" class="text-area"></textarea> <span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></span>
+                <!----></span></label>
+              <!---->
+              <div class="error">
+                ERROR: foo
+              </div>
+            </div>
+        `);
     });
 });

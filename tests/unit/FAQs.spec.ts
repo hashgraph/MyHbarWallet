@@ -1,14 +1,31 @@
 import { shallowMount } from "@vue/test-utils";
 import FAQs from "../../src/components/FAQs.vue";
-import Accordion from "../../src/components/Accordion.vue";
-import CustomerSupportLink from "../../src/components/CustomerSupportLink.vue";
 
 describe("FAQs.vue", (): void => {
     it("renders", (): void => {
-        expect.assertions(2);
-
         const wrapper = shallowMount(FAQs);
-        expect(wrapper.findAll(Accordion)).toHaveLength(4);
-        expect(wrapper.findAll(CustomerSupportLink)).toHaveLength(1);
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div id="faqs" class="faqs">
+              <div class="wrap">
+                <div class="page-container">
+                  <div class="head">
+                    <div class="title">
+                      <div class="title-text">FAQs</div>
+                      <div class="subtitle-text">
+                        Answers to most frequently asked questions.
+                      </div>
+                    </div>
+                    <customersupportlink-stub class="customer-support-link"></customersupportlink-stub>
+                  </div>
+                  <div class="cards">
+                    <accordion-stub></accordion-stub>
+                    <accordion-stub></accordion-stub>
+                    <accordion-stub></accordion-stub>
+                    <accordion-stub></accordion-stub>
+                  </div>
+                </div>
+              </div>
+            </div>
+        `);
     });
 });
