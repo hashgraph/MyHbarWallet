@@ -34,6 +34,7 @@ import QrcodeVue from "qrcode.vue";
 import { Id } from "../store/modules/wallet";
 import { writeToClipboard } from "../clipboard";
 import { ALERT } from "../store/actions";
+import store from "../store";
 
 interface Props {
     isOpen: boolean;
