@@ -21,12 +21,24 @@
                         <tbody>
                             <tr v-for="hu in hbarUnitRef" :key="hu.key">
                                 <td>{{ hu.name }}</td>
-                                <td class="amount">
-                                    {{ hu.amount }} {{ hu.symbol }}
-                                </td>
-                                <td class="amount-hbar">
-                                    {{ hu.amountInHbar }} ℏ
-                                </td>
+                                <template v-if="true">
+                                    <div class="sub-row-container">
+                                        <td class="amount">
+                                            {{ hu.amount }} {{ hu.symbol }}
+                                        </td>
+                                        <td class="amount-hbar">
+                                            {{ hu.amountInHbar }} ℏ
+                                        </td>
+                                    </div>
+                                </template>
+                                <template v-else>
+                                    <td class="amount">
+                                        {{ hu.amount }} {{ hu.symbol }}
+                                    </td>
+                                    <td class="amount-hbar">
+                                        {{ hu.amountInHbar }} ℏ
+                                    </td>
+                                </template>
                             </tr>
                         </tbody>
                     </table>
@@ -146,11 +158,40 @@ table {
 tr {
     border-bottom: 1px solid var(--color-jupiter);
     position: relative;
+
+    @media (max-width: 414px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 10px 0;
+    }
 }
 
 td {
     padding: 18px 10px;
     position: relative;
+
+    @media (max-width: 414px) {
+        padding: 0 10px;
+    }
+}
+
+tr > td:first-child {
+    @media (max-width: 414px) {
+        font-weight: 500;
+    }
+}
+
+.sub-row-container > td:last-child {
+    @media (max-width: 414px) {
+        text-align: end;
+    }
+}
+
+.sub-row-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-block-start: 5px;
 }
 
 span {
