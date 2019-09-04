@@ -124,7 +124,7 @@ export default createComponent({
     background-color: var(--color-white);
     inset-inline: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
 
     &::after {
         box-shadow: 0 2px 13px rgba(0, 0, 0, 0.1);
