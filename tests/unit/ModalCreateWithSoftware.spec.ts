@@ -1,0 +1,40 @@
+import { createLocalVue, shallowMount } from "@vue/test-utils";
+import VueCompositionApi from "@vue/composition-api";
+import ModalCreateWithSoftware from "../../src/components/ModalCreateWithSoftware.vue";
+
+describe("ModalCreateWithSoftware.vue", (): void => {
+    const localVue = createLocalVue();
+    localVue.use(VueCompositionApi);
+
+    it("renders", (): void => {
+        const onChange = jest.fn();
+        const wrapper = shallowMount(ModalCreateWithSoftware, {
+            localVue,
+            propsData: {
+                isOpen: false
+            },
+            listeners: {
+                change: onChange
+            }
+        });
+
+        expect(wrapper).toMatchInlineSnapshot(`
+            <modal-stub title="Create with Software">
+              <form class="modal-access-by-software">
+                <radiobuttongroup-stub name="software-access-option" options="[object Object],[object Object]"></radiobuttongroup-stub>
+                <div class="hardware-link">
+                  <div>
+                    Purchase a hardware wallet for the highest security when
+                    accessing your crypto.
+                  </div>
+                  <router-link to="[object Object]">
+                    Purchase a hardware wallet....
+                  </router-link>
+                </div>
+                <button-stub label="Continue" disabled="true"></button-stub>
+                <customersupportlink-stub class="support-link"></customersupportlink-stub>
+              </form>
+            </modal-stub>
+        `);
+    });
+});
