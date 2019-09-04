@@ -92,9 +92,14 @@ export default createComponent({
             }
         }
 
+        function unregister(): void {
+            modalIds.splice(modalIds.indexOf(id), 1);
+        }
+
         window.addEventListener("keydown", handleWindowKeyDown);
 
         onUnmounted(() => {
+            unregister();
             setModalIsOpenOnBody();
             window.removeEventListener("keydown", handleWindowKeyDown);
         });
@@ -105,11 +110,10 @@ export default createComponent({
                 const hasOpened = isOpen && !prevIsOpen;
                 const hasClosed = !isOpen && prevIsOpen;
 
-                if (hasOpened) modalIds.push(id);
-
-                // NOTE: Not sure if the second half of condition is necessary
-                if (hasClosed && modalIsTop(id)) {
-                    modalIds.pop();
+                if (hasOpened) {
+                    modalIds.push(id);
+                } else if (hasClosed) {
+                    unregister();
                 }
 
                 setModalIsOpenOnBody();
