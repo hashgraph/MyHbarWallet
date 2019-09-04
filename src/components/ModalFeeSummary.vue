@@ -1,9 +1,7 @@
 <template>
     <div class="modal-fee-summary">
         <Modal :is-open="isOpen" title="Transaction Summary" not-closable>
-            <div class="summary-title">
-                {{ title }}
-            </div>
+            <div class="summary-title">{{ title }}</div>
 
             <div class="separator" />
 
@@ -13,14 +11,14 @@
                         <span class="item-description">
                             {{ item.description }}:
                         </span>
-                        <span :key="item.key" class="item-value">
-                            {{ formatHbar(item.value) }} ℏ
+                        <span class="item-value">
+                            {{ formatValue(item.value) }}
                         </span>
                     </div>
                 </template>
                 <div class="item">
                     <span class="item-description">Total:</span>
-                    <span class="item-value">{{ formatHbar(total) }} ℏ</span>
+                    <span class="item-value">{{ formatValue(total) }}</span>
                 </div>
             </div>
 
@@ -55,7 +53,7 @@ import { formatHbar } from "../formatter";
 
 export interface Item {
     description: string;
-    value: BigNumber;
+    value: BigNumber | string;
 }
 
 export interface KeyedItem extends Item {
@@ -94,12 +92,22 @@ export default createComponent({
             if (props.items != null) {
                 for (const item of props.items) {
                     item.key = "Item" + nextItemKey();
-                    total = total.plus(item.value);
+                    if (item.value instanceof BigNumber) {
+                        total = total.plus(item.value);
+                    }
                 }
             }
 
             return total;
         });
+
+        function formatValue(value: BigNumber | string): string {
+            if (value instanceof BigNumber) {
+                return formatHbar(value) + " ℏ";
+            } else {
+                return value;
+            }
+        }
 
         function handleCancel(): void {
             context.emit("change", false);
@@ -112,7 +120,7 @@ export default createComponent({
 
         return {
             total,
-            formatHbar,
+            formatValue,
             handleCancel,
             handleSubmit
         };

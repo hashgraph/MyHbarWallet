@@ -70,15 +70,12 @@ export default createComponent({
         const balanceHBarFormatted = computed(() => {
             const balance = balanceHbar.value;
             return formatHbar(
-                String(
-                    balance.isLessThan(0.0001) ? balance : balance.toFixed(4)
-                )
+                balance.isLessThan(0.0001) ? balance : balance.decimalPlaces(4)
             );
         });
 
         const balanceUSDFormatted = computed(() => {
             const balanceUSD = balanceHbar.value.multipliedBy(0.12);
-            console.log(formatUSD(balanceUSD));
             return formatUSD(balanceUSD);
         });
 
