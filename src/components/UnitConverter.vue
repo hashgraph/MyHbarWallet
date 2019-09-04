@@ -7,16 +7,17 @@
                         v-model="state.selectedLeft"
                         :options="options"
                         :left="true"
+                        @change="handleSelect"
                     />
                 </div>
                 <div>
                     <TextInput
-                        v-model="state.valueLeft"
+                        :value="state.valueLeft"
                         compact
                         white
-                        type="number"
                         step="any"
                         placeholder="Amount"
+                        @input="handleInputValueLeft"
                     />
                 </div>
             </div>
@@ -33,16 +34,17 @@
                         v-model="state.selectedRight"
                         :options="options"
                         :left="false"
+                        @change="handleSelect"
                     />
                 </div>
                 <div>
                     <TextInput
-                        v-model="state.valueRight"
+                        :value="state.valueRight"
                         compact
                         white
-                        type="number"
                         step="any"
                         placeholder="Amount"
+                        @input="handleInputValueRight"
                     />
                 </div>
             </div>
@@ -53,48 +55,19 @@
 <script lang="ts">
 import Select from "./Select.vue";
 import TextInput from "./TextInput.vue";
-import BigNumber from "bignumber.js";
-import { createComponent, watch, reactive } from "@vue/composition-api";
-
-export enum Unit {
-    Tinybar = "tinybar",
-    Microbar = "microbar",
-    Millibar = "millibar",
-    Hbar = "hbar",
-    Kilobar = "kilobar",
-    Megabar = "megabar",
-    Gigabar = "gigabar"
-}
-
-const unitMap: Map<Unit, number> = new Map([
-    [Unit.Tinybar, 1],
-    [Unit.Microbar, 100],
-    [Unit.Millibar, 100000],
-    [Unit.Hbar, 100000000],
-    [Unit.Kilobar, 100000000000],
-    [Unit.Megabar, 100000000000000],
-    [Unit.Gigabar, 100000000000000000]
-]);
-
-export function getValueOfUnit(unit: Unit): BigNumber {
-    return new BigNumber(unitMap.get(unit) || 0);
-}
-
-function convertFromTo(amt: string, from: Unit, to: Unit): string {
-    const x = new BigNumber(amt);
-    const y = getValueOfUnit(from);
-    const z = getValueOfUnit(to);
-    return x
-        .multipliedBy(y)
-        .dividedBy(z)
-        .toFixed();
-}
+import { Unit, convert, getValueOfUnit } from "../units";
+import { createComponent, reactive } from "@vue/composition-api";
 
 interface State {
     selectedLeft: Unit;
     selectedRight: Unit;
     valueLeft: string;
     valueRight: string;
+}
+
+function nanCheck(amt: string): string {
+    if (amt == "NaN") return "";
+    return amt;
 }
 
 export default createComponent({
@@ -105,6 +78,8 @@ export default createComponent({
     setup() {
         const options = Object.values(Unit);
 
+        const numericRegex = /^\d*\.?\d*$/;
+
         const state = reactive<State>({
             selectedLeft: Unit.Tinybar,
             selectedRight: Unit.Hbar,
@@ -112,53 +87,77 @@ export default createComponent({
             valueRight: "1"
         });
 
-        watch(
-            () => state.valueLeft,
-            (newValue: string) => {
-                state.valueRight = convertFromTo(
-                    newValue,
-                    state.selectedLeft,
-                    state.selectedRight
-                );
-            }
-        );
-
-        watch(
-            () => state.valueRight,
-            (newValue: string) => {
-                state.valueLeft = convertFromTo(
-                    newValue,
-                    state.selectedRight,
-                    state.selectedLeft
-                );
-            }
-        );
-
-        watch(
-            () => state.selectedLeft,
-            (newValue: Unit) => {
-                state.valueRight = convertFromTo(
+        function handleSelect(): void {
+            state.valueRight = nanCheck(
+                convert(
                     state.valueLeft,
-                    newValue,
-                    state.selectedRight
-                );
-            }
-        );
+                    state.selectedLeft,
+                    state.selectedRight,
+                    false
+                )
+            );
+        }
 
-        watch(
-            () => state.selectedRight,
-            (newValue: Unit) => {
-                state.valueLeft = convertFromTo(
+        function handleInputValueLeft(value: string, event: Event): void {
+            if (!numericRegex.test(value)) value = state.valueLeft;
+
+            state.valueRight = nanCheck(
+                convert(value, state.selectedLeft, state.selectedRight, false)
+            );
+
+            state.valueLeft = nanCheck(
+                convert(
                     state.valueRight,
-                    newValue,
-                    state.selectedLeft
-                );
+                    state.selectedRight,
+                    state.selectedLeft,
+                    false
+                )
+            );
+
+            if (
+                state.valueLeft.includes(".") &&
+                state.valueLeft
+                    .toString()
+                    .substring(state.valueLeft.indexOf(".")).length >=
+                    getValueOfUnit(state.selectedLeft).toFixed.length
+            )
+                (event.target as HTMLInputElement).value = state.valueLeft;
+        }
+
+        function handleInputValueRight(value: string, event: Event): void {
+            if (!numericRegex.test(value)) value = state.valueRight;
+
+            state.valueLeft = nanCheck(
+                convert(value, state.selectedRight, state.selectedLeft, false)
+            );
+
+            state.valueRight = nanCheck(
+                convert(
+                    state.valueLeft,
+                    state.selectedLeft,
+                    state.selectedRight,
+                    false
+                )
+            );
+
+            if (
+                state.valueRight.includes(".") &&
+                state.valueRight
+                    .toString()
+                    .substring(state.valueRight.indexOf(".")).length -
+                    1 >=
+                    getValueOfUnit(state.selectedRight).toFixed().length - 1
+            ) {
+                (event.target as HTMLInputElement).value = state.valueRight;
             }
-        );
+        }
 
         return {
             state,
-            options
+            options,
+            handleInputValueRight,
+            handleInputValueLeft,
+            handleSelect
         };
     }
 });

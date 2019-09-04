@@ -57,7 +57,7 @@ import { AccountId } from "@hashgraph/sdk/src/Client";
 import { ALERT, REFRESH_BALANCE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { CryptoTransferTransaction } from "@hashgraph/sdk";
-import { Unit, getValueOfUnit } from "../components/UnitConverter.vue";
+import { Unit, getValueOfUnit } from "../units";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import format, { hbarAmountRegex } from "../formatter";

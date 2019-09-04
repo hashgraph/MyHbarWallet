@@ -218,7 +218,7 @@ export default createComponent({
 
         function handleInput(event: Event): void {
             const input = event.target as HTMLTextAreaElement;
-            context.emit("input", input.value);
+            context.emit("input", input.value, event);
         }
 
         function handleClickClear(): void {
