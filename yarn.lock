@@ -781,9 +781,9 @@
     "@hapi/hoek" "8.x.x"
 
 "@hashgraph/sdk@^0.3.2":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-0.3.3.tgz#0943ae75d1e5e06b2599d071fe0912f165953b58"
-  integrity sha512-WF83BjTTqrDOTgpB6sXN+6Cx97wXM4ctnyYX0Y5EMfXIVuyQO3vx333vpGHjcShu36gaAgBF/TCPN2vfeCUIIA==
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-0.3.4.tgz#570a2d7ae0b4c8de948c7f753998445172b64743"
+  integrity sha512-c+IeGw8eYLTuvznoR7kPvYkardrzYMYR3PzP88D9d3xelhREtRcbnR0BCoMNtttWxGauz4uLFXoSYWMvJpxr+g==
   dependencies:
     "@improbable-eng/grpc-web" "0.11.0"
     "@types/google-protobuf" "^3.7.1"
