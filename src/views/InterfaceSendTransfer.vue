@@ -199,8 +199,6 @@ export default createComponent({
                 // eslint-disable-next-line require-atomic-updates
                 state.successModalIsOpen = true;
             } catch (error) {
-                console.log(error);
-
                 // eslint-disable-next-line require-atomic-updates
                 state.isBusy = false;
                 // eslint-disable-next-line require-atomic-updates

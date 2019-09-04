@@ -176,7 +176,6 @@ export default createComponent({
                 keyStoreLink.value.download =
                     "keystore-" + new Date().toISOString();
             } catch (error) {
-                console.log(error);
                 await store.dispatch(ALERT, {
                     level: "error",
                     message: "Unable to Download"
