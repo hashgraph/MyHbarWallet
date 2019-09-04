@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "my-hedera-wallet"
+  },
+  "targets": {
+    "my-hedera-wallet": {
+      "hosting": {
+        "testnet": [
+          "my-hedera-wallet"
+        ],
+        "mainnet": [
+          "mainnet-my-hedera-wallet"
+        ]
+      }
+    }
   }
 }

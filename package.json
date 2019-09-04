@@ -11,8 +11,10 @@
         "test": "npm-run-all test:unit",
         "test:unit": "vue-cli-service test:unit",
         "test:e2e": "vue-cli-service test:e2e",
-        "firebase:deploy": "firebase deploy",
-        "deploy": "npm-run-all test:unit build firebase:deploy"
+        "firebase:deploy:testnet": "firebase deploy --only hosting:testnet",
+        "firebase:deploy:mainnet": "firebase deploy --only hosting:mainnet",
+        "deploy:testnet": "cross-env HEDERA_NETWORK=testnet npm-run-all test:unit build firebase:deploy:testnet",
+        "deploy:mainnet": "cross-env HEDERA_NETWORK=mainnet npm-run-all test:unit build firebase:deploy:mainnet"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.21",
@@ -49,6 +51,7 @@
         "babel-core": "7.0.0-bridge.0",
         "babel-eslint": "^10.0.1",
         "chromedriver": "^76.0.0",
+        "cross-env": "^5.2.1",
         "cssnano-preset-advanced": "^4.0.7",
         "eslint": "^6.2.1",
         "firebase-tools": "^7.2.3",
