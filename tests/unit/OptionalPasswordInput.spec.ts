@@ -1,9 +1,9 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import OptionalPasswordInput from "../../src/components/OptionalPasswordInput.vue";
 
 describe("OptionalPasswordInput", (): void => {
     it("renders", (): void => {
-        const wrapper = shallowMount(OptionalPasswordInput, {
+        const wrapper = mount(OptionalPasswordInput, {
             propsData: {
                 value: ""
             },
@@ -33,12 +33,17 @@ describe("OptionalPasswordInput", (): void => {
                 <div class="password-switch">
                   <div class="text">
                     Optional
-                  </div>
-                  <switchbutton-stub value="true" class="btn"></switchbutton-stub>
+                  </div> <label class="switch-button btn"><input type="checkbox" class="input"> <span class="thumb"></span>
+                    <!----></label>
                 </div>
               </div>
               <div class="password-input expanded">
-                <textinput-stub placeholder="Please Enter Password" value="" compact="true" obscure="true"></textinput-stub>
+                <div class="text-input"><label class="label-container">
+                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><input placeholder="Please Enter Password" autocomplete="on"> <!----></span>
+                    <!----></span></label>
+                  <!---->
+                  <!---->
+                </div>
                 <div class="password-warning">
                   <p></p>
                 </div>
