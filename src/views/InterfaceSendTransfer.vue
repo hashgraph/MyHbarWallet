@@ -10,6 +10,7 @@
             :valid="isAmountValid"
             :error="state.amountErrorMessage"
             @action="handleClickEntireBalance"
+            @input="handleInput"
         />
 
         <TextInput
@@ -143,6 +144,10 @@ export default createComponent({
             state.summaryIsOpen = true;
         }
 
+        function handleInput(): void {
+            state.amountErrorMessage = "";
+        }
+
         async function handleSendTransfer(): Promise<void> {
             state.isBusy = true;
 
@@ -244,7 +249,8 @@ export default createComponent({
             handleClickEntireBalance,
             handleSendTransfer,
             handleSuccessModalChange,
-            truncate
+            truncate,
+            handleInput
         };
     }
 });
