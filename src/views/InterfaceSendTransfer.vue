@@ -145,21 +145,16 @@ export default createComponent({
 
         async function handleSendTransfer(): Promise<void> {
             state.isBusy = true;
+            if (store.state.wallet.session == null) {
+                throw new Error(
+                    "Session should not be null if inside Send Transfer"
+                );
+            }
+
+            const client = store.state.wallet.session.client;
+            const parts = state.toAccount.split(".");
 
             try {
-                if (!isAmountValid || !isIdValid) {
-                    return;
-                }
-
-                if (store.state.wallet.session == null) {
-                    throw new Error(
-                        "Session should not be null if inside Send Transfer"
-                    );
-                }
-
-                const client = store.state.wallet.session.client;
-                const parts = state.toAccount.split(".");
-
                 const recipient: AccountId = {
                     shard: parseInt(parts[0]),
                     realm: parseInt(parts[1]),
@@ -198,8 +193,6 @@ export default createComponent({
                 state.successModalIsOpen = true;
             } catch (error) {
                 // eslint-disable-next-line require-atomic-updates
-                state.isBusy = false;
-                // eslint-disable-next-line require-atomic-updates
                 state.idErrorMessage = "";
                 // eslint-disable-next-line require-atomic-updates
                 state.amountErrorMessage = "";
@@ -215,10 +208,7 @@ export default createComponent({
                     // eslint-disable-next-line require-atomic-updates
                     state.idErrorMessage = "Cannot send HBar to yourself";
                 } else {
-                    store.dispatch(ALERT, {
-                        level: "error",
-                        message: "Transaction Failed"
-                    });
+                    throw error;
                 }
             } finally {
                 // eslint-disable-next-line require-atomic-updates

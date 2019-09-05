@@ -84,9 +84,9 @@ interface State {
     isBusy: boolean;
     successModalIsOpen: boolean;
     summaryModalIsOpen: boolean;
-    keyError: string | null;
-    userBalanceError: string | null;
-    account: string | null;
+    keyError: string;
+    userBalanceError: string;
+    account: string;
 }
 
 export default createComponent({
@@ -105,9 +105,9 @@ export default createComponent({
             isBusy: false,
             successModalIsOpen: false,
             summaryModalIsOpen: false,
-            keyError: null,
-            userBalanceError: null,
-            account: null
+            keyError: "",
+            userBalanceError: "",
+            account: ""
         });
 
         const validBalance = computed(() => {
@@ -134,29 +134,15 @@ export default createComponent({
         async function handleCreateAccount(): Promise<void> {
             state.isBusy = true;
 
-            if (!validBalance || !validKey) {
-                if (!validBalance) {
-                    state.userBalanceError = "Invalid Balance";
-                }
-                if (!validKey) {
-                    state.keyError = "Invalid Key";
-                }
-                state.isBusy = false;
-                return;
-            } else {
-                state.userBalanceError = null;
-                state.keyError = null;
+            if (store.state.wallet.session == null) {
+                throw new Error(
+                    "Session should not be null if inside Create Account Interface"
+                );
             }
 
+            const client = store.state.wallet.session.client;
+
             try {
-                if (store.state.wallet.session == null) {
-                    throw new Error(
-                        "Session should not be null if inside Create Account Interface"
-                    );
-                }
-
-                const client = store.state.wallet.session.client;
-
                 const balance = new BigNumber(state.userBalance).multipliedBy(
                     getValueOfUnit(Unit.Hbar)
                 );
@@ -196,7 +182,7 @@ export default createComponent({
                     accountIdIntermediate.getAccountnum();
 
                 // If creating state.account succeeds then remove all the error
-                state.userBalanceError = null;
+                state.userBalanceError = "";
 
                 state.successModalIsOpen = true;
             } catch (error) {
@@ -204,10 +190,7 @@ export default createComponent({
                     if (error.message === "INSUFFICIENT_PAYER_BALANCE") {
                         state.userBalanceError = "Insufficient Payer Balance";
                     } else {
-                        store.dispatch(ALERT, {
-                            level: "error",
-                            message: "Failed to create account"
-                        });
+                        throw error;
                     }
                 }
             } finally {
