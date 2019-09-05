@@ -46,7 +46,7 @@ import { computed, createComponent, reactive } from "@vue/composition-api";
 import walletHbar from "../assets/wallet-hbar.svg";
 import store from "../store";
 import { REFRESH_BALANCE } from "../store/actions";
-import format from "../formatter";
+import { formatHbar, formatUSD } from "../formatter";
 import BigNumber from "bignumber.js";
 
 export default createComponent({
@@ -69,16 +69,14 @@ export default createComponent({
 
         const balanceHBarFormatted = computed(() => {
             const balance = balanceHbar.value;
-            return format(
-                String(
-                    balance.isLessThan(0.0001) ? balance : balance.toFixed(4)
-                )
+            return formatHbar(
+                balance.isLessThan(0.0001) ? balance : balance.decimalPlaces(4)
             );
         });
 
         const balanceUSDFormatted = computed(() => {
             const balanceUSD = balanceHbar.value.multipliedBy(0.12);
-            return format(String(balanceUSD.toFormat()));
+            return formatUSD(balanceUSD);
         });
 
         async function handleRefreshBalance(): Promise<void> {

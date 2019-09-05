@@ -1,9 +1,7 @@
 <template>
     <div class="modal-fee-summary">
         <Modal :is-open="isOpen" title="Transaction Summary" not-closable>
-            <div class="summary-title">
-                {{ title }}
-            </div>
+            <div class="summary-title">{{ title }}</div>
 
             <div class="separator" />
 
@@ -13,20 +11,14 @@
                         <span class="item-description">
                             {{ item.description }}:
                         </span>
-                        <span
-                            v-if="item.value instanceof BigNumber"
-                            :key="item.key"
-                            class="item-value"
-                            >{{ format(item.value) }} ℏ</span
-                        >
-                        <span v-else class="item-value">
-                            {{ item.value }}
+                        <span class="item-value">
+                            {{ formatValue(item.value) }}
                         </span>
                     </div>
                 </template>
                 <div class="item">
                     <span class="item-description">Total:</span>
-                    <span class="item-value"> {{ format(total) }} ℏ </span>
+                    <span class="item-value">{{ formatValue(total) }}</span>
                 </div>
             </div>
 
@@ -57,7 +49,7 @@ import { computed, createComponent, SetupContext } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
-import format from "../formatter";
+import { formatHbar } from "../formatter";
 
 export interface Item {
     description: string;
@@ -109,6 +101,14 @@ export default createComponent({
             return total;
         });
 
+        function formatValue(value: BigNumber | string): string {
+            if (value instanceof BigNumber) {
+                return formatHbar(value) + " ℏ";
+            } else {
+                return value;
+            }
+        }
+
         function handleCancel(): void {
             context.emit("change", false);
         }
@@ -120,8 +120,7 @@ export default createComponent({
 
         return {
             total,
-            format,
-            BigNumber,
+            formatValue,
             handleCancel,
             handleSubmit
         };

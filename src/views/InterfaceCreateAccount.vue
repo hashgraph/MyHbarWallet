@@ -63,7 +63,7 @@ import { getValueOfUnit, Unit } from "../units";
 import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
-import format, { hbarAmountRegex } from "../formatter";
+import { formatHbar, validateHbar } from "../formatter";
 
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
@@ -114,7 +114,7 @@ export default createComponent({
             return (
                 new BigNumber(state.userBalance).isGreaterThan(
                     new BigNumber(0)
-                ) && hbarAmountRegex.test(state.userBalance)
+                ) && validateHbar(state.userBalance)
             );
         });
 
@@ -127,7 +127,7 @@ export default createComponent({
         const summaryTitle = computed(
             () =>
                 "Creating account with balance " +
-                format(new BigNumber(state.userBalance).toString()) +
+                formatHbar(new BigNumber(state.userBalance)) +
                 " ℏ"
         );
 
