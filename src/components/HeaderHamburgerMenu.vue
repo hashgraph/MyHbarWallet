@@ -4,24 +4,18 @@
             <BalanceCard class="info-balance" />
             <NetworkCard class="info-network" />
         </div>
-        <div class="link-block">
-            <a href="/" @click="toggle">
-                <div class="link">Home</div>
-                <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-            </a>
-        </div>
-        <div class="link-block">
-            <a href="/#about" @click="toggle">
-                <div class="link">About</div>
-                <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-            </a>
-        </div>
-        <div class="link-block">
-            <a href="/#faqs" @click="toggle">
-                <div class="link">FAQs</div>
-                <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-            </a>
-        </div>
+        <a href="/" class="link-block" @click="toggle">
+            <div class="link">Home</div>
+            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+        </a>
+        <a href="/#about" class="link-block" @click="toggle">
+            <div class="link">About</div>
+            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+        </a>
+        <a href="/#faqs" class="link-block" @click="toggle">
+            <div class="link">FAQs</div>
+            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+        </a>
     </nav>
 </template>
 
