@@ -34,6 +34,7 @@ import {
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
+import { Ed25519PublicKey } from "@hashgraph/sdk/src/Keys";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
@@ -57,7 +58,7 @@ export default createComponent({
         context: SetupContext
     ) {
         const rawPublicKey = computed(() => {
-            let publickey = props.publicKey;
+            let publickey: string = props.publicKey;
             if (publickey.startsWith(ED25519_PREFIX, 0)) {
                 publickey = publickey.slice(ED25519_PREFIX.length);
             }

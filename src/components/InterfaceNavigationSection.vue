@@ -61,14 +61,25 @@ export default createComponent({
     watch: {},
     setup(props: Props, context: SetupContext) {
         const isSectionActive = computed(() =>
-            props.routes.some(route => route.name === context.root.$route.name)
+            props.routes.some(
+                route =>
+                    route.name ===
+                    (context.root.$route == undefined
+                        ? null
+                        : context.root.$route.name)
+            )
         );
 
         function handleHeaderClick(): void {
             const firstRoute = props.routes[0];
 
             // If the first route is active, do nothing
-            if (firstRoute.name === context.root.$route.name) {
+            if (
+                firstRoute.name ===
+                (context.root.$route == undefined
+                    ? null
+                    : context.root.$route.name)
+            ) {
                 return;
             }
 

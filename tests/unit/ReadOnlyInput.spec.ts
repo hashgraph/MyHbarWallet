@@ -1,15 +1,18 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import ReadOnlyInput from "../../src/components/ReadOnlyInput.vue";
 
 describe("ReadOnlyInput.vue", (): void => {
     it("renders", (): void => {
-        expect.assertions(1);
-        const wrapper = shallowMount(ReadOnlyInput, {
+        const wrapper = mount(ReadOnlyInput, {
             propsData: {
                 value: "test"
             }
         });
 
-        expect(wrapper.find("read-only-input")).not.toBeNull();
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="read-only-input">
+              <div class="value">test</div>
+            </div>
+        `);
     });
 });

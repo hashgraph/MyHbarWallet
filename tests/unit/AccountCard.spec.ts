@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import { createLocalVue, mount } from "@vue/test-utils";
 import AccountCard from "../../src/components/AccountCard.vue";
 import VueCompositionApi from "@vue/composition-api";
 

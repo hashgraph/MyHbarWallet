@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import { createLocalVue, mount } from "@vue/test-utils";
 import Notice from "../../src/components/Notice.vue";
 import VueCompositionApi from "@vue/composition-api";
 import { mdiPartyPopper } from "@mdi/js";

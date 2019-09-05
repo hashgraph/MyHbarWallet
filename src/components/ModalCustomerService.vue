@@ -61,7 +61,7 @@ import {
 } from "@vue/composition-api";
 
 function createLink(
-    url: string,
+    url: string | null,
     platform: string,
     browser: string,
     device: string,
@@ -101,7 +101,10 @@ export default createComponent({
         const state = reactive({
             platform: ua.getOS.name,
             browser: ua.getBrowser().name || "",
-            url: context.root.$route.fullPath,
+            url:
+                context.root.$route != undefined
+                    ? context.root.$route.fullPath
+                    : null,
             description: "",
             device: "",
             accountId: ""
@@ -124,8 +127,10 @@ export default createComponent({
 
         // When the route is updated, reset the path value
         watch(
-            () => context.root.$route.fullPath,
+            () => context.root.$route,
             () => {
+                if (context.root.$route == undefined) return null;
+
                 state.url = context.root.$route.fullPath;
             }
         );

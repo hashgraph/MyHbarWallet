@@ -1,30 +1,54 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import OptionalPasswordInput from "../../src/components/OptionalPasswordInput.vue";
-import TextInput from "../../src/components/TextInput.vue";
-describe("OptionalPasswordInput", (): void => {
-    const wrapper = shallowMount(OptionalPasswordInput, {
-        propsData: {
-            value: ""
-        },
-        data(): {
-            showPassword: boolean;
-        } {
-            return {
-                showPassword: true
-            };
-        },
-        methods: {
-            handleInput: (): void => {
-                return;
-            },
-            handleChangeShowPassword: (): void => {
-                return;
-            }
-        }
-    });
 
+describe("OptionalPasswordInput", (): void => {
     it("renders", (): void => {
-        expect.assertions(1);
-        expect(wrapper.find(TextInput).text()).toContain("");
+        const wrapper = mount(OptionalPasswordInput, {
+            propsData: {
+                value: ""
+            },
+            data(): {
+                showPassword: boolean;
+            } {
+                return {
+                    showPassword: true
+                };
+            },
+            methods: {
+                handleInput: (): void => {
+                    return;
+                },
+                handleChangeShowPassword: (): void => {
+                    return;
+                }
+            }
+        });
+
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="password-container">
+              <div class="header">
+                <div class="text">
+                  Password
+                </div>
+                <div class="password-switch">
+                  <div class="text">
+                    Optional
+                  </div> <label class="switch-button btn"><input type="checkbox" class="input"> <span class="thumb"></span>
+                    <!----></label>
+                </div>
+              </div>
+              <div class="password-input expanded">
+                <div class="text-input"><label class="label-container">
+                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><input placeholder="Please Enter Password" autocomplete="on"> <!----></span>
+                    <!----></span></label>
+                  <!---->
+                  <!---->
+                </div>
+                <div class="password-warning">
+                  <p></p>
+                </div>
+              </div>
+            </div>
+        `);
     });
 });
