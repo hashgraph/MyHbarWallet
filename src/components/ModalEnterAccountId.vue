@@ -124,17 +124,6 @@ export default createComponent({
         function handleInput(accountText: string): void {
             state.errorMessage = null;
             state.input = accountText;
-
-            if (valid.value) {
-                const parts = state.input.split(".");
-                state.account = {
-                    shard: parseInt(parts[0]),
-                    realm: parseInt(parts[1]),
-                    account: parseInt(parts[2])
-                };
-            } else {
-                state.account = null;
-            }
         }
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
@@ -148,6 +137,17 @@ export default createComponent({
         async function handleSubmit(): Promise<void> {
             state.errorMessage = null;
             state.isBusy = true;
+
+            if (valid.value) {
+                const parts = state.input.split(".");
+                state.account = {
+                    shard: parseInt(parts[0]),
+                    realm: parseInt(parts[1]),
+                    account: parseInt(parts[2])
+                };
+            } else {
+                state.account = null;
+            }
 
             if (state.account == null || props.privateKey == null) {
                 throw new Error("unexpected submission of EnterAccountID");
