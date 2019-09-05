@@ -39,7 +39,7 @@ describe("OptionalPasswordInput", (): void => {
               </div>
               <div class="password-input expanded">
                 <div class="text-input"><label class="label-container">
-                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><input placeholder="Please Enter Password" autocomplete="on"> <!----></span>
+                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Please Enter Password" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
                     <!----></span></label>
                   <!---->
                   <!---->

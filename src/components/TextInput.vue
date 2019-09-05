@@ -5,53 +5,59 @@
 
             <span class="input-container">
                 <span v-if="prefix" class="prefix">{{ prefix }}</span>
-
                 <span class="input-wrapper">
-                    <textarea
-                        v-if="multiline"
-                        class="text-area"
-                        :placeholder="placeholder"
-                        :tabindex="tabindex"
-                        :value="value"
-                        :rows="rows"
-                        :class="{ resize: resizable }"
-                        @focusin="handleFocusIn"
-                        @focusout="handleFocusOut"
-                        @input="handleInput"
-                    />
-                    <input
-                        v-else
-                        ref="input"
-                        :value="value"
-                        :placeholder="placeholder"
-                        :type="keyboardType"
-                        :tabindex="tabindex"
-                        :step="step"
-                        :min="min"
-                        :autocomplete="autocompleteDisabled ? 'off' : 'on'"
-                        @focusin="handleFocusIn"
-                        @focusout="handleFocusOut"
-                        @input="handleInput"
-                    />
+                    <div class="flex-container">
+                        <div class="text-flex-item">
+                            <textarea
+                                v-if="multiline"
+                                class="text-area"
+                                :placeholder="placeholder"
+                                :tabindex="tabindex"
+                                :value="value"
+                                :rows="rows"
+                                :class="{ resize: resizable }"
+                                @focusin="handleFocusIn"
+                                @focusout="handleFocusOut"
+                                @input="handleInput"
+                            />
+                            <input
+                                v-else
+                                ref="input"
+                                :value="value"
+                                :placeholder="placeholder"
+                                :type="keyboardType"
+                                :tabindex="tabindex"
+                                :step="step"
+                                :min="min"
+                                :autocomplete="
+                                    autocompleteDisabled ? 'off' : 'on'
+                                "
+                                @focusin="handleFocusIn"
+                                @focusout="handleFocusOut"
+                                @input="handleInput"
+                            />
+                        </div>
 
-                    <span v-if="hasDecorations" class="decorations">
-                        <MaterialDesignIcon
-                            v-if="obscure"
-                            class="eye"
-                            :class="{ 'is-open': state.isEyeOpen }"
-                            :icon="eye"
-                            @click="handleClickEye"
-                        />
+                        <div class="deco-flex-item">
+                            <span v-if="hasDecorations" class="decorations">
+                                <MaterialDesignIcon
+                                    v-if="obscure"
+                                    class="eye"
+                                    :class="{ 'is-open': state.isEyeOpen }"
+                                    :icon="eye"
+                                    @click="handleClickEye"
+                                />
 
-                        <MaterialDesignIcon
-                            v-else-if="showValidation"
-                            class="checkmark"
-                            :class="{ 'is-valid': valid }"
-                            :icon="mdiCheckCircle"
-                        />
-                    </span>
+                                <MaterialDesignIcon
+                                    v-else-if="showValidation"
+                                    class="checkmark"
+                                    :class="{ 'is-valid': valid }"
+                                    :icon="mdiCheckCircle"
+                                />
+                            </span>
+                        </div>
+                    </div>
                 </span>
-
                 <span v-if="suffix" class="suffix">{{ suffix }}</span>
             </span>
         </label>
@@ -265,6 +271,19 @@ export default createComponent({
     width: 100%;
 }
 
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.text-flex-item {
+    flex-grow: 1;
+}
+
+.deco-flex-item {
+    flex-grow: 0;
+}
+
 .actions {
     align-items: center;
     display: flex;
@@ -361,7 +380,7 @@ input[type="number"]::-webkit-inner-spin-button {
     height: 100%;
     inset-block-start: 0;
     inset-inline-end: 15px;
-    position: absolute;
+    padding-inline-end: 20px;
 }
 
 /* Compact */
@@ -415,22 +434,6 @@ input[type="number"]::-webkit-inner-spin-button {
     }
 }
 
-/* Has Suffix */
-.text-input.has-suffix {
-    & input,
-    & textarea {
-        border-right: 1px solid var(--color-jupiter);
-    }
-}
-
-/* Is Multiline */
-.text-input.is-multiline {
-    & .decorations {
-        align-items: flex-end;
-        padding-block-end: 15px;
-    }
-}
-
 .prefix,
 .suffix {
     align-items: center;
@@ -440,6 +443,21 @@ input[type="number"]::-webkit-inner-spin-button {
     font-size: 14px;
     padding: 0 14px;
     white-space: nowrap;
+}
+
+/* Has Suffix */
+.text-input.has-suffix {
+    & .suffix {
+        border-left: 1px solid var(--color-jupiter);
+    }
+}
+
+/* Is Multiline */
+.text-input.is-multiline {
+    & .decorations {
+        align-items: flex-end;
+        padding-block-end: 15px;
+    }
 }
 
 .eye {

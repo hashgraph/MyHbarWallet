@@ -49,7 +49,7 @@ describe("UnitConverter.vue", (): void => {
                   </div>
                   <div>
                     <div class="text-input is-compact is-white"><label class="label-container">
-                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><input placeholder="Amount" type="text" step="any" autocomplete="on"> <!----></span>
+                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Amount" type="text" step="any" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
                         <!----></span></label>
                       <!---->
                       <!---->
@@ -94,7 +94,7 @@ describe("UnitConverter.vue", (): void => {
                   </div>
                   <div>
                     <div class="text-input is-compact is-white"><label class="label-container">
-                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><input placeholder="Amount" type="text" step="any" autocomplete="on"> <!----></span>
+                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Amount" type="text" step="any" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
                         <!----></span></label>
                       <!---->
                       <!---->

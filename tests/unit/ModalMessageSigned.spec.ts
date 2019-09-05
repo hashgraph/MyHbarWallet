@@ -27,7 +27,7 @@ describe("ModalMessageSigned.vue", (): void => {
                   </svg></header>
                 <div class="main">
                   <div class="content-container">
-                    <div class="text-input is-multiline has-label"><label class="label-container"><span class="label">Signed Message</span> <span class="input-container"><!----> <span class="input-wrapper"><textarea rows="8" class="text-area"></textarea> <!----></span>
+                    <div class="text-input is-multiline has-label"><label class="label-container"><span class="label">Signed Message</span> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
                         <!----></span></label>
                       <div class="actions">
                         <!---->

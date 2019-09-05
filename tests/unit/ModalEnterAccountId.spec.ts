@@ -44,18 +44,19 @@ describe("ModalEnterAccountId.vue", (): void => {
                   <div class="content-container">
                     <form>
                       <div class="text-input"><label class="label-container">
-                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><input placeholder="shard.realm.account" type="text" autocomplete="on"> <span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></span>
-                          <!----></span></label>
-                        <!---->
-                        <!---->
-                      </div>
-                      <div class="buttons"><button type="button" class="button outline compact"><span>No Account ID?</span>
-                          <!----></button> <button type="submit" disabled="disabled" class="button compact"><span>Continue</span>
-                          <!----></button></div>
-                    </form>
-                  </div>
+                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
+                  </div></span>
+                  <!----></span></label>
+                  <!---->
+                  <!---->
                 </div>
+                <div class="buttons"><button type="button" class="button outline compact"><span>No Account ID?</span>
+                    <!----></button> <button type="submit" disabled="disabled" class="button compact"><span>Continue</span>
+                    <!----></button></div>
+                </form>
               </div>
+            </div>
+            </div>
             </div>
         `);
     });
