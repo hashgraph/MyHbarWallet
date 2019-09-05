@@ -13,7 +13,8 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
             propsData: {
                 state: {
                     modalIsOpen: false,
-                    rawPrivateKey: "raw_private_key",
+                    rawPrivateKey:
+                        "302e020100300506032b657004220420aff973d1405b55398a3e7edec946ae9a2d86870c82babb04624c92e2be8c6e38",
                     isBusy: false
                 }
             },
@@ -53,7 +54,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                           <!----></span></label>
                         <!---->
                         <!---->
-                      </div> <button type="submit" disabled="disabled" class="button-access-wallet"><span>Access Account</span>
+                      </div> <button type="submit" class="button-access-wallet"><span>Access Account</span>
                         <!----></button>
                       <div class="customer-support-link"><img alt="" src=""> Customer Support
                         <div role="dialog" aria-modal="true" class="modal-background">
