@@ -3,7 +3,16 @@
         :is-open="isOpen"
         title="Enter Account ID"
         @change="handleModalChangeIsOpen"
+        @click.native="handleInputNotFocused"
     >
+        <template v-slot:banner>
+            <Notice class="notice" :symbol="mdiHelpCircleOutline">
+                Hedera Account IDs are three numbers separated by decimals (ex.
+                0.0.10000). Accounts are controlled by keys. To get an account,
+                another existing account must create and fund a new account on
+                your behalf using your public key.
+            </Notice>
+        </template>
         <form @submit.stop.prevent="handleSubmit">
             <TextInput
                 ref="input"
@@ -13,8 +22,8 @@
                 :error="state.errorMessage"
                 placeholder="shard.realm.account"
                 @input="handleInput"
+                @click.native.stop
             />
-
             <div class="buttons">
                 <Button
                     compact
@@ -23,6 +32,7 @@
                     class="button"
                     type="button"
                     @click="handleDontHaveAccount"
+                    @focus.native="handleInputNotFocused"
                 />
                 <Button
                     compact
@@ -57,6 +67,8 @@ import {
     Ed25519PrivateKey
 } from "@hashgraph/sdk";
 import settings from "../settings";
+import Notice from "../components/Notice.vue";
+import { mdiHelpCircleOutline } from "@mdi/js";
 
 export interface Props {
     isOpen: boolean;
@@ -75,7 +87,8 @@ export default createComponent({
     components: {
         Modal,
         TextInput,
-        Button
+        Button,
+        Notice
     },
     model: {
         prop: "isOpen",
@@ -95,10 +108,18 @@ export default createComponent({
         });
 
         const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
+        const partialRegex = /^\d{1,}$/;
 
         const valid = computed(() => shardRealmAccountRegex.test(state.input));
+        const partialValid = computed(() => partialRegex.test(state.input));
 
         const input = ref<HTMLInputElement | null>(null);
+
+        function handleInputNotFocused(): void {
+            if (partialValid.value) {
+                state.input = "0.0." + state.input;
+            }
+        }
 
         function handleInput(accountText: string): void {
             state.errorMessage = null;
@@ -201,11 +222,14 @@ export default createComponent({
         return {
             state,
             valid,
+            partialValid,
             input,
             handleInput,
+            handleInputNotFocused,
             handleModalChangeIsOpen,
             handleDontHaveAccount,
-            handleSubmit
+            handleSubmit,
+            mdiHelpCircleOutline
         };
     }
 });
