@@ -74,4 +74,8 @@ export default createComponent({
     color: var(--color-china-blue);
     font-size: 14px;
 }
+
+.text {
+    align-self: center;
+}
 </style>
