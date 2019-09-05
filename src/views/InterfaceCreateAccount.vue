@@ -68,14 +68,16 @@ import { formatHbar, validateHbar } from "../formatter";
 // make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
 
-// TODO: SDK BigInt --> BigNumber
-const ESTIMATED_FEE = new BigNumber(0.000_100_000);
+const ESTIMATED_FEE_HBAR = new BigNumber(0.000_900_000);
+const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
+    getValueOfUnit(Unit.Hbar)
+);
 
 // Summary Items
 const summaryItems = [
     { description: "Initial Balance", value: new BigNumber(0) },
     { description: "Public Key", value: "" },
-    { description: "Estimated Fee", value: ESTIMATED_FEE }
+    { description: "Estimated Fee", value: ESTIMATED_FEE_HBAR }
 ] as Item[];
 
 interface State {
@@ -170,7 +172,7 @@ export default createComponent({
                     return;
                 }
 
-                const fee = ESTIMATED_FEE;
+                const fee = ESTIMATED_FEE_TINYBAR;
                 const key = Ed25519PublicKey.fromString(state.publicKey);
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client
