@@ -23,6 +23,15 @@ describe("ModalFeeSummaryItems.vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot();
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="modal-fee-summary-items">
+              <div class="modal-fee-summary-item"><span class="description"> description: </span> <span class="value bignumber"><span class="whole">1</span> <span class="fraction">.23</span> <span class="symbol">ℏ</span></span></div>
+              <div class="modal-fee-summary-item"><span class="description"> description: </span> <span class="value string">
+                    public key
+                </span></div>
+              <div class="modal-fee-summary-item"><span class="description"> description: </span> <span class="value bignumber"><span class="whole">3</span> <span class="fraction">.45</span> <span class="symbol">ℏ</span></span></div>
+              <div class="modal-fee-summary-item total"><span class="description"> Total: </span> <span class="value bignumber"><span class="whole">4</span> <span class="fraction">.68</span> <span class="symbol">ℏ</span></span></div>
+            </div>
+        `);
     });
 });

@@ -19,7 +19,7 @@ describe("ModalFeeSummary.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-fee-summary">
+            <div class="modal-fee-summary" title="Title">
               <div role="dialog" aria-modal="true" class="modal-background is-open">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
@@ -27,17 +27,14 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-<<<<<<< HEAD
-                      <div class="summary-title">Title</div>
+                      <div class="modal-fee-summary-title"><span>
+                    Transaction:
+                    <strong></strong>
+                    ℏ
+                </span></div>
                       <div class="separator"></div>
-                      <div class="summary">
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
-=======
-                      <div class="summary-title"><span>Title</span></div>
-                      <div class="separator"></div>
-                      <div class="summary">
-                        <div class="item total"><span class="item-description">Total:</span> <span class="item-value"><span class="whole">0</span> <span class="fraction"></span><span>ℏ</span></span></div>
->>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
+                      <div class="modal-fee-summary-items">
+                        <div class="modal-fee-summary-item total"><span class="description"> Total: </span> <span class="value bignumber"><span class="whole">0</span> <span class="fraction"></span> <span class="symbol">ℏ</span></span></div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -63,7 +60,7 @@ describe("ModalFeeSummary.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-fee-summary">
+            <div class="modal-fee-summary" title="Title">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
@@ -71,17 +68,14 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-<<<<<<< HEAD
-                      <div class="summary-title">TItle</div>
+                      <div class="modal-fee-summary-title"><span>
+                    Transaction:
+                    <strong></strong>
+                    ℏ
+                </span></div>
                       <div class="separator"></div>
-                      <div class="summary">
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
-=======
-                      <div class="summary-title"><span>Title</span></div>
-                      <div class="separator"></div>
-                      <div class="summary">
-                        <div class="item total"><span class="item-description">Total:</span> <span class="item-value"><span class="whole">0</span> <span class="fraction"></span><span>ℏ</span></span></div>
->>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
+                      <div class="modal-fee-summary-items">
+                        <div class="modal-fee-summary-item total"><span class="description"> Total: </span> <span class="value bignumber"><span class="whole">0</span> <span class="fraction"></span> <span class="symbol">ℏ</span></span></div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -111,7 +105,7 @@ describe("ModalFeeSummary.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-fee-summary">
+            <div class="modal-fee-summary" title="Title">
               <div role="dialog" aria-modal="true" class="modal-background is-open">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
@@ -119,33 +113,23 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-<<<<<<< HEAD
-                      <div class="summary-title">TItle</div>
-=======
-                      <div class="summary-title"><span>Title</span></div>
->>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
+                      <div class="modal-fee-summary-title"><span>
+                    Transaction:
+                    <strong></strong>
+                    ℏ
+                </span></div>
                       <div class="separator"></div>
-                      <div class="summary">
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-<<<<<<< HEAD
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
-=======
-                        <div class="item total"><span class="item-description">Total:</span> <span class="item-value"><span class="whole">0</span> <span class="fraction"></span><span>ℏ</span></span></div>
->>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
+                      <div class="modal-fee-summary-items">
+                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
+                    Value
+                </span></div>
+                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
+                    Value
+                </span></div>
+                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
+                    Value
+                </span></div>
+                        <div class="modal-fee-summary-item total"><span class="description"> Total: </span> <span class="value bignumber"><span class="whole">0</span> <span class="fraction"></span> <span class="symbol">ℏ</span></span></div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -175,7 +159,7 @@ describe("ModalFeeSummary.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-fee-summary">
+            <div class="modal-fee-summary" title="Title">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
@@ -183,33 +167,23 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-<<<<<<< HEAD
-                      <div class="summary-title">TItle</div>
-=======
-                      <div class="summary-title"><span>Title</span></div>
->>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
+                      <div class="modal-fee-summary-title"><span>
+                    Transaction:
+                    <strong></strong>
+                    ℏ
+                </span></div>
                       <div class="separator"></div>
-                      <div class="summary">
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-<<<<<<< HEAD
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
-=======
-                        <div class="item total"><span class="item-description">Total:</span> <span class="item-value"><span class="whole">0</span> <span class="fraction"></span><span>ℏ</span></span></div>
->>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
+                      <div class="modal-fee-summary-items">
+                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
+                    Value
+                </span></div>
+                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
+                    Value
+                </span></div>
+                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
+                    Value
+                </span></div>
+                        <div class="modal-fee-summary-item total"><span class="description"> Total: </span> <span class="value bignumber"><span class="whole">0</span> <span class="fraction"></span> <span class="symbol">ℏ</span></span></div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>

@@ -35,7 +35,7 @@ describe("ModalSendTransferSuccess.vue", (): void => {
                           Success
                         </div>
                         <div class="description">
-                          Transferred <strong>500000</strong> hbar to account
+                          Transferred <strong>500000</strong> ℏ to account
                           <strong>0.0.999</strong>.
                         </div> <button type="submit" class="btn outline"><span>Dismiss</span>
                           <!----></button>

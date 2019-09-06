@@ -18,7 +18,13 @@ describe("ModalFeeSummaryTitle.vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot();
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="modal-fee-summary-title"><span class="title">
+                    Sending
+                    <strong>999999999</strong>
+                    ℏ to account
+                    <strong>0.0.1</strong></span></div>
+        `);
     });
 
     it("renders for create account", (): void => {
@@ -33,6 +39,10 @@ describe("ModalFeeSummaryTitle.vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot();
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="modal-fee-summary-title"><span class="title">
+                    Creating account with balance
+                    <strong>999999999</strong></span></div>
+        `);
     });
 });

@@ -22,7 +22,9 @@ describe("ModalFeeSummaryItem.vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot();
+        expect(wrapper).toMatchInlineSnapshot(
+            `<div class="modal-fee-summary-item"><span class="description"> DESCRIPTION: </span> <span class="value bignumber"><span class="whole">123,454</span> <span class="fraction">.2390734</span> <span class="symbol">ℏ</span></span></div>`
+        );
     });
 
     it("renders with String value", (): void => {
@@ -36,6 +38,10 @@ describe("ModalFeeSummaryItem.vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot();
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="modal-fee-summary-item"><span class="description"> DESCRIPTION: </span> <span class="value string">
+                    VALUE
+                </span></div>
+        `);
     });
 });
