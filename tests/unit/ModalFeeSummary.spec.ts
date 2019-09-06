@@ -34,7 +34,23 @@ describe("ModalFeeSummary.vue", (): void => {
                 </span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
-                        <div class="modal-fee-summary-item total"><span class="description"> Total: </span> <span class="value bignumber"><span class="whole">0</span> <span class="fraction"></span> <span class="symbol">ℏ</span></span></div>
+                        <div class="row total">
+                          <div class="description">
+                            Total
+                          </div>
+                          <div class="int text">
+                            0
+                          </div>
+                          <div class="period text">
+                            .
+                          </div>
+                          <div class="fraction text">
+
+                          </div>
+                          <div class="symbol text">
+                            ℏ
+                          </div>
+                        </div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -75,7 +91,23 @@ describe("ModalFeeSummary.vue", (): void => {
                 </span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
-                        <div class="modal-fee-summary-item total"><span class="description"> Total: </span> <span class="value bignumber"><span class="whole">0</span> <span class="fraction"></span> <span class="symbol">ℏ</span></span></div>
+                        <div class="row total">
+                          <div class="description">
+                            Total
+                          </div>
+                          <div class="int text">
+                            0
+                          </div>
+                          <div class="period text">
+                            .
+                          </div>
+                          <div class="fraction text">
+
+                          </div>
+                          <div class="symbol text">
+                            ℏ
+                          </div>
+                        </div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -120,16 +152,47 @@ describe("ModalFeeSummary.vue", (): void => {
                 </span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
-                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
-                    Value
-                </span></div>
-                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
-                    Value
-                </span></div>
-                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
-                    Value
-                </span></div>
-                        <div class="modal-fee-summary-item total"><span class="description"> Total: </span> <span class="value bignumber"><span class="whole">0</span> <span class="fraction"></span> <span class="symbol">ℏ</span></span></div>
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row total">
+                          <div class="description">
+                            Total
+                          </div>
+                          <div class="int text">
+                            0
+                          </div>
+                          <div class="period text">
+                            .
+                          </div>
+                          <div class="fraction text">
+
+                          </div>
+                          <div class="symbol text">
+                            ℏ
+                          </div>
+                        </div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -174,16 +237,47 @@ describe("ModalFeeSummary.vue", (): void => {
                 </span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
-                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
-                    Value
-                </span></div>
-                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
-                    Value
-                </span></div>
-                        <div class="modal-fee-summary-item"><span class="description"> Description: </span> <span class="value string">
-                    Value
-                </span></div>
-                        <div class="modal-fee-summary-item total"><span class="description"> Total: </span> <span class="value bignumber"><span class="whole">0</span> <span class="fraction"></span> <span class="symbol">ℏ</span></span></div>
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row total">
+                          <div class="description">
+                            Total
+                          </div>
+                          <div class="int text">
+                            0
+                          </div>
+                          <div class="period text">
+                            .
+                          </div>
+                          <div class="fraction text">
+
+                          </div>
+                          <div class="symbol text">
+                            ℏ
+                          </div>
+                        </div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>

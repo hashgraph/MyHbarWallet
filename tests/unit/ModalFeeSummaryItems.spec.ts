@@ -25,12 +25,65 @@ describe("ModalFeeSummaryItems.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-fee-summary-items">
-              <div class="modal-fee-summary-item"><span class="description"> description: </span> <span class="value bignumber"><span class="whole">1</span> <span class="fraction">.23</span> <span class="symbol">ℏ</span></span></div>
-              <div class="modal-fee-summary-item"><span class="description"> description: </span> <span class="value string">
-                    public key
-                </span></div>
-              <div class="modal-fee-summary-item"><span class="description"> description: </span> <span class="value bignumber"><span class="whole">3</span> <span class="fraction">.45</span> <span class="symbol">ℏ</span></span></div>
-              <div class="modal-fee-summary-item total"><span class="description"> Total: </span> <span class="value bignumber"><span class="whole">4</span> <span class="fraction">.68</span> <span class="symbol">ℏ</span></span></div>
+              <div class="row">
+                <div class="description">
+                  description
+                </div>
+                <div class="int text">
+                  1
+                </div>
+                <div class="period text">
+                  .
+                </div>
+                <div class="fraction text">
+                  23
+                </div>
+                <div class="symbol text">
+                  ℏ
+                </div>
+              </div>
+              <div class="row">
+                <div class="description">
+                  description
+                </div>
+                <div class="text">
+                  public key
+                </div>
+              </div>
+              <div class="row">
+                <div class="description">
+                  description
+                </div>
+                <div class="int text">
+                  3
+                </div>
+                <div class="period text">
+                  .
+                </div>
+                <div class="fraction text">
+                  45
+                </div>
+                <div class="symbol text">
+                  ℏ
+                </div>
+              </div>
+              <div class="row total">
+                <div class="description">
+                  Total
+                </div>
+                <div class="int text">
+                  4
+                </div>
+                <div class="period text">
+                  .
+                </div>
+                <div class="fraction text">
+                  68
+                </div>
+                <div class="symbol text">
+                  ℏ
+                </div>
+              </div>
             </div>
         `);
     });
