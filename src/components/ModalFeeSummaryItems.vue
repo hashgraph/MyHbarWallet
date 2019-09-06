@@ -1,78 +1,35 @@
 <template>
     <div class="modal-fee-summary-items">
-        <div class="receipt">
-            <div class="column">
-                <template v-for="(item, index) in splitItems">
-                    <div
-                        :key="item.key"
-                        class="description"
-                        :class="{ total: index === splitItems.length - 1 }"
-                    >
-                        {{ item.description }}
+        <template v-for="(item, index) in splitItems">
+            <div
+                :key="item.key"
+                class="row"
+                :class="{ total: index === splitItems.length - 1 }"
+            >
+                <div class="description">
+                    {{ item.description }}
+                </div>
+                <template v-if="item.int != null">
+                    <div class="int text">
+                        {{ item.int }}
                     </div>
-                </template>
-            </div>
-            <div class="column">
-                <template v-for="(item, index) in splitItems">
-                    <template v-if="item.int != null">
-                        <div
-                            :key="item.key"
-                            class="int text"
-                            :class="{ total: index === splitItems.length - 1 }"
-                        >
-                            {{ item.int }}
-                        </div>
-                    </template>
-                    <template v-else>
-                        <div
-                            :key="item.key"
-                            class="text"
-                            :class="{ total: index === splitItems.length - 1 }"
-                        >
-                            {{ item.value }}
-                        </div>
-                    </template>
-                </template>
-            </div>
-            <div class="column">
-                <template v-for="(item, index) in splitItems">
-                    <div
-                        :key="item.key"
-                        class="period text"
-                        :class="{ total: index === splitItems.length - 1 }"
-                    >
+                    <div class="period text">
                         .
                     </div>
-                </template>
-            </div>
-            <div class="column">
-                <template v-for="(item, index) in splitItems">
-                    <div
-                        v-if="item.fraction != null"
-                        :key="item.key"
-                        class="fraction text"
-                        :class="{ total: index === splitItems.length - 1 }"
-                    >
+                    <div class="fraction text">
                         {{ item.fraction }}
                     </div>
-                </template>
-            </div>
-            <div class="column">
-                <template v-for="(item, index) in splitItems">
-                    <div
-                        v-if="
-                            Number(item.int) != null &&
-                                Number(item.fraction) != null
-                        "
-                        :key="item.key"
-                        class="symbol text"
-                        :class="{ total: index === splitItems.length - 1 }"
-                    >
+                    <div class="symbol text">
                         ℏ
                     </div>
                 </template>
+                <template v-else>
+                    <div class="text">
+                        {{ item.value }}
+                    </div>
+                </template>
             </div>
-        </div>
+        </template>
     </div>
 </template>
 
@@ -80,7 +37,6 @@
 import { createComponent, computed, PropType, Ref } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 import { KeyedItem } from "./ModalFeeSummary.vue";
-import ModalFeeSummaryItem from "../components/ModalFeeSummaryItem.vue";
 import { formatSplit, formatRightPad } from "../formatter";
 
 let KEY = 0;
@@ -101,9 +57,6 @@ interface SplitItem {
 export default createComponent({
     props: {
         items: Array as PropType<KeyedItem[]>
-    },
-    components: {
-        ModalFeeSummaryItem
     },
     setup(props: { items: KeyedItem[] }) {
         // Compute the total
@@ -162,11 +115,6 @@ export default createComponent({
                         mostFractionDecimals = parts.fraction.length;
                     }
 
-                    parts.fraction = formatRightPad(
-                        parts.fraction,
-                        mostFractionDecimals
-                    );
-
                     return {
                         key: nextItemKey(),
                         description: item.description,
@@ -177,8 +125,17 @@ export default createComponent({
                 }
             );
 
+            // Loop through all the items and right pad all the necessary ones
+            for (const item of items) {
+                item.fraction = formatRightPad(
+                    item.fraction,
+                    mostFractionDecimals
+                );
+            }
+
             const computedTotal = total;
 
+            // Right padd the total as well
             computedTotal.value.fraction = formatRightPad(
                 computedTotal.value.fraction,
                 mostFractionDecimals
@@ -186,7 +143,7 @@ export default createComponent({
 
             items.push({
                 key: nextItemKey(),
-                description: "Total:",
+                description: "Total",
                 int: computedTotal.value.int,
                 fraction: computedTotal.value.fraction,
                 value: computedTotal.value.toString()
@@ -212,22 +169,15 @@ export default createComponent({
 
 .description {
     color: var(--color-washed-black);
+    flex-grow: 1;
     font-weight: 500;
 }
 
-.receipt {
+.row {
     align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
-
-.column {
-    width: fit-content;
-}
-
-.column:first-child {
-    flex-grow: 1;
 }
 
 .text {
