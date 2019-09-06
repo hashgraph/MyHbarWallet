@@ -108,7 +108,8 @@ export default createComponent({
                 password: "",
                 isBusy: false,
                 passwordStrength: 0,
-                passwordSuggestion: ""
+                passwordSuggestion: "",
+                confirmationPassword: ""
             },
             modalCreateByPhraseIsOpen: false,
             modalCreateWithSoftwareIsOpen: false,

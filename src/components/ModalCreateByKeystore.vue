@@ -23,7 +23,13 @@
                     :value="state.password"
                     placeholder="Please Enter At Least 9 Characters"
                     obscure
+                    class="input"
                     @input="handleInputPassword"
+                />
+                <TextInput
+                    v-model="state.confirmationPassword"
+                    placeholder="Confirm Password"
+                    obscure
                 />
 
                 <div
@@ -86,8 +92,9 @@
                 <div class="btn-container">
                     <Button
                         :disabled="
-                            state.password.length < 9 &&
-                                state.passwordStrength < 2
+                            (state.password.length < 9 &&
+                                state.passwordStrength < 2) ||
+                                !confirmPassword
                         "
                         :busy="state.isBusy"
                         class="btn"
@@ -112,7 +119,8 @@ import {
     createComponent,
     PropType,
     watch,
-    SetupContext
+    SetupContext,
+    computed
 } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
@@ -130,6 +138,7 @@ export interface State {
     passwordStrength: number;
     passwordSuggestion: string;
     isBusy: boolean;
+    confirmationPassword: string;
 }
 
 interface Props {
@@ -188,7 +197,8 @@ export default createComponent({
                         ...props.state,
                         password: "",
                         passwordStrength: 0,
-                        passwordSuggestion: ""
+                        passwordSuggestion: "",
+                        confirmationPassword: ""
                     });
 
                     (context as Context).refs.input.focus();
@@ -204,6 +214,10 @@ export default createComponent({
          * 3 # safely unguessable: moderate protection from offline slow-hash scenario. (guesses < 10^10)
          * 4 # very unguessable: strong protection from offline slow-hash scenario. (guesses >= 10^10)
          */
+
+        const confirmPassword = computed(
+            () => props.state.confirmationPassword === props.state.password
+        );
 
         function handleInputPassword(value: string): void {
             const passwordMetrics: ZXCVBNResult = zxcvbn(value, wordlist);
@@ -223,7 +237,8 @@ export default createComponent({
         return {
             handleModalChangeIsOpen,
             handleInputPassword,
-            mdiArrowRight
+            mdiArrowRight,
+            confirmPassword
         };
     }
 });
@@ -240,6 +255,10 @@ export default createComponent({
     font-size: 20px;
     font-weight: 500;
     padding-block-end: 40px;
+}
+
+.input {
+    margin-block-end: 20px;
 }
 
 .btn-container {
