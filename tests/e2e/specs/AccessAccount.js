@@ -50,7 +50,7 @@ module.exports = {
             .click(
                 ".modal-enter-account-id > .modal-background.is-open > .modal button[type=submit]"
             )
-            .waitForElementVisible(".interface-form", 5000)
+            .waitForElementVisible(".interface-form", 10000)
             .assert.urlContains("interface/send-transfer")
             .end();
     }
