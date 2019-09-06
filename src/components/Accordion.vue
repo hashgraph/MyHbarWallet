@@ -101,6 +101,9 @@ a {
 }
 
 .content-text {
-    padding-block-start: 20px;
+    background-color: var(--color-peral);
+    border: 1px solid var(--color-boysenberry-shadow);
+    border-radius: 5px;
+    padding: 20px;
 }
 </style>
