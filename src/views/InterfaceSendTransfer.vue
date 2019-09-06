@@ -187,6 +187,9 @@ export default createComponent({
                     return;
                 }
 
+                console.log("sendAmountTinybar", sendAmountTinybar);
+                console.log("recipient", recipient);
+
                 await new CryptoTransferTransaction(client)
                     .addSender(
                         store.state.wallet.session.account,

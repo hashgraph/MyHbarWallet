@@ -7,7 +7,7 @@ interface NetworkSettings {
 
 const availableNetworks: { [key: string]: NetworkSettings } = {
     testnet: {
-        proxy: "https://grpc-web.myhederawallet.com",
+        proxy: "192.168.7.22:11205",
         address: "0.testnet.hedera.com:50211",
         node: "0.0.3",
         name: "testnet"

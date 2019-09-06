@@ -149,12 +149,14 @@ export default createComponent({
                     lengthLongestString
                 );
 
-                // Determine if the period is necessary
+                // Determine if the item is a nubmer and period is necessary
                 // and set the result int item.value -- the preformatted string
-                if (hasFraction) {
-                    item.value = item.int + "." + item.fraction;
-                } else {
-                    item.value = item.int + " " + item.fraction;
+                if (item.int != null) {
+                    if (hasFraction) {
+                        item.value = item.int + "." + item.fraction;
+                    } else {
+                        item.value = item.int + " " + item.fraction;
+                    }
                 }
             }
 
