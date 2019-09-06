@@ -56,8 +56,7 @@ import FAQs from "../components/FAQs.vue";
 import Community from "../components/Community.vue";
 import HomeTileButtons from "../components/HomeTileButtons.vue";
 import circleImage from "../assets/circle.png";
-import { createComponent, reactive } from "@vue/composition-api";
-import store from "../store";
+import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
     components: {
@@ -67,13 +66,8 @@ export default createComponent({
         Community
     },
     setup() {
-        const state = reactive({
-            modalForgotToLogOutIsOpen: store.getters.IS_LOGGED_IN
-        });
-
         return {
-            circleImage,
-            state
+            circleImage
         };
     }
 });
