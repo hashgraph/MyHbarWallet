@@ -58,7 +58,6 @@ import InterfaceForm from "../components/InterfaceForm.vue";
 import { computed, createComponent, reactive } from "@vue/composition-api";
 import store from "../store";
 import { AccountCreateTransaction, Ed25519PublicKey } from "@hashgraph/sdk";
-import { ALERT } from "../store/actions";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { getValueOfUnit, Unit } from "../units";

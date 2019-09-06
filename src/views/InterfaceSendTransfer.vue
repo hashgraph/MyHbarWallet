@@ -56,7 +56,7 @@ import Button from "../components/Button.vue";
 import { createComponent, reactive, computed } from "@vue/composition-api";
 import store from "../store";
 import { AccountId } from "@hashgraph/sdk";
-import { ALERT, REFRESH_BALANCE } from "../store/actions";
+import { REFRESH_BALANCE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { CryptoTransferTransaction } from "@hashgraph/sdk";
 import { Unit, getValueOfUnit } from "../units";
