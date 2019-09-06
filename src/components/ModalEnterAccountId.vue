@@ -1,50 +1,52 @@
 <template>
-    <Modal
-        :is-open="isOpen"
-        title="Enter Account ID"
-        @change="handleModalChangeIsOpen"
-        @click.native="handleInputNotFocused"
-    >
-        <template v-slot:banner>
-            <Notice class="notice" :symbol="mdiHelpCircleOutline">
-                Hedera Account IDs are three numbers separated by decimals (ex.
-                0.0.10000). Accounts are controlled by keys. To get an account,
-                another existing account must create and fund a new account on
-                your behalf using your public key.
-            </Notice>
-        </template>
-        <form @submit.stop.prevent="handleSubmit">
-            <TextInput
-                ref="input"
-                :value="state.input"
-                show-validation
-                :valid="valid"
-                :error="state.errorMessage"
-                placeholder="shard.realm.account"
-                @input="handleInput"
-                @click.native.stop
-            />
-            <div class="buttons">
-                <Button
-                    compact
-                    outline
-                    label="No Account ID?"
-                    class="button"
-                    type="button"
-                    @click="handleDontHaveAccount"
-                    @focus.native="handleInputNotFocused"
+    <div class="modal-enter-account-id">
+        <Modal
+            :is-open="isOpen"
+            title="Enter Account ID"
+            @change="handleModalChangeIsOpen"
+            @click.native="handleInputNotFocused"
+        >
+            <template v-slot:banner>
+                <Notice class="notice" :symbol="mdiHelpCircleOutline">
+                    Hedera Account IDs are three numbers separated by decimals
+                    (ex. 0.0.10000). Accounts are controlled by keys. To get an
+                    account, another existing account must create and fund a new
+                    account on your behalf using your public key.
+                </Notice>
+            </template>
+            <form @submit.stop.prevent="handleSubmit">
+                <TextInput
+                    ref="input"
+                    :value="state.input"
+                    show-validation
+                    :valid="valid"
+                    :error="state.errorMessage"
+                    placeholder="shard.realm.account"
+                    @input="handleInput"
+                    @click.native.stop
                 />
-                <Button
-                    compact
-                    label="Continue"
-                    class="button"
-                    type="submit"
-                    :disabled="!valid"
-                    :busy="state.isBusy"
-                />
-            </div>
-        </form>
-    </Modal>
+                <div class="buttons">
+                    <Button
+                        compact
+                        outline
+                        label="No Account ID?"
+                        class="button"
+                        type="button"
+                        @click="handleDontHaveAccount"
+                        @focus.native="handleInputNotFocused"
+                    />
+                    <Button
+                        compact
+                        label="Continue"
+                        class="button"
+                        type="submit"
+                        :disabled="!valid"
+                        :busy="state.isBusy"
+                    />
+                </div>
+            </form>
+        </Modal>
+    </div>
 </template>
 
 <script lang="ts">

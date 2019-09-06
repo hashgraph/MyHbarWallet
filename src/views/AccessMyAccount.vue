@@ -49,6 +49,7 @@
 
         <input
             v-show="false"
+            id="file-upload"
             ref="file"
             type="file"
             @change="loadTextFromFile"
