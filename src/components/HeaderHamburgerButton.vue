@@ -53,7 +53,7 @@ export default createComponent({
     border-color: var(--color-white);
     border-radius: 50%;
     cursor: pointer;
-    inset-inline-end: 0;
+    inset-inline-end: 15px;
     max-height: 40px;
     min-width: 40px;
     overflow: hidden;

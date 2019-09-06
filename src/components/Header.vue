@@ -130,6 +130,7 @@ export default createComponent({
         box-shadow: 0 2px 13px rgba(0, 0, 0, 0.1);
         content: "";
         inset: 0;
+        margin-inline-end: 50px;
         opacity: 0;
         position: absolute;
         transition: opacity 0.3s ease;
@@ -215,10 +216,6 @@ export default createComponent({
     & > strong {
         font-weight: 600;
     }
-}
-
-.spacer {
-    flex-grow: 1;
 }
 
 @media screen and (max-width: 1024px) {
