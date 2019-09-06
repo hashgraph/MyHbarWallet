@@ -93,7 +93,7 @@ export default createComponent({
 }
 
 .bar-1-anim {
-    transform: rotate(45deg) translate(20px, 4px) scaleX(1.75) scaleY(2);
+    transform: rotate(45deg) translate(19.75px, 4px) scaleX(1.75) scaleY(2);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {
@@ -102,7 +102,9 @@ export default createComponent({
 }
 
 .bar-2-anim {
-    transform: rotate(-45deg) translate(25.5px, -13px) scaleX(1.75) scaleY(2);
+    transform:
+        rotate(-45deg) translate(26.5px, -13.625px) scaleX(1.75)
+        scaleY(2);
     transition: transform 0.2s linear;
 
     @media (prefers-reduced-motion) {
