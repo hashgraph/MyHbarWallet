@@ -130,7 +130,6 @@ export default createComponent({
         box-shadow: 0 2px 13px rgba(0, 0, 0, 0.1);
         content: "";
         inset: 0;
-        margin-inline-end: 50px;
         opacity: 0;
         position: absolute;
         transition: opacity 0.3s ease;
