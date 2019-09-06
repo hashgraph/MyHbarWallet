@@ -68,7 +68,7 @@ import { formatHbar, validateHbar } from "../formatter";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
-const ESTIMATED_FEE_HBAR = new BigNumber(0.000_900_000);
+const ESTIMATED_FEE_HBAR = new BigNumber(0.100_000_000);
 const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
     getValueOfUnit(Unit.Hbar)
 );
