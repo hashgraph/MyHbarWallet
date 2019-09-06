@@ -258,7 +258,7 @@ export default createComponent({
 
     @media (max-width: 425px) {
         align-items: center;
-        flex-direction: column-reverse;
+        flex-direction: column;
     }
 }
 </style>
