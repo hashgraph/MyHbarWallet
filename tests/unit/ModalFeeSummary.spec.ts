@@ -38,16 +38,8 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Total
                           </div>
-                          <div class="int text">
-                            0
-                          </div>
-                          <div class="period text">
-                            .
-                          </div>
-                          <div class="fraction text">
-
-                          </div>
-                          <div class="symbol text">
+                          <div class="value">0 </div>
+                          <div class="symbol value">
                             ℏ
                           </div>
                         </div>
@@ -95,16 +87,8 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Total
                           </div>
-                          <div class="int text">
-                            0
-                          </div>
-                          <div class="period text">
-                            .
-                          </div>
-                          <div class="fraction text">
-
-                          </div>
-                          <div class="symbol text">
+                          <div class="value">0 </div>
+                          <div class="symbol value">
                             ℏ
                           </div>
                         </div>
@@ -156,40 +140,35 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Description
                           </div>
-                          <div class="text">
-                            Value
+                          <div class="value">Value</div>
+                          <div class="symbol value">
+                            ℏ
                           </div>
                         </div>
                         <div class="row">
                           <div class="description">
                             Description
                           </div>
-                          <div class="text">
-                            Value
+                          <div class="value">Value</div>
+                          <div class="symbol value">
+                            ℏ
                           </div>
                         </div>
                         <div class="row">
                           <div class="description">
                             Description
                           </div>
-                          <div class="text">
-                            Value
+                          <div class="value">Value</div>
+                          <div class="symbol value">
+                            ℏ
                           </div>
                         </div>
                         <div class="row total">
                           <div class="description">
                             Total
                           </div>
-                          <div class="int text">
-                            0
-                          </div>
-                          <div class="period text">
-                            .
-                          </div>
-                          <div class="fraction text">
-
-                          </div>
-                          <div class="symbol text">
+                          <div class="value">0 </div>
+                          <div class="symbol value">
                             ℏ
                           </div>
                         </div>
@@ -241,40 +220,35 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Description
                           </div>
-                          <div class="text">
-                            Value
+                          <div class="value">Value</div>
+                          <div class="symbol value">
+                            ℏ
                           </div>
                         </div>
                         <div class="row">
                           <div class="description">
                             Description
                           </div>
-                          <div class="text">
-                            Value
+                          <div class="value">Value</div>
+                          <div class="symbol value">
+                            ℏ
                           </div>
                         </div>
                         <div class="row">
                           <div class="description">
                             Description
                           </div>
-                          <div class="text">
-                            Value
+                          <div class="value">Value</div>
+                          <div class="symbol value">
+                            ℏ
                           </div>
                         </div>
                         <div class="row total">
                           <div class="description">
                             Total
                           </div>
-                          <div class="int text">
-                            0
-                          </div>
-                          <div class="period text">
-                            .
-                          </div>
-                          <div class="fraction text">
-
-                          </div>
-                          <div class="symbol text">
+                          <div class="value">0 </div>
+                          <div class="symbol value">
                             ℏ
                           </div>
                         </div>
