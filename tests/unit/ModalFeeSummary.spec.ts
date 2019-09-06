@@ -19,7 +19,7 @@ describe("ModalFeeSummary.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-fee-summary">
+            <div class="modal-fee-summary" title="Title">
               <div role="dialog" aria-modal="true" class="modal-background is-open">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
@@ -27,10 +27,30 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="summary-title">Title</div>
+                      <div class="modal-fee-summary-title"><span>
+                    Transaction:
+                    <strong></strong>
+                    ℏ
+                </span></div>
                       <div class="separator"></div>
-                      <div class="summary">
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
+                      <div class="modal-fee-summary-items">
+                        <div class="row total">
+                          <div class="description">
+                            Total
+                          </div>
+                          <div class="int text">
+                            0
+                          </div>
+                          <div class="period text">
+                            .
+                          </div>
+                          <div class="fraction text">
+
+                          </div>
+                          <div class="symbol text">
+                            ℏ
+                          </div>
+                        </div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -49,14 +69,14 @@ describe("ModalFeeSummary.vue", (): void => {
         const wrapper = mount(ModalFeeSummary, {
             localVue,
             propsData: {
-                title: "TItle",
+                title: "Title",
                 isOpen: false,
                 items: []
             }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-fee-summary">
+            <div class="modal-fee-summary" title="Title">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
@@ -64,10 +84,30 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="summary-title">TItle</div>
+                      <div class="modal-fee-summary-title"><span>
+                    Transaction:
+                    <strong></strong>
+                    ℏ
+                </span></div>
                       <div class="separator"></div>
-                      <div class="summary">
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
+                      <div class="modal-fee-summary-items">
+                        <div class="row total">
+                          <div class="description">
+                            Total
+                          </div>
+                          <div class="int text">
+                            0
+                          </div>
+                          <div class="period text">
+                            .
+                          </div>
+                          <div class="fraction text">
+
+                          </div>
+                          <div class="symbol text">
+                            ℏ
+                          </div>
+                        </div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -86,7 +126,7 @@ describe("ModalFeeSummary.vue", (): void => {
         const wrapper = mount(ModalFeeSummary, {
             localVue,
             propsData: {
-                title: "TItle",
+                title: "Title",
                 isOpen: true,
                 items: [
                     { description: "Description", value: "Value" },
@@ -97,7 +137,7 @@ describe("ModalFeeSummary.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-fee-summary">
+            <div class="modal-fee-summary" title="Title">
               <div role="dialog" aria-modal="true" class="modal-background is-open">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
@@ -105,25 +145,54 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="summary-title">TItle</div>
+                      <div class="modal-fee-summary-title"><span>
+                    Transaction:
+                    <strong></strong>
+                    ℏ
+                </span></div>
                       <div class="separator"></div>
-                      <div class="summary">
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
+                      <div class="modal-fee-summary-items">
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row total">
+                          <div class="description">
+                            Total
+                          </div>
+                          <div class="int text">
+                            0
+                          </div>
+                          <div class="period text">
+                            .
+                          </div>
+                          <div class="fraction text">
+
+                          </div>
+                          <div class="symbol text">
+                            ℏ
+                          </div>
+                        </div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -142,7 +211,7 @@ describe("ModalFeeSummary.vue", (): void => {
         const wrapper = mount(ModalFeeSummary, {
             localVue,
             propsData: {
-                title: "TItle",
+                title: "Title",
                 isOpen: false,
                 items: [
                     { description: "Description", value: "Value" },
@@ -153,7 +222,7 @@ describe("ModalFeeSummary.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-fee-summary">
+            <div class="modal-fee-summary" title="Title">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
@@ -161,25 +230,54 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="summary-title">TItle</div>
+                      <div class="modal-fee-summary-title"><span>
+                    Transaction:
+                    <strong></strong>
+                    ℏ
+                </span></div>
                       <div class="separator"></div>
-                      <div class="summary">
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-                        <div class="item"><span class="item-description">
-                                    Description:
-                                </span> <span class="item-value">
-                                    Value
-                                </span></div>
-                        <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
+                      <div class="modal-fee-summary-items">
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="description">
+                            Description
+                          </div>
+                          <div class="text">
+                            Value
+                          </div>
+                        </div>
+                        <div class="row total">
+                          <div class="description">
+                            Total
+                          </div>
+                          <div class="int text">
+                            0
+                          </div>
+                          <div class="period text">
+                            .
+                          </div>
+                          <div class="fraction text">
+
+                          </div>
+                          <div class="symbol text">
+                            ℏ
+                          </div>
+                        </div>
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>

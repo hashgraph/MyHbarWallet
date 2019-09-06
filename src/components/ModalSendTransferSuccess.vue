@@ -15,7 +15,7 @@
                     Success
                 </div>
                 <div class="description">
-                    Transferred <strong>{{ amount }}</strong> hbar to account
+                    Transferred <strong>{{ amount }}</strong> ℏ to account
                     <strong>{{ toAccount }}</strong
                     >.
                 </div>

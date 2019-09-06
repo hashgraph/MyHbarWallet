@@ -1,16 +1,16 @@
 <template>
     <div
         class="modal-background"
-        :class="{ 'is-open': isOpen }"
+        :class="{ 'is-open': props.isOpen }"
         role="dialog"
         aria-modal="true"
         @mousedown.self="handleClose"
     >
-        <div class="modal" :class="{ large: large }">
-            <header v-if="!hideDecoration">
-                <span class="title">{{ title }}</span>
+        <div class="modal" :class="{ large: props.large }">
+            <header v-if="!props.hideDecoration">
+                <span class="title">{{ props.title }}</span>
                 <MaterialDesignIcon
-                    v-if="!notClosable"
+                    v-if="!props.notClosable"
                     class="close"
                     :icon="mdiClose"
                     @click="handleClose"
@@ -30,7 +30,6 @@
 import {
     createComponent,
     watch,
-    PropType,
     onUnmounted,
     SetupContext
 } from "@vue/composition-api";
@@ -48,18 +47,16 @@ function setModalIsOpenOnBody(): void {
     document.body.classList.toggle("modal-is-open", modalIds.length !== 0);
 }
 
-interface Props {
-    notClosable: boolean;
-    isOpen: boolean;
-    title: string;
-    hideDecoration: boolean;
-    large: boolean;
-}
-
 // The isOpen property controls if the modal is open or not. It should be bound with
 // the v-model directive to allow the modal to close itself (click out and close button).
 export default createComponent({
-    name: "Modal",
+    props: {
+        notClosable: Boolean,
+        isOpen: Boolean,
+        title: String,
+        hideDecoration: Boolean,
+        large: Boolean
+    },
     components: {
         MaterialDesignIcon
     },
@@ -67,15 +64,16 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        notClosable: (Boolean as unknown) as PropType<boolean>,
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        title: (String as unknown) as PropType<string>,
-        hideDecoration: (Boolean as unknown) as PropType<boolean>,
-        large: (Boolean as unknown) as PropType<boolean>
-    },
-
-    setup(props: Props, context: SetupContext) {
+    setup(
+        props: {
+            notClosable: boolean;
+            isOpen: boolean;
+            title: string;
+            hideDecoration: boolean;
+            large: boolean;
+        },
+        context: SetupContext
+    ) {
         const id = nextModalId++;
 
         function handleClose(): void {
@@ -123,7 +121,8 @@ export default createComponent({
         return {
             mdiClose,
             handleClose,
-            handleWindowKeyDown
+            handleWindowKeyDown,
+            props
         };
     }
 });

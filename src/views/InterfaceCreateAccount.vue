@@ -43,7 +43,9 @@
         <ModalFeeSummary
             v-model="state.summaryModalIsOpen"
             :items="summaryItems"
-            :title="summaryTitle"
+            :amount="summaryAmount"
+            account=""
+            tx-type="createAccount"
             @submit="handleCreateAccount"
         />
     </InterfaceForm>
@@ -65,7 +67,6 @@ import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
 import { formatHbar, validateHbar } from "../formatter";
 
-// make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
 
 const ESTIMATED_FEE_HBAR = new BigNumber(0.000_900_000);
@@ -75,8 +76,8 @@ const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
 
 // Summary Items
 const summaryItems = [
-    { description: "Initial Balance", value: new BigNumber(0) },
     { description: "Public Key", value: "" },
+    { description: "Initial Balance", value: new BigNumber(0) },
     { description: "Estimated Fee", value: ESTIMATED_FEE_HBAR }
 ] as Item[];
 
@@ -126,11 +127,8 @@ export default createComponent({
                 state.publicKey.length == 88
         );
 
-        const summaryTitle = computed(
-            () =>
-                "Creating account with balance " +
-                formatHbar(new BigNumber(state.userBalance)) +
-                " ℏ"
+        const summaryAmount = computed(() =>
+            formatHbar(new BigNumber(state.userBalance))
         );
 
         async function handleCreateAccount(): Promise<void> {
@@ -206,14 +204,14 @@ export default createComponent({
         }
 
         function handleShowSummary(): void {
-            summaryItems[0].value = new BigNumber(state.userBalance);
-            summaryItems[1].value = "..." + state.publicKey.substring(65);
+            summaryItems[0].value = "..." + state.publicKey.substring(65);
+            summaryItems[1].value = new BigNumber(state.userBalance);
             state.summaryModalIsOpen = true;
         }
 
         return {
             state,
-            summaryTitle,
+            summaryAmount,
             summaryItems,
             validBalance,
             validKey,

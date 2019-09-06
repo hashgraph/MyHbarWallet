@@ -55,7 +55,7 @@ export default createComponent({
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
-    setup(props: Props, ctx) {
+    setup() {
         function handleGoBack(): void {
             // have to wait till next tick so modal gives us back the scrollbar
             Vue.nextTick(() => router.push({ name: "interface" }));

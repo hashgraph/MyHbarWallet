@@ -1,27 +1,13 @@
 <template>
     <div class="modal-fee-summary">
-        <Modal :is-open="isOpen" title="Transaction Summary" not-closable>
-            <div class="summary-title">{{ title }}</div>
-
+        <Modal :is-open="props.isOpen" title="Transaction Summary" not-closable>
+            <ModalFeeSummaryTitle
+                :amount="props.amount"
+                :account="props.account"
+                :type="props.txType"
+            />
             <div class="separator" />
-
-            <div class="summary">
-                <template v-for="item in items">
-                    <div :key="item.key" class="item">
-                        <span class="item-description">
-                            {{ item.description }}:
-                        </span>
-                        <span class="item-value">
-                            {{ formatValue(item.value) }}
-                        </span>
-                    </div>
-                </template>
-                <div class="item">
-                    <span class="item-description">Total:</span>
-                    <span class="item-value">{{ formatValue(total) }}</span>
-                </div>
-            </div>
-
+            <ModalFeeSummaryItems :items="props.items" />
             <div class="buttons">
                 <Button
                     compact
@@ -45,11 +31,12 @@
 </template>
 
 <script lang="ts">
-import { computed, createComponent, SetupContext } from "@vue/composition-api";
-import Modal from "../components/Modal.vue";
+import { createComponent, SetupContext, PropType } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
-import { formatHbar } from "../formatter";
+import Modal from "../components/Modal.vue";
+import ModalFeeSummaryTitle from "../components/ModalFeeSummaryTitle.vue";
+import ModalFeeSummaryItems from "../components/ModalFeeSummaryItems.vue";
 
 export interface Item {
     description: string;
@@ -60,55 +47,34 @@ export interface KeyedItem extends Item {
     key: string;
 }
 
-let KEY = 0;
-function nextItemKey(): number {
-    return (KEY += 1);
-}
-
 export default createComponent({
+    props: {
+        isOpen: Boolean,
+        items: Array as PropType<KeyedItem[]>,
+        amount: String,
+        account: String,
+        txType: String
+    },
     components: {
+        Button,
         Modal,
-        Button
+        ModalFeeSummaryTitle,
+        ModalFeeSummaryItems
     },
     model: {
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: Boolean,
-        items: Array,
-        title: String
-    },
     setup(
-        props: { isOpen: boolean; items: KeyedItem[]; title: string },
+        props: {
+            isOpen: boolean;
+            items: KeyedItem[];
+            amount: string;
+            account: string;
+            txType: string;
+        },
         context: SetupContext
     ): object {
-        // Compute the total
-        const total = computed(() => {
-            let total = new BigNumber(0);
-
-            // Only add to total if value is a BigNumber
-            // Assign key to each item
-            if (props.items != null) {
-                for (const item of props.items) {
-                    item.key = "Item" + nextItemKey();
-                    if (item.value instanceof BigNumber) {
-                        total = total.plus(item.value);
-                    }
-                }
-            }
-
-            return total;
-        });
-
-        function formatValue(value: BigNumber | string): string {
-            if (value instanceof BigNumber) {
-                return formatHbar(value) + " ℏ";
-            } else {
-                return value;
-            }
-        }
-
         function handleCancel(): void {
             context.emit("change", false);
         }
@@ -119,8 +85,8 @@ export default createComponent({
         }
 
         return {
-            total,
-            formatValue,
+            props,
+            BigNumber,
             handleCancel,
             handleSubmit
         };
@@ -129,39 +95,6 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.summary-title {
-    color: var(--color-washed-black);
-    font-size: 18px;
-    text-overflow: ellipsis;
-}
-
-.summary {
-    display: grid;
-    grid-template-columns: 1fr;
-    width: 100%;
-}
-
-.item {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-
-    &:not(:last-child) {
-        margin-block-end: 2px;
-    }
-}
-
-.item-description {
-    color: var(--color-washed-black);
-    font-weight: 500;
-}
-
-.item-value {
-    color: var(--color-china-blue);
-    font-family: monospace;
-    font-size: 16px;
-}
-
 .buttons {
     display: flex;
     justify-content: space-between;
