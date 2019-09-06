@@ -25,9 +25,9 @@ describe("ModalDownloadKeystore.vue", (): void => {
             <div class="modal-create-by-mnemonic-phrase">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
-                  <header><span class="title">By Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
-                      <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
-                    </svg></header>
+                  <header><span class="title">By Keystore File</span>
+                    <!---->
+                  </header>
                   <div class="main">
                     <div class="content-container">
                       <div class="modal-save-my-keystore-cards"><span class="modal-body-title">Save My Keystore File</span>
@@ -55,7 +55,8 @@ describe("ModalDownloadKeystore.vue", (): void => {
                           </div>
                         </div>
                       </div>
-                      <div class="button-container"><button type="submit" class="download-button"><span>Download Keystore File</span>
+                      <div class="button-container"><button type="submit" class="download-button compact"><span>Download Keystore File</span>
+                          <!----></button> <button type="submit" disabled="disabled" class="continue-button compact"><span>Continue</span>
                           <!----></button></div>
                     </div>
                   </div>

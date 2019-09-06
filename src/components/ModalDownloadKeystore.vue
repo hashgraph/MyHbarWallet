@@ -3,6 +3,7 @@
         <Modal
             :is-open="state.modalIsOpen"
             title="By Keystore File"
+            not-closable
             @change="handleModalChangeIsOpen"
         >
             <div class="modal-save-my-keystore-cards">
@@ -47,8 +48,17 @@
                     label="Download Keystore File"
                     :busy="state.isBusy"
                     :disabled="state.isBusy"
+                    :outline="state.downloadClicked"
+                    compact
                     class="download-button"
-                    @click="$emit('submit')"
+                    @click="handleDownloadClick"
+                />
+                <Button
+                    label="Continue"
+                    :disabled="!state.downloadClicked"
+                    compact
+                    class="continue-button"
+                    @click="$emit('continue')"
                 />
             </div>
         </Modal>
@@ -66,6 +76,7 @@ import { createComponent, SetupContext } from "@vue/composition-api";
 export interface State {
     modalIsOpen: boolean;
     isBusy: boolean;
+    downloadClicked: boolean;
 }
 
 interface Props {
@@ -89,11 +100,17 @@ export default createComponent({
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
         }
 
+        function handleDownloadClick(): void {
+            context.emit("submit");
+            props.state.downloadClicked = true;
+        }
+
         return {
             noLoseIcon,
             noShareIcon,
             makeBackupIcon,
-            handleModalChangeIsOpen
+            handleModalChangeIsOpen,
+            handleDownloadClick
         };
     }
 });
@@ -154,9 +171,26 @@ export default createComponent({
 .button-container {
     display: flex;
     flex-flow: row nowrap;
+    justify-content: space-between;
+
+    @media (max-width: 425px) {
+        align-items: center;
+        flex-direction: column;
+    }
 }
 
 .download-button {
-    margin: 0 auto;
+    @media (max-width: 425px) {
+        margin-block-end: 15px;
+        width: 100%;
+    }
+}
+
+.continue-button {
+    width: 213px;
+
+    @media (max-width: 425px) {
+        width: 100%;
+    }
 }
 </style>
