@@ -184,6 +184,7 @@ export default createComponent({
     color: var(--color-china-blue);
     font-family: monospace;
     font-size: 16px;
+    white-space: nowrap;
 }
 
 .int {
