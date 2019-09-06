@@ -35,6 +35,10 @@ export default createComponent({
         AccountCard
     },
     setup() {
+        // Boolean used to determine if the user has been to interface
+        // Otherwise don't show the Logout modal
+        store.state.interfaceMenu.hasBeenToInterface = true;
+
         const publicKey = computed(() =>
             store.state.wallet.session != null
                 ? store.state.wallet.session.privateKey.publicKey.toString()

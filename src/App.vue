@@ -40,7 +40,11 @@ export default createComponent({
         });
 
         const isOpen = computed(() => {
-            return !isInterface.value && store.getters.IS_LOGGED_IN;
+            return (
+                !isInterface.value &&
+                store.getters.IS_LOGGED_IN &&
+                store.state.interfaceMenu.hasBeenToInterface
+            );
         });
 
         return {
