@@ -96,7 +96,7 @@ export default createComponent({
             let mostFractionDecimals = 0;
             const items = props.items.map(
                 (item): SplitItem => {
-                    const parts = formatSplit(item.value);
+                    const parts = formatSplit(item.value.toString());
 
                     if (parts == null) {
                         return {
@@ -104,7 +104,7 @@ export default createComponent({
                             description: item.description,
                             int: null,
                             fraction: null,
-                            value: item.value
+                            value: item.value.toString()
                         };
                     }
 
@@ -120,7 +120,7 @@ export default createComponent({
                         description: item.description,
                         int: parts.int,
                         fraction: parts.fraction,
-                        value: item.value
+                        value: item.value.toString()
                     };
                 }
             );
