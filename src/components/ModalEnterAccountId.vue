@@ -158,10 +158,12 @@ export default createComponent({
             try {
                 client = new Client({
                     // TODO: Use nodeId from settings
-                    [settings.network.proxy]: {
-                        shard: 0,
-                        realm: 0,
-                        account: 3
+                    nodes: {
+                        [settings.network.proxy]: {
+                            shard: 0,
+                            realm: 0,
+                            account: 3
+                        }
                     },
                     operator: {
                         account: state.account,
