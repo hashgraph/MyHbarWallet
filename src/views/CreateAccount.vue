@@ -26,6 +26,7 @@
         <ModalDownloadKeystore
             v-model="state.modalDownloadKeystoreState"
             @submit="handleDownloadKeystoreSubmit"
+            @continue="handleContinue"
         />
         <ModalEnterAccountId
             v-model="state.modalEnterAccountIdIsOpen"
@@ -114,7 +115,8 @@ export default createComponent({
             modalCreateWithSoftwareIsOpen: false,
             modalDownloadKeystoreState: {
                 modalIsOpen: false,
-                isBusy: true
+                isBusy: true,
+                downloadClicked: false
             },
             modalEnterAccountIdIsOpen: false,
             modalRequestToCreateAccountIsOpen: false,
@@ -195,12 +197,14 @@ export default createComponent({
             context.root.$el.removeChild(
                 keyStoreLink.value as HTMLAnchorElement
             );
+        }
 
+        function handleContinue(): void {
+            state.modalRequestToCreateAccountIsOpen = true;
             setTimeout(
-                () => (state.modalRequestToCreateAccountIsOpen = true),
+                () => (state.modalDownloadKeystoreState.modalIsOpen = false),
                 125
             );
-            state.modalDownloadKeystoreState.modalIsOpen = false;
         }
 
         function handleCreateByPhraseSubmit(
@@ -256,7 +260,8 @@ export default createComponent({
             handleCreateByPhraseSubmit,
             handleAccountIdSubmit,
             handleHasAccount,
-            handleDoesntHaveAccount
+            handleDoesntHaveAccount,
+            handleContinue
         };
     }
 });

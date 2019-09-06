@@ -108,12 +108,12 @@ export default createComponent({
 
 <style lang="postcss" scoped>
 .button {
-    width: 200px;
+    width: 213px;
 
     @media (max-width: 425px) {
         width: 100%;
 
-        &:last-child {
+        &:first-child {
             margin-block-end: 15px;
         }
     }
@@ -147,7 +147,7 @@ export default createComponent({
 
     @media (max-width: 425px) {
         align-items: center;
-        flex-direction: column-reverse;
+        flex-direction: column;
     }
 }
 </style>
