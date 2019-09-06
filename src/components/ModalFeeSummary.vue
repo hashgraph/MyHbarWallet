@@ -40,7 +40,7 @@ import ModalFeeSummaryItems from "../components/ModalFeeSummaryItems.vue";
 
 export interface Item {
     description: string;
-    value: BigNumber;
+    value: BigNumber | string;
 }
 
 export interface KeyedItem extends Item {
