@@ -217,10 +217,6 @@ export default createComponent({
     }
 }
 
-.spacer {
-    flex-grow: 1;
-}
-
 @media screen and (max-width: 1024px) {
     .links {
         max-width: 0;
