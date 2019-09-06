@@ -27,10 +27,17 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
+<<<<<<< HEAD
                       <div class="summary-title">Title</div>
                       <div class="separator"></div>
                       <div class="summary">
                         <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
+=======
+                      <div class="summary-title"><span>Title</span></div>
+                      <div class="separator"></div>
+                      <div class="summary">
+                        <div class="item total"><span class="item-description">Total:</span> <span class="item-value"><span class="whole">0</span> <span class="fraction"></span><span>ℏ</span></span></div>
+>>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -49,7 +56,7 @@ describe("ModalFeeSummary.vue", (): void => {
         const wrapper = mount(ModalFeeSummary, {
             localVue,
             propsData: {
-                title: "TItle",
+                title: "Title",
                 isOpen: false,
                 items: []
             }
@@ -64,10 +71,17 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
+<<<<<<< HEAD
                       <div class="summary-title">TItle</div>
                       <div class="separator"></div>
                       <div class="summary">
                         <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
+=======
+                      <div class="summary-title"><span>Title</span></div>
+                      <div class="separator"></div>
+                      <div class="summary">
+                        <div class="item total"><span class="item-description">Total:</span> <span class="item-value"><span class="whole">0</span> <span class="fraction"></span><span>ℏ</span></span></div>
+>>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -86,7 +100,7 @@ describe("ModalFeeSummary.vue", (): void => {
         const wrapper = mount(ModalFeeSummary, {
             localVue,
             propsData: {
-                title: "TItle",
+                title: "Title",
                 isOpen: true,
                 items: [
                     { description: "Description", value: "Value" },
@@ -105,7 +119,11 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
+<<<<<<< HEAD
                       <div class="summary-title">TItle</div>
+=======
+                      <div class="summary-title"><span>Title</span></div>
+>>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
                       <div class="separator"></div>
                       <div class="summary">
                         <div class="item"><span class="item-description">
@@ -123,7 +141,11 @@ describe("ModalFeeSummary.vue", (): void => {
                                 </span> <span class="item-value">
                                     Value
                                 </span></div>
+<<<<<<< HEAD
                         <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
+=======
+                        <div class="item total"><span class="item-description">Total:</span> <span class="item-value"><span class="whole">0</span> <span class="fraction"></span><span>ℏ</span></span></div>
+>>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>
@@ -142,7 +164,7 @@ describe("ModalFeeSummary.vue", (): void => {
         const wrapper = mount(ModalFeeSummary, {
             localVue,
             propsData: {
-                title: "TItle",
+                title: "Title",
                 isOpen: false,
                 items: [
                     { description: "Description", value: "Value" },
@@ -161,7 +183,11 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
+<<<<<<< HEAD
                       <div class="summary-title">TItle</div>
+=======
+                      <div class="summary-title"><span>Title</span></div>
+>>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
                       <div class="separator"></div>
                       <div class="summary">
                         <div class="item"><span class="item-description">
@@ -179,7 +205,11 @@ describe("ModalFeeSummary.vue", (): void => {
                                 </span> <span class="item-value">
                                     Value
                                 </span></div>
+<<<<<<< HEAD
                         <div class="item"><span class="item-description">Total:</span> <span class="item-value">0 ℏ</span></div>
+=======
+                        <div class="item total"><span class="item-description">Total:</span> <span class="item-value"><span class="whole">0</span> <span class="fraction"></span><span>ℏ</span></span></div>
+>>>>>>> Refactor ModalFeeSummary and Align BigNumbers at decimal point
                       </div>
                       <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button compact"><span>Continue</span>

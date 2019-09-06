@@ -43,7 +43,9 @@
         <ModalFeeSummary
             v-model="state.summaryModalIsOpen"
             :items="summaryItems"
-            :title="summaryTitle"
+            :amount="summaryAmount"
+            account=""
+            tx-type="createAccount"
             @submit="handleCreateAccount"
         />
     </InterfaceForm>
@@ -65,7 +67,6 @@ import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
 import { formatHbar, validateHbar } from "../formatter";
 
-// make this a global const?
 const ED25519_PREFIX = "302a300506032b6570032100";
 
 const ESTIMATED_FEE_HBAR = new BigNumber(0.000_900_000);
@@ -126,11 +127,8 @@ export default createComponent({
                 state.publicKey.length == 88
         );
 
-        const summaryTitle = computed(
-            () =>
-                "Creating account with balance " +
-                formatHbar(new BigNumber(state.userBalance)) +
-                " ℏ"
+        const summaryAmount = computed(() =>
+            formatHbar(new BigNumber(state.userBalance))
         );
 
         async function handleCreateAccount(): Promise<void> {
@@ -213,7 +211,7 @@ export default createComponent({
 
         return {
             state,
-            summaryTitle,
+            summaryAmount,
             summaryItems,
             validBalance,
             validKey,

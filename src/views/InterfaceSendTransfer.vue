@@ -41,7 +41,9 @@
         <ModalFeeSummary
             v-model="state.summaryIsOpen"
             :items="summaryItems"
-            :title="summaryTitle"
+            :amount="summaryAmount"
+            :account="summaryAccount"
+            tx-type="transfer"
             @submit="handleSendTransfer"
         />
     </InterfaceForm>
@@ -120,9 +122,13 @@ export default createComponent({
                 : "Send Hbar"
         );
 
-        const summaryTitle = computed(
-            () => "Sending " + amount.value + " ℏ to account " + state.toAccount
-        );
+        const summaryAmount = computed(() => {
+            return amount.value;
+        });
+
+        const summaryAccount = computed(() => {
+            return state.toAccount;
+        });
 
         async function handleClickEntireBalance(): Promise<void> {
             const balance = store.state.wallet.balance;
@@ -223,7 +229,8 @@ export default createComponent({
 
         return {
             state,
-            summaryTitle,
+            summaryAmount,
+            summaryAccount,
             summaryItems,
             buttonLabel,
             isIdValid,

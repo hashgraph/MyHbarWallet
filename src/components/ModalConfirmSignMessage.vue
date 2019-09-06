@@ -34,7 +34,6 @@ import {
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
-import { Ed25519PublicKey } from "@hashgraph/sdk/src/Keys";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
