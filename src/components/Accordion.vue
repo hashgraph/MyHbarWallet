@@ -84,8 +84,8 @@ a {
 .content {
     font-size: 14px;
     font-weight: 400;
-    height: auto;
-    max-height: 50em;
+    height: max-content;
+    max-height: 10em;
     overflow: hidden;
 
     /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
