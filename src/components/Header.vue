@@ -171,6 +171,10 @@ export default createComponent({
     padding-block: 2.5px;
 }
 
+.spacer {
+    flex-grow: 1;
+}
+
 .link {
     align-items: center;
     color: var(--color-china-blue);
