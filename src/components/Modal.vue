@@ -78,7 +78,6 @@ export default createComponent({
 
         function handleClose(): void {
             if (!props.notClosable && modalIsTop(id)) {
-                modalIds.pop();
                 context.emit("change", false);
             }
         }
