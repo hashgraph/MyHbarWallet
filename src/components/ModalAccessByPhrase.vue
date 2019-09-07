@@ -1,5 +1,5 @@
 <template>
-    <div class="mnemonic-phrase">
+    <div class="modal-mnemonic-phrase">
         <Modal
             title="Access by Mnemonic Phrase"
             :not-closable="state.isBusy"

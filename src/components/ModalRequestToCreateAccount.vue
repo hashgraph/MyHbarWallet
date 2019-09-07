@@ -1,57 +1,59 @@
 <template>
-    <Modal
-        :is-open="isOpen"
-        :large="false"
-        not-closable
-        title="Request to Create Account"
-        @change="this.$listeners.change"
-    >
-        <div class="instructions">
-            <div>
-                Provide your public key (this QR code or the copied text) to an
-                existing account owner on the Hedera network.
-            </div>
-            <div>
-                They must create and fund your account, then provide you with
-                your new account ID.
-            </div>
-        </div>
-
-        <form
-            class="modal-request-to-create-account"
-            @submit.prevent="$emit('submit')"
+    <div class="modal-request-to-create-account">
+        <Modal
+            :is-open="isOpen"
+            :large="false"
+            not-closable
+            title="Request to Create Account"
+            @change="this.$listeners.change"
         >
-            <qrcode-vue
-                v-if="publicKey"
-                :value="publicKey.toString()"
-                size="180"
-                level="L"
-                class="pub-qr"
-            />
-
-            <ReadOnlyInput
-                v-if="publicKey"
-                multiline
-                :value="publicKey.toString()"
-            />
-
-            <div class="buttons">
-                <Button
-                    compact
-                    outline
-                    label="Copy Public Key"
-                    class="button"
-                    @click="handleClickCopy"
-                />
-                <Button
-                    compact
-                    label="I have an Account ID"
-                    class="button"
-                    @click="handleHasAccount"
-                />
+            <div class="instructions">
+                <div>
+                    Provide your public key (this QR code or the copied text) to
+                    an existing account owner on the Hedera network.
+                </div>
+                <div>
+                    They must create and fund your account, then provide you
+                    with your new account ID.
+                </div>
             </div>
-        </form>
-    </Modal>
+
+            <form
+                class="request-to-create-account"
+                @submit.prevent="$emit('submit')"
+            >
+                <qrcode-vue
+                    v-if="publicKey"
+                    :value="publicKey.toString()"
+                    size="180"
+                    level="L"
+                    class="pub-qr"
+                />
+
+                <ReadOnlyInput
+                    v-if="publicKey"
+                    multiline
+                    :value="publicKey.toString()"
+                />
+
+                <div class="buttons">
+                    <Button
+                        compact
+                        outline
+                        label="Copy Public Key"
+                        class="button"
+                        @click="handleClickCopy"
+                    />
+                    <Button
+                        compact
+                        label="I have an Account ID"
+                        class="button"
+                        @click="handleHasAccount"
+                    />
+                </div>
+            </form>
+        </Modal>
+    </div>
 </template>
 
 <script lang="ts">
@@ -119,7 +121,7 @@ export default createComponent({
     }
 }
 
-.modal-request-to-create-account {
+.request-to-create-account {
     align-items: center;
     display: flex;
     flex-direction: column;

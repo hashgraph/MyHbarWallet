@@ -49,7 +49,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="mnemonic-phrase">
+            <div class="modal-mnemonic-phrase">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Access by Mnemonic Phrase</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">

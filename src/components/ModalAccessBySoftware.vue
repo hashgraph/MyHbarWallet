@@ -1,39 +1,43 @@
 <template>
-    <Modal
-        :is-open="isOpen"
-        title="Access by Software"
-        @change="this.$listeners.change"
-    >
-        <template v-slot:banner>
-            <Warning />
-        </template>
-        <template>
-            <form
-                class="modal-access-by-software"
-                @submit.prevent="handleSubmit"
-            >
-                <RadioButtonGroup
-                    v-model="state.optionSelected"
-                    name="software-access-option"
-                    :options="options"
-                />
-                <div class="hardware-link">
-                    <div>
-                        Purchase a hardware wallet for the highest security when
-                        accessing your crypto.
+    <div class="modal-access-by-software">
+        <Modal
+            :is-open="isOpen"
+            title="Access by Software"
+            @change="this.$listeners.change"
+        >
+            <template v-slot:banner>
+                <Warning />
+            </template>
+            <template>
+                <form
+                    class="modal-access-by-software"
+                    @submit.prevent="handleSubmit"
+                >
+                    <RadioButtonGroup
+                        v-model="state.optionSelected"
+                        name="software-access-option"
+                        :options="options"
+                    />
+                    <div class="hardware-link">
+                        <div>
+                            Purchase a hardware wallet for the highest security
+                            when accessing your crypto.
+                        </div>
+                        <router-link
+                            :to="{ name: 'hardware-wallet-affiliates' }"
+                        >
+                            Purchase a hardware wallet....
+                        </router-link>
                     </div>
-                    <router-link :to="{ name: 'hardware-wallet-affiliates' }">
-                        Purchase a hardware wallet....
-                    </router-link>
-                </div>
-                <Button
-                    :disabled="state.optionSelected == null"
-                    label="Continue"
-                />
-                <CustomerSupportLink class="support-link" />
-            </form>
-        </template>
-    </Modal>
+                    <Button
+                        :disabled="state.optionSelected == null"
+                        label="Continue"
+                    />
+                    <CustomerSupportLink class="support-link" />
+                </form>
+            </template>
+        </Modal>
+    </div>
 </template>
 
 <script lang="ts">
