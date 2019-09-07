@@ -1,9 +1,9 @@
 const mnemonicPhrase =
     "baby\tgrid\tbrain\tsight\tsunset\tdomain\tjoy\tgallery\tmaster\trenew\tassume\tpony\tpistol\torient\ttaxi\tbehave\tfrown\ttent\torchard\thungry\ttext\tpeace\tdivert\tinquiry";
 // const mnemonicPhrase = "baby grid brain sight sunset domain joy gallery master renew assume pony pistol orient taxi behave frown tent orchard hungry text peace divert inquiry";
-const mnemonicPhraseAccountId = "0.0.60122\n";
-const keystoreFileAccountId = "0.0.60118\n";
-const incorrectAccountId = "0.0.33\n";
+const mnemonicPhraseAccountId = "0.0.60122";
+const keystoreFileAccountId = "0.0.60118";
+const incorrectAccountId = "0.0.33";
 
 module.exports = {
     "it can access account by keystore file": browser => {
@@ -60,8 +60,19 @@ module.exports = {
                 ".modal-enter-account-id > .modal-background.is-open > .modal button[type=submit]"
             )
             .waitForElementVisible(".interface-form", 10000)
+            .waitForElementVisible(".interface .balance .hbar-balance", 10000)
             .assert.urlContains("interface/send-transfer")
-            .end();
+            .assert.containsText(".account .subtitle", keystoreFileAccountId);
+
+        browser.expect
+            .element(".interface .balance .hbar-balance")
+            .text.to.match(/^[1-9]\d{0,2}(?:,\d{3}?)*(?:\.\d{1,9})? ℏ$/);
+
+        browser.expect
+            .element(".interface .balance .usd-balance")
+            .text.to.match(/^\$[1-9]\d{0,2}(?:,\d{3}?)*\.\d{2}$/);
+
+        browser.end();
     },
 
     "it can access account by keystore file using the <enter> keypress to switch modals": browser => {
@@ -112,7 +123,7 @@ module.exports = {
             )
             .setValue(
                 "input[placeholder='shard.realm.account']",
-                keystoreFileAccountId
+                keystoreFileAccountId + "\n"
             )
             .waitForElementVisible(".interface-form", 10000)
             .assert.urlContains("interface/send-transfer")
@@ -216,7 +227,7 @@ module.exports = {
             )
             .setValue(
                 "input[placeholder='shard.realm.account']",
-                incorrectAccountId
+                incorrectAccountId + "\n"
             )
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background.is-open > .modal .error",
@@ -322,10 +333,7 @@ module.exports = {
             )
             .setValue(
                 ".modal-mnemonic-phrase > .modal-background.is-open > .modal .list-item > .word",
-                mnemonicPhrase
-            )
-            .click(
-                ".modal-mnemonic-phrase > .modal-background.is-open > .modal button[type=submit]"
+                mnemonicPhrase + "\n"
             )
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background.is-open > .modal",
