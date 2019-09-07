@@ -33,9 +33,29 @@ module.exports = {
             );
     },
 
-    // todo: Account ID and assert the value matches
-    // todo: Balance in hbar and assert nonzero (if this fails the account isn't going to work in other tests anyway)
-    // todo: Balance in USD and assert nonzero
+    "it can see accurate Account Id": browser => {
+        // todo: fix this when 0.0. prefixes change?
+        browser.assert.containsText(
+            ".account > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > strong:nth-child(2)",
+            accountId.substr(accountId.lastIndexOf(".") + 1)
+        );
+    },
+
+    "it can see non-zero hbar balance in wallet": browser => {
+        browser.expect
+            .element(".interface .balance .hbar-balance")
+            .text.to.match(
+                /^([1-9]\d{0,2}(?:,\d{3})*(\.\d{1,9})?|0?\.(?=.*[1-9])\d{1,9}) ℏ$/
+            );
+    },
+
+    "it can see non-zero USD balance in wallet": browser => {
+        browser.expect
+            .element(".interface .balance .usd-balance")
+            .text.to.match(
+                /^\$([1-9]\d{0,2}(,\d{3})*(\.\d{2})?|[1-9]\d*(\.\d{2})?|0?\.(?!00)\d{2})$/
+            );
+    },
 
     "it can view public key modal": browser => {
         browser

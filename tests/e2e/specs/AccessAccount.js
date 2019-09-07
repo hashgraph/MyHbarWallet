@@ -66,11 +66,15 @@ module.exports = {
 
         browser.expect
             .element(".interface .balance .hbar-balance")
-            .text.to.match(/^[1-9]\d{0,2}(?:,\d{3}?)*(?:\.\d{1,9})? ℏ$/);
+            .text.to.match(
+                /^([1-9]\d{0,2}(?:,\d{3})*(\.\d{1,9})?|0?\.(?=.*[1-9])\d{1,9}) ℏ$/
+            );
 
         browser.expect
             .element(".interface .balance .usd-balance")
-            .text.to.match(/^\$[1-9]\d{0,2}(?:,\d{3}?)*\.\d{2}$/);
+            .text.to.match(
+                /^\$([1-9]\d{0,2}(,\d{3})*(\.\d{2})?|[1-9]\d*(\.\d{2})?|0?\.(?!00)\d{2})$/
+            );
 
         browser.end();
     },
