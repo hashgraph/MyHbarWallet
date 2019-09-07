@@ -66,7 +66,7 @@ module.exports = {
     "it can see log out at home": browser => {
         browser
             .click("div.links:nth-child(3) > a:nth-child(1)")
-            .waitForElementVisible(".home-tile-button", 5000)
+            .waitForElementVisible(".home-tile-button", 10000)
             .expect.element("div.modal-background:nth-child(6)")
             .to.have.attribute("class")
             .which.contains("is-open");
