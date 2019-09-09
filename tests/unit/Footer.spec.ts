@@ -54,7 +54,7 @@ describe("Footer.vue", (): void => {
                     MyHbarWallet is open-source and free to the community. Your
                     donations go a long way towards making that possible.
                   </div>
-                  <div class="donation"><img src="../assets/icon-hbar-outline2.svg" class="hbar-icon">
+                  <div class="donation"><img src="" class="hbar-icon">
                     0.0.1001
                   </div>
                 </div>
