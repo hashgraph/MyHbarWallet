@@ -5,39 +5,41 @@
         title="Print Preview"
         @change="onChange"
     >
-        <div class="logo-contents">
-            <div class="header-container">
-                <span class="header">
-                    My<strong>Hbar</strong>Wallet
-                </span>
-                <span class="sub-header">Mnemonic Phrase</span>
+        <div ref="mnemonic">
+            <div class="logo-contents">
+                <div class="header-container">
+                    <span class="header">
+                        My<strong>Hbar</strong>Wallet
+                    </span>
+                    <span class="sub-header">Mnemonic Phrase</span>
+                </div>
+                <div class="support-email">
+                    <img
+                        alt=""
+                        class="icon"
+                        src="../assets/icon-bell.svg"
+                    />support@myhbarwallet.com
+                </div>
             </div>
-            <div class="support-email">
-                <img
-                    alt=""
-                    class="icon"
-                    src="../assets/icon-bell.svg"
-                />support@myhbarwallet.com
+            <div class="password-disclaimer">
+                <h3>
+                    Please Keep This Sheet in a Very Safe Place. It is your
+                    property!
+                </h3>
+                We <strong>CAN NOT</strong> change your password. Please
+                <strong>DO NOT FORGET</strong> to save your password. It is your
+                private key. You will need this
+                <strong>Password + Mnemonic Phrase</strong> to access your
+                wallet.
             </div>
-        </div>
-        <div class="password-disclaimer">
-            <h3>
-                Please Keep This Sheet in a Very Safe Place. It is your
-                property!
-            </h3>
-            We <strong>CAN NOT</strong> change your password. Please
-            <strong>DO NOT FORGET</strong> to save your password. It is your
-            private key. You will need this
-            <strong>Password + Mnemonic Phrase</strong> to access your wallet.
-        </div>
 
-        <div class="contents">
-            <Mnemonic
-                ref="mnemonic"
-                :editable="false"
-                :words="props.words.length"
-                :value="props.words"
-            />
+            <div class="contents">
+                <Mnemonic
+                    :editable="false"
+                    :words="props.words.length"
+                    :value="props.words"
+                />
+            </div>
         </div>
 
         <div class="button-container">
@@ -56,7 +58,14 @@ import { createComponent, SetupContext, ref } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "../components/MnemonicInput.vue";
-import html2pdf from "html2pdf";
+import store from "../store";
+import { ALERT } from "../store/actions";
+import html2pdf from "html2pdf.js";
+
+interface Props {
+    isOpen: boolean;
+    words: string[];
+}
 
 export default createComponent({
     components: {
@@ -68,22 +77,38 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    setup(
-        props: {
-            isOpen: { type: boolean };
-            words: {
-                type: string[];
-                required: true;
-            };
-        },
-        context: SetupContext
-    ) {
+    props: {
+        isOpen: Boolean,
+        words: Array
+    },
+    setup(props: Props, context: SetupContext) {
         const mnemonic = ref(null);
 
         function handleClickPrint(): void {
-            const element = mnemonic;
-            debugger;
+            let element = null;
+
+            try {
+                // Note: Vue Instances need $el to get their HTML, dumb elements do not
+                element = (mnemonic.value as unknown) as HTMLElement;
+            } catch (error) {
+                if (error instanceof TypeError) {
+                    console.log(error);
+                    store.dispatch(ALERT, {
+                        message: "Could not print Mnemonic",
+                        level: "error"
+                    });
+                } else {
+                    throw error;
+                }
+            }
+
+            const options = {
+                filename: "MHW_Mnemonic_Phrase.pdf",
+                margin: 10
+            };
+
             html2pdf()
+                .set(options)
                 .from(element)
                 .save();
         }
