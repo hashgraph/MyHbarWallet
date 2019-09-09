@@ -105,6 +105,10 @@ export default createComponent({
     margin: 0 auto;
     max-width: 1024px;
     padding: 100px 20px;
+
+    @media (max-width: 500px) {
+        padding: 25px 20px;
+    }
 }
 
 .title-wrap {
@@ -117,6 +121,10 @@ export default createComponent({
     font-size: 45px;
     font-weight: 500;
     margin: 0;
+
+    @media (max-width: 500px) {
+        font-size: 40px;
+    }
 }
 
 .page-subtitle {
