@@ -1,9 +1,9 @@
 <template>
     <Modal
-        :is-open="isOpen"
+        :is-open="props.isOpen"
         :large="true"
         title="Print Preview"
-        @change="this.$listeners.change"
+        @change="onChange"
     >
         <div class="logo-contents">
             <div class="header-container">
@@ -32,7 +32,12 @@
         </div>
 
         <div class="contents">
-            <Mnemonic :editable="false" :words="words.length" :value="words" />
+            <Mnemonic
+                ref="mnemonic"
+                :editable="false"
+                :words="props.words.length"
+                :value="props.words"
+            />
         </div>
 
         <div class="button-container">
@@ -47,10 +52,11 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { createComponent, SetupContext, ref } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "../components/MnemonicInput.vue";
+import html2pdf from "html2pdf";
 
 export default createComponent({
     components: {
@@ -62,19 +68,34 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: { type: Boolean },
-        words: {
-            type: Array,
-            required: true
-        }
-    },
-    setup() {
+    setup(
+        props: {
+            isOpen: { type: boolean };
+            words: {
+                type: string[];
+                required: true;
+            };
+        },
+        context: SetupContext
+    ) {
+        const mnemonic = ref(null);
+
         function handleClickPrint(): void {
-            window.print();
+            const element = mnemonic;
+            debugger;
+            html2pdf()
+                .from(element)
+                .save();
+        }
+
+        function onChange(): void {
+            context.emit("change");
         }
 
         return {
+            props,
+            mnemonic,
+            onChange,
             handleClickPrint
         };
     }
