@@ -91,15 +91,14 @@ export default createComponent({
                 // Note: Vue Instances need $el to get their HTML, dumb elements do not
                 element = (mnemonic.value as unknown) as HTMLElement;
             } catch (error) {
-                if (error instanceof TypeError) {
-                    console.log(error);
-                    store.dispatch(ALERT, {
-                        message: "Could not print Mnemonic",
-                        level: "error"
-                    });
-                } else {
-                    throw error;
-                }
+                console.log(error);
+
+                store.dispatch(ALERT, {
+                    message: "Could not print Mnemonic",
+                    level: "error"
+                });
+
+                throw error;
             }
 
             const options = {
