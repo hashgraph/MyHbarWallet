@@ -12,17 +12,18 @@
                     :size="200"
                 />
                 <div class="title">
-                    Success
+                    {{ $t("common.success") }}
                 </div>
                 <div class="description">
-                    Transferred <strong>{{ amount }}</strong> ℏ to account
-                    <strong>{{ toAccount }}</strong
-                    >.
+                    <i18n path="modalSendTransferSuccess.transfered">
+                        <strong>{{ amount }}</strong>
+                        <strong>{{ toAccount }}</strong>
+                    </i18n>
                 </div>
                 <Button
                     class="btn"
                     outline
-                    label="Dismiss"
+                    :label="$t('common.dismiss')"
                     @click="handleClose"
                 />
             </div>

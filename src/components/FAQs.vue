@@ -4,9 +4,9 @@
             <div class="page-container">
                 <div class="head">
                     <div class="title">
-                        <div class="title-text">FAQs</div>
+                        <div class="title-text">{{ $t("common.faqs") }}</div>
                         <div class="subtitle-text">
-                            Answers to most frequently asked questions.
+                            {{ $t("faqs.answersToMostFAQs") }}
                         </div>
                     </div>
                     <CustomerSupportLink class="customer-support-link" />
@@ -14,47 +14,42 @@
                 <div class="cards">
                     <Accordion>
                         <template v-slot:title>
-                            How do I create a new account?
+                            {{ $t("faqs.howDoICreateANewAccountQuestion") }}
                         </template>
                         <template v-slot:content>
-                            MyHederaWallet (MHW) offers three ways to create a
-                            new H wallet. These are via Keystore file,
-                            Passphrase, or Private Key. Pair the keys with an
-                            account ID to start transacting hbar.
+                            {{ $t("faqs.howDoICreateANewAccountAnswer") }}
                         </template>
                     </Accordion>
                     <Accordion>
                         <template v-slot:title>
-                            Can MHW work with other wallets?
+                            {{ $t("faqs.canMHWWorkWithOtherWalletsQuestion") }}
                         </template>
                         <template v-slot:content>
-                            MHW supports many different wallet types with plans
-                            to include support for hardware wallets in the near
-                            future. We are also open for anyone to use their H
-                            wallets with the appropriate information.
+                            {{ $t("faqs.canMHWWorkWithOtherWalletsAnswer") }}
                         </template>
                     </Accordion>
                     <Accordion>
                         <template v-slot:title>
-                            What does it cost to use MyHbarWallet?
+                            {{ $t("faqs.howCanISendATransactionQuestion") }}
                         </template>
                         <template v-slot:content>
-                            MHW does not charge any fees for interacting with
-                            the Hedera™ API. Hedera™ Hashgraph requires a
-                            transaction fee when interacting with the Hedera™
-                            API. That fee paid in Hbar.
+                            {{ $t("faqs.howCanISendATransactionAnswer") }}
                         </template>
                     </Accordion>
                     <Accordion>
                         <template v-slot:title>
-                            I forgot my passphrase / private key! What can I do?
+                            {{
+                                $t(
+                                    "faqs.iForgotMyPassphrase/PrivateKeyWhatCanIDoQuestion"
+                                )
+                            }}
                         </template>
                         <template v-slot:content>
-                            MHW does not offer support for recovery or reset of
-                            passwords / private keys. We always suggest writing
-                            down private keys and passwords on physical media
-                            for safekeeping. Maybe you saved it on your
-                            computer!
+                            {{
+                                $t(
+                                    "faqs.iForgotMyPassphrase/PrivateKeyWhatCanIDoAnswer"
+                                )
+                            }}
                         </template>
                     </Accordion>
                 </div>

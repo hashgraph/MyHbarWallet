@@ -2,15 +2,19 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import Notice from "../../../src/components/Notice.vue";
 import VueCompositionApi from "@vue/composition-api";
 import { mdiPartyPopper } from "@mdi/js";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("Notice.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
         const wrapper = mount(Notice, {
             localVue,
+            i18n,
             propsData: {
                 symbol: mdiPartyPopper
             }

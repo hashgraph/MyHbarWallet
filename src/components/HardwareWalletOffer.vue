@@ -1,7 +1,9 @@
 <template>
     <div class="hardware-wallet-offer">
         <div class="offer-description">
-            <div class="starting-from">Starting From</div>
+            <div class="starting-from">
+                {{ $t("hardwareWalletOffer.startingFrom") }}
+            </div>
             <div class="cost-container">
                 {{ currency }}<span class="cost">{{ cost }}</span>
             </div>
@@ -12,7 +14,7 @@
                 class="green-link"
                 :href="moreInfo"
             >
-                More information >
+                {{ $t("hardwareWalletOffer.moreInformation") }} >
             </a>
         </div>
         <a :href="moreInfo" rel="noopener" target="_blank">

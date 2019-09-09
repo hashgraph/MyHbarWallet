@@ -2,7 +2,7 @@
     <Modal
         :large="false"
         :is-open="isOpen"
-        title="Account ID"
+        :title="$t('modalViewAccountId.title')"
         @change="this.$listeners.change"
     >
         <div class="modal-contents">
@@ -17,7 +17,7 @@
 
             <Button
                 compact
-                label="Copy Account ID"
+                :label="$t('modalViewAccountId.copyAccountId')"
                 class="button"
                 @click="handleClickCopy"
             />

@@ -1,6 +1,10 @@
 <template>
     <div class="modal-fee-summary">
-        <Modal :is-open="props.isOpen" title="Transaction Summary" not-closable>
+        <Modal
+            :is-open="props.isOpen"
+            :title="$t('modalFeeSummary.title')"
+            not-closable
+        >
             <ModalFeeSummaryTitle
                 :amount="props.amount"
                 :account="props.account"
@@ -12,14 +16,14 @@
                 <Button
                     compact
                     outline
-                    label="Cancel"
+                    :label="$t('common.cancel')"
                     class="button"
                     type="button"
                     @click="handleCancel"
                 />
                 <Button
                     compact
-                    label="Continue"
+                    :label="$t('common.continue')"
                     class="button"
                     type="submit"
                     @submit="handleSubmit"

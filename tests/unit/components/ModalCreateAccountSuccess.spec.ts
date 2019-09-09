@@ -2,11 +2,14 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalCreateAccountSuccess from "../../../src/components/ModalCreateAccountSuccess.vue";
 import VueRouter from "vue-router";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalCreateAccountSuccess.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     localVue.use(VueRouter);
+    localVue.use(VueI18n);
 
     const ACCOUNT_ID = "999.999.999";
 
@@ -16,6 +19,7 @@ describe("ModalCreateAccountSuccess.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCreateAccountSuccess, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false,
                 accountId: ACCOUNT_ID
@@ -42,7 +46,9 @@ describe("ModalCreateAccountSuccess.vue", (): void => {
                           <div class="value">999.999.999</div>
                         </div> <button type="submit" class="btn outline"><span>Copy</span>
                           <!----></button>
-                        <div class="close">Dismiss</div>
+                        <div class="close">
+                          Dismiss
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -58,6 +64,7 @@ describe("ModalCreateAccountSuccess.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCreateAccountSuccess, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: true,
                 accountId: ACCOUNT_ID
@@ -84,7 +91,9 @@ describe("ModalCreateAccountSuccess.vue", (): void => {
                           <div class="value">999.999.999</div>
                         </div> <button type="submit" class="btn outline"><span>Copy</span>
                           <!----></button>
-                        <div class="close">Dismiss</div>
+                        <div class="close">
+                          Dismiss
+                        </div>
                       </div>
                     </div>
                   </div>

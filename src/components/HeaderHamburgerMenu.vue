@@ -5,7 +5,7 @@
             <NetworkCard class="info-network" />
         </div>
         <router-link to="/" class="link-block" @click.native="toggle">
-            <div class="link">Home</div>
+            <div class="link">{{ $t("common.home") }}</div>
             <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
         </router-link>
         <router-link
@@ -14,11 +14,11 @@
             class="link-block"
             @click.native="toggle"
         >
-            <div class="link">About</div>
+            <div class="link">{{ $t("common.about") }}</div>
             <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
         </router-link>
         <div v-else class="link-block" @click="handleSameHash('#about')">
-            <div class="link">About</div>
+            <div class="link">{{ $t("common.about") }}</div>
             <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
         </div>
         <router-link
@@ -27,11 +27,11 @@
             class="link-block"
             @click.native="toggle"
         >
-            <div class="link">FAQs</div>
+            <div class="link">{{ $t("common.faqs") }}</div>
             <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
         </router-link>
         <div v-else class="link-block" @click="handleSameHash('#faqs')">
-            <div class="link">FAQs</div>
+            <div class="link">{{ $t("common.faqs") }}</div>
             <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
         </div>
 
@@ -41,7 +41,7 @@
                 class="logout"
                 outline
                 danger
-                label="Logout"
+                :label="$t('common.logout')"
                 @click="handleLogout"
             />
         </div>

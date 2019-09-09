@@ -2,12 +2,15 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalCreateWithSoftware from "../../../src/components/ModalCreateWithSoftware.vue";
 import VueRouter from "vue-router";
+import VueI18n from "vue-i18n";
 import router from "../../../src/router";
+import i18n from "../../../src/i18n";
 
 describe("ModalCreateWithSoftware.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     localVue.use(VueRouter);
+    localVue.use(VueI18n);
 
     it("renders closed", (): void => {
         expect.assertions(1);
@@ -16,6 +19,7 @@ describe("ModalCreateWithSoftware.vue", (): void => {
         const wrapper = mount(ModalCreateWithSoftware, {
             localVue,
             router,
+            i18n,
             propsData: {
                 isOpen: false
             },
@@ -41,9 +45,7 @@ describe("ModalCreateWithSoftware.vue", (): void => {
                           NOT RECOMMENDED
                         </div>
                         <div class="message">
-                          This is not a recommended way to access your wallet. Due to the
-                          sensitivity of the information involved, these options should only
-                          be used in offline settings by experienced users.
+                          This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                         </div>
                       </div>
                     </div>
@@ -56,17 +58,12 @@ describe("ModalCreateWithSoftware.vue", (): void => {
                         <div><label for="phrase" class="radio-button"><img alt="" src="" class="icon"> <input id="phrase" type="radio" name="software-access-option" class="input" value="phrase"> <span class="label">Mnemonic Phrase</span>
                             <!----></label></div>
                       </div>
-                      <div class="hardware-link">
-                        <div>
-                          Purchase a hardware wallet for the highest security when
-                          accessing your crypto.
-                        </div> <a href="/hardware-wallet-affiliates" class="">
-                          Purchase a hardware wallet....
-                        </a>
-                      </div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
+                      <div class="hardware-link"><a href="/hardware-wallet-affiliates" class="">
+                          Purchase a hardware wallet for the highest security when accessing your crypto.
+                        </a></div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
                         <!----></button>
                       <div class="customer-support-link support-link">
-                        <div class="customer-support-container"><img alt="" src=""> Customer Support
+                        <div class="customer-support-container"><img alt="" src="">Customer Support
                         </div>
                         <div role="dialog" aria-modal="true" class="modal-background">
                           <div class="modal">
@@ -133,6 +130,7 @@ describe("ModalCreateWithSoftware.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCreateWithSoftware, {
             localVue,
+            i18n,
             router,
             propsData: {
                 isOpen: true
@@ -159,9 +157,7 @@ describe("ModalCreateWithSoftware.vue", (): void => {
                           NOT RECOMMENDED
                         </div>
                         <div class="message">
-                          This is not a recommended way to access your wallet. Due to the
-                          sensitivity of the information involved, these options should only
-                          be used in offline settings by experienced users.
+                          This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                         </div>
                       </div>
                     </div>
@@ -174,17 +170,12 @@ describe("ModalCreateWithSoftware.vue", (): void => {
                         <div><label for="phrase" class="radio-button"><img alt="" src="" class="icon"> <input id="phrase" type="radio" name="software-access-option" class="input" value="phrase"> <span class="label">Mnemonic Phrase</span>
                             <!----></label></div>
                       </div>
-                      <div class="hardware-link">
-                        <div>
-                          Purchase a hardware wallet for the highest security when
-                          accessing your crypto.
-                        </div> <a href="/hardware-wallet-affiliates" class="">
-                          Purchase a hardware wallet....
-                        </a>
-                      </div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
+                      <div class="hardware-link"><a href="/hardware-wallet-affiliates" class="">
+                          Purchase a hardware wallet for the highest security when accessing your crypto.
+                        </a></div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
                         <!----></button>
                       <div class="customer-support-link support-link">
-                        <div class="customer-support-container"><img alt="" src=""> Customer Support
+                        <div class="customer-support-container"><img alt="" src="">Customer Support
                         </div>
                         <div role="dialog" aria-modal="true" class="modal-background">
                           <div class="modal">

@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import ModalEnterAccountId from "../../../src/components/ModalEnterAccountId.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalEnterAccountId.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders closed, not busy, no error", (): void => {
         expect.assertions(2);
@@ -18,6 +21,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -82,6 +86,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -146,6 +151,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -209,6 +215,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -272,6 +279,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -335,6 +343,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -398,6 +407,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -461,6 +471,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },

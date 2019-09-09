@@ -1,16 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import InfoButton from "../../../src/components/InfoButton.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("InfoButton.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(InfoButton, {
             localVue,
+            i18n,
             propsData: {
                 message: "message"
             }

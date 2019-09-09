@@ -2,7 +2,7 @@
     <div class="modal-access-by-software">
         <Modal
             :is-open="isOpen"
-            title="Access by Software"
+            :title="$t('modalAccessBySoftware.title')"
             @change="this.$listeners.change"
         >
             <template v-slot:banner>
@@ -19,20 +19,24 @@
                         :options="options"
                     />
                     <div class="hardware-link">
-                        <!--'Support coming soon!' note? -->
-                        <div>
-                            Purchase a hardware wallet for the highest security
-                            when accessing your crypto.
-                        </div>
+                        {{
+                            $t(
+                                "modalAccessBySoftware.purchaseAHardwareWalletForTheHightestSecurity"
+                            )
+                        }}
                         <router-link
                             :to="{ name: 'hardware-wallet-affiliates' }"
                         >
-                            Purchase a hardware wallet....
+                            {{
+                                $t(
+                                    "modalAccessBySoftware.purchaseAHardwareWallet"
+                                )
+                            }}
                         </router-link>
                     </div>
                     <Button
                         :disabled="state.optionSelected == null"
-                        label="Continue"
+                        :label="$t('common.continue')"
                     />
                     <CustomerSupportLink class="support-link" />
                 </form>

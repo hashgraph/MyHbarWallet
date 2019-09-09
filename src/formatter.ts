@@ -5,6 +5,7 @@ import BigNumber from "bignumber.js";
 // The captured group is the desired end result.
 const hbarAmountRegex = /^0*(\d+(?:\.\d{1,9}?)?)0*$/;
 const splitHbarRegex = /^0*(\d+)(?:\.(\d{1,9}?))?0*$/;
+const markdownBoldRegex = /(?:\*{2}((?:\w| |\+|-)+)\*{2})/g;
 
 export function validateHbar(input: string): boolean {
     return hbarAmountRegex.test(input);
@@ -73,4 +74,23 @@ export function formatUSD(input: BigNumber): string {
     };
 
     return input.toFormat(2, BigNumber.ROUND_HALF_CEIL, fmt);
+}
+
+export function formatRich(
+    input: string,
+    elements:
+        | {
+              strongClass: string;
+          }
+        | null
+        | undefined
+): string {
+    if (elements != null) {
+        const replaceValue =
+            "<span class='" + elements.strongClass + "'>$1</span>";
+        input = input.replace(markdownBoldRegex, replaceValue);
+    } else {
+        input = input.replace(markdownBoldRegex, "<strong>$1</strong>");
+    }
+    return input;
 }

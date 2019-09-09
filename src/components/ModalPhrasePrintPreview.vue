@@ -2,7 +2,7 @@
     <Modal
         :is-open="props.isOpen"
         :large="true"
-        title="Print Preview"
+        :title="$t('modalPhrasePrintPreview.title')"
         @change="onChange"
     >
         <div ref="mnemonic">
@@ -11,7 +11,9 @@
                     <span class="header">
                         My<strong>Hbar</strong>Wallet
                     </span>
-                    <span class="sub-header">Mnemonic Phrase</span>
+                    <span class="sub-header">{{
+                        $t("modalPhrasePrintPreview.mnemonicPhrase")
+                    }}</span>
                 </div>
                 <div class="support-email">
                     <img
@@ -23,13 +25,18 @@
             </div>
             <div class="password-disclaimer">
                 <h3>
-                    Save this sheet! Print it and keep it in a safe place! This
-                    is your property!
+                    {{ $t("modalPhrasePrintPreview.saveThisSheet") }}
                 </h3>
-                We <strong>CAN NOT</strong> change your mnemonic phrase. Please
-                <strong>DO NOT FORGET</strong> to save this information. You
-                will need this <strong>Mnemonic Phrase</strong> to access your
-                wallet. This is your private key!
+                <p
+                    v-html="
+                        formatRich(
+                            $t(
+                                'modalPhrasePrintPreview.weCanNotChagneYourPassword'
+                            ).toString(),
+                            { strongClass: 'important' }
+                        )
+                    "
+                />
             </div>
 
             <div class="contents">
@@ -44,7 +51,7 @@
         <div class="button-container">
             <Button
                 class="button-save"
-                label="Save"
+                :label="$t('common.save')"
                 outline
                 @click="handleClickSave"
             />
@@ -58,6 +65,7 @@ import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "../components/MnemonicInput.vue";
 import html2pdf from "html2pdf.js";
+import { formatRich } from "../formatter";
 
 interface Props {
     isOpen: boolean;
@@ -116,7 +124,8 @@ export default createComponent({
             props,
             mnemonic,
             onChange,
-            handleClickSave
+            handleClickSave,
+            formatRich
         };
     }
 });
@@ -176,7 +185,7 @@ export default createComponent({
     font-size: 14px;
     margin-block-end: 30px;
 
-    & > strong {
+    & >>> .important {
         color: var(--color-lightish-red);
         font-weight: 700;
     }

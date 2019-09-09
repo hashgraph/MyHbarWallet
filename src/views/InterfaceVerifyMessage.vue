@@ -1,9 +1,9 @@
 <template>
     <div class="verify-message">
-        <InterfaceForm title="Verify Message">
+        <InterfaceForm :title="$t('interfaceVerifyMessage.title')">
             <TextInput
                 v-model.trim="signature"
-                label="Signature"
+                :label="$t('interfaceVerifyMessage.signature')"
                 can-copy
                 can-clear
                 multiline
@@ -11,7 +11,7 @@
 
             <template v-slot:footer>
                 <Button
-                    label="Verify Message"
+                    :label="$t('interfaceVerifyMessage.verifyMessage')"
                     :disabled="!isValid"
                     :busy="busy"
                 />

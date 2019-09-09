@@ -1,15 +1,13 @@
 <template>
-    <InterfaceForm title="Sign Message">
+    <InterfaceForm :title="$t('interfaceSignMessage.title')">
         <div class="description">
-            Include your nickname and where you use the nickname so someone else
-            cannot use it. Include a specific reason for the message so it
-            cannot be reused for a different purpose.
+            {{ $t("interfaceSignMessage.includeYourNickname") }}
         </div>
 
         <div class="text-input-container">
             <TextInput
                 v-model="state.message"
-                label="Message"
+                :label="$t('common.message')"
                 type="text"
                 :error="
                     state.enableErr ? 'The message field is required' : null
@@ -21,7 +19,7 @@
         <template v-slot:footer>
             <Button
                 :disabled="!state.signable"
-                label="Sign"
+                :label="$t('Sign')"
                 @click="onSignClicked"
             />
         </template>

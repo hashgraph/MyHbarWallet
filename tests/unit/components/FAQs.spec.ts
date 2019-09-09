@@ -1,15 +1,21 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import FAQs from "../../../src/components/FAQs.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("FAQs.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
 
-        const wrapper = mount(FAQs, { localVue });
+        const wrapper = mount(FAQs, {
+            localVue,
+            i18n
+        });
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div id="faqs" class="faqs">
@@ -23,7 +29,7 @@ describe("FAQs.vue", (): void => {
                       </div>
                     </div>
                     <div class="customer-support-link customer-support-link">
-                      <div class="customer-support-container"><img alt="" src=""> Customer Support
+                      <div class="customer-support-container"><img alt="" src="">Customer Support
                       </div>
                       <div role="dialog" aria-modal="true" class="modal-background">
                         <div class="modal">
@@ -88,10 +94,7 @@ describe("FAQs.vue", (): void => {
                       </div>
                       <div class="content">
                         <div class="content-text">
-                          MyHederaWallet (MHW) offers three ways to create a
-                          new H wallet. These are via Keystore file,
-                          Passphrase, or Private Key. Pair the keys with an
-                          account ID to start transacting hbar.
+                          MyHederaWallet (MHW) offers three ways to create a new H wallet. These are via Keystore file, Passphrase, or Private Key. Pair the keys with an account ID to start transacting hbar.
                         </div>
                       </div>
                     </div>
@@ -105,27 +108,21 @@ describe("FAQs.vue", (): void => {
                       </div>
                       <div class="content">
                         <div class="content-text">
-                          MHW supports many different wallet types with plans
-                          to include support for hardware wallets in the near
-                          future. We are also open for anyone to use their H
-                          wallets with the appropriate information.
+                          MHW supports many different wallet types with plans to include support for hardware wallets in the near future. We are also open for anyone to use their H wallets with the appropriate information.
                         </div>
                       </div>
                     </div>
                     <div class="accordion">
                       <div class="title">
                         <div class="title-text">
-                          What does it cost to use MyHbarWallet?
+                          How can I send a transaction?
                         </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                           <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"></path>
                         </svg>
                       </div>
                       <div class="content">
                         <div class="content-text">
-                          MHW does not charge any fees for interacting with
-                          the Hedera™ API. Hedera™ Hashgraph requires a
-                          transaction fee when interacting with the Hedera™
-                          API. That fee paid in Hbar.
+                          MHW does not charge any fees for interacting with the Hedera™ API. Hedera™ Hashgraph requires a transaction fee when interacting with the Hedera™ API. That fee paid in Hbar.
                         </div>
                       </div>
                     </div>
@@ -139,11 +136,7 @@ describe("FAQs.vue", (): void => {
                       </div>
                       <div class="content">
                         <div class="content-text">
-                          MHW does not offer support for recovery or reset of
-                          passwords / private keys. We always suggest writing
-                          down private keys and passwords on physical media
-                          for safekeeping. Maybe you saved it on your
-                          computer!
+                          MHW does not offer support for recovery or reset of passwords / private keys. We always suggest writing down private keys and passwords on physical media for safekeeping. Maybe you saved it on your computer!
                         </div>
                       </div>
                     </div>

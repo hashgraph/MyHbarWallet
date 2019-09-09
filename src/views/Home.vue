@@ -4,8 +4,10 @@
             <div class="page-container">
                 <div class="banner">
                     <div class="banner-content">
-                        <div class="title">The #1</div>
-                        <div class="title">Hbar Wallet</div>
+                        <div class="title">
+                            {{ $t("home.theNumberOneHbarWallet") }}
+                        </div>
+                        <div class="title"></div>
                         <div class="subtitle">
                             MyHbarWallet is a free, client-side interface
                             helping you interact with Hedera™ Hashgraph. Our
@@ -26,7 +28,9 @@
             <div class="page-container">
                 <div class="banner">
                     <div class="banner-content">
-                        <div class="about-title">About MyHbarWallet</div>
+                        <div class="about-title">
+                            {{ $t("home.aboutMyHbarWallet") }}
+                        </div>
                         <div class="about-subtitle">
                             MyHbarWallet is a clone of one of the most popular
                             wallets on Ethereum. We took that approach because
@@ -141,9 +145,8 @@ export default createComponent({
     color: var(--color-ghostlands-coal);
     font-size: 45px;
     font-weight: 700;
-    height: 45px;
     line-height: 100%;
-    margin-block-end: 8px;
+    margin-block-end: -10px;
 
     @media (max-width: 480px) {
         font-size: 32px;

@@ -2,16 +2,20 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import MaterialDesignIcon from "../../../src/components/MaterialDesignIcon.vue";
 import { mdiChevronUp } from "@mdi/js";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("MaterialDesignIcon.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(MaterialDesignIcon, {
             localVue,
+            i18n,
             propsData: {
                 icon: mdiChevronUp
             }
@@ -29,6 +33,7 @@ describe("MaterialDesignIcon.vue", (): void => {
 
         const wrapper = mount(MaterialDesignIcon, {
             localVue,
+            i18n,
             propsData: {
                 spin: true,
                 icon: mdiChevronUp
@@ -47,6 +52,7 @@ describe("MaterialDesignIcon.vue", (): void => {
 
         const wrapper = mount(MaterialDesignIcon, {
             localVue,
+            i18n,
             propsData: {
                 size: 12,
                 icon: mdiChevronUp

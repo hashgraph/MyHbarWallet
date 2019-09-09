@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalCreateByKeystore from "../../../src/components/ModalCreateByKeystore.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalCreateByKeystore.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     const PASSWORD = "password";
 
@@ -14,6 +17,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCreateByKeystore, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: false,
@@ -46,9 +50,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -87,11 +89,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
                   </svg></button></div>
               </form>
-              <p class="footer"><span class="important"> DO NOT FORGET</span> to save your
-                password. You will need this
-                <span class="important">Password + Keystore</span> File to
-                unlock your wallet.
-              </p>
+              <p class="footer"><span class="important">DO NOT FORGET</span> to save your password. You will need this <span class="important">Password + Keystore</span> File to unlock your wallet.</p>
             </div>
             </div>
             </div>
@@ -106,6 +104,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCreateByKeystore, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: false,
@@ -138,9 +137,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -181,11 +178,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
                   </svg></button></div>
               </form>
-              <p class="footer"><span class="important"> DO NOT FORGET</span> to save your
-                password. You will need this
-                <span class="important">Password + Keystore</span> File to
-                unlock your wallet.
-              </p>
+              <p class="footer"><span class="important">DO NOT FORGET</span> to save your password. You will need this <span class="important">Password + Keystore</span> File to unlock your wallet.</p>
             </div>
             </div>
             </div>
@@ -200,6 +193,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCreateByKeystore, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: true,
@@ -232,9 +226,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -273,11 +265,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
                   </svg></button></div>
               </form>
-              <p class="footer"><span class="important"> DO NOT FORGET</span> to save your
-                password. You will need this
-                <span class="important">Password + Keystore</span> File to
-                unlock your wallet.
-              </p>
+              <p class="footer"><span class="important">DO NOT FORGET</span> to save your password. You will need this <span class="important">Password + Keystore</span> File to unlock your wallet.</p>
             </div>
             </div>
             </div>
@@ -292,6 +280,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCreateByKeystore, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: true,
@@ -324,9 +313,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -367,11 +354,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
                   </svg></button></div>
               </form>
-              <p class="footer"><span class="important"> DO NOT FORGET</span> to save your
-                password. You will need this
-                <span class="important">Password + Keystore</span> File to
-                unlock your wallet.
-              </p>
+              <p class="footer"><span class="important">DO NOT FORGET</span> to save your password. You will need this <span class="important">Password + Keystore</span> File to unlock your wallet.</p>
             </div>
             </div>
             </div>

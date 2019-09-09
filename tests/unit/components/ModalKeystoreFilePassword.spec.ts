@@ -1,10 +1,13 @@
 import ModalPassword from "../../../src/components/ModalKeystoreFilePassword.vue";
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("ModalKeystoreFilePassword.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders closed, short password, not busy", (): void => {
         expect.assertions(1);
@@ -17,6 +20,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         };
         const wrapper = mount(ModalPassword, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -43,9 +47,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -79,6 +81,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         };
         const wrapper = mount(ModalPassword, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -105,9 +108,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -141,6 +142,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         };
         const wrapper = mount(ModalPassword, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -167,9 +169,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -203,6 +203,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         };
         const wrapper = mount(ModalPassword, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -229,9 +230,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -265,6 +264,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         };
         const wrapper = mount(ModalPassword, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -291,9 +291,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -329,6 +327,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         };
         const wrapper = mount(ModalPassword, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -355,9 +354,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -393,6 +390,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         };
         const wrapper = mount(ModalPassword, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -419,9 +417,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -457,6 +453,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         };
         const wrapper = mount(ModalPassword, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -483,9 +480,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>

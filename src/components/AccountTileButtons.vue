@@ -2,20 +2,22 @@
     <div class="tile-grid">
         <!-- TODO: Remove div below when hardware option is ready -->
         <div class="ribbon-container">
-            <div class="coming-soon">Coming Soon!</div>
+            <div class="coming-soon">{{ $t("common.comingSoon") }}</div>
             <AccountTileButton
                 disabled
-                title="Hardware"
-                content="Support for hardware wallets in development"
+                :title="$t('accountTileButtons.hardware')"
+                :content="$t('accountTileButtons.supportForHardwareWallets')"
                 :image="hardwareImage"
                 @click="$emit('click', 'hardware')"
             />
         </div>
         <AccountTileButton
-            title="Software"
-            content="Keystore file, Private key, Mnemonic phrase"
+            :title="$t('accountTileButtons.software')"
+            :content="
+                $t('accountTileButtons.keystoreFilePrivateKeyMnemonicPhrase')
+            "
             :image="softwareImage"
-            note="Not Recommended"
+            :note="$t('accountTileButtons.notRecomended')"
             @click="$emit('click', 'software')"
         />
     </div>

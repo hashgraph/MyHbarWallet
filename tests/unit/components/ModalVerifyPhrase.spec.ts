@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalVerifyPhrase from "../../../src/components/ModalVerifyPhrase.vue";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("ModalVerifyPhrase.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     const WORDS = [
         "skull",
@@ -40,6 +43,7 @@ describe("ModalVerifyPhrase.vue", (): void => {
         const hasAccount = jest.fn();
         const wrapper = mount(ModalVerifyPhrase, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false,
                 words: []
@@ -60,8 +64,7 @@ describe("ModalVerifyPhrase.vue", (): void => {
                   <div class="main">
                     <div class="content-container">
                       <div class="prompt">
-                        Please enter and fill out the empty boxes below to verify your
-                        mnemonic phrase key.
+                        Please enter and fill out the empty boxes below to verify your mnemonic phrase key.
                       </div>
                       <form>
                         <div class="mnemonic"></div>
@@ -83,6 +86,7 @@ describe("ModalVerifyPhrase.vue", (): void => {
         const hasAccount = jest.fn();
         const wrapper = mount(ModalVerifyPhrase, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false,
                 words: WORDS
@@ -103,8 +107,7 @@ describe("ModalVerifyPhrase.vue", (): void => {
                   <div class="main">
                     <div class="content-container">
                       <div class="prompt">
-                        Please enter and fill out the empty boxes below to verify your
-                        mnemonic phrase key.
+                        Please enter and fill out the empty boxes below to verify your mnemonic phrase key.
                       </div>
                       <form>
                         <div class="mnemonic"><label class="readonly"><span class="number">1.</span> <input readonly="readonly" data-index="0" tabindex="-1" class="word"></label><label class="readonly"><span class="number">2.</span> <input readonly="readonly" data-index="1" tabindex="-1" class="word"></label><label class="readonly"><span class="number">3.</span> <input readonly="readonly" data-index="2" tabindex="-1" class="word"></label><label class="readonly"><span class="number">4.</span> <input readonly="readonly" data-index="3" tabindex="-1" class="word"></label><label class="readonly"><span class="number">5.</span> <input readonly="readonly" data-index="4" tabindex="-1" class="word"></label><label class="readonly"><span class="number">6.</span> <input readonly="readonly" data-index="5" tabindex="-1" class="word"></label><label class="readonly"><span class="number">7.</span> <input readonly="readonly" data-index="6" tabindex="-1" class="word"></label><label class="readonly"><span class="number">8.</span> <input readonly="readonly" data-index="7" tabindex="-1" class="word"></label><label class="readonly"><span class="number">9.</span> <input readonly="readonly" data-index="8" tabindex="-1" class="word"></label><label class="readonly"><span class="number">10.</span> <input readonly="readonly" data-index="9" tabindex="-1" class="word"></label><label class="readonly"><span class="number">11.</span> <input readonly="readonly" data-index="10" tabindex="-1" class="word"></label><label class="readonly"><span class="number">12.</span> <input readonly="readonly" data-index="11" tabindex="-1" class="word"></label><label class="readonly"><span class="number">13.</span> <input readonly="readonly" data-index="12" tabindex="-1" class="word"></label><label class="readonly"><span class="number">14.</span> <input readonly="readonly" data-index="13" tabindex="-1" class="word"></label><label class="readonly"><span class="number">15.</span> <input readonly="readonly" data-index="14" tabindex="-1" class="word"></label><label class="readonly"><span class="number">16.</span> <input readonly="readonly" data-index="15" tabindex="-1" class="word"></label><label class="readonly"><span class="number">17.</span> <input readonly="readonly" data-index="16" tabindex="-1" class="word"></label><label class="readonly"><span class="number">18.</span> <input readonly="readonly" data-index="17" tabindex="-1" class="word"></label><label class="readonly"><span class="number">19.</span> <input readonly="readonly" data-index="18" tabindex="-1" class="word"></label><label class="readonly"><span class="number">20.</span> <input readonly="readonly" data-index="19" tabindex="-1" class="word"></label><label class="readonly"><span class="number">21.</span> <input readonly="readonly" data-index="20" tabindex="-1" class="word"></label><label class="readonly"><span class="number">22.</span> <input readonly="readonly" data-index="21" tabindex="-1" class="word"></label><label class="readonly"><span class="number">23.</span> <input readonly="readonly" data-index="22" tabindex="-1" class="word"></label><label class="readonly"><span class="number">24.</span> <input readonly="readonly" data-index="23" tabindex="-1" class="word"></label></div>
@@ -126,6 +129,7 @@ describe("ModalVerifyPhrase.vue", (): void => {
         const hasAccount = jest.fn();
         const wrapper = mount(ModalVerifyPhrase, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: true,
                 words: []
@@ -146,8 +150,7 @@ describe("ModalVerifyPhrase.vue", (): void => {
                   <div class="main">
                     <div class="content-container">
                       <div class="prompt">
-                        Please enter and fill out the empty boxes below to verify your
-                        mnemonic phrase key.
+                        Please enter and fill out the empty boxes below to verify your mnemonic phrase key.
                       </div>
                       <form>
                         <div class="mnemonic"></div>

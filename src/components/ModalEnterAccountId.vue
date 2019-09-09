@@ -2,7 +2,7 @@
     <div class="modal-enter-account-id">
         <Modal
             :is-open="isOpen"
-            title="Enter Account ID"
+            :title="$t('modalEnterAccountId.title')"
             @change="handleModalChangeIsOpen"
             @click.native="handleInputNotFocused"
         >
@@ -21,7 +21,7 @@
                     show-validation
                     :valid="valid"
                     :error="state.errorMessage"
-                    placeholder="shard.realm.account"
+                    :placeholder="$t('common.accountSyntax')"
                     @input="handleInput"
                     @click.native.stop
                 />
@@ -29,7 +29,7 @@
                     <Button
                         compact
                         outline
-                        label="No Account ID?"
+                        :label="$t('modalEnterAccountId.noAccountId')"
                         class="button"
                         type="button"
                         @click="handleDontHaveAccount"
@@ -37,7 +37,7 @@
                     />
                     <Button
                         compact
-                        label="Continue"
+                        :label="$t('common.continue')"
                         class="button"
                         type="submit"
                         :disabled="!valid"
@@ -194,15 +194,17 @@ export default createComponent({
                             ResponseCodeEnum.PAYER_ACCOUNT_NOT_FOUND ||
                         error.code === ResponseCodeEnum.INVALID_ACCOUNT_ID
                     ) {
-                        state.errorMessage =
-                            "This account does not exist in the network.";
+                        state.errorMessage = context.root
+                            .$t("common.error.payerAccountNotFound")
+                            .toString();
 
                         return;
                     } else if (
                         error.code === ResponseCodeEnum.INVALID_SIGNATURE
                     ) {
-                        state.errorMessage =
-                            "This account is not associated with your private key.";
+                        state.errorMessage = context.root
+                            .$t("common.error.invalidSignature")
+                            .toString();
 
                         return;
                     } else if (
@@ -223,9 +225,9 @@ export default createComponent({
                     error instanceof Error &&
                     error.message === "Response closed without headers"
                 ) {
-                    state.errorMessage =
-                        "Could not reach the network. Check your connection" +
-                        " and try again.";
+                    state.errorMessage = context.root
+                        .$t("common.error.noConnection")
+                        .toString();
 
                     return;
                 }

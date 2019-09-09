@@ -2,12 +2,12 @@
     <div class="view-public-key">
         <Modal
             :is-open="isOpen"
-            title="Public Key"
+            :title="$t('modalViewPublicKey.title')"
             @change="this.$listeners.change"
         >
             <ReadOnlyInput multiline :value="publicKey" />
             <div class="container">
-                <Button label="Copy" @click="handleCopy" />
+                <Button :label="$t('common.copy')" @click="handleCopy" />
             </div>
         </Modal>
     </div>

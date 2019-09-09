@@ -1,10 +1,14 @@
 import VueCompositionApi from "@vue/composition-api";
 import ModalConfirmSignMessage from "../../../src/components/ModalConfirmSignMessage.vue";
 import { createLocalVue, mount } from "@vue/test-utils";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalConfirmSignMessage.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
+
     const PUBLIC_KEY =
         "302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29";
 
@@ -14,6 +18,7 @@ describe("ModalConfirmSignMessage.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalConfirmSignMessage, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false,
                 message: "message",
@@ -57,6 +62,7 @@ describe("ModalConfirmSignMessage.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalConfirmSignMessage, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: true,
                 message: "message",

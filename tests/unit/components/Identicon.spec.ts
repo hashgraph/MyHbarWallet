@@ -1,16 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import Identicon from "../../../src/components/Identicon.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("Identicon.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(Identicon, {
             localVue,
+            i18n,
             propsData: {
                 size: 150,
                 value: "this-is-a-test"

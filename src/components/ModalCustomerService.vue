@@ -1,7 +1,7 @@
 <template>
     <Modal
         :is-open="isOpen"
-        title="Issue Information"
+        :title="$t('modalCustomerService.title')"
         @change="this.$listeners.change"
     >
         <template>
@@ -12,36 +12,42 @@
                 <TextInput
                     v-model="state.browser"
                     class="issue-item"
-                    placeholder="Browser"
+                    :placeholder="$t('modalCustomerService.browser')"
                 />
                 <TextInput
                     v-model="state.platform"
                     class="issue-item"
-                    placeholder="Operating System"
+                    :placeholder="$t('modalCustomerService.operatingSystem')"
                 />
                 <TextInput
                     v-model="state.device"
                     class="issue-item"
-                    placeholder="Device/Wallet type (if any)"
+                    :placeholder="
+                        $t('modalCustomerService.deviceOrwalletIfAny')
+                    "
                 />
                 <TextInput
                     v-model="state.accountId"
                     class="issue-item"
-                    placeholder="Account ID (if any)"
+                    :placeholder="$t('modalCustomerService.accountIdIfAny')"
                 />
                 <TextInput
                     v-model="state.url"
                     class="issue-item"
-                    placeholder="URL"
+                    :placeholder="$t('modalCustomerService.url')"
                 />
                 <TextInput
                     v-model="state.description"
                     multiline
                     class="issue-item"
-                    placeholder="Describe the issue"
+                    :placeholder="$t('modalCustomerService.describeTheIssue')"
                     resizable
                 />
-                <Button label="Send" class="send-button" :compact="true" />
+                <Button
+                    :label="$t('common.send')"
+                    class="send-button"
+                    :compact="true"
+                />
             </form>
         </template>
     </Modal>

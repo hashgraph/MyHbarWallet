@@ -1,7 +1,7 @@
 <template>
     <Modal
         :is-open="isOpen"
-        title="Access by hardware"
+        :title="$t('modalAccessByHardware.title')"
         @change="this.$listeners.change"
     >
         <form class="modal-access-by-hardware" @submit.prevent="">
@@ -13,7 +13,7 @@
             <Button
                 :disabled="state.optionSelected.length === 0"
                 class="button-choose-a-hardware"
-                label="Choose a Hardware"
+                :label="$t('modalAccessByHardware.chooseAHardware')"
             />
             <CustomerSupportLink />
         </form>

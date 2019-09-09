@@ -1,7 +1,7 @@
 <template>
     <CirclePage>
         <div class="wrap">
-            <PageTitle title="Terms of Conditions">
+            <PageTitle :title="t('termsAndConditions.title')">
                 Last updated: September 12, 2019
             </PageTitle>
 

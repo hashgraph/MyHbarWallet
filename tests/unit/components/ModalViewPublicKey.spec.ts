@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalViewPublicKey from "../../../src/components/ModalViewPublicKey.vue";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("ModalViewPublicKey.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders open", (): void => {
         expect.assertions(1);
@@ -12,6 +15,7 @@ describe("ModalViewPublicKey.vue", (): void => {
 
         const wrapper = mount(ModalViewPublicKey, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: true
             },
@@ -48,6 +52,7 @@ describe("ModalViewPublicKey.vue", (): void => {
 
         const wrapper = mount(ModalViewPublicKey, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false
             },

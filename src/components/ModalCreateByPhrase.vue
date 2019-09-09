@@ -2,7 +2,7 @@
     <div class="modal-create-by-mnemonic-phrase">
         <Modal
             :is-open="isOpen"
-            title="Create by Mnemonic Phrase"
+            :title="$t('modalCreateByPhrase.title')"
             @change="this.$listeners.change"
         >
             <template v-slot:banner>
@@ -10,9 +10,13 @@
             </template>
             <div class="password-info-header-wrapper">
                 <div class="password-info-header">
-                    Your Password
+                    {{ $t("common.password.yourPassword") }}
                     <InfoButton
-                        message="This password encrypts your private key. This does not act as a seed to generate your keys."
+                        :message="
+                            $t(
+                                'common.password.thisPasswordEncryptsYourPrivateKey'
+                            )
+                        "
                     />
                 </div>
             </div>
@@ -20,7 +24,7 @@
                 <div class="spacer" />
                 <div class="random-button" @click="randomizeMnemonic">
                     <MaterialDesignIcon :size="16" :icon="cachedIcon" />
-                    Random
+                    {{ $t("modalCreateByPhrase.random") }}
                 </div>
             </div>
 
@@ -34,7 +38,7 @@
             <HiddenPasswordInput
                 v-if="false"
                 :value="state.passwordValue"
-                password-warning="If you choose to include a password, understand you will ALWAYS need this password with your mnemonic phrase. You can not change it. It becomes a permanent part of your phrase."
+                :password-warning="$t('modalCreateByPhrase.passwordWarning')"
                 @input="handlePasswordChange"
             />
 
@@ -42,7 +46,9 @@
                 <Button
                     :busy="state.isBusy"
                     class="continue-btn"
-                    label="I Wrote Down My Mnemonic Phrase"
+                    :label="
+                        $t('modalCreateByPhrase.iWroteDownMyMnemonicPhrase')
+                    "
                     @click="handleClick"
                 />
                 <ModalVerifyPhrase
@@ -63,10 +69,17 @@
             </div>
 
             <div class="warning-container">
-                <p class="do-not-forget">
-                    <span class="important"> DO NOT FORGET</span> to save your
-                    password. You will need this to access your wallet.
-                </p>
+                <div
+                    class="do-not-forget"
+                    v-html="
+                        formatRich(
+                            $t(
+                                'modalCreateByPhrase.doNotForgetToSaveYourPassword'
+                            ).toString(),
+                            { strongClass: 'important' }
+                        )
+                    "
+                />
             </div>
         </Modal>
     </div>
@@ -193,7 +206,8 @@ export default createComponent({
             handlePasswordChange,
             handleClick,
             randomizeMnemonic,
-            handleVerifySuccess
+            handleVerifySuccess,
+            formatRich
         };
     }
 });
@@ -253,11 +267,6 @@ export default createComponent({
     user-select: none;
 }
 
-.important {
-    color: var(--color-lightish-red);
-    font-weight: 500;
-}
-
 .printer-button {
     cursor: pointer;
     height: 30px;
@@ -268,6 +277,11 @@ export default createComponent({
     color: var(--color-china-blue);
     font-size: 14px;
     margin-inline: auto;
+
+    & >>> .important {
+        color: var(--color-lightish-red);
+        font-weight: 500;
+    }
 }
 
 .warning-container {

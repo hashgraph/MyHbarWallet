@@ -4,7 +4,7 @@
         <div class="content">
             <div class="top">
                 <div class="title">
-                    Account
+                    {{ $t("accountCard.account") }}
                 </div>
                 <div class="subtitle">
                     <span>{{ shard }}.{{ realm }}.</span
@@ -12,14 +12,17 @@
                 </div>
             </div>
             <div class="actions">
-                <Tooltip class="action" message="Account QR Code">
+                <Tooltip
+                    class="action"
+                    :message="$t('accountCard.accountQrCode')"
+                >
                     <MaterialDesignIcon
                         class="qr-icon"
                         :icon="mdiQrcode"
                         @click="showQrCode"
                     />
                 </Tooltip>
-                <Tooltip class="action" message="Public Key">
+                <Tooltip class="action" :message="$t('accountCard.publicKey')">
                     <MaterialDesignIcon
                         class="copy-icon"
                         :icon="mdiKey"

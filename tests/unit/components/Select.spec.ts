@@ -1,16 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import Select from "../../../src/components/Select.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("Select.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders without options", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(Select, {
             localVue,
+            i18n,
             propsData: {
                 selected: "",
                 options: []
@@ -34,6 +38,7 @@ describe("Select.vue", (): void => {
 
         const wrapper = mount(Select, {
             localVue,
+            i18n,
             propsData: {
                 selected: "current selected",
                 options: ["1", "2", "3"]
@@ -67,6 +72,7 @@ describe("Select.vue", (): void => {
 
         const wrapper = mount(Select, {
             localVue,
+            i18n,
             propsData: {
                 selected: "current selected",
                 options: ["1", "2", "3"]
