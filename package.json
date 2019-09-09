@@ -24,6 +24,7 @@
         "@mdi/js": "^4.2.95",
         "@vue/composition-api": "^0.2.1",
         "bignumber.js": "^9.0.0",
+        "html2pdf": "^0.0.11",
         "jdenticon": "^2.2.0",
         "qrcode.vue": "^1.6.2",
         "ua-parser-js": "^0.7.20",
