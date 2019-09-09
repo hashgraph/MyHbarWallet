@@ -87,6 +87,7 @@ a {
     height: max-content;
     max-height: 200px;
     overflow: hidden;
+    padding-block-start: 20px;
 
     /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
     transition: max-height 0.3s linear;
