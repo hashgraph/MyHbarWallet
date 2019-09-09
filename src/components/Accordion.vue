@@ -85,12 +85,10 @@ a {
     font-size: 14px;
     font-weight: 400;
     height: max-content;
-    max-height: 200px;
     overflow: hidden;
-    padding-block-start: 20px;
 
     /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
-    transition: max-height 0.3s linear;
+    transition: 0.3s;
 
     @media (prefers-reduced-motion) {
         transition: none;
@@ -99,6 +97,12 @@ a {
 
 .accordion:not(.expanded) .content {
     max-height: 0;
+    padding-block-start: 0;
+}
+
+.accordion.expanded .content {
+    max-height: 200px;
+    padding-block-start: 20px;
 }
 
 .content-text {
