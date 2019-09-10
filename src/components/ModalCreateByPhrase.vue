@@ -65,7 +65,7 @@
             <div class="warning-container">
                 <p class="do-not-forget">
                     <span class="important"> DO NOT FORGET</span> to save your
-                    password. You will need this
+                    password. You will need this to access your wallet.
                 </p>
             </div>
         </Modal>

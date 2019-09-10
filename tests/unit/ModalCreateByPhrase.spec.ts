@@ -92,27 +92,29 @@ describe("ModalCreateByPhrase.vue", (): void => {
                               </svg></header>
                             <div class="main">
                               <div class="content-container">
-                                <div class="logo-contents">
-                                  <div class="header-container"><span class="header">
-                            My<strong>Hbar</strong>Wallet
-                        </span> <span class="sub-header">Mnemonic Phrase</span></div>
-                                  <div class="support-email"><img alt="" src="../assets/icon-bell.svg" class="icon">support@myhbarwallet.com
+                                <div>
+                                  <div class="logo-contents">
+                                    <div class="header-container"><span class="header">
+                                My<strong>Hbar</strong>Wallet
+                            </span> <span class="sub-header">Mnemonic Phrase</span></div>
+                                    <div class="support-email"><img alt="" src="../assets/icon-bell.svg" class="icon">support@myhbarwallet.app
+                                    </div>
+                                  </div>
+                                  <div class="password-disclaimer">
+                                    <h3>
+                                      Save this sheet! Print it and keep it in a safe place! This
+                                      is your property!
+                                    </h3>
+                                    We <strong>CAN NOT</strong> change your mnemonic phrase. Please
+                                    <strong>DO NOT FORGET</strong> to save this information. You
+                                    will need this <strong>Mnemonic Phrase</strong> to access your
+                                    wallet. This is your private key!
+                                  </div>
+                                  <div class="contents">
+                                    <div class="list-container"></div>
                                   </div>
                                 </div>
-                                <div class="password-disclaimer">
-                                  <h3>
-                                    Please Keep This Sheet in a Very Safe Place. It is your
-                                    property!
-                                  </h3>
-                                  We <strong>CAN NOT</strong> change your password. Please
-                                  <strong>DO NOT FORGET</strong> to save your password. It is your
-                                  private key. You will need this
-                                  <strong>Password + Mnemonic Phrase</strong> to access your wallet.
-                                </div>
-                                <div class="contents">
-                                  <div class="list-container"></div>
-                                </div>
-                                <div class="button-container"><button type="submit" class="button-print outline"><span>Print</span>
+                                <div class="button-container"><button type="submit" class="button-save outline"><span>Save</span>
                                     <!----></button></div>
                               </div>
                             </div>
@@ -121,7 +123,7 @@ describe("ModalCreateByPhrase.vue", (): void => {
                       </div>
                       <div class="warning-container">
                         <p class="do-not-forget"><span class="important"> DO NOT FORGET</span> to save your
-                          password. You will need this
+                          password. You will need this to access your wallet.
                         </p>
                       </div>
                     </div>

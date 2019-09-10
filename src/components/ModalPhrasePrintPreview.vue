@@ -1,56 +1,68 @@
 <template>
     <Modal
-        :is-open="isOpen"
+        :is-open="props.isOpen"
         :large="true"
         title="Print Preview"
-        @change="this.$listeners.change"
+        @change="onChange"
     >
-        <div class="logo-contents">
-            <div class="header-container">
-                <span class="header">
-                    My<strong>Hbar</strong>Wallet
-                </span>
-                <span class="sub-header">Mnemonic Phrase</span>
+        <div ref="mnemonic">
+            <div class="logo-contents">
+                <div class="header-container">
+                    <span class="header">
+                        My<strong>Hbar</strong>Wallet
+                    </span>
+                    <span class="sub-header">Mnemonic Phrase</span>
+                </div>
+                <div class="support-email">
+                    <img
+                        alt=""
+                        class="icon"
+                        src="../assets/icon-bell.svg"
+                    />support@myhbarwallet.app
+                </div>
             </div>
-            <div class="support-email">
-                <img
-                    alt=""
-                    class="icon"
-                    src="../assets/icon-bell.svg"
-                />support@myhbarwallet.com
+            <div class="password-disclaimer">
+                <h3>
+                    Save this sheet! Print it and keep it in a safe place! This
+                    is your property!
+                </h3>
+                We <strong>CAN NOT</strong> change your mnemonic phrase. Please
+                <strong>DO NOT FORGET</strong> to save this information. You
+                will need this <strong>Mnemonic Phrase</strong> to access your
+                wallet. This is your private key!
             </div>
-        </div>
-        <div class="password-disclaimer">
-            <h3>
-                Please Keep This Sheet in a Very Safe Place. It is your
-                property!
-            </h3>
-            We <strong>CAN NOT</strong> change your password. Please
-            <strong>DO NOT FORGET</strong> to save your password. It is your
-            private key. You will need this
-            <strong>Password + Mnemonic Phrase</strong> to access your wallet.
-        </div>
 
-        <div class="contents">
-            <Mnemonic :editable="false" :words="words.length" :value="words" />
+            <div class="contents">
+                <Mnemonic
+                    :editable="false"
+                    :words="props.words.length"
+                    :value="props.words"
+                />
+            </div>
         </div>
 
         <div class="button-container">
             <Button
-                class="button-print"
-                label="Print"
+                class="button-save"
+                label="Save"
                 outline
-                @click="handleClickPrint"
+                @click="handleClickSave"
             />
         </div>
     </Modal>
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { createComponent, ref, SetupContext } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "../components/MnemonicInput.vue";
+import html2pdf from "html2pdf.js";
+
+interface Props {
+    isOpen: boolean;
+    words: string[];
+}
 
 export default createComponent({
     components: {
@@ -63,19 +75,48 @@ export default createComponent({
         event: "change"
     },
     props: {
-        isOpen: { type: Boolean },
-        words: {
-            type: Array,
-            required: true
-        }
+        isOpen: Boolean,
+        words: Array
     },
-    setup() {
-        function handleClickPrint(): void {
-            window.print();
+    setup(props: Props, context: SetupContext) {
+        const mnemonic = ref(null);
+
+        function handleClickSave(): void {
+            let element = null;
+
+            try {
+                // Note: Vue Instances need $el to get their HTML, dumb elements do not
+                element = (mnemonic.value as unknown) as HTMLElement;
+            } catch (error) {
+                console.warn(error);
+                throw error;
+            }
+
+            const options = {
+                filename: "MHW_Mnemonic_Phrase.pdf",
+                margin: [10, 10, 10, 10],
+                pageSize: "a4",
+                image: { type: "png", quality: 1 },
+                jsPDF: {
+                    unit: "mm"
+                }
+            };
+
+            html2pdf()
+                .set(options)
+                .from(element)
+                .save();
+        }
+
+        function onChange(): void {
+            context.emit("change");
         }
 
         return {
-            handleClickPrint
+            props,
+            mnemonic,
+            onChange,
+            handleClickSave
         };
     }
 });
@@ -158,7 +199,7 @@ export default createComponent({
     }
 }
 
-.button-print {
+.button-save {
     align-self: center;
 
     @media print {
