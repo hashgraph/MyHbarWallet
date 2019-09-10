@@ -102,6 +102,7 @@ export default createComponent({
             // .toPdf()
             // .get("pdf")
             // .then(function(pdf: jsPDF) {
+            //      window.open(...);
             // });
         }
 
