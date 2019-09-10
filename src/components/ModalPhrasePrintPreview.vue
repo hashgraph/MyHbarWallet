@@ -95,6 +95,7 @@ export default createComponent({
             const options = {
                 filename: "MHW_Mnemonic_Phrase.pdf",
                 margin: [10, 10, 10, 10],
+                pageSize: "a4",
                 image: { type: "png", quality: 1 },
                 jsPDF: {
                     unit: "mm"

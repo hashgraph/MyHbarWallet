@@ -13,6 +13,7 @@ declare module "html2pdf.js" {
     type Html2PdfOptions = {
         filename: string;
         margin?: number | Array<number>;
+        pageSize: string;
         image: Html2PdfImageOptions;
         jsPDF: jsPDFOptions;
     };
