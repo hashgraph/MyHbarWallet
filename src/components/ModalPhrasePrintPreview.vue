@@ -13,24 +13,17 @@
                     </span>
                     <span class="sub-header">Mnemonic Phrase</span>
                 </div>
-                <div class="support-email">
-                    <img
-                        alt=""
-                        class="icon"
-                        src="../assets/icon-bell.svg"
-                    />support@myhbarwallet.com
-                </div>
+                <CustomerSupportLink />
             </div>
             <div class="password-disclaimer">
                 <h3>
-                    Please Keep This Sheet in a Very Safe Place. It is your
-                    property!
+                    Save this sheet! Print it and keep it in a safe place! This
+                    is your property!
                 </h3>
-                We <strong>CAN NOT</strong> change your password. Please
-                <strong>DO NOT FORGET</strong> to save your password. It is your
-                private key. You will need this
-                <strong>Password + Mnemonic Phrase</strong> to access your
-                wallet.
+                We <strong>CAN NOT</strong> change your mnemonic phrase. Please
+                <strong>DO NOT FORGET</strong> to save this information. You
+                will need this <strong>Mnemonic Phrase</strong> to access your
+                wallet. This is your private key!
             </div>
 
             <div class="contents">
@@ -44,23 +37,22 @@
 
         <div class="button-container">
             <Button
-                class="button-print"
-                label="Print"
+                class="button-save"
+                label="Save"
                 outline
-                @click="handleClickPrint"
+                @click="handleClickSave"
             />
         </div>
     </Modal>
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext, ref } from "@vue/composition-api";
+import { createComponent, ref, SetupContext } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "../components/MnemonicInput.vue";
-import store from "../store";
-import { ALERT } from "../store/actions";
 import html2pdf from "html2pdf.js";
+import CustomerSupportLink from "./CustomerSupportLink.vue";
 
 interface Props {
     isOpen: boolean;
@@ -69,6 +61,7 @@ interface Props {
 
 export default createComponent({
     components: {
+        CustomerSupportLink,
         Button,
         Modal,
         Mnemonic
@@ -84,20 +77,14 @@ export default createComponent({
     setup(props: Props, context: SetupContext) {
         const mnemonic = ref(null);
 
-        function handleClickPrint(): void {
+        function handleClickSave(): void {
             let element = null;
 
             try {
                 // Note: Vue Instances need $el to get their HTML, dumb elements do not
                 element = (mnemonic.value as unknown) as HTMLElement;
             } catch (error) {
-                console.log(error);
-
-                store.dispatch(ALERT, {
-                    message: "Could not print Mnemonic",
-                    level: "error"
-                });
-
+                console.warn(error);
                 throw error;
             }
 
@@ -110,6 +97,12 @@ export default createComponent({
                 .set(options)
                 .from(element)
                 .save();
+
+            // Adblockers close the new tab :(
+            // .toPdf()
+            // .get("pdf")
+            // .then(function(pdf: jsPDF) {
+            // });
         }
 
         function onChange(): void {
@@ -120,7 +113,7 @@ export default createComponent({
             props,
             mnemonic,
             onChange,
-            handleClickPrint
+            handleClickSave
         };
     }
 });
@@ -203,7 +196,7 @@ export default createComponent({
     }
 }
 
-.button-print {
+.button-save {
     align-self: center;
 
     @media print {
