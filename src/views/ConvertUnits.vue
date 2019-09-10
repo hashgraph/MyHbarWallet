@@ -107,7 +107,7 @@ export default createComponent({
     padding: 100px 20px;
 
     @media (max-width: 500px) {
-        padding: 25px 20px;
+        padding: 5px 20px;
     }
 }
 
@@ -115,6 +115,10 @@ export default createComponent({
     margin-block-end: 60px;
     margin-block-start: 0;
     text-align: center;
+
+    @media (max-width: 500px) {
+        margin-block-end: 15px;
+    }
 }
 
 .page-title {
@@ -133,10 +137,17 @@ export default createComponent({
     margin: 0 auto;
     margin-block-start: 20px;
     max-width: 700px;
+
+    @media (max-width: 500px) {
+        margin-block-start: 5px;
+    }
 }
 
 .hbar-unit-reference-guide {
+    background-color: var(--color-boysenberry-shadow-transparent);
+    border-radius: 5px;
     margin-block-start: 60px;
+    padding-block-start: 20px;
 }
 
 .block-title {
@@ -159,7 +170,7 @@ tr {
     border-bottom: 1px solid var(--color-jupiter);
     position: relative;
 
-    @media (max-width: 414px) {
+    @media (max-width: 500px) {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -171,19 +182,19 @@ td {
     padding: 18px 10px;
     position: relative;
 
-    @media (max-width: 414px) {
+    @media (max-width: 500px) {
         padding: 0 10px;
     }
 }
 
 tr > td:first-child {
-    @media (max-width: 414px) {
+    @media (max-width: 500px) {
         font-weight: 500;
     }
 }
 
 .sub-row-container > td:last-child {
-    @media (max-width: 414px) {
+    @media (max-width: 500px) {
         text-align: end;
     }
 

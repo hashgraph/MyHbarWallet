@@ -2,14 +2,6 @@
     <div class="unit-input">
         <div class="wrap">
             <div class="block-left">
-                <div class="select-block">
-                    <Select
-                        v-model="state.selectedLeft"
-                        :options="options"
-                        :left="true"
-                        @change="handleSelect"
-                    />
-                </div>
                 <div class="input-block">
                     <TextInput
                         :value="state.valueLeft"
@@ -18,6 +10,14 @@
                         step="any"
                         placeholder="Amount"
                         @input="handleInputValueLeft"
+                    />
+                </div>
+                <div class="select-block">
+                    <Select
+                        v-model="state.selectedLeft"
+                        :options="options"
+                        :left="true"
+                        @change="handleSelect"
                     />
                 </div>
             </div>
@@ -29,14 +29,6 @@
             </div>
 
             <div class="block-right">
-                <div class="select-block">
-                    <Select
-                        v-model="state.selectedRight"
-                        :options="options"
-                        :left="false"
-                        @change="handleSelect"
-                    />
-                </div>
                 <div class="input-block">
                     <TextInput
                         :value="state.valueRight"
@@ -45,6 +37,14 @@
                         step="any"
                         placeholder="Amount"
                         @input="handleInputValueRight"
+                    />
+                </div>
+                <div class="select-block">
+                    <Select
+                        v-model="state.selectedRight"
+                        :options="options"
+                        :left="false"
+                        @change="handleSelect"
                     />
                 </div>
             </div>
@@ -180,26 +180,21 @@ export default createComponent({
 }
 
 .select-block {
-    margin-block-end: 5px;
     position: relative;
-
-    @media (max-width: 800px) {
-        margin-block-end: 0;
-        width: 50%;
-    }
 }
 
 .input-block {
+    margin-block-end: 5px;
+
     @media (max-width: 800px) {
-        margin-inline-end: 5px;
-        width: 50%;
+        margin-inline-end: 0;
     }
 }
 
 .block-left {
     @media (max-width: 800px) {
         display: flex;
-        flex-direction: row-reverse;
+        flex-direction: column;
     }
 }
 
@@ -210,7 +205,7 @@ export default createComponent({
 .block-right {
     @media (max-width: 800px) {
         display: flex;
-        flex-direction: row-reverse;
+        flex-direction: column;
     }
 }
 
