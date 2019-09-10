@@ -42,6 +42,7 @@ export default createComponent({
 
     @media (max-width: 600px) {
         grid-template-columns: auto;
+        padding-inline: 20px;
 
         & * {
             width: 100%;

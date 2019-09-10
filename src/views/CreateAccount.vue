@@ -292,7 +292,7 @@ a:focus {
     padding: 80px 0;
 
     @media (max-width: 600px) {
-        padding: 20px;
+        padding: 20px 0;
     }
 }
 </style>
