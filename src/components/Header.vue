@@ -21,7 +21,11 @@
                     FAQs
                 </router-link>
             </div>
-            <div v-if="loggedIn" class="logout" @click="handleLogout">
+            <div
+                v-if="loggedIn && isInterface"
+                class="logout"
+                @click="handleLogout"
+            >
                 Logout
             </div>
             <HeaderHamburgerButton
@@ -130,7 +134,8 @@ export default createComponent({
             headerClasses,
             handleReturnClick,
             loggedIn,
-            handleLogout
+            handleLogout,
+            isInterface
         };
     }
 });
