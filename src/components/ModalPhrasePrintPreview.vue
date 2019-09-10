@@ -13,7 +13,13 @@
                     </span>
                     <span class="sub-header">Mnemonic Phrase</span>
                 </div>
-                <CustomerSupportLink />
+                <div class="support-email">
+                    <img
+                        alt=""
+                        class="icon"
+                        src="../assets/icon-bell.svg"
+                    />support@myhbarwallet.app
+                </div>
             </div>
             <div class="password-disclaimer">
                 <h3>
@@ -52,7 +58,6 @@ import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "../components/MnemonicInput.vue";
 import html2pdf from "html2pdf.js";
-import CustomerSupportLink from "./CustomerSupportLink.vue";
 
 interface Props {
     isOpen: boolean;
@@ -61,7 +66,6 @@ interface Props {
 
 export default createComponent({
     components: {
-        CustomerSupportLink,
         Button,
         Modal,
         Mnemonic
