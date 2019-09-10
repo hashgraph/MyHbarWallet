@@ -1,6 +1,4 @@
 declare module "html2pdf.js" {
-    import jsPDF from "jspdf";
-
     type Html2PdfImageOptions = {
         type: String;
         quality: number;

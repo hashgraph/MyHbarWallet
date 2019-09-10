@@ -106,13 +106,6 @@ export default createComponent({
                 .set(options)
                 .from(element)
                 .save();
-
-            // Adblockers close the new tab :(
-            // .toPdf()
-            // .get("pdf")
-            // .then(function(pdf: jsPDF) {
-            //      window.open(...);
-            // });
         }
 
         function onChange(): void {
