@@ -13,7 +13,7 @@
                 security, either log out, or return to your account.
             </p>
             <p v-else>
-                Are you sure you would like to log out?
+                Are you sure?
             </p>
             <div class="button-group">
                 <Button
