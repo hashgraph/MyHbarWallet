@@ -1,6 +1,6 @@
 <template>
     <div class="network">
-        <img :src="hbar" />
+        <img :src="hedera" />
         <div class="content">
             <div class="top">
                 <div class="title">
@@ -25,7 +25,7 @@
 <script lang="ts">
 import Tooltip from "./Tooltip.vue";
 import { createComponent } from "@vue/composition-api";
-import hbar from "../assets/icon-hbar-outline.svg";
+import hedera from "../assets/icon-hedera-outline.svg";
 import settings from "../settings";
 
 export default createComponent({
@@ -34,7 +34,7 @@ export default createComponent({
     },
     setup() {
         return {
-            hbar,
+            hedera,
             networkName: settings.network.name,
             networkAddress: settings.network.address
         };

@@ -139,7 +139,7 @@
                 donations go a long way towards making that possible.
             </div>
             <div class="donation">
-                <img class="hbar-icon" src="../assets/icon-hbar-outline2.svg" />
+                <img class="hbar-icon" :src="hbar" />
                 0.0.1001
             </div>
         </div>
@@ -150,6 +150,7 @@
 <script lang="ts">
 import { createComponent, reactive } from "@vue/composition-api";
 import ModalCustomerService from "../components/ModalCustomerService.vue";
+import hbar from "../assets/icon-hbar-outline.svg";
 
 export default createComponent({
     components: {
@@ -166,6 +167,7 @@ export default createComponent({
         }
 
         return {
+            hbar,
             state,
             handleButtonClick,
             hasAffiliates
