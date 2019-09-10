@@ -27,6 +27,8 @@ describe("Header.vue", (): void => {
                 <div class="links"><a href="/" class="link router-link-exact-active router-link-active">Home</a> <a href="/#about" class="link">About</a> <a href="/#faqs" class="link">
                     FAQs
                   </a></div>
+                <!---->
+                <!---->
                 <div class="button-wrapper">
                   <div class="bar-1"><svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                       <path d="M19,13H5V11H19V13Z"></path>
@@ -54,6 +56,23 @@ describe("Header.vue", (): void => {
                     <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
                   </svg>
                 </a></nav>
+              <div role="dialog" aria-modal="true" class="modal-background">
+                <div class="modal">
+                  <!---->
+                  <div class="main">
+                    <div class="content-container">
+                      <div class="modal-forgot-to-logout"><span>Log Out</span>
+                        <p>
+                          Are you sure you would like to log out?
+                        </p>
+                        <div class="button-group">
+                          <!----> <button type="submit" class="button-logout danger center-button"><span>Log Out of Account</span>
+                            <!----></button></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
         `);
     });

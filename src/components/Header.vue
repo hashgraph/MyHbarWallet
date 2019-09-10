@@ -21,6 +21,18 @@
                     FAQs
                 </router-link>
             </div>
+            <MaterialDesignIcon
+                v-if="loggedIn"
+                class="icon"
+                :icon="mdiLogout"
+                @click="handleLogout"
+            />
+            <MaterialDesignIcon
+                v-if="state.isHamburgerOpen && loggedIn"
+                class="icon-mobile"
+                :icon="mdiLogout"
+                @click="handleLogout"
+            />
             <HeaderHamburgerButton
                 :is-open="state.isHamburgerOpen"
                 @toggle="toggle"
@@ -38,6 +50,7 @@
             :is-open="state.isHamburgerOpen"
             @toggle="toggle"
         />
+        <ModalLogOut v-model="state.isLogoutOpen" />
     </div>
 </template>
 
@@ -51,12 +64,22 @@ import {
 } from "@vue/composition-api";
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
+import MaterialDesignIcon from "./MaterialDesignIcon.vue";
+import { mdiLogout } from "@mdi/js";
+import store from "../store";
+import { IS_LOGGED_IN } from "../store/getters";
+import { LOG_OUT } from "../store/mutations";
+import router from "../router";
+import Vue from "vue";
+import ModalLogOut from "../components/ModalLogOut.vue";
 
 export default createComponent({
     components: {
         Button,
         HeaderHamburgerMenu,
-        HeaderHamburgerButton
+        HeaderHamburgerButton,
+        MaterialDesignIcon,
+        ModalLogOut
     },
     // Even though props is not used, we must have `context`
     // as the second arguement otherwise it will take the place of
@@ -64,7 +87,8 @@ export default createComponent({
     setup(props: object, context: SetupContext) {
         const state = reactive({
             scrolled: false,
-            isHamburgerOpen: false
+            isHamburgerOpen: false,
+            isLogoutOpen: false
         });
 
         function onScroll(): void {
@@ -76,6 +100,7 @@ export default createComponent({
         }
 
         function toggle(): void {
+            console.log(store.getters.IS_LOGGED_IN);
             state.isHamburgerOpen = !state.isHamburgerOpen;
         }
 
@@ -101,6 +126,13 @@ export default createComponent({
             return false;
         });
 
+        const loggedIn = computed(() => store.getters.IS_LOGGED_IN);
+
+        function handleLogout(): void {
+            state.isHamburgerOpen = false;
+            state.isLogoutOpen = true;
+        }
+
         const headerClasses = computed(() => {
             if (isInterface.value) {
                 return "header interface";
@@ -113,7 +145,10 @@ export default createComponent({
             toggle,
             isHome,
             headerClasses,
-            handleReturnClick
+            handleReturnClick,
+            mdiLogout,
+            loggedIn,
+            handleLogout
         };
     }
 });
@@ -142,6 +177,32 @@ export default createComponent({
 
     &.scrolled::after {
         opacity: 1;
+    }
+}
+
+.icon-mobile {
+    align-self: center;
+    color: var(--color-infra-red);
+    margin-inline-end: 70px;
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+    }
+}
+
+.icon {
+    align-self: center;
+    color: var(--color-infra-red);
+    margin-inline-start: 26px;
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+    }
+
+    @media screen and (max-width: 1024px) {
+        visibility: hidden;
     }
 }
 

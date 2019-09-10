@@ -7,7 +7,7 @@
         <Footer />
         <Alerts />
         <ZoomTopButton />
-        <ModalForgotToLogOut v-model="isOpen" />
+        <ModalLogOut v-model="isOpen" forgot />
     </div>
 </template>
 
@@ -15,7 +15,7 @@
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import Alerts from "./components/Alerts.vue";
-import ModalForgotToLogOut from "./components/ModalForgotToLogOut.vue";
+import ModalLogOut from "./components/ModalLogOut.vue";
 import ZoomTopButton from "./components/ZoomTopButton.vue";
 import { createComponent, SetupContext, computed } from "@vue/composition-api";
 import store from "./store";
@@ -26,7 +26,7 @@ export default createComponent({
         Footer,
         Alerts,
         ZoomTopButton,
-        ModalForgotToLogOut
+        ModalLogOut
     },
     setup(props: {}, context: SetupContext) {
         const isInterface = computed(() => {
