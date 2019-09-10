@@ -1,9 +1,20 @@
 declare module "html2pdf.js" {
     import jsPDF from "jspdf";
 
+    type Html2PdfImageOptions = {
+        type: String;
+        quality: number;
+    }
+
+    type jsPDFOptions = {
+        unit: String;
+    }
+
     type Html2PdfOptions = {
         filename: string;
-        margin?: number;
+        margin?: number | Array<number>;
+        image: Html2PdfImageOptions;
+        jsPDF: jsPDFOptions;
     };
 
     interface Html2Pdf {
