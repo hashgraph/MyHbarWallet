@@ -65,7 +65,7 @@ describe("Header.vue", (): void => {
                       <div class="content-container">
                         <div class="modal-forgot-to-logout"><span>Log Out</span>
                           <p>
-                            Are you sure you would like to log out?
+                            Are you sure?
                           </p>
                           <div class="button-group">
                             <!----> <button type="submit" class="button-logout danger center-button"><span>Log Out of Account</span>
@@ -83,7 +83,7 @@ describe("Header.vue", (): void => {
                     <div class="content-container">
                       <div class="modal-forgot-to-logout"><span>Log Out</span>
                         <p>
-                          Are you sure you would like to log out?
+                          Are you sure?
                         </p>
                         <div class="button-group">
                           <!----> <button type="submit" class="button-logout danger center-button"><span>Log Out of Account</span>
