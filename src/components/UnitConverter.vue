@@ -2,15 +2,7 @@
     <div class="unit-input">
         <div class="wrap">
             <div class="block-left">
-                <div class="select-block">
-                    <Select
-                        v-model="state.selectedLeft"
-                        :options="options"
-                        :left="true"
-                        @change="handleSelect"
-                    />
-                </div>
-                <div>
+                <div class="input-block">
                     <TextInput
                         :value="state.valueLeft"
                         compact
@@ -18,6 +10,14 @@
                         step="any"
                         placeholder="Amount"
                         @input="handleInputValueLeft"
+                    />
+                </div>
+                <div class="select-block">
+                    <Select
+                        v-model="state.selectedLeft"
+                        :options="options"
+                        :left="true"
+                        @change="handleSelect"
                     />
                 </div>
             </div>
@@ -29,15 +29,7 @@
             </div>
 
             <div class="block-right">
-                <div class="select-block">
-                    <Select
-                        v-model="state.selectedRight"
-                        :options="options"
-                        :left="false"
-                        @change="handleSelect"
-                    />
-                </div>
-                <div>
+                <div class="input-block">
                     <TextInput
                         :value="state.valueRight"
                         compact
@@ -45,6 +37,14 @@
                         step="any"
                         placeholder="Amount"
                         @input="handleInputValueRight"
+                    />
+                </div>
+                <div class="select-block">
+                    <Select
+                        v-model="state.selectedRight"
+                        :options="options"
+                        :left="false"
+                        @change="handleSelect"
                     />
                 </div>
             </div>
@@ -173,40 +173,45 @@ export default createComponent({
     align-items: center;
     display: grid;
     grid-template-columns: 4fr 1fr 4fr;
-}
 
-select,
-input {
-    background-color: var(--color-white);
-    border: 0;
-    border-radius: 4px;
-    padding: 18px;
-    width: 100%;
-}
-
-select {
-    margin: 0;
-    margin-block-end: 5px;
-    position: relative;
+    @media (max-width: 800px) {
+        display: block;
+    }
 }
 
 .select-block {
-    margin-block-end: 5px;
     position: relative;
+}
+
+.input-block {
+    margin-block-end: 5px;
+
+    @media (max-width: 800px) {
+        margin-inline-end: 0;
+    }
+}
+
+.block-left {
+    @media (max-width: 800px) {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .block-center {
     text-align: center;
 }
 
-@media screen and (max-width: 800px) {
-    .wrap {
-        display: block;
+.block-right {
+    @media (max-width: 800px) {
+        display: flex;
+        flex-direction: column;
     }
+}
 
+@media screen and (max-width: 800px) {
     .block-center {
         margin: 20px 0;
-        text-align: center;
     }
 
     .convert-icon > img {

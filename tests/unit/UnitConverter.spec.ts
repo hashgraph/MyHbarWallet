@@ -15,6 +15,14 @@ describe("UnitConverter.vue", (): void => {
             <div class="unit-input">
               <div class="wrap">
                 <div class="block-left">
+                  <div class="input-block">
+                    <div class="text-input is-compact is-white"><label class="label-container">
+                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Amount" type="text" step="any" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
+                        <!----></span></label>
+                      <!---->
+                      <!---->
+                    </div>
+                  </div>
                   <div class="select-block">
                     <div class="select" left="true">
                       <div class="select-value-container">
@@ -47,7 +55,12 @@ describe("UnitConverter.vue", (): void => {
                       </div>
                     </div>
                   </div>
-                  <div>
+                </div>
+                <div class="block-center">
+                  <div class="convert-icon"><img src="../assets/swap.svg" alt=""></div>
+                </div>
+                <div class="block-right">
+                  <div class="input-block">
                     <div class="text-input is-compact is-white"><label class="label-container">
                         <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Amount" type="text" step="any" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
                         <!----></span></label>
@@ -55,11 +68,6 @@ describe("UnitConverter.vue", (): void => {
                       <!---->
                     </div>
                   </div>
-                </div>
-                <div class="block-center">
-                  <div class="convert-icon"><img src="../assets/swap.svg" alt=""></div>
-                </div>
-                <div class="block-right">
                   <div class="select-block">
                     <div class="select">
                       <div class="select-value-container">
@@ -90,14 +98,6 @@ describe("UnitConverter.vue", (): void => {
                           gigabar
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="text-input is-compact is-white"><label class="label-container">
-                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Amount" type="text" step="any" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
-                        <!----></span></label>
-                      <!---->
-                      <!---->
                     </div>
                   </div>
                 </div>
