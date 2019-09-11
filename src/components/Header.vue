@@ -21,6 +21,13 @@
                     FAQs
                 </router-link>
             </div>
+            <div
+                v-if="loggedIn && isInterface"
+                class="logout"
+                @click="handleLogout"
+            >
+                Logout
+            </div>
             <HeaderHamburgerButton
                 :is-open="state.isHamburgerOpen"
                 @toggle="toggle"
@@ -38,6 +45,7 @@
             :is-open="state.isHamburgerOpen"
             @toggle="toggle"
         />
+        <ModalLogOut v-model="state.isLogoutOpen" />
     </div>
 </template>
 
@@ -51,12 +59,15 @@ import {
 } from "@vue/composition-api";
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
+import store from "../store";
+import ModalLogOut from "../components/ModalLogOut.vue";
 
 export default createComponent({
     components: {
         Button,
         HeaderHamburgerMenu,
-        HeaderHamburgerButton
+        HeaderHamburgerButton,
+        ModalLogOut
     },
     // Even though props is not used, we must have `context`
     // as the second arguement otherwise it will take the place of
@@ -64,7 +75,8 @@ export default createComponent({
     setup(props: object, context: SetupContext) {
         const state = reactive({
             scrolled: false,
-            isHamburgerOpen: false
+            isHamburgerOpen: false,
+            isLogoutOpen: false
         });
 
         function onScroll(): void {
@@ -101,6 +113,13 @@ export default createComponent({
             return false;
         });
 
+        const loggedIn = computed(() => store.getters.IS_LOGGED_IN);
+
+        function handleLogout(): void {
+            state.isHamburgerOpen = false;
+            state.isLogoutOpen = true;
+        }
+
         const headerClasses = computed(() => {
             if (isInterface.value) {
                 return "header interface";
@@ -113,7 +132,10 @@ export default createComponent({
             toggle,
             isHome,
             headerClasses,
-            handleReturnClick
+            handleReturnClick,
+            loggedIn,
+            handleLogout,
+            isInterface
         };
     }
 });
@@ -142,6 +164,21 @@ export default createComponent({
 
     &.scrolled::after {
         opacity: 1;
+    }
+}
+
+.logout {
+    align-self: center;
+    color: var(--color-infra-red);
+    margin-inline-start: 26px;
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+    }
+
+    @media screen and (max-width: 1024px) {
+        visibility: hidden;
     }
 }
 

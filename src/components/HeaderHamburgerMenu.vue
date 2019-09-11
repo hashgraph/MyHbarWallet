@@ -16,6 +16,17 @@
             <div class="link">FAQs</div>
             <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
         </a>
+        <div class="logout-container">
+            <Button
+                v-if="loggedIn"
+                class="logout"
+                outline
+                danger
+                label="Logout"
+                @click="handleLogout"
+            />
+        </div>
+        <ModalLogOut v-model="state.isLogoutOpen" />
     </nav>
 </template>
 
@@ -24,12 +35,16 @@ import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiChevronRight } from "@mdi/js";
 import BalanceCard from "./BalanceCard.vue";
 import NetworkCard from "./NetworkCard.vue";
+import store from "../store";
+import ModalLogOut from "../components/ModalLogOut.vue";
+import Button from "../components/Button.vue";
 
 import {
     createComponent,
     PropType,
     computed,
-    SetupContext
+    SetupContext,
+    reactive
 } from "@vue/composition-api";
 
 interface Props {
@@ -40,12 +55,19 @@ export default createComponent({
     components: {
         MaterialDesignIcon,
         BalanceCard,
-        NetworkCard
+        NetworkCard,
+        ModalLogOut,
+        Button
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
     setup(props: Props, context: SetupContext) {
+        const state = reactive({
+            scrolled: false,
+            isLogoutOpen: false
+        });
+
         const inInterface = computed(() => {
             const route = context.root.$route;
 
@@ -59,10 +81,21 @@ export default createComponent({
         function toggle(): void {
             context.emit("toggle", !props.isOpen);
         }
+
+        const loggedIn = computed(() => store.getters.IS_LOGGED_IN);
+
+        function handleLogout(): void {
+            context.emit("toggle", !props.isOpen);
+            state.isLogoutOpen = true;
+        }
+
         return {
             toggle,
             mdiChevronRight,
-            inInterface
+            inInterface,
+            loggedIn,
+            handleLogout,
+            state
         };
     }
 });
@@ -86,6 +119,22 @@ nav {
     @media (min-width: 1025px) {
         position: absolute;
         visibility: hidden;
+    }
+}
+
+.logout-container {
+    margin-inline-end: 10px;
+}
+
+.logout {
+    align-self: center;
+    color: var(--color-infra-red);
+    width: 100%;
+
+    &:hover:not(.busy):not(:disabled),
+    &:focus:not(.busy):not(:disabled) {
+        color: var(--color-aggressive-salmon);
+        cursor: pointer;
     }
 }
 
