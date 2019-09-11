@@ -4,18 +4,37 @@
             <BalanceCard class="info-balance" />
             <NetworkCard class="info-network" />
         </div>
-        <a href="/" class="link-block" @click="toggle">
+        <router-link to="/" class="link-block" @click.native="toggle">
             <div class="link">Home</div>
             <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-        </a>
-        <a href="/#about" class="link-block" @click="toggle">
+        </router-link>
+        <router-link
+            v-if="!isAbout"
+            :to="{ name: 'home', hash: '#about' }"
+            class="link-block"
+            @click.native="toggle"
+        >
             <div class="link">About</div>
             <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-        </a>
-        <a href="/#faqs" class="link-block" @click="toggle">
+        </router-link>
+        <div v-else class="link-block" @click="handleSameHash('#about')">
+            <div class="link">About</div>
+            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+        </div>
+        <router-link
+            v-if="!isFaqs"
+            :to="{ name: 'home', hash: '#faqs' }"
+            class="link-block"
+            @click.native="toggle"
+        >
             <div class="link">FAQs</div>
             <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-        </a>
+        </router-link>
+        <div v-else class="link-block" @click="handleSameHash('#faqs')">
+            <div class="link">FAQs</div>
+            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+        </div>
+
         <div class="logout-container">
             <Button
                 v-if="loggedIn"
@@ -82,6 +101,28 @@ export default createComponent({
             context.emit("toggle", !props.isOpen);
         }
 
+        const isFaqs = computed(() => {
+            if (context.root != null && context.root.$route != null) {
+                return context.root.$route.hash === "#faqs";
+            }
+            return false;
+        });
+
+        const isAbout = computed(() => {
+            if (context.root != null && context.root.$route != null) {
+                return context.root.$route.hash === "#about";
+            }
+            return false;
+        });
+
+        // vue-router doesn't allow same path routing (from #faqs to #faqs)
+        // this is a workaround
+        function handleSameHash(path: string): void {
+            toggle();
+            context.root.$router.push({ name: "home" });
+            context.root.$router.push({ name: "home", hash: path });
+        }
+
         const loggedIn = computed(() => store.getters.IS_LOGGED_IN);
 
         function handleLogout(): void {
@@ -95,7 +136,10 @@ export default createComponent({
             inInterface,
             loggedIn,
             handleLogout,
-            state
+            state,
+            isFaqs,
+            isAbout,
+            handleSameHash
         };
     }
 });

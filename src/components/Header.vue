@@ -14,12 +14,25 @@
             <div class="spacer"></div>
             <div class="links">
                 <router-link to="/" class="link">Home</router-link>
-                <router-link :to="{ name: 'home', hash: '#about' }" class="link"
+                <router-link
+                    v-if="!isAbout"
+                    :to="{ name: 'home', hash: '#about' }"
+                    class="link"
                     >About</router-link
                 >
-                <router-link :to="{ name: 'home', hash: '#faqs' }" class="link">
+                <div v-else class="link" @click="handleSameHash('#about')">
+                    About
+                </div>
+                <router-link
+                    v-if="!isFaqs"
+                    :to="{ name: 'home', hash: '#faqs' }"
+                    class="link"
+                >
                     FAQs
                 </router-link>
+                <div v-else class="link" @click="handleSameHash('#faqs')">
+                    FAQs
+                </div>
             </div>
             <div
                 v-if="loggedIn && isInterface"
@@ -93,14 +106,33 @@ export default createComponent({
 
         const isHome = computed(() => {
             // This conditional is required for unit tests to passs
-            if (context.root != null) {
-                if (context.root.$route != null) {
-                    return context.root.$route.name === "home";
-                }
+            if (context.root != null && context.root.$route != null) {
+                return context.root.$route.name === "home";
             }
 
             return false;
         });
+
+        const isFaqs = computed(() => {
+            if (context.root != null && context.root.$route != null) {
+                return context.root.$route.hash === "#faqs";
+            }
+            return false;
+        });
+
+        const isAbout = computed(() => {
+            if (context.root != null && context.root.$route != null) {
+                return context.root.$route.hash === "#about";
+            }
+            return false;
+        });
+
+        // vue-router doesn't allow same path routing (from #faqs to #faqs)
+        // this is a workaround
+        function handleSameHash(path: string): void {
+            context.root.$router.push({ name: "home" });
+            context.root.$router.push({ name: "home", hash: path });
+        }
 
         const isInterface = computed(() => {
             // This conditional is required for unit tests to passs
@@ -135,7 +167,10 @@ export default createComponent({
             handleReturnClick,
             loggedIn,
             handleLogout,
-            isInterface
+            isInterface,
+            isFaqs,
+            isAbout,
+            handleSameHash
         };
     }
 });
