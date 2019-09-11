@@ -3,24 +3,27 @@ import OptionalPasswordInput from "../../src/components/OptionalPasswordInput.vu
 
 describe("OptionalPasswordInput", (): void => {
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(OptionalPasswordInput, {
             propsData: {
                 value: ""
             },
-            data(): {
-                showPassword: boolean;
-            } {
-                return {
-                    showPassword: true
-                };
-            },
             methods: {
-                handleInput: (): void => {
+                // This test has warnings if the values aren't defined
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                handleInput: (password: string): void => {
                     return;
                 },
-                handleChangeShowPassword: (): void => {
+                // This test has warnings if the values aren't defined
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                handleChangeShowPassword: (showPassword: boolean): void => {
                     return;
                 }
+            },
+            stubs: {
+                TextInput: true,
+                SwitchButton: true
             }
         });
 
@@ -33,17 +36,12 @@ describe("OptionalPasswordInput", (): void => {
                 <div class="password-switch">
                   <div class="text">
                     Optional
-                  </div> <label class="switch-button btn"><input type="checkbox" class="input"> <span class="thumb"></span>
-                    <!----></label>
+                  </div>
+                  <switchbutton-stub class="btn"></switchbutton-stub>
                 </div>
               </div>
-              <div class="password-input expanded">
-                <div class="text-input"><label class="label-container">
-                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Please Enter Password" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
-                    <!----></span></label>
-                  <!---->
-                  <!---->
-                </div>
+              <div class="password-input">
+                <textinput-stub placeholder="Please Enter Password" value="" tabindex="-1" compact="true" obscure="true"></textinput-stub>
                 <div class="password-warning">
                   <p></p>
                 </div>

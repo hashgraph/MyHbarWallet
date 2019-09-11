@@ -9,6 +9,8 @@ describe("InterfaceNavigationSection.vue", (): void => {
     localVue.use(VueRouter);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(InterfaceNavigationSection, {
             localVue,
             propsData: {
@@ -18,6 +20,7 @@ describe("InterfaceNavigationSection.vue", (): void => {
                 routes: []
             }
         });
+
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="nav-section">
               <div class="nav-section-header"><img alt="" src="https://via.placeholder.com/150"> <span class="nav-title">title</span> <svg width="24" height="24" viewBox="0 0 24 24" class="indicator" name="fade" mode="out-in">

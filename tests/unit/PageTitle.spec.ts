@@ -7,6 +7,8 @@ describe("PageTitle.vue", (): void => {
     localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(PageTitle, {
             localVue,
             propsData: {
@@ -24,6 +26,8 @@ describe("PageTitle.vue", (): void => {
     });
 
     it("renders large", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(PageTitle, {
             localVue,
             propsData: {

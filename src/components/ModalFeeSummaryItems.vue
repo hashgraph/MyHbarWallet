@@ -66,7 +66,7 @@ export default createComponent({
 
             const parts = formatSplit(total.toString());
 
-            // Note this should never be possbile unless it's a programmer error
+            // Note this should never be possible unless it's a programmer error
             if (parts == null) {
                 return {
                     int: "0",

@@ -7,6 +7,8 @@ describe("InterfaceNavigation", (): void => {
     localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(InterfaceNavigation, {
             localVue
         });

@@ -201,7 +201,9 @@ export default createComponent({
                         confirmationPassword: ""
                     });
 
-                    (context as Context).refs.input.focus();
+                    if ((context as Context).refs.input != undefined) {
+                        (context as Context).refs.input.focus();
+                    }
                 }
             }
         );

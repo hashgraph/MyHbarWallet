@@ -8,6 +8,7 @@ describe("Community.vue", (): void => {
 
     it("renders", (): void => {
         expect.assertions(1);
+
         const wrapper = mount(Community, {
             localVue
         });

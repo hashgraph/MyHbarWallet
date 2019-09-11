@@ -5,7 +5,10 @@ import VueCompositionApi from "@vue/composition-api";
 describe("HardwareWalletOffer.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(HardwareWalletOffer, {
             localVue,
             propsData: {
@@ -16,6 +19,7 @@ describe("HardwareWalletOffer.vue", (): void => {
                 moreInfo: "more Info"
             }
         });
+
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="hardware-wallet-offer">
               <div class="offer-description">

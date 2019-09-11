@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import { createLocalVue, mount } from "@vue/test-utils";
 import ModalFeeSummaryTitle from "../../src/components/ModalFeeSummaryTitle.vue";
 import VueCompositionApi from "@vue/composition-api";
 
@@ -6,7 +6,7 @@ describe("ModalFeeSummaryTitle.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
 
-    it("renders for transfer", (): void => {
+    it("renders, transfer", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(ModalFeeSummaryTitle, {
@@ -27,7 +27,7 @@ describe("ModalFeeSummaryTitle.vue", (): void => {
         `);
     });
 
-    it("renders for create account", (): void => {
+    it("renders, create account", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(ModalFeeSummaryTitle, {

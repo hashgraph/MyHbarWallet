@@ -6,15 +6,40 @@ describe("Select.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
 
-    const wrapper = mount(Select, {
-        localVue,
-        propsData: {
-            selected: "current selected",
-            options: ["1", "2", "3"]
-        }
+    it("renders without options", (): void => {
+        expect.assertions(1);
+
+        const wrapper = mount(Select, {
+            localVue,
+            propsData: {
+                selected: "",
+                options: []
+            }
+        });
+
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="select">
+              <div class="select-value-container">
+                <div class="select-value"></div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
+                </svg>
+              </div>
+              <div class="select-menu"></div>
+            </div>
+        `);
     });
 
-    it("renders", (): void => {
+    it("renders with options", (): void => {
+        expect.assertions(1);
+
+        const wrapper = mount(Select, {
+            localVue,
+            propsData: {
+                selected: "current selected",
+                options: ["1", "2", "3"]
+            }
+        });
+
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="select">
               <div class="select-value-container">
@@ -37,14 +62,22 @@ describe("Select.vue", (): void => {
         `);
     });
 
-    it("renders as opened after click", (): void => {
-        wrapper.find(".select-value-container").trigger("click");
+    it("renders open options", (): void => {
+        expect.assertions(1);
+
+        const wrapper = mount(Select, {
+            localVue,
+            propsData: {
+                selected: "current selected",
+                options: ["1", "2", "3"]
+            }
+        });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="select is-open">
+            <div class="select">
               <div class="select-value-container">
                 <div class="select-value">current selected</div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
-                  <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"></path>
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
                 </svg>
               </div>
               <div class="select-menu">

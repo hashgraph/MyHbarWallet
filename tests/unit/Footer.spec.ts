@@ -1,14 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import Footer from "../../src/components/Footer.vue";
 import VueCompositionApi from "@vue/composition-api";
+import VueRouter from "vue-router";
+import router from "../../src/router";
 
 describe("Footer.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueRouter);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(Footer, {
-            localVue
+            localVue,
+            router
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -16,30 +22,22 @@ describe("Footer.vue", (): void => {
               <div class="footer-top">
                 <div class="section">
                   <div class="title">Discover</div>
-                  <div class="item">
-                    <router-link to="[object Object]" class="link">
+                  <div class="item"><a href="/convert-units" class="link">
                       Units
-                    </router-link>
-                  </div>
-                  <div class="item">
-                    <router-link to="[object Object]" class="link">
+                    </a></div>
+                  <div class="item"><a href="/hardware-wallet-affiliates" class="link">
                       Buy a Hardware Wallet
-                    </router-link>
-                  </div>
+                    </a></div>
                 </div>
                 <!---->
                 <div class="section">
                   <div class="title">MHW</div>
-                  <div class="item">
-                    <router-link to="[object Object]" class="link">
+                  <div class="item"><a href="/#about" class="link">
                       About
-                    </router-link>
-                  </div>
-                  <div class="item">
-                    <router-link to="[object Object]" class="link">
+                    </a></div>
+                  <div class="item"><a href="/#faqs" class="link">
                       FAQs
-                    </router-link>
-                  </div>
+                    </a></div>
                   <div class="item customer-service">
                     Customer Support
                   </div>
@@ -110,16 +108,13 @@ describe("Footer.vue", (): void => {
                 </div>
               </div>
               <div class="wrapper">
-                <div class="links">
-                  <router-link to="[object Object]" class="link">
+                <div class="links"><a href="/privacy-policy" class="link">
                     Privacy
-                  </router-link>
-                  <router-link to="[object Object]" class="link">
+                  </a> <a href="/terms-and-conditions" class="link">
                     Terms
-                  </router-link> <a target="_blank" href="https://github.com/hashgraph/myhbarwallet" class="link">
+                  </a> <a target="_blank" href="https://github.com/hashgraph/myhbarwallet" class="link">
                     v1.1.1+placeholderhash
-                  </a>
-                </div>
+                  </a></div>
                 <div class="copyright">
                   © 2019 Hedera Hashgraph LLC. All Rights
                   reserved.

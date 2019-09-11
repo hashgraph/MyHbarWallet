@@ -4,6 +4,7 @@ const mnemonicPhrase =
 const mnemonicPhraseAccountId = "0.0.60122";
 const keystoreFileAccountId = "0.0.60118";
 const incorrectAccountId = "0.0.33";
+const keystorePath = __dirname + "/../assets/keystore_file";
 
 module.exports = {
     "it can access account by keystore file": browser => {
@@ -27,10 +28,7 @@ module.exports = {
             .click(
                 ".modal-access-by-software > .modal-background.is-open > .modal button[type=submit]"
             )
-            .setValue(
-                "#file-upload",
-                require("path").resolve(__dirname + "/../keystore_file")
-            )
+            .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
                 ".modal-password > .modal-background.is-open > .modal",
@@ -100,10 +98,7 @@ module.exports = {
             .click(
                 ".modal-access-by-software > .modal-background.is-open > .modal button[type=submit]"
             )
-            .setValue(
-                "#file-upload",
-                require("path").resolve(__dirname + "/../keystore_file")
-            )
+            .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
                 ".modal-password > .modal-background.is-open > .modal",
@@ -155,10 +150,7 @@ module.exports = {
             .click(
                 ".modal-access-by-software > .modal-background.is-open > .modal button[type=submit]"
             )
-            .setValue(
-                "#file-upload",
-                require("path").resolve(__dirname + "/../keystore_file")
-            )
+            .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
                 ".modal-password > .modal-background.is-open > .modal",
@@ -204,10 +196,7 @@ module.exports = {
             .click(
                 ".modal-access-by-software > .modal-background.is-open > .modal button[type=submit]"
             )
-            .setValue(
-                "#file-upload",
-                require("path").resolve(__dirname + "/../keystore_file")
-            )
+            .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
                 ".modal-password > .modal-background.is-open > .modal",
@@ -265,10 +254,7 @@ module.exports = {
             .click(
                 ".modal-access-by-software > .modal-background.is-open > .modal button[type=submit]"
             )
-            .setValue(
-                "#file-upload",
-                require("path").resolve(__dirname + "/../keystore_file")
-            )
+            .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
                 ".modal-password > .modal-background.is-open > .modal",

@@ -7,6 +7,8 @@ describe("Button.vue", (): void => {
     localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(Button, {
             localVue,
             propsData: {
@@ -20,7 +22,9 @@ describe("Button.vue", (): void => {
         `);
     });
 
-    it("renders a loading spinner when busy", (): void => {
+    it("renders as busy", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(Button, {
             localVue,
             propsData: {

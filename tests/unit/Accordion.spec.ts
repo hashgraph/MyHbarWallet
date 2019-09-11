@@ -5,7 +5,7 @@ import VueCompositionApi from "@vue/composition-api";
 describe("Accordion.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
-
+    expect.assertions(1);
     it("renders", (): void => {
         const wrapper = mount(Accordion, {
             localVue,

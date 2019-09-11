@@ -6,9 +6,12 @@ describe("AccountTileButtons.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(AccountTileButtons, {
             localVue
         });
+
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="tile-grid">
               <div class="account-tile-button"><img src="" class="tile-image">

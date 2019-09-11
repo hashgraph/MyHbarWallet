@@ -3,6 +3,8 @@ import Features from "../../src/components/Features.vue";
 
 describe("Features.vue", (): void => {
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(Features);
 
         expect(wrapper).toMatchInlineSnapshot(`

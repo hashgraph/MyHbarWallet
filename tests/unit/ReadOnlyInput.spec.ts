@@ -3,6 +3,8 @@ import ReadOnlyInput from "../../src/components/ReadOnlyInput.vue";
 
 describe("ReadOnlyInput.vue", (): void => {
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(ReadOnlyInput, {
             propsData: {
                 value: "test"

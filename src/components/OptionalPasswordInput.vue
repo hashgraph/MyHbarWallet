@@ -64,7 +64,9 @@ export default createComponent({
             if (showPassword) {
                 // If we are now showing the password,
                 // focus the password input
-                (context as Context).refs.input.focus();
+                if ((context as Context).refs.input != undefined) {
+                    (context as Context).refs.input.focus();
+                }
             }
         }
 
