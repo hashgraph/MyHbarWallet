@@ -1,6 +1,9 @@
 <template>
     <div class="tile-grid">
+        <!-- TODO: Remove div below when hardware option is ready -->
+        <div class="coming-soon">Hardware Coming Soon!</div>
         <AccountTileButton
+            disabled
             title="Hardware"
             content="Support for hardware wallets in development"
             :image="hardwareImage"
@@ -44,7 +47,7 @@ export default createComponent({
         grid-template-columns: auto;
         padding-inline: 20px;
 
-        & * {
+        & .account-tile-button {
             width: 100%;
         }
     }
@@ -54,6 +57,24 @@ export default createComponent({
     &:hover,
     &:focus {
         background-color: var(--color-sunkist-coral);
+    }
+}
+
+/* TODO: Remove below css when hardware option is ready */
+.coming-soon {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-lightish-red);
+    border-radius: 5px;
+    color: var(--color-lightish-red);
+    padding: 10px;
+    position: absolute;
+    transform: translate(-53%, 115px) rotate(-45deg);
+    user-select: none;
+    z-index: 1;
+
+    @media (max-width: 600px) {
+        padding: 15px;
+        transform: translate(-10%, 100%);
     }
 }
 </style>
