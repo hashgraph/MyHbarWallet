@@ -29,16 +29,8 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   description
                 </div>
-                <div class="int text">
-                  1
-                </div>
-                <div class="period text">
-                  .
-                </div>
-                <div class="fraction text">
-                  23
-                </div>
-                <div class="symbol text">
+                <div class="value">1.23</div>
+                <div class="symbol value">
                   ℏ
                 </div>
               </div>
@@ -46,24 +38,17 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   description
                 </div>
-                <div class="text">
-                  public key
+                <div class="value">public key</div>
+                <div class="symbol value">
+                  ℏ
                 </div>
               </div>
               <div class="row">
                 <div class="description">
                   description
                 </div>
-                <div class="int text">
-                  3
-                </div>
-                <div class="period text">
-                  .
-                </div>
-                <div class="fraction text">
-                  45
-                </div>
-                <div class="symbol text">
+                <div class="value">3.45</div>
+                <div class="symbol value">
                   ℏ
                 </div>
               </div>
@@ -71,16 +56,8 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   Total
                 </div>
-                <div class="int text">
-                  4
-                </div>
-                <div class="period text">
-                  .
-                </div>
-                <div class="fraction text">
-                  68
-                </div>
-                <div class="symbol text">
+                <div class="value">4.68</div>
+                <div class="symbol value">
                   ℏ
                 </div>
               </div>

@@ -43,7 +43,11 @@ export function formatSplit(
     };
 }
 
-export function formatRightPad(input: string | null, length: number): string {
+export function formatRightPad(
+    input: string | null,
+    padChar: string,
+    length: number
+): string {
     let str = "";
 
     if (input != null) {
@@ -51,7 +55,7 @@ export function formatRightPad(input: string | null, length: number): string {
     }
 
     for (let i = str.length; i < length; i++) {
-        str = str + "0";
+        str = str + padChar;
     }
 
     return str;
