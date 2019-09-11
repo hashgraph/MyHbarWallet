@@ -80,23 +80,13 @@ export default createComponent({
         });
 
         function randomizeEmpties(): void {
-            // this situation should never happen, but if it somehow does an infinite loop occurs,
-            // as a result it is better to ask the user to refresh or some other fix.
-            if (props.words.length < 5) {
-                // close the modal
-                context.emit("change", false);
-
-                store.dispatch(ALERT, {
-                    message: "An error has occurred, please refresh.",
-                    level: "error"
-                });
-
-                return;
-            }
+            // there should never be a case where the list of words is less than 5, except in test or some odd error
+            // if it is less than 5 an infinite loop used to happen breaking tests, this should prevent that.
+            const maxSize = props.words.length >= 5 ? 5 : props.words.length;
 
             const newMap = new Map<number, string>([]);
 
-            while (newMap.size < 5) {
+            while (newMap.size < maxSize) {
                 const num = Math.floor(
                     Math.random() * (props.words.length - 1)
                 );
