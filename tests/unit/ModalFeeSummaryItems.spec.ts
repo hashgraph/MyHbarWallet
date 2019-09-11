@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import { createLocalVue, mount } from "@vue/test-utils";
 import ModalFeeSummaryItems from "../../src/components/ModalFeeSummaryItems.vue";
 import VueCompositionApi from "@vue/composition-api";
 import BigNumber from "bignumber.js";
@@ -13,7 +13,32 @@ describe("ModalFeeSummaryItems.vue", (): void => {
         { description: "description", value: new BigNumber(3.45) }
     ];
 
-    it("renders with mixed item values", (): void => {
+    it("renders with empty list", (): void => {
+        expect.assertions(1);
+
+        const wrapper = mount(ModalFeeSummaryItems, {
+            localVue,
+            propsData: {
+                items: []
+            }
+        });
+
+        expect(wrapper).toMatchInlineSnapshot(`
+            <div class="modal-fee-summary-items">
+              <div class="row total">
+                <div class="description">
+                  Total
+                </div>
+                <div class="value">0 </div>
+                <div class="symbol value">
+                  ℏ
+                </div>
+              </div>
+            </div>
+        `);
+    });
+
+    it("renders with values", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(ModalFeeSummaryItems, {

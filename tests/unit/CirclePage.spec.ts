@@ -5,7 +5,10 @@ import VueCompositionApi from "@vue/composition-api";
 describe("CirclePage.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(CirclePage, {
             localVue
         });

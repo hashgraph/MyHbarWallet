@@ -3,10 +3,11 @@ import VueCompositionApi from "@vue/composition-api";
 import ModalViewPublicKey from "../../src/components/ModalViewPublicKey.vue";
 
 describe("ModalViewPublicKey.vue", (): void => {
+    const localVue = createLocalVue();
+    localVue.use(VueCompositionApi);
+
     it("renders open", (): void => {
-        expect.assertions(2);
-        const localVue = createLocalVue();
-        localVue.use(VueCompositionApi);
+        expect.assertions(1);
         const onChange = jest.fn();
 
         const wrapper = mount(ModalViewPublicKey, {
@@ -39,14 +40,10 @@ describe("ModalViewPublicKey.vue", (): void => {
               </div>
             </div>
         `);
-
-        expect(onChange).toHaveBeenCalledTimes(0);
     });
 
     it("renders closed", (): void => {
-        expect.assertions(2);
-        const localVue = createLocalVue();
-        localVue.use(VueCompositionApi);
+        expect.assertions(1);
         const onChange = jest.fn();
 
         const wrapper = mount(ModalViewPublicKey, {
@@ -79,7 +76,5 @@ describe("ModalViewPublicKey.vue", (): void => {
               </div>
             </div>
         `);
-
-        expect(onChange).toHaveBeenCalledTimes(0);
     });
 });

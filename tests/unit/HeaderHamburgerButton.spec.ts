@@ -7,6 +7,8 @@ describe("HeaderHamburgerButton.vue", (): void => {
     localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(HeaderHamburgerButton, {
             localVue,
             propsData: {

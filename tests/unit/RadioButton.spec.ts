@@ -7,10 +7,12 @@ describe("RadioButton.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
 
+    const name = "RadioGroup";
+    const label = "Label";
+    const value = "Value";
+
     it("renders", (): void => {
-        const name = "RadioGroup";
-        const label = "Label";
-        const value = "Value";
+        expect.assertions(1);
 
         const wrapper = mount(RadioButton, {
             localVue,
@@ -31,9 +33,7 @@ describe("RadioButton.vue", (): void => {
     });
 
     it("reacts when checked", (): void => {
-        const name = "RadioGroup";
-        const label = "Label";
-        const value = "Value";
+        expect.assertions(1);
         const fn = jest.fn();
 
         const wrapper = mount(RadioButton, {

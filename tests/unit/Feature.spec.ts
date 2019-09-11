@@ -5,7 +5,10 @@ import VueCompositionApi from "@vue/composition-api";
 describe("Feature.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(Feature, {
             localVue,
             propsData: {
@@ -13,6 +16,7 @@ describe("Feature.vue", (): void => {
                 title: "title"
             }
         });
+
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="feature"><img src="https://via.placeholder.com/150" alt="" class="image">
               <div class="text">

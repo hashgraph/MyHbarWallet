@@ -7,6 +7,8 @@ describe("TextInput.vue", (): void => {
     localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const value = "12345";
         const wrapper = mount(TextInput, {
             localVue,
@@ -25,7 +27,9 @@ describe("TextInput.vue", (): void => {
         `);
     });
 
-    it("renders a password", (): void => {
+    it("renders obscured", (): void => {
+        expect.assertions(1);
+
         const value = "super-secure-password";
         const wrapper = mount(TextInput, {
             localVue,
@@ -44,22 +48,11 @@ describe("TextInput.vue", (): void => {
             <!---->
             </div>
         `);
-
-        // Expose the password
-        wrapper.find(".eye").trigger("click");
-
-        expect(wrapper).toMatchInlineSnapshot(`
-            <div class="text-input"><label class="label-container">
-                <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="eye is-open"><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg></span></div>
-            </div></span>
-            <!----></span></label>
-            <!---->
-            <!---->
-            </div>
-        `);
     });
 
     it("renders multiline", (): void => {
+        expect.assertions(1);
+
         const placeholder = "placeholder text";
         const value = "textarea text";
         const wrapper = mount(TextInput, {
@@ -82,6 +75,8 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders label", (): void => {
+        expect.assertions(1);
+
         const label = "label text";
         const wrapper = mount(TextInput, {
             localVue,
@@ -105,6 +100,8 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders validation indicator", (): void => {
+        expect.assertions(1);
+
         const showValidation = true;
         const valid = true;
         const wrapper = mount(TextInput, {
@@ -128,6 +125,8 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders copy action", (): void => {
+        expect.assertions(1);
+
         const canCopy = true;
         const wrapper = mount(TextInput, {
             localVue,
@@ -155,6 +154,8 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders clear action", (): void => {
+        expect.assertions(1);
+
         const canClear = true;
         const wrapper = mount(TextInput, {
             localVue,
@@ -182,6 +183,8 @@ describe("TextInput.vue", (): void => {
     });
 
     it("renders error message", (): void => {
+        expect.assertions(1);
+
         const error = "ERROR: foo";
         const wrapper = mount(TextInput, {
             localVue,

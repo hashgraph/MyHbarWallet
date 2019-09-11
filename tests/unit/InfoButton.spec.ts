@@ -7,6 +7,8 @@ describe("InfoButton.vue", (): void => {
     localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(InfoButton, {
             localVue,
             propsData: {

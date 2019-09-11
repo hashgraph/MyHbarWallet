@@ -7,6 +7,8 @@ describe("InterfaceForm.vue", (): void => {
     localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const title =
             "Bacon ipsum dolor amet strip steak pork chop eu consequat pork belly excepteur.";
 

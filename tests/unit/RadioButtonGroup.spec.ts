@@ -5,26 +5,42 @@ import imagePhrase from "../../src/assets/button-phrase.svg";
 import imageFile from "../../src/assets/button-file.svg";
 
 describe("RadioButtonGroup.vue", (): void => {
-    it("renders", (): void => {
-        const name = "RadioButtonGroup";
+    const name = "RadioButtonGroup";
+    const options = [
+        {
+            label: "Keystore File",
+            value: "file",
+            image: imageFile
+        },
+        {
+            label: "Mnemonic Phrase",
+            value: "phrase",
+            image: imagePhrase
+        },
+        {
+            label: "Private Key",
+            value: "key",
+            image: imageKey
+        }
+    ];
 
-        const options = [
-            {
-                label: "Keystore File",
-                value: "file",
-                image: imageFile
-            },
-            {
-                label: "Mnemonic Phrase",
-                value: "phrase",
-                image: imagePhrase
-            },
-            {
-                label: "Private Key",
-                value: "key",
-                image: imageKey
+    it("renders without options", (): void => {
+        expect.assertions(1);
+
+        const wrapper = mount(RadioButtonGroup, {
+            propsData: {
+                name,
+                options: []
             }
-        ];
+        });
+
+        expect(wrapper).toMatchInlineSnapshot(
+            `<div class="radio-button-group"></div>`
+        );
+    });
+
+    it("renders with options", (): void => {
+        expect.assertions(1);
 
         const wrapper = mount(RadioButtonGroup, {
             propsData: {

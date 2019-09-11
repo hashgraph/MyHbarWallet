@@ -8,6 +8,8 @@ describe("MaterialDesignIcon.vue", (): void => {
     localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(MaterialDesignIcon, {
             localVue,
             propsData: {
@@ -23,6 +25,8 @@ describe("MaterialDesignIcon.vue", (): void => {
     });
 
     it("renders spin", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(MaterialDesignIcon, {
             localVue,
             propsData: {
@@ -39,6 +43,8 @@ describe("MaterialDesignIcon.vue", (): void => {
     });
 
     it("renders non-default size", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(MaterialDesignIcon, {
             localVue,
             propsData: {

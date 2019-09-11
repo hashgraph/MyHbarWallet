@@ -1,42 +1,42 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import FooterTop from "../../src/components/FooterTop.vue";
 import VueCompositionApi from "@vue/composition-api";
+import VueRouter from "vue-router";
+import router from "../../src/router";
 
 describe("FooterTop.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueRouter);
+
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(FooterTop, {
-            localVue
+            localVue,
+            router
         });
+
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="footer-top">
               <div class="section">
                 <div class="title">Discover</div>
-                <div class="item">
-                  <router-link to="[object Object]" class="link">
+                <div class="item"><a href="/convert-units" class="link">
                     Units
-                  </router-link>
-                </div>
-                <div class="item">
-                  <router-link to="[object Object]" class="link">
+                  </a></div>
+                <div class="item"><a href="/hardware-wallet-affiliates" class="link">
                     Buy a Hardware Wallet
-                  </router-link>
-                </div>
+                  </a></div>
               </div>
               <!---->
               <div class="section">
                 <div class="title">MHW</div>
-                <div class="item">
-                  <router-link to="[object Object]" class="link">
+                <div class="item"><a href="/#about" class="link">
                     About
-                  </router-link>
-                </div>
-                <div class="item">
-                  <router-link to="[object Object]" class="link">
+                  </a></div>
+                <div class="item"><a href="/#faqs" class="link">
                     FAQs
-                  </router-link>
-                </div>
+                  </a></div>
                 <div class="item customer-service">
                   Customer Support
                 </div>

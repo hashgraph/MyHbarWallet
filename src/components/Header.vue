@@ -60,7 +60,7 @@ import {
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
 import store from "../store";
-import ModalLogOut from "../components/ModalLogOut.vue";
+import ModalLogOut from "./ModalLogOut.vue";
 
 export default createComponent({
     components: {
@@ -70,7 +70,7 @@ export default createComponent({
         ModalLogOut
     },
     // Even though props is not used, we must have `context`
-    // as the second arguement otherwise it will take the place of
+    // as the second argument otherwise it will take the place of
     // props implicitly and NOT complain you're casting it to `SetupContext`
     setup(props: object, context: SetupContext) {
         const state = reactive({

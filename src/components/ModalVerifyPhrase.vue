@@ -74,11 +74,26 @@ export default createComponent({
     },
     setup(props: Props, context: SetupContext) {
         let inputMap: Map<number, string> = new Map();
+
         const state = reactive({
             focused: null as number | null
         });
 
         function randomizeEmpties(): void {
+            // this situation should never happen, but if it somehow does an infinite loop occurs,
+            // as a result it is better to ask the user to refresh or some other fix.
+            if (props.words.length < 5) {
+                // close the modal
+                context.emit("change", false);
+
+                store.dispatch(ALERT, {
+                    message: "An error has occurred, please refresh.",
+                    level: "error"
+                });
+
+                return;
+            }
+
             const newMap = new Map<number, string>([]);
 
             while (newMap.size < 5) {

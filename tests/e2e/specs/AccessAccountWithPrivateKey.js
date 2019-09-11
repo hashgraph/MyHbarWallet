@@ -77,7 +77,7 @@ module.exports = {
         browser
             .click(".qr-icon")
             .waitForElementVisible(".pub-qr > canvas:nth-child(1)", 5000)
-            .assert.containsText(".value", accountId)
+            .assert.containsText(".account-id .value", accountId)
             .moveTo("div.modal-background")
             .mouseButtonDown()
             .mouseButtonUp();

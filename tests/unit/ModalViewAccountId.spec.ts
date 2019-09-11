@@ -5,7 +5,7 @@ import store from "../../src/store";
 
 describe("ModalViewAccountId.vue", (): void => {
     it("renders open", (): void => {
-        expect.assertions(2);
+        expect.assertions(1);
 
         const localVue = createLocalVue();
         localVue.use(VueCompositionApi);
@@ -44,12 +44,10 @@ describe("ModalViewAccountId.vue", (): void => {
               </div>
             </div>
         `);
-
-        expect(onChange).toHaveBeenCalledTimes(0);
     });
 
     it("renders closed", (): void => {
-        expect.assertions(2);
+        expect.assertions(1);
 
         const localVue = createLocalVue();
         localVue.use(VueCompositionApi);
@@ -88,7 +86,5 @@ describe("ModalViewAccountId.vue", (): void => {
               </div>
             </div>
         `);
-
-        expect(onChange).toHaveBeenCalledTimes(0);
     });
 });

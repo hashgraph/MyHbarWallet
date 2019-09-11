@@ -7,7 +7,10 @@ describe("FAQs.vue", (): void => {
     localVue.use(VueCompositionApi);
 
     it("renders", (): void => {
+        expect.assertions(1);
+
         const wrapper = mount(FAQs, { localVue });
+
         expect(wrapper).toMatchInlineSnapshot(`
             <div id="faqs" class="faqs">
               <div class="wrap">
