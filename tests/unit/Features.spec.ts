@@ -28,8 +28,8 @@ describe("Features.vue", (): void => {
                         Hardware Wallet Support
                       </div>
                       <div class="content">
-                        MHW currently offers support for only Trezor but all major
-                        hardware wallets are on the roadmap to be supported.
+                        MHW does not currently support hardware wallets, but all
+                        major hardware wallets are on the roadmap or in development.
                       </div>
                     </div>
                   </div>

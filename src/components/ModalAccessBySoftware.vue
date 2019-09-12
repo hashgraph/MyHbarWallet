@@ -19,6 +19,7 @@
                         :options="options"
                     />
                     <div class="hardware-link">
+                        <!--'Support coming soon!' note? -->
                         <div>
                             Purchase a hardware wallet for the highest security
                             when accessing your crypto.

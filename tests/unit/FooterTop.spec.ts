@@ -18,7 +18,7 @@ describe("FooterTop.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="footer-top">
+            <div class="footer-top footer-w-affiliate">
               <div class="section">
                 <div class="title">Discover</div>
                 <div class="item"><a href="/convert-units" class="link">
@@ -28,7 +28,23 @@ describe("FooterTop.vue", (): void => {
                     Buy a Hardware Wallet
                   </a></div>
               </div>
-              <!---->
+              <div class="section">
+                <div class="title">Affiliates</div>
+                <div class="item"><a rel="noopener" target="_blank" href="https://shop.ledger.com/pages/ledger-nano-x?r=0d2e5ed943aa" class="link">
+                    Ledger
+                  </a></div>
+                <div class="item"><a rel="noopener" target="_blank" href="https://shop.trezor.io/?offer_id=10&amp;aff_id=3302" class="link">
+                    Trezor
+                  </a></div>
+                <!---->
+                <!---->
+                <!---->
+                <!---->
+                <!---->
+                <!---->
+                <!---->
+                <!---->
+              </div>
               <div class="section">
                 <div class="title">MHW</div>
                 <div class="item"><a href="/#about" class="link">

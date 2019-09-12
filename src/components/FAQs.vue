@@ -28,10 +28,10 @@
                             Can MHW work with other wallets?
                         </template>
                         <template v-slot:content>
-                            MHW supports many different wallet types including
-                            hardware wallets, such as Trezor. We are also open
-                            for anyone to use their H wallets with the
-                            appropriate information.
+                            MHW supports many different wallet types with plans
+                            to include support for hardware wallets in the near
+                            future. We are also open for anyone to use their H
+                            wallets with the appropriate information.
                         </template>
                     </Accordion>
                     <Accordion>
