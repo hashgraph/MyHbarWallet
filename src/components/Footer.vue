@@ -21,7 +21,7 @@
                 </a>
             </div>
             <div class="copyright">
-                &copy; {{ currentYear }} Hedera Hashgraph LLC. All Rights
+                &copy; {{ currentYear }} Hedera™ Hashgraph LLC. All Rights
                 reserved.
             </div>
             <div class="social">

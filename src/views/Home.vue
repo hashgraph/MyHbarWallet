@@ -8,14 +8,18 @@
                         <div class="title">Hbar Wallet</div>
                         <div class="subtitle">
                             MyHbarWallet is a free, client-side interface
-                            helping you interact with Hedera Hashgraph. Our
+                            helping you interact with Hedera™ Hashgraph. Our
                             easy-to-use, open-source platform allows you to
                             generate keys, create accounts, transfer hbars, and
                             so much more.
                         </div>
                     </div>
                     <div class="banner-image">
-                        <img src="https://placehold.it/400x400" alt="banner" />
+                        <img
+                            v-if="false"
+                            src="https://placehold.it/400x400"
+                            alt="banner"
+                        />
                     </div>
                 </div>
                 <HomeTileButtons />
@@ -33,10 +37,11 @@
                             it was open source and people already are familiar
                             with the interface and processes. We want
                             MyHbarWallet to be the simplest and most intuitive
-                            interface to Hedera Hashgraph.
+                            interface to Hedera™ Hashgraph.
                         </div>
                     </div>
                     <img
+                        v-if="false"
                         class="about-image"
                         src="https://placehold.it/300x300"
                         alt="about"

@@ -132,7 +132,7 @@ describe("Footer.vue", (): void => {
                     v1.1.1+placeholderhash
                   </a></div>
                 <div class="copyright">
-                  © 2019 Hedera Hashgraph LLC. All Rights
+                  © 2019 Hedera™ Hashgraph LLC. All Rights
                   reserved.
                 </div>
                 <div class="social">

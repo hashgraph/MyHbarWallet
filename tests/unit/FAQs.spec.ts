@@ -122,7 +122,7 @@ describe("FAQs.vue", (): void => {
                         <div class="content-text">
                           MHW lets anyone with a balance of Hbar send a
                           transaction without additional charges. Using the
-                          Hedera Hashgraph requires a transaction fee paid in
+                          Hedera™ Hashgraph requires a transaction fee paid in
                           Hbar, so we recommend having at least 1 Hbar to
                           cover around 2 - 3 transactions.
                         </div>
