@@ -1,11 +1,16 @@
 <template>
     <div class="tile-grid">
-        <AccountTileButton
-            title="Hardware"
-            content="Support for hardware wallets in development"
-            :image="hardwareImage"
-            @click="$emit('click', 'hardware')"
-        />
+        <!-- TODO: Remove div below when hardware option is ready -->
+        <div class="ribbon-container">
+            <div class="coming-soon">Coming Soon!</div>
+            <AccountTileButton
+                disabled
+                title="Hardware"
+                content="Support for hardware wallets in development"
+                :image="hardwareImage"
+                @click="$emit('click', 'hardware')"
+            />
+        </div>
         <AccountTileButton
             title="Software"
             content="Keystore file, Private key, Mnemonic phrase"
@@ -44,10 +49,18 @@ export default createComponent({
         grid-template-columns: auto;
         padding-inline: 20px;
 
-        & * {
+        & .account-tile-button {
             width: 100%;
         }
     }
+}
+
+.ribbon-container {
+    align-items: stretch;
+    display: flex;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
 }
 
 .account-tile-button:last-child {
@@ -55,5 +68,23 @@ export default createComponent({
     &:focus {
         background-color: var(--color-sunkist-coral);
     }
+}
+
+/* TODO: Remove below css when hardware option is ready */
+.coming-soon {
+    background-color: var(--color-lightish-red);
+    border: 4px double var(--color-white);
+    color: var(--color-white);
+    font-size: 12px;
+    font-weight: 600;
+    margin-block-start: 25px;
+    margin-inline-start: -45px;
+    padding: 5px 40px;
+    position: absolute;
+    text-rendering: geometricPrecision;
+    transform: perspective(1px) rotate(-45deg);
+    transform-origin: center;
+    user-select: none;
+    z-index: 1;
 }
 </style>
