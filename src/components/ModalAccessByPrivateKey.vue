@@ -93,10 +93,10 @@ export default createComponent({
                         "invalid private key: " + props.state.rawPrivateKey
                     ) {
                         return false;
-                    } else {
-                        throw error;
                     }
                 }
+
+                throw error;
             }
         });
 

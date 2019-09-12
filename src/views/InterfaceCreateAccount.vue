@@ -65,6 +65,7 @@ import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
 import { formatHbar, validateHbar } from "../formatter";
+import { HederaError, ResponseCodeEnum } from "@hashgraph/sdk/src/errors";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
@@ -185,13 +186,17 @@ export default createComponent({
 
                 state.successModalIsOpen = true;
             } catch (error) {
-                if (error instanceof Error) {
-                    if (error.message === "INSUFFICIENT_PAYER_BALANCE") {
+                if (error instanceof HederaError) {
+                    if (
+                        error.code ===
+                        ResponseCodeEnum.INSUFFICIENT_PAYER_BALANCE
+                    ) {
                         state.userBalanceError = "Insufficient Payer Balance";
-                    } else {
-                        throw error;
+                        return;
                     }
                 }
+
+                throw error;
             } finally {
                 state.isBusy = false;
             }

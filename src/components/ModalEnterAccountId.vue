@@ -71,6 +71,7 @@ import {
 import settings from "../settings";
 import Notice from "../components/Notice.vue";
 import { mdiHelpCircleOutline } from "@mdi/js";
+import { HederaError, ResponseCodeEnum } from "@hashgraph/sdk/src/errors";
 
 export interface Props {
     isOpen: boolean;
@@ -186,33 +187,39 @@ export default createComponent({
                     .build()
                     .executeForReceipt();
             } catch (error) {
-                if (error instanceof Error) {
-                    if (error.message === "PAYER_ACCOUNT_NOT_FOUND") {
+                if (error instanceof HederaError) {
+                    if (
+                        error.code === ResponseCodeEnum.PAYER_ACCOUNT_NOT_FOUND
+                    ) {
                         state.errorMessage =
                             "This account does not exist in the network.";
 
                         return;
-                    } else if (error.message === "INVALID_SIGNATURE") {
+                    } else if (
+                        error.code === ResponseCodeEnum.INVALID_SIGNATURE
+                    ) {
                         state.errorMessage =
                             "This account is not associated with your private key.";
 
                         return;
                     } else if (
-                        error.message === "Response closed without headers"
-                    ) {
-                        state.errorMessage =
-                            "Could not reach the network. Check your connection" +
-                            " and try again.";
-
-                        return;
-                    } else if (
-                        error.message === "TRANSACTION_EXPIRED" ||
-                        error.message === "INVALID_TRANSACTION_DURATION"
+                        error.code === ResponseCodeEnum.TRANSACTION_EXPIRED ||
+                        error.code ===
+                            ResponseCodeEnum.INVALID_TRANSACTION_DURATION
                     ) {
                         // This is actually good here
                         context.emit("submit", client, state.account);
                         return;
                     }
+                } else if (
+                    error instanceof Error &&
+                    error.message === "Response closed without headers"
+                ) {
+                    state.errorMessage =
+                        "Could not reach the network. Check your connection" +
+                        " and try again.";
+
+                    return;
                 }
 
                 throw error;
@@ -225,7 +232,7 @@ export default createComponent({
             () => props.isOpen,
             (newVal: boolean) => {
                 if (newVal && input.value != null) {
-                    // Clear input everytime we reopen this modal
+                    // Clear input every time we reopen this modal
                     state.input = "";
                     input.value.focus();
                 }
