@@ -205,7 +205,10 @@ export default createComponent({
                             " and try again.";
 
                         return;
-                    } else if (error.message === "TRANSACTION_EXPIRED") {
+                    } else if (
+                        error.message === "TRANSACTION_EXPIRED" ||
+                        error.message === "INVALID_TRANSACTION_DURATION"
+                    ) {
                         // This is actually good here
                         context.emit("submit", client, state.account);
                         return;
