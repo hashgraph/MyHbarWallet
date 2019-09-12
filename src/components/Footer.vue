@@ -12,19 +12,13 @@
                 >
                     Terms
                 </router-link>
-                <a
-                    target="_blank"
-                    href="https://github.com/hashgraph/myhbarwallet"
-                    class="link"
-                >
-                    v{{ version }}+{{ hash }}
-                </a>
+                <span class="version"> v{{ version }} </span>
             </div>
             <div class="copyright">
                 &copy; {{ currentYear }} Hedera™ Hashgraph LLC. All Rights
                 reserved.
             </div>
-            <div class="social">
+            <div v-if="false" class="social">
                 <a
                     v-if="false"
                     rel="noopener"
@@ -118,6 +112,12 @@ footer {
     &:not(:last-child) {
         border-right: 1px solid var(--color-white);
     }
+}
+
+.version {
+    color: var(--color-white);
+    opacity: 0.7;
+    padding: 0 15px;
 }
 
 .social-link {

@@ -1,5 +1,5 @@
 <template>
-    <div class="footer-top" :class="{ 'footer-w-affiliate': hasAffiliates }">
+    <div class="footer-top">
         <div class="section">
             <div class="title">Discover</div>
             <div class="item">
@@ -55,7 +55,7 @@
                 Customer Support
             </div>
         </div>
-        <div class="section">
+        <div v-if="false" class="section">
             <div class="title">
                 Love
                 <img class="love" src="../assets/heart.svg" />
@@ -109,7 +109,7 @@ export default createComponent({
 .footer-top {
     border-bottom: 1px solid var(--color-china-blue);
     display: grid;
-    grid-template-columns: 1fr 1fr 1.5fr;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
     margin: auto;
     margin-block-end: 40px;
@@ -123,10 +123,6 @@ export default createComponent({
         grid-template-columns: auto;
         padding-block-start: 0;
     }
-}
-
-.footer-w-affiliate {
-    grid-template-columns: 1fr 1fr 1fr 1.5fr;
 }
 
 .section {
