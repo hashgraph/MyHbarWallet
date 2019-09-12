@@ -38,11 +38,11 @@ import { SetupContext } from "@vue/composition-api/dist/types/vue";
 import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 
-type Context = SetupContext & {
+interface Context extends SetupContext {
     refs: {
         input: HTMLInputElement;
     };
-};
+}
 
 export default createComponent({
     components: {
@@ -64,8 +64,8 @@ export default createComponent({
             if (showPassword) {
                 // If we are now showing the password,
                 // focus the password input
-                if ((context as Context).refs.input != undefined) {
-                    (context as Context).refs.input.focus();
+                if (((context as unknown) as Context).refs.input != undefined) {
+                    ((context as unknown) as Context).refs.input.focus();
                 }
             }
         }
