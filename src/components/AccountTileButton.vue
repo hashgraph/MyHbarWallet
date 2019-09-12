@@ -86,7 +86,7 @@ export default createComponent({
     }
 
     &.disabled {
-        filter: blur(2px);
+        filter: blur(0.5px);
         opacity: 0.5;
         pointer-events: none;
     }
