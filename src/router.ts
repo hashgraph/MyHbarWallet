@@ -3,7 +3,6 @@ import Home from "./views/Home.vue";
 import AccessMyAccount from "./views/AccessMyAccount.vue";
 import CreateAccount from "./views/CreateAccount.vue";
 import HardwareWalletAffiliates from "./views/HardwareWalletAffiliates.vue";
-import PrivacyPolicy from "./views/PrivacyPolicy.vue";
 import InterfaceCreateAccount from "./views/InterfaceCreateAccount.vue";
 import TermsConditions from "./views/TermsConditions.vue";
 import Error404 from "./views/Error404.vue";
@@ -107,11 +106,6 @@ export default new Router({
             path: "/convert-units",
             name: "convert-units",
             component: ConvertUnits
-        },
-        {
-            path: "/privacy-policy",
-            name: "privacy-policy",
-            component: PrivacyPolicy
         },
         {
             path: "/terms-and-conditions",

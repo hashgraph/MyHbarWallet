@@ -3,9 +3,6 @@
         <FooterTop />
         <div class="wrapper">
             <div class="links">
-                <router-link :to="{ name: 'privacy-policy' }" class="link">
-                    Privacy
-                </router-link>
                 <router-link
                     :to="{ name: 'terms-and-conditions' }"
                     class="link"
@@ -55,10 +52,10 @@ import { mdiFacebook, mdiGithubCircle, mdiTwitter } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import FooterTop from "../components/FooterTop.vue";
 import { createComponent, computed } from "@vue/composition-api";
+
 // Both of these are defined in vue.config.js.
 // VERSION reads from package.json and COMMIT_HASH is git rev-parse --short HEAD output
 declare const VERSION: string;
-declare const COMMIT_HASH: string;
 
 export default createComponent({
     components: {
@@ -67,9 +64,7 @@ export default createComponent({
     },
     setup() {
         const facebook = mdiFacebook;
-
         const twitter = mdiTwitter;
-
         const github = mdiGithubCircle;
 
         const currentYear = computed(() => {
@@ -81,8 +76,7 @@ export default createComponent({
             twitter,
             github,
             currentYear,
-            version: VERSION,
-            hash: COMMIT_HASH
+            version: VERSION
         };
     }
 });
