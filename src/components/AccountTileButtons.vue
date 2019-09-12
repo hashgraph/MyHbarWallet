@@ -1,7 +1,6 @@
 <template>
     <div class="tile-grid">
         <!-- TODO: Remove div below when hardware option is ready -->
-
         <div class="ribbon-container">
             <div class="coming-soon">Coming Soon!</div>
             <AccountTileButton
