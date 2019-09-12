@@ -17,6 +17,7 @@
                     name="software-access-option"
                     :options="options"
                 />
+                <!--'Support coming soon!' note? -->
                 <div class="hardware-link">
                     <div>
                         Purchase a hardware wallet for the highest security when
