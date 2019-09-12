@@ -190,23 +190,29 @@ export default createComponent({
                     if (error.message === "PAYER_ACCOUNT_NOT_FOUND") {
                         state.errorMessage =
                             "This account does not exist in the network.";
+
+                        return;
                     } else if (error.message === "INVALID_SIGNATURE") {
                         state.errorMessage =
                             "This account is not associated with your private key.";
+
+                        return;
                     } else if (
                         error.message === "Response closed without headers"
                     ) {
                         state.errorMessage =
                             "Could not reach the network. Check your connection" +
                             " and try again.";
+
+                        return;
                     } else if (error.message === "TRANSACTION_EXPIRED") {
                         // This is actually good here
                         context.emit("submit", client, state.account);
                         return;
-                    } else {
-                        throw error;
                     }
                 }
+
+                throw error;
             } finally {
                 state.isBusy = false;
             }
