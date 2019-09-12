@@ -172,8 +172,11 @@ export default new Router({
         }
 
         if (to.hash) {
+            // hash results were not quite right for mobile, this gives
+            // a 25 pixel buffer
             return {
-                selector: to.hash
+                selector: to.hash,
+                offset: { x: 0, y: 25 }
             };
         }
 

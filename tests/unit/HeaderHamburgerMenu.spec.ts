@@ -16,19 +16,22 @@ describe("HeaderHamburgerMenu.vue", (): void => {
         });
         expect(wrapper).toMatchInlineSnapshot(`
             <nav class="nav-open">
-              <!----> <a href="/" class="link-block">
+              <!---->
+              <router-link to="/" class="link-block">
                 <div class="link">Home</div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                   <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
                 </svg>
-              </a> <a href="/#about" class="link-block">
+              </router-link>
+              <router-link to="[object Object]" class="link-block">
                 <div class="link">About</div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                   <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
                 </svg>
-              </a> <a href="/#faqs" class="link-block">
+              </router-link>
+              <router-link to="[object Object]" class="link-block">
                 <div class="link">FAQs</div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                   <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
                 </svg>
-              </a>
+              </router-link>
               <div class="logout-container">
                 <!---->
               </div>
