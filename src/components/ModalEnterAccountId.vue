@@ -203,6 +203,12 @@ export default createComponent({
                         // This is actually good here
                         context.emit("submit", client, state.account);
                         return;
+                    } else if (
+                        error.message === "INVALID_TRANSACTION_DURATION"
+                    ) {
+                        // This is actually good here
+                        context.emit("submit", client, state.account);
+                        return;
                     } else {
                         throw error;
                     }
