@@ -39,12 +39,14 @@ export default createComponent({
     },
     setup() {
         const offers = [
+            //TODO: change link for ledger (affiliate offer)
             {
-                supported: false,
+                supported: true,
                 currency: "$",
                 cost: "59.00",
                 image: ledgerImage,
-                moreInfo: "https://www.ledger.com",
+                moreInfo:
+                    "https://shop.ledger.com/pages/ledger-nano-x?r=0d2e5ed943aa",
                 description:
                     "A light, yet solid multicurrency hardware wallet for cryptocurrencies. It is easy to carry everywhere thanks to its USB format."
             },

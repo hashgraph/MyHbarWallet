@@ -7,8 +7,8 @@
                     easy-to-use interface.
                 </Feature>
                 <Feature :image="hardware" title="Hardware Wallet Support">
-                    MHW currently offers support for only Trezor but all major
-                    hardware wallets are on the roadmap to be supported.
+                    MHW does not currently support hardware wallets, but all
+                    major hardware wallets are on the roadmap or in development.
                 </Feature>
             </div>
         </div>

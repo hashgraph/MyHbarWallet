@@ -16,6 +16,7 @@
                 </router-link>
             </div>
         </div>
+        <!-- TODO: enable affiliates as they join up -->
         <div v-if="hasAffiliates" class="section">
             <div class="title">Affiliates</div>
             <div class="item">
@@ -25,10 +26,10 @@
                     class="link"
                     href="https://www.ledger.com/"
                 >
-                    Ledger Wallet
+                    Ledger
                 </a>
             </div>
-            <div class="item">
+            <div v-if="false" class="item">
                 <a
                     rel="noopener"
                     target="_blank"
@@ -38,7 +39,7 @@
                     Ether Card
                 </a>
             </div>
-            <div class="item">
+            <div v-if="false" class="item">
                 <a
                     rel="noopener"
                     target="_blank"
@@ -48,7 +49,7 @@
                     Bity
                 </a>
             </div>
-            <div class="item">
+            <div v-if="false" class="item">
                 <a
                     rel="noopener"
                     target="_blank"
@@ -58,7 +59,7 @@
                     Billfodl
                 </a>
             </div>
-            <div class="item">
+            <div v-if="false" class="item">
                 <a
                     rel="noopener"
                     target="_blank"
@@ -68,7 +69,7 @@
                     Finney
                 </a>
             </div>
-            <div class="item">
+            <div v-if="false" class="item">
                 <a
                     rel="noopener"
                     target="_blank"
@@ -88,7 +89,7 @@
                     Trezor
                 </a>
             </div>
-            <div class="item">
+            <div v-if="false" class="item">
                 <a
                     rel="noopener"
                     target="_blank"
@@ -98,7 +99,7 @@
                     Secalot
                 </a>
             </div>
-            <div class="item">
+            <div v-if="false" class="item">
                 <a
                     rel="noopener"
                     target="_blank"
@@ -160,7 +161,7 @@ export default createComponent({
         const state = reactive({
             modalCustomerServiceIsOpen: false
         });
-        const hasAffiliates = false;
+        const hasAffiliates = true;
 
         function handleButtonClick(): void {
             state.modalCustomerServiceIsOpen = !state.modalCustomerServiceIsOpen;
