@@ -31,17 +31,18 @@ describe("Footer.vue", (): void => {
                 </div>
                 <div class="section">
                   <div class="title">Affiliates</div>
-                  <div class="item"><a rel="noopener" target="_blank" href="https://www.ledger.com/" class="link">
+                  <div class="item"><a rel="noopener" target="_blank" href="https://shop.ledger.com/pages/ledger-nano-x?r=0d2e5ed943aa" class="link">
                       Ledger
                     </a></div>
-                  <!---->
-                  <!---->
-                  <!---->
-                  <!---->
-                  <!---->
                   <div class="item"><a rel="noopener" target="_blank" href="https://shop.trezor.io/?offer_id=10&amp;aff_id=3302" class="link">
                       Trezor
                     </a></div>
+                  <!---->
+                  <!---->
+                  <!---->
+                  <!---->
+                  <!---->
+                  <!---->
                   <!---->
                   <!---->
                 </div>

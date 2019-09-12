@@ -16,99 +16,25 @@
                 </router-link>
             </div>
         </div>
-        <!-- TODO: enable affiliates as they join up -->
+        <!-- enable and add affiliates in src/affiliates.ts -->
         <div v-if="hasAffiliates" class="section">
             <div class="title">Affiliates</div>
-            <div class="item">
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    class="link"
-                    href="https://www.ledger.com/"
+            <template v-for="affiliate of affiliates">
+                <div
+                    v-if="affiliate.supported"
+                    :key="affiliate.name"
+                    class="item"
                 >
-                    Ledger
-                </a>
-            </div>
-            <div v-if="false" class="item">
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    class="link"
-                    href="https://ether.cards/"
-                >
-                    Ether Card
-                </a>
-            </div>
-            <div v-if="false" class="item">
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    class="link"
-                    href="https://bity.com/"
-                >
-                    Bity
-                </a>
-            </div>
-            <div v-if="false" class="item">
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    class="link"
-                    href="https://billfodl.com/"
-                >
-                    Billfodl
-                </a>
-            </div>
-            <div v-if="false" class="item">
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    class="link"
-                    href="http://shop.sirinlabs.com/"
-                >
-                    Finney
-                </a>
-            </div>
-            <div v-if="false" class="item">
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    class="link"
-                    href="https://shiftcrypto.ch/"
-                >
-                    Bitbox
-                </a>
-            </div>
-            <div class="item">
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    class="link"
-                    href="https://shop.trezor.io/?offer_id=10&aff_id=3302"
-                >
-                    Trezor
-                </a>
-            </div>
-            <div v-if="false" class="item">
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    class="link"
-                    href="https://www.secalot.com/"
-                >
-                    Secalot
-                </a>
-            </div>
-            <div v-if="false" class="item">
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    class="link"
-                    href="https://keepkey.myshopify.com/"
-                >
-                    Keepkey
-                </a>
-            </div>
+                    <a
+                        rel="noopener"
+                        target="_blank"
+                        class="link"
+                        :href="affiliate.address"
+                    >
+                        {{ affiliate.name }}
+                    </a>
+                </div>
+            </template>
         </div>
         <div class="section">
             <div class="title">MHW</div>
@@ -152,6 +78,7 @@
 import { createComponent, reactive } from "@vue/composition-api";
 import ModalCustomerService from "../components/ModalCustomerService.vue";
 import hbar from "../assets/icon-hbar-outline.svg";
+import affiliates from "../affiliates";
 
 export default createComponent({
     components: {
@@ -171,7 +98,8 @@ export default createComponent({
             hbar,
             state,
             handleButtonClick,
-            hasAffiliates
+            hasAffiliates,
+            affiliates
         };
     }
 });

@@ -4,15 +4,16 @@
             Purchase a hardware wallet for the highest security when accessing
             your crypto.
         </PageTitle>
+        <!-- enable and add offers/affiliates in src/affiliates.ts -->
         <div class="offers">
-            <template v-for="offer of offers">
+            <template v-for="offer of affiliates">
                 <HardwareWalletOffer
                     v-if="offer.supported"
-                    :key="offer.moreInfo"
+                    :key="offer.address"
                     :currency="offer.currency"
                     :cost="offer.cost"
                     :image="offer.image"
-                    :more-info="offer.moreInfo"
+                    :more-info="offer.address"
                     :description="offer.description"
                 >
                 </HardwareWalletOffer>
@@ -25,12 +26,7 @@
 import { createComponent } from "@vue/composition-api";
 import HardwareWalletOffer from "../components/HardwareWalletOffer.vue";
 import PageTitle from "../components/PageTitle.vue";
-import ledgerImage from "../assets/logo-ledger.png";
-import finneyImage from "../assets/logo-finney.png";
-import bitboxImage from "../assets/logo-bitbox.png";
-import trezorImage from "../assets/logo-trezor.png";
-import secalotImage from "../assets/logo-secalot.png";
-import keepkeyImage from "../assets/logo-keepkey.png";
+import affiliates from "../affiliates";
 
 export default createComponent({
     components: {
@@ -38,66 +34,8 @@ export default createComponent({
         PageTitle
     },
     setup() {
-        const offers = [
-            //TODO: change link for ledger (affiliate offer)
-            {
-                supported: true,
-                currency: "$",
-                cost: "59.00",
-                image: ledgerImage,
-                moreInfo:
-                    "https://shop.ledger.com/pages/ledger-nano-x?r=0d2e5ed943aa",
-                description:
-                    "A light, yet solid multicurrency hardware wallet for cryptocurrencies. It is easy to carry everywhere thanks to its USB format."
-            },
-            {
-                supported: false,
-                currency: "$",
-                cost: "999.00",
-                image: finneyImage,
-                moreInfo:
-                    "http://shop.sirinlabs.com/?rfsn=2397639.54fdf&utm_source=refersion&utm_medium=affiliate&utm_campaign=2397639.54fdf",
-                description: "Uncompromised Security In a Blockchain Smartphone"
-            },
-            {
-                supported: false,
-                currency: "€",
-                cost: "44.00",
-                image: bitboxImage,
-                moreInfo: "https://shiftcrypto.ch/?ref=mew",
-                description:
-                    "Our aim is to equip you for independence, with ease, in the digital world."
-            },
-            {
-                supported: true,
-                currency: "€",
-                cost: "83.49",
-                image: trezorImage,
-                moreInfo: "https://shop.trezor.io/?offer_id=10&aff_id=3302",
-                description:
-                    "The most trusted hardware wallet in the world. Get yours today!"
-            },
-            {
-                supported: false,
-                currency: "$",
-                cost: "50.00",
-                image: secalotImage,
-                moreInfo: "https://www.secalot.com",
-                description:
-                    "Your all-in-one digital security companion. it is a small USB dongle that packs a wide range of features."
-            },
-            {
-                supported: false,
-                currency: "€",
-                cost: "79.00",
-                image: keepkeyImage,
-                moreInfo: "http://lddy.no/a4im",
-                description:
-                    "Protect your cryptocurrencies, store your private keys offline, and safeguard your assets from hackers."
-            }
-        ];
         return {
-            offers
+            affiliates
         };
     }
 });
