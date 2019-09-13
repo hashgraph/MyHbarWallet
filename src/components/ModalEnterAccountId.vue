@@ -180,16 +180,18 @@ export default createComponent({
                 );
                 await new CryptoTransferTransaction(client)
                     .addSender(state.account, 0)
-                    // 0.0.3 is _A_ node and a system account
                     .addRecipient({ realm: 0, shard: 0, account: 3 }, 0)
-                    .setTransactionFee(100_000)
-                    .setTransactionValidDuration(0)
+                    .setTransactionFee(1)
                     .build()
                     .executeForReceipt();
             } catch (error) {
+                console.warn(error);
+
                 if (error instanceof HederaError) {
                     if (
-                        error.code === ResponseCodeEnum.PAYER_ACCOUNT_NOT_FOUND
+                        error.code ===
+                            ResponseCodeEnum.PAYER_ACCOUNT_NOT_FOUND ||
+                        error.code === ResponseCodeEnum.INVALID_ACCOUNT_ID
                     ) {
                         state.errorMessage =
                             "This account does not exist in the network.";
@@ -203,9 +205,7 @@ export default createComponent({
 
                         return;
                     } else if (
-                        error.code === ResponseCodeEnum.TRANSACTION_EXPIRED ||
-                        error.code ===
-                            ResponseCodeEnum.INVALID_TRANSACTION_DURATION
+                        error.code === ResponseCodeEnum.INSUFFICIENT_TX_FEE
                     ) {
                         // This is actually good here
                         context.emit("submit", client, state.account);
