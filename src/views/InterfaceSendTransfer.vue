@@ -59,7 +59,6 @@ import store from "../store";
 import { AccountId } from "@hashgraph/sdk";
 import { REFRESH_BALANCE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
-import { CryptoTransferTransaction } from "@hashgraph/sdk";
 import { Unit, getValueOfUnit } from "../units";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
@@ -187,10 +186,12 @@ export default createComponent({
                     return;
                 }
 
-                console.log("sendAmountTinybar", sendAmountTinybar);
-                console.log("recipient", recipient);
-
-                await new CryptoTransferTransaction(client)
+                const { CryptoTransferTransaction, Client } = await import(
+                    "@hashgraph/sdk"
+                );
+                await new CryptoTransferTransaction(client as InstanceType<
+                    typeof Client
+                >)
                     .addSender(
                         store.state.wallet.session.account,
                         sendAmountTinybar

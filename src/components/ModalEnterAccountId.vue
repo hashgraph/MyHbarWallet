@@ -63,11 +63,7 @@ import Modal from "../components/Modal.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import { Id } from "../store/modules/wallet";
-import {
-    Client,
-    CryptoTransferTransaction,
-    Ed25519PrivateKey
-} from "@hashgraph/sdk";
+import { Ed25519PrivateKey } from "@hashgraph/sdk";
 import settings from "../settings";
 import Notice from "../components/Notice.vue";
 import { mdiHelpCircleOutline } from "@mdi/js";
@@ -159,6 +155,7 @@ export default createComponent({
             let client;
 
             try {
+                const { Client } = await import("@hashgraph/sdk");
                 client = new Client({
                     // TODO: Use nodeId from settings
                     nodes: {
@@ -178,6 +175,9 @@ export default createComponent({
                 // the valid duration. If we fail on the signature map
                 // then we know the account ID is mismatched to the private key.
 
+                const { CryptoTransferTransaction } = await import(
+                    "@hashgraph/sdk"
+                );
                 await new CryptoTransferTransaction(client)
                     .addSender(state.account, 0)
                     // 0.0.3 is _A_ node and a system account

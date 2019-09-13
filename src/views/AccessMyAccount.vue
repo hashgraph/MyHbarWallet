@@ -77,7 +77,7 @@ import {
     ref,
     SetupContext
 } from "@vue/composition-api";
-import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
+import { Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
 import { ALERT, LOG_IN } from "../store/actions";
 import Vue from "vue";
@@ -270,9 +270,15 @@ export default createComponent({
         }
 
         async function handleAccountIdSubmit(
-            client: Client,
+            client: object,
             account: Id
         ): Promise<void> {
+            const { Client } = await import("@hashgraph/sdk");
+            if (!(client instanceof Client)) {
+                throw new TypeError(
+                    "client not instance of Client: Programmer Error"
+                );
+            }
             // Make sure there are no open modals when we navigate
             state.modalEnterAccountIdIsOpen = false;
 
