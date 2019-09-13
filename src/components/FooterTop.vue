@@ -59,7 +59,7 @@
             <div class="title">
                 Love
                 <img class="love" src="../assets/heart.svg" />
-                WP? Donate!
+                MHW? Donate!
             </div>
             <div class="item">
                 MyHbarWallet is open-source and free to the community. Your

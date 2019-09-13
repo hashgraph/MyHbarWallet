@@ -14,10 +14,10 @@
                     You do not create an account or give us your funds to hold
                     onto. No data leaves your computer / your browser. We make
                     it easy for you to create, save, and access your information
-                    and interact with the Hedera Hashgraph distributed ledger.
+                    and interact with the Hedera™ Hashgraph distributed ledger.
                 </p>
                 <p>
-                    We are not responsible for any loss: Hedera, MyHbarWallet,
+                    We are not responsible for any loss: Hedera™, MyHbarWallet,
                     and some of the underlying Javascript libraries we use are
                     under active development. While we have thoroughly tested &
                     thousands of wallets have been successfully created by
