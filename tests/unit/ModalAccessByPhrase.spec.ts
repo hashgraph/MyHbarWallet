@@ -84,7 +84,9 @@ describe("ModalAccessByPhrase.vue", (): void => {
                           <!----></button>
                       </form>
                       <div class="support">
-                        <div class="customer-support-link"><img alt="" src=""> Customer Support
+                        <div class="customer-support-link">
+                          <div class="customer-support-container"><img alt="" src=""> Customer Support
+                          </div>
                           <div role="dialog" aria-modal="true" class="modal-background">
                             <div class="modal">
                               <header><span class="title">Issue Information</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
@@ -223,7 +225,9 @@ describe("ModalAccessByPhrase.vue", (): void => {
                           <!----></button>
                       </form>
                       <div class="support">
-                        <div class="customer-support-link"><img alt="" src=""> Customer Support
+                        <div class="customer-support-link">
+                          <div class="customer-support-container"><img alt="" src=""> Customer Support
+                          </div>
                           <div role="dialog" aria-modal="true" class="modal-background">
                             <div class="modal">
                               <header><span class="title">Issue Information</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
@@ -364,7 +368,9 @@ describe("ModalAccessByPhrase.vue", (): void => {
                           <!----></button>
                       </form>
                       <div class="support">
-                        <div class="customer-support-link"><img alt="" src=""> Customer Support
+                        <div class="customer-support-link">
+                          <div class="customer-support-container"><img alt="" src=""> Customer Support
+                          </div>
                           <div role="dialog" aria-modal="true" class="modal-background">
                             <div class="modal">
                               <header><span class="title">Issue Information</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
@@ -505,7 +511,9 @@ describe("ModalAccessByPhrase.vue", (): void => {
                           <!----></button>
                       </form>
                       <div class="support">
-                        <div class="customer-support-link"><img alt="" src=""> Customer Support
+                        <div class="customer-support-link">
+                          <div class="customer-support-container"><img alt="" src=""> Customer Support
+                          </div>
                           <div role="dialog" aria-modal="true" class="modal-background">
                             <div class="modal">
                               <header><span class="title">Issue Information</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
