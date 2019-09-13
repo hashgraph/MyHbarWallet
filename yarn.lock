@@ -785,10 +785,10 @@
   dependencies:
     "@hapi/hoek" "8.x.x"
 
-"@hashgraph/sdk@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-0.5.0.tgz#850daca498af35507135473f974a38551c1bc845"
-  integrity sha512-QSLjCXZZ5pXPs0L2IElRszrCkU39iQYv/wutcp/Pe54oLXv1h1NvV/ZcGUTZvP40mPvxdGR45/O6Ul61LlljGQ==
+"@hashgraph/sdk@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-0.5.1.tgz#c0d63969eff7fdc6405614de4d4aee25caa2066b"
+  integrity sha512-QG2lnKUv5kEIE2qf9u3Z+TddMQUbwmbW3D1UGcA2Sd4A2VWuu8kfvxda0E73YyE5tncybsQxqDerzdE/NERESw==
   dependencies:
     "@improbable-eng/grpc-web" "0.11.0"
     "@types/google-protobuf" "^3.7.1"
@@ -5856,7 +5856,7 @@ file-loader@^4.1.0:
     loader-utils "^1.2.3"
     schema-utils "^2.0.0"
 
-"file-saver@github:eligrey/FileSaver.js#1.3.8":
+file-saver@eligrey/FileSaver.js#1.3.8:
   version "1.3.8"
   resolved "https://codeload.github.com/eligrey/FileSaver.js/tar.gz/e865e37af9f9947ddcced76b549e27dc45c1cb2e"
 
