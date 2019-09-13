@@ -184,6 +184,8 @@ export default createComponent({
                 state.userBalanceError = "";
 
                 state.successModalIsOpen = true;
+                state.publicKey = "";
+                state.userBalance = "";
             } catch (error) {
                 if (error instanceof HederaError) {
                     if (
