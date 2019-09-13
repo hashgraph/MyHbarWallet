@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "myhbarwallet"
+  },
+  "targets": {
+    "myhbarwallet": {
+      "hosting": {
+        "mainnet": [
+          "myhbarwallet"
+        ],
+        "testnet": [
+          "testnet-myhbarwallet"
+        ]
+      }
+    }
+  }
+}
