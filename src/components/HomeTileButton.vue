@@ -65,6 +65,13 @@ export default createComponent({
     }
 }
 
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
 .tile-image {
     flex-shrink: 0;
     height: 87px;
