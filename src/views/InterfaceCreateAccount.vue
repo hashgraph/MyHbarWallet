@@ -76,7 +76,6 @@ const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
 
 // Summary Items
 const summaryItems = [
-    { description: "Public Key", value: "" },
     { description: "Initial Balance", value: new BigNumber(0) },
     { description: "Estimated Fee", value: ESTIMATED_FEE_HBAR }
 ] as Item[];
@@ -208,7 +207,7 @@ export default createComponent({
         }
 
         function handleShowSummary(): void {
-            summaryItems[0].value = "..." + state.publicKey.substring(65);
+            // summaryItems[0].value = "..." + state.publicKey.substring(65);
             summaryItems[1].value = new BigNumber(state.userBalance);
             state.summaryModalIsOpen = true;
         }
