@@ -47,7 +47,7 @@ describe("Footer.vue", (): void => {
                   <!---->
                 </div>
                 <div class="section">
-                  <div class="title">MHW</div>
+                  <div class="title">MyHbarWallet</div>
                   <div class="item"><a href="/#about" class="link">
                       About
                     </a></div>
@@ -111,7 +111,9 @@ describe("Footer.vue", (): void => {
                 </div>
               </div>
               <div class="wrapper">
-                <div class="links"><a href="/terms-and-conditions" class="link">
+                <div class="links"><a href="/privacy-policy" class="link">
+                    Privacy
+                  </a> <a href="/terms-and-conditions" class="link">
                     Terms
                   </a> <span class="version"> v1.1.1 </span></div>
                 <div class="copyright">
