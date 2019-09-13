@@ -36,14 +36,13 @@
                     </Accordion>
                     <Accordion>
                         <template v-slot:title>
-                            How can I send a transaction?
+                            What does it cost to use MyHbarWallet?
                         </template>
                         <template v-slot:content>
-                            MHW lets anyone with a balance of Hbar send a
-                            transaction without additional charges. Using the
-                            Hedera™ Hashgraph requires a transaction fee paid in
-                            Hbar, so we recommend having at least 1 Hbar to
-                            cover around 2 - 3 transactions.
+                            MHW does not charge any fees for interacting with
+                            the Hedera™ API. Hedera™ Hashgraph requires a
+                            transaction fee when interacting with the Hedera™
+                            API. That fee paid in Hbar.
                         </template>
                     </Accordion>
                     <Accordion>

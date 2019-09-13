@@ -115,18 +115,17 @@ describe("FAQs.vue", (): void => {
                     <div class="accordion">
                       <div class="title">
                         <div class="title-text">
-                          How can I send a transaction?
+                          What does it cost to use MyHbarWallet?
                         </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                           <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"></path>
                         </svg>
                       </div>
                       <div class="content">
                         <div class="content-text">
-                          MHW lets anyone with a balance of Hbar send a
-                          transaction without additional charges. Using the
-                          Hedera™ Hashgraph requires a transaction fee paid in
-                          Hbar, so we recommend having at least 1 Hbar to
-                          cover around 2 - 3 transactions.
+                          MHW does not charge any fees for interacting with
+                          the Hedera™ API. Hedera™ Hashgraph requires a
+                          transaction fee when interacting with the Hedera™
+                          API. That fee paid in Hbar.
                         </div>
                       </div>
                     </div>
