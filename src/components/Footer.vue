@@ -12,13 +12,19 @@
                 >
                     Terms
                 </router-link>
-                <span class="version"> v{{ version }} </span>
+                <a
+                    target="_blank"
+                    href="https://github.com/hashgraph/myhbarwallet"
+                    class="link"
+                >
+                    v{{ version }}+{{ hash }}
+                </a>
             </div>
             <div class="copyright">
                 &copy; {{ currentYear }} Hedera™ Hashgraph LLC. All Rights
                 reserved.
             </div>
-            <div v-if="false" class="social">
+            <div class="social">
                 <a
                     v-if="false"
                     rel="noopener"
@@ -59,6 +65,7 @@ import { createComponent, computed } from "@vue/composition-api";
 // Both of these are defined in vue.config.js.
 // VERSION reads from package.json and COMMIT_HASH is git rev-parse --short HEAD output
 declare const VERSION: string;
+declare const COMMIT_HASH: string;
 
 export default createComponent({
     components: {
@@ -67,7 +74,9 @@ export default createComponent({
     },
     setup() {
         const facebook = mdiFacebook;
+
         const twitter = mdiTwitter;
+
         const github = mdiGithubCircle;
 
         const currentYear = computed(() => {
@@ -79,7 +88,8 @@ export default createComponent({
             twitter,
             github,
             currentYear,
-            version: VERSION
+            version: VERSION,
+            hash: COMMIT_HASH
         };
     }
 });
@@ -109,12 +119,6 @@ footer {
     &:not(:last-child) {
         border-right: 1px solid var(--color-white);
     }
-}
-
-.version {
-    color: var(--color-white);
-    opacity: 0.7;
-    padding: 0 15px;
 }
 
 .social-link {
