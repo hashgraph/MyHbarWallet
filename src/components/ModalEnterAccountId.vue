@@ -185,8 +185,6 @@ export default createComponent({
                     .build()
                     .executeForReceipt();
             } catch (error) {
-                console.warn(error);
-
                 if (error instanceof HederaError) {
                     if (
                         error.code ===
