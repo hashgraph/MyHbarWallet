@@ -23,7 +23,7 @@ const affiliates: { [key: string]: Affiliate } = {
         name: "Ledger",
         supported: true,
         currency: "$",
-        cost: "59.00",
+        cost: "59",
         image: ledgerImage,
         address: "https://shop.ledger.com/pages/ledger-nano-x?r=0d2e5ed943aa",
         description:
@@ -32,8 +32,8 @@ const affiliates: { [key: string]: Affiliate } = {
     trezor: {
         name: "Trezor",
         supported: true,
-        currency: "€",
-        cost: "83.49",
+        currency: "$",
+        cost: "55",
         image: trezorImage,
         address: "https://shop.trezor.io/?offer_id=10&aff_id=3302",
         description:
