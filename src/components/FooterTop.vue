@@ -37,7 +37,7 @@
             </template>
         </div>
         <div class="section">
-            <div class="title">MHW</div>
+            <div class="title">MyHbarWallet</div>
             <div class="item">
                 <router-link
                     :to="{ name: 'home', hash: '#about' }"
@@ -59,7 +59,7 @@
             <div class="title">
                 Love
                 <img class="love" src="../assets/heart.svg" />
-                MHW? Donate!
+                WP? Donate!
             </div>
             <div class="item">
                 MyHbarWallet is open-source and free to the community. Your

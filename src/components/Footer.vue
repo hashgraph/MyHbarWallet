@@ -3,6 +3,9 @@
         <FooterTop />
         <div class="wrapper">
             <div class="links">
+                <router-link :to="{ name: 'privacy-policy' }" class="link">
+                    Privacy
+                </router-link>
                 <router-link
                     :to="{ name: 'terms-and-conditions' }"
                     class="link"
