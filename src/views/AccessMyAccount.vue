@@ -221,17 +221,21 @@ export default createComponent({
 
             accessByPhraseState.isBusy = true;
 
-            const phrase = accessByPhraseState.words.join(" ");
-
             try {
-                setPrivateKey(await Ed25519PrivateKey.fromMnemonic(phrase));
+                setPrivateKey(
+                    // `.derive(0)` to use the same key as the default account of the mobile wallet
+                    (await Ed25519PrivateKey.fromMnemonic(
+                        accessByPhraseState.words
+                    )).derive(0)
+                );
 
                 // Close  previous modal and open another one
                 accessByPhraseState.isBusy = false;
                 accessByPhraseState.modalIsOpen = false;
                 Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
                 accessByPhraseState.isValid = true;
-            } catch {
+            } catch (error) {
+                console.warn("error access by mnemonic", error);
                 accessByPhraseState.isBusy = false;
 
                 store.dispatch(ALERT, {
