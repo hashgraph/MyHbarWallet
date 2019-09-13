@@ -42,7 +42,6 @@ export default createComponent({
     border-radius: 4px;
     color: var(--color-white);
     display: flex;
-    justify-content: center;
     outline: none;
     padding: 30px 40px;
     padding-block-end: 40px;
