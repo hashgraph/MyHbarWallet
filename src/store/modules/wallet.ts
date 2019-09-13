@@ -1,5 +1,5 @@
 import { LOG_OUT, LOG_IN } from "../../store/mutations";
-import { Ed25519PrivateKey } from "@hashgraph/sdk";
+import { Ed25519PrivateKey, Client } from "@hashgraph/sdk";
 import { IS_LOGGED_IN } from "../../store/getters";
 import { ActionContext } from "vuex";
 import { RootState } from "..";
@@ -17,7 +17,7 @@ export interface Id {
 export interface Session {
     account: Id;
     privateKey: Ed25519PrivateKey;
-    client: object;
+    client: Client;
 }
 
 export interface State {
