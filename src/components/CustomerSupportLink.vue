@@ -1,6 +1,8 @@
 <template>
-    <div class="customer-support-link" @click="handleButtonClick">
-        <img alt="" :src="serviceBell" /> Customer Support
+    <div class="customer-support-link">
+        <div class="customer-support-container" @click="handleButtonClick">
+            <img alt="" :src="serviceBell" /> Customer Support
+        </div>
         <ModalCustomerService v-model="state.modalCustomerServiceIsOpen" />
     </div>
 </template>
@@ -34,7 +36,7 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.customer-support-link {
+.customer-support-container {
     align-items: center;
     align-self: center;
     color: var(--color-melbourne-cup);
