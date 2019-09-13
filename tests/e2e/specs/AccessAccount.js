@@ -5,6 +5,7 @@ const mnemonicPhraseAccountId = "0.0.60122";
 const keystoreFileAccountId = "0.0.60118";
 const incorrectAccountId = "0.0.33";
 const keystorePath = __dirname + "/../assets/keystore_file";
+const keystorePassword = "ThisIsARandomPassword\n";
 
 module.exports = {
     "it can access account by keystore file": browser => {
@@ -18,10 +19,10 @@ module.exports = {
             .click("a.home-tile-button[href='/access-my-account']")
             .waitForElementVisible(".account-tile-button", 5000)
             .assert.containsText(
-                ".account-tile-button:nth-child(2) > .text > .title",
+                ".account-tile-button:not(.disabled):nth-child(2) > .text > .title",
                 "Software"
             )
-            .click(".account-tile-button:nth-child(2)")
+            .click(".account-tile-button:not(.disabled):nth-child(2)")
             .waitForElementVisible("label[for=file]", 5000)
             .assert.containsText("label[for=file]", "Keystore File")
             .click("label[for=file]")
@@ -40,7 +41,7 @@ module.exports = {
             )
             .setValue(
                 "input[placeholder='Please Enter At Least 9 Characters']",
-                "ThisIsARandomPassword"
+                keystorePassword
             )
             .click(
                 ".modal-password > .modal-background.is-open > .modal button[type=submit]"
@@ -88,10 +89,10 @@ module.exports = {
             .click("a.home-tile-button[href='/access-my-account']")
             .waitForElementVisible(".account-tile-button", 5000)
             .assert.containsText(
-                ".account-tile-button:nth-child(2) > .text > .title",
+                ".account-tile-button:not(.disabled):nth-child(2) > .text > .title",
                 "Software"
             )
-            .click(".account-tile-button:nth-child(2)")
+            .click(".account-tile-button:not(.disabled):nth-child(2)")
             .waitForElementVisible("label[for=file]", 5000)
             .assert.containsText("label[for=file]", "Keystore File")
             .click("label[for=file]")
@@ -110,7 +111,7 @@ module.exports = {
             )
             .setValue(
                 "input[placeholder='Please Enter At Least 9 Characters']",
-                "ThisIsARandomPassword\n"
+                keystorePassword
             )
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background.is-open > .modal",
@@ -140,10 +141,10 @@ module.exports = {
             .click("a.home-tile-button[href='/access-my-account']")
             .waitForElementVisible(".account-tile-button", 5000)
             .assert.containsText(
-                ".account-tile-button:nth-child(2) > .text > .title",
+                ".account-tile-button:not(.disabled):nth-child(2) > .text > .title",
                 "Software"
             )
-            .click(".account-tile-button:nth-child(2)")
+            .click(".account-tile-button:not(.disabled):nth-child(2)")
             .waitForElementVisible("label[for=file]", 5000)
             .assert.containsText("label[for=file]", "Keystore File")
             .click("label[for=file]")
@@ -186,10 +187,10 @@ module.exports = {
             .click("a.home-tile-button[href='/access-my-account']")
             .waitForElementVisible(".account-tile-button", 5000)
             .assert.containsText(
-                ".account-tile-button:nth-child(2) > .text > .title",
+                ".account-tile-button:not(.disabled):nth-child(2) > .text > .title",
                 "Software"
             )
-            .click(".account-tile-button:nth-child(2)")
+            .click(".account-tile-button:not(.disabled):nth-child(2)")
             .waitForElementVisible("label[for=file]", 5000)
             .assert.containsText("label[for=file]", "Keystore File")
             .click("label[for=file]")
@@ -208,7 +209,7 @@ module.exports = {
             )
             .setValue(
                 "input[placeholder='Please Enter At Least 9 Characters']",
-                "ThisIsARandomPassword\n"
+                keystorePassword
             )
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background.is-open > .modal",
@@ -244,10 +245,10 @@ module.exports = {
             .click("a.home-tile-button[href='/access-my-account']")
             .waitForElementVisible(".account-tile-button", 5000)
             .assert.containsText(
-                ".account-tile-button:nth-child(2) > .text > .title",
+                ".account-tile-button:not(.disabled):nth-child(2) > .text > .title",
                 "Software"
             )
-            .click(".account-tile-button:nth-child(2)")
+            .click(".account-tile-button:not(.disabled):nth-child(2)")
             .waitForElementVisible("label[for=file]", 5000)
             .assert.containsText("label[for=file]", "Keystore File")
             .click("label[for=file]")
@@ -266,7 +267,7 @@ module.exports = {
             )
             .setValue(
                 "input[placeholder='Please Enter At Least 9 Characters']",
-                "ThisIsARandomPassword\n"
+                keystorePassword
             )
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background.is-open > .modal",
@@ -303,10 +304,10 @@ module.exports = {
             .click("a.home-tile-button[href='/access-my-account']")
             .waitForElementVisible(".account-tile-button", 5000)
             .assert.containsText(
-                ".account-tile-button:nth-child(2) > .text > .title",
+                ".account-tile-button:not(.disabled):nth-child(2) > .text > .title",
                 "Software"
             )
-            .click(".account-tile-button:nth-child(2)")
+            .click(".account-tile-button:not(.disabled):nth-child(2)")
             .waitForElementVisible("label[for=phrase]", 5000)
             .assert.containsText("label[for=phrase]", "Mnemonic Phrase")
             .click("label[for=phrase]")

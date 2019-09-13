@@ -66,7 +66,7 @@ import {
 } from "@vue/composition-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
 import store from "../store";
-import { Client, Ed25519PrivateKey } from "@hashgraph/sdk";
+import { Ed25519PrivateKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
 import { ALERT, LOG_IN } from "../store/actions";
 import Vue from "vue";
@@ -225,9 +225,17 @@ export default createComponent({
         }
 
         async function handleAccountIdSubmit(
-            client: Client,
+            client: object,
             account: Id
         ): Promise<void> {
+            // Lazy load Client until this method is called
+            const { Client } = await import("@hashgraph/sdk");
+
+            if (!(client instanceof Client)) {
+                throw new TypeError(
+                    "client is not instance of Client: Programmer Error"
+                );
+            }
             // Make sure there are no open modals when we navigate
             state.modalEnterAccountIdIsOpen = false;
 

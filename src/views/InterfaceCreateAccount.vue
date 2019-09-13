@@ -57,7 +57,7 @@ import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import { computed, createComponent, reactive } from "@vue/composition-api";
 import store from "../store";
-import { AccountCreateTransaction, Ed25519PublicKey } from "@hashgraph/sdk";
+import { Ed25519PublicKey } from "@hashgraph/sdk";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { getValueOfUnit, Unit } from "../units";
@@ -157,8 +157,11 @@ export default createComponent({
 
                 const fee = ESTIMATED_FEE_TINYBAR;
                 const key = Ed25519PublicKey.fromString(state.publicKey);
+                const { AccountCreateTransaction, Client } = await import(
+                    "@hashgraph/sdk"
+                );
                 const accountIdIntermediate = (await new AccountCreateTransaction(
-                    client
+                    client as InstanceType<typeof Client>
                 )
                     .setInitialBalance(balance)
                     .setTransactionFee(fee)

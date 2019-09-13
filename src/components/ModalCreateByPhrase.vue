@@ -93,11 +93,7 @@ import {
     reactive,
     SetupContext
 } from "@vue/composition-api";
-import {
-    generateMnemonic,
-    MnemonicResult,
-    Ed25519PrivateKey
-} from "@hashgraph/sdk/src/Keys";
+import { MnemonicResult, Ed25519PrivateKey } from "@hashgraph/sdk/src/Keys";
 
 interface Props {
     isOpen: boolean;
@@ -158,7 +154,8 @@ export default createComponent({
             state.verifyPhraseIsOpen = true;
         }
 
-        function randomizeMnemonic(): void {
+        async function randomizeMnemonic(): Promise<void> {
+            const { generateMnemonic } = await import("@hashgraph/sdk");
             state.result = generateMnemonic();
         }
 
