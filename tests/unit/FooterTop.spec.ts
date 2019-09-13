@@ -18,7 +18,7 @@ describe("FooterTop.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="footer-top">
+            <div class="footer-top footer-w-affiliate">
               <div class="section">
                 <div class="title">Discover</div>
                 <div class="item"><a href="/convert-units" class="link">
@@ -57,7 +57,20 @@ describe("FooterTop.vue", (): void => {
                   Customer Support
                 </div>
               </div>
-              <!---->
+              <div class="section">
+                <div class="title">
+                  Love
+                  <img src="../assets/heart.svg" class="love">
+                  MHW? Donate!
+                </div>
+                <div class="item">
+                  MyHbarWallet is open-source and free to the community. Your
+                  donations go a long way towards making that possible.
+                </div>
+                <div class="donation"><img src="" class="hbar-icon">
+                  0.0.1001
+                </div>
+              </div>
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Issue Information</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
