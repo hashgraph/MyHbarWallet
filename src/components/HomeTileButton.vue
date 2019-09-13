@@ -42,7 +42,6 @@ export default createComponent({
     border-radius: 4px;
     color: var(--color-white);
     display: flex;
-    justify-content: center;
     outline: none;
     padding: 30px 40px;
     padding-block-end: 40px;
@@ -64,6 +63,13 @@ export default createComponent({
     @media (prefers-reduced-motion) {
         transition: none;
     }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
 }
 
 .tile-image {
