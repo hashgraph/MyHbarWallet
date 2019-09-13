@@ -73,16 +73,17 @@ export default createComponent({
         words: (Array as unknown) as PropType<string[]>
     },
     setup(props: Props, context: SetupContext) {
-        let inputMap: Map<number, string> = new Map();
+        // let inputMap: Map<number, string> = ;
 
         const state = reactive({
-            focused: null as number | null
+            focused: null as number | null,
+            inputMap: new Map() as Map<number, string>
         });
 
         function randomizeEmpties(): void {
             // there should never be a case where the list of words is less than 5, except in test or some odd error
             // if it is less than 5 an infinite loop used to happen breaking tests, this should prevent that.
-            const maxSize = props.words.length >= 5 ? 5 : props.words.length;
+            const maxSize = props.words.length < 5 ? props.words.length : 5;
 
             const newMap = new Map<number, string>([]);
 
@@ -94,7 +95,7 @@ export default createComponent({
                     newMap.set(num, "");
                 }
             }
-            inputMap = newMap;
+            state.inputMap = newMap;
         }
 
         watch(
@@ -112,17 +113,17 @@ export default createComponent({
         }
 
         function isDisabled(index: number): boolean {
-            return !inputMap.has(index);
+            return !state.inputMap.has(index);
         }
 
         function valueForIndex(index: number): string {
             return isDisabled(index)
                 ? props.words[index]
-                : inputMap.get(index) || "";
+                : state.inputMap.get(index) || "";
         }
 
         function handleVerify(): void {
-            for (const [index, value] of inputMap.entries()) {
+            for (const [index, value] of state.inputMap.entries()) {
                 if (props.words[index] !== value) {
                     store.dispatch(ALERT, {
                         message: "Memonic does not match",
@@ -149,7 +150,7 @@ export default createComponent({
             const target = event.target as HTMLInputElement;
             const index = Number.parseInt(target.dataset.index || "0", 10);
 
-            inputMap.set(index, target.value);
+            state.inputMap.set(index, target.value);
         }
 
         return {
