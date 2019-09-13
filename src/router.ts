@@ -6,6 +6,7 @@ import HardwareWalletAffiliates from "./views/HardwareWalletAffiliates.vue";
 import InterfaceCreateAccount from "./views/InterfaceCreateAccount.vue";
 import TermsConditions from "./views/TermsConditions.vue";
 import Error404 from "./views/Error404.vue";
+import PrivacyPolicy from "./views/PrivacyPolicy.vue";
 import { PositionResult } from "vue-router/types/router";
 import store from "./store";
 
@@ -106,6 +107,11 @@ export default new Router({
             path: "/convert-units",
             name: "convert-units",
             component: ConvertUnits
+        },
+        {
+            path: "/privacy-policy",
+            name: "privacy-policy",
+            component: PrivacyPolicy
         },
         {
             path: "/terms-and-conditions",
