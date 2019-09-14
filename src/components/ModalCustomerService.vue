@@ -78,7 +78,7 @@ URL: ${url}
 
 ${description}
 `;
-    return `mailto:contact@myhbarwallet.com?subject=${encodeURIComponent(
+    return `mailto:support@myhbarwallet.com?subject=${encodeURIComponent(
         subjectTemplate
     )}&body=${encodeURIComponent(bodyTemplate)}`;
 }
