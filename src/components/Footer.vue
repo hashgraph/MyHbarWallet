@@ -21,8 +21,7 @@
                 </a>
             </div>
             <div class="copyright">
-                &copy; {{ currentYear }} Hedera™ Hashgraph LLC. All Rights
-                reserved.
+                &copy; {{ currentYear }} MyHbarWallet, All Rights reserved.
             </div>
             <div class="social">
                 <a
