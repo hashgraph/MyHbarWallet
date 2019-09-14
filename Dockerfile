@@ -11,4 +11,4 @@ WORKDIR /srv
 
 # Copy files
 # Do this last so all else is cached
-COPY ./dist/* /srv/
+COPY ./dist /srv
