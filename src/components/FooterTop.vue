@@ -1,5 +1,5 @@
 <template>
-    <div class="footer-top" :class="{ 'footer-w-affiliate': hasAffiliates }">
+    <div class="footer-top">
         <div class="section">
             <div class="title">Discover</div>
             <div class="item">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <!-- enable and add affiliates in src/affiliates.ts -->
-        <div v-if="hasAffiliates" class="section">
+        <div class="section">
             <div class="title">Affiliates</div>
             <template v-for="affiliate of affiliates">
                 <div
@@ -88,7 +88,6 @@ export default createComponent({
         const state = reactive({
             modalCustomerServiceIsOpen: false
         });
-        const hasAffiliates = true;
 
         function handleButtonClick(): void {
             state.modalCustomerServiceIsOpen = !state.modalCustomerServiceIsOpen;
@@ -98,7 +97,6 @@ export default createComponent({
             hbar,
             state,
             handleButtonClick,
-            hasAffiliates,
             affiliates
         };
     }
@@ -109,7 +107,7 @@ export default createComponent({
 .footer-top {
     border-bottom: 1px solid var(--color-china-blue);
     display: grid;
-    grid-template-columns: 1fr 1fr 1.5fr;
+    grid-template-columns: 1fr 1fr 1fr 1.5fr;
     justify-content: space-between;
     margin: auto;
     margin-block-end: 40px;
@@ -123,10 +121,6 @@ export default createComponent({
         grid-template-columns: auto;
         padding-block-start: 0;
     }
-}
-
-.footer-w-affiliate {
-    grid-template-columns: 1fr 1fr 1fr 1.5fr;
 }
 
 .section {
