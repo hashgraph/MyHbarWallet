@@ -65,7 +65,6 @@ import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "../clipboard";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import Warning from "../components/Warning.vue";
-import { Ed25519PublicKey } from "@hashgraph/sdk";
 import { ALERT } from "../store/actions";
 import store from "../store";
 
@@ -84,7 +83,9 @@ export default createComponent({
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
-        publicKey: (Object as unknown) as PropType<Ed25519PublicKey>,
+        publicKey: (Object as unknown) as PropType<
+            import("@hashgraph/sdk").Ed25519PublicKey
+        >,
         event: (String as unknown) as PropType<string>
     },
     setup(props, context) {

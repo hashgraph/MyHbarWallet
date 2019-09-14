@@ -40,15 +40,12 @@ import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import {
-    computed,
     createComponent,
     SetupContext,
     PropType,
     watch,
     ref
 } from "@vue/composition-api";
-
-// import { Ed25519PrivateKey } from "@hashgraph/sdk";
 
 export interface State {
     modalIsOpen: boolean;
@@ -78,35 +75,14 @@ export default createComponent({
         state: (Object as unknown) as PropType<State>
     },
     setup(props: { state: State }, context: SetupContext) {
-        // const valid = computed(() => {
-        //     if (props.state.rawPrivateKey.length === 0) {
-        //         // Back out now if we have an empty value
-        //         return false;
-        //     }
-
-        //     try {
-        //         Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
-        //         return true;
-        //     } catch (error) {
-        //         if (error instanceof Error) {
-        //             // The exception message changes depending on the input
-        //             if (
-        //                 error.message ===
-        //                 "invalid private key: " + props.state.rawPrivateKey
-        //             ) {
-        //                 return false;
-        //             }
-        //         }
-
-        //         throw error;
-        //     }
-        // });
-
         const valid = ref<boolean>(false);
 
         async function isValid(): Promise<boolean> {
             try {
-                const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
+                const { Ed25519PrivateKey } = await (import(
+                    "@hashgraph/sdk"
+                ) as Promise<typeof import("@hashgraph/sdk")>);
+
                 Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;
             } catch (error) {

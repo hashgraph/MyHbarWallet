@@ -65,10 +65,7 @@ import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "../components/ModalAccessBySoftware.vue";
 import ModalAccessByPhrase from "../components/ModalAccessByPhrase.vue";
-const ModalAccessByPrivateKey = (): Promise<
-    typeof import("/home/shenglong/Documents/dev/myhbarwallet/src/components/ModalAccessByPrivateKey.vue")
-> => import("../components/ModalAccessByPrivateKey.vue");
-// import ModalAccessByPrivateKey from "../components/ModalAccessByPrivateKey.vue";
+import ModalAccessByPrivateKey from "../components/ModalAccessByPrivateKey.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
@@ -80,7 +77,6 @@ import {
     ref,
     SetupContext
 } from "@vue/composition-api";
-import { Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
 import { ALERT, LOG_IN } from "../store/actions";
 import Vue from "vue";
@@ -100,8 +96,12 @@ export default createComponent({
     },
     setup(props: object, context: SetupContext) {
         const state = reactive({
-            privateKey: null as Ed25519PrivateKey | null,
-            publicKey: null as Ed25519PublicKey | null,
+            privateKey: null as
+                | import("@hashgraph/sdk/src/Keys").Ed25519PrivateKey
+                | null,
+            publicKey: null as
+                | import("@hashgraph/sdk/src/Keys").Ed25519PublicKey
+                | null,
             modalAccessByHardwareIsOpen: false,
             modalAccessBySoftwareIsOpen: false,
             modalAccessByPhraseState: {
@@ -186,7 +186,9 @@ export default createComponent({
         // Update our local understand of what the private/public key pair is
         // Called at the end of each access by software workflow before merging
         // into enter account ID
-        function setPrivateKey(newPrivateKey: Ed25519PrivateKey): void {
+        function setPrivateKey(
+            newPrivateKey: import("@hashgraph/sdk/src/Keys").Ed25519PrivateKey
+        ): void {
             state.privateKey = newPrivateKey;
             state.publicKey = newPrivateKey.publicKey;
         }
@@ -202,6 +204,10 @@ export default createComponent({
             }
 
             try {
+                const { Ed25519PrivateKey } = await (import(
+                    "@hashgraph/sdk"
+                ) as Promise<typeof import("@hashgraph/sdk")>);
+
                 setPrivateKey(
                     await Ed25519PrivateKey.fromKeystore(
                         state.keystoreFileArray as Uint8Array,
@@ -225,6 +231,10 @@ export default createComponent({
             accessByPhraseState.isBusy = true;
 
             try {
+                const { Ed25519PrivateKey } = await (import(
+                    "@hashgraph/sdk"
+                ) as Promise<typeof import("@hashgraph/sdk")>);
+
                 setPrivateKey(
                     // `.derive(0)` to use the same key as the default account of the mobile wallet
                     (await Ed25519PrivateKey.fromMnemonic(
@@ -250,8 +260,11 @@ export default createComponent({
             }
         }
 
-        function handleAccessByPrivateKeySubmit(): void {
+        async function handleAccessByPrivateKeySubmit(): Promise<void> {
             state.modalAccessByPrivateKeyState.isBusy = true;
+            const { Ed25519PrivateKey } = await (import(
+                "@hashgraph/sdk"
+            ) as Promise<typeof import("@hashgraph/sdk")>);
 
             setPrivateKey(
                 Ed25519PrivateKey.fromString(
@@ -276,7 +289,9 @@ export default createComponent({
             client: object,
             account: Id
         ): Promise<void> {
-            const { Client } = await import("@hashgraph/sdk");
+            const { Client } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
             if (!(client instanceof Client)) {
                 throw new TypeError(
                     "client not instance of Client: Programmer Error"
