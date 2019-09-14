@@ -1,7 +1,7 @@
 <template>
     <div>
         <div :class="classObject" class="side-nav-top">
-            <img alt="" class="logo" src="../assets/myhbarwallet-logo.svg">
+            <img alt="" class="logo" src="../assets/myhbarwallet-logo.svg" />
             <MaterialDesignIcon
                 class="close"
                 :icon="mdiClose"

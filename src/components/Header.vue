@@ -6,10 +6,18 @@
     >
         <header :class="headerClasses">
             <div v-if="isHome" class="link" @click="handleReturnClick">
-                <img alt="" class="logo" src="../assets/myhbarwallet-logo.svg">
+                <img
+                    alt=""
+                    class="logo"
+                    src="../assets/myhbarwallet-logo.svg"
+                />
             </div>
             <router-link v-else to="/" class="link">
-                <img alt="" class="logo" src="../assets/myhbarwallet-logo.svg">
+                <img
+                    alt=""
+                    class="logo"
+                    src="../assets/myhbarwallet-logo.svg"
+                />
             </router-link>
             <div class="spacer"></div>
             <div class="links">
