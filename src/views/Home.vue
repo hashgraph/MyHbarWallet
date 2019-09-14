@@ -106,7 +106,7 @@ export default createComponent({
     align-items: center;
     align-self: center;
     display: flex;
-    padding: 30px;
+    padding: 80px 30px;
     width: 100%;
 
     @media (max-width: 810px) {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div :class="classObject" class="side-nav-top">
-            <div class="logo">My<strong>Hbar</strong>Wallet</div>
+            <img alt="" class="logo" src="../assets/myhbarwallet-logo.svg">
             <MaterialDesignIcon
                 class="close"
                 :icon="mdiClose"
@@ -181,6 +181,7 @@ nav {
 
 .logo {
     color: var(--color-china-blue);
+    height: 50px;
     padding-inline-start: 25px;
 
     & > strong {

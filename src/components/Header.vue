@@ -6,10 +6,10 @@
     >
         <header :class="headerClasses">
             <div v-if="isHome" class="link" @click="handleReturnClick">
-                <div class="logo">My<strong>Hbar</strong>Wallet</div>
+                <img alt="" class="logo" src="../assets/myhbarwallet-logo.svg">
             </div>
             <router-link v-else to="/" class="link">
-                <div class="logo">My<strong>Hbar</strong>Wallet</div>
+                <img alt="" class="logo" src="../assets/myhbarwallet-logo.svg">
             </router-link>
             <div class="spacer"></div>
             <div class="links">
@@ -287,6 +287,7 @@ export default createComponent({
 
 .logo {
     font-size: 26px;
+    height: 50px;
 
     & > strong {
         font-weight: 600;
