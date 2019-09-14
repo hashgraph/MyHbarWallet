@@ -94,6 +94,7 @@ import {
     SetupContext
 } from "@vue/composition-api";
 import { MnemonicResult, Ed25519PrivateKey } from "@hashgraph/sdk/src/Keys";
+// type MnemonicResult = import("@hashgraph/sdk/src/Keys").MnemonicResult;
 
 interface Props {
     isOpen: boolean;

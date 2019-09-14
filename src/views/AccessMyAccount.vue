@@ -65,7 +65,10 @@ import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "../components/ModalAccessBySoftware.vue";
 import ModalAccessByPhrase from "../components/ModalAccessByPhrase.vue";
-import ModalAccessByPrivateKey from "../components/ModalAccessByPrivateKey.vue";
+const ModalAccessByPrivateKey = (): Promise<
+    typeof import("/home/shenglong/Documents/dev/myhbarwallet/src/components/ModalAccessByPrivateKey.vue")
+> => import("../components/ModalAccessByPrivateKey.vue");
+// import ModalAccessByPrivateKey from "../components/ModalAccessByPrivateKey.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
