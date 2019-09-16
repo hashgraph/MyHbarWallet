@@ -206,8 +206,6 @@ export default createComponent({
 
                 // eslint-disable-next-line require-atomic-updates
                 state.successModalIsOpen = true;
-                state.amount = "";
-                state.toAccount = "";
             } catch (error) {
                 // eslint-disable-next-line require-atomic-updates
                 state.idErrorMessage = "";
@@ -234,8 +232,12 @@ export default createComponent({
         }
 
         function handleSuccessModalChange(isOpen: boolean): void {
-            state.successModalIsOpen = isOpen;
-            state.isBusy = false;
+            if (!isOpen) {
+                state.successModalIsOpen = isOpen;
+                state.isBusy = false;
+                state.amount = "";
+                state.toAccount = "";
+            }
         }
 
         return {

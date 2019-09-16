@@ -187,8 +187,6 @@ export default createComponent({
                 state.userBalanceError = "";
 
                 state.successModalIsOpen = true;
-                state.publicKey = "";
-                state.userBalance = "";
             } catch (error) {
                 if (error instanceof HederaError) {
                     if (
@@ -207,8 +205,12 @@ export default createComponent({
         }
 
         function handleSuccessModalChange(isOpen: boolean): void {
-            state.successModalIsOpen = isOpen;
-            state.isBusy = false;
+            if (!isOpen) {
+                state.successModalIsOpen = isOpen;
+                state.isBusy = false;
+                state.publicKey = "";
+                state.userBalance = "";
+            }
         }
 
         function handleShowSummary(): void {
