@@ -15,11 +15,7 @@
                         </div>
                     </div>
                     <div class="banner-image">
-                        <img
-                            v-if="false"
-                            src="https://placehold.it/400x400"
-                            alt="banner"
-                        />
+                        <img :src="mountainTop" alt="banner" />
                     </div>
                 </div>
                 <HomeTileButtons />
@@ -40,12 +36,7 @@
                             interface to Hedera™ Hashgraph.
                         </div>
                     </div>
-                    <img
-                        v-if="false"
-                        class="about-image"
-                        src="https://placehold.it/300x300"
-                        alt="about"
-                    />
+                    <img class="about-image" :src="hbarOrb" alt="about" />
                 </div>
             </div>
         </div>
@@ -62,7 +53,8 @@ import Community from "../components/Community.vue";
 import HomeTileButtons from "../components/HomeTileButtons.vue";
 import circleImage from "../assets/circle.png";
 import { createComponent } from "@vue/composition-api";
-
+import hbarOrb from "../assets/hbar_orb.svg";
+import mountainTop from "../assets/mountain_top.svg";
 export default createComponent({
     components: {
         FAQs,
@@ -72,7 +64,9 @@ export default createComponent({
     },
     setup() {
         return {
-            circleImage
+            circleImage,
+            hbarOrb,
+            mountainTop
         };
     }
 });
@@ -169,7 +163,7 @@ export default createComponent({
 
     & :first-child {
         border-radius: 20px;
-        height: 400px;
+        height: 300px;
     }
 }
 
