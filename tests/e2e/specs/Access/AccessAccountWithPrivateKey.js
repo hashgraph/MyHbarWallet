@@ -1,8 +1,8 @@
-const privateKey =
+const keyPrivateKey =
     "302e020100300506032b657004220420b47720552ad89bafe97676da89cef818d8d888fe4eeba62135facfbd35e60e88";
-const publicKey =
+const keyPublicKey =
     "302a300506032b65700321000399267b48ccbac3f03278f6fd96fce1c71a00db692d75f8f82814f85a8cf74e";
-const accountId = "0.0.45507";
+const keyAccountId = "0.0.45507";
 
 module.exports = {
     "it can access account by private key": browser => {
@@ -11,7 +11,7 @@ module.exports = {
             .waitForElementVisible(".home-tile-button", 5000)
             .click(".home-tile-button[href='/access-my-account']")
             .waitForElementVisible(".account-tile-button", 5000)
-            .click(".account-tile-button:nth-child(2)")
+            .click(".account-tile-button:not(.disabled):nth-child(2)")
             .waitForElementVisible("label[for=key]", 5000)
             .click("label[for=key]")
             .click(".modal-access-by-software > button:nth-child(3)")
@@ -19,37 +19,26 @@ module.exports = {
                 "input[placeholder='Enter Private Key']",
                 5000
             )
-            .setValue("input[placeholder='Enter Private Key']", privateKey)
+            .setValue("input[placeholder='Enter Private Key']", keyPrivateKey)
             .click(".button-access-wallet")
             .waitForElementVisible(
                 "input[placeholder='shard.realm.account'",
                 5000
             )
-            .setValue("input[placeholder='shard.realm.account'", accountId)
+            .setValue("input[placeholder='shard.realm.account'", keyAccountId)
             .click("div.buttons:nth-child(2) > button:nth-child(2)")
-            .waitForElementVisible(
-                ".account > div:nth-child(2) > div:nth-child(1) > div:nth-child(2)",
-                5000
-            );
+            .waitForElementVisible(".interface-form", 10000)
+            .waitForElementVisible(".interface .balance .hbar-balance", 10000)
+            .assert.urlContains("interface/send-transfer")
+            .assert.containsText(".account .subtitle", keyAccountId);
     },
 
-    "it can see accurate Account Id": browser => {
-        // todo: fix this when 0.0. prefixes change?
-        browser.assert.containsText(
-            ".account > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > strong:nth-child(2)",
-            accountId.substr(accountId.lastIndexOf(".") + 1)
-        );
-    },
-
-    "it can see non-zero hbar balance in wallet": browser => {
+    "it can view balance information": browser => {
         browser.expect
             .element(".interface .balance .hbar-balance")
             .text.to.match(
                 /^([1-9]\d{0,2}(?:,\d{3})*(\.\d{1,9})?|0?\.(?=.*[1-9])\d{1,9}) ℏ$/
             );
-    },
-
-    "it can see non-zero USD balance in wallet": browser => {
         browser.expect
             .element(".interface .balance .usd-balance")
             .text.to.match(
@@ -66,7 +55,7 @@ module.exports = {
             )
             .assert.containsText(
                 "div.read-only-input:nth-child(1) > div:nth-child(1)",
-                publicKey
+                keyPublicKey
             )
             .moveTo("div.modal-background")
             .mouseButtonDown()
@@ -77,7 +66,7 @@ module.exports = {
         browser
             .click(".qr-icon")
             .waitForElementVisible(".pub-qr > canvas:nth-child(1)", 5000)
-            .assert.containsText(".account-id .value", accountId)
+            .assert.containsText(".account-id .value", keyAccountId)
             .moveTo("div.modal-background")
             .mouseButtonDown()
             .mouseButtonUp();
@@ -90,7 +79,6 @@ module.exports = {
             .expect.element("div.modal-background:nth-child(6)")
             .to.have.attribute("class")
             .which.contains("is-open");
-
         browser.end();
     }
 };

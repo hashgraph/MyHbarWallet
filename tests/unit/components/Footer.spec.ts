@@ -132,8 +132,7 @@ describe("Footer.vue", (): void => {
                     v1.1.1+placeholderhash
                   </a></div>
                 <div class="copyright">
-                  © 2019 MyHbarWallet, All Rights
-                  reserved.
+                  © 2019 MyHbarWallet, All Rights reserved.
                 </div>
                 <div class="social">
                   <!---->
