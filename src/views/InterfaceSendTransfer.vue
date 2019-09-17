@@ -60,27 +60,20 @@
 import TextInput from "../components/TextInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
-import { createComponent, reactive, computed } from "@vue/composition-api";
+import { computed, createComponent, reactive } from "@vue/composition-api";
 import store from "../store";
 import { AccountId } from "@hashgraph/sdk";
 import { REFRESH_BALANCE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
-import { Unit, getValueOfUnit } from "../units";
+import { getValueOfUnit, Unit } from "../units";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { formatHbar, validateHbar } from "../formatter";
 
-// Transactions between 1 HBar and 360 GBar **DID** cost between 85_100 and 85_500 Tinybar
-// With some additional trial-error, 900_000 Tinybar seems to cover everything
 const ESTIMATED_FEE_HBAR = new BigNumber(0.120_000_000);
 const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
     getValueOfUnit(Unit.Hbar)
 );
-
-const summaryItems = [
-    { description: "Transfer Amount", value: new BigNumber(0) },
-    { description: "Estimated Fee", value: ESTIMATED_FEE_HBAR }
-] as Item[];
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
 
@@ -137,6 +130,16 @@ export default createComponent({
             return state.toAccount;
         });
 
+        const summaryItems = computed(() => {
+            return [
+                {
+                    description: "Transfer Amount",
+                    value: new BigNumber(state.amount)
+                },
+                { description: "Estimated Fee", value: ESTIMATED_FEE_HBAR }
+            ] as Item[];
+        });
+
         async function handleClickEntireBalance(): Promise<void> {
             const balance = store.state.wallet.balance;
 
@@ -152,7 +155,6 @@ export default createComponent({
         }
 
         function handleShowSummary(): void {
-            summaryItems[0].value = new BigNumber(state.amount);
             state.summaryIsOpen = true;
         }
 
