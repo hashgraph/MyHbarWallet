@@ -18,15 +18,15 @@
             :error="state.idErrorMessage"
             :valid="isIdValid"
             can-copy
-            label="To Account"
+            :label="$t('common.toAccount')"
             :placeholder="$t('common.accountSyntax')"
             show-validation
         />
 
         <TextInput
             v-model.trim="state.memo"
-            label="Memo"
-            placeholder="Optional Memo"
+            :placeholder="$t('common.optionalMemo')"
+            :label="$t('common.memo')"
         />
 
         <template v-slot:footer>
@@ -140,13 +140,15 @@ export default createComponent({
         const summaryItems = computed(() => {
             return [
                 {
-                    description: "Transfer Amount",
+                    description: context.root.$t(
+                        "interfaceSendTransfer.transferAmount"
+                    ),
                     value: isAmountValid
                         ? new BigNumber(state.amount)
                         : new BigNumber(0)
                 },
                 {
-                    description: "Estimated Fee",
+                    description: context.root.$t("common.estimatedFee"),
                     value: estimatedFeeHbar
                 }
             ] as Item[];
@@ -258,7 +260,9 @@ export default createComponent({
                 } else if (
                     error.toString().includes("INSUFFICIENT_ACCOUNT_BALANCE")
                 ) {
-                    state.amountErrorMessage = "Insufficient balance";
+                    state.amountErrorMessage = context.root
+                        .$t("common.error.insufficientBalance")
+                        .toString();
                 }
 
                 throw error;

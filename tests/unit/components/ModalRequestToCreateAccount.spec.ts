@@ -45,8 +45,7 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
                     <div class="content-container">
                       <div class="instructions">
                         <div>
-                          Provide your public key (this QR code or the copied text) to
-                          an existing account owner on the Hedera™ network.
+                          Provide your public key (this QR code or the copied text) to an existing account owner on the Hedera™ network.
                         </div>
                         <div>
                           They must create and fund your account, then provide you with your new account ID.
@@ -100,8 +99,7 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
                     <div class="content-container">
                       <div class="instructions">
                         <div>
-                          Provide your public key (this QR code or the copied text) to
-                          an existing account owner on the Hedera™ network.
+                          Provide your public key (this QR code or the copied text) to an existing account owner on the Hedera™ network.
                         </div>
                         <div>
                           They must create and fund your account, then provide you with your new account ID.

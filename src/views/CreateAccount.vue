@@ -184,7 +184,9 @@ export default createComponent({
             } catch (error) {
                 await store.dispatch(ALERT, {
                     level: "error",
-                    message: "Unable to Download"
+                    message: context.root
+                        .$t("createAccount.unableToDownload")
+                        .toString()
                 });
             }
         }

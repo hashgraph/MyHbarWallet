@@ -19,7 +19,7 @@
         <template v-slot:footer>
             <Button
                 :disabled="!state.signable"
-                :label="$t('Sign')"
+                :label="$t('interfaceSignMessage.sign')"
                 @click="onSignClicked"
             />
         </template>

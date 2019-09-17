@@ -106,6 +106,7 @@ import {
     reactive,
     SetupContext
 } from "@vue/composition-api";
+import { formatRich } from "../formatter";
 
 interface Props {
     isOpen: boolean;

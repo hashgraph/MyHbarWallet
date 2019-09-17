@@ -9,8 +9,7 @@
         >
             <div class="instructions">
                 <div>
-                    Provide your public key (this QR code or the copied text) to
-                    an existing account owner on the Hedera™ network.
+                    {{ $t("modalRequestToCreateAccount.provideYourPublicKey") }}
                 </div>
                 <div>
                     {{

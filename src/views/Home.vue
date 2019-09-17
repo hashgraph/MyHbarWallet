@@ -9,11 +9,11 @@
                         </div>
                         <div class="title"></div>
                         <div class="subtitle">
-                            MyHbarWallet is a free, client-side interface
-                            helping you interact with Hedera™ Hashgraph. Our
-                            easy-to-use, open-source platform allows you to
-                            generate keys, create accounts, transfer hbars, and
-                            so much more.
+                            {{
+                                $t(
+                                    "home.myHbarWalletIsAFreeClientSideInterface"
+                                )
+                            }}
                         </div>
                     </div>
                     <div class="banner-image">
@@ -32,12 +32,7 @@
                             {{ $t("home.aboutMyHbarWallet") }}
                         </div>
                         <div class="about-subtitle">
-                            MyHbarWallet is a clone of one of the most popular
-                            wallets on Ethereum. We took that approach because
-                            it was open source and people already are familiar
-                            with the interface and processes. We want
-                            MyHbarWallet to be the simplest and most intuitive
-                            interface to Hedera™ Hashgraph.
+                            {{ $t("home.myHbarWalletIsAClone") }}
                         </div>
                     </div>
                     <img class="about-image" :src="hbarOrb" alt="about" />

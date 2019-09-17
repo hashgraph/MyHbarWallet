@@ -8,10 +8,7 @@
         >
             <template v-slot:banner>
                 <Notice class="notice" :symbol="mdiHelpCircleOutline">
-                    Hedera™ Account IDs are three numbers separated by decimals
-                    (ex. 0.0.10000). Accounts are controlled by keys. To get an
-                    account, another existing account must create and fund a new
-                    account on your behalf using your public key.
+                    {{ $t("modalEnterAccountId.hederaAccountIdsAre") }}
                 </Notice>
             </template>
             <form @submit.stop.prevent="handleSubmit">
