@@ -23,6 +23,12 @@
             can-copy
         />
 
+        <TextInput
+            v-model.trim="state.memo"
+            placeholder="Optional Memo"
+            label="Memo"
+        />
+
         <template v-slot:footer>
             <Button
                 :busy="state.isBusy"
@@ -90,6 +96,7 @@ export default createComponent({
         const state = reactive({
             amount: "",
             toAccount: "",
+            memo: "",
             isBusy: false,
             maxFee: ESTIMATED_FEE_HBAR.toString(),
             idErrorMessage: "",
@@ -189,7 +196,8 @@ export default createComponent({
                 const { CryptoTransferTransaction, Client } = await import(
                     "@hashgraph/sdk"
                 );
-                await new CryptoTransferTransaction(client as InstanceType<
+
+                const tx = new CryptoTransferTransaction(client as InstanceType<
                     typeof Client
                 >)
                     .addSender(
@@ -197,9 +205,13 @@ export default createComponent({
                         sendAmountTinybar
                     )
                     .addRecipient(recipient, sendAmountTinybar)
-                    .setTransactionFee(ESTIMATED_FEE_TINYBAR)
-                    .build()
-                    .executeForReceipt();
+                    .setTransactionFee(ESTIMATED_FEE_TINYBAR);
+
+                if (state.memo !== "") {
+                    tx.setMemo(state.memo);
+                }
+
+                await tx.build().executeForReceipt();
 
                 // Refresh Balance
                 store.dispatch(REFRESH_BALANCE);
@@ -236,6 +248,7 @@ export default createComponent({
                 state.successModalIsOpen = isOpen;
                 state.isBusy = false;
                 state.amount = "";
+                state.memo = "";
                 state.toAccount = "";
             }
         }
