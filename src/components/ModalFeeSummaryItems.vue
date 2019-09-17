@@ -21,7 +21,7 @@
 <script lang="ts">
 import { createComponent, computed, PropType, Ref } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
-import { KeyedItem } from "./ModalFeeSummary.vue";
+import { Item } from "./ModalFeeSummary.vue";
 import { formatSplit, formatRightPad } from "../formatter";
 
 let KEY = 0;
@@ -44,9 +44,9 @@ interface SplitItem {
 
 export default createComponent({
     props: {
-        items: Array as PropType<KeyedItem[]>
+        items: Array as PropType<Item[]>
     },
-    setup(props: { items: KeyedItem[] }) {
+    setup(props: { items: Item[] }) {
         // Compute the total
         const total: Ref<{
             int: string;
@@ -91,11 +91,14 @@ export default createComponent({
                     // Break item's value int int and fraction
                     const parts = formatSplit(item.value.toString());
 
+                    // Get a key
+                    const itemKey = nextItemKey();
+
                     // The item value isn't required to be a number so we'll get back a null here
                     // int that case we simply use the item value as the preformatted text
                     if (parts == null) {
                         return {
-                            key: nextItemKey(),
+                            key: itemKey,
                             description: item.description,
                             int: null,
                             fraction: null,
@@ -114,7 +117,7 @@ export default createComponent({
 
                     // Return the item
                     return {
-                        key: nextItemKey(),
+                        key: itemKey,
                         description: item.description,
                         int: parts.int,
                         fraction: parts.fraction,
@@ -167,7 +170,6 @@ export default createComponent({
         return {
             props,
             total,
-            nextItemKey,
             splitItems
         };
     }

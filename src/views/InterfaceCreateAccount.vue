@@ -74,12 +74,6 @@ const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
     getValueOfUnit(Unit.Hbar)
 );
 
-// Summary Items
-const summaryItems = [
-    { description: "Initial Balance", value: new BigNumber(0) },
-    { description: "Estimated Fee", value: ESTIMATED_FEE_HBAR }
-] as Item[];
-
 interface State {
     userBalance: string;
     publicKey: string;
@@ -125,6 +119,17 @@ export default createComponent({
                 state.publicKey.startsWith(ED25519_PREFIX) &&
                 state.publicKey.length == 88
         );
+
+        // Summary Items
+        const summaryItems = computed(() => {
+            return [
+                {
+                    description: "Initial Balance",
+                    value: formatHbar(new BigNumber(state.userBalance))
+                },
+                { description: "Estimated Fee", value: ESTIMATED_FEE_HBAR }
+            ] as Item[];
+        });
 
         const summaryAmount = computed(() =>
             formatHbar(new BigNumber(state.userBalance))
@@ -214,8 +219,6 @@ export default createComponent({
         }
 
         function handleShowSummary(): void {
-            // summaryItems[0].value = "..." + state.publicKey.substring(65);
-            summaryItems[1].value = new BigNumber(state.userBalance);
             state.summaryModalIsOpen = true;
         }
 

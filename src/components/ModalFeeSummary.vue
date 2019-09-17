@@ -43,14 +43,10 @@ export interface Item {
     value: BigNumber | string;
 }
 
-export interface KeyedItem extends Item {
-    key: string;
-}
-
 export default createComponent({
     props: {
         isOpen: Boolean,
-        items: Array as PropType<KeyedItem[]>,
+        items: Array as PropType<Item[]>,
         amount: String,
         account: String,
         txType: String
@@ -68,7 +64,7 @@ export default createComponent({
     setup(
         props: {
             isOpen: boolean;
-            items: KeyedItem[];
+            items: Item[];
             amount: string;
             account: string;
             txType: string;
