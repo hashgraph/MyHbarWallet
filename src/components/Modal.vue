@@ -31,7 +31,8 @@ import {
     createComponent,
     watch,
     onUnmounted,
-    SetupContext
+    SetupContext,
+    onMounted
 } from "@vue/composition-api";
 import { mdiClose } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
@@ -95,10 +96,49 @@ export default createComponent({
 
         window.addEventListener("keydown", handleWindowKeyDown);
 
+        onMounted(() => {
+            const elModals = context.root.$el.querySelectorAll(".modal");
+            elModals.forEach(element => {
+                element.addEventListener("touchstart", () => {
+                    if (element.scrollTop <= 0) {
+                        element.scrollTo(0, 1);
+                        return;
+                    }
+                    if (
+                        element.scrollTop + element.clientHeight >=
+                        element.scrollHeight
+                    ) {
+                        element.scrollTo(
+                            0,
+                            element.scrollHeight - element.clientHeight - 1
+                        );
+                    }
+                });
+            });
+        });
+
         onUnmounted(() => {
             unregister();
             setModalIsOpenOnBody();
             window.removeEventListener("keydown", handleWindowKeyDown);
+            const elModals = context.root.$el.querySelectorAll(".modal");
+            elModals.forEach(element => {
+                element.removeEventListener("touchstart", () => {
+                    if (element.scrollTop <= 0) {
+                        element.scrollTo(0, 1);
+                        return;
+                    }
+                    if (
+                        element.scrollTop + element.clientHeight >=
+                        element.scrollHeight
+                    ) {
+                        element.scrollTo(
+                            0,
+                            element.scrollHeight - element.clientHeight - 1
+                        );
+                    }
+                });
+            });
         });
 
         watch(
@@ -146,6 +186,14 @@ export default createComponent({
         overflow-x: hidden;
         overflow-y: auto;
         pointer-events: all;
+
+        @media (max-width: 600px) {
+            padding: 0;
+        }
+
+        @supports (-webkit-overflow-scrolling: touch) {
+            background-color: var(--color-white);
+        }
     }
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -163,6 +211,7 @@ export default createComponent({
     margin: auto;
     max-width: 530px;
     overflow: hidden;
+    overflow-y: auto;
     transform: translateY(-50px);
     transition: transform 0.3s ease-out;
     width: 100%;
@@ -174,6 +223,19 @@ export default createComponent({
 
     @media print {
         box-shadow: none;
+    }
+
+    @media (max-width: 600px) {
+        background-color: var(--color-white);
+        border-radius: 0;
+        height: 100vh;
+        max-width: 600px;
+        width: 100vw;
+    }
+
+    @supports (-webkit-overflow-scrolling: touch) {
+        -webkit-overflow-scrolling: auto;
+        padding-block-end: 75px;
     }
 }
 
@@ -205,6 +267,10 @@ header {
 
 .main {
     background-color: var(--color-white);
+
+    @media (max-width: 600px) {
+        height: 100vh;
+    }
 }
 
 .close {

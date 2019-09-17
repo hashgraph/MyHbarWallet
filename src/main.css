@@ -56,5 +56,9 @@ body {
     /* For the Modal component */
     &.modal-is-open {
         overflow: hidden;
+
+        @supports (-webkit-overflow-scrolling: touch) {
+            position: fixed;
+        }
     }
 }
