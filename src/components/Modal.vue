@@ -185,6 +185,8 @@ export default createComponent({
         background-color: var(--color-white);
         border-radius: 0;
         height: 100vh;
+        max-width: 600px;
+        width: 100vw;
     }
 }
 
