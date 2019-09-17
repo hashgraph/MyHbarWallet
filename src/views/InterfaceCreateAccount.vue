@@ -69,7 +69,7 @@ import { HederaError, ResponseCodeEnum } from "@hashgraph/sdk/src/errors";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 
-const ESTIMATED_FEE_HBAR = new BigNumber(0.100_000_000);
+const ESTIMATED_FEE_HBAR = new BigNumber(0.120_000_000);
 const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
     getValueOfUnit(Unit.Hbar)
 );
@@ -142,7 +142,9 @@ export default createComponent({
             const client = store.state.wallet.session.client;
 
             try {
-                const balance = new BigNumber(state.userBalance);
+                const balance = new BigNumber(state.userBalance).multipliedBy(
+                    getValueOfUnit(Unit.Hbar)
+                );
 
                 if (
                     store.state.wallet.balance != null &&
