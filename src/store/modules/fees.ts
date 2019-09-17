@@ -14,7 +14,7 @@ export interface State {
 
 export default {
     state: {
-        estimatedFeeHbar: new BigNumber(0.120_000_000),
+        estimatedFeeHbar: new BigNumber(0.200_000_000),
         maxFeeHbar: new BigNumber(1)
     } as State,
     // TODO: JFC replace this with actual units from the SDK when ready
