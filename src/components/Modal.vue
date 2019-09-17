@@ -146,6 +146,10 @@ export default createComponent({
         overflow-x: hidden;
         overflow-y: auto;
         pointer-events: all;
+
+        @media (max-width: 600px) {
+            padding: 0;
+        }
     }
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -163,6 +167,7 @@ export default createComponent({
     margin: auto;
     max-width: 530px;
     overflow: hidden;
+    overflow-y: auto;
     transform: translateY(-50px);
     transition: transform 0.3s ease-out;
     width: 100%;
@@ -174,6 +179,12 @@ export default createComponent({
 
     @media print {
         box-shadow: none;
+    }
+
+    @media (max-width: 600px) {
+        background-color: var(--color-white);
+        border-radius: 0;
+        height: 100vh;
     }
 }
 
@@ -205,6 +216,10 @@ header {
 
 .main {
     background-color: var(--color-white);
+
+    @media (max-width: 500px) {
+        height: 100vh;
+    }
 }
 
 .close {
