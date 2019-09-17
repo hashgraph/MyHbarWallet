@@ -203,6 +203,13 @@ export default createComponent({
 
                         return;
                     } else if (
+                        error.code ===
+                        ResponseCodeEnum.INVALID_TRANSACTION_START
+                    ) {
+                        state.errorMessage =
+                            "Invalid date time. Check your current system time.";
+                        return;
+                    } else if (
                         error.code === ResponseCodeEnum.INSUFFICIENT_TX_FEE
                     ) {
                         // This is actually good here
