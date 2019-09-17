@@ -216,8 +216,6 @@ a {
 
     &:active,
     &:hover,
-    &:link,
-    &:active,
     &:focus,
     &:link {
         color: var(--color-melbourne-cup);
