@@ -151,14 +151,15 @@ export default createComponent({
                     getValueOfUnit(Unit.Hbar)
                 );
 
-                if (
-                    store.state.wallet.balance != null &&
-                    store.state.wallet.balance <= balance
-                ) {
-                    state.userBalanceError =
-                        "Amount is greater than current balance";
-                    return;
-                }
+                // TODO: put this back once we have a more stable balance check
+                // if (
+                //     store.state.wallet.balance != null &&
+                //     store.state.wallet.balance <= balance
+                // ) {
+                //     state.userBalanceError =
+                //         "Amount is greater than current balance";
+                //     return;
+                // }
 
                 const fee = ESTIMATED_FEE_TINYBAR;
                 const key = Ed25519PublicKey.fromString(state.publicKey);
