@@ -142,9 +142,7 @@ export default createComponent({
             const client = store.state.wallet.session.client;
 
             try {
-                const balance = new BigNumber(state.userBalance).multipliedBy(
-                    getValueOfUnit(Unit.Hbar)
-                );
+                const balance = new BigNumber(state.userBalance);
 
                 if (
                     store.state.wallet.balance != null &&
