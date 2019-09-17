@@ -72,7 +72,7 @@ import { formatHbar, validateHbar } from "../formatter";
 
 // Transactions between 1 HBar and 360 GBar **DID** cost between 85_100 and 85_500 Tinybar
 // With some additional trial-error, 900_000 Tinybar seems to cover everything
-const ESTIMATED_FEE_HBAR = new BigNumber(0.000_900_000);
+const ESTIMATED_FEE_HBAR = new BigNumber(0.120_000_000);
 const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
     getValueOfUnit(Unit.Hbar)
 );
