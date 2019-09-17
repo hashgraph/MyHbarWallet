@@ -130,7 +130,7 @@ export default createComponent({
             return [
                 {
                     description: "Initial Balance",
-                    value: summaryAmount
+                    value: summaryAmount.value.toString()
                 },
                 { description: "Estimated Fee", value: estimatedFeeHbar }
             ] as Item[];
