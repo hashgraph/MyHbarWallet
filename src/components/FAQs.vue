@@ -30,10 +30,10 @@
                     </Accordion>
                     <Accordion>
                         <template v-slot:title>
-                            {{ $t("faqs.howCanISendATransactionQuestion") }}
+                            {{ $t("faqs.howMuchDoesItCostQuestion") }}
                         </template>
                         <template v-slot:content>
-                            {{ $t("faqs.howCanISendATransactionAnswer") }}
+                            {{ $t("faqs.howMuchDoesItCostAnswer") }}
                         </template>
                     </Accordion>
                     <Accordion>

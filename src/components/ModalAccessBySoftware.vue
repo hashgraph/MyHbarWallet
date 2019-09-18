@@ -21,7 +21,7 @@
                     <div class="hardware-link">
                         {{
                             $t(
-                                "modalAccessBySoftware.purchaseAHardwareWalletForTheHightestSecurity"
+                                "modalAccessBySoftware.purchaseAHardwareWalletForTheHighestSecurity"
                             )
                         }}
                         <router-link

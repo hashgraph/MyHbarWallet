@@ -15,7 +15,7 @@
                     {{ $t("common.success") }}
                 </div>
                 <div class="description">
-                    <i18n path="modalSendTransferSuccess.transfered">
+                    <i18n path="modalSendTransferSuccess.transferred">
                         <strong>{{ amount }}</strong>
                         <strong>{{ toAccount }}</strong>
                     </i18n>

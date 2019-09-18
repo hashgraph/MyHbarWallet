@@ -23,7 +23,7 @@
                     v-model="state.device"
                     class="issue-item"
                     :placeholder="
-                        $t('modalCustomerService.deviceOrwalletIfAny')
+                        $t('modalCustomerService.deviceOrWalletIfAny')
                     "
                 />
                 <TextInput

@@ -17,7 +17,7 @@
                 $t('accountTileButtons.keystoreFilePrivateKeyMnemonicPhrase')
             "
             :image="softwareImage"
-            :note="$t('accountTileButtons.notRecomended')"
+            :note="$t('accountTileButtons.notRecommended')"
             @click="$emit('click', 'software')"
         />
     </div>

@@ -94,7 +94,7 @@ describe("FAQs.vue", (): void => {
                       </div>
                       <div class="content">
                         <div class="content-text">
-                          MyHederaWallet (MHW) offers three ways to create a new H wallet. These are via Keystore file, Passphrase, or Private Key. Pair the keys with an account ID to start transacting hbar.
+                          MyHbarWallet (MHW) offers three ways to create a new H wallet. These are via Keystore file, Passphrase, or Private Key. Pair the keys with an account ID to start transacting hbar.
                         </div>
                       </div>
                     </div>
@@ -115,7 +115,7 @@ describe("FAQs.vue", (): void => {
                     <div class="accordion">
                       <div class="title">
                         <div class="title-text">
-                          How can I send a transaction?
+                          How much does it cost to use MHW?
                         </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                           <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"></path>
                         </svg>
