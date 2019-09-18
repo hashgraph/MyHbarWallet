@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalMessageSigned from "../../../src/components/ModalMessageSigned.vue";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("ModalMessageSigned.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders closed", (): void => {
         expect.assertions(1);
@@ -16,6 +19,7 @@ describe("ModalMessageSigned.vue", (): void => {
 
         const wrapper = mount(ModalMessageSigned, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false,
                 value: "value"
@@ -62,6 +66,7 @@ describe("ModalMessageSigned.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalMessageSigned, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: true,
                 value: "value"

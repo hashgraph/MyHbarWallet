@@ -3,10 +3,10 @@
         <div class="wrap">
             <div class="head">
                 <div class="title">
-                    Join MHW Community
+                    {{ $t("community.joinMHWCommunity") }}
                 </div>
                 <div class="subtitle">
-                    Get in the know and see your balance grow (we hope)!
+                    {{ $t("community.getInTheKnow") }}
                 </div>
             </div>
             <div class="icons">

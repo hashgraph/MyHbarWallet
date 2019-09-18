@@ -1,14 +1,19 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import Accordion from "../../../src/components/Accordion.vue";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("Accordion.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
+
     expect.assertions(1);
     it("renders", (): void => {
         const wrapper = mount(Accordion, {
             localVue,
+            i18n,
             slots: {
                 title: "Title",
                 content: "Content"

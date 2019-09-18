@@ -1,19 +1,20 @@
 <template>
     <div class="modal-fee-summary-title">
         <span v-if="props.type === 'transfer'" class="title">
-            Sending
-            <strong>{{ props.amount }}</strong>
-            ℏ to account
-            <strong>{{ props.account }}</strong>
+            <i18n path="modalFeeSummaryTitle.sendingToAccount">
+                <strong>{{ props.amount }}</strong>
+                <strong>{{ props.account }}</strong>
+            </i18n>
         </span>
         <span v-else-if="props.type === 'createAccount'" class="title">
-            Creating account with balance
-            <strong>{{ props.amount }}</strong>
+            <i18n path="modalFeeSummaryTitle.creatingAccountWithBalance">
+                <strong>{{ props.amount }}</strong>
+            </i18n>
         </span>
         <span v-else>
-            Transaction:
-            <strong>{{ props.amount }}</strong>
-            ℏ
+            <i18n path="modalFeeSummaryTitle.transaction">
+                <strong>{{ props.amount }}</strong>
+            </i18n>
         </span>
     </div>
 </template>

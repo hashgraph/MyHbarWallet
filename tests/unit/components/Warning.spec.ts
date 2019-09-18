@@ -1,16 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import Warning from "../../../src/components/Warning.vue";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("Warning.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(Warning, {
-            localVue
+            localVue,
+            i18n
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -24,9 +28,7 @@ describe("Warning.vue", (): void => {
                     NOT RECOMMENDED
                   </div>
                   <div class="message">
-                    This is not a recommended way to access your wallet. Due to the
-                    sensitivity of the information involved, these options should only
-                    be used in offline settings by experienced users.
+                    This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                   </div>
                 </div>
               </div>

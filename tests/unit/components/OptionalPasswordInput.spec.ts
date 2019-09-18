@@ -1,5 +1,6 @@
 import { mount } from "@vue/test-utils";
 import OptionalPasswordInput from "../../../src/components/OptionalPasswordInput.vue";
+import i18n from "../../../src/i18n";
 
 describe("OptionalPasswordInput", (): void => {
     it("renders", (): void => {
@@ -9,6 +10,7 @@ describe("OptionalPasswordInput", (): void => {
             propsData: {
                 value: ""
             },
+            i18n,
             methods: {
                 // This test has warnings if the values aren't defined
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -2,13 +2,17 @@
     <div class="features">
         <div class="wrap">
             <div class="feature-grid">
-                <Feature :image="wallet" title="Join MyHbarWallet">
-                    Access Hedera™ with the #1 Hbar Wallet with an elegant and
-                    easy-to-use interface.
+                <Feature
+                    :image="wallet"
+                    :title="$t('features.joinMyHbarWallet')"
+                >
+                    {{ $t("features.accessHederaTm") }}
                 </Feature>
-                <Feature :image="hardware" title="Hardware Wallet Support">
-                    MHW does not currently support hardware wallets, but all
-                    major hardware wallets are on the roadmap or in development.
+                <Feature
+                    :image="hardware"
+                    :title="$t('features.hardwareWalletSupport')"
+                >
+                    {{ $t("features.mhwCurrentlyOffersSupportFor") }}
                 </Feature>
             </div>
         </div>

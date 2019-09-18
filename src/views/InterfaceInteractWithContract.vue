@@ -1,16 +1,16 @@
 <template>
     <div class="interact-with-contract">
-        <InterfaceForm title="Interact With Contract">
+        <InterfaceForm :title="$t('interfaceInteractWithContract.title')">
             <TextInput
                 v-model.trim="contractId"
-                label="Contract"
-                placeholder="shard.realm.contract"
+                :label="$t('common.contract')"
+                :placeholder="$t('common.accountSyntax')"
                 show-validation
                 :valid="isIdValid"
             />
             <TextInput
                 v-model.trim="abi"
-                label="ABI/JSON Interface"
+                :label="'ABI/JSON' + $t('common.interface')"
                 can-copy
                 can-clear
                 multiline
@@ -20,7 +20,7 @@
 
             <template v-slot:footer>
                 <Button
-                    label="Continue"
+                    :label="$t('common.continue')"
                     :trailing-icon="arrowRight"
                     :disabled="!isFormValid"
                 />

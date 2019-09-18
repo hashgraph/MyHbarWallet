@@ -1,8 +1,7 @@
 <template>
     <div class="hardware-wallet-affiliates">
-        <PageTitle large title="Buy a Hardware Wallet">
-            Purchase a hardware wallet for the highest security when accessing
-            your crypto.
+        <PageTitle large :title="$t('hardwareWalletAffiliates.title')">
+            {{ $t("hardwareWalletAffiliates.purchase") }}
         </PageTitle>
         <!-- enable and add offers/affiliates in src/affiliates.ts -->
         <div class="offers">

@@ -67,10 +67,10 @@
                 {{ action }}
             </div>
             <div v-if="canClear" class="action" @click="handleClickClear">
-                Clear
+                {{ $t("common.clear") }}
             </div>
             <div v-if="canCopy" class="action" @click="handleClickCopy">
-                Copy
+                {{ $t("common.copy") }}
             </div>
         </div>
 

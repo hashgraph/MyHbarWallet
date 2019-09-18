@@ -1,10 +1,10 @@
 <template>
     <div class="footer-top">
         <div class="section">
-            <div class="title">Discover</div>
+            <div class="title">{{ $t("footerTop.discover") }}</div>
             <div class="item">
                 <router-link :to="{ name: 'convert-units' }" class="link">
-                    Units
+                    {{ $t("footerTop.units") }}
                 </router-link>
             </div>
             <div class="item">
@@ -12,13 +12,13 @@
                     :to="{ name: 'hardware-wallet-affiliates' }"
                     class="link"
                 >
-                    Buy a Hardware Wallet
+                    {{ $t("footerTop.buyAHardwareWallet") }}
                 </router-link>
             </div>
         </div>
         <!-- enable and add affiliates in src/affiliates.ts -->
         <div class="section">
-            <div class="title">Affiliates</div>
+            <div class="title">{{ $t("footerTop.affiliates") }}</div>
             <template v-for="affiliate of affiliates">
                 <div
                     v-if="affiliate.supported"
@@ -43,27 +43,26 @@
                     :to="{ name: 'home', hash: '#about' }"
                     class="link"
                 >
-                    About
+                    {{ $t("common.about") }}
                 </router-link>
             </div>
             <div class="item">
                 <router-link :to="{ name: 'home', hash: '#faqs' }" class="link">
-                    FAQs
+                    {{ $t("common.faqs") }}
                 </router-link>
             </div>
             <div class="item customer-service" @click="handleButtonClick">
-                Customer Support
+                {{ $t("footerTop.customerSupport") }}
             </div>
         </div>
         <div class="section">
             <div class="title">
-                Love
-                <img class="love" src="../assets/heart.svg" />
-                MHW? Donate!
+                <i18n path="footerTop.donate">
+                    <img class="love" src="../assets/heart.svg" />
+                </i18n>
             </div>
             <div class="item">
-                MyHbarWallet is open-source and free to the community. Your
-                donations go a long way towards making that possible.
+                {{ $t("footerTop.MHWIsOpenSourced") }}
             </div>
             <div class="donation">
                 <img class="hbar-icon" :src="hbar" />

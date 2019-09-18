@@ -1,10 +1,14 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import Modal from "../../../src/components/Modal.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("Modal.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
+
     const TEXT = "Test Content";
 
     it("renders", (): void => {
@@ -12,6 +16,7 @@ describe("Modal.vue", (): void => {
 
         const wrapper = mount(Modal, {
             localVue,
+            i18n,
             propsData: {
                 notClosable: false,
                 title: TEXT,
@@ -38,6 +43,7 @@ describe("Modal.vue", (): void => {
 
         const wrapper = mount(Modal, {
             localVue,
+            i18n,
             propsData: {
                 notClosable: true,
                 title: TEXT,
@@ -64,6 +70,7 @@ describe("Modal.vue", (): void => {
 
         const wrapper = mount(Modal, {
             localVue,
+            i18n,
             propsData: {
                 notClosable: false,
                 title: TEXT,
@@ -90,6 +97,7 @@ describe("Modal.vue", (): void => {
 
         const wrapper = mount(Modal, {
             localVue,
+            i18n,
             propsData: {
                 notClosable: true,
                 title: TEXT,

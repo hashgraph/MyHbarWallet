@@ -1,19 +1,19 @@
 <template>
     <div class="tile-grid">
         <HomeTileButton
-            title="Create A New Wallet"
-            content="Generate your private key and obtain an account ID. Key saving and security is your responsibility."
+            :title="$t('homeTileButtons.createANewWallet')"
+            :content="$t('homeTileButtons.generateYourPrivateKey')"
             :image="wallet"
             route="create-account"
-            action="Get Started"
+            :action="$t('homeTileButtons.getStarted')"
         />
 
         <HomeTileButton
-            title="Access My Account"
-            content="Manage an account, send or receive hbars, create new accounts, and more!"
+            :title="$t('common.accessMyAccount')"
+            :content="$t('homeTileButtons.manageAnAccount')"
             :image="unlock"
             route="access-my-account"
-            action="Access Now"
+            :action="$t('homeTileButtons.accessNow')"
         />
     </div>
 </template>

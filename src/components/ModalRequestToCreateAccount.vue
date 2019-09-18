@@ -4,17 +4,19 @@
             :is-open="isOpen"
             :large="false"
             not-closable
-            title="Request to Create Account"
+            :title="$t('modalRequestToCreateAccount.title')"
             @change="this.$listeners.change"
         >
             <div class="instructions">
                 <div>
-                    Provide your public key (this QR code or the copied text) to
-                    an existing account owner on the Hedera™ network.
+                    {{ $t("modalRequestToCreateAccount.provideYourPublicKey") }}
                 </div>
                 <div>
-                    They must create and fund your account, then provide you
-                    with your new account ID.
+                    {{
+                        $t(
+                            "modalRequestToCreateAccount.theyMustCreateAndFundYourAccount"
+                        )
+                    }}
                 </div>
             </div>
 
@@ -40,13 +42,15 @@
                     <Button
                         compact
                         outline
-                        label="Copy Public Key"
+                        :label="$t('modalRequestToCreateAccount.copyPublicKey')"
                         class="button"
                         @click="handleClickCopy"
                     />
                     <Button
                         compact
-                        label="I have an Account ID"
+                        :label="
+                            $t('modalRequestToCreateAccount.iHaveAnAccountId')
+                        "
                         class="button"
                         @click="handleHasAccount"
                     />

@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import ModalFeeSummary from "../../../src/components/ModalFeeSummary.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalFeeSummary.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     const TITLE = "Title";
     const AMOUNT = "100";
@@ -21,6 +24,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummary, {
             localVue,
+            i18n,
             propsData: {
                 title: TITLE,
                 isOpen: false,
@@ -40,11 +44,7 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="modal-fee-summary-title"><span class="title">
-                    Sending
-                    <strong>100</strong>
-                    ℏ to account
-                    <strong>999.999.999</strong></span></div>
+                      <div class="modal-fee-summary-title"><span class="title"><span>Sending <strong>100</strong> ℏ to account  </span></span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row total">
@@ -73,6 +73,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummary, {
             localVue,
+            i18n,
             propsData: {
                 title: TITLE,
                 isOpen: false,
@@ -92,9 +93,7 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="modal-fee-summary-title"><span class="title">
-                    Creating account with balance
-                    <strong>100</strong></span></div>
+                      <div class="modal-fee-summary-title"><span class="title"><span>Creating account with balance <strong>100</strong> ℏ</span></span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row total">
@@ -123,6 +122,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummary, {
             localVue,
+            i18n,
             propsData: {
                 title: TITLE,
                 isOpen: false,
@@ -142,11 +142,7 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="modal-fee-summary-title"><span class="title">
-                    Sending
-                    <strong>100</strong>
-                    ℏ to account
-                    <strong>999.999.999</strong></span></div>
+                      <div class="modal-fee-summary-title"><span class="title"><span>Sending <strong>100</strong> ℏ to account  </span></span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row">
@@ -202,6 +198,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummary, {
             localVue,
+            i18n,
             propsData: {
                 title: TITLE,
                 isOpen: false,
@@ -221,11 +218,7 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="modal-fee-summary-title"><span class="title">
-                    Sending
-                    <strong>100</strong>
-                    ℏ to account
-                    <strong>999.999.999</strong></span></div>
+                      <div class="modal-fee-summary-title"><span class="title"><span>Sending <strong>100</strong> ℏ to account  </span></span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row total">
@@ -254,6 +247,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummary, {
             localVue,
+            i18n,
             propsData: {
                 title: TITLE,
                 isOpen: true,
@@ -273,11 +267,7 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="modal-fee-summary-title"><span class="title">
-                    Sending
-                    <strong>100</strong>
-                    ℏ to account
-                    <strong>999.999.999</strong></span></div>
+                      <div class="modal-fee-summary-title"><span class="title"><span>Sending <strong>100</strong> ℏ to account  </span></span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row total">
@@ -306,6 +296,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummary, {
             localVue,
+            i18n,
             propsData: {
                 title: TITLE,
                 isOpen: false,
@@ -325,9 +316,7 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="modal-fee-summary-title"><span class="title">
-                    Creating account with balance
-                    <strong>100</strong></span></div>
+                      <div class="modal-fee-summary-title"><span class="title"><span>Creating account with balance <strong>100</strong> ℏ</span></span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row total">
@@ -356,6 +345,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummary, {
             localVue,
+            i18n,
             propsData: {
                 title: TITLE,
                 isOpen: false,
@@ -375,11 +365,7 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="modal-fee-summary-title"><span class="title">
-                    Sending
-                    <strong>100</strong>
-                    ℏ to account
-                    <strong>999.999.999</strong></span></div>
+                      <div class="modal-fee-summary-title"><span class="title"><span>Sending <strong>100</strong> ℏ to account  </span></span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row">
@@ -435,6 +421,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummary, {
             localVue,
+            i18n,
             propsData: {
                 title: TITLE,
                 isOpen: true,
@@ -454,9 +441,7 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="modal-fee-summary-title"><span class="title">
-                    Creating account with balance
-                    <strong>100</strong></span></div>
+                      <div class="modal-fee-summary-title"><span class="title"><span>Creating account with balance <strong>100</strong> ℏ</span></span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row">
@@ -514,6 +499,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummary, {
             localVue,
+            i18n,
             propsData: {
                 title: TITLE,
                 isOpen: true,
@@ -533,11 +519,7 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="modal-fee-summary-title"><span class="title">
-                    Sending
-                    <strong>100</strong>
-                    ℏ to account
-                    <strong>999.999.999</strong></span></div>
+                      <div class="modal-fee-summary-title"><span class="title"><span>Sending <strong>100</strong> ℏ to account  </span></span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row">

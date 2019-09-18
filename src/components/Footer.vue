@@ -4,13 +4,13 @@
         <div class="wrapper">
             <div class="links">
                 <router-link :to="{ name: 'privacy-policy' }" class="link">
-                    Privacy
+                    {{ $t("footer.privacy") }}
                 </router-link>
                 <router-link
                     :to="{ name: 'terms-and-conditions' }"
                     class="link"
                 >
-                    Terms
+                    {{ $t("footer.terms") }}
                 </router-link>
                 <a
                     target="_blank"

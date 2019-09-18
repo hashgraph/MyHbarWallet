@@ -2,9 +2,9 @@
     <div class="access-my-account">
         <div class="wrap">
             <PageTitle title="Create A New Account">
-                Already Have One?
+                {{ $t("createAccount.alreadyHaveOne") }}
                 <router-link :to="{ name: 'access-my-account' }">
-                    Access My Account
+                    {{ $t("common.accessMyAccount") }}
                 </router-link>
             </PageTitle>
             <AccountTileButtons @click="handleClickTiles" />
@@ -184,7 +184,9 @@ export default createComponent({
             } catch (error) {
                 await store.dispatch(ALERT, {
                     level: "error",
-                    message: "Unable to Download"
+                    message: context.root
+                        .$t("createAccount.unableToDownload")
+                        .toString()
                 });
             }
         }

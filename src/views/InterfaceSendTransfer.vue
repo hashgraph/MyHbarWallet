@@ -1,5 +1,5 @@
 <template>
-    <InterfaceForm title="Send">
+    <InterfaceForm :title="$t('interfaceSendTransfer.title')">
         <TextInput
             v-model="state.amount"
             :error="state.amountErrorMessage"
@@ -7,7 +7,7 @@
             :valid="isAmountValid"
             action="Entire Balance"
             has-input
-            label="Amount"
+            :label="$t('common.amount')"
             show-validation
             @action="handleClickEntireBalance"
             @input="handleInput"
@@ -18,15 +18,15 @@
             :error="state.idErrorMessage"
             :valid="isIdValid"
             can-copy
-            label="To Account"
-            placeholder="shard.realm.account"
+            :label="$t('common.toAccount')"
+            :placeholder="$t('common.accountSyntax')"
             show-validation
         />
 
         <TextInput
             v-model.trim="state.memo"
-            label="Memo"
-            placeholder="Optional Memo"
+            :placeholder="$t('common.optionalMemo')"
+            :label="$t('common.memo')"
         />
 
         <template v-slot:footer>
@@ -60,7 +60,12 @@
 import TextInput from "../components/TextInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
-import { computed, createComponent, reactive } from "@vue/composition-api";
+import {
+    createComponent,
+    reactive,
+    computed,
+    SetupContext
+} from "@vue/composition-api";
 import store from "../store";
 import { REFRESH_BALANCE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
@@ -86,7 +91,7 @@ export default createComponent({
         ModalSendTransferSuccess,
         ModalFeeSummary
     },
-    setup() {
+    setup(_: object | null, context: SetupContext) {
         const state = reactive({
             amount: "",
             toAccount: "",
@@ -118,8 +123,10 @@ export default createComponent({
 
         const buttonLabel = computed((): string =>
             new BigNumber(state.amount).isGreaterThan(new BigNumber(0))
-                ? "Send " + truncate.value + " Hbars"
-                : "Send Hbar"
+                ? context.root
+                      .$t("interfaceSendTransfer.sendHbars", [truncate.value])
+                      .toString()
+                : context.root.$t("interfaceSendTransfer.sendHbar").toString()
         );
 
         const summaryAmount = computed(() => {
@@ -133,13 +140,15 @@ export default createComponent({
         const summaryItems = computed(() => {
             return [
                 {
-                    description: "Transfer Amount",
+                    description: context.root.$t(
+                        "interfaceSendTransfer.transferAmount"
+                    ),
                     value: isAmountValid
                         ? new BigNumber(state.amount)
                         : new BigNumber(0)
                 },
                 {
-                    description: "Estimated Fee",
+                    description: context.root.$t("common.estimatedFee"),
                     value: estimatedFeeHbar
                 }
             ] as Item[];
@@ -236,18 +245,24 @@ export default createComponent({
 
                 if (error.toString().includes("INVALID_ACCOUNT_ID")) {
                     // eslint-disable-next-line require-atomic-updates
-                    state.idErrorMessage = "Account ID not found on network";
+                    state.idErrorMessage = context.root
+                        .$t("common.error.invalidAccount")
+                        .toString();
                 } else if (
                     error
                         .toString()
                         .includes("ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS")
                 ) {
                     // eslint-disable-next-line require-atomic-updates
-                    state.idErrorMessage = "Cannot send HBar to yourself";
+                    state.idErrorMessage = context.root
+                        .$t("common.error.cannotSendHbarToYourself")
+                        .toString();
                 } else if (
                     error.toString().includes("INSUFFICIENT_ACCOUNT_BALANCE")
                 ) {
-                    state.amountErrorMessage = "Insufficient balance";
+                    state.amountErrorMessage = context.root
+                        .$t("common.error.insufficientBalance")
+                        .toString();
                 }
 
                 throw error;

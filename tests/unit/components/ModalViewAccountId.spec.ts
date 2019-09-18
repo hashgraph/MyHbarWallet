@@ -2,6 +2,8 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalViewAccountId from "../../../src/components/ModalViewAccountId.vue";
 import store from "../../../src/store";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalViewAccountId.vue", (): void => {
     it("renders open", (): void => {
@@ -9,12 +11,14 @@ describe("ModalViewAccountId.vue", (): void => {
 
         const localVue = createLocalVue();
         localVue.use(VueCompositionApi);
+        localVue.use(VueI18n);
 
         const onChange = jest.fn();
 
         const wrapper = mount(ModalViewAccountId, {
             store,
             localVue,
+            i18n,
             propsData: {
                 isOpen: true,
                 event: "change"
@@ -51,12 +55,14 @@ describe("ModalViewAccountId.vue", (): void => {
 
         const localVue = createLocalVue();
         localVue.use(VueCompositionApi);
+        localVue.use(VueI18n);
 
         const onChange = jest.fn();
 
         const wrapper = mount(ModalViewAccountId, {
             store,
             localVue,
+            i18n,
             propsData: {
                 isOpen: false,
                 event: "change"

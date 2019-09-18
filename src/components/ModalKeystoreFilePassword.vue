@@ -1,7 +1,7 @@
 <template>
     <div class="modal-password">
         <Modal
-            title="Password"
+            :title="$t('modalKeystoreFilePassword.title')"
             :not-closable="state.isBusy"
             :is-open="state.modalIsOpen"
             @change="handleModalChangeIsOpen"
@@ -14,14 +14,16 @@
                     class="input"
                     :value="state.password"
                     :error="state.error"
-                    placeholder="Please Enter At Least 9 Characters"
+                    :placeholder="
+                        $t('common.password.pleaseEnterAtLeast9Characters')
+                    "
                     obscure
                     @input="handleInputChange"
                 />
                 <Button
                     class="btn"
                     :busy="state.isBusy"
-                    label="Access Wallet"
+                    :label="$t('modalKeystoreFilePassword.accessWallet')"
                     :disabled="disabled"
                 />
             </form>

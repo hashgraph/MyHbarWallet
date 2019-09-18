@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalAccessByPrivateKey from "../../../src/components/ModalAccessByPrivateKey.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalAccessByPrivateKey.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     const PRIVATE_KEY =
         "302e020100300506032b657004220420aff973d1405b55398a3e7edec946ae9a2d86870c82babb04624c92e2be8c6e38";
@@ -15,6 +18,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessByPrivateKey, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: false,
@@ -44,9 +48,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                           NOT RECOMMENDED
                         </div>
                         <div class="message">
-                          This is not a recommended way to access your wallet. Due to the
-                          sensitivity of the information involved, these options should only
-                          be used in offline settings by experienced users.
+                          This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                         </div>
                       </div>
                     </div>
@@ -62,7 +64,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                 </div> <button type="submit" disabled="disabled" class="button-access-wallet"><span>Access Account</span>
                   <!----></button>
                 <div class="customer-support-link">
-                  <div class="customer-support-container"><img alt="" src=""> Customer Support
+                  <div class="customer-support-container"><img alt="" src="">Customer Support
                   </div>
                   <div role="dialog" aria-modal="true" class="modal-background">
                     <div class="modal">
@@ -129,6 +131,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessByPrivateKey, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: true,
@@ -158,9 +161,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                           NOT RECOMMENDED
                         </div>
                         <div class="message">
-                          This is not a recommended way to access your wallet. Due to the
-                          sensitivity of the information involved, these options should only
-                          be used in offline settings by experienced users.
+                          This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                         </div>
                       </div>
                     </div>
@@ -176,7 +177,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                 </div> <button type="submit" disabled="disabled" class="button-access-wallet"><span>Access Account</span>
                   <!----></button>
                 <div class="customer-support-link">
-                  <div class="customer-support-container"><img alt="" src=""> Customer Support
+                  <div class="customer-support-container"><img alt="" src="">Customer Support
                   </div>
                   <div role="dialog" aria-modal="true" class="modal-background">
                     <div class="modal">
@@ -243,6 +244,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessByPrivateKey, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: true,
@@ -272,9 +274,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                           NOT RECOMMENDED
                         </div>
                         <div class="message">
-                          This is not a recommended way to access your wallet. Due to the
-                          sensitivity of the information involved, these options should only
-                          be used in offline settings by experienced users.
+                          This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                         </div>
                       </div>
                     </div>
@@ -292,7 +292,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                   </svg>
                   <!----></button>
                 <div class="customer-support-link">
-                  <div class="customer-support-container"><img alt="" src=""> Customer Support
+                  <div class="customer-support-container"><img alt="" src="">Customer Support
                   </div>
                   <div role="dialog" aria-modal="true" class="modal-background">
                     <div class="modal">
@@ -359,6 +359,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessByPrivateKey, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: false,
@@ -388,9 +389,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                           NOT RECOMMENDED
                         </div>
                         <div class="message">
-                          This is not a recommended way to access your wallet. Due to the
-                          sensitivity of the information involved, these options should only
-                          be used in offline settings by experienced users.
+                          This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                         </div>
                       </div>
                     </div>
@@ -408,7 +407,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                   </svg>
                   <!----></button>
                 <div class="customer-support-link">
-                  <div class="customer-support-container"><img alt="" src=""> Customer Support
+                  <div class="customer-support-container"><img alt="" src="">Customer Support
                   </div>
                   <div role="dialog" aria-modal="true" class="modal-background">
                     <div class="modal">

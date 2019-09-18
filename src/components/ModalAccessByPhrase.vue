@@ -1,7 +1,7 @@
 <template>
     <div class="modal-mnemonic-phrase">
         <Modal
-            title="Access by Mnemonic Phrase"
+            :title="$t('modalAccessByPhrase.title')"
             :not-closable="state.isBusy"
             :is-open="state.modalIsOpen"
             @change="handleModalChangeIsOpen"
@@ -11,7 +11,7 @@
             </template>
 
             <div class="instruction">
-                Please type in your mnemonic phrase
+                {{ $t("modalAccessByPhrase.pleaseTypeInYourMnemonicPhrase") }}
             </div>
             <form @submit.prevent="$emit('submit')">
                 <MnemonicInput
@@ -24,7 +24,7 @@
 
                 <Button
                     class="continue-btn"
-                    label="Continue"
+                    :label="$t('common.continue')"
                     :busy="state.isBusy"
                     :disabled="!areFieldsFilled"
                 />

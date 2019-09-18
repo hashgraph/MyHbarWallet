@@ -1,16 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import Alert from "../../../src/components/Alert.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("Alert", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders as info", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(Alert, {
             localVue,
+            i18n,
             propsData: {
                 id: 1,
                 message: "test",
@@ -36,6 +40,7 @@ describe("Alert", (): void => {
 
         const wrapper = mount(Alert, {
             localVue,
+            i18n,
             propsData: {
                 id: 1,
                 message: "test",
@@ -61,6 +66,7 @@ describe("Alert", (): void => {
 
         const wrapper = mount(Alert, {
             localVue,
+            i18n,
             propsData: {
                 id: 1,
                 message: "test",
@@ -86,6 +92,7 @@ describe("Alert", (): void => {
 
         const wrapper = mount(Alert, {
             localVue,
+            i18n,
             propsData: {
                 id: 1,
                 message: "test",
@@ -111,6 +118,7 @@ describe("Alert", (): void => {
 
         const wrapper = mount(Alert, {
             localVue,
+            i18n,
             propsData: {
                 id: 1,
                 message: "test",

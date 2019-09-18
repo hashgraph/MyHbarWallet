@@ -1,9 +1,7 @@
 <template>
     <div class="warning">
-        <Notice title="NOT RECOMMENDED" :symbol="mdiAlertOutline">
-            This is not a recommended way to access your wallet. Due to the
-            sensitivity of the information involved, these options should only
-            be used in offline settings by experienced users.
+        <Notice :title="$t('warning.title')" :symbol="mdiAlertOutline">
+            {{ $t("warning.thisIsNotARecommendedWayToAccessYourWallet") }}
         </Notice>
     </div>
 </template>

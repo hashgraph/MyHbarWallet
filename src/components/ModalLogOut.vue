@@ -6,27 +6,26 @@
         @change="this.$listeners.change"
     >
         <div class="modal-forgot-to-logout">
-            <span v-if="forgot">Oops!</span>
-            <span v-else>Log Out</span>
+            <span v-if="forgot">{{ $t("modalForgotToLogout.oops") }}</span>
+            <span v-else>{{ $t("modalForgotToLogout.logOut") }}</span>
             <p v-if="forgot">
-                Looks like you forgot to log out of your account! For your
-                security, either log out, or return to your account.
+                {{ $t("modalForgotToLogout.looksLikeYouForgotToLogOut") }}
             </p>
             <p v-else>
-                Are you sure?
+                {{ $t("modalForgotToLogout.areYouSure") }}
             </p>
             <div class="button-group">
                 <Button
                     v-if="forgot"
                     class="button-go-back"
-                    label="Go back"
+                    :label="$t('common.goBack')"
                     :outline="true"
                     @click="handleGoBack"
                 />
                 <Button
                     class="button-logout"
+                    :label="$t('modalForgotToLogout.logOut')"
                     :class="logoutBtnCenter"
-                    label="Log Out"
                     :danger="true"
                     @click="handleClickLogOut"
                 />

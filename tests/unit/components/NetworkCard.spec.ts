@@ -1,16 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import NetworkCard from "../../../src/components/NetworkCard.vue";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("NetworkCard.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(NetworkCard, {
-            localVue
+            localVue,
+            i18n
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

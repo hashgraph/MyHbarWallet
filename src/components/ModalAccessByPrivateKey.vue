@@ -2,7 +2,7 @@
     <Modal
         :is-open="state.modalIsOpen"
         :not-closable="state.isBusy"
-        title="Access by Private Key"
+        :title="$t('modalAccessByPrivateKey.title')"
         @change="handleModalChangeIsOpen"
     >
         <template v-slot:banner>
@@ -14,7 +14,7 @@
         >
             <TextInput
                 ref="input"
-                placeholder="Enter Private Key"
+                :placeholder="$t('modalAccessByPrivateKey.enterPrivateKey')"
                 :value="state.rawPrivateKey"
                 :valid="valid"
                 show-validation
@@ -22,7 +22,7 @@
             />
             <Button
                 class="button-access-wallet"
-                label="Access Account"
+                :label="$t('modalAccessByPrivateKey.accessAccount')"
                 :busy="state.isBusy"
                 :disabled="!valid"
             />

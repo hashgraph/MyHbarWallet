@@ -1,7 +1,7 @@
 <template>
     <div class="create-with-keystore-file">
         <Modal
-            title="Create By Keystore File"
+            :title="$t('modalCreateByKeystore.title')"
             :is-open="state.modalIsOpen"
             @change="handleModalChangeIsOpen"
         >
@@ -11,9 +11,13 @@
 
             <div class="password-info-header-wrapper">
                 <div class="password-info-header">
-                    Your Password
+                    {{ $t("modalCreateByKeystore.yourPassword") }}
                     <InfoButton
-                        message="This password encrypts your private key. This does not act as a seed to generate your keys."
+                        :message="
+                            $t(
+                                'common.password.thisPasswordEncryptsYourPrivateKey'
+                            )
+                        "
                     />
                 </div>
             </div>
@@ -21,14 +25,16 @@
                 <TextInput
                     ref="input"
                     :value="state.password"
-                    placeholder="Please Enter At Least 9 Characters"
+                    :placeholder="
+                        $t('common.password.pleaseEnterAtLeast9Characters')
+                    "
                     obscure
                     class="input"
                     @input="handleInputPassword"
                 />
                 <TextInput
                     v-model="state.confirmationPassword"
-                    placeholder="Confirm Password"
+                    :placeholder="$t('common.password.confirmPassword')"
                     obscure
                 />
 
@@ -36,31 +42,45 @@
                     v-if="state.password.length > 0"
                     class="password-hint-container"
                 >
-                    Password strength:
+                    {{ $t("modalCreateByKeystore.passwordStrength") }}
                     <span
                         v-if="state.passwordStrength === 0"
                         class="strength very-weak"
-                        >Very Weak</span
+                        >{{
+                            $t(
+                                "modalCreateByKeystore.passwordStrength.veryWeak"
+                            )
+                        }}</span
                     >
                     <span
                         v-else-if="state.passwordStrength === 1"
                         class="strength weak"
-                        >Weak</span
+                        >{{
+                            $t("modalCreateByKeystore.passwordStrength.weak")
+                        }}</span
                     >
                     <span
                         v-else-if="state.passwordStrength === 2"
                         class="strength good"
-                        >Good</span
+                        >{{
+                            $t("modalCreateByKeystore.passwordStrength.good")
+                        }}</span
                     >
                     <span
                         v-else-if="state.passwordStrength === 3"
                         class="strength strong"
-                        >Strong</span
+                        >{{
+                            $t("modalCreateByKeystore.passwordStrength.strong")
+                        }}</span
                     >
                     <span
                         v-else-if="state.passwordStrength === 4"
                         class="strength excellent"
-                        >Excellent</span
+                        >{{
+                            $t(
+                                "modalCreateByKeystore.passwordStrength.excellent"
+                            )
+                        }}</span
                     >
                 </div>
 
@@ -70,7 +90,11 @@
                     "
                     class="password-hint-container"
                 >
-                    The password field must be at least 9 characters
+                    {{
+                        $t(
+                            "modalCreateByKeystore.thePasswordFieldMustBeAtLeast9Characters"
+                        )
+                    }}
                 </div>
 
                 <div
@@ -98,18 +122,23 @@
                         "
                         :busy="state.isBusy"
                         class="btn"
-                        label="Next"
+                        :label="$t('common.next')"
                         :trailing-icon="mdiArrowRight"
                     />
                 </div>
             </form>
 
-            <p class="footer">
-                <span class="important"> DO NOT FORGET</span> to save your
-                password. You will need this
-                <span class="important">Password + Keystore</span> File to
-                unlock your wallet.
-            </p>
+            <p
+                class="footer"
+                v-html="
+                    formatRich(
+                        $t(
+                            'modalCreateByKeystore.doNotForgetToSaveYourPassword'
+                        ).toString(),
+                        { strongClass: 'important' }
+                    )
+                "
+            />
         </Modal>
     </div>
 </template>
@@ -131,6 +160,7 @@ import TextInput, {
 import Button from "../components/Button.vue";
 import { mdiArrowRight } from "@mdi/js";
 import zxcvbn, { ZXCVBNResult } from "zxcvbn";
+import { formatRich } from "../formatter";
 
 export interface State {
     modalIsOpen: boolean;
@@ -240,7 +270,8 @@ export default createComponent({
             handleModalChangeIsOpen,
             handleInputPassword,
             mdiArrowRight,
-            confirmPassword
+            confirmPassword,
+            formatRich
         };
     }
 });
@@ -279,11 +310,11 @@ export default createComponent({
     margin: 0;
     padding: 0;
     text-align: center;
-}
 
-.important {
-    color: var(--color-lightish-red);
-    font-weight: 500;
+    & >>> .important {
+        color: var(--color-lightish-red);
+        font-weight: 500;
+    }
 }
 
 .strength {

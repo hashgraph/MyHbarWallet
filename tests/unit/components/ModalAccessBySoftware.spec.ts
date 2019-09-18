@@ -3,11 +3,14 @@ import VueCompositionApi from "@vue/composition-api";
 import ModalAccessBySoftware from "../../../src/components/ModalAccessBySoftware.vue";
 import VueRouter from "vue-router";
 import router from "../../../src/router";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalAccessBySoftware.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     localVue.use(VueRouter);
+    localVue.use(VueI18n);
 
     it("renders closed", (): void => {
         expect.assertions(1);
@@ -15,6 +18,7 @@ describe("ModalAccessBySoftware.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessBySoftware, {
             localVue,
+            i18n,
             router,
             propsData: {
                 isOpen: false
@@ -45,9 +49,7 @@ describe("ModalAccessBySoftware.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -63,16 +65,13 @@ describe("ModalAccessBySoftware.vue", (): void => {
                               <!----></label></div>
                         </div>
                         <div class="hardware-link">
-                          <div>
-                            Purchase a hardware wallet for the highest security
-                            when accessing your crypto.
-                          </div> <a href="/hardware-wallet-affiliates" class="">
+                          Purchase a hardware wallet for the highest security when accessing your crypto.
+                          <a href="/hardware-wallet-affiliates" class="">
                             Purchase a hardware wallet....
-                          </a>
-                        </div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
+                          </a></div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
                           <!----></button>
                         <div class="customer-support-link support-link">
-                          <div class="customer-support-container"><img alt="" src=""> Customer Support
+                          <div class="customer-support-container"><img alt="" src="">Customer Support
                           </div>
                           <div role="dialog" aria-modal="true" class="modal-background">
                             <div class="modal">
@@ -140,6 +139,7 @@ describe("ModalAccessBySoftware.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessBySoftware, {
             localVue,
+            i18n,
             router,
             propsData: {
                 isOpen: true
@@ -170,9 +170,7 @@ describe("ModalAccessBySoftware.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -188,16 +186,13 @@ describe("ModalAccessBySoftware.vue", (): void => {
                               <!----></label></div>
                         </div>
                         <div class="hardware-link">
-                          <div>
-                            Purchase a hardware wallet for the highest security
-                            when accessing your crypto.
-                          </div> <a href="/hardware-wallet-affiliates" class="">
+                          Purchase a hardware wallet for the highest security when accessing your crypto.
+                          <a href="/hardware-wallet-affiliates" class="">
                             Purchase a hardware wallet....
-                          </a>
-                        </div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
+                          </a></div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
                           <!----></button>
                         <div class="customer-support-link support-link">
-                          <div class="customer-support-container"><img alt="" src=""> Customer Support
+                          <div class="customer-support-container"><img alt="" src="">Customer Support
                           </div>
                           <div role="dialog" aria-modal="true" class="modal-background">
                             <div class="modal">

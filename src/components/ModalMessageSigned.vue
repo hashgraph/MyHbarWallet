@@ -1,10 +1,22 @@
 <template>
-    <Modal title="Signature" :is-open="isOpen" @change="this.$listeners.change">
+    <Modal
+        :title="$t('modalMessageSigned.title')"
+        :is-open="isOpen"
+        @change="this.$listeners.change"
+    >
         <!-- fixme: either bind this to save edits or make it non-editable -->
-        <TextInput label="Signed Message" can-copy multiline :value="value" />
+        <TextInput
+            :label="$t('modalMessageSigned.signedMessage')"
+            can-copy
+            multiline
+            :value="value"
+        />
 
         <div class="button-container">
-            <Button label="Copy" @click="handleClickCopy"></Button>
+            <Button
+                :label="$t('common.copy')"
+                @click="handleClickCopy"
+            ></Button>
         </div>
     </Modal>
 </template>

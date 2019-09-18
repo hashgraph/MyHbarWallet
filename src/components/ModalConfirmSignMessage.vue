@@ -1,11 +1,11 @@
 <template>
     <Modal
-        title="Confirmation"
+        :title="$t('modalConfirmSignMessage.title')"
         :is-open="isOpen"
         large
         @change="this.$listeners.change"
     >
-        <p class="title">Signing Key</p>
+        <p class="title">{{ $t("modalConfirmSignMessage.signingKey") }}</p>
         <div class="item account">
             <img
                 class="account-image"
@@ -13,13 +13,16 @@
             />
             <span class="account-key"> {{ rawPublicKey }} </span>
         </div>
-        <p class="title">Message</p>
+        <p class="title">{{ $t("common.message") }}</p>
         <ReadOnlyInput class="item" :value="message" />
-        <p class="title">Message in hex</p>
+        <p class="title">{{ $t("modalConfirmSignMessage.messageInHex") }}</p>
         <ReadOnlyInput class="item" :value="hexMessage" />
 
         <div class="center">
-            <Button label="Confirm Signing" @click="handleConfirm"></Button>
+            <Button
+                :label="$t('modalConfirmSignMessage.confirmSigning')"
+                @click="handleConfirm"
+            ></Button>
         </div>
     </Modal>
 </template>

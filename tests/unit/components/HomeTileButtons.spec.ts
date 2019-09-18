@@ -2,16 +2,20 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import HomeTileButtons from "../../../src/components/HomeTileButtons.vue";
 import VueRouter from "vue-router";
 import router from "../../../src/router";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("HomeTileButtons.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueRouter);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(HomeTileButtons, {
             localVue,
+            i18n,
             router,
             stubs: {
                 MaterialDesignIcon: true

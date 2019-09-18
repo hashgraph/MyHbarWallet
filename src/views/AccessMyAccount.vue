@@ -1,10 +1,10 @@
 <template>
     <div class="access-my-account">
         <div class="wrap">
-            <PageTitle title="Access My Account">
-                Don't have an account?
+            <PageTitle :title="$t('common.accessMyAccount')">
+                {{ $t("accessMyAccount.dontHaveAnAccount") }}
                 <router-link :to="{ name: 'create-account' }">
-                    Create A New Account
+                    {{ $t("accessMyAccount.createANewAccount") }}
                 </router-link>
             </PageTitle>
             <AccountTileButtons @click="handleClickTiles" />

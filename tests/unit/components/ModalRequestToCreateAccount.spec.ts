@@ -2,10 +2,13 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalRequestToCreateAccount from "../../../src/components/ModalRequestToCreateAccount.vue";
 import { Ed25519PublicKey } from "@hashgraph/sdk";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("ModalRequestToCreateAccount.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     const PUBLIC_KEY = Ed25519PublicKey.fromString(
         "302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29"
@@ -19,6 +22,7 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
 
         const wrapper = mount(ModalRequestToCreateAccount, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false,
                 publicKey: PUBLIC_KEY,
@@ -41,12 +45,10 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
                     <div class="content-container">
                       <div class="instructions">
                         <div>
-                          Provide your public key (this QR code or the copied text) to
-                          an existing account owner on the Hedera™ network.
+                          Provide your public key (this QR code or the copied text) to an existing account owner on the Hedera™ network.
                         </div>
                         <div>
-                          They must create and fund your account, then provide you
-                          with your new account ID.
+                          They must create and fund your account, then provide you with your new account ID.
                         </div>
                       </div>
                       <form class="request-to-create-account">
@@ -74,6 +76,7 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
 
         const wrapper = mount(ModalRequestToCreateAccount, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: true,
                 publicKey: PUBLIC_KEY,
@@ -96,12 +99,10 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
                     <div class="content-container">
                       <div class="instructions">
                         <div>
-                          Provide your public key (this QR code or the copied text) to
-                          an existing account owner on the Hedera™ network.
+                          Provide your public key (this QR code or the copied text) to an existing account owner on the Hedera™ network.
                         </div>
                         <div>
-                          They must create and fund your account, then provide you
-                          with your new account ID.
+                          They must create and fund your account, then provide you with your new account ID.
                         </div>
                       </div>
                       <form class="request-to-create-account">

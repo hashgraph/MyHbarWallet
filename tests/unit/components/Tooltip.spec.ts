@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import Tooltip from "../../../src/components/Tooltip.vue";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("Tooltip.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders, pinnable", (): void => {
         expect.assertions(1);
@@ -12,6 +15,7 @@ describe("Tooltip.vue", (): void => {
         const message = "Tooltip Text";
         const wrapper = mount(Tooltip, {
             localVue,
+            i18n,
             propsData: {
                 message,
                 pinnable: true
@@ -39,6 +43,7 @@ describe("Tooltip.vue", (): void => {
         const message = "Tooltip Text";
         const wrapper = mount(Tooltip, {
             localVue,
+            i18n,
             propsData: {
                 message,
                 pinnable: false

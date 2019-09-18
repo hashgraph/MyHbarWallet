@@ -1,16 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import MnemonicInput from "../../../src/components/MnemonicInput.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("MnemonicInput.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders editable with empty list", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(MnemonicInput, {
             localVue,
+            i18n,
             propsData: {
                 words: 12,
                 value: [],
@@ -28,6 +32,7 @@ describe("MnemonicInput.vue", (): void => {
 
         const wrapper = mount(MnemonicInput, {
             localVue,
+            i18n,
             propsData: {
                 words: 24,
                 value: [
@@ -70,6 +75,7 @@ describe("MnemonicInput.vue", (): void => {
 
         const wrapper = mount(MnemonicInput, {
             localVue,
+            i18n,
             propsData: {
                 words: 12,
                 value: [],
@@ -87,6 +93,7 @@ describe("MnemonicInput.vue", (): void => {
 
         const wrapper = mount(MnemonicInput, {
             localVue,
+            i18n,
             propsData: {
                 words: 24,
                 value: [

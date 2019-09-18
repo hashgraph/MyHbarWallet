@@ -1,11 +1,14 @@
 import { mount } from "@vue/test-utils";
 import Features from "../../../src/components/Features.vue";
+import i18n from "../../../src/i18n";
 
 describe("Features.vue", (): void => {
     it("renders", (): void => {
         expect.assertions(1);
 
-        const wrapper = mount(Features);
+        const wrapper = mount(Features, {
+            i18n
+        });
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="features">
@@ -17,8 +20,7 @@ describe("Features.vue", (): void => {
                         Join MyHbarWallet
                       </div>
                       <div class="content">
-                        Access Hedera™ with the #1 Hbar Wallet with an elegant and
-                        easy-to-use interface.
+                        Access Hedera™ with the #1 Hbar Wallet with an elegant and easy-to-use interface.
                       </div>
                     </div>
                   </div>
@@ -28,8 +30,7 @@ describe("Features.vue", (): void => {
                         Hardware Wallet Support
                       </div>
                       <div class="content">
-                        MHW does not currently support hardware wallets, but all
-                        major hardware wallets are on the roadmap or in development.
+                        MHW does not currently support hardware wallets, but all major hardware wallets are on the roadmap or in development.
                       </div>
                     </div>
                   </div>

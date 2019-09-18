@@ -1,7 +1,7 @@
 <template>
     <Modal
         :is-open="isOpen"
-        title="Create with Software"
+        :title="$t('modalCreateWithSoftware.title')"
         @change="this.$listeners.change"
     >
         <template v-slot:banner>
@@ -19,17 +19,17 @@
                 />
                 <!--'Support coming soon!' note? -->
                 <div class="hardware-link">
-                    <div>
-                        Purchase a hardware wallet for the highest security when
-                        accessing your crypto.
-                    </div>
                     <router-link :to="{ name: 'hardware-wallet-affiliates' }">
-                        Purchase a hardware wallet....
+                        {{
+                            $t(
+                                "modalCreateWithSoftware.purchaseAHardwareWallet"
+                            )
+                        }}
                     </router-link>
                 </div>
                 <Button
                     :disabled="state.optionSelected == null"
-                    label="Continue"
+                    :label="$t('common.continue')"
                 />
                 <CustomerSupportLink class="support-link" />
             </form>

@@ -2,11 +2,11 @@
     <div class="password-container">
         <div class="header">
             <div class="text">
-                Password
+                {{ $t("common.password.password") }}
             </div>
             <div class="password-switch">
                 <div class="text">
-                    Optional
+                    {{ $t("common.optional") }}
                 </div>
                 <SwitchButton
                     v-model="showPassword"
@@ -19,7 +19,7 @@
             <TextInput
                 ref="input"
                 :value="value"
-                placeholder="Please Enter Password"
+                :placeholder="$t('optionalPasswordInput.pleaseEnterPassword')"
                 obscure
                 compact
                 :tabindex="showPassword ? null : '-1'"
