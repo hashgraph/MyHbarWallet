@@ -189,17 +189,6 @@ export default createComponent({
                     state.amount
                 ).multipliedBy(getValueOfUnit(Unit.Hbar));
 
-                if (
-                    store.state.wallet.balance != null &&
-                    store.state.wallet.balance.isLessThan(
-                        sendAmountTinybar.plus(estimatedFeeTinybar)
-                    )
-                ) {
-                    state.amountErrorMessage =
-                        "Amount plus fee is greater than current balance";
-                    return;
-                }
-
                 const { CryptoTransferTransaction, Client } = await import(
                     "@hashgraph/sdk"
                 );
@@ -211,6 +200,7 @@ export default createComponent({
                     store.state.wallet.balance == null
                         ? new BigNumber(0)
                         : store.state.wallet.balance;
+
                 const maxTxFeeTinybar = store.getters[MAX_FEE_TINYBAR](
                     new BigNumber(safeBalance).minus(
                         sendAmountTinybar.plus(estimatedFeeTinybar)
