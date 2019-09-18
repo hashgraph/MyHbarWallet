@@ -30,12 +30,12 @@ export default {
         [MAX_FEE_HBAR]: (state: State) => (
             remainingBalanceHBar: BigNumber
         ): BigNumber => {
-            return BigNumber.max(state.maxFeeHbar, remainingBalanceHBar);
+            return BigNumber.min(state.maxFeeHbar, remainingBalanceHBar);
         },
         [MAX_FEE_TINYBAR]: (state: State) => (
             remainingBalanceTinybar: BigNumber
         ): BigNumber => {
-            return BigNumber.max(
+            return BigNumber.min(
                 state.maxFeeHbar,
                 remainingBalanceTinybar.dividedBy(getValueOfUnit(Unit.Hbar))
             ).multipliedBy(getValueOfUnit(Unit.Hbar));
