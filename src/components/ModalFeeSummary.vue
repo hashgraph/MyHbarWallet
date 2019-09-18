@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext, PropType } from "@vue/composition-api";
+import { createComponent, PropType, SetupContext } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";

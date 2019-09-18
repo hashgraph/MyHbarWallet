@@ -2,54 +2,54 @@
     <InterfaceForm title="Send">
         <TextInput
             v-model="state.amount"
+            :error="state.amountErrorMessage"
+            :suffix="hbarSuffix"
+            :valid="isAmountValid"
+            action="Entire Balance"
             has-input
             label="Amount"
-            action="Entire Balance"
-            :suffix="hbarSuffix"
             show-validation
-            :valid="isAmountValid"
-            :error="state.amountErrorMessage"
             @action="handleClickEntireBalance"
             @input="handleInput"
         />
 
         <TextInput
             v-model="state.toAccount"
-            placeholder="shard.realm.account"
-            label="To Account"
-            show-validation
-            :valid="isIdValid"
             :error="state.idErrorMessage"
+            :valid="isIdValid"
             can-copy
+            label="To Account"
+            placeholder="shard.realm.account"
+            show-validation
         />
 
         <TextInput
             v-model.trim="state.memo"
-            placeholder="Optional Memo"
             label="Memo"
+            placeholder="Optional Memo"
         />
 
         <template v-slot:footer>
             <Button
                 :busy="state.isBusy"
-                :label="buttonLabel"
                 :disabled="!isIdValid || !isAmountValid"
+                :label="buttonLabel"
                 @click="handleShowSummary"
             />
         </template>
 
         <ModalSendTransferSuccess
+            :amount="state.amount"
             :is-open="state.successModalIsOpen"
             :to-account="state.toAccount"
-            :amount="state.amount"
             @change="handleSuccessModalChange"
         />
 
         <ModalFeeSummary
             v-model="state.summaryIsOpen"
-            :items="summaryItems"
-            :amount="summaryAmount"
             :account="summaryAccount"
+            :amount="summaryAmount"
+            :items="summaryItems"
             tx-type="transfer"
             @submit="handleSendTransfer"
         />
@@ -60,29 +60,24 @@
 import TextInput from "../components/TextInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
-import { createComponent, reactive, computed } from "@vue/composition-api";
+import { computed, createComponent, reactive } from "@vue/composition-api";
 import store from "../store";
 import { AccountId } from "@hashgraph/sdk";
 import { REFRESH_BALANCE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
-import { Unit, getValueOfUnit } from "../units";
+import { getValueOfUnit, Unit } from "../units";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { formatHbar, validateHbar } from "../formatter";
-
-// Transactions between 1 HBar and 360 GBar **DID** cost between 85_100 and 85_500 Tinybar
-// With some additional trial-error, 900_000 Tinybar seems to cover everything
-const ESTIMATED_FEE_HBAR = new BigNumber(0.120_000_000);
-const ESTIMATED_FEE_TINYBAR = ESTIMATED_FEE_HBAR.multipliedBy(
-    getValueOfUnit(Unit.Hbar)
-);
-
-const summaryItems = [
-    { description: "Transfer Amount", value: new BigNumber(0) },
-    { description: "Estimated Fee", value: ESTIMATED_FEE_HBAR }
-] as Item[];
+import {
+    ESTIMATED_FEE_HBAR,
+    ESTIMATED_FEE_TINYBAR,
+    MAX_FEE_TINYBAR
+} from "../store/getters";
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
+const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
+const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
 
 export default createComponent({
     components: {
@@ -98,7 +93,6 @@ export default createComponent({
             toAccount: "",
             memo: "",
             isBusy: false,
-            maxFee: ESTIMATED_FEE_HBAR.toString(),
             idErrorMessage: "",
             amountErrorMessage: "",
             successModalIsOpen: false,
@@ -137,6 +131,21 @@ export default createComponent({
             return state.toAccount;
         });
 
+        const summaryItems = computed(() => {
+            return [
+                {
+                    description: "Transfer Amount",
+                    value: isAmountValid
+                        ? new BigNumber(state.amount)
+                        : new BigNumber(0)
+                },
+                {
+                    description: "Estimated Fee",
+                    value: estimatedFeeHbar
+                }
+            ] as Item[];
+        });
+
         async function handleClickEntireBalance(): Promise<void> {
             const balance = store.state.wallet.balance;
 
@@ -144,15 +153,14 @@ export default createComponent({
                 return;
             }
 
-            const hbar = new BigNumber(balance.toString())
+            const hbar = new BigNumber(balance)
                 .dividedBy(getValueOfUnit(Unit.Hbar))
-                .minus(ESTIMATED_FEE_HBAR);
+                .minus(estimatedFeeHbar);
 
             state.amount = hbar.toString();
         }
 
         function handleShowSummary(): void {
-            summaryItems[0].value = new BigNumber(state.amount);
             state.summaryIsOpen = true;
         }
 
@@ -185,7 +193,7 @@ export default createComponent({
                 if (
                     store.state.wallet.balance != null &&
                     store.state.wallet.balance.isLessThan(
-                        sendAmountTinybar.plus(ESTIMATED_FEE_TINYBAR)
+                        sendAmountTinybar.plus(estimatedFeeTinybar)
                     )
                 ) {
                     state.amountErrorMessage =
@@ -197,6 +205,19 @@ export default createComponent({
                     "@hashgraph/sdk"
                 );
 
+                // Max Transaction Fee, otherwise known as Transaction Fee,
+                // is the max of 1 Hbar and the user's remaining balance
+                // Oh also, check for null balance to appease typescript
+                const safeBalance =
+                    store.state.wallet.balance == null
+                        ? new BigNumber(0)
+                        : store.state.wallet.balance;
+                const maxTxFeeTinybar = store.getters[MAX_FEE_TINYBAR](
+                    new BigNumber(safeBalance).minus(
+                        sendAmountTinybar.plus(estimatedFeeTinybar)
+                    )
+                );
+
                 const tx = new CryptoTransferTransaction(client as InstanceType<
                     typeof Client
                 >)
@@ -205,7 +226,7 @@ export default createComponent({
                         sendAmountTinybar
                     )
                     .addRecipient(recipient, sendAmountTinybar)
-                    .setTransactionFee(ESTIMATED_FEE_TINYBAR);
+                    .setTransactionFee(maxTxFeeTinybar);
 
                 if (state.memo !== "") {
                     tx.setMemo(state.memo);
@@ -234,9 +255,13 @@ export default createComponent({
                 ) {
                     // eslint-disable-next-line require-atomic-updates
                     state.idErrorMessage = "Cannot send HBar to yourself";
-                } else {
-                    throw error;
+                } else if (
+                    error.toString().includes("INSUFFICIENT_ACCOUNT_BALANCE")
+                ) {
+                    state.amountErrorMessage = "Insufficient balance";
                 }
+
+                throw error;
             } finally {
                 // eslint-disable-next-line require-atomic-updates
                 state.isBusy = false;
