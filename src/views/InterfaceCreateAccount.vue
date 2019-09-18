@@ -161,14 +161,6 @@ export default createComponent({
                         ? new BigNumber(0)
                         : store.state.wallet.balance;
 
-                if (
-                    balanceTinybar < newBalanceTinybar.plus(estimatedFeeTinybar)
-                ) {
-                    state.newBalanceError =
-                        "Amount plus fee is greater than current balance";
-                    return;
-                }
-
                 const {
                     AccountCreateTransaction,
                     Client,
@@ -176,6 +168,7 @@ export default createComponent({
                 } = await (import("@hashgraph/sdk") as Promise<
                     typeof import("@hashgraph/sdk")
                 >);
+
                 const key = Ed25519PublicKey.fromString(state.publicKey);
                 const maxTxFeeTinybar = store.getters[MAX_FEE_TINYBAR](
                     balanceTinybar.minus(
