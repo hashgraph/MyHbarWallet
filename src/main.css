@@ -57,4 +57,12 @@ body {
     &.modal-is-open {
         overflow: hidden;
     }
+
+    &.ham-menu-is-open {
+        overflow: hidden;
+
+        @supports (-webkit-overflow-scrolling: touch) {
+            position: fixed;
+        }
+    }
 }
