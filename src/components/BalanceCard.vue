@@ -4,14 +4,14 @@
         <div class="content">
             <div class="top">
                 <div class="title">
-                    Balance
+                    {{ $t("balanceCard.balance") }}
                 </div>
                 <div v-if="hasFetchedBalance" class="subtitle" type="string">
                     <div class="hbar-balance">{{ balanceHBarFormatted }} ℏ</div>
                     <div class="usd-balance">{{ balanceUSDFormatted }}</div>
                 </div>
                 <div v-else class="subtitle-null" type="string">
-                    Unknown
+                    {{ $t("balanceCard.unknown") }}
                 </div>
             </div>
             <div class="actions">
@@ -25,7 +25,7 @@
                     v-else
                     class="action"
                     :pinnable="false"
-                    message="Refresh Balance"
+                    :message="$t('balanceCard.refreshBalance')"
                 >
                     <MaterialDesignIcon
                         class="refresh-icon"

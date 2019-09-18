@@ -13,11 +13,18 @@
                     :icon="mdiCheck"
                 />
                 <div class="title">
-                    Success
+                    {{ $t("common.success") }}
                 </div>
                 <ReadOnlyInput class="center" :value="accountId" />
-                <Button outline class="btn" label="Copy" @click="handleCopy" />
-                <div class="close" @click="handleClose">Dismiss</div>
+                <Button
+                    outline
+                    class="btn"
+                    :label="$t('common.copy')"
+                    @click="handleCopy"
+                />
+                <div class="close" @click="handleClose">
+                    {{ $t("common.dismiss") }}
+                </div>
             </div>
         </Modal>
     </div>

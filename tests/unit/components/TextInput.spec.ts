@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import TextInput from "../../../src/components/TextInput.vue";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("TextInput.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
@@ -12,6 +15,7 @@ describe("TextInput.vue", (): void => {
         const value = "12345";
         const wrapper = mount(TextInput, {
             localVue,
+            i18n,
             propsData: {
                 value
             }
@@ -33,6 +37,7 @@ describe("TextInput.vue", (): void => {
         const value = "super-secure-password";
         const wrapper = mount(TextInput, {
             localVue,
+            i18n,
             propsData: {
                 obscure: true,
                 value
@@ -57,6 +62,7 @@ describe("TextInput.vue", (): void => {
         const value = "textarea text";
         const wrapper = mount(TextInput, {
             localVue,
+            i18n,
             propsData: {
                 multiline: true,
                 placeholder,
@@ -80,6 +86,7 @@ describe("TextInput.vue", (): void => {
         const label = "label text";
         const wrapper = mount(TextInput, {
             localVue,
+            i18n,
             propsData: {
                 multiline: true,
                 label
@@ -106,6 +113,7 @@ describe("TextInput.vue", (): void => {
         const valid = true;
         const wrapper = mount(TextInput, {
             localVue,
+            i18n,
             propsData: {
                 multiline: true,
                 showValidation,
@@ -130,6 +138,7 @@ describe("TextInput.vue", (): void => {
         const canCopy = true;
         const wrapper = mount(TextInput, {
             localVue,
+            i18n,
             propsData: {
                 multiline: true,
                 label: "",
@@ -159,6 +168,7 @@ describe("TextInput.vue", (): void => {
         const canClear = true;
         const wrapper = mount(TextInput, {
             localVue,
+            i18n,
             propsData: {
                 multiline: true,
                 label: "",
@@ -188,6 +198,7 @@ describe("TextInput.vue", (): void => {
         const error = "ERROR: foo";
         const wrapper = mount(TextInput, {
             localVue,
+            i18n,
             propsData: {
                 multiline: true,
                 error,

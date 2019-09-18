@@ -2,10 +2,9 @@
     <CirclePage>
         <div class="wrap">
             <div class="title-wrap">
-                <div class="page-title">Convert Units</div>
+                <div class="page-title">{{ $t("convertUnits.title") }}</div>
                 <div class="page-subtitle">
-                    Our helpful conversion tool and hbar unit reference allow
-                    you to calculate your total transaction cost.
+                    {{ $t("convertUnits.ourHelpfulConversionTool") }}
                 </div>
             </div>
 
@@ -14,7 +13,9 @@
             </div>
 
             <div class="hbar-unit-reference-guide">
-                <div class="block-title">Hbar Unit Reference Guide</div>
+                <div class="block-title">
+                    {{ $t("convertUnits.hbarUnitReferenceGuide") }}
+                </div>
 
                 <div class="unit-table">
                     <table>

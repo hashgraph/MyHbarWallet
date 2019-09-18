@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalSendTransferSuccess from "../../../src/components/ModalSendTransferSuccess.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalSendTransferSuccess.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders closed", (): void => {
         expect.assertions(1);
@@ -12,6 +15,7 @@ describe("ModalSendTransferSuccess.vue", (): void => {
 
         const wrapper = mount(ModalSendTransferSuccess, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false,
                 toAccount: "0.0.999",
@@ -35,10 +39,7 @@ describe("ModalSendTransferSuccess.vue", (): void => {
                         <div class="title">
                           Success
                         </div>
-                        <div class="description">
-                          Transferred <strong>500000</strong> ℏ to account
-                          <strong>0.0.999</strong>.
-                        </div> <button type="submit" class="btn outline"><span>Dismiss</span>
+                        <div class="description"><span>Transferred <strong>500000</strong> ℏ to account  .</span></div> <button type="submit" class="btn outline"><span>Dismiss</span>
                           <!----></button>
                       </div>
                     </div>
@@ -55,6 +56,7 @@ describe("ModalSendTransferSuccess.vue", (): void => {
 
         const wrapper = mount(ModalSendTransferSuccess, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: true,
                 toAccount: "0.0.999",
@@ -78,10 +80,7 @@ describe("ModalSendTransferSuccess.vue", (): void => {
                         <div class="title">
                           Success
                         </div>
-                        <div class="description">
-                          Transferred <strong>500000</strong> ℏ to account
-                          <strong>0.0.999</strong>.
-                        </div> <button type="submit" class="btn outline"><span>Dismiss</span>
+                        <div class="description"><span>Transferred <strong>500000</strong> ℏ to account  .</span></div> <button type="submit" class="btn outline"><span>Dismiss</span>
                           <!----></button>
                       </div>
                     </div>

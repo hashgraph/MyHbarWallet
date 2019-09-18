@@ -3,6 +3,7 @@ import RadioButtonGroup from "../../../src/components/RadioButtonGroup.vue";
 import imageKey from "../../../src/assets/button-key.svg";
 import imagePhrase from "../../../src/assets/button-phrase.svg";
 import imageFile from "../../../src/assets/button-file.svg";
+import i18n from "../../../src/i18n";
 
 describe("RadioButtonGroup.vue", (): void => {
     const name = "RadioButtonGroup";
@@ -28,6 +29,7 @@ describe("RadioButtonGroup.vue", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(RadioButtonGroup, {
+            i18n,
             propsData: {
                 name,
                 options: []
@@ -43,6 +45,7 @@ describe("RadioButtonGroup.vue", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(RadioButtonGroup, {
+            i18n,
             propsData: {
                 name,
                 options

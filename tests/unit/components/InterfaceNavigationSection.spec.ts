@@ -2,17 +2,21 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import InterfaceNavigationSection from "../../../src/components/InterfaceNavigationSection.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueRouter from "vue-router";
+import VueI18n from "vue-i18n";
+import i18n from "../../../src/i18n";
 
 describe("InterfaceNavigationSection.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     localVue.use(VueRouter);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(InterfaceNavigationSection, {
             localVue,
+            i18n,
             propsData: {
                 image: "https://via.placeholder.com/150",
                 imageActive: "https://via.placeholder.com/150",

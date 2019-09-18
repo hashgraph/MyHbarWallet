@@ -8,7 +8,7 @@
                         compact
                         white
                         step="any"
-                        placeholder="Amount"
+                        :placeholder="$t('common.amount')"
                         @input="handleInputValueLeft"
                     />
                 </div>
@@ -35,7 +35,7 @@
                         compact
                         white
                         step="any"
-                        placeholder="Amount"
+                        :placeholder="$t('common.amount')"
                         @input="handleInputValueRight"
                     />
                 </div>

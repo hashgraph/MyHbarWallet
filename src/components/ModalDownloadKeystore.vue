@@ -2,19 +2,27 @@
     <div class="modal-create-by-mnemonic-phrase">
         <Modal
             :is-open="state.modalIsOpen"
-            title="By Keystore File"
+            :title="$t('modalDownloadKeystore.title')"
             not-closable
             @change="handleModalChangeIsOpen"
         >
             <div class="modal-save-my-keystore-cards">
-                <span class="modal-body-title">Save My Keystore File</span>
+                <span class="modal-body-title">{{
+                    $t("modalDownloadKeystore.saveMyKeystoreFile")
+                }}</span>
 
                 <div class="modal-card">
                     <img alt="" class="card-image" :src="noLoseIcon" />
                     <div class="card-body-wrapper">
-                        <span class="card-header">Don't Lose It</span>
+                        <span class="card-header">{{
+                            $t("modalDownloadKeystore.dontLoseIt")
+                        }}</span>
                         <p class="card-body">
-                            Be careful, it can not be recovered if you lose it.
+                            {{
+                                $t(
+                                    "modalDownloadKeystore.beCarefulItCanNotBeRecovered"
+                                )
+                            }}
                         </p>
                     </div>
                 </div>
@@ -22,10 +30,15 @@
                 <div class="modal-card">
                     <img alt="" class="card-image" :src="noShareIcon" />
                     <div class="card-body-wrapper">
-                        <span class="card-header">Don't Share It</span>
+                        <span class="card-header">{{
+                            $t("modalDownloadKeystore.dontShareIt")
+                        }}</span>
                         <p class="card-body">
-                            Your funds will be stolen if you use this file on a
-                            malicious phishing site.
+                            {{
+                                $t(
+                                    "modalDownloadKeystore.yourFundsWillBeStolen"
+                                )
+                            }}
                         </p>
                     </div>
                 </div>
@@ -33,10 +46,11 @@
                 <div class="modal-card">
                     <img alt="" class="card-image" :src="makeBackupIcon" />
                     <div class="card-body-wrapper">
-                        <span class="card-header">Make a Backup</span>
+                        <span class="card-header">{{
+                            $t("modalDownloadKeystore.makeABackup")
+                        }}</span>
                         <p class="card-body">
-                            Secure it like the millions of dollars it may one
-                            day be worth.
+                            {{ $t("modalDownloadKeystore.secureIt") }}
                         </p>
                     </div>
                 </div>
@@ -45,7 +59,7 @@
             <div class="button-container">
                 <!-- If we are busy we should not be able be able to click the button -->
                 <Button
-                    label="Download Keystore File"
+                    :label="$t('modalDownloadKeystore.downloadKeystoreFile')"
                     :busy="state.isBusy"
                     :disabled="state.isBusy"
                     :outline="state.downloadClicked"
@@ -54,7 +68,7 @@
                     @click="handleDownloadClick"
                 />
                 <Button
-                    label="Continue"
+                    :label="$t('common.continue')"
                     :disabled="!state.downloadClicked"
                     compact
                     class="continue-button"

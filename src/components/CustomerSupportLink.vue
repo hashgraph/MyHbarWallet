@@ -1,7 +1,9 @@
 <template>
     <div class="customer-support-link">
         <div class="customer-support-container" @click="handleButtonClick">
-            <img alt="" :src="serviceBell" /> Customer Support
+            <img alt="" :src="serviceBell" />{{
+                $t("customerSupport.customerSupport")
+            }}
         </div>
         <ModalCustomerService v-model="state.modalCustomerServiceIsOpen" />
     </div>

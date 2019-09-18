@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalDownloadKeystore from "../../../src/components/ModalDownloadKeystore.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalDownloadKeystore.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders, closed, not busy", (): void => {
         expect.assertions(1);
@@ -12,6 +15,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalDownloadKeystore, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: false,
@@ -43,16 +47,14 @@ describe("ModalDownloadKeystore.vue", (): void => {
                         <div class="modal-card"><img alt="" src="" class="card-image">
                           <div class="card-body-wrapper"><span class="card-header">Don't Share It</span>
                             <p class="card-body">
-                              Your funds will be stolen if you use this file on a
-                              malicious phishing site.
+                              Your funds will be stolen if you use this file on a malicious phishing site.
                             </p>
                           </div>
                         </div>
                         <div class="modal-card"><img alt="" src="" class="card-image">
                           <div class="card-body-wrapper"><span class="card-header">Make a Backup</span>
                             <p class="card-body">
-                              Secure it like the millions of dollars it may one
-                              day be worth.
+                              Secure it like the millions of dollars it may one day be worth.
                             </p>
                           </div>
                         </div>
@@ -74,6 +76,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalDownloadKeystore, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: true,
@@ -105,16 +108,14 @@ describe("ModalDownloadKeystore.vue", (): void => {
                         <div class="modal-card"><img alt="" src="" class="card-image">
                           <div class="card-body-wrapper"><span class="card-header">Don't Share It</span>
                             <p class="card-body">
-                              Your funds will be stolen if you use this file on a
-                              malicious phishing site.
+                              Your funds will be stolen if you use this file on a malicious phishing site.
                             </p>
                           </div>
                         </div>
                         <div class="modal-card"><img alt="" src="" class="card-image">
                           <div class="card-body-wrapper"><span class="card-header">Make a Backup</span>
                             <p class="card-body">
-                              Secure it like the millions of dollars it may one
-                              day be worth.
+                              Secure it like the millions of dollars it may one day be worth.
                             </p>
                           </div>
                         </div>
@@ -136,6 +137,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalDownloadKeystore, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: false,
@@ -167,16 +169,14 @@ describe("ModalDownloadKeystore.vue", (): void => {
                         <div class="modal-card"><img alt="" src="" class="card-image">
                           <div class="card-body-wrapper"><span class="card-header">Don't Share It</span>
                             <p class="card-body">
-                              Your funds will be stolen if you use this file on a
-                              malicious phishing site.
+                              Your funds will be stolen if you use this file on a malicious phishing site.
                             </p>
                           </div>
                         </div>
                         <div class="modal-card"><img alt="" src="" class="card-image">
                           <div class="card-body-wrapper"><span class="card-header">Make a Backup</span>
                             <p class="card-body">
-                              Secure it like the millions of dollars it may one
-                              day be worth.
+                              Secure it like the millions of dollars it may one day be worth.
                             </p>
                           </div>
                         </div>
@@ -200,6 +200,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalDownloadKeystore, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: true,
@@ -231,16 +232,14 @@ describe("ModalDownloadKeystore.vue", (): void => {
                         <div class="modal-card"><img alt="" src="" class="card-image">
                           <div class="card-body-wrapper"><span class="card-header">Don't Share It</span>
                             <p class="card-body">
-                              Your funds will be stolen if you use this file on a
-                              malicious phishing site.
+                              Your funds will be stolen if you use this file on a malicious phishing site.
                             </p>
                           </div>
                         </div>
                         <div class="modal-card"><img alt="" src="" class="card-image">
                           <div class="card-body-wrapper"><span class="card-header">Make a Backup</span>
                             <p class="card-body">
-                              Secure it like the millions of dollars it may one
-                              day be worth.
+                              Secure it like the millions of dollars it may one day be worth.
                             </p>
                           </div>
                         </div>

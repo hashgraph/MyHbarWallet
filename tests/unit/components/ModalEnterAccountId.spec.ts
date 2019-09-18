@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import ModalEnterAccountId from "../../../src/components/ModalEnterAccountId.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalEnterAccountId.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders closed, not busy, no error", (): void => {
         expect.assertions(2);
@@ -18,6 +21,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -42,10 +46,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals
-                          (ex. 0.0.10000). Accounts are controlled by keys. To get an
-                          account, another existing account must create and fund a new
-                          account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -82,6 +83,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -106,10 +108,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals
-                          (ex. 0.0.10000). Accounts are controlled by keys. To get an
-                          account, another existing account must create and fund a new
-                          account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -146,6 +145,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -169,10 +169,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals
-                          (ex. 0.0.10000). Accounts are controlled by keys. To get an
-                          account, another existing account must create and fund a new
-                          account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -209,6 +206,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -232,10 +230,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals
-                          (ex. 0.0.10000). Accounts are controlled by keys. To get an
-                          account, another existing account must create and fund a new
-                          account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -272,6 +267,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -295,10 +291,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals
-                          (ex. 0.0.10000). Accounts are controlled by keys. To get an
-                          account, another existing account must create and fund a new
-                          account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -335,6 +328,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -358,10 +352,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals
-                          (ex. 0.0.10000). Accounts are controlled by keys. To get an
-                          account, another existing account must create and fund a new
-                          account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -398,6 +389,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -421,10 +413,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals
-                          (ex. 0.0.10000). Accounts are controlled by keys. To get an
-                          account, another existing account must create and fund a new
-                          account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -461,6 +450,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
+            i18n,
             propsData: {
                 state
             },
@@ -484,10 +474,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals
-                          (ex. 0.0.10000). Accounts are controlled by keys. To get an
-                          account, another existing account must create and fund a new
-                          account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>

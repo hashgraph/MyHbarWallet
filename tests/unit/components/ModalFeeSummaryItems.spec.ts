@@ -2,10 +2,13 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import ModalFeeSummaryItems from "../../../src/components/ModalFeeSummaryItems.vue";
 import VueCompositionApi from "@vue/composition-api";
 import BigNumber from "bignumber.js";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalFeeSummaryItems.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     const items = [
         { description: "description", value: new BigNumber(1.23) },
@@ -18,6 +21,7 @@ describe("ModalFeeSummaryItems.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummaryItems, {
             localVue,
+            i18n,
             propsData: {
                 items: []
             }
@@ -43,6 +47,7 @@ describe("ModalFeeSummaryItems.vue", (): void => {
 
         const wrapper = mount(ModalFeeSummaryItems, {
             localVue,
+            i18n,
             propsData: {
                 items
             }

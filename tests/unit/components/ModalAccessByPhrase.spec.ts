@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalAccessByPhrase from "../../../src/components/ModalAccessByPhrase.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalAccessByPhrase.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders not busy, not valid", (): void => {
         expect.assertions(1);
@@ -12,6 +15,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessByPhrase, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: false,
@@ -68,9 +72,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -85,7 +87,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                       </form>
                       <div class="support">
                         <div class="customer-support-link">
-                          <div class="customer-support-container"><img alt="" src=""> Customer Support
+                          <div class="customer-support-container"><img alt="" src="">Customer Support
                           </div>
                           <div role="dialog" aria-modal="true" class="modal-background">
                             <div class="modal">
@@ -153,6 +155,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessByPhrase, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: false,
@@ -209,9 +212,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -226,7 +227,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                       </form>
                       <div class="support">
                         <div class="customer-support-link">
-                          <div class="customer-support-container"><img alt="" src=""> Customer Support
+                          <div class="customer-support-container"><img alt="" src="">Customer Support
                           </div>
                           <div role="dialog" aria-modal="true" class="modal-background">
                             <div class="modal">
@@ -294,6 +295,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessByPhrase, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: false,
@@ -350,9 +352,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -369,7 +369,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                       </form>
                       <div class="support">
                         <div class="customer-support-link">
-                          <div class="customer-support-container"><img alt="" src=""> Customer Support
+                          <div class="customer-support-container"><img alt="" src="">Customer Support
                           </div>
                           <div role="dialog" aria-modal="true" class="modal-background">
                             <div class="modal">
@@ -437,6 +437,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessByPhrase, {
             localVue,
+            i18n,
             propsData: {
                 state: {
                     modalIsOpen: false,
@@ -493,9 +494,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -512,7 +511,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                       </form>
                       <div class="support">
                         <div class="customer-support-link">
-                          <div class="customer-support-container"><img alt="" src=""> Customer Support
+                          <div class="customer-support-container"><img alt="" src="">Customer Support
                           </div>
                           <div role="dialog" aria-modal="true" class="modal-background">
                             <div class="modal">

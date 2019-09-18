@@ -2,11 +2,14 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalCustomerService from "../../../src/components/ModalCustomerService.vue";
 import VueRouter from "vue-router";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalCustomerService.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     localVue.use(VueRouter);
+    localVue.use(VueI18n);
 
     Object.defineProperty(navigator, "userAgent", {
         get() {
@@ -20,6 +23,7 @@ describe("ModalCustomerService.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCustomerService, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false
             },
@@ -88,6 +92,7 @@ describe("ModalCustomerService.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCustomerService, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: true
             },

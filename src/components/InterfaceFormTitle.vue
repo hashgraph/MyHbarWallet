@@ -1,7 +1,7 @@
 <template>
     <div class="interface-form-title-container">
         <div class="interface-form-title">{{ title }}</div>
-        <Button label="Menu" @click="emitMenuOpen" />
+        <Button :label="$t('common.menu')" @click="emitMenuOpen" />
     </div>
 </template>
 

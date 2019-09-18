@@ -1,9 +1,9 @@
 <template>
     <div class="error-404">
         <div class="error-container">
-            <div class="error-code">404</div>
+            <div class="error-code">{{ $t("error404.404") }}</div>
             <div class="error-description">
-                Oops! Looks like you're lost.
+                {{ $t("error404.oops") }}
             </div>
         </div>
     </div>

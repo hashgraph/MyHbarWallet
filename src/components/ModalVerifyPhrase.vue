@@ -1,13 +1,12 @@
 <template>
     <div class="verify-phrase">
         <Modal
-            title="Verification"
+            :title="$t('modalVerifyPhrase.title')"
             :is-open="isOpen"
             @change="this.$listeners.change"
         >
             <div class="prompt">
-                Please enter and fill out the empty boxes below to verify your
-                mnemonic phrase key.
+                {{ $t("modalVerifyPhrase.pleaseEnterAndFillOut") }}
             </div>
             <form @submit.prevent="handleVerify">
                 <div class="mnemonic">
@@ -32,7 +31,7 @@
                     </label>
                 </div>
                 <div class="btn-container">
-                    <Button label="Verify" />
+                    <Button :label="$t('modalVerifyPhrase.verify')" />
                 </div>
             </form>
         </Modal>

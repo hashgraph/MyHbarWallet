@@ -1,16 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import Button from "../../../src/components/Button.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("Button.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(Button, {
             localVue,
+            i18n,
             propsData: {
                 label: "Choose a Hardware"
             }
@@ -27,6 +31,7 @@ describe("Button.vue", (): void => {
 
         const wrapper = mount(Button, {
             localVue,
+            i18n,
             propsData: {
                 label: "Choose a Hardware",
                 busy: true

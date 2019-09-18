@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalAccessByHardware from "../../../src/components/ModalAccessByHardware.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalAccessByHardware.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders open", (): void => {
         expect.assertions(1);
@@ -12,6 +15,7 @@ describe("ModalAccessByHardware.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessByHardware, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: true
             },
@@ -35,7 +39,7 @@ describe("ModalAccessByHardware.vue", (): void => {
                       </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Choose a Hardware</span>
                         <!----></button>
                       <div class="customer-support-link">
-                        <div class="customer-support-container"><img alt="" src=""> Customer Support
+                        <div class="customer-support-container"><img alt="" src="">Customer Support
                         </div>
                         <div role="dialog" aria-modal="true" class="modal-background">
                           <div class="modal">
@@ -102,6 +106,7 @@ describe("ModalAccessByHardware.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalAccessByHardware, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false
             },
@@ -125,7 +130,7 @@ describe("ModalAccessByHardware.vue", (): void => {
                       </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Choose a Hardware</span>
                         <!----></button>
                       <div class="customer-support-link">
-                        <div class="customer-support-container"><img alt="" src=""> Customer Support
+                        <div class="customer-support-container"><img alt="" src="">Customer Support
                         </div>
                         <div role="dialog" aria-modal="true" class="modal-background">
                           <div class="modal">

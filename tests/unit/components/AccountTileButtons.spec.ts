@@ -1,15 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import AccountTileButtons from "../../../src/components/AccountTileButtons.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("AccountTileButtons.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
+
     it("renders", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(AccountTileButtons, {
-            localVue
+            localVue,
+            i18n
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

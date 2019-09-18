@@ -12,7 +12,7 @@
             <InterfaceNavigationSection
                 :image="sendImage"
                 :image-active="sendImageActive"
-                title="Crypto"
+                :title="$t('interfaceNavigation.crypto')"
                 :routes="cryptoRoutes"
             />
 
@@ -20,7 +20,7 @@
                 v-if="false"
                 :image="contractImage"
                 :image-active="contractImageActive"
-                title="Contract"
+                :title="$t('interfaceNavigation.contract')"
                 :routes="contractRoutes"
             />
 
@@ -28,7 +28,7 @@
                 v-if="false"
                 :image="messageImage"
                 :image-active="messageImageActive"
-                title="Message"
+                :title="$t('common.message')"
                 :routes="messageRoutes"
             />
         </nav>

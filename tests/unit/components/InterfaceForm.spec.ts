@@ -1,5 +1,6 @@
 import { mount } from "@vue/test-utils";
 import InterfaceForm from "../../../src/components/InterfaceForm.vue";
+import i18n from "../../../src/i18n";
 
 describe("InterfaceForm.vue", (): void => {
     it("renders", (): void => {
@@ -11,6 +12,7 @@ describe("InterfaceForm.vue", (): void => {
             propsData: {
                 title
             },
+            i18n,
             stubs: {
                 InterfaceFormTitle: true
             }

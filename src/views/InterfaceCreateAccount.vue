@@ -1,9 +1,7 @@
 <template>
-    <InterfaceForm title="Create Account">
+    <InterfaceForm :title="$t('common.createAccount')">
         <Notice :symbol="mdiHelpCircleOutline">
-            To create an account, you need the public key of the person
-            requesting an account and you need to fund the new account with some
-            amount of hbars.
+            {{ $t("interfaceCreateAccount.toCreateAccount") }}
         </Notice>
 
         <TextInput
@@ -13,7 +11,7 @@
             :suffix="Unit.Hbar"
             :valid="validBalance"
             has-input
-            label="Initial Balance"
+            :label="$t('interfaceCreateAccount.initialBalance')"
             show-validation
         />
 
@@ -21,7 +19,7 @@
             v-model="state.publicKey"
             :error="state.keyError"
             :valid="validKey"
-            label="Public Key"
+            :label="$t('interfaceCreateAccount.publicKey')"
             show-validation
         />
 
@@ -29,7 +27,7 @@
             <Button
                 :busy="state.isBusy"
                 :disabled="!validKey || !validBalance"
-                label="Create Account"
+                :label="$t('common.createAccount')"
                 @click="handleShowSummary"
             />
         </template>
@@ -55,7 +53,12 @@
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
-import { computed, createComponent, reactive } from "@vue/composition-api";
+import {
+    computed,
+    createComponent,
+    reactive,
+    SetupContext
+} from "@vue/composition-api";
 import store from "../store";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
@@ -95,7 +98,7 @@ export default createComponent({
         Notice,
         ModalFeeSummary
     },
-    setup() {
+    setup(_: object | null, context: SetupContext) {
         const state = reactive<State>({
             newBalance: "",
             publicKey: "",
@@ -165,6 +168,17 @@ export default createComponent({
                         ? new BigNumber(0)
                         : store.state.wallet.balance;
 
+                if (
+                    balanceTinybar < newBalanceTinybar.plus(estimatedFeeTinybar)
+                ) {
+                    state.newBalanceError = context.root
+                        .$t(
+                            "interfaceCreateAccount.userBalanceError.amountIsGreaterThanCurrentBalance"
+                        )
+                        .toString();
+                    return;
+                }
+
                 const {
                     AccountCreateTransaction,
                     Client,
@@ -213,7 +227,9 @@ export default createComponent({
                         error.code ===
                         ResponseCodeEnum.INSUFFICIENT_PAYER_BALANCE
                     ) {
-                        state.newBalanceError = "Insufficient Payer Balance";
+                        state.newBalanceError = context.root
+                            .$t("common.error.insufficientPayerBalance")
+                            .toString();
                     } else if (
                         error
                             .toString()

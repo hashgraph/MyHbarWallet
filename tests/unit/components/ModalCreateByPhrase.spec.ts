@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalCreateByPhrase from "../../../src/components/ModalCreateByPhrase.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalCreateByPhrase.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders closed", (): void => {
         expect.assertions(1);
@@ -12,6 +15,7 @@ describe("ModalCreateByPhrase.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCreateByPhrase, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false
             },
@@ -38,9 +42,7 @@ describe("ModalCreateByPhrase.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -74,8 +76,7 @@ describe("ModalCreateByPhrase.vue", (): void => {
                               <div class="main">
                                 <div class="content-container">
                                   <div class="prompt">
-                                    Please enter and fill out the empty boxes below to verify your
-                                    mnemonic phrase key.
+                                    Please enter and fill out the empty boxes below to verify your mnemonic phrase key.
                                   </div>
                                   <form>
                                     <div class="mnemonic"></div>
@@ -104,13 +105,9 @@ describe("ModalCreateByPhrase.vue", (): void => {
                                   </div>
                                   <div class="password-disclaimer">
                                     <h3>
-                                      Save this sheet! Print it and keep it in a safe place! This
-                                      is your property!
+                                      Save this sheet! Print it and keep it in a safe place! This is your property!
                                     </h3>
-                                    We <strong>CAN NOT</strong> change your mnemonic phrase. Please
-                                    <strong>DO NOT FORGET</strong> to save this information. You
-                                    will need this <strong>Mnemonic Phrase</strong> to access your
-                                    wallet. This is your private key!
+                                    <p>We <span class="important">CAN NOT</span> change your password. Please <span class="important">DO NOT FORGET</span> to save your password. It is your private key. You will need this <span class="important">Password + Mnemonic Phrase</span> to access your wallet.</p>
                                   </div>
                                   <div class="contents">
                                     <div class="list-container"></div>
@@ -124,9 +121,7 @@ describe("ModalCreateByPhrase.vue", (): void => {
                         </div>
                       </div>
                       <div class="warning-container">
-                        <p class="do-not-forget"><span class="important"> DO NOT FORGET</span> to save your
-                          password. You will need this to access your wallet.
-                        </p>
+                        <div class="do-not-forget"><span class="important">DO NOT FORGET</span> to save your password. You will need this to access your wallet.</div>
                       </div>
                     </div>
                   </div>
@@ -142,6 +137,7 @@ describe("ModalCreateByPhrase.vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalCreateByPhrase, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: true
             },
@@ -168,9 +164,7 @@ describe("ModalCreateByPhrase.vue", (): void => {
                             NOT RECOMMENDED
                           </div>
                           <div class="message">
-                            This is not a recommended way to access your wallet. Due to the
-                            sensitivity of the information involved, these options should only
-                            be used in offline settings by experienced users.
+                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
                           </div>
                         </div>
                       </div>
@@ -204,8 +198,7 @@ describe("ModalCreateByPhrase.vue", (): void => {
                               <div class="main">
                                 <div class="content-container">
                                   <div class="prompt">
-                                    Please enter and fill out the empty boxes below to verify your
-                                    mnemonic phrase key.
+                                    Please enter and fill out the empty boxes below to verify your mnemonic phrase key.
                                   </div>
                                   <form>
                                     <div class="mnemonic"></div>
@@ -234,13 +227,9 @@ describe("ModalCreateByPhrase.vue", (): void => {
                                   </div>
                                   <div class="password-disclaimer">
                                     <h3>
-                                      Save this sheet! Print it and keep it in a safe place! This
-                                      is your property!
+                                      Save this sheet! Print it and keep it in a safe place! This is your property!
                                     </h3>
-                                    We <strong>CAN NOT</strong> change your mnemonic phrase. Please
-                                    <strong>DO NOT FORGET</strong> to save this information. You
-                                    will need this <strong>Mnemonic Phrase</strong> to access your
-                                    wallet. This is your private key!
+                                    <p>We <span class="important">CAN NOT</span> change your password. Please <span class="important">DO NOT FORGET</span> to save your password. It is your private key. You will need this <span class="important">Password + Mnemonic Phrase</span> to access your wallet.</p>
                                   </div>
                                   <div class="contents">
                                     <div class="list-container"></div>
@@ -254,9 +243,7 @@ describe("ModalCreateByPhrase.vue", (): void => {
                         </div>
                       </div>
                       <div class="warning-container">
-                        <p class="do-not-forget"><span class="important"> DO NOT FORGET</span> to save your
-                          password. You will need this to access your wallet.
-                        </p>
+                        <div class="do-not-forget"><span class="important">DO NOT FORGET</span> to save your password. You will need this to access your wallet.</div>
                       </div>
                     </div>
                   </div>

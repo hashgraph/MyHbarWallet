@@ -4,7 +4,7 @@
         <div class="content">
             <div class="top">
                 <div class="title">
-                    Network
+                    {{ $t("networkCard.network") }}
                 </div>
                 <div class="subtitle">
                     {{ networkName }}
@@ -14,8 +14,13 @@
                 </div>
             </div>
             <div class="actions">
-                <Tooltip :pinnable="false" message="Change Network">
-                    <button v-if="false" class="change">Change</button>
+                <Tooltip
+                    :pinnable="false"
+                    :message="$t('networkCard.changeNetwork')"
+                >
+                    <button v-if="false" class="change">
+                        {{ $t("common.change") }}
+                    </button>
                 </Tooltip>
             </div>
         </div>

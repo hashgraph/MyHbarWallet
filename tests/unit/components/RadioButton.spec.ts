@@ -2,10 +2,13 @@ import { createLocalVue, mount } from "@vue/test-utils";
 import RadioButton from "../../../src/components/RadioButton.vue";
 import imageKey from "../../../src/assets/button-key.svg";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("RadioButton.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     const name = "RadioGroup";
     const label = "Label";
@@ -16,6 +19,7 @@ describe("RadioButton.vue", (): void => {
 
         const wrapper = mount(RadioButton, {
             localVue,
+            i18n,
             propsData: {
                 name,
                 label,
@@ -38,6 +42,7 @@ describe("RadioButton.vue", (): void => {
 
         const wrapper = mount(RadioButton, {
             localVue,
+            i18n,
             propsData: {
                 name,
                 label,

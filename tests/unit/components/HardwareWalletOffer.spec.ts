@@ -1,16 +1,20 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import HardwareWalletOffer from "../../../src/components/HardwareWalletOffer.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("HardwareWalletOffer.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(HardwareWalletOffer, {
             localVue,
+            i18n,
             propsData: {
                 description: "description",
                 image: "https://via.placeholder.com/150",
@@ -23,7 +27,9 @@ describe("HardwareWalletOffer.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="hardware-wallet-offer">
               <div class="offer-description">
-                <div class="starting-from">Starting From</div>
+                <div class="starting-from">
+                  Starting From
+                </div>
                 <div class="cost-container">
                   gil<span class="cost">999</span></div>
                 <div class="description-text">description</div> <a rel="noopener" target="_blank" href="more Info" class="green-link">

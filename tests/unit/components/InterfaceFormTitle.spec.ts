@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import InterfaceFormTitle from "../../../src/components/InterfaceFormTitle.vue";
 import VueCompositionApi from "@vue/composition-api";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("InterfaceForm.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     it("renders", (): void => {
         expect.assertions(1);
@@ -14,6 +17,7 @@ describe("InterfaceForm.vue", (): void => {
 
         const wrapper = mount(InterfaceFormTitle, {
             localVue,
+            i18n,
             propsData: {
                 title
             }
