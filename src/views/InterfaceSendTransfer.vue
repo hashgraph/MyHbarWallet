@@ -67,7 +67,7 @@ import {
     SetupContext
 } from "@vue/composition-api";
 import store from "../store";
-import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
+import { ALERT, REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { getValueOfUnit, Unit } from "../units";
 import BigNumber from "bignumber.js";
@@ -78,6 +78,8 @@ import {
     ESTIMATED_FEE_TINYBAR,
     MAX_FEE_TINYBAR
 } from "../store/getters";
+import { ResponseCodeEnum } from "@hashgraph/sdk/src/generated/ResponseCode_pb";
+import { HederaError } from "@hashgraph/sdk/src/errors";
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
@@ -243,29 +245,38 @@ export default createComponent({
                 // eslint-disable-next-line require-atomic-updates
                 state.amountErrorMessage = "";
 
-                if (error.toString().includes("INVALID_ACCOUNT_ID")) {
-                    // eslint-disable-next-line require-atomic-updates
-                    state.idErrorMessage = context.root
+                if (error instanceof HederaError) {
+                    if (error.code === ResponseCodeEnum.INVALID_ACCOUNT_ID) {
+                        // eslint-disable-next-line require-atomic-updates
+                        state.idErrorMessage =
+                            context.root
                         .$t("common.error.invalidAccount")
                         .toString();
-                } else if (
-                    error
-                        .toString()
-                        .includes("ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS")
-                ) {
-                    // eslint-disable-next-line require-atomic-updates
-                    state.idErrorMessage = context.root
+                    } else if (
+                        error.code ===
+                        ResponseCodeEnum.ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS
+                    ) {
+                        // eslint-disable-next-line require-atomic-updates
+                        state.idErrorMessage = context.root
                         .$t("common.error.cannotSendHbarToYourself")
                         .toString();
-                } else if (
-                    error.toString().includes("INSUFFICIENT_ACCOUNT_BALANCE")
-                ) {
-                    state.amountErrorMessage = context.root
+                    } else if (
+                        error.code ===
+                        ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE
+                    ) {
+                        state.amountErrorMessage = context.root
                         .$t("common.error.insufficientBalance")
                         .toString();
+                    } else {
+                        store.dispatch(ALERT, {
+                            message: `UNHANDLED HEDERA EXCEPTION: ${error.code}`,
+                            level: "error"
+                        });
+                        throw error;
+                    }
+                } else {
+                    throw error;
                 }
-
-                throw error;
             } finally {
                 // eslint-disable-next-line require-atomic-updates
                 state.isBusy = false;

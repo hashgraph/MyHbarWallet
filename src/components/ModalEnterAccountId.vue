@@ -63,6 +63,8 @@ import { Id } from "../store/modules/wallet";
 import settings from "../settings";
 import Notice from "../components/Notice.vue";
 import { mdiHelpCircleOutline } from "@mdi/js";
+import { ALERT } from "../store/actions";
+import store from "../store";
 
 export interface Props {
     isOpen: boolean;
@@ -217,6 +219,12 @@ export default createComponent({
                         // This is actually good here
                         context.emit("submit", client, state.account);
                         return;
+                    } else {
+                        store.dispatch(ALERT, {
+                            message: `UNHANDLED HEDERA EXCEPTION: ${error.code}`,
+                            level: "error"
+                        });
+                        throw error;
                     }
                 } else if (
                     error instanceof Error &&

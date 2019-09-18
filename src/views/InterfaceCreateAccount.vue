@@ -67,13 +67,12 @@ import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
 import { formatHbar, validateHbar } from "../formatter";
-
 import {
     ESTIMATED_FEE_HBAR,
     ESTIMATED_FEE_TINYBAR,
     MAX_FEE_TINYBAR
 } from "../store/getters";
-import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
+import { ALERT, REFRESH_BALANCE_AND_RATE } from "../store/actions";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
@@ -235,15 +234,20 @@ export default createComponent({
                             .$t("common.error.insufficientPayerBalance")
                             .toString();
                     } else if (
-                        error
-                            .toString()
-                            .includes("INSUFFICIENT_ACCOUNT_BALANCE")
+                        error.code ===
+                        ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE
                     ) {
-                        state.newBalanceError = "Insufficient Balance";
+                        state.newBalanceError = "Insufficient Account Balance";
+                    } else {
+                        store.dispatch(ALERT, {
+                            message: `UNHANDLED HEDERA EXCEPTION: ${error.code}`,
+                            level: "error"
+                        });
+                        throw error;
                     }
+                } else {
+                    throw error;
                 }
-
-                throw error;
             } finally {
                 state.isBusy = false;
             }
