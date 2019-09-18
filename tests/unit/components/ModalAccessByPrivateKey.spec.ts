@@ -54,12 +54,12 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                   <div class="content-container">
                     <form class="modal-access-by-private-key">
                       <div class="text-input"><label class="label-container">
-                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Enter Private Key" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark is-valid"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
+                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Enter Private Key" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
                   </div></span>
                   <!----></span></label>
                   <!---->
                   <!---->
-                </div> <button type="submit" class="button-access-wallet"><span>Access Account</span>
+                </div> <button type="submit" disabled="disabled" class="button-access-wallet"><span>Access Account</span>
                   <!----></button>
                 <div class="customer-support-link">
                   <div class="customer-support-container"><img alt="" src=""> Customer Support
@@ -168,12 +168,12 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                   <div class="content-container">
                     <form class="modal-access-by-private-key">
                       <div class="text-input"><label class="label-container">
-                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Enter Private Key" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark is-valid"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
+                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Enter Private Key" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
                   </div></span>
                   <!----></span></label>
                   <!---->
                   <!---->
-                </div> <button type="submit" class="button-access-wallet"><span>Access Account</span>
+                </div> <button type="submit" disabled="disabled" class="button-access-wallet"><span>Access Account</span>
                   <!----></button>
                 <div class="customer-support-link">
                   <div class="customer-support-container"><img alt="" src=""> Customer Support
@@ -282,12 +282,12 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                   <div class="content-container">
                     <form class="modal-access-by-private-key">
                       <div class="text-input"><label class="label-container">
-                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Enter Private Key" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark is-valid"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
+                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Enter Private Key" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
                   </div></span>
                   <!----></span></label>
                   <!---->
                   <!---->
-                </div> <button type="submit" class="button-access-wallet busy"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                </div> <button type="submit" disabled="disabled" class="button-access-wallet busy"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
                     <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
                   </svg>
                   <!----></button>
@@ -398,12 +398,12 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                   <div class="content-container">
                     <form class="modal-access-by-private-key">
                       <div class="text-input"><label class="label-container">
-                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Enter Private Key" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark is-valid"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
+                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Enter Private Key" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
                   </div></span>
                   <!----></span></label>
                   <!---->
                   <!---->
-                </div> <button type="submit" class="button-access-wallet busy"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                </div> <button type="submit" disabled="disabled" class="button-access-wallet busy"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
                     <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
                   </svg>
                   <!----></button>

@@ -63,7 +63,6 @@ import Modal from "../components/Modal.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import { Id } from "../store/modules/wallet";
-import { Ed25519PrivateKey } from "@hashgraph/sdk";
 import settings from "../settings";
 import Notice from "../components/Notice.vue";
 import { mdiHelpCircleOutline } from "@mdi/js";
@@ -71,7 +70,7 @@ import { HederaError, ResponseCodeEnum } from "@hashgraph/sdk/src/errors";
 
 export interface Props {
     isOpen: boolean;
-    privateKey: Ed25519PrivateKey | null;
+    privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null;
 }
 
 interface State {
@@ -94,7 +93,9 @@ export default createComponent({
         event: "change"
     },
     props: {
-        privateKey: (Object as unknown) as PropType<Ed25519PrivateKey | null>,
+        privateKey: (Object as unknown) as PropType<
+            import("@hashgraph/sdk").Ed25519PrivateKey | null
+        >,
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
     setup(props: Props, context: SetupContext) {
@@ -155,7 +156,9 @@ export default createComponent({
             let client;
 
             try {
-                const { Client } = await import("@hashgraph/sdk");
+                const { Client } = await (import("@hashgraph/sdk") as Promise<
+                    typeof import("@hashgraph/sdk")
+                >);
                 client = new Client({
                     // TODO: Use nodeId from settings
                     nodes: {

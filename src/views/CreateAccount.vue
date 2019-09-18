@@ -66,13 +66,12 @@ import {
 } from "@vue/composition-api";
 import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
 import store from "../store";
-import { Ed25519PrivateKey } from "@hashgraph/sdk";
 import { Id } from "../store/modules/wallet";
 import { ALERT, LOG_IN } from "../store/actions";
 import Vue from "vue";
 
 interface State {
-    privateKey: Ed25519PrivateKey | null;
+    privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null;
 
     modalAccessByHardwareIsOpen: boolean;
     modalCreateWithSoftwareIsOpen: boolean;
@@ -156,6 +155,10 @@ export default createComponent({
                 state.modalDownloadKeystoreState.modalIsOpen = true;
             }, 125);
             try {
+                const { Ed25519PrivateKey } = await (import(
+                    "@hashgraph/sdk"
+                ) as Promise<typeof import("@hashgraph/sdk")>);
+
                 state.privateKey = await Ed25519PrivateKey.generate();
                 state.keyFile = await state.privateKey.createKeystore(
                     state.modalCreateByKeystoreState.password
@@ -209,7 +212,7 @@ export default createComponent({
         }
 
         function handleCreateByPhraseSubmit(
-            newPrivateKey: Ed25519PrivateKey
+            newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey
         ): void {
             state.modalCreateByPhraseIsOpen = false;
 
@@ -229,7 +232,9 @@ export default createComponent({
             account: Id
         ): Promise<void> {
             // Lazy load Client until this method is called
-            const { Client } = await import("@hashgraph/sdk");
+            const { Client } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
 
             if (!(client instanceof Client)) {
                 throw new TypeError(

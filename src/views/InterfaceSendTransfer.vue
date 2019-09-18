@@ -62,7 +62,6 @@ import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
 import { computed, createComponent, reactive } from "@vue/composition-api";
 import store from "../store";
-import { AccountId } from "@hashgraph/sdk";
 import { REFRESH_BALANCE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { getValueOfUnit, Unit } from "../units";
@@ -180,7 +179,7 @@ export default createComponent({
             const parts = state.toAccount.split(".");
 
             try {
-                const recipient: AccountId = {
+                const recipient: import("@hashgraph/sdk").AccountId = {
                     shard: parseInt(parts[0]),
                     realm: parseInt(parts[1]),
                     account: parseInt(parts[2])

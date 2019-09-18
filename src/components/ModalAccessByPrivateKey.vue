@@ -40,13 +40,12 @@ import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import {
-    computed,
     createComponent,
     SetupContext,
     PropType,
-    watch
+    watch,
+    ref
 } from "@vue/composition-api";
-import { Ed25519PrivateKey } from "@hashgraph/sdk";
 
 export interface State {
     modalIsOpen: boolean;
@@ -76,13 +75,14 @@ export default createComponent({
         state: (Object as unknown) as PropType<State>
     },
     setup(props: { state: State }, context: SetupContext) {
-        const valid = computed(() => {
-            if (props.state.rawPrivateKey.length === 0) {
-                // Back out now if we have an empty value
-                return false;
-            }
+        const valid = ref<boolean>(false);
 
+        async function isValid(): Promise<boolean> {
             try {
+                const { Ed25519PrivateKey } = await (import(
+                    "@hashgraph/sdk"
+                ) as Promise<typeof import("@hashgraph/sdk")>);
+
                 Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;
             } catch (error) {
@@ -98,7 +98,21 @@ export default createComponent({
 
                 throw error;
             }
-        });
+        }
+
+        watch(
+            () => props.state.rawPrivateKey,
+            (newVal: string) => {
+                if (props.state.rawPrivateKey.length === 0) {
+                    // Back out now if we have an empty value
+                    valid.value = false;
+                }
+
+                isValid().then(result => {
+                    valid.value = result;
+                });
+            }
+        );
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, modalIsOpen: isOpen });
