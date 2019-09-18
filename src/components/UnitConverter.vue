@@ -15,7 +15,7 @@
                 <div class="select-block">
                     <Select
                         v-model="state.selectedLeft"
-                        :options="options"
+                        :options="state.options"
                         :left="true"
                         @change="handleSelect"
                     />
@@ -42,7 +42,7 @@
                 <div class="select-block">
                     <Select
                         v-model="state.selectedRight"
-                        :options="options"
+                        :options="state.options"
                         :left="false"
                         @change="handleSelect"
                     />
@@ -55,13 +55,13 @@
 <script lang="ts">
 import Select from "./Select.vue";
 import TextInput from "./TextInput.vue";
-import { Unit, convert } from "../units";
-import { createComponent, reactive } from "@vue/composition-api";
+import { createComponent, reactive, onMounted } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 
 interface State {
-    selectedLeft: Unit;
-    selectedRight: Unit;
+    options: string[];
+    selectedLeft: import("@hashgraph/sdk/src/Hbar").HbarUnit;
+    selectedRight: import("@hashgraph/sdk/src/Hbar").HbarUnit;
     valueLeft: string;
     valueRight: string;
 }
@@ -72,24 +72,26 @@ export default createComponent({
         TextInput
     },
     setup() {
-        const options = Object.values(Unit);
-
         const numericRegex = /^\d*\.?\d*$/;
 
         const state = reactive<State>({
-            selectedLeft: Unit.Tinybar,
-            selectedRight: Unit.Hbar,
+            options: [],
+            selectedLeft: "tinybar",
+            selectedRight: "hbar",
             valueLeft: "100000000",
             valueRight: "1"
         });
 
-        function handleSelect(): void {
-            state.valueRight = convert(
-                state.valueLeft,
-                state.selectedLeft,
-                state.selectedRight,
-                false
-            );
+        onMounted(async () => {
+            const { hbarUnits } = await (import(
+                "@hashgraph/sdk/src/Hbar"
+            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+
+            state.options = hbarUnits;
+        });
+
+        async function handleSelect(): Promise<void> {
+            await computeValueRight();
         }
 
         // TODO: A generalization of this function would be very useful for a general-purpose [AmountInput] component
@@ -117,49 +119,58 @@ export default createComponent({
             }
         }
 
-        function computeValueLeft(): void {
-            state.valueLeft = convert(
-                state.valueRight,
-                state.selectedRight,
-                state.selectedLeft,
-                false
-            );
+        async function computeValueLeft(): Promise<void> {
+            const { Hbar } = await (import(
+                "@hashgraph/sdk/src/Hbar"
+            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+
+            state.valueLeft = Hbar.from(state.valueRight, state.selectedRight)
+                .as(state.selectedLeft)
+                .toFixed()
+                .toString();
         }
 
-        function computeValueRight(): void {
-            state.valueRight = convert(
-                state.valueLeft,
-                state.selectedLeft,
-                state.selectedRight,
-                false
-            );
+        async function computeValueRight(): Promise<void> {
+            const { Hbar } = await (import(
+                "@hashgraph/sdk/src/Hbar"
+            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+
+            state.valueRight = Hbar.from(state.valueLeft, state.selectedLeft)
+                .as(state.selectedRight)
+                .toFixed()
+                .toString();
         }
 
-        function handleInputValueLeft(value: string, event: Event): void {
+        async function handleInputValueLeft(
+            value: string,
+            event: Event
+        ): Promise<void> {
             if (!numericRegex.test(value)) value = state.valueLeft;
 
             state.valueLeft = value;
 
-            computeValueRight();
-            computeValueLeft();
+            await computeValueRight();
+            await computeValueLeft();
 
             boundInput(event, value, state.valueLeft);
         }
 
-        function handleInputValueRight(value: string, event: Event): void {
+        async function handleInputValueRight(
+            value: string,
+            event: Event
+        ): Promise<void> {
             if (!numericRegex.test(value)) value = state.valueRight;
 
             state.valueRight = value;
 
-            computeValueLeft();
-            computeValueRight();
+            await computeValueLeft();
+            await computeValueRight();
 
             boundInput(event, value, state.valueRight);
         }
 
         return {
             state,
-            options,
             handleInputValueRight,
             handleInputValueLeft,
             handleSelect

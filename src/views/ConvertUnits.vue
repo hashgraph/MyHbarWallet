@@ -66,7 +66,7 @@ export default createComponent({
                 amountInHbar: "1"
             },
             {
-                name: "Milibar",
+                name: "Millibar",
                 symbol: "mℏ",
                 amount: "1,000",
                 amountInHbar: "1"
