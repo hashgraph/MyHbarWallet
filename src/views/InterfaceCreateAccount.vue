@@ -240,7 +240,7 @@ export default createComponent({
                         state.newBalanceError = "Insufficient Account Balance";
                     } else {
                         store.dispatch(ALERT, {
-                            message: `UNHANDLED HEDERA EXCEPTION: ${error.code}`,
+                            message: `Received unhandled error from Hedera:  ${error.codeName}`,
                             level: "error"
                         });
                         throw error;

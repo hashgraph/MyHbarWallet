@@ -269,7 +269,7 @@ export default createComponent({
                         .toString();
                     } else {
                         store.dispatch(ALERT, {
-                            message: `UNHANDLED HEDERA EXCEPTION: ${error.code}`,
+                            message: `Received unhandled error from Hedera:  ${error.codeName}`,
                             level: "error"
                         });
                         throw error;
