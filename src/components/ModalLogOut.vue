@@ -26,7 +26,7 @@
                 <Button
                     class="button-logout"
                     :class="logoutBtnCenter"
-                    label="Log Out of Account"
+                    label="Log Out"
                     :danger="true"
                     @click="handleClickLogOut"
                 />

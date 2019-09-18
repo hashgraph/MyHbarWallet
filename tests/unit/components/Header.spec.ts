@@ -66,7 +66,7 @@ describe("Header.vue", (): void => {
                             Are you sure?
                           </p>
                           <div class="button-group">
-                            <!----> <button type="submit" class="button-logout danger center-button"><span>Log Out of Account</span>
+                            <!----> <button type="submit" class="button-logout danger center-button"><span>Log Out</span>
                               <!----></button></div>
                         </div>
                       </div>
@@ -84,7 +84,7 @@ describe("Header.vue", (): void => {
                           Are you sure?
                         </p>
                         <div class="button-group">
-                          <!----> <button type="submit" class="button-logout danger center-button"><span>Log Out of Account</span>
+                          <!----> <button type="submit" class="button-logout danger center-button"><span>Log Out</span>
                             <!----></button></div>
                       </div>
                     </div>
