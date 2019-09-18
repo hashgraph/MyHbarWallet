@@ -135,9 +135,14 @@ export default createComponent({
             return [
                 {
                     description: "Transfer Amount",
-                    value: new BigNumber(state.amount)
+                    value: isAmountValid
+                        ? new BigNumber(state.amount)
+                        : new BigNumber(0)
                 },
-                { description: "Estimated Fee", value: estimatedFeeHbar }
+                {
+                    description: "Estimated Fee",
+                    value: estimatedFeeHbar
+                }
             ] as Item[];
         });
 
@@ -250,9 +255,13 @@ export default createComponent({
                 ) {
                     // eslint-disable-next-line require-atomic-updates
                     state.idErrorMessage = "Cannot send HBar to yourself";
-                } else {
-                    throw error;
+                } else if (
+                    error.toString().includes("INSUFFICIENT_ACCOUNT_BALANCE")
+                ) {
+                    state.amountErrorMessage = "Insufficient balance";
                 }
+
+                throw error;
             } finally {
                 // eslint-disable-next-line require-atomic-updates
                 state.isBusy = false;

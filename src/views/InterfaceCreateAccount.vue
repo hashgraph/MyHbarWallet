@@ -122,15 +122,18 @@ export default createComponent({
                 state.publicKey.length == 88
         );
 
-        const summaryAmount = computed(() =>
-            formatHbar(new BigNumber(state.newBalance))
-        );
+        // Just for display in modal title
+        const summaryAmount = computed(() => {
+            return formatHbar(new BigNumber(state.newBalance));
+        });
 
         const summaryItems = computed(() => {
             return [
                 {
                     description: "Initial Balance",
-                    value: summaryAmount.value.toString()
+                    value: validBalance.value
+                        ? new BigNumber(state.newBalance)
+                        : new BigNumber(0)
                 },
                 { description: "Estimated Fee", value: estimatedFeeHbar }
             ] as Item[];
@@ -159,9 +162,11 @@ export default createComponent({
                         ? new BigNumber(0)
                         : store.state.wallet.balance;
 
-                if (balanceTinybar < newBalanceTinybar) {
+                if (
+                    balanceTinybar < newBalanceTinybar.plus(estimatedFeeTinybar)
+                ) {
                     state.newBalanceError =
-                        "Amount is greater than current balance";
+                        "Amount plus fee is greater than current balance";
                     return;
                 }
 
@@ -208,7 +213,12 @@ export default createComponent({
                         ResponseCodeEnum.INSUFFICIENT_PAYER_BALANCE
                     ) {
                         state.newBalanceError = "Insufficient Payer Balance";
-                        return;
+                    } else if (
+                        error
+                            .toString()
+                            .includes("INSUFFICIENT_ACCOUNT_BALANCE")
+                    ) {
+                        state.newBalanceError = "Insufficient Balance";
                     }
                 }
 
