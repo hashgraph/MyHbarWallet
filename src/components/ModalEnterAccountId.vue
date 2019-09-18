@@ -66,7 +66,6 @@ import { Id } from "../store/modules/wallet";
 import settings from "../settings";
 import Notice from "../components/Notice.vue";
 import { mdiHelpCircleOutline } from "@mdi/js";
-import { HederaError, ResponseCodeEnum } from "@hashgraph/sdk/src/errors";
 
 export interface Props {
     isOpen: boolean;
@@ -153,12 +152,13 @@ export default createComponent({
                 throw new Error("unexpected submission of EnterAccountID");
             }
 
+            const { Client, HederaError, ResponseCodeEnum } = await (import(
+                "@hashgraph/sdk/"
+            ) as Promise<typeof import("@hashgraph/sdk/")>);
+
             let client;
 
             try {
-                const { Client } = await (import("@hashgraph/sdk") as Promise<
-                    typeof import("@hashgraph/sdk")
-                >);
                 client = new Client({
                     // TODO: Use nodeId from settings
                     nodes: {
