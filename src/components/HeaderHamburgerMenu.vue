@@ -168,6 +168,11 @@ nav {
 
 .logout-container {
     margin-inline-end: 10px;
+    padding-block: 5px;
+
+    @supports (-webkit-overflow-scrolling: touch) {
+        padding-block-end: 100px;
+    }
 }
 
 .logout {
@@ -184,7 +189,8 @@ nav {
 
 .nav-open {
     box-shadow: 0 calc(100vh - 85px) 0 calc(100vh - 85px) rgba(0, 0, 0, 0.8);
-    height: 100vh;
+    height: calc(100vh - 85px);
+    overflow-y: scroll;
 
     @media (prefers-reduced-motion) {
         transition: none;
