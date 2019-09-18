@@ -64,7 +64,7 @@ import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
 import { formatHbar, validateHbar } from "../formatter";
-import { HederaError, ResponseCodeEnum } from "@hashgraph/sdk/src/errors";
+
 import {
     ESTIMATED_FEE_HBAR,
     ESTIMATED_FEE_TINYBAR,
@@ -148,6 +148,10 @@ export default createComponent({
             }
 
             const client = store.state.wallet.session.client;
+
+            const { HederaError, ResponseCodeEnum } = await (import(
+                "@hashgraph/sdk/src/errors"
+            ) as Promise<typeof import("@hashgraph/sdk/src/errors")>);
 
             try {
                 // The new wallet's initial balance
