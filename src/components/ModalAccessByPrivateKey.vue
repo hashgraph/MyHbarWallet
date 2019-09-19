@@ -102,7 +102,7 @@ export default createComponent({
 
         watch(
             () => props.state.rawPrivateKey,
-            (newVal: string) => {
+            () => {
                 if (props.state.rawPrivateKey.length === 0) {
                     // Back out now if we have an empty value
                     valid.value = false;

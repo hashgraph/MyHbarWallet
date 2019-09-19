@@ -67,7 +67,7 @@ import {
     SetupContext
 } from "@vue/composition-api";
 import store from "../store";
-import { REFRESH_BALANCE } from "../store/actions";
+import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { getValueOfUnit, Unit } from "../units";
 import BigNumber from "bignumber.js";
@@ -233,7 +233,7 @@ export default createComponent({
                 await tx.build().executeForReceipt();
 
                 // Refresh Balance
-                store.dispatch(REFRESH_BALANCE);
+                store.dispatch(REFRESH_BALANCE_AND_RATE);
 
                 // eslint-disable-next-line require-atomic-updates
                 state.successModalIsOpen = true;

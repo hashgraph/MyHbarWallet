@@ -73,6 +73,7 @@ import {
     ESTIMATED_FEE_TINYBAR,
     MAX_FEE_TINYBAR
 } from "../store/getters";
+import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
@@ -219,6 +220,9 @@ export default createComponent({
 
                 // If creating state.account succeeds then remove all the error
                 state.newBalanceError = "";
+
+                // Refresh Balance
+                store.dispatch(REFRESH_BALANCE_AND_RATE);
 
                 state.successModalIsOpen = true;
             } catch (error) {
