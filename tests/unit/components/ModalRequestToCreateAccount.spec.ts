@@ -52,9 +52,9 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
                         </div>
                       </div>
                       <form class="request-to-create-account">
-                        <div value="302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29" level="L" background="#fff" foreground="#000" class="pub-qr"><canvas height="180" width="180" style="width: 180px; height: 180px;"></canvas></div>
+                        <div value="dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29" level="L" background="#fff" foreground="#000" class="pub-qr"><canvas height="180" width="180" style="width: 180px; height: 180px;"></canvas></div>
                         <div class="read-only-input">
-                          <div class="">302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29</div>
+                          <div class="">dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29</div>
                         </div>
                         <div class="buttons"><button type="submit" class="button outline compact"><span>Copy Public Key</span>
                             <!----></button> <button type="submit" class="button compact"><span>I have an Account ID</span>
@@ -106,9 +106,9 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
                         </div>
                       </div>
                       <form class="request-to-create-account">
-                        <div value="302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29" level="L" background="#fff" foreground="#000" class="pub-qr"><canvas height="180" width="180" style="width: 180px; height: 180px;"></canvas></div>
+                        <div value="dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29" level="L" background="#fff" foreground="#000" class="pub-qr"><canvas height="180" width="180" style="width: 180px; height: 180px;"></canvas></div>
                         <div class="read-only-input">
-                          <div class="">302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29</div>
+                          <div class="">dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29</div>
                         </div>
                         <div class="buttons"><button type="submit" class="button outline compact"><span>Copy Public Key</span>
                             <!----></button> <button type="submit" class="button compact"><span>I have an Account ID</span>

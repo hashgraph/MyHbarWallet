@@ -18,7 +18,7 @@
         <TextInput
             v-model="state.publicKey"
             :error="state.keyError"
-            :valid="validKey"
+            :valid="state.isPublicKeyValid"
             :label="$t('interfaceCreateAccount.publicKey')"
             show-validation
         />
@@ -26,7 +26,7 @@
         <template v-slot:footer>
             <Button
                 :busy="state.isBusy"
-                :disabled="!validKey || !validBalance"
+                :disabled="!state.isPublicKeyValid || !validBalance"
                 :label="$t('common.createAccount')"
                 @click="handleShowSummary"
             />
@@ -57,7 +57,8 @@ import {
     computed,
     createComponent,
     reactive,
-    SetupContext
+    SetupContext,
+    watch
 } from "@vue/composition-api";
 import store from "../store";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
@@ -87,6 +88,27 @@ interface State {
     keyError: string;
     newBalanceError: string;
     account: string;
+    isPublicKeyValid: boolean;
+}
+
+async function isPublicKeyValid(key: string): Promise<boolean> {
+    try {
+        const { Ed25519PrivateKey } = await (import(
+            "@hashgraph/sdk"
+        ) as Promise<typeof import("@hashgraph/sdk")>);
+
+        Ed25519PrivateKey.fromString(key);
+        return true;
+    } catch (error) {
+        if (error instanceof Error) {
+            // The exception message changes depending on the input
+            if (error.message === "invalid private key: " + key) {
+                return false;
+            }
+        }
+
+        throw error;
+    }
 }
 
 export default createComponent({
@@ -107,7 +129,8 @@ export default createComponent({
             summaryModalIsOpen: false,
             keyError: "",
             newBalanceError: "",
-            account: ""
+            account: "",
+            isPublicKeyValid: false
         });
 
         const validBalance = computed(() => {
@@ -118,11 +141,9 @@ export default createComponent({
             );
         });
 
-        const validKey = computed(
-            () =>
-                state.publicKey.startsWith(ED25519_PREFIX) &&
-                state.publicKey.length == 88
-        );
+        watch(async () => {
+            state.isPublicKeyValid = await isPublicKeyValid(state.publicKey);
+        });
 
         // Just for display in modal title
         const summaryAmount = computed(() => {
@@ -271,7 +292,6 @@ export default createComponent({
             summaryAmount,
             summaryItems,
             validBalance,
-            validKey,
             handleCreateAccount,
             handleShowSummary,
             handleSuccessModalChange,

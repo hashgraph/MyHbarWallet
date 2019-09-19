@@ -26,7 +26,7 @@
             >
                 <qrcode-vue
                     v-if="publicKey"
-                    :value="publicKey.toString()"
+                    :value="rawPublicKey"
                     size="180"
                     level="L"
                     class="pub-qr"
@@ -35,7 +35,7 @@
                 <ReadOnlyInput
                     v-if="publicKey"
                     multiline
-                    :value="publicKey.toString()"
+                    :value="rawPublicKey"
                 />
 
                 <div class="buttons">
@@ -64,13 +64,22 @@
 import Modal from "../components/Modal.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
-import { createComponent, PropType } from "@vue/composition-api";
+import { computed, createComponent, PropType } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "../clipboard";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import Warning from "../components/Warning.vue";
 import { ALERT } from "../store/actions";
 import store from "../store";
+
+// HACK: We strip this prefix from the key if there for compat. with mobile wallets
+const ed25519PubKeyPrefix = "302a300506032b6570032100";
+
+interface Props {
+    isOpen: boolean;
+    publicKey: import("@hashgraph/sdk").Ed25519PublicKey;
+    event: string;
+}
 
 export default createComponent({
     components: {
@@ -92,13 +101,20 @@ export default createComponent({
         >,
         event: (String as unknown) as PropType<string>
     },
-    setup(props, context) {
-        async function handleClickCopy(): Promise<void> {
-            const key = props.publicKey;
-            if (key != null) {
-                await writeToClipboard(key.toString());
-                store.dispatch(ALERT, { message: "Copied", level: "info" });
+    setup(props: Props, context) {
+        const rawPublicKey = computed(() => {
+            const key = props.publicKey.toString();
+
+            if (key.startsWith(ed25519PubKeyPrefix)) {
+                return key.slice(ed25519PubKeyPrefix.length);
             }
+
+            return key;
+        });
+
+        async function handleClickCopy(): Promise<void> {
+            await writeToClipboard(rawPublicKey.value);
+            await store.dispatch(ALERT, { message: "Copied", level: "info" });
         }
 
         function handleHasAccount(): void {
@@ -107,7 +123,8 @@ export default createComponent({
 
         return {
             handleClickCopy,
-            handleHasAccount
+            handleHasAccount,
+            rawPublicKey
         };
     }
 });
