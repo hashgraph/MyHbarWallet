@@ -64,7 +64,7 @@ module.exports = {
         browser.expect
             .element(".interface .balance .usd-balance")
             .text.to.match(
-                /^\$([1-9]\d{0,2}(,\d{3})*(\.\d{2})?|[1-9]\d*(\.\d{2})?|0?\.(?!00)\d{2})$/
+                /^≈ \$([1-9]\d{0,2}(,\d{3})*(\.\d{2})?|[1-9]\d*(\.\d{2})?|0?\.(?!00)\d{2})$/
             );
     },
 
