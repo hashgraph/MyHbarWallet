@@ -1,5 +1,6 @@
 container:
     image: node:latest
+    memory: 8G
 
 check_task:
     node_modules_cache:
