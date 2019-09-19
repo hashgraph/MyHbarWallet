@@ -35,14 +35,9 @@ export default createComponent({
             return props.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
         }
 
-        function setHamburgerMenuIsOpenOnBody(open: boolean): void {
-            console.log(open);
-            document.body.classList.toggle("ham-menu-is-open", open);
-        }
-
         function handleToggle(): void {
             context.emit("toggle", !props.isOpen);
-            setHamburgerMenuIsOpenOnBody(!props.isOpen);
+            document.body.classList.toggle("ham-menu-is-open", !props.isOpen);
         }
 
         return {
