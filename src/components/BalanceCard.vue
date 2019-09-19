@@ -89,7 +89,7 @@ export default createComponent({
 
             if (rate.isGreaterThan(0)) {
                 const balanceUSD = balanceHbar.value.multipliedBy(rate);
-                return formatUSD(balanceUSD);
+                return "≈ " + formatUSD(balanceUSD);
             }
 
             return "";
