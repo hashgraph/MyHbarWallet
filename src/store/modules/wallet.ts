@@ -115,16 +115,6 @@ export default {
                 return;
             }
 
-            const { Client } = await (import("@hashgraph/sdk") as Promise<
-                typeof import("@hashgraph/sdk")
-            >);
-
-            if (!(state.session.client instanceof Client)) {
-                throw new TypeError(
-                    "state.session.client not instance of Client: Programmer Error"
-                );
-            }
-
             // Get response, clone, get text, parse to JSON
             const response: Response = await fetch(coingeckoEndpoint);
             const responseJson: TickersJSON = JSON.parse(
