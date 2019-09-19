@@ -23,7 +23,7 @@ describe("ModalFeeSummaryTitle.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(
-            `<div class="modal-fee-summary-title"><span class="title"><span>Sending <strong>999999999</strong> ℏ to account  </span></span></div>`
+            `<div class="modal-fee-summary-title"><span class="title"><span>Sending <strong>999999999</strong> ℏ to account <strong>0.0.1</strong></span></span></div>`
         );
     });
 
