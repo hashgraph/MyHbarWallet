@@ -79,9 +79,11 @@ export default createComponent({
 
         function getPosition(): void {
             const tt = (context as Context).refs.ttEl;
-            const curleft = tt.getBoundingClientRect().left;
-            if (curleft > 2 * (window.innerWidth / 3))
-                tt.classList.add("on-right");
+            if (tt) {
+                const curleft = tt.getBoundingClientRect().left;
+                if (curleft > 2 * (window.innerWidth / 3))
+                    tt.classList.add("on-right");
+            }
         }
 
         window.addEventListener("click", handleCloseOnWindowClick);
