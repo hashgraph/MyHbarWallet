@@ -248,25 +248,24 @@ export default createComponent({
                 if (error instanceof HederaError) {
                     if (error.code === ResponseCodeEnum.INVALID_ACCOUNT_ID) {
                         // eslint-disable-next-line require-atomic-updates
-                        state.idErrorMessage =
-                            context.root
-                        .$t("common.error.invalidAccount")
-                        .toString();
+                        state.idErrorMessage = context.root
+                            .$t("common.error.invalidAccount")
+                            .toString();
                     } else if (
                         error.code ===
                         ResponseCodeEnum.ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS
                     ) {
                         // eslint-disable-next-line require-atomic-updates
                         state.idErrorMessage = context.root
-                        .$t("common.error.cannotSendHbarToYourself")
-                        .toString();
+                            .$t("common.error.cannotSendHbarToYourself")
+                            .toString();
                     } else if (
                         error.code ===
                         ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE
                     ) {
                         state.amountErrorMessage = context.root
-                        .$t("common.error.insufficientBalance")
-                        .toString();
+                            .$t("common.error.insufficientBalance")
+                            .toString();
                     } else {
                         store.dispatch(ALERT, {
                             message: `Received unhandled error from Hedera:  ${error.codeName}`,
