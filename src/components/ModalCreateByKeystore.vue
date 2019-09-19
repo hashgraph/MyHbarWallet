@@ -159,7 +159,6 @@ import TextInput, {
 } from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import { mdiArrowRight } from "@mdi/js";
-import zxcvbn, { ZXCVBNResult } from "zxcvbn";
 import { formatRich } from "../formatter";
 
 export interface State {
@@ -251,8 +250,10 @@ export default createComponent({
             () => props.state.confirmationPassword === props.state.password
         );
 
-        function handleInputPassword(value: string): void {
-            const passwordMetrics: ZXCVBNResult = zxcvbn(value, wordlist);
+        async function handleInputPassword(value: string): Promise<void> {
+            const zxcvbn = await import("zxcvbn");
+
+            const passwordMetrics = zxcvbn.default(value, wordlist);
 
             context.emit("change", {
                 ...props.state,
