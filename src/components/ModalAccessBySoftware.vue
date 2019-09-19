@@ -18,22 +18,7 @@
                         name="software-access-option"
                         :options="options"
                     />
-                    <div class="hardware-link">
-                        {{
-                            $t(
-                                "modalAccessBySoftware.purchaseAHardwareWalletForTheHighestSecurity"
-                            )
-                        }}
-                        <router-link
-                            :to="{ name: 'hardware-wallet-affiliates' }"
-                        >
-                            {{
-                                $t(
-                                    "modalAccessBySoftware.purchaseAHardwareWallet"
-                                )
-                            }}
-                        </router-link>
-                    </div>
+                    <PurchaseWalletLink></PurchaseWalletLink>
                     <Button
                         :disabled="state.optionSelected == null"
                         :label="$t('common.continue')"
@@ -54,6 +39,7 @@ import imageFile from "../assets/button-file.svg";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
+import PurchaseWalletLink from "../components/PurchaseWalletLink.vue";
 import {
     createComponent,
     reactive,
@@ -73,7 +59,8 @@ export default createComponent({
         Button,
         Modal,
         CustomerSupportLink,
-        Warning
+        Warning,
+        PurchaseWalletLink
     },
     model: {
         prop: "isOpen",

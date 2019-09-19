@@ -18,15 +18,7 @@
                     :options="options"
                 />
                 <!--'Support coming soon!' note? -->
-                <div class="hardware-link">
-                    <router-link :to="{ name: 'hardware-wallet-affiliates' }">
-                        {{
-                            $t(
-                                "modalCreateWithSoftware.purchaseAHardwareWallet"
-                            )
-                        }}
-                    </router-link>
-                </div>
+                <PurchaseWalletLink></PurchaseWalletLink>
                 <Button
                     :disabled="state.optionSelected == null"
                     :label="$t('common.continue')"
@@ -46,6 +38,7 @@ import imageFile from "../assets/button-file.svg";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
+import PurchaseWalletLink from "../components/PurchaseWalletLink.vue";
 
 export enum CreateSoftwareOption {
     File = "file",
@@ -62,7 +55,8 @@ export default createComponent({
         Button,
         Modal,
         CustomerSupportLink,
-        Warning
+        Warning,
+        PurchaseWalletLink
     },
     model: {
         prop: "isOpen",
