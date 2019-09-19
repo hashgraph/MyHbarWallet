@@ -6,9 +6,15 @@
                 <div class="title">
                     {{ $t("balanceCard.balance") }}
                 </div>
-                <div v-if="hasFetchedBalance" class="subtitle" type="string">
+                <div
+                    v-if="hasFetchedBalanceAndRate"
+                    class="subtitle"
+                    type="string"
+                >
                     <div class="hbar-balance">{{ balanceHBarFormatted }} ℏ</div>
-                    <div class="usd-balance">{{ balanceUSDFormatted }}</div>
+                    <div class="usd-balance">
+                        {{ balanceUSDFormatted }}
+                    </div>
                 </div>
                 <div v-else class="subtitle-null" type="string">
                     {{ $t("balanceCard.unknown") }}
@@ -17,19 +23,19 @@
             <div class="actions">
                 <MaterialDesignIcon
                     v-if="state.isBusy"
-                    class="spinner"
                     :icon="mdiLoading"
+                    class="spinner"
                     spin
                 />
                 <Tooltip
                     v-else
-                    class="action"
-                    :pinnable="false"
                     :message="$t('balanceCard.refreshBalance')"
+                    :pinnable="false"
+                    class="action"
                 >
                     <MaterialDesignIcon
-                        class="refresh-icon"
                         :icon="mdiRefresh"
+                        class="refresh-icon"
                         @click="handleRefreshBalance"
                     />
                 </Tooltip>
@@ -45,7 +51,7 @@ import Tooltip from "./Tooltip.vue";
 import { computed, createComponent, reactive } from "@vue/composition-api";
 import walletHbar from "../assets/wallet-hbar.svg";
 import store from "../store";
-import { REFRESH_BALANCE } from "../store/actions";
+import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import { formatHbar, formatUSD } from "../formatter";
 import BigNumber from "bignumber.js";
 
@@ -59,12 +65,18 @@ export default createComponent({
             isBusy: false
         });
 
-        const hasFetchedBalance = computed(
-            () => store.state.wallet.balance != null
+        const hasFetchedBalanceAndRate = computed(
+            () =>
+                store.state.wallet.balance != null &&
+                store.state.wallet.exchangeRate != null
         );
 
         const balanceHbar = computed(() =>
             (store.state.wallet.balance || new BigNumber(0)).div(100000000)
+        );
+
+        const exchangeRate = computed(
+            () => (store.state.wallet.exchangeRate || new BigNumber(0)).div(1) // computed with null | undefined is broken
         );
 
         const balanceHBarFormatted = computed(() => {
@@ -75,15 +87,21 @@ export default createComponent({
         });
 
         const balanceUSDFormatted = computed(() => {
-            const balanceUSD = balanceHbar.value.multipliedBy(0.12);
-            return formatUSD(balanceUSD);
+            const rate = exchangeRate.value;
+
+            if (rate.isGreaterThan(0)) {
+                const balanceUSD = balanceHbar.value.multipliedBy(rate);
+                return formatUSD(balanceUSD);
+            }
+
+            return "";
         });
 
         async function handleRefreshBalance(): Promise<void> {
             state.isBusy = true;
 
             try {
-                await store.dispatch(REFRESH_BALANCE);
+                await store.dispatch(REFRESH_BALANCE_AND_RATE);
             } finally {
                 setTimeout(() => {
                     state.isBusy = false;
@@ -96,7 +114,7 @@ export default createComponent({
             mdiLoading,
             walletHbar,
             state,
-            hasFetchedBalance,
+            hasFetchedBalanceAndRate,
             handleRefreshBalance,
             balanceHbar,
             balanceHBarFormatted,
@@ -106,7 +124,7 @@ export default createComponent({
 });
 </script>
 
-<style scoped lang="postcss">
+<style lang="postcss" scoped>
 .balance {
     background-color: var(--color-byzantine-night-blue);
     border-radius: 4px;
