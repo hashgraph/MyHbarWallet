@@ -6,13 +6,9 @@
                 <div class="title">
                     {{ $t("balanceCard.balance") }}
                 </div>
-                <div
-                    v-if="hasFetchedBalanceAndRate"
-                    class="subtitle"
-                    type="string"
-                >
+                <div v-if="hasFetchedBalance" class="subtitle" type="string">
                     <div class="hbar-balance">{{ balanceHBarFormatted }} ℏ</div>
-                    <div class="usd-balance">
+                    <div v-if="hasFetchedRate" class="usd-balance">
                         {{ balanceUSDFormatted }}
                     </div>
                 </div>
@@ -65,10 +61,12 @@ export default createComponent({
             isBusy: false
         });
 
-        const hasFetchedBalanceAndRate = computed(
-            () =>
-                store.state.wallet.balance != null &&
-                store.state.wallet.exchangeRate != null
+        const hasFetchedBalance = computed(
+            () => store.state.wallet.balance != null
+        );
+
+        const hasFetchedRate = computed(
+            () => store.state.wallet.exchangeRate != null
         );
 
         const balanceHbar = computed(() =>
@@ -114,7 +112,8 @@ export default createComponent({
             mdiLoading,
             walletHbar,
             state,
-            hasFetchedBalanceAndRate,
+            hasFetchedBalance,
+            hasFetchedRate,
             handleRefreshBalance,
             balanceHbar,
             balanceHBarFormatted,
