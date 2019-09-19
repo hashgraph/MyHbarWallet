@@ -64,7 +64,6 @@ import { createComponent, ref, SetupContext } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "../components/MnemonicInput.vue";
-import html2pdf from "html2pdf.js";
 import { formatRich } from "../formatter";
 
 interface Props {
@@ -89,7 +88,7 @@ export default createComponent({
     setup(props: Props, context: SetupContext) {
         const mnemonic = ref(null);
 
-        function handleClickSave(): void {
+        async function handleClickSave(): Promise<void> {
             let element = null;
 
             try {
@@ -110,7 +109,8 @@ export default createComponent({
                 }
             };
 
-            html2pdf()
+            const HTML2PDF = await import("html2pdf.js");
+            HTML2PDF.default()
                 .set(options)
                 .from(element)
                 .save();
