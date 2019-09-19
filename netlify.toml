@@ -1,0 +1,13 @@
+# Set the HEDERA_NETWORK to mainnet for production
+[context.production.environment]
+HEDERA_NETWORK = "mainnet"
+
+# Set the HEDERA_NETWORK to testnet for deployment previews on PRs
+[context.deploy-preview.environment]
+HEDERA_NETWORK = "testnet"
+
+# Redirect all access to / as this is a Single Page Application
+[[redirects]]
+from = "/*"
+to = "/"
+status = 200

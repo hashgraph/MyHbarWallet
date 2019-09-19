@@ -7,7 +7,6 @@
                         <div class="title">
                             {{ $t("home.theNumberOneHbarWallet") }}
                         </div>
-                        <div class="title"></div>
                         <div class="subtitle">
                             {{
                                 $t(
@@ -141,11 +140,10 @@ export default createComponent({
     font-size: 45px;
     font-weight: 700;
     line-height: 100%;
-    margin-block-end: -10px;
+    margin-block-end: 20px;
 
     @media (max-width: 480px) {
         font-size: 32px;
-        margin-block-end: 0;
     }
 }
 
