@@ -173,6 +173,7 @@ export default createComponent({
             const { generateMnemonic } = await (import(
                 "@hashgraph/sdk"
             ) as Promise<typeof import("@hashgraph/sdk")>);
+
             state.result = generateMnemonic();
         }
 
