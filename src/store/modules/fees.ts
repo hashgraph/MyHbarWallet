@@ -1,44 +1,30 @@
-import BigNumber from "bignumber.js";
-import { getValueOfUnit, Unit } from "../../units";
 import {
     ESTIMATED_FEE_HBAR,
-    ESTIMATED_FEE_TINYBAR,
     MAX_FEE_HBAR,
-    MAX_FEE_TINYBAR
 } from "../getters";
 
 export interface State {
-    estimatedFeeHbar: BigNumber;
-    maxFeeHbar: BigNumber;
+    estimatedFeeHbar: import("@hashgraph/sdk/src/Hbar").Hbar;
+    maxFeeHbar: import("@hashgraph/sdk/src/Hbar").Hbar;
 }
 
 export default {
-    state: {
-        estimatedFeeHbar: new BigNumber(0.200_000_000),
-        maxFeeHbar: new BigNumber(1)
-    } as State,
-    // TODO: JFC replace this with actual units from the SDK when ready
+    constructor: async (): Promise<State> => {
+        const { Hbar } = await (import("@hashgraph/sdk/src/Hbar") as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+
+        return {
+            estimatedFeeHbar: Hbar.from(0.200_000_000, "hbar"),
+            maxFeeHbar: Hbar.from(1, "hbar")
+        } as State;
+    },
     getters: {
-        [ESTIMATED_FEE_HBAR]: (state: State): BigNumber => {
+        [ESTIMATED_FEE_HBAR]: (state: State): import("@hashgraph/sdk/src/Hbar").Hbar => {
             return state.estimatedFeeHbar;
         },
-        [ESTIMATED_FEE_TINYBAR]: (state: State): BigNumber => {
-            return state.estimatedFeeHbar.multipliedBy(
-                getValueOfUnit(Unit.Hbar)
-            );
-        },
         [MAX_FEE_HBAR]: (state: State) => (
-            remainingBalanceHBar: BigNumber
-        ): BigNumber => {
-            return BigNumber.min(state.maxFeeHbar, remainingBalanceHBar);
-        },
-        [MAX_FEE_TINYBAR]: (state: State) => (
-            remainingBalanceTinybar: BigNumber
-        ): BigNumber => {
-            return BigNumber.min(
-                state.maxFeeHbar,
-                remainingBalanceTinybar.dividedBy(getValueOfUnit(Unit.Hbar))
-            ).multipliedBy(getValueOfUnit(Unit.Hbar));
+            remainingBalanceHBar: import("@hashgraph/sdk/src/Hbar").Hbar
+        ): import("@hashgraph/sdk/src/Hbar").Hbar => {
+            return state.maxFeeHbar.comparedTo(remainingBalanceHBar) <= 0 ? state.maxFeeHbar : remainingBalanceHBar;
         }
     }
 };

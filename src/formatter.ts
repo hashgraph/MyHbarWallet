@@ -1,5 +1,3 @@
-import BigNumber from "bignumber.js";
-
 // Trim leading and trailing 0's from the input,
 // and restrict significant digits past the decimal point.
 // The captured group is the desired end result.
@@ -11,7 +9,7 @@ export function validateHbar(input: string): boolean {
     return hbarAmountRegex.test(input);
 }
 
-export function formatHbar(input: BigNumber): string {
+export function formatHbar(input: import("@hashgraph/sdk/src/Hbar").Hbar): string {
     const fmt = {
         decimalSeparator: ".",
         groupSeparator: ",",
@@ -21,7 +19,7 @@ export function formatHbar(input: BigNumber): string {
         fractionGroupSize: 0
     };
 
-    return input.toFormat(fmt);
+    return input.as("hbar").toFormat(fmt);
 }
 
 // Splits string into the int and fraction parts
@@ -62,7 +60,7 @@ export function formatRightPad(
     return str;
 }
 
-export function formatUSD(input: BigNumber): string {
+export function formatUSD(input: import("@hashgraph/sdk").BigNumber): string {
     const fmt = {
         prefix: "$",
         decimalSeparator: ".",
@@ -73,7 +71,8 @@ export function formatUSD(input: BigNumber): string {
         fractionGroupSize: 0
     };
 
-    return input.toFormat(2, BigNumber.ROUND_HALF_CEIL, fmt);
+    // rounding mode 7 is ROUND_HALF_CEIL
+    return input.toFormat(2, 7, fmt);
 }
 
 export function formatRich(

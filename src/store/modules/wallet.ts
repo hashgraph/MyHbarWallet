@@ -8,7 +8,6 @@ import {
     REFRESH_BALANCE_AND_RATE,
     REFRESH_EXCHANGE_RATE
 } from "../actions";
-import BigNumber from "bignumber.js";
 
 const SET_BALANCE = "wallet#set_balance";
 const SET_EXCHANGE_RATE = "wallet#set_exchange_rate";
@@ -49,8 +48,8 @@ export interface Session {
 
 export interface State {
     session: Session | null;
-    balance: BigNumber | null;
-    exchangeRate: BigNumber | null;
+    balance: import("@hashgraph/sdk/src/Hbar").Hbar | null;
+    exchangeRate: import("@hashgraph/sdk").BigNumber | null;
 }
 
 export default {
@@ -72,10 +71,10 @@ export default {
             state.session = null;
             state.balance = null;
         },
-        [SET_BALANCE](state: State, balance: BigNumber): void {
+        [SET_BALANCE](state: State, balance: import("@hashgraph/sdk/src/Hbar").Hbar): void {
             state.balance = balance;
         },
-        [SET_EXCHANGE_RATE](state: State, rate: BigNumber): void {
+        [SET_EXCHANGE_RATE](state: State, rate: import("@hashgraph/sdk").BigNumber): void {
             state.exchangeRate = rate;
         }
     },
@@ -97,9 +96,7 @@ export default {
                 );
             }
 
-            const balance = await (state.session.client as InstanceType<
-                typeof Client
-            >).getAccountBalance();
+            const balance = await (state.session.client as InstanceType<typeof Client>).getAccountBalance();
 
             commit(SET_BALANCE, balance);
         },
@@ -120,6 +117,8 @@ export default {
             const responseJson: TickersJSON = JSON.parse(
                 await response.clone().text()
             );
+
+            const { BigNumber } = await (import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>);
 
             // filter reduce to average of last rate from relevant exchanges
             const meanLast = new BigNumber(

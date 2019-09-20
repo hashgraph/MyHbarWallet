@@ -56,7 +56,6 @@
 import Select from "./Select.vue";
 import TextInput from "./TextInput.vue";
 import { createComponent, reactive, onMounted } from "@vue/composition-api";
-import BigNumber from "bignumber.js";
 
 interface State {
     options: string[];
@@ -95,14 +94,18 @@ export default createComponent({
         }
 
         // TODO: A generalization of this function would be very useful for a general-purpose [AmountInput] component
-        function boundInput(
+        async function boundInput(
             event: Event,
             inputValue: string,
             stateValue: string
-        ): void {
+        ): Promise<void> {
             // If the computed value from the round-trip from {input} -> left -> right
             // is different than {input} then we should replace {input} so as
             // to prevent typing more
+
+            const { BigNumber } = await (import("@hashgraph/sdk/") as Promise<
+                typeof import("@hashgraph/sdk/")
+            >);
 
             const computedValueNum = new BigNumber(stateValue);
             const valueNum = new BigNumber(inputValue);
