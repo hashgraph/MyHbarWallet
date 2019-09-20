@@ -47,7 +47,7 @@ export default createComponent({
     props: {
         editable: Boolean,
         words: Number,
-        value: (Array as unknown) as PropType<string[]>
+        value: Array
     },
     setup(props: Props, context: SetupContext) {
         const state = reactive<State>({
