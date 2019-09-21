@@ -7,7 +7,9 @@
         :label="label"
         :valid="valid || partialValid"
         :error="state.errorMessage"
-        :placeholder="$t('common.accountSyntax')"
+        :placeholder="
+            file ? 'shard.realm.file or file' : $t('common.accountSyntax')
+        "
         @input="handleInput"
         @click.native.stop
     />
@@ -29,6 +31,7 @@ interface State {
     input: string;
     errorMessage: string | null;
     account: Id | null;
+    file: { shard: number; realm: number; file: number } | null;
 }
 
 export interface Props {
@@ -36,6 +39,7 @@ export interface Props {
     errorMessage: string | null;
     canCopy: boolean;
     label: string;
+    file: boolean;
 }
 
 export default createComponent({
@@ -46,13 +50,15 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>,
         errorMessage: (String as unknown) as PropType<string>,
         canCopy: (Boolean as unknown) as PropType<boolean>,
-        label: (String as unknown) as PropType<string>
+        label: (String as unknown) as PropType<string>,
+        file: (Boolean as unknown) as PropType<boolean>
     },
     setup(props, context) {
         const state = reactive<State>({
             input: "",
             errorMessage: null,
-            account: null
+            account: null,
+            file: null
         });
         const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
         const partialRegex = /^[1-9]{1}\d{0,}$/;
@@ -67,22 +73,41 @@ export default createComponent({
             state.input = accountText;
             if (valid.value) {
                 const parts = state.input.split(".");
-                state.account = {
-                    shard: parseInt(parts[0]),
-                    realm: parseInt(parts[1]),
-                    account: parseInt(parts[2])
-                };
+                if (props.file) {
+                    state.file = {
+                        shard: parseInt(parts[0]),
+                        realm: parseInt(parts[1]),
+                        file: parseInt(parts[2])
+                    };
+                } else {
+                    state.account = {
+                        shard: parseInt(parts[0]),
+                        realm: parseInt(parts[1]),
+                        account: parseInt(parts[2])
+                    };
+                }
             } else if (partialValid.value) {
-                state.account = {
-                    shard: parseInt("0"),
-                    realm: parseInt("0"),
-                    account: parseInt(state.input)
-                };
+                if (props.file) {
+                    state.file = {
+                        shard: parseInt("0"),
+                        realm: parseInt("0"),
+                        file: parseInt(state.input)
+                    };
+                } else {
+                    state.account = {
+                        shard: parseInt("0"),
+                        realm: parseInt("0"),
+                        account: parseInt(state.input)
+                    };
+                }
             } else {
                 state.account = null;
             }
-
-            context.emit("input", input.value, state.account);
+            if (props.file) {
+                context.emit("input", input.value, state.file);
+            } else {
+                context.emit("input", input.value, state.account);
+            }
             context.emit("valid", valid.value || partialValid.value);
         }
 

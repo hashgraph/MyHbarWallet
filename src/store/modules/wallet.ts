@@ -1,4 +1,8 @@
-import {LOG_IN, LOG_OUT, SET_HAS_BEEN_TO_INTERFACE} from "../../store/mutations";
+import {
+    LOG_IN,
+    LOG_OUT,
+    SET_HAS_BEEN_TO_INTERFACE
+} from "../../store/mutations";
 import { IS_LOGGED_IN } from "../../store/getters";
 import { ActionContext } from "vuex";
 import { RootState } from "..";
@@ -172,7 +176,7 @@ export default {
         async [REFRESH_EXCHANGE_RATE]({
             commit,
             state
-        }: ActionContext<State, RootState>){
+        }: ActionContext<State, RootState>) {
             if (state.session == null) {
                 console.warn(
                     "attempt to refresh exchange rate with a null session"
@@ -219,9 +223,7 @@ export default {
             commit(LOG_IN, session);
             await dispatch(REFRESH_BALANCE_AND_RATE);
         },
-        async [LOG_OUT_ACTION](
-            { commit }: ActionContext<State, RootState>
-        ) {
+        async [LOG_OUT_ACTION]({ commit }: ActionContext<State, RootState>) {
             commit(SET_HAS_BEEN_TO_INTERFACE, false);
             commit(LOG_OUT);
         }
