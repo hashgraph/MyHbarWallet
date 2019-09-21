@@ -17,6 +17,13 @@
             />
 
             <InterfaceNavigationSection
+                :image="fileDocumentBoxMultiple"
+                :image-active="fileDocumentBoxMultipleActive"
+                :title="$t('interfaceNavigation.files')"
+                :routes="filesRoutes"
+            />
+
+            <InterfaceNavigationSection
                 v-if="false"
                 :image="contractImage"
                 :image-active="contractImageActive"
@@ -48,6 +55,8 @@ import contractImage from "../assets/contract.svg";
 import contractImageActive from "../assets/contract-active.svg";
 import messageImage from "../assets/message.svg";
 import messageImageActive from "../assets/message-active.svg";
+import fileDocumentBoxMultipleActive from "../assets/file-document-box-multiple.svg";
+import fileDocumentBoxMultiple from "../assets/file-document-box-multiple-outline.svg";
 import store from "../store";
 import { SET_INTERFACE_MENU_IS_OPEN } from "../store/mutations";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
@@ -75,6 +84,11 @@ export default createComponent({
             { name: "verify-message", label: "Verify Message" }
         ];
 
+        const filesRoutes = [
+            { name: "upload-file", label: "Upload Files" },
+            { name: "download-file", label: "Download Files" }
+        ];
+
         const menuOpen = computed(() => store.state.interfaceMenu.isOpen);
 
         const classObject = computed(() => {
@@ -98,7 +112,10 @@ export default createComponent({
             messageImage,
             messageImageActive,
             mdiClose,
-            classObject
+            classObject,
+            filesRoutes,
+            fileDocumentBoxMultiple,
+            fileDocumentBoxMultipleActive
         };
     }
 });
