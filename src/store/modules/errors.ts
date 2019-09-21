@@ -76,9 +76,7 @@ export default {
             switch (payload.error.code) {
                 case ResponseCodeEnum.PAYER_ACCOUNT_NOT_FOUND:
                 case ResponseCodeEnum.INVALID_ACCOUNT_ID:
-                    message = i18n
-                        .t("common.error.invalidAccount")
-                        .toString();
+                    message = i18n.t("common.error.invalidAccount").toString();
                     break;
                 case ResponseCodeEnum.INVALID_SIGNATURE:
                     message = i18n
@@ -95,11 +93,14 @@ export default {
                     break;
                 case ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE:
                 case ResponseCodeEnum.INSUFFICIENT_PAYER_BALANCE:
-                    message = i18n.t("common.error.insufficientPayerBalance")
+                    message = i18n
+                        .t("common.error.insufficientPayerBalance")
                         .toString();
                     break;
                 case ResponseCodeEnum.ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS:
-                    message = i18n.t("common.error.cannotSendHbarToYourself").toString();
+                    message = i18n
+                        .t("common.error.cannotSendHbarToYourself")
+                        .toString();
                     break;
                 default:
                     message =
@@ -108,7 +109,7 @@ export default {
             }
 
             if (payload.showAlert) {
-                dispatch(ALERT, {message, level: severity});
+                dispatch(ALERT, { message, level: severity });
             }
 
             return { message, error: payload.error };
@@ -141,7 +142,7 @@ export default {
             }
 
             if (payload.showAlert) {
-                dispatch(ALERT, {message, level: severity});
+                dispatch(ALERT, { message, level: severity });
             }
 
             return { message, error: payload.error };

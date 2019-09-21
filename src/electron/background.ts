@@ -26,7 +26,7 @@ function createWindow(): void {
 
     // wait to show the window until the page is actually loaded
     win.once("ready-to-show", () => {
-        if(win != null) {
+        if (win != null) {
             win.show();
         }
     });

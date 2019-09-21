@@ -10,24 +10,27 @@
         </div>
         <nav :class="classObject">
             <InterfaceNavigationSection
-                :image="sendImage"
-                :image-active="sendImageActive"
+                :icon="mdiCoinOutline"
                 :title="$t('interfaceNavigation.crypto')"
                 :routes="cryptoRoutes"
             />
 
             <InterfaceNavigationSection
+                :icon="mdiFileDocumentBoxMultipleOutline"
+                :title="$t('interfaceNavigation.files')"
+                :routes="filesRoutes"
+            />
+
+            <InterfaceNavigationSection
                 v-if="false"
-                :image="contractImage"
-                :image-active="contractImageActive"
+                :icon="contractImage"
                 :title="$t('interfaceNavigation.contract')"
                 :routes="contractRoutes"
             />
 
             <InterfaceNavigationSection
                 v-if="false"
-                :image="messageImage"
-                :image-active="messageImageActive"
+                :icon="messageImage"
                 :title="$t('common.message')"
                 :routes="messageRoutes"
             />
@@ -42,16 +45,14 @@
 
 <script lang="ts">
 import InterfaceNavigationSection from "./InterfaceNavigationSection.vue";
-import sendImage from "../assets/send.svg";
-import sendImageActive from "../assets/send-active.svg";
-import contractImage from "../assets/contract.svg";
-import contractImageActive from "../assets/contract-active.svg";
-import messageImage from "../assets/message.svg";
-import messageImageActive from "../assets/message-active.svg";
 import store from "../store";
 import { SET_INTERFACE_MENU_IS_OPEN } from "../store/mutations";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
-import { mdiClose } from "@mdi/js";
+import {
+    mdiClose,
+    mdiCoinOutline,
+    mdiFileDocumentBoxMultipleOutline
+} from "@mdi/js";
 import { createComponent, computed } from "@vue/composition-api";
 
 // Yes, it is used
@@ -81,6 +82,11 @@ export default createComponent({
             { name: "verify-message", label: "Verify Message" }
         ];
 
+        const filesRoutes = [
+            { name: "upload-file", label: "Upload Files" },
+            { name: "download-file", label: "Download Files" }
+        ];
+
         const menuOpen = computed(() => store.state.interfaceMenu.isOpen);
 
         const classObject = computed(() => {
@@ -90,16 +96,13 @@ export default createComponent({
 
         return {
             cryptoRoutes,
-            sendImage,
-            sendImageActive,
             contractRoutes,
-            contractImage,
-            contractImageActive,
             messageRoutes,
-            messageImage,
-            messageImageActive,
             mdiClose,
             classObject,
+            filesRoutes,
+            mdiFileDocumentBoxMultipleOutline,
+            mdiCoinOutline,
             handleClick
         };
     }

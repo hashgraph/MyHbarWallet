@@ -63,6 +63,24 @@ function InterfaceVerifyMessage(): Promise<
     );
 }
 
+function InterfaceUploadFile(): Promise<
+    typeof import("./views/InterfaceUploadFile.vue")
+> {
+    return import(
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceUploadFile.vue"
+    );
+}
+
+function InterfaceDownloadFile(): Promise<
+    typeof import("./views/InterfaceDownloadFile.vue")
+> {
+    return import(
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceDownloadFile.vue"
+    );
+}
+
 // auth function that redirects visitors who have not logged in back to the home route
 function RequireWallet(
     _to: Route,
@@ -156,6 +174,16 @@ export default new Router({
                     path: "verify-message",
                     name: "verify-message",
                     component: InterfaceVerifyMessage
+                },
+                {
+                    path: "upload-file",
+                    name: "upload-file",
+                    component: InterfaceUploadFile
+                },
+                {
+                    path: "download-file",
+                    name: "download-file",
+                    component: InterfaceDownloadFile
                 }
             ]
         },

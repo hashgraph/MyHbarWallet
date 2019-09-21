@@ -1,8 +1,13 @@
 <template>
     <div class="nav-section">
         <div class="nav-section-header" @click="handleHeaderClick">
-            <img alt :src="isSectionActive ? imageActive : image" />
-            <span class="nav-title">{{ title }}</span>
+            <material-design-icon
+                alt
+                class="icon"
+                :class="isSectionActive"
+                :icon="icon"
+            />
+            <span class="nav-title" :class="isSectionActive">{{ title }}</span>
             <transition name="fade" mode="out-in">
                 <MaterialDesignIcon
                     :key="isSectionActive"
@@ -42,8 +47,7 @@ interface InterfaceNavigationItem {
 }
 
 interface Props {
-    image: string;
-    imageActive: string;
+    icon: string;
     title: string;
     routes: InterfaceNavigationItem[];
 }
@@ -59,22 +63,25 @@ export default createComponent({
         MaterialDesignIcon
     },
     props: {
-        image: (String as unknown) as PropType<string>,
-        imageActive: (String as unknown) as PropType<string>,
+        icon: (String as unknown) as PropType<string>,
         title: (String as unknown) as PropType<string>,
         routes: (Array as unknown) as PropType<InterfaceNavigationItem[]>
     },
     watch: {},
     setup(props: Props, context: SetupContext) {
-        const isSectionActive = computed(() =>
-            props.routes.some(
-                route =>
-                    route.name ===
-                    (context.root.$route == undefined
-                        ? null
-                        : context.root.$route.name)
-            )
-        );
+        const isSectionActive = computed(() => {
+            if (
+                props.routes.some(
+                    route =>
+                        route.name ===
+                        (context.root.$route == undefined
+                            ? null
+                            : context.root.$route.name)
+                )
+            ) {
+                return "active";
+            }
+        });
 
         function handleHeaderClick(): void {
             const firstRoute = props.routes[0];
@@ -104,6 +111,14 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
+.icon {
+    color: var(--color-silver-polish);
+
+    &.active {
+        color: var(--color-green-jelly);
+    }
+}
+
 .nav-section {
     display: flex;
     flex-direction: column;
@@ -119,10 +134,15 @@ export default createComponent({
 }
 
 .nav-title {
+    color: var(--color-silver-polish);
     flex-grow: 1;
     font-size: 16px;
     font-weight: 500;
     margin-inline-start: 10px;
+
+    &.active {
+        color: inherit;
+    }
 }
 
 .indicator {

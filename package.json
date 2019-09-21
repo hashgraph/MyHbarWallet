@@ -20,7 +20,7 @@
     },
     "main": "background.js",
     "dependencies": {
-        "@hashgraph/sdk": "^0.6.1",
+        "@hashgraph/sdk": "^0.7.0",
         "@ledgerhq/errors": "^4.70.3",
         "@ledgerhq/hw-transport": "^4.71.0",
         "@ledgerhq/hw-transport-u2f": "^4.70.0",
@@ -30,6 +30,7 @@
         "@mdi/js": "^4.4.95",
         "@vue/composition-api": "^0.3.2",
         "bignumber.js": "^9.0.0",
+        "file-type": "^12.3.0",
         "html2pdf.js": "^0.9.1",
         "jdenticon": "^2.2.0",
         "jspdf": "^1.5.3",

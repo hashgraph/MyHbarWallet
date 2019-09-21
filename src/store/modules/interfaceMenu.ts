@@ -1,4 +1,7 @@
-import {SET_HAS_BEEN_TO_INTERFACE, SET_INTERFACE_MENU_IS_OPEN} from "../../store/mutations";
+import {
+    SET_HAS_BEEN_TO_INTERFACE,
+    SET_INTERFACE_MENU_IS_OPEN
+} from "../../store/mutations";
 
 export interface State {
     isOpen: boolean;
