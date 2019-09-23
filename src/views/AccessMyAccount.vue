@@ -141,7 +141,6 @@ export default createComponent({
             state.modalAccessBySoftwareIsOpen = false;
 
             if (which === "file") {
-                console.log(file); //REMOVE
                 if (file.value != null) {
                     file.value.click(); // triggers loadTextFromFile via hidden input @click
                 }

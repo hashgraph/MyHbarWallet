@@ -7,17 +7,17 @@
             label="Select a file from your computer"
             @click="handleBrowseClick"
         ></Button>
-        <div class="file-name-container">
+        <div v-if="state.filename" class="file-name-container">
             <MaterialDesignIcon class="icon" :icon="mdiFileUpload" />
             <span class="file-name">{{ state.filename }}</span>
-            <input
-                v-show="false"
-                id="file-upload"
-                ref="file"
-                type="file"
-                @change="loadBuffFromFile"
-            />
         </div>
+        <input
+            v-show="false"
+            id="file-upload"
+            ref="file"
+            type="file"
+            @change="loadBuffFromFile"
+        />
     </div>
 </template>
 
@@ -48,7 +48,6 @@ export default createComponent({
         const file = ref<HTMLInputElement | null>(null);
 
         function handleBrowseClick(): void {
-            console.log(file);
             if (file.value != null) {
                 file.value.click(); // triggers loadTextFromFile via hidden input @click
             }
@@ -107,7 +106,7 @@ export default createComponent({
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    height: 300px;
+    height: 200px;
     justify-content: center;
     width: 100%;
 }
