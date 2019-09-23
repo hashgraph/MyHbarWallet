@@ -23,11 +23,7 @@
             show-validation
         />
 
-        <TextInput
-            v-model.trim="state.memo"
-            :placeholder="$t('common.optionalMemo')"
-            :label="$t('common.memo')"
-        />
+        <OptionalMemoField v-model.trim="state.memo" />
 
         <template v-slot:footer>
             <Button
@@ -80,6 +76,7 @@ import {
 } from "../store/getters";
 import { ResponseCodeEnum } from "@hashgraph/sdk/src/generated/ResponseCode_pb";
 import { HederaError } from "@hashgraph/sdk/src/errors";
+import OptionalMemoField from "../components/OptionalMemoField.vue";
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
@@ -91,7 +88,8 @@ export default createComponent({
         InterfaceForm,
         Button,
         ModalSendTransferSuccess,
-        ModalFeeSummary
+        ModalFeeSummary,
+        OptionalMemoField
     },
     setup(_: object | null, context: SetupContext) {
         const state = reactive({
