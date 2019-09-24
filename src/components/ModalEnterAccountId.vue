@@ -4,7 +4,6 @@
             :is-open="isOpen"
             :title="$t('modalEnterAccountId.title')"
             @change="handleModalChangeIsOpen"
-            @click.native="handleInputNotFocused"
         >
             <template v-slot:banner>
                 <Notice class="notice" :symbol="mdiHelpCircleOutline">
@@ -12,16 +11,12 @@
                 </Notice>
             </template>
             <form @submit.stop.prevent="handleSubmit">
-                <TextInput
+                <IDInput
                     ref="input"
-                    :value="state.input"
-                    show-validation
-                    :valid="valid"
-                    :error="state.errorMessage"
-                    :placeholder="$t('common.accountSyntax')"
-                    @input="handleInput"
-                    @click.native.stop
-                />
+                    :is-open="isOpen"
+                    @valid="handleValid"
+                    @input="handleAccount"
+                ></IDInput>
                 <div class="buttons">
                     <Button
                         compact
@@ -30,14 +25,13 @@
                         class="button"
                         type="button"
                         @click="handleDontHaveAccount"
-                        @focus.native="handleInputNotFocused"
                     />
                     <Button
                         compact
                         :label="$t('common.continue')"
                         class="button"
                         type="submit"
-                        :disabled="!valid"
+                        :disabled="!state.valid"
                         :busy="state.isBusy"
                     />
                 </div>
@@ -59,6 +53,7 @@ import {
 import Modal from "../components/Modal.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
+import IDInput from "../components/IDInput.vue";
 import { Id } from "../store/modules/wallet";
 import settings from "../settings";
 import Notice from "../components/Notice.vue";
@@ -72,11 +67,11 @@ export interface Props {
 }
 
 interface State {
-    input: string;
     failed: string | null;
     errorMessage: string | null;
     isBusy: boolean;
     account: Id | null;
+    valid: boolean;
 }
 
 export default createComponent({
@@ -84,7 +79,8 @@ export default createComponent({
         Modal,
         TextInput,
         Button,
-        Notice
+        Notice,
+        IDInput
     },
     model: {
         prop: "isOpen",
@@ -98,30 +94,19 @@ export default createComponent({
     },
     setup(props: Props, context: SetupContext) {
         const state = reactive<State>({
-            input: "",
             failed: null,
             errorMessage: null,
             isBusy: false,
-            account: null
+            account: null,
+            valid: false
         });
 
-        const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
-        const partialRegex = /^\d{1,}$/;
-
-        const valid = computed(() => shardRealmAccountRegex.test(state.input));
-        const partialValid = computed(() => partialRegex.test(state.input));
-
-        const input = ref<HTMLInputElement | null>(null);
-
-        function handleInputNotFocused(): void {
-            if (partialValid.value) {
-                state.input = "0.0." + state.input;
-            }
+        function handleAccount(value: string, account: Id | null): void {
+            state.account = account;
         }
 
-        function handleInput(accountText: string): void {
-            state.errorMessage = null;
-            state.input = accountText;
+        function handleValid(valid: boolean): void {
+            state.valid = valid;
         }
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
@@ -135,17 +120,6 @@ export default createComponent({
         async function handleSubmit(): Promise<void> {
             state.errorMessage = null;
             state.isBusy = true;
-
-            if (valid.value) {
-                const parts = state.input.split(".");
-                state.account = {
-                    shard: parseInt(parts[0]),
-                    realm: parseInt(parts[1]),
-                    account: parseInt(parts[2])
-                };
-            } else {
-                state.account = null;
-            }
 
             if (state.account == null || props.privateKey == null) {
                 throw new Error("unexpected submission of EnterAccountID");
@@ -242,27 +216,13 @@ export default createComponent({
             }
         }
 
-        watch(
-            () => props.isOpen,
-            (newVal: boolean) => {
-                if (newVal && input.value != null) {
-                    // Clear input every time we reopen this modal
-                    state.input = "";
-                    input.value.focus();
-                }
-            }
-        );
-
         return {
             state,
-            valid,
-            partialValid,
-            input,
-            handleInput,
-            handleInputNotFocused,
+            handleAccount,
             handleModalChangeIsOpen,
             handleDontHaveAccount,
             handleSubmit,
+            handleValid,
             mdiHelpCircleOutline
         };
     }
