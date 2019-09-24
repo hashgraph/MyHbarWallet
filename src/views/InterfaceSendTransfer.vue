@@ -60,13 +60,13 @@ import {
     createComponent,
     reactive,
     computed,
+    watch,
     SetupContext
 } from "@vue/composition-api";
 import store from "../store";
 import { ALERT, REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
-import { getValueOfUnit, Unit } from "../units";
-import BigNumber from "bignumber.js";
+import { Unit } from "../units";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { formatHbar, validateHbar } from "../formatter";
 import {
@@ -74,8 +74,6 @@ import {
     ESTIMATED_FEE_TINYBAR,
     MAX_FEE_TINYBAR
 } from "../store/getters";
-import { ResponseCodeEnum } from "@hashgraph/sdk";
-import { HederaError } from "@hashgraph/sdk";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
@@ -94,76 +92,97 @@ export default createComponent({
     setup(_: object | null, context: SetupContext) {
         const state = reactive({
             amount: "",
+            isAmountValid: false,
             toAccount: "",
             memo: "",
+            buttonLabel: context.root
+                .$t("interfaceSendTransfer.sendHbar")
+                .toString(),
             isBusy: false,
             idErrorMessage: "",
             amountErrorMessage: "",
             successModalIsOpen: false,
-            summaryIsOpen: false
+            summaryIsOpen: false,
+            summaryAmount: "",
+            summaryItems: [] as Item[]
         });
 
         const isIdValid = computed(() =>
             shardRealmAccountRegex.test(state.toAccount)
         );
-        const isAmountValid = computed(() => {
-            return (
-                new BigNumber(state.amount).isGreaterThan(new BigNumber(0)) &&
-                validateHbar(state.amount)
-            );
-        });
 
-        const amount = computed(() => formatHbar(new BigNumber(state.amount)));
+        watch(
+            () => state.amount,
+            async (amount: string) => {
+                if (!validateHbar(amount)) {
+                    state.isAmountValid = false;
+                    return;
+                }
 
-        const truncate = computed((): string =>
-            amount.value.length > 15
-                ? amount.value.substring(0, 13) + "..."
-                : amount.value
+                const { Hbar } = await (import(
+                    "@hashgraph/sdk/src/Hbar"
+                ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+
+                const amountHbar = Hbar.from(amount, "hbar");
+
+                state.isAmountValid =
+                    amountHbar.comparedTo(Hbar.fromTinybar(0)) > 0;
+
+                const formattedAmount = formatHbar(amountHbar);
+                const truncatedAmount =
+                    formattedAmount.length > 15
+                        ? formattedAmount.substring(0, 13) + "..."
+                        : formattedAmount;
+
+                state.buttonLabel =
+                    amountHbar.comparedTo(Hbar.fromTinybar(0)) > 0
+                        ? context.root
+                              .$t("interfaceSendTransfer.sendHbars", [
+                                  truncatedAmount
+                              ])
+                              .toString()
+                        : context.root
+                              .$t("interfaceSendTransfer.sendHbar")
+                              .toString();
+
+                state.summaryAmount = formattedAmount;
+
+                state.summaryItems = [
+                    {
+                        description: context.root
+                            .$t("interfaceSendTransfer.transferAmount")
+                            .toString(),
+                        value: state.isAmountValid
+                            ? amount
+                            : (Hbar.fromTinybar(
+                                  0
+                              ) as import("@hashgraph/sdk/src/Hbar").Hbar)
+                    } as Item,
+                    {
+                        description: context.root
+                            .$t("common.estimatedFee")
+                            .toString(),
+                        value: estimatedFeeHbar as import("@hashgraph/sdk/src/Hbar").Hbar
+                    } as Item
+                ] as Item[];
+            }
         );
-
-        const buttonLabel = computed((): string =>
-            new BigNumber(state.amount).isGreaterThan(new BigNumber(0))
-                ? context.root
-                      .$t("interfaceSendTransfer.sendHbars", [truncate.value])
-                      .toString()
-                : context.root.$t("interfaceSendTransfer.sendHbar").toString()
-        );
-
-        const summaryAmount = computed(() => {
-            return amount.value;
-        });
 
         const summaryAccount = computed(() => {
             return state.toAccount;
         });
 
-        const summaryItems = computed(() => {
-            return [
-                {
-                    description: context.root.$t(
-                        "interfaceSendTransfer.transferAmount"
-                    ),
-                    value: isAmountValid
-                        ? new BigNumber(state.amount)
-                        : new BigNumber(0)
-                },
-                {
-                    description: context.root.$t("common.estimatedFee"),
-                    value: estimatedFeeHbar
-                }
-            ] as Item[];
-        });
-
         async function handleClickEntireBalance(): Promise<void> {
-            const balance = store.state.wallet.balance;
+            const balance: import("@hashgraph/sdk/src/Hbar").Hbar | null =
+                store.state.wallet.balance;
 
             if (balance == null) {
                 return;
             }
 
-            const hbar = new BigNumber(balance)
-                .dividedBy(getValueOfUnit(Unit.Hbar))
-                .minus(estimatedFeeHbar);
+            const hbar: import("@hashgraph/sdk/src/Hbar").Hbar = balance.minus(
+                estimatedFeeHbar
+            );
 
             state.amount = hbar.toString();
         }
@@ -187,6 +206,10 @@ export default createComponent({
             const client = store.state.wallet.session.client;
             const parts = state.toAccount.split(".");
 
+            const { Hbar } = await (import(
+                "@hashgraph/sdk/src/Hbar"
+            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+
             try {
                 const recipient: import("@hashgraph/sdk").AccountId = {
                     shard: parseInt(parts[0]),
@@ -194,9 +217,7 @@ export default createComponent({
                     account: parseInt(parts[2])
                 };
 
-                const sendAmountTinybar = new BigNumber(
-                    state.amount
-                ).multipliedBy(getValueOfUnit(Unit.Hbar));
+                const sendAmount = Hbar.from(state.amount, "hbar");
 
                 const { CryptoTransferTransaction, Client } = await import(
                     "@hashgraph/sdk"
@@ -207,24 +228,19 @@ export default createComponent({
                 // Oh also, check for null balance to appease typescript
                 const safeBalance =
                     store.state.wallet.balance == null
-                        ? new BigNumber(0)
+                        ? Hbar.fromTinybar(0)
                         : store.state.wallet.balance;
 
-                const maxTxFeeTinybar = store.getters[MAX_FEE_TINYBAR](
-                    new BigNumber(safeBalance).minus(
-                        sendAmountTinybar.plus(estimatedFeeTinybar)
-                    )
+                const maxTxFee = store.getters[MAX_FEE_TINYBAR](
+                    safeBalance.minus(sendAmount).plus(estimatedFeeHbar)
                 );
 
                 const tx = new CryptoTransferTransaction(client as InstanceType<
                     typeof Client
                 >)
-                    .addSender(
-                        store.state.wallet.session.account,
-                        sendAmountTinybar
-                    )
-                    .addRecipient(recipient, sendAmountTinybar)
-                    .setTransactionFee(maxTxFeeTinybar);
+                    .addSender(store.state.wallet.session.account, sendAmount)
+                    .addRecipient(recipient, sendAmount)
+                    .setTransactionFee(maxTxFee);
 
                 if (state.memo !== "") {
                     tx.setMemo(state.memo);
@@ -238,6 +254,10 @@ export default createComponent({
                 // eslint-disable-next-line require-atomic-updates
                 state.successModalIsOpen = true;
             } catch (error) {
+                const { HederaError } = await (import(
+                    "@hashgraph/sdk/src/errors"
+                ) as Promise<typeof import("@hashgraph/sdk/src/errors")>);
+
                 // eslint-disable-next-line require-atomic-updates
                 state.idErrorMessage = "";
                 // eslint-disable-next-line require-atomic-updates
@@ -292,19 +312,14 @@ export default createComponent({
 
         return {
             state,
-            summaryAmount,
             summaryAccount,
-            summaryItems,
-            buttonLabel,
             isIdValid,
-            isAmountValid,
             hbarSuffix: Unit.Hbar,
             tinybarSuffix: Unit.Tinybar,
             handleShowSummary,
             handleClickEntireBalance,
             handleSendTransfer,
             handleSuccessModalChange,
-            truncate,
             handleInput
         };
     }

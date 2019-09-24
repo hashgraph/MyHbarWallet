@@ -9,7 +9,9 @@ export function validateHbar(input: string): boolean {
     return hbarAmountRegex.test(input);
 }
 
-export function formatHbar(input: import("@hashgraph/sdk/src/Hbar").Hbar): string {
+export function formatHbar(
+    input: import("@hashgraph/sdk/src/Hbar").Hbar
+): string {
     const fmt = {
         decimalSeparator: ".",
         groupSeparator: ",",

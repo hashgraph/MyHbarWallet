@@ -71,10 +71,16 @@ export default {
             state.session = null;
             state.balance = null;
         },
-        [SET_BALANCE](state: State, balance: import("@hashgraph/sdk/src/Hbar").Hbar): void {
+        [SET_BALANCE](
+            state: State,
+            balance: import("@hashgraph/sdk/src/Hbar").Hbar
+        ): void {
             state.balance = balance;
         },
-        [SET_EXCHANGE_RATE](state: State, rate: import("@hashgraph/sdk").BigNumber): void {
+        [SET_EXCHANGE_RATE](
+            state: State,
+            rate: import("@hashgraph/sdk").BigNumber
+        ): void {
             state.exchangeRate = rate;
         }
     },
@@ -96,7 +102,9 @@ export default {
                 );
             }
 
-            const balance = await (state.session.client as InstanceType<typeof Client>).getAccountBalance();
+            const balance = await (state.session.client as InstanceType<
+                typeof Client
+            >).getAccountBalance();
 
             commit(SET_BALANCE, balance);
         },
@@ -118,7 +126,9 @@ export default {
                 await response.clone().text()
             );
 
-            const { BigNumber } = await (import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>);
+            const { BigNumber } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
 
             // filter reduce to average of last rate from relevant exchanges
             const meanLast = new BigNumber(
