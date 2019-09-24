@@ -64,11 +64,11 @@ describe("ModalAccessBySoftware.vue", (): void => {
                           <div><label for="key" class="radio-button"><img alt="" src="" class="icon"> <input id="key" type="radio" name="software-access-option" class="input" value="key"> <span class="label">Private Key</span>
                               <!----></label></div>
                         </div>
-                        <div class="hardware-link">
-                          Purchase a hardware wallet for the highest security when accessing your crypto.
-                          <a href="/hardware-wallet-affiliates" class="">
-                            Purchase a hardware wallet....
-                          </a></div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
+                        <div class="hardware-link"><a href="/hardware-wallet-affiliates" class="">
+                            Purchase a hardware wallet
+                          </a>
+                          for the highest security when accessing your crypto.
+                        </div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
                           <!----></button>
                         <div class="customer-support-link support-link">
                           <div class="customer-support-container"><img alt="" src="">Customer Support
@@ -185,11 +185,11 @@ describe("ModalAccessBySoftware.vue", (): void => {
                           <div><label for="key" class="radio-button"><img alt="" src="" class="icon"> <input id="key" type="radio" name="software-access-option" class="input" value="key"> <span class="label">Private Key</span>
                               <!----></label></div>
                         </div>
-                        <div class="hardware-link">
-                          Purchase a hardware wallet for the highest security when accessing your crypto.
-                          <a href="/hardware-wallet-affiliates" class="">
-                            Purchase a hardware wallet....
-                          </a></div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
+                        <div class="hardware-link"><a href="/hardware-wallet-affiliates" class="">
+                            Purchase a hardware wallet
+                          </a>
+                          for the highest security when accessing your crypto.
+                        </div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
                           <!----></button>
                         <div class="customer-support-link support-link">
                           <div class="customer-support-container"><img alt="" src="">Customer Support
