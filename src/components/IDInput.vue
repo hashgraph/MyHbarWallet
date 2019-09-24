@@ -3,6 +3,8 @@
         ref="input"
         :value="state.input"
         show-validation
+        :can-copy="canCopy"
+        :label="label"
         :valid="valid || partialValid"
         :error="state.errorMessage"
         :placeholder="$t('common.accountSyntax')"
@@ -31,6 +33,9 @@ interface State {
 
 export interface Props {
     isOpen: boolean;
+    errorMessage: string | null;
+    canCopy: boolean;
+    label: string;
 }
 
 export default createComponent({
@@ -38,7 +43,10 @@ export default createComponent({
         TextInput
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>
+        isOpen: (Boolean as unknown) as PropType<boolean>,
+        errorMessage: (String as unknown) as PropType<string>,
+        canCopy: (Boolean as unknown) as PropType<boolean>,
+        label: (String as unknown) as PropType<string>
     },
     setup(props, context) {
         const state = reactive<State>({
@@ -79,9 +87,17 @@ export default createComponent({
         }
 
         watch(
+            () => props.errorMessage,
+            newVal => {
+                if (newVal && props.errorMessage)
+                    state.errorMessage = props.errorMessage;
+            }
+        );
+
+        watch(
             () => props.isOpen,
             newVal => {
-                if (newVal && input.value != null) {
+                if (newVal && input.value) {
                     // Clear input every time we reopen this modal
                     state.input = "";
                     input.value.focus();
