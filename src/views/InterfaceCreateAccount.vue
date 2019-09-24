@@ -174,8 +174,8 @@ export default createComponent({
             const client = store.state.wallet.session.client;
 
             const { HederaError, ResponseCodeEnum } = await (import(
-                "@hashgraph/sdk/src/errors"
-            ) as Promise<typeof import("@hashgraph/sdk/src/errors")>);
+                "@hashgraph/sdk"
+            ) as Promise<typeof import("@hashgraph/sdk")>);
 
             try {
                 // The new wallet's initial balance

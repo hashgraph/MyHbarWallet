@@ -152,8 +152,8 @@ export default createComponent({
             }
 
             const { Client, HederaError, ResponseCodeEnum } = await (import(
-                "@hashgraph/sdk/"
-            ) as Promise<typeof import("@hashgraph/sdk/")>);
+                "@hashgraph/sdk"
+            ) as Promise<typeof import("@hashgraph/sdk")>);
 
             let client;
 

@@ -37,20 +37,19 @@ interface State {
     focused: number | null;
 }
 
+interface Props {
+    editable: boolean;
+    word: number;
+    value: string[];
+}
+
 export default createComponent({
     props: {
-        editable: (Boolean as unknown) as boolean,
-        words: (Number as unknown) as number,
+        editable: Boolean,
+        words: Number,
         value: (Array as unknown) as PropType<string[]>
     },
-    setup(
-        props: {
-            editable: boolean;
-            word: number;
-            value: string[];
-        },
-        context: SetupContext
-    ) {
+    setup(props: Props, context: SetupContext) {
         const state = reactive<State>({
             focused: null as number | null
         });

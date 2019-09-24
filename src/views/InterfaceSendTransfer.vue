@@ -74,8 +74,8 @@ import {
     ESTIMATED_FEE_TINYBAR,
     MAX_FEE_TINYBAR
 } from "../store/getters";
-import { ResponseCodeEnum } from "@hashgraph/sdk/src/generated/ResponseCode_pb";
-import { HederaError } from "@hashgraph/sdk/src/errors";
+import { ResponseCodeEnum } from "@hashgraph/sdk";
+import { HederaError } from "@hashgraph/sdk";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
