@@ -1,13 +1,13 @@
 <template>
     <div class="hardware-link">
+        <router-link :to="{ name: 'hardware-wallet-affiliates' }">
+            {{ $t("purchaseWalletLink.purchaseAHardwareWallet") }}
+        </router-link>
         {{
             $t(
                 "purchaseWalletLink.purchaseAHardwareWalletForTheHighestSecurity"
             )
         }}
-        <router-link :to="{ name: 'hardware-wallet-affiliates' }">
-            {{ $t("purchaseWalletLink.purchaseAHardwareWallet") }}
-        </router-link>
     </div>
 </template>
 
@@ -27,7 +27,7 @@ export default createComponent({});
 
 a {
     color: var(--color-melbourne-cup);
-    display: block;
+    display: inline-block;
     text-decoration: none;
 
     &:hover,
