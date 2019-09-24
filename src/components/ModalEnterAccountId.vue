@@ -14,6 +14,7 @@
                 <IDInput
                     ref="input"
                     :is-open="isOpen"
+                    :error-message="state.errorMessage"
                     @valid="handleValid"
                     @input="handleAccount"
                 ></IDInput>
@@ -102,6 +103,7 @@ export default createComponent({
         });
 
         function handleAccount(value: string, account: Id | null): void {
+            state.errorMessage = null;
             state.account = account;
         }
 

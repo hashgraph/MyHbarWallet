@@ -13,14 +13,14 @@
             @input="handleInput"
         />
 
-        <TextInput
-            v-model="state.toAccount"
+        <IDInput
             :error="state.idErrorMessage"
-            :valid="isIdValid"
+            :valid="state.idValid"
             can-copy
             :label="$t('common.toAccount')"
-            :placeholder="$t('common.accountSyntax')"
             show-validation
+            @valid="handleValid"
+            @input="handleAccount"
         />
 
         <OptionalMemoField v-model.trim="state.memo" />
@@ -28,7 +28,7 @@
         <template v-slot:footer>
             <Button
                 :busy="state.isBusy"
-                :disabled="!isIdValid || !isAmountValid"
+                :disabled="!state.idValid || !isAmountValid"
                 :label="buttonLabel"
                 @click="handleShowSummary"
             />
@@ -37,7 +37,7 @@
         <ModalSendTransferSuccess
             :amount="state.amount"
             :is-open="state.successModalIsOpen"
-            :to-account="state.toAccount"
+            :to-account="state.accountString"
             @change="handleSuccessModalChange"
         />
 
@@ -56,6 +56,7 @@
 import TextInput from "../components/TextInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
+import IDInput from "../components/IDInput.vue";
 import {
     createComponent,
     reactive,
@@ -69,6 +70,7 @@ import { getValueOfUnit, Unit } from "../units";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { formatHbar, validateHbar } from "../formatter";
+import { Id } from "../store/modules/wallet";
 import {
     ESTIMATED_FEE_HBAR,
     ESTIMATED_FEE_TINYBAR,
@@ -78,7 +80,20 @@ import { ResponseCodeEnum } from "@hashgraph/sdk";
 import { HederaError } from "@hashgraph/sdk";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 
-const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
+interface State {
+    amount: string | null;
+    account: Id | null;
+    accountString: string | null;
+    memo: string | null;
+    isBusy: boolean;
+    idErrorMessage: string | null;
+    amountErrorMessage: string | null;
+    successModalIsOpen: boolean;
+    summaryIsOpen: boolean;
+    idValid: boolean;
+}
+
+// const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
 
@@ -89,39 +104,67 @@ export default createComponent({
         Button,
         ModalSendTransferSuccess,
         ModalFeeSummary,
-        OptionalMemoField
+        OptionalMemoField,
+        IDInput
     },
     setup(_: object | null, context: SetupContext) {
-        const state = reactive({
+        const state = reactive<State>({
             amount: "",
-            toAccount: "",
+            account: null,
+            accountString: "",
             memo: "",
             isBusy: false,
             idErrorMessage: "",
             amountErrorMessage: "",
             successModalIsOpen: false,
-            summaryIsOpen: false
+            summaryIsOpen: false,
+            idValid: false
         });
 
-        const isIdValid = computed(() =>
-            shardRealmAccountRegex.test(state.toAccount)
-        );
+        function handleAccount(value: string, account: Id | null): void {
+            state.idErrorMessage = "";
+            state.account = account;
+            if (state.account) {
+                state.accountString =
+                    state.account.shard +
+                    "." +
+                    state.account.realm +
+                    "." +
+                    state.account.account;
+            }
+        }
+
+        function handleValid(valid: boolean): void {
+            state.idValid = valid;
+        }
+
+        // const isIdValid = computed(() =>
+        //     shardRealmAccountRegex.test(state.toAccount)
+        // );
         const isAmountValid = computed(() => {
-            return (
-                new BigNumber(state.amount).isGreaterThan(new BigNumber(0)) &&
-                validateHbar(state.amount)
-            );
+            if (state.amount) {
+                return (
+                    new BigNumber(state.amount).isGreaterThan(
+                        new BigNumber(0)
+                    ) && validateHbar(state.amount)
+                );
+            }
         });
 
-        const amount = computed(() => formatHbar(new BigNumber(state.amount)));
+        const amount = computed(() => {
+            if (state.amount) {
+                return formatHbar(new BigNumber(state.amount));
+            }
+        });
 
-        const truncate = computed((): string =>
-            amount.value.length > 15
+        const truncate = computed(() =>
+            amount.value && amount.value.length > 15
                 ? amount.value.substring(0, 13) + "..."
                 : amount.value
         );
 
-        const buttonLabel = computed((): string =>
+        const buttonLabel = computed(() =>
+            state.amount &&
             new BigNumber(state.amount).isGreaterThan(new BigNumber(0))
                 ? context.root
                       .$t("interfaceSendTransfer.sendHbars", [truncate.value])
@@ -134,25 +177,27 @@ export default createComponent({
         });
 
         const summaryAccount = computed(() => {
-            return state.toAccount;
+            return state.accountString;
         });
 
-        const summaryItems = computed(() => {
-            return [
-                {
-                    description: context.root.$t(
-                        "interfaceSendTransfer.transferAmount"
-                    ),
-                    value: isAmountValid
-                        ? new BigNumber(state.amount)
-                        : new BigNumber(0)
-                },
-                {
-                    description: context.root.$t("common.estimatedFee"),
-                    value: estimatedFeeHbar
-                }
-            ] as Item[];
-        });
+        const summaryItems = computed(
+            () =>
+                [
+                    {
+                        description: context.root.$t(
+                            "interfaceSendTransfer.transferAmount"
+                        ),
+                        value:
+                            isAmountValid && state.amount
+                                ? new BigNumber(state.amount)
+                                : new BigNumber(0)
+                    },
+                    {
+                        description: context.root.$t("common.estimatedFee"),
+                        value: estimatedFeeHbar
+                    }
+                ] as Item[]
+        );
 
         async function handleClickEntireBalance(): Promise<void> {
             const balance = store.state.wallet.balance;
@@ -184,19 +229,32 @@ export default createComponent({
                 );
             }
 
-            const client = store.state.wallet.session.client;
-            const parts = state.toAccount.split(".");
+            const client = store.state.wallet.session.client;            const parts = state.toAccount.split(".");
+            // const parts = state.toAccount.split(".");
 
             try {
-                const recipient: import("@hashgraph/sdk").AccountId = {
-                    shard: parseInt(parts[0]),
-                    realm: parseInt(parts[1]),
-                    account: parseInt(parts[2])
+                let recipient: import("@hashgraph/sdk").AccountId = {
+                    shard: -1,
+                    realm: -1,
+                    account: -1
                 };
 
-                const sendAmountTinybar = new BigNumber(
-                    state.amount
-                ).multipliedBy(getValueOfUnit(Unit.Hbar));
+                if (state.account) {
+                    recipient = state.account;
+                }
+                // {
+                //     shard: parseInt(parts[0]),
+                //     realm: parseInt(parts[1]),
+                //     account: parseInt(parts[2])
+                // };
+
+                let sendAmountTinybar = new BigNumber(0);
+
+                if (state.amount) {
+                    sendAmountTinybar = new BigNumber(
+                        state.amount
+                    ).multipliedBy(getValueOfUnit(Unit.Hbar));
+                }
 
                 const { CryptoTransferTransaction, Client } = await import(
                     "@hashgraph/sdk"
@@ -226,7 +284,7 @@ export default createComponent({
                     .addRecipient(recipient, sendAmountTinybar)
                     .setTransactionFee(maxTxFeeTinybar);
 
-                if (state.memo !== "") {
+                if (state.memo !== "" && state.memo) {
                     tx.setMemo(state.memo);
                 }
 
@@ -286,7 +344,7 @@ export default createComponent({
                 state.isBusy = false;
                 state.amount = "";
                 state.memo = "";
-                state.toAccount = "";
+                state.account = null;
             }
         }
 
@@ -296,7 +354,6 @@ export default createComponent({
             summaryAccount,
             summaryItems,
             buttonLabel,
-            isIdValid,
             isAmountValid,
             hbarSuffix: Unit.Hbar,
             tinybarSuffix: Unit.Tinybar,
@@ -305,7 +362,9 @@ export default createComponent({
             handleSendTransfer,
             handleSuccessModalChange,
             truncate,
-            handleInput
+            handleInput,
+            handleValid,
+            handleAccount
         };
     }
 });
