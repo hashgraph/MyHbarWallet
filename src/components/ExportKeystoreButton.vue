@@ -89,8 +89,6 @@ export default createComponent({
                     throw new Error("Private Key is null");
                 }
 
-                debugger;
-
                 keyFile.value = await Ed25519PrivateKey.fromString(
                     props.privateKey
                 ).createKeystore(
