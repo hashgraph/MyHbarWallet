@@ -1,4 +1,20 @@
-[![](https://myhbarwallet.com/img/myhbarwallet-logo.c74a7d51.svg)](https://myhbarwallet.com/)
+<div align="center">
+   <h1>
+       <img src="https://myhbarwallet.com/img/myhbarwallet-logo.c74a7d51.svg" alt="logo" />
+   </h1>
+</div>
+
+<br>
+
+<div align="center">
+  <!-- Netlify Status -->
+  <a href="https://app.netlify.com/sites/myhbarwallet/deploys">
+    <img src="https://api.netlify.com/api/v1/badges/c533cd8a-a127-48d5-a123-292202cab01c/deploy-status"
+    alt="Netlify Status" />
+  </a>
+</div>
+
+<br>
 
 MyHbarWallet is a free, client-side interface helping you interact with Hedera™ Hashgraph. Our easy-to-use, open-source platform allows you to generate keys, create accounts, transfer hbars, and so much more.
 
