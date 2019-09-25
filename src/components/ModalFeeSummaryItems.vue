@@ -25,12 +25,16 @@ import {
     reactive,
     onMounted
 } from "@vue/composition-api";
-import { Item } from "./ModalFeeSummary.vue";
 import { formatSplit, formatRightPad } from "../formatter";
 
 let KEY = 0;
 function nextItemKey(): number {
     return (KEY += 1);
+}
+
+export interface Item {
+    description: string;
+    value: import("@hashgraph/sdk").Hbar;
 }
 
 interface SplitItem {
@@ -60,7 +64,7 @@ function splitItemFrom(item: Item): SplitItem {
         description: item.description,
         int: parts == null ? null : parts.int,
         fraction: parts == null ? null : parts.fraction,
-        value: item.value instanceof String ? item.value : ""
+        value: parts == null ? item.value.toString() : ""
     };
 }
 
@@ -75,27 +79,30 @@ export default createComponent({
     },
     setup(props: { items: Item[] }) {
         const state = reactive<State>({
-            splitItems: [] as SplitItem[],
+            splitItems: new Array<SplitItem>(),
             total: { int: "", fraction: null }
-        });
+        } as State);
 
         onMounted(async () => {
             const { Hbar } = await (import("@hashgraph/sdk") as Promise<
                 typeof import("@hashgraph/sdk")
             >);
 
-            const total: import("@hashgraph/sdk").Hbar = props.items
-                .map((item: Item): import("@hashgraph/sdk").Hbar =>
-                    item.value instanceof Hbar
-                        ? item.value
-                        : Hbar.fromTinybar(0)
-                )
-                .reduce(
-                    (
-                        a: import("@hashgraph/sdk").Hbar,
-                        b: import("@hashgraph/sdk").Hbar
-                    ): import("@hashgraph/sdk").Hbar => a.plus(b)
-                );
+            const total: import("@hashgraph/sdk").Hbar =
+                props.items.length > 0
+                    ? props.items
+                          .map((item: Item): import("@hashgraph/sdk").Hbar =>
+                              item.value instanceof Hbar
+                                  ? item.value
+                                  : Hbar.fromTinybar(0)
+                          )
+                          .reduce(
+                              (
+                                  a: import("@hashgraph/sdk").Hbar,
+                                  b: import("@hashgraph/sdk").Hbar
+                              ): import("@hashgraph/sdk").Hbar => a.plus(b)
+                          )
+                    : Hbar.fromTinybar(0);
 
             const parts = formatSplit(total.as("hbar").toString());
 
@@ -104,12 +111,17 @@ export default createComponent({
                     ? { int: "0", fraction: "0" }
                     : { int: parts.int, fraction: parts.fraction };
 
+            if (props.items.length <= 0) {
+                // nothing else to do here
+                return;
+            }
+
             // Track the long fraction part of a string
             // Used later to right pad all items
             // let lengthLongestString = 0;
             const items: SplitItem[] = props.items.map((item: Item) =>
                 splitItemFrom(item)
-            );
+            ) as SplitItem[];
 
             // Push the the total onto the item array
             // The last item in the list is always treated as the total
@@ -140,8 +152,8 @@ export default createComponent({
                     maxStringLength
                 );
 
-                // Determine if the item is a nubmer and period is necessary
-                // and set the result int item.value -- the preformatted string
+                // Determine if the item is a number and period is necessary
+                // and set the result int item.value -- the pre-formatted string
                 if (item.int != null) {
                     if (hasFraction) {
                         item.value = item.int + "." + item.fraction;

@@ -50,9 +50,7 @@ import {
     computed,
     createComponent,
     onMounted,
-    reactive,
-    Ref,
-    ref
+    reactive
 } from "@vue/composition-api";
 import walletHbar from "../assets/wallet-hbar.svg";
 import store from "../store";

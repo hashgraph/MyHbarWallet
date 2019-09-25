@@ -40,11 +40,7 @@ import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import ModalFeeSummaryTitle from "../components/ModalFeeSummaryTitle.vue";
 import ModalFeeSummaryItems from "../components/ModalFeeSummaryItems.vue";
-
-export interface Item {
-    description: string;
-    value: import("@hashgraph/sdk/src/Hbar").Hbar | string;
-}
+import { Item } from "./ModalFeeSummaryItems.vue";
 
 export default createComponent({
     props: {

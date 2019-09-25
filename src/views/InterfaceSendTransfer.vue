@@ -4,7 +4,7 @@
             v-model="state.amount"
             :error="state.amountErrorMessage"
             :suffix="hbarSuffix"
-            :valid="isAmountValid"
+            :valid="state.isAmountValid"
             action="Entire Balance"
             has-input
             :label="$t('common.amount')"
@@ -28,8 +28,8 @@
         <template v-slot:footer>
             <Button
                 :busy="state.isBusy"
-                :disabled="!isIdValid || !isAmountValid"
-                :label="buttonLabel"
+                :disabled="!isIdValid || !state.isAmountValid"
+                :label="state.buttonLabel"
                 @click="handleShowSummary"
             />
         </template>
@@ -44,8 +44,8 @@
         <ModalFeeSummary
             v-model="state.summaryIsOpen"
             :account="summaryAccount"
-            :amount="summaryAmount"
-            :items="summaryItems"
+            :amount="state.summaryAmount"
+            :items="state.summaryItems"
             tx-type="transfer"
             @submit="handleSendTransfer"
         />
@@ -67,7 +67,7 @@ import store from "../store";
 import { ALERT, REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { Unit } from "../units";
-import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+import ModalFeeSummary from "../components/ModalFeeSummary.vue";
 import { formatHbar, validateHbar } from "../formatter";
 import {
     ESTIMATED_FEE_HBAR,
@@ -75,10 +75,10 @@ import {
     MAX_FEE_TINYBAR
 } from "../store/getters";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
+import { Item } from "../components/ModalFeeSummaryItems.vue";
 
 const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
-const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
 
 export default createComponent({
     components: {
@@ -153,7 +153,7 @@ export default createComponent({
                             .$t("interfaceSendTransfer.transferAmount")
                             .toString(),
                         value: state.isAmountValid
-                            ? amount
+                            ? Hbar.from(amount, "hbar")
                             : (Hbar.fromTinybar(
                                   0
                               ) as import("@hashgraph/sdk").Hbar)

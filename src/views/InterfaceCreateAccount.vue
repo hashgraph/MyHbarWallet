@@ -61,7 +61,7 @@ import {
 } from "@vue/composition-api";
 import store from "../store";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
-import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+import ModalFeeSummary from "../components/ModalFeeSummary.vue";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
 import { formatHbar, validateHbar } from "../formatter";
@@ -71,6 +71,7 @@ import {
     MAX_FEE_TINYBAR
 } from "../store/getters";
 import { ALERT, REFRESH_BALANCE_AND_RATE } from "../store/actions";
+import { Item } from "../components/ModalFeeSummaryItems.vue";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
