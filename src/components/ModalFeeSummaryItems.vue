@@ -1,10 +1,10 @@
 <template>
     <div class="modal-fee-summary-items">
-        <template v-for="(item, index) in state.splitItems">
+        <template v-for="(item, index) in splitItems">
             <div
                 :key="item.key"
                 class="row"
-                :class="{ total: index === state.splitItems.length - 1 }"
+                :class="{ total: index === splitItems.length - 1 }"
             >
                 <div class="description">
                     {{ item.description }}
@@ -22,9 +22,11 @@
 import {
     createComponent,
     PropType,
-    reactive,
-    onMounted
+    onMounted,
+    ref,
+    Ref
 } from "@vue/composition-api";
+
 import { formatSplit, formatRightPad } from "../formatter";
 
 let KEY = 0;
@@ -68,27 +70,23 @@ function splitItemFrom(item: Item): SplitItem {
     };
 }
 
-interface State {
-    splitItems: SplitItem[];
-    total: { int: string; fraction: string | null };
-}
-
 export default createComponent({
     props: {
         items: Array as PropType<Item[]>
     },
     setup(props: { items: Item[] }) {
-        const state = reactive<State>({
-            splitItems: (new Array<SplitItem>() as unknown) as SplitItem[],
-            total: { int: "", fraction: null }
-        } as State);
+        const splitItems: Ref<SplitItem[]> = ref(new Array<SplitItem>());
+        const total: Ref<{ int: string; fraction: string | null }> = ref({
+            int: "",
+            fraction: null
+        });
 
         onMounted(async () => {
             const { Hbar } = await (import("@hashgraph/sdk") as Promise<
                 typeof import("@hashgraph/sdk")
             >);
 
-            const total: import("@hashgraph/sdk").Hbar =
+            const calculatedTotal: import("@hashgraph/sdk").Hbar =
                 props.items.length > 0
                     ? props.items
                           .map((item: Item): import("@hashgraph/sdk").Hbar =>
@@ -104,9 +102,9 @@ export default createComponent({
                           )
                     : Hbar.fromTinybar(0);
 
-            const parts = formatSplit(total.as("hbar").toString());
+            const parts = formatSplit(calculatedTotal.as("hbar").toString());
 
-            state.total =
+            total.value =
                 parts == null
                     ? { int: "0", fraction: "0" }
                     : { int: parts.int, fraction: parts.fraction };
@@ -128,8 +126,8 @@ export default createComponent({
             items.push({
                 key: nextItemKey(),
                 description: "Total",
-                int: state.total.int,
-                fraction: state.total.fraction,
+                int: total.value.int,
+                fraction: total.value.fraction,
                 value: ""
             });
 
@@ -163,12 +161,13 @@ export default createComponent({
                 }
             }
 
-            ((state.splitItems as unknown) as SplitItem[]) = items;
+            splitItems.value = items;
         });
 
         return {
-            props,
-            state
+            splitItems,
+            total,
+            props
         };
     }
 });
