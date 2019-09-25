@@ -131,7 +131,7 @@ export default {
                         );
                     })
                     .reduce<number>((accumulator, ticker, _, { length }) => {
-                        return accumulator + ticker.converted_last.usd / length;
+                        return (accumulator + ticker.converted_last.usd) / length;
                     }, 0)
             );
 
