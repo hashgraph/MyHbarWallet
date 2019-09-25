@@ -1,6 +1,6 @@
 <template>
     <div class="account">
-        <Identicon :value="rawPublicKey" :size="60" class="account-image" />
+        <Identicon :size="60" :value="publicKey" class="account-image" />
         <div class="content">
             <div class="top">
                 <div class="title">
@@ -13,31 +13,38 @@
             </div>
             <div class="actions">
                 <Tooltip
-                    class="action"
                     :message="$t('accountCard.accountQrCode')"
+                    class="action"
                 >
                     <MaterialDesignIcon
-                        class="qr-icon"
                         :icon="mdiQrcode"
+                        class="qr-icon"
                         @click="showQrCode"
                     />
                 </Tooltip>
-                <Tooltip class="action" :message="$t('accountCard.publicKey')">
+                <Tooltip :message="$t('accountCard.keys')" class="action">
                     <MaterialDesignIcon
-                        class="copy-icon"
                         :icon="mdiKey"
-                        @click="showPublicKey"
+                        class="key-icon"
+                        @click="showKeys"
                     />
                 </Tooltip>
+                <ExportKeystoreButton
+                    v-if="hasPrivateKey"
+                    :private-key="privateKey"
+                    class="action"
+                />
             </div>
         </div>
         <ModalViewAccountId
             v-model="state.viewAccountQrCodeIsOpen"
             :value="{ shard, realm, account }"
         />
-        <ModalViewPublicKey
-            v-model="state.viewPublicKeyIsOpen"
+        <ModalViewKeys
+            v-if="hasKeys"
+            v-model="state.viewKeysIsOpen"
             :public-key="publicKey"
+            :private-key="privateKey"
         />
     </div>
 </template>
@@ -46,23 +53,29 @@
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiQrcode, mdiKey } from "@mdi/js";
 import Tooltip from "../components/Tooltip.vue";
-import {
-    computed,
-    createComponent,
-    PropType,
-    reactive
-} from "@vue/composition-api";
+import { computed, createComponent, reactive } from "@vue/composition-api";
 import Identicon from "../components/Identicon.vue";
 import ModalViewAccountId from "../components/ModalViewAccountId.vue";
-import ModalViewPublicKey from "./ModalViewPublicKey.vue";
+import ExportKeystoreButton from "./ExportKeystoreButton.vue";
+import ModalViewKeys from "./ModalViewKeys.vue";
+import store from "../store";
 
-const ED25519_PREFIX = "302a300506032b6570032100";
+function getPublicKey(): string | null {
+    return store.state.wallet.session != null
+        ? store.state.wallet.session.privateKey.publicKey.toString(true) // Truncate Prefix
+        : null;
+}
+
+function getPrivateKey(): string | null {
+    return store.state.wallet.session != null
+        ? store.state.wallet.session.privateKey.toString(true) // Truncate Prefix
+        : null;
+}
 
 interface Props {
     shard: number;
     realm: number;
     account: number;
-    publicKey: string;
 }
 
 export default createComponent({
@@ -71,31 +84,30 @@ export default createComponent({
         Tooltip,
         Identicon,
         ModalViewAccountId,
-        ModalViewPublicKey
+        ModalViewKeys,
+        ExportKeystoreButton
     },
     props: {
-        shard: (Number as unknown) as PropType<number>,
-        realm: (Number as unknown) as PropType<number>,
-        account: (Number as unknown) as PropType<number>,
-        publicKey: (String as unknown) as PropType<string>
+        shard: Number,
+        realm: Number,
+        account: Number
     },
-    setup(props: Props) {
-        const rawPublicKey = computed(() => {
-            let publickey = props.publicKey;
-            if (publickey != null && publickey.startsWith(ED25519_PREFIX, 0)) {
-                publickey = publickey.slice(ED25519_PREFIX.length);
-            }
-
-            return publickey;
-        });
+    setup() {
+        const hasPrivateKey = computed(() => getPrivateKey() !== null);
+        const hasPublicKey = computed(() => getPublicKey() !== null);
+        const hasKeys = computed(
+            () => hasPrivateKey.value && hasPublicKey.value
+        );
+        const privateKey = computed(() => getPrivateKey());
+        const publicKey = computed(() => getPublicKey());
 
         const state = reactive({
             viewAccountQrCodeIsOpen: false,
-            viewPublicKeyIsOpen: false
+            viewKeysIsOpen: false
         });
 
-        function showPublicKey(): void {
-            state.viewPublicKeyIsOpen = true;
+        function showKeys(): void {
+            state.viewKeysIsOpen = true;
         }
 
         function showQrCode(): void {
@@ -105,16 +117,20 @@ export default createComponent({
         return {
             mdiQrcode,
             mdiKey,
-            rawPublicKey,
             state,
-            showPublicKey,
+            hasPrivateKey,
+            hasPublicKey,
+            hasKeys,
+            privateKey,
+            publicKey,
+            showKeys,
             showQrCode
         };
     }
 });
 </script>
 
-<style scoped lang="postcss">
+<style lang="postcss" scoped>
 .account {
     background-color: var(--color-hera-blue);
     border-radius: 4px;

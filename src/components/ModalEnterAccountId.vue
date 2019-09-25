@@ -94,7 +94,7 @@ export default createComponent({
         privateKey: (Object as unknown) as PropType<
             import("@hashgraph/sdk").Ed25519PrivateKey | null
         >,
-        isOpen: (Boolean as unknown) as PropType<boolean>
+        isOpen: Boolean
     },
     setup(props: Props, context: SetupContext) {
         const state = reactive<State>({
@@ -159,7 +159,6 @@ export default createComponent({
 
             try {
                 client = new Client({
-                    // TODO: Use nodeId from settings
                     nodes: {
                         [settings.network.proxy]: {
                             shard: 0,

@@ -1,33 +1,21 @@
 <template>
-    <div class="create-with-keystore-file">
+    <div class="modal-export-generate-keystore">
         <Modal
-            :title="$t('modalCreateByKeystore.title')"
             :is-open="state.isOpen"
+            :title="$t('modalExportGenerateKeystore.title')"
             @change="handleModalChangeIsOpen"
         >
-            <template v-slot:banner>
-                <Warning />
-            </template>
-
             <div class="password-info-header-wrapper">
                 <div class="password-info-header">
-                    {{ $t("modalCreateByKeystore.yourPassword") }}
-                    <InfoButton
-                        :message="
-                            $t(
-                                'common.password.thisPasswordEncryptsYourPrivateKey'
-                            )
-                        "
-                    />
+                    {{ $t("modalExportGenerateKeystore.yourPassword") }}
+                    <InfoButton :message="$t('common.password.thisPassword')" />
                 </div>
             </div>
-
             <PasswordGenerator
                 ref="passwordGenerator"
                 v-model="state.passwordGeneratorState"
                 @submit="handleSubmitPassword"
             />
-
             <p
                 class="footer"
                 v-html="
@@ -53,11 +41,11 @@ import {
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
+import { mdiArrowRight } from "@mdi/js";
+import { formatRich } from "../formatter";
 import PasswordGenerator, {
     State as PasswordGeneratorState
 } from "../components/PasswordGenerator.vue";
-import { mdiArrowRight } from "@mdi/js";
-import { formatRich } from "../formatter";
 import { Vue } from "vue/types/vue";
 
 export interface State {
@@ -124,8 +112,9 @@ export default createComponent({
 });
 </script>
 
-<style scoped lang="postcss">
+<style lang="postcss" scoped>
 .password-info-header-wrapper {
+    color: var(--color-washed-black);
     display: flex;
     justify-content: space-around;
 }

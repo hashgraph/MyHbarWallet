@@ -1,19 +1,56 @@
-const keystoreAccountId = "0.0.60118";
-const keystoreIncorrectAccountId = "0.0.666";
-const keystorePath = __dirname + "/../../assets/keystore_file";
-const keystorePassword = "ThisIsARandomPassword";
-const keystoreIncorrectPassword = "$^$^$^$^$^$^$^$^";
-const keystorePublicKey =
-    "302a300506032b6570032100389ac2dd5574527b37513463822bbee3869664b46421f0627a82d0c305728d4b";
+const regexUSD = require("../../assets/common/constants").regexUSD;
+const regexHBar = require("../../assets/common/constants").regexHBar;
+const keystorePath = require("../../assets/common/constants").keystorePath;
+const keystorePassword = require("../../assets/common/constants")
+    .keystorePassword;
+const keystoreIncorrectPassword = require("../../assets/common/constants")
+    .keystoreIncorrectPassword;
+const keystoreAccountId = require("../../assets/common/constants")
+    .keystoreAccountId;
+const keystoreIncorrectAccountId = require("../../assets/common/constants")
+    .keystoreIncorrectAccountId;
+const keystorePrivateKey = require("../../assets/common/constants")
+    .keystorePrivateKey;
+const keystorePublicKey = require("../../assets/common/constants")
+    .keystorePublicKey;
+
+const accountInputSelector = require("../../assets/common/selectors")
+    .accountInputSelector;
+const hbarBalanceSelector = require("../../assets/common/selectors")
+    .hbarBalanceSelector;
+const usdBalanceSelector = require("../../assets/common/selectors")
+    .usdBalanceSelector;
+const modalBackgroundSelector = require("../../assets/common/selectors")
+    .modalBackgroundSelector;
+const privateKeySelector = require("../../assets/common/selectors")
+    .privateKeySelector;
+const privateKeyObscureSelector = require("../../assets/common/selectors")
+    .privateKeyObscureSelector;
+const publicKeySelector = require("../../assets/common/selectors")
+    .publicKeySelector;
+const passwordSelector = require("../../assets/common/selectors")
+    .passwordSelector;
+const passwordConfirmSelector = require("../../assets/common/selectors")
+    .passwordConfirmSelector;
+const softwareAccessSelector = require("../../assets/common/selectors")
+    .softwareAccessSelector;
+const modalExportByKeystoreSubmitSelector = require("../../assets/common/selectors")
+    .modalExportByKeystoreSubmitSelector;
+const modalExportKeystoreSubmitSelector = require("../../assets/common/selectors")
+    .modalExportKeystoreSubmitSelector;
+
+const truncatePublic = require("../../assets/common/constants").truncatePublic;
+const truncatePrivate = require("../../assets/common/constants")
+    .truncatePrivate;
 
 module.exports = {
-    "it can access account by keystore file": browser => {
+    "It Can Access Account With Keystore": browser => {
         browser
             .url(`${process.env.VUE_DEV_SERVER_URL}`)
             .waitForElementVisible(".home-tile-button", 5000)
             .click(".home-tile-button[href='/access-my-account']")
             .waitForElementVisible(".account-tile-button", 5000)
-            .click(".account-tile-button:not(.disabled):nth-child(2)")
+            .click(softwareAccessSelector)
             .waitForElementVisible("label[for=file]", 5000)
             .click("label[for=file]")
             .click(
@@ -25,26 +62,14 @@ module.exports = {
                 ".modal-password > .modal-background.is-open > .modal",
                 5000
             )
-            .waitForElementVisible(
-                "input[placeholder='Please Enter At Least 9 Characters']",
-                5000
-            )
-            .setValue(
-                "input[placeholder='Please Enter At Least 9 Characters']",
-                keystorePassword + "\n"
-            )
+            .waitForElementVisible(passwordSelector, 5000)
+            .setValue(passwordSelector, keystorePassword + "\n")
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background.is-open > .modal",
                 5000
             )
-            .waitForElementVisible(
-                "input[placeholder='shard.realm.account']",
-                5000
-            )
-            .setValue(
-                "input[placeholder='shard.realm.account']",
-                keystoreAccountId
-            )
+            .waitForElementVisible(accountInputSelector, 5000)
+            .setValue(accountInputSelector, keystoreAccountId)
             .click(
                 ".modal-enter-account-id > .modal-background.is-open > .modal button[type=submit]"
             )
@@ -54,47 +79,71 @@ module.exports = {
             .assert.containsText(".account .subtitle", keystoreAccountId);
     },
 
-    "it can view balance information": browser => {
-        browser.expect
-            .element(".interface .balance .hbar-balance")
-            .text.to.match(
-                /^([1-9]\d{0,2}(?:,\d{3})*(\.\d{1,9})?|0?\.(?=.*[1-9])\d{1,9}) ℏ$/
-            );
-        browser.waitForElementVisible(".interface .balance .usd-balance", 5000);
-        browser.expect
-            .element(".interface .balance .usd-balance")
-            .text.to.match(
-                /^≈ \$([1-9]\d{0,2}(,\d{3})*(\.\d{2})?|[1-9]\d*(\.\d{2})?|0?\.(?!00)\d{2})$/
-            );
+    "It Can View Balance": browser => {
+        browser.waitForElementVisible(hbarBalanceSelector, 10000);
+        browser.expect.element(hbarBalanceSelector).text.to.match(regexHBar);
+        browser.waitForElementVisible(usdBalanceSelector, 10000);
+        browser.expect.element(usdBalanceSelector).text.to.match(regexUSD);
     },
 
-    "it can view public key modal": browser => {
+    "It Can View Account ID": browser => {
         browser
-            .click(".copy-icon > path:nth-child(1)")
-            .waitForElementVisible(
-                "div.read-only-input:nth-child(1) > div:nth-child(1)",
-                5000
-            )
-            .assert.containsText(
-                "div.read-only-input:nth-child(1) > div:nth-child(1)",
-                keystorePublicKey
-            )
-            .moveTo("div.modal-background")
-            .mouseButtonDown()
-            .mouseButtonUp();
-    },
-
-    "it can view account id modal": browser => {
-        browser
-            .click(".qr-icon")
+            .click(".qr-icon > path:nth-child(1)")
             .waitForElementVisible(".pub-qr > canvas:nth-child(1)", 5000)
             .assert.containsText(".account-id .value", keystoreAccountId)
-            .moveTo("div.modal-background")
+            .moveTo(modalBackgroundSelector)
             .mouseButtonDown()
             .mouseButtonUp();
     },
 
-    "it can see log out at home": browser => {
+    "It Can View Public Key": browser => {
+        browser
+            .click(".key-icon > path:nth-child(1)")
+            .waitForElementVisible(".modal-view-keys", 5000)
+            .expect.element(publicKeySelector)
+            .text.to.equal(truncatePublic(keystorePublicKey));
+        browser
+            .moveTo(modalBackgroundSelector)
+            .mouseButtonDown()
+            .mouseButtonUp();
+    },
+
+    "It Can View Private Key": browser => {
+        browser
+            .click(".key-icon > path:nth-child(1)")
+            .waitForElementVisible(".modal-view-keys", 5000)
+            .expect.element(privateKeySelector)
+            .text.to.equal(truncatePrivate(keystorePrivateKey));
+        browser.expect
+            .element(privateKeySelector)
+            .to.have.attribute("class")
+            .which.contains("obscure");
+        browser.click(privateKeyObscureSelector);
+        browser.expect
+            .element(privateKeySelector)
+            .to.have.attribute("class")
+            .which.not.contains("obscure");
+        browser
+            .moveTo(modalBackgroundSelector)
+            .mouseButtonDown()
+            .mouseButtonUp();
+    },
+
+    "It Can Download Keystore": browser => {
+        browser
+            .click(".export-keystore-icon > path:nth-child(1)")
+            .waitForElementVisible(passwordSelector, 5000)
+            .setValue(passwordSelector, keystorePassword)
+            .waitForElementVisible(passwordConfirmSelector, 5000)
+            .setValue(passwordConfirmSelector, keystorePassword)
+            .pause(1000)
+            .click(modalExportByKeystoreSubmitSelector)
+            .waitForElementVisible(modalExportKeystoreSubmitSelector, 5000)
+            .click(modalExportKeystoreSubmitSelector)
+            .waitForElementNotPresent("modal-export-keystore", 5000);
+    },
+
+    "It Can See Log Out": browser => {
         browser
             .click("div.links:nth-child(3) > a:nth-child(1)")
             .waitForElementVisible(".home-tile-button", 10000)
@@ -104,7 +153,7 @@ module.exports = {
         browser.end();
     },
 
-    "it fails to access keystore file with incorrect password": browser => {
+    "It Cannot Access with Incorrect Password": browser => {
         browser
             .url(`${process.env.VUE_DEV_SERVER_URL}`)
             .waitForElementVisible(".home-tile-button", 5000)
@@ -141,7 +190,7 @@ module.exports = {
             .end();
     },
 
-    "it fails to access keystore file with invalid account id": browser => {
+    "It Cannot Access with Incorrect Account ID": browser => {
         browser
             .url(`${process.env.VUE_DEV_SERVER_URL}`)
             .waitForElementVisible(".home-tile-button", 5000)
@@ -190,7 +239,7 @@ module.exports = {
             .end();
     },
 
-    "it can get public key if an account hasn't been created": browser => {
+    "It Can Request Account": browser => {
         browser
             .url(`${process.env.VUE_DEV_SERVER_URL}`)
             .waitForElementVisible(".home-tile-button", 5000)
@@ -233,7 +282,7 @@ module.exports = {
             )
             .assert.containsText(
                 ".modal-request-to-create-account > .modal-background.is-open > .modal .read-only-input",
-                keystorePublicKey
+                truncatePublic(keystorePublicKey)
             )
             .end();
     }

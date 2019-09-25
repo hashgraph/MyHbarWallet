@@ -48,6 +48,12 @@ interface Props {
     routes: InterfaceNavigationItem[];
 }
 
+// Yes, it is used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function handleClick(): void {
+    store.commit(SET_INTERFACE_MENU_IS_OPEN, false);
+}
+
 export default createComponent({
     components: {
         MaterialDesignIcon
@@ -86,16 +92,12 @@ export default createComponent({
             context.root.$router.push({ name: firstRoute.name });
         }
 
-        function handleClick(): void {
-            store.commit(SET_INTERFACE_MENU_IS_OPEN, false);
-        }
-
         return {
             isSectionActive,
             mdiChevronUp,
             mdiChevronDown,
-            handleHeaderClick,
-            handleClick
+            handleClick,
+            handleHeaderClick
         };
     }
 });

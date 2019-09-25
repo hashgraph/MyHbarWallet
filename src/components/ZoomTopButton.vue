@@ -13,6 +13,10 @@ import { mdiChevronUp } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { computed, createComponent, ref } from "@vue/composition-api";
 
+function handleClick(): void {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 export default createComponent({
     components: {
         MaterialDesignIcon
@@ -23,10 +27,6 @@ export default createComponent({
         const classObject = computed(() => {
             return { "is-active": isActive.value };
         });
-
-        function handleClick(): void {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
 
         function handleWindowScroll(): void {
             isActive.value = window.scrollY > 150;

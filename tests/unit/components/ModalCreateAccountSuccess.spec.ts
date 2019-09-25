@@ -43,7 +43,10 @@ describe("ModalCreateAccountSuccess.vue", (): void => {
                           Success
                         </div>
                         <div class="read-only-input center">
-                          <div class="value">999.999.999</div>
+                          <div class="value">
+                            999.999.999
+                          </div>
+                          <!---->
                         </div> <button type="submit" class="btn outline"><span>Copy</span>
                           <!----></button>
                         <div class="close">
@@ -88,7 +91,10 @@ describe("ModalCreateAccountSuccess.vue", (): void => {
                           Success
                         </div>
                         <div class="read-only-input center">
-                          <div class="value">999.999.999</div>
+                          <div class="value">
+                            999.999.999
+                          </div>
+                          <!---->
                         </div> <button type="submit" class="btn outline"><span>Copy</span>
                           <!----></button>
                         <div class="close">

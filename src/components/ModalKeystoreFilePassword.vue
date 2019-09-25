@@ -3,7 +3,7 @@
         <Modal
             :title="$t('modalKeystoreFilePassword.title')"
             :not-closable="state.isBusy"
-            :is-open="state.modalIsOpen"
+            :is-open="state.isOpen"
             @change="handleModalChangeIsOpen"
         >
             <template v-slot:banner>
@@ -14,9 +14,7 @@
                     class="input"
                     :value="state.password"
                     :error="state.error"
-                    :placeholder="
-                        $t('common.password.pleaseEnterAtLeast9Characters')
-                    "
+                    :placeholder="$t('common.password.nineCharacters')"
                     obscure
                     @input="handleInputChange"
                 />
@@ -45,7 +43,7 @@ import {
 } from "@vue/composition-api";
 
 export interface State {
-    modalIsOpen: boolean;
+    isOpen: boolean;
     password: string;
     error: string | null;
     isBusy: boolean;
@@ -77,7 +75,7 @@ export default createComponent({
         });
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
-            context.emit("change", { ...props.state, modalIsOpen: isOpen });
+            context.emit("change", { ...props.state, isOpen });
         }
 
         function handleInputChange(value: string): void {
@@ -90,7 +88,7 @@ export default createComponent({
         }
 
         watch(
-            () => props.state.modalIsOpen,
+            () => props.state.isOpen,
             (newVal: boolean) => {
                 if (newVal) {
                     context.emit("change", { ...props.state, password: "" });

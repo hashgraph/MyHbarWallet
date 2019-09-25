@@ -21,7 +21,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
             i18n,
             propsData: {
                 state: {
-                    modalIsOpen: false,
+                    isOpen: false,
                     rawPrivateKey: PRIVATE_KEY,
                     isBusy: false
                 }
@@ -134,7 +134,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
             i18n,
             propsData: {
                 state: {
-                    modalIsOpen: true,
+                    isOpen: true,
                     rawPrivateKey: PRIVATE_KEY,
                     isBusy: false
                 }
@@ -247,7 +247,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
             i18n,
             propsData: {
                 state: {
-                    modalIsOpen: true,
+                    isOpen: true,
                     rawPrivateKey: PRIVATE_KEY,
                     isBusy: true
                 }
@@ -362,7 +362,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
             i18n,
             propsData: {
                 state: {
-                    modalIsOpen: false,
+                    isOpen: false,
                     rawPrivateKey: PRIVATE_KEY,
                     isBusy: true
                 }

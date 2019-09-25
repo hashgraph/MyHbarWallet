@@ -1,6 +1,6 @@
 <template>
     <Modal
-        :is-open="state.modalIsOpen"
+        :is-open="state.isOpen"
         :not-closable="state.isBusy"
         :title="$t('modalAccessByPrivateKey.title')"
         @change="handleModalChangeIsOpen"
@@ -48,7 +48,7 @@ import {
 } from "@vue/composition-api";
 
 export interface State {
-    modalIsOpen: boolean;
+    isOpen: boolean;
     rawPrivateKey: string;
     isBusy: boolean;
 }
@@ -77,6 +77,8 @@ export default createComponent({
     setup(props: { state: State }, context: SetupContext) {
         const valid = ref<boolean>(false);
 
+        // No, it cannot be moved to enclosing scope
+        // eslint-disable-next-line unicorn/consistent-function-scoping
         async function isValid(): Promise<boolean> {
             try {
                 const { Ed25519PrivateKey } = await (import(
@@ -115,7 +117,7 @@ export default createComponent({
         );
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
-            context.emit("change", { ...props.state, modalIsOpen: isOpen });
+            context.emit("change", { ...props.state, isOpen });
         }
 
         function handlePrivateKeyInput(rawPrivateKey: string): void {
@@ -124,7 +126,7 @@ export default createComponent({
 
         // Focus the single text input when the modal is opened
         watch(
-            () => props.state.modalIsOpen,
+            () => props.state.isOpen,
             (newVal: boolean) => {
                 if (newVal) {
                     context.emit("change", {

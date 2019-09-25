@@ -55,6 +55,13 @@ interface Props {
     forgot: boolean;
 }
 
+// Yes it is used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function handleGoBack(): void {
+    // have to wait till next tick so modal gives us back the scrollbar
+    Vue.nextTick(() => router.push({ name: "interface" }));
+}
+
 export default createComponent({
     components: {
         Button,
@@ -70,11 +77,6 @@ export default createComponent({
         forgot: (Boolean as unknown) as PropType<boolean>
     },
     setup(props: Props, context: SetupContext) {
-        function handleGoBack(): void {
-            // have to wait till next tick so modal gives us back the scrollbar
-            Vue.nextTick(() => router.push({ name: "interface" }));
-        }
-
         function handleClickLogOut(): void {
             store.commit(LOG_OUT);
             if (!props.forgot) {

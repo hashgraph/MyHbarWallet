@@ -75,7 +75,6 @@ import {
 } from "../store/getters";
 import { ALERT, REFRESH_BALANCE_AND_RATE } from "../store/actions";
 
-const ED25519_PREFIX = "302a300506032b6570032100";
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
 

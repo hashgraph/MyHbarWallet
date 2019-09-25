@@ -89,6 +89,12 @@ import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
 import store from "../store";
 import ModalLogOut from "./ModalLogOut.vue";
 
+// Yes, it is used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function handleReturnClick(): void {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 export default createComponent({
     components: {
         Button,
@@ -108,10 +114,6 @@ export default createComponent({
 
         function onScroll(): void {
             state.scrolled = window.scrollY > 150;
-        }
-
-        function handleReturnClick(): void {
-            window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
         function toggle(): void {
@@ -173,12 +175,12 @@ export default createComponent({
         });
 
         return {
+            handleReturnClick,
             state,
             onScroll,
             toggle,
             isHome,
             headerClasses,
-            handleReturnClick,
             loggedIn,
             handleLogout,
             isInterface,

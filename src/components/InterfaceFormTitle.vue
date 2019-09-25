@@ -11,6 +11,12 @@ import Button from "../components/Button.vue";
 import store from "../store";
 import { SET_INTERFACE_MENU_IS_OPEN } from "../store/mutations";
 
+// Yes, it is used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function emitMenuOpen(): void {
+    store.commit(SET_INTERFACE_MENU_IS_OPEN, true);
+}
+
 export default createComponent({
     props: {
         title: { type: String, required: true }
@@ -19,9 +25,6 @@ export default createComponent({
         Button
     },
     setup() {
-        function emitMenuOpen(): void {
-            store.commit(SET_INTERFACE_MENU_IS_OPEN, true);
-        }
         return { emitMenuOpen };
     }
 });

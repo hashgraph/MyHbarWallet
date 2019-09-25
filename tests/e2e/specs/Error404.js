@@ -1,5 +1,5 @@
 module.exports = {
-    "renders 404 when navigating to an unknown route": browser => {
+    "It Renders 404 When Navigating to an Unknown Route": browser => {
         browser
             .url(`${process.env.VUE_DEV_SERVER_URL}not-a-real-path-in-the-app`)
             .waitForElementVisible(".error-404", 5000)

@@ -105,19 +105,19 @@ export default createComponent({
             modalAccessByHardwareIsOpen: false,
             modalAccessBySoftwareIsOpen: false,
             modalAccessByPhraseState: {
-                modalIsOpen: false,
+                isOpen: false,
                 isBusy: false,
                 words: [],
                 isValid: true
             },
             modalKeystoreFilePasswordState: {
-                modalIsOpen: false,
+                isOpen: false,
                 password: "",
                 error: null as string | null,
                 isBusy: false
             },
             modalAccessByPrivateKeyState: {
-                modalIsOpen: false,
+                isOpen: false,
                 rawPrivateKey: "",
                 isBusy: false
             },
@@ -147,9 +147,9 @@ export default createComponent({
             } else {
                 setTimeout(() => {
                     if (which === AccessSoftwareOption.Phrase) {
-                        state.modalAccessByPhraseState.modalIsOpen = true;
+                        state.modalAccessByPhraseState.isOpen = true;
                     } else if (which === AccessSoftwareOption.Key) {
-                        state.modalAccessByPrivateKeyState.modalIsOpen = true;
+                        state.modalAccessByPrivateKeyState.isOpen = true;
                     }
                 }, 125);
             }
@@ -179,7 +179,7 @@ export default createComponent({
             );
 
             target.value = ""; // change back to initial state to gaurantee that click fires next time
-            state.modalKeystoreFilePasswordState.modalIsOpen = true;
+            state.modalKeystoreFilePasswordState.isOpen = true;
             state.keystoreFileArray = new Uint8Array(keyStoreArrayBuff);
         }
 
@@ -214,9 +214,10 @@ export default createComponent({
                         state.modalKeystoreFilePasswordState.password
                     )
                 );
+
                 // Close  previous modal and open another one
                 pwState.isBusy = false;
-                pwState.modalIsOpen = false;
+                pwState.isOpen = false;
                 Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
             } catch (error) {
                 console.warn(error);
@@ -244,7 +245,7 @@ export default createComponent({
 
                 // Close  previous modal and open another one
                 accessByPhraseState.isBusy = false;
-                accessByPhraseState.modalIsOpen = false;
+                accessByPhraseState.isOpen = false;
                 Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
                 accessByPhraseState.isValid = true;
             } catch (error) {
@@ -273,7 +274,7 @@ export default createComponent({
             );
 
             // Close previous modal and open another one
-            state.modalAccessByPrivateKeyState.modalIsOpen = false;
+            state.modalAccessByPrivateKeyState.isOpen = false;
 
             setTimeout(() => {
                 state.modalAccessByPrivateKeyState.isBusy = false;

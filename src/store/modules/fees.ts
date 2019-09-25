@@ -17,7 +17,6 @@ export default {
         estimatedFeeHbar: new BigNumber(0.200_000_000),
         maxFeeHbar: new BigNumber(1)
     } as State,
-    // TODO: JFC replace this with actual units from the SDK when ready
     getters: {
         [ESTIMATED_FEE_HBAR]: (state: State): BigNumber => {
             return state.estimatedFeeHbar;
