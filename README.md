@@ -4,8 +4,6 @@
    </h1>
 </div>
 
-<br>
-
 <div align="center">
   <!-- Netlify Status -->
   <a href="https://app.netlify.com/sites/myhbarwallet/deploys">
