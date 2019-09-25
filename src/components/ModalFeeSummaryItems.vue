@@ -79,7 +79,7 @@ export default createComponent({
     },
     setup(props: { items: Item[] }) {
         const state = reactive<State>({
-            splitItems: new Array<SplitItem>(),
+            splitItems: (new Array<SplitItem>() as unknown) as SplitItem[],
             total: { int: "", fraction: null }
         } as State);
 
@@ -163,7 +163,7 @@ export default createComponent({
                 }
             }
 
-            state.splitItems = items;
+            ((state.splitItems as unknown) as SplitItem[]) = items;
         });
 
         return {

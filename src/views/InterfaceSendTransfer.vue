@@ -147,7 +147,7 @@ export default createComponent({
 
                 state.summaryAmount = formattedAmount;
 
-                state.summaryItems = [
+                ((state.summaryItems as unknown) as Item[]) = [
                     {
                         description: context.root
                             .$t("interfaceSendTransfer.transferAmount")

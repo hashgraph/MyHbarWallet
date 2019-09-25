@@ -149,8 +149,10 @@ export default createComponent({
                 state.validBalance =
                     newBalanceHbar.comparedTo(Hbar.fromTinybar(0)) > 0 &&
                     validateHbar(newBalance);
+
                 state.summaryAmount = formatHbar(newBalanceHbar);
-                state.summaryItems = [
+
+                ((state.summaryItems as unknown) as Item[]) = [
                     {
                         description: "Initial Balance",
                         value: state.validBalance
@@ -245,7 +247,7 @@ export default createComponent({
                 state.newBalanceError = "";
 
                 // Refresh Balance
-                store.dispatch(REFRESH_BALANCE_AND_RATE);
+                await store.dispatch(REFRESH_BALANCE_AND_RATE);
 
                 state.successModalIsOpen = true;
             } catch (error) {
@@ -263,7 +265,7 @@ export default createComponent({
                     ) {
                         state.newBalanceError = "Insufficient Account Balance";
                     } else {
-                        store.dispatch(ALERT, {
+                        await store.dispatch(ALERT, {
                             message: `Received unhandled error from Hedera:  ${error.codeName}`,
                             level: "error"
                         });
