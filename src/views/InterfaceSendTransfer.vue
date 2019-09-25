@@ -17,6 +17,7 @@
             :error="state.idErrorMessage"
             :valid="state.idValid"
             can-copy
+            :is-open="state.successModalIsOpen"
             :label="$t('common.toAccount')"
             show-validation
             @valid="handleValid"
@@ -138,9 +139,6 @@ export default createComponent({
             state.idValid = valid;
         }
 
-        // const isIdValid = computed(() =>
-        //     shardRealmAccountRegex.test(state.toAccount)
-        // );
         const isAmountValid = computed(() => {
             if (state.amount) {
                 return (
@@ -229,32 +227,18 @@ export default createComponent({
                 );
             }
 
-            const client = store.state.wallet.session.client;            const parts = state.toAccount.split(".");
-            // const parts = state.toAccount.split(".");
+            if (!state.account || !state.amount)
+                throw new Error("Neither account nor amount should be null!");
+
+            const client = store.state.wallet.session.client;
 
             try {
-                let recipient: import("@hashgraph/sdk").AccountId = {
-                    shard: -1,
-                    realm: -1,
-                    account: -1
-                };
+                const recipient: import("@hashgraph/sdk").AccountId =
+                    state.account;
 
-                if (state.account) {
-                    recipient = state.account;
-                }
-                // {
-                //     shard: parseInt(parts[0]),
-                //     realm: parseInt(parts[1]),
-                //     account: parseInt(parts[2])
-                // };
-
-                let sendAmountTinybar = new BigNumber(0);
-
-                if (state.amount) {
-                    sendAmountTinybar = new BigNumber(
-                        state.amount
-                    ).multipliedBy(getValueOfUnit(Unit.Hbar));
-                }
+                const sendAmountTinybar = new BigNumber(
+                    state.amount
+                ).multipliedBy(getValueOfUnit(Unit.Hbar));
 
                 const { CryptoTransferTransaction, Client } = await import(
                     "@hashgraph/sdk"
@@ -284,7 +268,7 @@ export default createComponent({
                     .addRecipient(recipient, sendAmountTinybar)
                     .setTransactionFee(maxTxFeeTinybar);
 
-                if (state.memo !== "" && state.memo) {
+                if (state.memo !== "" && state.memo != null) {
                     tx.setMemo(state.memo);
                 }
 
@@ -344,7 +328,7 @@ export default createComponent({
                 state.isBusy = false;
                 state.amount = "";
                 state.memo = "";
-                state.account = null;
+                state.accountString = "";
             }
         }
 
