@@ -7,7 +7,7 @@
 <div align="center">
   <!-- Netlify Status -->
   <a href="https://app.netlify.com/sites/myhbarwallet/deploys">
-    <img src="https://api.netlify.com/api/v1/badges/c533cd8a-a127-48d5-a123-292202cab01c/deploy-status"
+    <img src="https://img.shields.io/netlify/c533cd8a-a127-48d5-a123-292202cab01c?style=flat-square"
     alt="Netlify Status" />
   </a>
   <!-- Cirrus CI -->
