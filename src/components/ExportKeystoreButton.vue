@@ -145,7 +145,7 @@ export default createComponent({
             state.modalExportGenerateKeystoreState.isOpen = false;
             state.modalExportDownloadKeystoreState.isOpen = false;
             setTimeout(() => {
-                // reset ExportByKeystore Modal
+                // reset ExportGenerateKeystore Modal
                 state.modalExportGenerateKeystoreState.passwordGeneratorState.password =
                     "";
                 state.modalExportGenerateKeystoreState.passwordGeneratorState.confirmationPassword =
