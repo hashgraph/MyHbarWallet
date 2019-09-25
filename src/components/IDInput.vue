@@ -5,7 +5,7 @@
         show-validation
         :can-copy="canCopy"
         :label="label"
-        :valid="valid || partialValid"
+        :valid="valid"
         :error="state.errorMessage"
         :placeholder="$t('common.accountSyntax')"
         @input="handleInput"
@@ -57,33 +57,35 @@ export default createComponent({
         const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
         const partialRegex = /^[1-9]{1,}$/;
 
-        const valid = computed(() => shardRealmAccountRegex.test(state.input));
         const partialValid = computed(() => partialRegex.test(state.input));
+        const valid = computed(
+            () => shardRealmAccountRegex.test(state.input) || partialValid
+        );
 
         const input = ref<HTMLInputElement | null>(null);
 
         function handleInput(accountText: string, event: Event): void {
             state.errorMessage = null;
             state.input = accountText;
-            if (valid.value) {
+            if (partialValid.value) {
+                state.account = {
+                    shard: parseInt("0"),
+                    realm: parseInt("0"),
+                    account: parseInt(state.input)
+                };
+            } else if (valid.value) {
                 const parts = state.input.split(".");
                 state.account = {
                     shard: parseInt(parts[0]),
                     realm: parseInt(parts[1]),
                     account: parseInt(parts[2])
                 };
-            } else if (partialValid.value) {
-                state.account = {
-                    shard: parseInt("0"),
-                    realm: parseInt("0"),
-                    account: parseInt(state.input)
-                };
             } else {
                 state.account = null;
             }
 
             context.emit("input", input.value, state.account);
-            context.emit("valid", valid.value || partialValid.value);
+            context.emit("valid", valid.value);
         }
 
         watch(
@@ -108,7 +110,6 @@ export default createComponent({
         return {
             state,
             valid,
-            partialValid,
             handleInput,
             input
         };
