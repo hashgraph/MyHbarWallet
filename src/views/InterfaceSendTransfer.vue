@@ -119,9 +119,9 @@ export default createComponent({
                     return;
                 }
 
-                const { Hbar } = await (import(
-                    "@hashgraph/sdk/src/Hbar"
-                ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+                const { Hbar } = await (import("@hashgraph/sdk") as Promise<
+                    typeof import("@hashgraph/sdk")
+                >);
 
                 const amountHbar = Hbar.from(amount, "hbar");
 
@@ -156,13 +156,13 @@ export default createComponent({
                             ? amount
                             : (Hbar.fromTinybar(
                                   0
-                              ) as import("@hashgraph/sdk/src/Hbar").Hbar)
+                              ) as import("@hashgraph/sdk").Hbar)
                     } as Item,
                     {
                         description: context.root
                             .$t("common.estimatedFee")
                             .toString(),
-                        value: estimatedFeeHbar as import("@hashgraph/sdk/src/Hbar").Hbar
+                        value: estimatedFeeHbar as import("@hashgraph/sdk").Hbar
                     } as Item
                 ] as Item[];
             }
@@ -173,14 +173,14 @@ export default createComponent({
         });
 
         async function handleClickEntireBalance(): Promise<void> {
-            const balance: import("@hashgraph/sdk/src/Hbar").Hbar | null =
+            const balance: import("@hashgraph/sdk").Hbar | null =
                 store.state.wallet.balance;
 
             if (balance == null) {
                 return;
             }
 
-            const hbar: import("@hashgraph/sdk/src/Hbar").Hbar = balance.minus(
+            const hbar: import("@hashgraph/sdk").Hbar = balance.minus(
                 estimatedFeeHbar
             );
 
@@ -206,9 +206,9 @@ export default createComponent({
             const client = store.state.wallet.session.client;
             const parts = state.toAccount.split(".");
 
-            const { Hbar } = await (import(
-                "@hashgraph/sdk/src/Hbar"
-            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+            const { Hbar } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
 
             try {
                 const recipient: import("@hashgraph/sdk").AccountId = {
@@ -254,9 +254,9 @@ export default createComponent({
                 // eslint-disable-next-line require-atomic-updates
                 state.successModalIsOpen = true;
             } catch (error) {
-                const { HederaError } = await (import(
-                    "@hashgraph/sdk/src/errors"
-                ) as Promise<typeof import("@hashgraph/sdk/src/errors")>);
+                const { HederaError, ResponseCodeEnum } = await (import(
+                    "@hashgraph/sdk"
+                ) as Promise<typeof import("@hashgraph/sdk")>);
 
                 // eslint-disable-next-line require-atomic-updates
                 state.idErrorMessage = "";

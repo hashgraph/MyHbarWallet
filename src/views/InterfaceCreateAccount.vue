@@ -71,7 +71,6 @@ import {
     MAX_FEE_TINYBAR
 } from "../store/getters";
 import { ALERT, REFRESH_BALANCE_AND_RATE } from "../store/actions";
-import { Hbar } from "@hashgraph/sdk/src/Hbar";
 
 const ED25519_PREFIX = "302a300506032b6570032100";
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
@@ -140,9 +139,9 @@ export default createComponent({
         watch(
             () => state.newBalance,
             async (newBalance: string) => {
-                const { Hbar } = await (import(
-                    "@hashgraph/sdk/src/Hbar"
-                ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+                const { Hbar } = await (import("@hashgraph/sdk") as Promise<
+                    typeof import("@hashgraph/sdk")
+                >);
 
                 const newBalanceHbar = Hbar.from(newBalance, "hbar");
 
@@ -155,11 +154,13 @@ export default createComponent({
                         description: "Initial Balance",
                         value: state.validBalance
                             ? newBalanceHbar
-                            : (Hbar.fromTinybar(0) as Hbar)
+                            : (Hbar.fromTinybar(
+                                  0
+                              ) as import("@hashgraph/sdk").Hbar)
                     } as Item,
                     {
                         description: "Estimated Fee",
-                        value: estimatedFeeHbar as Hbar
+                        value: estimatedFeeHbar as import("@hashgraph/sdk").Hbar
                     } as Item
                 ] as Item[];
             }
@@ -180,13 +181,9 @@ export default createComponent({
 
             const client = store.state.wallet.session.client;
 
-            const { HederaError, ResponseCodeEnum } = await (import(
+            const { Hbar, HederaError, ResponseCodeEnum } = await (import(
                 "@hashgraph/sdk"
             ) as Promise<typeof import("@hashgraph/sdk")>);
-
-            const { Hbar } = await (import(
-                "@hashgraph/sdk/src/Hbar"
-            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
 
             try {
                 // The new wallet's initial balance

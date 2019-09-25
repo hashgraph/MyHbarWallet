@@ -1,14 +1,14 @@
 import { ESTIMATED_FEE_HBAR, MAX_FEE_HBAR } from "../getters";
 
 export interface State {
-    estimatedFeeHbar: import("@hashgraph/sdk/src/Hbar").Hbar;
-    maxFeeHbar: import("@hashgraph/sdk/src/Hbar").Hbar;
+    estimatedFeeHbar: import("@hashgraph/sdk").Hbar;
+    maxFeeHbar: import("@hashgraph/sdk").Hbar;
 }
 
 export default {
     constructor: async (): Promise<State> => {
-        const { Hbar } = await (import("@hashgraph/sdk/src/Hbar") as Promise<
-            typeof import("@hashgraph/sdk/src/Hbar")
+        const { Hbar } = await (import("@hashgraph/sdk") as Promise<
+            typeof import("@hashgraph/sdk")
         >);
 
         return {
@@ -19,12 +19,12 @@ export default {
     getters: {
         [ESTIMATED_FEE_HBAR]: (
             state: State
-        ): import("@hashgraph/sdk/src/Hbar").Hbar => {
+        ): import("@hashgraph/sdk").Hbar => {
             return state.estimatedFeeHbar;
         },
         [MAX_FEE_HBAR]: (state: State) => (
-            remainingBalanceHBar: import("@hashgraph/sdk/src/Hbar").Hbar
-        ): import("@hashgraph/sdk/src/Hbar").Hbar => {
+            remainingBalanceHBar: import("@hashgraph/sdk").Hbar
+        ): import("@hashgraph/sdk").Hbar => {
             return state.maxFeeHbar.comparedTo(remainingBalanceHBar) <= 0
                 ? state.maxFeeHbar
                 : remainingBalanceHBar;

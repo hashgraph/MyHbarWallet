@@ -59,8 +59,8 @@ import { createComponent, reactive, onMounted } from "@vue/composition-api";
 
 interface State {
     options: string[];
-    selectedLeft: import("@hashgraph/sdk/src/Hbar").HbarUnit;
-    selectedRight: import("@hashgraph/sdk/src/Hbar").HbarUnit;
+    selectedLeft: import("@hashgraph/sdk").HbarUnit;
+    selectedRight: import("@hashgraph/sdk").HbarUnit;
     valueLeft: string;
     valueRight: string;
 }
@@ -82,9 +82,9 @@ export default createComponent({
         });
 
         onMounted(async () => {
-            const { hbarUnits } = await (import(
-                "@hashgraph/sdk/src/Hbar"
-            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+            const { hbarUnits } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
 
             state.options = hbarUnits;
         });
@@ -103,8 +103,8 @@ export default createComponent({
             // is different than {input} then we should replace {input} so as
             // to prevent typing more
 
-            const { BigNumber } = await (import("@hashgraph/sdk/") as Promise<
-                typeof import("@hashgraph/sdk/")
+            const { BigNumber } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
             >);
 
             const computedValueNum = new BigNumber(stateValue);
@@ -123,9 +123,9 @@ export default createComponent({
         }
 
         async function computeValueLeft(): Promise<void> {
-            const { Hbar } = await (import(
-                "@hashgraph/sdk/src/Hbar"
-            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+            const { Hbar } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
 
             state.valueLeft = Hbar.from(state.valueRight, state.selectedRight)
                 .as(state.selectedLeft)
@@ -134,9 +134,9 @@ export default createComponent({
         }
 
         async function computeValueRight(): Promise<void> {
-            const { Hbar } = await (import(
-                "@hashgraph/sdk/src/Hbar"
-            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+            const { Hbar } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
 
             state.valueRight = Hbar.from(state.valueLeft, state.selectedLeft)
                 .as(state.selectedRight)

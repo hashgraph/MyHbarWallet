@@ -80,21 +80,21 @@ export default createComponent({
         });
 
         onMounted(async () => {
-            const { Hbar } = await (import(
-                "@hashgraph/sdk/src/Hbar"
-            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
+            const { Hbar } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
 
-            const total: import("@hashgraph/sdk/src/Hbar").Hbar = props.items
-                .map((item: Item): import("@hashgraph/sdk/src/Hbar").Hbar =>
+            const total: import("@hashgraph/sdk").Hbar = props.items
+                .map((item: Item): import("@hashgraph/sdk").Hbar =>
                     item.value instanceof Hbar
                         ? item.value
                         : Hbar.fromTinybar(0)
                 )
                 .reduce(
                     (
-                        a: import("@hashgraph/sdk/src/Hbar").Hbar,
-                        b: import("@hashgraph/sdk/src/Hbar").Hbar
-                    ): import("@hashgraph/sdk/src/Hbar").Hbar => a.plus(b)
+                        a: import("@hashgraph/sdk").Hbar,
+                        b: import("@hashgraph/sdk").Hbar
+                    ): import("@hashgraph/sdk").Hbar => a.plus(b)
                 );
 
             const parts = formatSplit(total.as("hbar").toString());

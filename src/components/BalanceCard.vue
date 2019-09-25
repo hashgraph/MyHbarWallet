@@ -86,12 +86,9 @@ export default createComponent({
         );
 
         onMounted(async () => {
-            const { Hbar } = await (import(
-                "@hashgraph/sdk/src/Hbar"
-            ) as Promise<typeof import("@hashgraph/sdk/src/Hbar")>);
-            const { BigNumber } = await (import("@hashgraph/sdk/") as Promise<
-                typeof import("@hashgraph/sdk/")
-            >);
+            const { Hbar, BigNumber } = await (import(
+                "@hashgraph/sdk"
+            ) as Promise<typeof import("@hashgraph/sdk")>);
 
             const balance = store.state.wallet.balance || Hbar.fromTinybar(0);
             const exchangeRate =
