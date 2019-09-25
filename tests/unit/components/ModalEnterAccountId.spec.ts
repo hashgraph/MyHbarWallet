@@ -46,7 +46,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by dots (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -108,7 +108,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by dots (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -169,7 +169,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by dots (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -230,7 +230,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by dots (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -291,7 +291,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by dots (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -352,7 +352,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by dots (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -413,7 +413,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by dots (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
@@ -474,7 +474,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                       <div class="text">
                         <!---->
                         <div class="message">
-                          Hedera™ Account IDs are three numbers separated by decimals (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
+                          Hedera™ Account IDs are three numbers separated by dots (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.
                         </div>
                       </div>
                     </div>
