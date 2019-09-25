@@ -108,6 +108,7 @@ export default createComponent({
 
 @media (max-width: 414px) {
     .home-tile-button {
+        justify-content: center;
         padding: 11px;
     }
 
@@ -116,7 +117,6 @@ export default createComponent({
         font-size: 14px;
         font-weight: 500;
         margin-block: 10px 10px;
-        text-align: center;
     }
 
     .message,

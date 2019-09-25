@@ -105,7 +105,15 @@ export default createComponent({
         flex-direction: column;
     }
 
-    @media (max-width: 350px) {
+    @media (max-width: 414px) {
+        padding: 35px;
+    }
+
+    @media (max-width: 360px) {
+        padding: 25px;
+    }
+
+    @media (max-width: 300px) {
         padding: 10px;
     }
 }

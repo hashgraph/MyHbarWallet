@@ -1,7 +1,7 @@
 <template>
     <div class="tile-grid">
         <HomeTileButton
-            :title="$t('homeTileButtons.createANewWallet')"
+            :title="$t('homeTileButtons.createNewAccount')"
             :content="$t('homeTileButtons.generateYourPrivateKey')"
             :image="wallet"
             route="create-account"
@@ -50,7 +50,7 @@ export default createComponent({
     }
 
     @media (max-width: 414px) {
-        grid-row-gap: 15px;
+        grid-row-gap: 5px;
     }
 }
 
