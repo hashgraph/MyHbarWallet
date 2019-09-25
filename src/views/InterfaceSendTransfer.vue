@@ -61,7 +61,9 @@ import {
     reactive,
     computed,
     watch,
-    SetupContext
+    SetupContext,
+    ref,
+    Ref
 } from "@vue/composition-api";
 import store from "../store";
 import { ALERT, REFRESH_BALANCE_AND_RATE } from "../store/actions";
@@ -69,11 +71,7 @@ import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue
 import { Unit } from "../units";
 import ModalFeeSummary from "../components/ModalFeeSummary.vue";
 import { formatHbar, validateHbar } from "../formatter";
-import {
-    ESTIMATED_FEE_HBAR,
-    ESTIMATED_FEE_TINYBAR,
-    MAX_FEE_TINYBAR
-} from "../store/getters";
+import { ESTIMATED_FEE_HBAR, MAX_FEE_TINYBAR } from "../store/getters";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 import { Item } from "../components/ModalFeeSummaryItems.vue";
 
@@ -103,17 +101,20 @@ export default createComponent({
             amountErrorMessage: "",
             successModalIsOpen: false,
             summaryIsOpen: false,
-            summaryAmount: "",
-            summaryItems: [] as Item[]
+            summaryAmount: ""
         });
 
         const isIdValid = computed(() =>
             shardRealmAccountRegex.test(state.toAccount)
         );
 
+        const summaryItems: Ref<Item[]> = ref(new Array<Item>());
+
         watch(
             () => state.amount,
             async (amount: string) => {
+                console.log("Hello world");
+
                 if (!validateHbar(amount)) {
                     state.isAmountValid = false;
                     return;
@@ -147,7 +148,7 @@ export default createComponent({
 
                 state.summaryAmount = formattedAmount;
 
-                ((state.summaryItems as unknown) as Item[]) = [
+                summaryItems.value = [
                     {
                         description: context.root
                             .$t("interfaceSendTransfer.transferAmount")
@@ -165,6 +166,8 @@ export default createComponent({
                         value: estimatedFeeHbar as import("@hashgraph/sdk").Hbar
                     } as Item
                 ] as Item[];
+
+                console.log(summaryItems.value);
             }
         );
 
@@ -313,6 +316,7 @@ export default createComponent({
         return {
             state,
             summaryAccount,
+            summaryItems,
             isIdValid,
             hbarSuffix: Unit.Hbar,
             tinybarSuffix: Unit.Tinybar,

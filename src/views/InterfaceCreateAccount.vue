@@ -41,7 +41,7 @@
         <ModalFeeSummary
             v-model="state.summaryModalIsOpen"
             :amount="state.summaryAmount"
-            :items="state.summaryItems"
+            :items="summaryItems.value"
             account=""
             tx-type="createAccount"
             @submit="handleCreateAccount"
@@ -56,6 +56,8 @@ import InterfaceForm from "../components/InterfaceForm.vue";
 import {
     createComponent,
     reactive,
+    ref,
+    Ref,
     SetupContext,
     watch
 } from "@vue/composition-api";
@@ -85,7 +87,6 @@ interface State {
     successModalIsOpen: boolean;
     summaryModalIsOpen: boolean;
     summaryAmount: string;
-    summaryItems: Item[];
     keyError: string;
     newBalanceError: string;
     account: string;
@@ -130,12 +131,13 @@ export default createComponent({
             successModalIsOpen: false,
             summaryModalIsOpen: false,
             summaryAmount: "",
-            summaryItems: [] as Item[],
             keyError: "",
             newBalanceError: "",
             account: "",
             isPublicKeyValid: false
         });
+
+        const summaryItems: Ref<Item[]> = ref(new Array<Item>());
 
         watch(
             () => state.newBalance,
@@ -146,13 +148,14 @@ export default createComponent({
 
                 const newBalanceHbar = Hbar.from(newBalance, "hbar");
 
+                // && validateHbar(newBalance); todo: see if this is actually needed now...
                 state.validBalance =
-                    newBalanceHbar.comparedTo(Hbar.fromTinybar(0)) > 0 &&
-                    validateHbar(newBalance);
+                    newBalanceHbar != null &&
+                    newBalanceHbar.comparedTo(Hbar.fromTinybar(0)) > 0;
 
                 state.summaryAmount = formatHbar(newBalanceHbar);
 
-                ((state.summaryItems as unknown) as Item[]) = [
+                summaryItems.value = [
                     {
                         description: "Initial Balance",
                         value: state.validBalance
@@ -160,18 +163,23 @@ export default createComponent({
                             : (Hbar.fromTinybar(
                                   0
                               ) as import("@hashgraph/sdk").Hbar)
-                    } as Item,
+                    },
                     {
                         description: "Estimated Fee",
                         value: estimatedFeeHbar as import("@hashgraph/sdk").Hbar
-                    } as Item
-                ] as Item[];
+                    }
+                ];
             }
         );
 
-        watch(async () => {
-            state.isPublicKeyValid = await isPublicKeyValid(state.publicKey);
-        });
+        watch(
+            () => state.publicKey,
+            async () => {
+                state.isPublicKeyValid = await isPublicKeyValid(
+                    state.publicKey
+                );
+            }
+        );
 
         async function handleCreateAccount(): Promise<void> {
             state.isBusy = true;
@@ -294,6 +302,7 @@ export default createComponent({
 
         return {
             state,
+            summaryItems,
             handleCreateAccount,
             handleShowSummary,
             handleSuccessModalChange,

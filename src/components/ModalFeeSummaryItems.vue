@@ -1,10 +1,10 @@
 <template>
     <div class="modal-fee-summary-items">
-        <template v-for="(item, index) in splitItems">
+        <template v-for="(item, index) in splitItems.value">
             <div
                 :key="item.key"
                 class="row"
-                :class="{ total: index === splitItems.length - 1 }"
+                :class="{ total: index === splitItems.value.length - 1 }"
             >
                 <div class="description">
                     {{ item.description }}
@@ -87,7 +87,7 @@ export default createComponent({
             >);
 
             const calculatedTotal: import("@hashgraph/sdk").Hbar =
-                props.items.length > 0
+                props.items != null && props.items.length > 0
                     ? props.items
                           .map((item: Item): import("@hashgraph/sdk").Hbar =>
                               item.value instanceof Hbar
@@ -109,7 +109,7 @@ export default createComponent({
                     ? { int: "0", fraction: "0" }
                     : { int: parts.int, fraction: parts.fraction };
 
-            if (props.items.length <= 0) {
+            if (props.items != null && props.items.length <= 0) {
                 // nothing else to do here
                 return;
             }
