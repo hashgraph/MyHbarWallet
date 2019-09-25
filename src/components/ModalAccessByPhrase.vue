@@ -3,7 +3,7 @@
         <Modal
             :title="$t('modalAccessByPhrase.title')"
             :not-closable="state.isBusy"
-            :is-open="state.modalIsOpen"
+            :is-open="state.isOpen"
             @change="handleModalChangeIsOpen"
         >
             <template v-slot:banner>
@@ -52,7 +52,7 @@ import {
 } from "@vue/composition-api";
 
 export interface State {
-    modalIsOpen: boolean;
+    isOpen: boolean;
     words: string[];
     isBusy: boolean;
     isValid: boolean;
@@ -76,7 +76,7 @@ export default createComponent({
     },
     setup(props: { state: State }, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
-            context.emit("change", { ...props.state, modalIsOpen: isOpen });
+            context.emit("change", { ...props.state, isOpen });
         }
         function handleMnemonicInput(words: string[]): void {
             context.emit("change", { ...props.state, words });
@@ -95,7 +95,7 @@ export default createComponent({
 
         // Watch for the modal state to change, and clear input when the modal is reopened
         watch(
-            () => props.state.modalIsOpen,
+            () => props.state.isOpen,
             (newVal: boolean) => {
                 if (newVal) {
                     context.emit("change", { ...props.state, words: [] });

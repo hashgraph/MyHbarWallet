@@ -14,7 +14,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
 
         const onChange = jest.fn();
         const state = {
-            modalIsOpen: false,
+            isOpen: false,
             password: "",
             isBusy: false
         };
@@ -75,7 +75,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
 
         const onChange = jest.fn();
         const state = {
-            modalIsOpen: true,
+            isOpen: true,
             password: "",
             isBusy: false
         };
@@ -136,7 +136,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
 
         const onChange = jest.fn();
         const state = {
-            modalIsOpen: false,
+            isOpen: false,
             password: "123456789",
             isBusy: false
         };
@@ -197,7 +197,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
 
         const onChange = jest.fn();
         const state = {
-            modalIsOpen: true,
+            isOpen: true,
             password: "123456789",
             isBusy: false
         };
@@ -258,7 +258,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
 
         const onChange = jest.fn();
         const state = {
-            modalIsOpen: false,
+            isOpen: false,
             password: "",
             isBusy: true
         };
@@ -321,7 +321,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
 
         const onChange = jest.fn();
         const state = {
-            modalIsOpen: true,
+            isOpen: true,
             password: "",
             isBusy: true
         };
@@ -384,7 +384,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
 
         const onChange = jest.fn();
         const state = {
-            modalIsOpen: false,
+            isOpen: false,
             password: "123456789",
             isBusy: true
         };
@@ -447,7 +447,7 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
 
         const onChange = jest.fn();
         const state = {
-            modalIsOpen: true,
+            isOpen: true,
             password: "123456789",
             isBusy: true
         };

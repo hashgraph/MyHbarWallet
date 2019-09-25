@@ -54,6 +54,12 @@ import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiClose } from "@mdi/js";
 import { createComponent, computed } from "@vue/composition-api";
 
+// Yes, it is used
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function handleClick(): void {
+    store.commit(SET_INTERFACE_MENU_IS_OPEN, false);
+}
+
 export default createComponent({
     components: {
         InterfaceNavigationSection,
@@ -82,12 +88,7 @@ export default createComponent({
             else return "menu-closed";
         });
 
-        function handleClick(): void {
-            store.commit(SET_INTERFACE_MENU_IS_OPEN, false);
-        }
-
         return {
-            handleClick,
             cryptoRoutes,
             sendImage,
             sendImageActive,
@@ -98,7 +99,8 @@ export default createComponent({
             messageImage,
             messageImageActive,
             mdiClose,
-            classObject
+            classObject,
+            handleClick
         };
     }
 });

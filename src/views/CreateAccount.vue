@@ -104,17 +104,19 @@ export default createComponent({
             keyFile: null,
             modalAccessByHardwareIsOpen: false,
             modalCreateByKeystoreState: {
-                modalIsOpen: false,
-                password: "",
+                isOpen: false,
                 isBusy: false,
-                passwordStrength: 0,
-                passwordSuggestion: "",
-                confirmationPassword: ""
+                passwordGeneratorState: {
+                    password: "",
+                    passwordStrength: 0,
+                    passwordSuggestion: "",
+                    confirmationPassword: ""
+                }
             },
             modalCreateByPhraseIsOpen: false,
             modalCreateWithSoftwareIsOpen: false,
             modalDownloadKeystoreState: {
-                modalIsOpen: false,
+                isOpen: false,
                 isBusy: true,
                 downloadClicked: false
             },
@@ -141,7 +143,7 @@ export default createComponent({
 
             setTimeout(() => {
                 if (which === CreateSoftwareOption.File) {
-                    state.modalCreateByKeystoreState.modalIsOpen = true;
+                    state.modalCreateByKeystoreState.isOpen = true;
                 } else if (which === CreateSoftwareOption.Phrase) {
                     state.modalCreateByPhraseIsOpen = true;
                 }
@@ -149,10 +151,10 @@ export default createComponent({
         }
 
         async function handleCreateByKeystoreSubmit(): Promise<void> {
-            state.modalCreateByKeystoreState.modalIsOpen = false;
+            state.modalCreateByKeystoreState.isOpen = false;
 
             setTimeout(() => {
-                state.modalDownloadKeystoreState.modalIsOpen = true;
+                state.modalDownloadKeystoreState.isOpen = true;
             }, 125);
             try {
                 const { Ed25519PrivateKey } = await (import(
@@ -161,7 +163,8 @@ export default createComponent({
 
                 state.privateKey = await Ed25519PrivateKey.generate();
                 state.keyFile = await state.privateKey.createKeystore(
-                    state.modalCreateByKeystoreState.password
+                    state.modalCreateByKeystoreState.passwordGeneratorState
+                        .password
                 );
                 if (state.keyFile == null) {
                     throw new Error(
@@ -208,7 +211,7 @@ export default createComponent({
         function handleContinue(): void {
             state.modalRequestToCreateAccountIsOpen = true;
             setTimeout(
-                () => (state.modalDownloadKeystoreState.modalIsOpen = false),
+                () => (state.modalDownloadKeystoreState.isOpen = false),
                 125
             );
         }

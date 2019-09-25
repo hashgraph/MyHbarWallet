@@ -39,7 +39,7 @@ interface State {
 
 interface Props {
     editable: boolean;
-    word: number;
+    words: number;
     value: string[];
 }
 

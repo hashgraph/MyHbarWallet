@@ -13,7 +13,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         expect.assertions(2);
 
         const state = {
-            modalIsOpen: false,
+            isOpen: false,
             isBusy: false,
             account: "",
             errorMessage: null
@@ -75,7 +75,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         expect.assertions(2);
 
         const state = {
-            modalIsOpen: true,
+            isOpen: true,
             isBusy: false,
             account: "",
             errorMessage: null
@@ -137,7 +137,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         expect.assertions(1);
 
         const state = {
-            modalIsOpen: false,
+            isOpen: false,
             isBusy: true,
             account: "",
             errorMessage: null
@@ -198,7 +198,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         expect.assertions(1);
 
         const state = {
-            modalIsOpen: false,
+            isOpen: false,
             isBusy: false,
             account: "",
             errorMessage: "Error Message"
@@ -259,7 +259,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         expect.assertions(1);
 
         const state = {
-            modalIsOpen: true,
+            isOpen: true,
             isBusy: true,
             account: "",
             errorMessage: null
@@ -320,7 +320,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         expect.assertions(1);
 
         const state = {
-            modalIsOpen: false,
+            isOpen: false,
             isBusy: true,
             account: "",
             errorMessage: "Error Message"
@@ -381,7 +381,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         expect.assertions(1);
 
         const state = {
-            modalIsOpen: true,
+            isOpen: true,
             isBusy: false,
             account: "",
             errorMessage: "Error Message"
@@ -442,7 +442,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         expect.assertions(1);
 
         const state = {
-            modalIsOpen: true,
+            isOpen: true,
             isBusy: true,
             account: "",
             errorMessage: "Error Message"

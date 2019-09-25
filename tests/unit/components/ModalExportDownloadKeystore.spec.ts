@@ -1,19 +1,19 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalDownloadKeystore from "../../../src/components/ModalDownloadKeystore.vue";
+import ModalExportDownloadKeystore from "../../../src/components/ModalExportDownloadKeystore.vue";
 import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
 
-describe("ModalDownloadKeystore.vue", (): void => {
+describe("ModalExportDownloadKeystore.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
     it("renders, closed, not busy", (): void => {
-        expect.assertions(1);
+        expect.assertions(2);
 
         const onChange = jest.fn();
-        const wrapper = mount(ModalDownloadKeystore, {
+        const wrapper = mount(ModalExportDownloadKeystore, {
             localVue,
             i18n,
             propsData: {
@@ -27,13 +27,14 @@ describe("ModalDownloadKeystore.vue", (): void => {
             }
         });
 
+        expect(onChange).toHaveBeenCalledTimes(0);
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-create-by-mnemonic-phrase">
+            <div class="modal-export-download-keystore">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
-                  <header><span class="title">By Keystore File</span>
-                    <!---->
-                  </header>
+                  <header><span class="title">Export Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                      <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
+                    </svg></header>
                   <div class="main">
                     <div class="content-container">
                       <div class="save-my-keystore-cards"><span class="body-title">Save This Keystore File!</span>
@@ -58,10 +59,8 @@ describe("ModalDownloadKeystore.vue", (): void => {
                             </p>
                           </div>
                         </div>
-                      </div>
-                      <div class="button-container"><button type="submit" class="download-button compact"><span>Download Keystore File</span>
-                          <!----></button> <button type="submit" disabled="disabled" class="continue-button compact"><span>Continue</span>
-                          <!----></button></div>
+                      </div> <button type="submit" class="download compact"><span>Download Keystore File</span>
+                        <!----></button>
                     </div>
                   </div>
                 </div>
@@ -71,10 +70,10 @@ describe("ModalDownloadKeystore.vue", (): void => {
     });
 
     it("renders, open, not busy", (): void => {
-        expect.assertions(1);
+        expect.assertions(2);
 
         const onChange = jest.fn();
-        const wrapper = mount(ModalDownloadKeystore, {
+        const wrapper = mount(ModalExportDownloadKeystore, {
             localVue,
             i18n,
             propsData: {
@@ -88,13 +87,14 @@ describe("ModalDownloadKeystore.vue", (): void => {
             }
         });
 
+        expect(onChange).toHaveBeenCalledTimes(0);
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-create-by-mnemonic-phrase">
+            <div class="modal-export-download-keystore">
               <div role="dialog" aria-modal="true" class="modal-background is-open">
                 <div class="modal">
-                  <header><span class="title">By Keystore File</span>
-                    <!---->
-                  </header>
+                  <header><span class="title">Export Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                      <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
+                    </svg></header>
                   <div class="main">
                     <div class="content-container">
                       <div class="save-my-keystore-cards"><span class="body-title">Save This Keystore File!</span>
@@ -119,10 +119,8 @@ describe("ModalDownloadKeystore.vue", (): void => {
                             </p>
                           </div>
                         </div>
-                      </div>
-                      <div class="button-container"><button type="submit" class="download-button compact"><span>Download Keystore File</span>
-                          <!----></button> <button type="submit" disabled="disabled" class="continue-button compact"><span>Continue</span>
-                          <!----></button></div>
+                      </div> <button type="submit" class="download compact"><span>Download Keystore File</span>
+                        <!----></button>
                     </div>
                   </div>
                 </div>
@@ -132,10 +130,10 @@ describe("ModalDownloadKeystore.vue", (): void => {
     });
 
     it("renders, closed, busy", (): void => {
-        expect.assertions(1);
+        expect.assertions(2);
 
         const onChange = jest.fn();
-        const wrapper = mount(ModalDownloadKeystore, {
+        const wrapper = mount(ModalExportDownloadKeystore, {
             localVue,
             i18n,
             propsData: {
@@ -149,13 +147,14 @@ describe("ModalDownloadKeystore.vue", (): void => {
             }
         });
 
+        expect(onChange).toHaveBeenCalledTimes(0);
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-create-by-mnemonic-phrase">
+            <div class="modal-export-download-keystore">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
-                  <header><span class="title">By Keystore File</span>
-                    <!---->
-                  </header>
+                  <header><span class="title">Export Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                      <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
+                    </svg></header>
                   <div class="main">
                     <div class="content-container">
                       <div class="save-my-keystore-cards"><span class="body-title">Save This Keystore File!</span>
@@ -180,12 +179,10 @@ describe("ModalDownloadKeystore.vue", (): void => {
                             </p>
                           </div>
                         </div>
-                      </div>
-                      <div class="button-container"><button type="submit" disabled="disabled" class="download-button busy compact"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
-                            <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
-                          </svg>
-                          <!----></button> <button type="submit" disabled="disabled" class="continue-button compact"><span>Continue</span>
-                          <!----></button></div>
+                      </div> <button type="submit" disabled="disabled" class="download busy compact"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                          <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
+                        </svg>
+                        <!----></button>
                     </div>
                   </div>
                 </div>
@@ -195,10 +192,10 @@ describe("ModalDownloadKeystore.vue", (): void => {
     });
 
     it("renders, open, busy", (): void => {
-        expect.assertions(1);
+        expect.assertions(2);
 
         const onChange = jest.fn();
-        const wrapper = mount(ModalDownloadKeystore, {
+        const wrapper = mount(ModalExportDownloadKeystore, {
             localVue,
             i18n,
             propsData: {
@@ -212,13 +209,14 @@ describe("ModalDownloadKeystore.vue", (): void => {
             }
         });
 
+        expect(onChange).toHaveBeenCalledTimes(0);
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-create-by-mnemonic-phrase">
+            <div class="modal-export-download-keystore">
               <div role="dialog" aria-modal="true" class="modal-background is-open">
                 <div class="modal">
-                  <header><span class="title">By Keystore File</span>
-                    <!---->
-                  </header>
+                  <header><span class="title">Export Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                      <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
+                    </svg></header>
                   <div class="main">
                     <div class="content-container">
                       <div class="save-my-keystore-cards"><span class="body-title">Save This Keystore File!</span>
@@ -243,12 +241,10 @@ describe("ModalDownloadKeystore.vue", (): void => {
                             </p>
                           </div>
                         </div>
-                      </div>
-                      <div class="button-container"><button type="submit" disabled="disabled" class="download-button busy compact"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
-                            <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
-                          </svg>
-                          <!----></button> <button type="submit" disabled="disabled" class="continue-button compact"><span>Continue</span>
-                          <!----></button></div>
+                      </div> <button type="submit" disabled="disabled" class="download busy compact"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                          <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
+                        </svg>
+                        <!----></button>
                     </div>
                   </div>
                 </div>

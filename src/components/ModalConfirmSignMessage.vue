@@ -9,9 +9,9 @@
         <div class="item account">
             <img
                 class="account-image"
-                :src="'https://api.adorable.io/avatars/285/' + rawPublicKey"
+                :src="'https://api.adorable.io/avatars/285/' + publicKey"
             />
-            <span class="account-key"> {{ rawPublicKey }} </span>
+            <span class="account-key"> {{ publicKey }} </span>
         </div>
         <p class="title">{{ $t("common.message") }}</p>
         <ReadOnlyInput class="item" :value="message" />
@@ -27,18 +27,18 @@
     </Modal>
 </template>
 <script lang="ts">
-import {
-    createComponent,
-    PropType,
-    computed,
-    SetupContext
-} from "@vue/composition-api";
+import { createComponent, computed, SetupContext } from "@vue/composition-api";
 
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 
-const ED25519_PREFIX = "302a300506032b6570032100";
+function hexEncode(str: string): string {
+    return unescape(encodeURIComponent(str))
+        .split("")
+        .map(v => v.charCodeAt(0).toString(16))
+        .join("");
+}
 
 export default createComponent({
     components: {
@@ -47,9 +47,9 @@ export default createComponent({
         ReadOnlyInput
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        message: (String as unknown) as PropType<string>,
-        publicKey: (String as unknown) as PropType<string>
+        isOpen: Boolean,
+        message: String,
+        publicKey: String
     },
     setup(
         props: {
@@ -59,21 +59,6 @@ export default createComponent({
         },
         context: SetupContext
     ) {
-        const rawPublicKey = computed(() => {
-            let publickey: string = props.publicKey;
-            if (publickey.startsWith(ED25519_PREFIX, 0)) {
-                publickey = publickey.slice(ED25519_PREFIX.length);
-            }
-            return publickey;
-        });
-
-        function hexEncode(str: string): string {
-            return unescape(encodeURIComponent(str))
-                .split("")
-                .map(v => v.charCodeAt(0).toString(16))
-                .join("");
-        }
-
         function handleConfirm(): void {
             context.emit("confirm");
         }
@@ -81,7 +66,6 @@ export default createComponent({
         const hexMessage = computed(() => `0x${hexEncode(props.message)}`);
         return {
             hexMessage,
-            rawPublicKey,
             handleConfirm
         };
     }

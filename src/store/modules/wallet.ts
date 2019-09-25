@@ -105,7 +105,6 @@ export default {
         },
         async [REFRESH_EXCHANGE_RATE]({
             commit,
-            dispatch,
             state
         }: ActionContext<State, RootState>): Promise<void> {
             if (state.session == null) {

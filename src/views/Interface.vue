@@ -11,7 +11,6 @@
                 :shard="account.shard"
                 :account="account.account"
                 class="info-account"
-                :public-key="publicKey"
             />
             <BalanceCard class="info-balance" />
             <NetworkCard class="info-network" />
@@ -27,9 +26,6 @@ import AccountCard from "../components/AccountCard.vue";
 import { computed, createComponent } from "@vue/composition-api";
 import store from "../store";
 
-// HACK: We strip this prefix from the key if there for compat. with mobile wallets
-const ed25519PubKeyPrefix = "302a300506032b6570032100";
-
 export default createComponent({
     components: {
         InterfaceNavigation,
@@ -42,13 +38,6 @@ export default createComponent({
         // Otherwise don't show the Logout modal
         store.state.interfaceMenu.hasBeenToInterface = true;
 
-        const publicKey = computed(() =>
-            store.state.wallet.session != null
-                ? store.state.wallet.session.privateKey.publicKey
-                      .toString()
-                      .slice(ed25519PubKeyPrefix.length)
-                : null
-        );
         const account = computed(() =>
             store.state.wallet.session != null
                 ? store.state.wallet.session.account
@@ -56,8 +45,7 @@ export default createComponent({
         );
 
         return {
-            account,
-            publicKey
+            account
         };
     }
 });

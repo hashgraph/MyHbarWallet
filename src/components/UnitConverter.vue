@@ -92,7 +92,6 @@ export default createComponent({
             );
         }
 
-        // TODO: A generalization of this function would be very useful for a general-purpose [AmountInput] component
         function boundInput(
             event: Event,
             inputValue: string,

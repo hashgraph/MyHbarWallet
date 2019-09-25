@@ -18,7 +18,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
             i18n,
             propsData: {
                 state: {
-                    modalIsOpen: false,
+                    isOpen: false,
                     words: [
                         "skull",
                         "emerge",
@@ -158,7 +158,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
             i18n,
             propsData: {
                 state: {
-                    modalIsOpen: false,
+                    isOpen: false,
                     words: [
                         "skull",
                         "emerge",
@@ -298,7 +298,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
             i18n,
             propsData: {
                 state: {
-                    modalIsOpen: false,
+                    isOpen: false,
                     words: [
                         "skull",
                         "emerge",
@@ -440,7 +440,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
             i18n,
             propsData: {
                 state: {
-                    modalIsOpen: false,
+                    isOpen: false,
                     words: [
                         "skull",
                         "emerge",

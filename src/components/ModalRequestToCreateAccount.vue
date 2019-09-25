@@ -26,7 +26,7 @@
             >
                 <qrcode-vue
                     v-if="publicKey"
-                    :value="rawPublicKey"
+                    :value="publicKey.toString()"
                     size="180"
                     level="L"
                     class="pub-qr"
@@ -35,7 +35,7 @@
                 <ReadOnlyInput
                     v-if="publicKey"
                     multiline
-                    :value="rawPublicKey"
+                    :value="publicKey.toString()"
                 />
 
                 <div class="buttons">
@@ -64,16 +64,13 @@
 import Modal from "../components/Modal.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
-import { computed, createComponent, PropType } from "@vue/composition-api";
+import { createComponent, PropType } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "../clipboard";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import Warning from "../components/Warning.vue";
 import { ALERT } from "../store/actions";
 import store from "../store";
-
-// HACK: We strip this prefix from the key if there for compat. with mobile wallets
-const ed25519PubKeyPrefix = "302a300506032b6570032100";
 
 interface Props {
     isOpen: boolean;
@@ -102,18 +99,8 @@ export default createComponent({
         event: (String as unknown) as PropType<string>
     },
     setup(props: Props, context) {
-        const rawPublicKey = computed(() => {
-            const key = props.publicKey.toString();
-
-            if (key.startsWith(ed25519PubKeyPrefix)) {
-                return key.slice(ed25519PubKeyPrefix.length);
-            }
-
-            return key;
-        });
-
         async function handleClickCopy(): Promise<void> {
-            await writeToClipboard(rawPublicKey.value);
+            await writeToClipboard(props.publicKey.toString());
             await store.dispatch(ALERT, { message: "Copied", level: "info" });
         }
 
@@ -123,8 +110,7 @@ export default createComponent({
 
         return {
             handleClickCopy,
-            handleHasAccount,
-            rawPublicKey
+            handleHasAccount
         };
     }
 });
