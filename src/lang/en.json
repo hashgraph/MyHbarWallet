@@ -98,7 +98,7 @@
     "home.myHbarWalletIsAFreeClientSideInterface": "MyHbarWallet is a free, client-side interface helping you interact with Hedera™ Hashgraph. Our easy-to-use, open-source platform allows you to generate keys, create accounts, transfer hbars, and so much more.",
     "home.theNumberOneHbarWallet": "The #1 Hbar Wallet",
     "homeTileButtons.accessNow": "Access Now",
-    "homeTileButtons.createANewWallet": "Create A New Wallet",
+    "homeTileButtons.createNewAccount": "Create New Account",
     "homeTileButtons.generateYourPrivateKey": "Generate your private key and obtain an account ID. Key saving and security is your responsibility.",
     "homeTileButtons.getStarted": "Get Started",
     "homeTileButtons.manageAnAccount": "Manage an account, send or receive hbars, create new accounts, and more!",

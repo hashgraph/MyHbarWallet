@@ -25,7 +25,7 @@ describe("HomeTileButtons.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="tile-grid"><a href="/create-account" class="home-tile-button"><img class="tile-image">
                 <div class="content">
-                  <div class="title">Create A New Wallet</div>
+                  <div class="title">Create New Account</div>
                   <div class="message">Generate your private key and obtain an account ID. Key saving and security is your responsibility.</div>
                   <div class="action-label">
                     Get Started
