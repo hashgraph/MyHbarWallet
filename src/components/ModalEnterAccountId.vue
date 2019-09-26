@@ -44,11 +44,8 @@
 <script lang="ts">
 import {
     createComponent,
-    computed,
-    watch,
     PropType,
     reactive,
-    ref,
     SetupContext
 } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
