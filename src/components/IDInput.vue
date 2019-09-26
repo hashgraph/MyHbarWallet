@@ -55,7 +55,7 @@ export default createComponent({
             account: null
         });
         const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
-        const partialRegex = /^[1-9]{1,}$/;
+        const partialRegex = /^[1-9]{1}\d{0,}$/;
 
         const valid = computed(() => shardRealmAccountRegex.test(state.input));
         const partialValid = computed(() => partialRegex.test(state.input));
