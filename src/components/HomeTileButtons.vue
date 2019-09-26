@@ -50,7 +50,7 @@ export default createComponent({
     }
 
     @media (max-width: 414px) {
-        grid-row-gap: 5px;
+        grid-row-gap: 8px;
     }
 }
 

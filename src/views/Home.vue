@@ -25,7 +25,7 @@
         <img class="circle" :src="circleImage" alt="circle" />
         <div id="about" class="about">
             <div class="page-container">
-                <div class="banner">
+                <div class="about-banner">
                     <div class="banner-content">
                         <div class="about-title">
                             {{ $t("home.aboutMyHbarWallet") }}
@@ -79,12 +79,6 @@ export default createComponent({
 
 .top {
     background-color: var(--color-white);
-
-    @media (max-width: 480px) {
-        & .banner-image {
-            display: none;
-        }
-    }
 }
 
 .page-container {
@@ -101,8 +95,13 @@ export default createComponent({
     padding: 80px 30px;
     width: 100%;
 
-    @media (max-width: 810px) {
-        flex-direction: column;
+    @media (max-width: 1024px) {
+        padding-block: 30px;
+        padding-inline: 0;
+    }
+
+    @media (max-width: 600px) {
+        padding-block: 40px;
     }
 
     @media (max-width: 414px) {
@@ -115,6 +114,18 @@ export default createComponent({
 
     @media (max-width: 300px) {
         padding: 10px;
+    }
+}
+
+.about-banner {
+    align-items: center;
+    align-self: center;
+    display: flex;
+    padding: 80px 30px;
+    width: 100%;
+
+    @media (max-width: 700px) {
+        flex-direction: column;
     }
 }
 
@@ -168,6 +179,14 @@ export default createComponent({
     & :first-child {
         border-radius: 20px;
         height: 300px;
+
+        @media (max-width: 1024px) {
+            height: 235px;
+        }
+
+        @media (max-width: 700px) {
+            display: none;
+        }
     }
 }
 
