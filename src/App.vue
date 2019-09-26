@@ -8,6 +8,7 @@
         <Alerts />
         <ZoomTopButton />
         <ModalLogOut v-model="isOpen" forgot />
+        <ModalReportError v-model="viewError" />
     </div>
 </template>
 
@@ -15,6 +16,7 @@
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import Alerts from "./components/Alerts.vue";
+import ModalReportError from "./components/ModalReportError.vue";
 import ModalLogOut from "./components/ModalLogOut.vue";
 import ZoomTopButton from "./components/ZoomTopButton.vue";
 import { createComponent, SetupContext, computed } from "@vue/composition-api";
@@ -26,7 +28,11 @@ export default createComponent({
         Footer,
         Alerts,
         ZoomTopButton,
-        ModalLogOut
+        ModalLogOut,
+        ModalReportError
+    },
+    model: {
+        event: "error"
     },
     setup(props: {}, context: SetupContext) {
         const isInterface = computed(() => {
@@ -47,8 +53,16 @@ export default createComponent({
             );
         });
 
+        const viewError = computed(() => {
+            return (
+                store.state.errors.newErrorOccurred &&
+                !store.state.errors.errorMessageViewed
+            );
+        });
+
         return {
-            isOpen
+            isOpen,
+            viewError
         };
     }
 });

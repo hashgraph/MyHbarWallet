@@ -8,35 +8,7 @@
                 </div>
 
                 <div class="stack-trace">
-                    error in
-                    /home/josh/Projects/github.com/hashgraph/MyHbarWallet/src/components/ModalFeeSummaryItems.vue
-                    ERROR in
-                    /home/josh/Projects/github.com/hashgraph/MyHbarWallet/src/components/ModalFeeSummaryItems.vue(152,13):
-                    152:13 Type 'SplitItem[]' is not assignable to type '(string
-                    | null)[]'. Type 'SplitItem' is not assignable to type
-                    'string'. 150 | } 151 | > 152 | state.splitItems = items; |
-                    ^ 153 | }); 154 | 155 | return { error in
-                    /home/josh/Projects/github.com/hashgraph/MyHbarWallet/src/views/InterfaceCreateAccount.vue
-                    ERROR in
-                    /home/josh/Projects/github.com/hashgraph/MyHbarWallet/src/views/InterfaceCreateAccount.vue(152,17):
-                    152:17 Type 'Item[]' is not assignable to type '(string |
-                    (() => BigNumber))[]'. Type 'Item' is not assignable to type
-                    'string | (() => BigNumber)'. Type 'Item' is not assignable
-                    to type '() => BigNumber'. Type 'Item' provides no match for
-                    the signature '(): BigNumber'. 150 |
-                    validateHbar(newBalance); 151 | state.summaryAmount =
-                    formatHbar(newBalanceHbar); > 152 | state.summaryItems = [ |
-                    ^ 153 | { 154 | description: "Initial Balance", 155 | value:
-                    state.validBalance error in
-                    /home/josh/Projects/github.com/hashgraph/MyHbarWallet/src/views/InterfaceSendTransfer.vue
-                    ERROR in
-                    /home/josh/Projects/github.com/hashgraph/MyHbarWallet/src/views/InterfaceSendTransfer.vue(149,17):
-                    149:17 Type 'Item[]' is not assignable to type '(string |
-                    (() => BigNumber))[]'. 147 | state.summaryAmount =
-                    formattedAmount; 148 | > 149 | state.summaryItems = [ | ^
-                    150 | { 151 | description: context.root 152 |
-                    .$t("interfaceSendTransfer.transferAmount") ERROR Build
-                    failed with errors. error Command failed with exit code 1.
+                    {{ stackTrace.value }}
                 </div>
 
                 <div class="button-group">
@@ -53,10 +25,15 @@
     </Modal>
 </template>
 
-<script>
+<script lang="ts">
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
-import { createComponent } from "@vue/composition-api";
+import { computed, createComponent } from "@vue/composition-api";
+import store from "../store";
+
+interface Props {
+    isOpen: boolean;
+}
 
 export default createComponent({
     components: {
@@ -67,11 +44,20 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    setup() {
-        console.log("hi");
+    setup(props: Props) {
+        const stackTrace = computed((): string => {
+            if (store.state.errors.error == null) {
+                return "";
+            }
+
+            return store.state.errors.error.stack != null
+                ? store.state.errors.error.stack
+                : "";
+        });
 
         return {
-            isOpen: true
+            isOpen: props.isOpen,
+            stackTrace
         };
     }
 });
