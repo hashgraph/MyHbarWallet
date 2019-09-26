@@ -99,6 +99,7 @@ export default createComponent({
 
         function toggle(): void {
             context.emit("toggle", !props.isOpen);
+            document.body.classList.toggle("ham-menu-is-open", !props.isOpen);
         }
 
         const isFaqs = computed(() => {
