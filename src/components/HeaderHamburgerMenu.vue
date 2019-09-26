@@ -54,7 +54,6 @@ import { mdiChevronRight } from "@mdi/js";
 import BalanceCard from "./BalanceCard.vue";
 import NetworkCard from "./NetworkCard.vue";
 import store from "../store";
-import ModalLogOut from "./ModalLogOut.vue";
 import Button from "../components/Button.vue";
 
 import {

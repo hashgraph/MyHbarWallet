@@ -40,23 +40,6 @@ describe("HeaderHamburgerMenu.vue", (): void => {
               <div class="logout-container">
                 <!---->
               </div>
-              <div role="dialog" aria-modal="true" class="modal-background">
-                <div class="modal">
-                  <!---->
-                  <div class="main">
-                    <div class="content-container">
-                      <div class="modal-forgot-to-logout"><span>Log Out</span>
-                        <p>
-                          Are you sure?
-                        </p>
-                        <div class="button-group">
-                          <!----> <button type="submit" class="button-logout danger center-button"><span>Log Out</span>
-                            <!----></button></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </nav>
         `);
     });
