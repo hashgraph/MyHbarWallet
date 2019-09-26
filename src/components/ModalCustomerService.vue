@@ -10,16 +10,19 @@
                 @submit.prevent="handleSubmit"
             >
                 <TextInput
+                    v-if="!hasBrowser"
                     v-model="state.browser"
                     class="issue-item"
                     :placeholder="$t('modalCustomerService.browser')"
                 />
                 <TextInput
+                    v-if="!hasPlatform"
                     v-model="state.platform"
                     class="issue-item"
                     :placeholder="$t('modalCustomerService.operatingSystem')"
                 />
                 <TextInput
+                    v-if="!hasDevice"
                     v-model="state.device"
                     class="issue-item"
                     :placeholder="
@@ -27,11 +30,13 @@
                     "
                 />
                 <TextInput
+                    v-if="!hasAccountId"
                     v-model="state.accountId"
                     class="issue-item"
                     :placeholder="$t('modalCustomerService.accountIdIfAny')"
                 />
                 <TextInput
+                    v-if="!hasUrl"
                     v-model="state.url"
                     class="issue-item"
                     :placeholder="$t('modalCustomerService.url')"
@@ -65,12 +70,20 @@ import {
     watch,
     reactive
 } from "@vue/composition-api";
+import store from "../store";
+import { Id } from "../store/modules/wallet";
+
+// Both of these are defined in vue.config.js.
+// VERSION reads from package.json and COMMIT_HASH is git rev-parse --short HEAD output
+declare const VERSION: string;
+declare const COMMIT_HASH: string;
 
 function createLink(
     url: string | null,
     platform: string,
     browser: string,
     device: string,
+    version: string,
     accountId: string,
     description: string
 ): string {
@@ -78,6 +91,7 @@ function createLink(
     const bodyTemplate = `Browser: ${browser}
 OS: ${platform}
 Device: ${device}
+Version: ${version}
 AccountID: ${accountId}
 URL: ${url}
 
@@ -87,6 +101,21 @@ ${description}
     return `mailto:support@myhbarwallet.com?subject=${encodeURIComponent(
         subjectTemplate
     )}&body=${encodeURIComponent(bodyTemplate)}`;
+}
+
+function build(
+    name: string | undefined | null,
+    version: string | undefined | null
+): string | null {
+    if (name || version) {
+        if (name && version) {
+            return name + " " + version;
+        } else if (name) {
+            return name;
+        }
+    }
+
+    return null;
 }
 
 export default createComponent({
@@ -104,16 +133,60 @@ export default createComponent({
     },
     setup(props, context) {
         const ua = new UAParser(navigator.userAgent);
+
+        const account = computed(() => {
+            return store.state.wallet.session != null
+                ? store.state.wallet.session.account
+                : null;
+        });
+
+        const accountId = computed(() => {
+            if (account.value !== null) {
+                const accountId: Id = account.value;
+                return (
+                    accountId.shard +
+                    "." +
+                    accountId.realm +
+                    "." +
+                    accountId.account
+                );
+            }
+
+            return null;
+        });
+
+        const platform = computed(() => {
+            const name = ua.getOS().name;
+            const version = ua.getOS().version;
+            return build(name, version);
+        });
+
+        const browser = computed(() => {
+            const name = ua.getBrowser().name;
+            const version = ua.getBrowser().version;
+            return build(name, version);
+        });
+
+        const url = computed(() => {
+            return context.root.$route != undefined
+                ? context.root.$route.fullPath
+                : null;
+        });
+
+        const device = computed(() => {
+            const type = ua.getDevice().type;
+            const model = ua.getDevice().model;
+            return build(type, model);
+        });
+
         const state = reactive({
-            platform: ua.getOS.name,
-            browser: ua.getBrowser().name || "",
-            url:
-                context.root.$route != undefined
-                    ? context.root.$route.fullPath
-                    : null,
+            platform: platform.value || "",
+            browser: browser.value || "",
+            url: url.value,
             description: "",
-            device: "",
-            accountId: ""
+            device: device.value || "",
+            version: "v" + VERSION + "+" + COMMIT_HASH,
+            accountId: accountId.value || ""
         });
 
         const sendLink = computed(() =>
@@ -122,6 +195,7 @@ export default createComponent({
                 state.platform,
                 state.browser,
                 state.device,
+                state.version,
                 state.accountId,
                 state.description
             )
@@ -142,6 +216,11 @@ export default createComponent({
         );
 
         return {
+            hasAccountId: accountId.value !== null,
+            hasPlatform: platform.value !== null,
+            hasBrowser: browser.value !== null,
+            hasUrl: url.value !== null,
+            hasDevice: device.value !== null,
             state,
             sendLink,
             handleSubmit

@@ -62,7 +62,7 @@ export default createComponent({
 
         const input = ref<HTMLInputElement | null>(null);
 
-        function handleInput(accountText: string, event: Event): void {
+        function handleInput(accountText: string): void {
             state.errorMessage = null;
             state.input = accountText;
             if (valid.value) {

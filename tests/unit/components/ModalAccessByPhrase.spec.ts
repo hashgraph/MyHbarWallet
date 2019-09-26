@@ -97,18 +97,8 @@ describe("ModalAccessByPhrase.vue", (): void => {
                               <div class="main">
                                 <div class="content-container">
                                   <form class="modal-issue-information">
-                                    <div class="text-input issue-item"><label class="label-container">
-                                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Browser" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                        <!----></span></label>
-                                      <!---->
-                                      <!---->
-                                    </div>
-                                    <div class="text-input issue-item"><label class="label-container">
-                                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Operating System" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                        <!----></span></label>
-                                      <!---->
-                                      <!---->
-                                    </div>
+                                    <!---->
+                                    <!---->
                                     <div class="text-input issue-item"><label class="label-container">
                                         <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
                                         <!----></span></label>
@@ -237,18 +227,8 @@ describe("ModalAccessByPhrase.vue", (): void => {
                               <div class="main">
                                 <div class="content-container">
                                   <form class="modal-issue-information">
-                                    <div class="text-input issue-item"><label class="label-container">
-                                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Browser" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                        <!----></span></label>
-                                      <!---->
-                                      <!---->
-                                    </div>
-                                    <div class="text-input issue-item"><label class="label-container">
-                                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Operating System" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                        <!----></span></label>
-                                      <!---->
-                                      <!---->
-                                    </div>
+                                    <!---->
+                                    <!---->
                                     <div class="text-input issue-item"><label class="label-container">
                                         <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
                                         <!----></span></label>
@@ -379,18 +359,8 @@ describe("ModalAccessByPhrase.vue", (): void => {
                               <div class="main">
                                 <div class="content-container">
                                   <form class="modal-issue-information">
-                                    <div class="text-input issue-item"><label class="label-container">
-                                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Browser" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                        <!----></span></label>
-                                      <!---->
-                                      <!---->
-                                    </div>
-                                    <div class="text-input issue-item"><label class="label-container">
-                                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Operating System" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                        <!----></span></label>
-                                      <!---->
-                                      <!---->
-                                    </div>
+                                    <!---->
+                                    <!---->
                                     <div class="text-input issue-item"><label class="label-container">
                                         <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
                                         <!----></span></label>
@@ -521,18 +491,8 @@ describe("ModalAccessByPhrase.vue", (): void => {
                               <div class="main">
                                 <div class="content-container">
                                   <form class="modal-issue-information">
-                                    <div class="text-input issue-item"><label class="label-container">
-                                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Browser" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                        <!----></span></label>
-                                      <!---->
-                                      <!---->
-                                    </div>
-                                    <div class="text-input issue-item"><label class="label-container">
-                                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Operating System" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                        <!----></span></label>
-                                      <!---->
-                                      <!---->
-                                    </div>
+                                    <!---->
+                                    <!---->
                                     <div class="text-input issue-item"><label class="label-container">
                                         <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
                                         <!----></span></label>
