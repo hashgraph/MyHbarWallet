@@ -100,6 +100,7 @@ module.exports = {
         browser
             .click(".key-icon > path:nth-child(1)")
             .waitForElementVisible(".modal-view-keys", 5000)
+            .pause(500)
             .expect.element(publicKeySelector)
             .text.to.equal(truncatePublic(keystorePublicKey));
         browser
@@ -172,11 +173,11 @@ module.exports = {
                 5000
             )
             .waitForElementVisible(
-                "input[placeholder='Please Enter At Least 9 Characters']",
+                ".modal-password > .modal-background.is-open > .modal input[type=password]",
                 5000
             )
             .setValue(
-                "input[placeholder='Please Enter At Least 9 Characters']",
+                ".modal-password > .modal-background.is-open > .modal input[type=password]",
                 keystoreIncorrectPassword + "\n"
             )
             .waitForElementVisible(
@@ -209,25 +210,19 @@ module.exports = {
                 5000
             )
             .waitForElementVisible(
-                "input[placeholder='Please Enter At Least 9 Characters']",
+                ".modal-password > .modal-background.is-open > .modal input[type=password]",
                 5000
             )
             .setValue(
-                "input[placeholder='Please Enter At Least 9 Characters']",
+                ".modal-password > .modal-background.is-open > .modal input[type=password]",
                 keystorePassword + "\n"
             )
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background.is-open > .modal",
                 5000
             )
-            .waitForElementVisible(
-                "input[placeholder='shard.realm.account']",
-                5000
-            )
-            .setValue(
-                "input[placeholder='shard.realm.account']",
-                keystoreIncorrectAccountId + "\n"
-            )
+            .waitForElementVisible(accountInputSelector, 5000)
+            .setValue(accountInputSelector, keystoreIncorrectAccountId + "\n")
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background.is-open > .modal .error",
                 5000
@@ -258,21 +253,18 @@ module.exports = {
                 5000
             )
             .waitForElementVisible(
-                "input[placeholder='Please Enter At Least 9 Characters']",
+                ".modal-password > .modal-background.is-open > .modal input[type=password]",
                 5000
             )
             .setValue(
-                "input[placeholder='Please Enter At Least 9 Characters']",
+                ".modal-password > .modal-background.is-open > .modal input[type=password]",
                 keystorePassword + "\n"
             )
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background.is-open > .modal",
                 5000
             )
-            .waitForElementVisible(
-                "input[placeholder='shard.realm.account']",
-                5000
-            )
+            .waitForElementVisible(accountInputSelector, 5000)
             .click(
                 ".modal-enter-account-id > .modal-background.is-open > .modal button[type=button]"
             )
