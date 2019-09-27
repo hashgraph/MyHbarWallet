@@ -99,21 +99,25 @@ export default createComponent({
         onMounted(() => {
             const elModals = context.root.$el.querySelectorAll(".modal");
             elModals.forEach(element => {
-                element.addEventListener("touchstart", () => {
-                    if (element.scrollTop <= 0) {
-                        element.scrollTo(0, 1);
-                        return;
-                    }
-                    if (
-                        element.scrollTop + element.clientHeight >=
-                        element.scrollHeight
-                    ) {
-                        element.scrollTo(
-                            0,
-                            element.scrollHeight - element.clientHeight - 1
-                        );
-                    }
-                });
+                element.addEventListener(
+                    "touchstart",
+                    () => {
+                        if (element.scrollTop <= 0) {
+                            element.scrollTo(0, 1);
+                            return;
+                        }
+                        if (
+                            element.scrollTop + element.clientHeight >=
+                            element.scrollHeight
+                        ) {
+                            element.scrollTo(
+                                0,
+                                element.scrollHeight - element.clientHeight - 1
+                            );
+                        }
+                    },
+                    { passive: true }
+                );
             });
         });
 
