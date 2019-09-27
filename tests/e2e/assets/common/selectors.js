@@ -1,10 +1,13 @@
 module.exports = Object.freeze({
-    accountInputSelector: "input[placeholder='shard.realm.account']",
+    accountInputSelector:
+        ".modal-enter-account-id > .modal-background.is-open > .modal input[type=text]",
     publicKeySelector: "div.public > div.read-only-input > div",
     privateKeySelector: "div.private > div.read-only-input > div",
     privateKeyObscureSelector: "div.private > div.read-only-input.input > svg",
-    passwordSelector: "input[placeholder='Please Enter At Least 9 Characters']",
-    passwordConfirmSelector: "input[placeholder='Confirm Password']",
+    passwordSelector:
+        ".text-input:not(.disabled):first-child input[type=password]",
+    passwordConfirmSelector:
+        ".text-input:not(.disabled):nth-child(2) input[type=password]",
     hbarBalanceSelector: ".interface .balance .hbar-balance",
     usdBalanceSelector: ".interface .balance .usd-balance",
     modalBackgroundSelector: "div.modal-background",

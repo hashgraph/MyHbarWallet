@@ -47,10 +47,13 @@ module.exports = {
             .click("label[for=key]")
             .click(".modal-access-by-software > button:nth-child(3)")
             .waitForElementVisible(
-                "input[placeholder='Enter Private Key']",
+                ".modal-background > .modal .modal-access-by-private-key input[type=text]",
                 5000
             )
-            .setValue("input[placeholder='Enter Private Key']", keyPrivateKey)
+            .setValue(
+                ".modal-background > .modal .modal-access-by-private-key input[type=text]",
+                keyPrivateKey
+            )
             .click(".button-access-wallet")
             .waitForElementVisible(accountInputSelector, 5000)
             .setValue(accountInputSelector, keyAccountId)
@@ -81,6 +84,7 @@ module.exports = {
         browser
             .click(".key-icon > path:nth-child(1)")
             .waitForElementVisible(".modal-view-keys", 5000)
+            .pause(500)
             .expect.element(publicKeySelector)
             .text.to.equal(truncatePublic(keyPublicKey));
         browser
