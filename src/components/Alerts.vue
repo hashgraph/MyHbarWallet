@@ -40,7 +40,7 @@ export default createComponent({
     max-height: 425px;
     overflow: hidden;
     position: fixed;
-    width: 325px;
+    width: 375px;
     z-index: 5;
 
     @media (max-width: 1024px) {

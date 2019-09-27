@@ -85,7 +85,7 @@ export default createComponent({
     overflow: hidden;
     padding: 6px 20px;
     user-select: none;
-    width: 325px;
+    width: 375px;
 
     @media (max-width: 1024px) {
         min-height: 50px;
