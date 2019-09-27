@@ -2,18 +2,15 @@ import { ERROR_OCCURRED, ERROR_VIEWED } from "../mutations";
 import { ERROR_MESSAGE, RAW_ERROR, HAS_ERROR } from "../getters";
 
 export interface State {
-    errors: ( Error | string )[];
+    errors: (Error | string)[];
 }
 
 export default {
     state: {
-        errors: [],
+        errors: []
     } as State,
     mutations: {
-        [ERROR_OCCURRED](
-            state: State,
-            e: { error: Error | string }
-        ): void {
+        [ERROR_OCCURRED](state: State, e: { error: Error | string }): void {
             console.log("errors", e.error);
             state.errors.push(e.error);
         },
@@ -35,6 +32,6 @@ export default {
             if (error instanceof Error) return error.stack || "";
 
             return error;
-        },
+        }
     }
 };
