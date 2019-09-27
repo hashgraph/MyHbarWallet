@@ -133,11 +133,8 @@ export default createComponent({
         });
 
         const validBalance = computed(() => {
-            return (
-                new BigNumber(state.newBalance).isGreaterThan(
-                    new BigNumber(0)
-                ) && validateHbar(state.newBalance)
-            );
+            // All we should check is that this is, in fact, a number
+            return !isNaN(parseInt(state.newBalance, 10));
         });
 
         watch(async () => {
@@ -187,17 +184,6 @@ export default createComponent({
                     store.state.wallet.balance == null
                         ? new BigNumber(0)
                         : store.state.wallet.balance;
-
-                if (
-                    balanceTinybar < newBalanceTinybar.plus(estimatedFeeTinybar)
-                ) {
-                    state.newBalanceError = context.root
-                        .$t(
-                            "interfaceCreateAccount.userBalanceError.amountIsGreaterThanCurrentBalance"
-                        )
-                        .toString();
-                    return;
-                }
 
                 const {
                     AccountCreateTransaction,
