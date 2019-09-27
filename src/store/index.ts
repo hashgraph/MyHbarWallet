@@ -6,7 +6,7 @@ import InterfaceMenu, {
 } from "./modules/interfaceMenu";
 import Wallet, { State as WalletState } from "./modules/wallet";
 import Fees, { State as FeesState } from "./modules/fees";
-import Errors, {State as ErrorsState } from "./modules/errors";
+import Errors, { State as ErrorsState } from "./modules/errors";
 
 Vue.use(Vuex);
 

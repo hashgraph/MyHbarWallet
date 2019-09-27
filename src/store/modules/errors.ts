@@ -1,5 +1,5 @@
-import {ERROR_OCCURRED, ERROR_VIEWED} from "../mutations";
-import {ERROR_DESCRIPTION, RAW_ERROR} from "../getters";
+import { ERROR_OCCURRED, ERROR_VIEWED } from "../mutations";
+import { ERROR_DESCRIPTION, RAW_ERROR } from "../getters";
 
 export interface State {
     newErrorOccurred: boolean;
@@ -16,7 +16,10 @@ export default {
         errorMessageViewed: false
     } as State,
     mutations: {
-        [ERROR_OCCURRED](state: State, e: { description: string; error: Error }): void {
+        [ERROR_OCCURRED](
+            state: State,
+            e: { description: string; error: Error }
+        ): void {
             state.newErrorOccurred = true;
             state.error = e.error;
             state.errorDescription = e.description;
@@ -30,7 +33,7 @@ export default {
         }
     },
     getters: {
-        [RAW_ERROR]: (state: State): (Error | null) => {
+        [RAW_ERROR]: (state: State): Error | null => {
             return state.error;
         },
         [ERROR_DESCRIPTION]: (state: State): string => {
