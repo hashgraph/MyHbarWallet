@@ -143,22 +143,22 @@ export default createComponent({
             )
         );
 
-        function handleCancel(): void {
+        function close(): void {
             context.emit("change", false);
 
+            // Wait until the close animation to clear the form
             setTimeout(() => {
                 store.commit(ERROR_VIEWED);
-            }, 0);
+            }, 150);
+        }
+
+        function handleCancel(): void {
+            close();
         }
 
         function handleSend(): void {
             window.open(sendLink.value);
-
-            context.emit("change", false);
-
-            setTimeout(() => {
-                store.commit(ERROR_VIEWED);
-            }, 0);
+            close();
         }
 
         // When the route is updated, reset the path value
