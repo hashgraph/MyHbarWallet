@@ -14,8 +14,8 @@ Vue.use(VueCompositionApi);
 Vue.use(Router);
 
 // Globally catch uncaught exceptions and store it
-Vue.config.errorHandler = (err: Error, vm: Vue, info: string) => {
-    store.commit(ERROR_OCCURRED, { description: info, error: err });
+Vue.config.errorHandler = (error: Error | string) => {
+    store.commit(ERROR_OCCURRED, { error });
 };
 
 new Vue({

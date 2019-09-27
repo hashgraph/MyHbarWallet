@@ -1,43 +1,40 @@
 import { ERROR_OCCURRED, ERROR_VIEWED } from "../mutations";
-import { ERROR_DESCRIPTION, RAW_ERROR } from "../getters";
+import { ERROR_MESSAGE, RAW_ERROR, HAS_ERROR } from "../getters";
 
 export interface State {
-    newErrorOccurred: boolean;
-    errorDescription: string | null;
-    error: Error | null;
-    errorMessageViewed: boolean;
+    errors: ( Error | string )[];
 }
 
 export default {
     state: {
-        newErrorOccurred: false,
-        errorDescription: null,
-        error: null,
-        errorMessageViewed: false
+        errors: [],
     } as State,
     mutations: {
         [ERROR_OCCURRED](
             state: State,
-            e: { description: string; error: Error }
+            e: { error: Error | string }
         ): void {
-            state.newErrorOccurred = true;
-            state.error = e.error;
-            state.errorDescription = e.description;
-            state.errorMessageViewed = false;
+            console.log("errors", e.error);
+            state.errors.push(e.error);
         },
         [ERROR_VIEWED](state: State): void {
-            state.newErrorOccurred = false;
-            state.error = null;
-            state.errorDescription = null;
-            state.errorMessageViewed = true;
+            state.errors.pop();
         }
     },
     getters: {
-        [RAW_ERROR]: (state: State): Error | null => {
-            return state.error;
+        [RAW_ERROR]: (state: State): Error | string | null => {
+            return state.errors.length > 0 ? state.errors[0] : null;
         },
-        [ERROR_DESCRIPTION]: (state: State): string => {
-            return state.errorDescription != null ? state.errorDescription : "";
-        }
+        [HAS_ERROR]: (state: State): boolean => {
+            console.log("has error?", state.errors.length);
+            return state.errors.length > 0;
+        },
+        [ERROR_MESSAGE]: (state: State): string | null => {
+            const error = state.errors.length > 0 ? state.errors[0] : null;
+            if (error == null) return null;
+            if (error instanceof Error) return error.stack || "";
+
+            return error;
+        },
     }
 };

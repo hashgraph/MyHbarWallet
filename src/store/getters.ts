@@ -9,4 +9,5 @@ export const MAX_FEE_TINYBAR = "MAX_FEE_TINYBAR";
 
 // errors
 export const RAW_ERROR = "RAW_ERROR";
-export const ERROR_DESCRIPTION = "ERROR_DESCRIPTION";
+export const ERROR_MESSAGE = "ERROR_MESSAGE";
+export const HAS_ERROR = "HAS_ERROR";

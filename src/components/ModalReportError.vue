@@ -8,7 +8,7 @@
                 </div>
 
                 <div class="stack-trace">
-                    {{ stackTrace.value }}
+                    {{ errorMessage }}
                 </div>
 
                 <div class="button-group">
@@ -42,6 +42,7 @@ import {
     watch
 } from "@vue/composition-api";
 import store from "../store";
+import { ERROR_MESSAGE } from "../store/getters";
 import { ERROR_VIEWED } from "../store/mutations";
 import { UAParser } from "ua-parser-js";
 import { Id } from "../store/modules/wallet";
@@ -126,14 +127,8 @@ export default createComponent({
             accountId: accountId.value || ""
         });
 
-        const stackTrace = computed((): string => {
-            if (store.state.errors.error == null) {
-                return "";
-            }
-
-            return store.state.errors.error.stack != null
-                ? store.state.errors.error.stack
-                : "";
+        const errorMessage = computed((): string => {
+            return store.getters[ERROR_MESSAGE]!;
         });
 
         const sendLink = computed(() =>
@@ -144,21 +139,26 @@ export default createComponent({
                 state.device,
                 state.version,
                 state.accountId,
-                stackTrace.value
+                errorMessage.value
             )
         );
 
         function handleCancel(): void {
-            store.commit(ERROR_VIEWED);
             context.emit("change", false);
+
+            setTimeout(() => {
+                store.commit(ERROR_VIEWED);
+            }, 0);
         }
 
         function handleSend(): void {
-            store.commit(ERROR_VIEWED);
-
             window.open(sendLink.value);
 
             context.emit("change", false);
+
+            setTimeout(() => {
+                store.commit(ERROR_VIEWED);
+            }, 0);
         }
 
         // When the route is updated, reset the path value
@@ -172,7 +172,7 @@ export default createComponent({
         );
 
         return {
-            stackTrace,
+            errorMessage,
             handleCancel,
             handleSend
         };
@@ -189,11 +189,16 @@ export default createComponent({
 
 .button-cancel,
 .button-send {
-    min-width: initial;
-    width: 48.2%;
+    width: 120px;
+
+    &:first-child {
+        margin-inline-end: 20px;
+    }
 }
 
 .stack-trace {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     color: var(--color-christmas-pink);
     font-family: monospace;
     font-size: 13px;
@@ -202,6 +207,7 @@ export default createComponent({
     min-width: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
+    padding: 20px;
 }
 
 .header {
@@ -211,7 +217,6 @@ export default createComponent({
     font-weight: 700;
     justify-content: center;
     margin-block-end: 20px;
-    max-width: 300px;
     text-align: center;
 }
 
