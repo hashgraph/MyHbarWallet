@@ -253,7 +253,7 @@ export default createComponent({
                         : store.state.wallet.balance;
 
                 const maxTxFeeTinybar = store.getters[MAX_FEE_TINYBAR](
-                    new BigNumber(safeBalance).minus(
+                    safeBalance.minus(
                         sendAmountTinybar.plus(estimatedFeeTinybar)
                     )
                 );
