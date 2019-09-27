@@ -71,8 +71,9 @@
         <HeaderHamburgerMenu
             :is-open="state.isHamburgerOpen"
             @toggle="toggle"
+            @logout="state.isLogoutOpen = true"
         />
-        <ModalLogOut v-model="state.isLogoutOpen" />
+        <ModalLogOut v-if="isInterface" v-model="state.isLogoutOpen" />
     </div>
 </template>
 

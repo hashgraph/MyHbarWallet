@@ -45,7 +45,6 @@
                 @click="handleLogout"
             />
         </div>
-        <ModalLogOut v-model="state.isLogoutOpen" />
     </nav>
 </template>
 
@@ -55,7 +54,6 @@ import { mdiChevronRight } from "@mdi/js";
 import BalanceCard from "./BalanceCard.vue";
 import NetworkCard from "./NetworkCard.vue";
 import store from "../store";
-import ModalLogOut from "./ModalLogOut.vue";
 import Button from "../components/Button.vue";
 
 import {
@@ -75,7 +73,6 @@ export default createComponent({
         MaterialDesignIcon,
         BalanceCard,
         NetworkCard,
-        ModalLogOut,
         Button
     },
     props: {
@@ -128,7 +125,7 @@ export default createComponent({
 
         function handleLogout(): void {
             context.emit("toggle", !props.isOpen);
-            state.isLogoutOpen = true;
+            context.emit("logout");
         }
 
         return {
