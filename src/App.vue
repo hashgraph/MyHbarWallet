@@ -19,9 +19,15 @@ import Alerts from "./components/Alerts.vue";
 import ModalReportError from "./components/ModalReportError.vue";
 import ModalLogOut from "./components/ModalLogOut.vue";
 import ZoomTopButton from "./components/ZoomTopButton.vue";
-import { createComponent, SetupContext, computed } from "@vue/composition-api";
+import {
+    createComponent,
+    SetupContext,
+    computed,
+    onMounted
+} from "@vue/composition-api";
 import store from "./store";
 import { HAS_ERROR } from "./store/getters";
+import router from "./router";
 
 export default createComponent({
     components: {
@@ -36,6 +42,12 @@ export default createComponent({
         event: "error"
     },
     setup(props: {}, context: SetupContext) {
+        onMounted(() => {
+            // prevent going to a 404 when launching as an Electron app
+            // see https://nklayman.github.io/vue-cli-plugin-electron-builder/guide/commonIssues.html#blank-screen-on-builds-but-works-fine-on-serve
+            router.push("/");
+        });
+
         const isInterface = computed(() => {
             if (context.root != null) {
                 if (context.root.$route != null) {
