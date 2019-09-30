@@ -10,11 +10,6 @@
     <img src="https://img.shields.io/netlify/c533cd8a-a127-48d5-a123-292202cab01c?style=flat-square"
     alt="Netlify Status" />
   </a>
-  <!-- Cirrus CI -->
-  <a href="https://cirrus-ci.com/github/hashgraph/MyHbarWallet">
-    <img src="https://img.shields.io/cirrus/github/hashgraph/MyHbarWallet?style=flat-square"
-         alt="Build Status" />
-  </a>
 </div>
 
 <br>
