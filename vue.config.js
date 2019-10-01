@@ -19,11 +19,11 @@ module.exports = {
                 HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`
             })
         ]
-        // ,
-        // entry: {
-        //     home: "./src/app.vue",
-        //     access: "./src/views/AccessMyAccount.vue"
-        // }
+    },
+    pluginOptions: {
+        electronBuilder: {
+            mainProcessFile: "src/electron/background.ts"
+        }
     },
     chainWebpack(config) {
         // Use a standard HTML template instead of rolling our own (which is default)
