@@ -26,7 +26,7 @@
             >
                 <qrcode-vue
                     v-if="publicKey"
-                    :value="publicKey.toString()"
+                    :value="publicKey.toString(true)"
                     size="180"
                     level="L"
                     class="pub-qr"
@@ -35,7 +35,7 @@
                 <ReadOnlyInput
                     v-if="publicKey"
                     multiline
-                    :value="publicKey.toString()"
+                    :value="publicKey.toString(true)"
                 />
 
                 <div class="buttons">
@@ -64,7 +64,7 @@
 import Modal from "../components/Modal.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
-import { createComponent, PropType } from "@vue/composition-api";
+import { createComponent, PropType, SetupContext } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "../clipboard";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
@@ -98,10 +98,13 @@ export default createComponent({
         >,
         event: (String as unknown) as PropType<string>
     },
-    setup(props: Props, context) {
+    setup(props: Props, context: SetupContext) {
         async function handleClickCopy(): Promise<void> {
             await writeToClipboard(props.publicKey.toString());
-            await store.dispatch(ALERT, { message: "Copied", level: "info" });
+            await store.dispatch(ALERT, {
+                message: context.root.$t("common.copy"),
+                level: "info"
+            });
         }
 
         function handleHasAccount(): void {

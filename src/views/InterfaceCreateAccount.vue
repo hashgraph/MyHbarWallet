@@ -92,16 +92,16 @@ interface State {
 
 async function isPublicKeyValid(key: string): Promise<boolean> {
     try {
-        const { Ed25519PrivateKey } = await (import(
-            "@hashgraph/sdk"
-        ) as Promise<typeof import("@hashgraph/sdk")>);
+        const { Ed25519PublicKey } = await (import("@hashgraph/sdk") as Promise<
+            typeof import("@hashgraph/sdk")
+        >);
 
-        Ed25519PrivateKey.fromString(key);
+        Ed25519PublicKey.fromString(key);
         return true;
     } catch (error) {
         if (error instanceof Error) {
             // The exception message changes depending on the input
-            if (error.message === "invalid private key: " + key) {
+            if (error.message === "invalid public key: " + key) {
                 return false;
             }
         }
