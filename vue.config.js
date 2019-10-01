@@ -22,7 +22,14 @@ module.exports = {
     },
     pluginOptions: {
         electronBuilder: {
-            mainProcessFile: "src/electron/background.ts"
+            mainProcessFile: "src/electron/background.ts",
+            customFileProtocol: "mhw://./",
+            chainWebpackRendererProcess: config => {
+                config.plugin("define").tap(args => {
+                    args[0]["IS_ELECTRON"] = true;
+                    return args;
+                });
+            }
         }
     },
     chainWebpack(config) {
