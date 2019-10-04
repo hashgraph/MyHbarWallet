@@ -42,15 +42,6 @@ export default createComponent({
         event: "error"
     },
     setup(props: {}, context: SetupContext) {
-        onMounted(() => {
-            // prevent going to a 404 when launching as an Electron app
-            // see https://nklayman.github.io/vue-cli-plugin-electron-builder/guide/commonIssues.html#blank-screen-on-builds-but-works-fine-on-serve
-            if (process.env.IS_ELECTRON) {
-                console.log("is electron");
-                router.replace("/");
-            }
-        });
-
         const isInterface = computed(() => {
             if (context.root != null) {
                 if (context.root.$route != null) {

@@ -29,6 +29,21 @@ module.exports = {
                     args[0]["IS_ELECTRON"] = true;
                     return args;
                 });
+            },
+            builderOptions: {
+                appId: "com.myhbarwallet.app",
+                productName: "MyHbarWallet",
+                copyright: "Copyright © 2019 MyHbarWallet",
+                files: ["**", "build/icon.*"],
+                linux: {
+                    target: ["pacman", "deb", "rpm"],
+                    executableName: "MyHbarWallet",
+                    category: "Utility",
+                    desktop: {
+                        Name: "MyHbarWallet",
+                        Type: "Application"
+                    }
+                }
             }
         }
     },

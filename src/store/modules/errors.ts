@@ -23,7 +23,6 @@ export default {
             return state.errors.length > 0 ? state.errors[0] : null;
         },
         [HAS_ERROR]: (state: State): boolean => {
-            console.log("has error?", state.errors.length);
             return state.errors.length > 0;
         },
         [ERROR_MESSAGE]: (state: State): string | null => {

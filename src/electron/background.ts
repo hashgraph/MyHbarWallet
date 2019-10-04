@@ -18,7 +18,6 @@ function createWindow(): void {
     win = new BrowserWindow({
         width: 800,
         height: 600,
-        icon: path.join(__static, "icon.png"),
         webPreferences: {
             nodeIntegration: true
         }
@@ -32,6 +31,9 @@ function createWindow(): void {
         // Load the index.html when not in development
         win.loadURL("mhw://./index.html");
     }
+
+    // Remove the default menu
+    win.setMenuBarVisibility(false);
 
     win.on("closed", () => {
         win = null;
