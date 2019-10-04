@@ -28,3 +28,7 @@ yarn-error.log*
 # Nightwatch
 tests/e2e/reports
 selenium*.log
+
+#Electron-builder output
+/dist_electron
+/build
