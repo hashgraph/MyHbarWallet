@@ -22,27 +22,30 @@
             @submit="handleAccessByPhraseSubmit"
         />
 
-        <ModalAccessByHardware v-model="state.modalAccessByHardwareIsOpen" />
+        <ModalAccessByHardware
+            v-model="state.modalAccessByHardwareState.isOpen"
+            @submit="handleAccessByHardwareSubmit"
+        />
 
         <ModalAccessBySoftware
-            v-model="state.modalAccessBySoftwareIsOpen"
+            v-model="state.modalAccessBySoftwareState.isOpen"
             @submit="handleAccessBySoftwareSubmit"
         />
 
         <ModalKeystoreFilePassword
             v-model="state.modalKeystoreFilePasswordState"
-            @submit="handlePasswordSubmit"
+            @submit="handleAccessByKeystoreSubmit"
         />
 
         <ModalEnterAccountId
-            v-model="state.modalEnterAccountIdIsOpen"
+            v-model="state.modalEnterAccountIdState"
             :private-key="state.privateKey"
-            @submit="handleAccountIdSubmit"
             @noAccount="handleDoesntHaveAccount"
+            @submit="handleAccountIdSubmit"
         />
 
         <ModalRequestToCreateAccount
-            v-model="state.modalRequestToCreateAccountIsOpen"
+            v-model="state.modalRequestToCreateAccountState.isOpen"
             :public-key="state.publicKey"
             @hasAccount="handleHasAccount"
         />
@@ -60,26 +63,37 @@
 <script lang="ts">
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "../components/AccountTileButtons.vue";
-import ModalAccessByHardware from "../components/ModalAccessByHardware.vue";
+import ModalAccessByHardware, {
+    AccessHardwareOption
+} from "../components/ModalAccessByHardware.vue";
 import ModalAccessBySoftware, {
     AccessSoftwareOption
 } from "../components/ModalAccessBySoftware.vue";
 import ModalAccessByPhrase from "../components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "../components/ModalAccessByPrivateKey.vue";
-import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
-import store from "../store";
+import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
+import { AccessAccountDTO, Id } from "../store/modules/wallet";
 import {
     createComponent,
     reactive,
     ref,
     SetupContext
 } from "@vue/composition-api";
-import { Id } from "../store/modules/wallet";
-import { ALERT, LOG_IN } from "../store/actions";
+import LedgerNanoS from "../wallets/hardware/LedgerNanoS";
 import Vue from "vue";
+import store from "../store";
+import {
+    ALERT,
+    HANDLE_HEDERA_ERROR,
+    HANDLE_LEDGER_ERROR,
+    LOG_IN
+} from "../store/actions";
+import SoftwareWallet from "../wallets/software/SoftwareWallet";
+import settings from "../settings";
+import { HederaErrorTuple, LedgerErrorTuple } from "src/store/modules/errors";
 
 export default createComponent({
     components: {
@@ -95,15 +109,17 @@ export default createComponent({
         ModalRequestToCreateAccount
     },
     setup(props: object, context: SetupContext) {
-        const state = reactive({
-            privateKey: null as
-                | import("@hashgraph/sdk/src/Keys").Ed25519PrivateKey
-                | null,
-            publicKey: null as
-                | import("@hashgraph/sdk/src/Keys").Ed25519PublicKey
-                | null,
-            modalAccessByHardwareIsOpen: false,
-            modalAccessBySoftwareIsOpen: false,
+        const state: AccessAccountDTO = reactive({
+            wallet: null,
+            privateKey: null,
+            publicKey: null,
+            keyFile: null,
+            modalAccessByHardwareState: {
+                isOpen: false
+            },
+            modalAccessBySoftwareState: {
+                isOpen: false
+            },
             modalAccessByPhraseState: {
                 isOpen: false,
                 isBusy: false,
@@ -113,7 +129,7 @@ export default createComponent({
             modalKeystoreFilePasswordState: {
                 isOpen: false,
                 password: "",
-                error: null as string | null,
+                error: null,
                 isBusy: false
             },
             modalAccessByPrivateKeyState: {
@@ -121,38 +137,26 @@ export default createComponent({
                 rawPrivateKey: "",
                 isBusy: false
             },
-            modalEnterAccountIdIsOpen: false,
-            modalRequestToCreateAccountIsOpen: false,
-            keystoreFileArray: null as Uint8Array | null
+            modalEnterAccountIdState: {
+                failed: null,
+                errorMessage: null,
+                isOpen: false,
+                isBusy: false,
+                account: null,
+                valid: false
+            },
+            modalRequestToCreateAccountState: {
+                isOpen: false
+            }
         });
 
         const file = ref<HTMLInputElement | null>(null);
 
-        function handleClickTiles(which: string): void {
-            if (which === "hardware") {
-                state.modalAccessByHardwareIsOpen = true;
-            } else if (which === "software") {
-                state.modalAccessBySoftwareIsOpen = true;
-            }
-        }
-        function handleAccessBySoftwareSubmit(
-            which: AccessSoftwareOption
+        function setPrivateKey(
+            newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey
         ): void {
-            state.modalAccessBySoftwareIsOpen = false;
-
-            if (which === "file") {
-                if (file.value != null) {
-                    file.value.click(); // triggers loadTextFromFile via hidden input @click
-                }
-            } else {
-                setTimeout(() => {
-                    if (which === AccessSoftwareOption.Phrase) {
-                        state.modalAccessByPhraseState.isOpen = true;
-                    } else if (which === AccessSoftwareOption.Key) {
-                        state.modalAccessByPrivateKeyState.isOpen = true;
-                    }
-                }, 125);
-            }
+            state.privateKey = newPrivateKey;
+            state.publicKey = newPrivateKey.publicKey;
         }
 
         async function loadTextFromFile(event: Event): Promise<void> {
@@ -178,30 +182,163 @@ export default createComponent({
                 }
             );
 
-            target.value = ""; // change back to initial state to gaurantee that click fires next time
+            target.value = ""; // change back to initial state to guarantee that click fires next time
             state.modalKeystoreFilePasswordState.isOpen = true;
-            state.keystoreFileArray = new Uint8Array(keyStoreArrayBuff);
+            state.keyFile = new Uint8Array(keyStoreArrayBuff);
         }
 
-        // Update our local understand of what the private/public key pair is
-        // Called at the end of each access by software workflow before merging
-        // into enter account ID
-        function setPrivateKey(
-            newPrivateKey: import("@hashgraph/sdk/src/Keys").Ed25519PrivateKey
+        function openInterface(): void {
+            context.root.$router.push({ name: "interface" });
+        }
+
+        async function constructOperator(
+            account: Id
+        ): Promise<import("@hashgraph/sdk").Operator> {
+            if (state.wallet !== null) {
+                if (state.wallet.hasPrivateKey()) {
+                    return {
+                        account,
+                        privateKey: await state.wallet!.getPrivateKey()
+                    } as import("@hashgraph/sdk").Operator;
+                } else {
+                    return {
+                        account,
+                        publicKey: (await state.wallet!.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey,
+                        signer: state.wallet!.signTransaction.bind(
+                            state.wallet!
+                        ) as import("@hashgraph/sdk").Signer
+                    };
+                }
+            }
+
+            return {
+                account: null as Id | null,
+                privateKey: null as
+                    | import("@hashgraph/sdk").Ed25519PrivateKey
+                    | null
+            } as import("@hashgraph/sdk").Operator;
+        }
+
+        async function constructClient(
+            account: Id
+        ): Promise<import("@hashgraph/sdk").Client | undefined> {
+            let client: import("@hashgraph/sdk").Client | undefined = undefined;
+
+            const {
+                Client,
+                CryptoTransferTransaction,
+                HederaError,
+                ResponseCodeEnum
+            } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
+
+            try {
+                const operator: import("@hashgraph/sdk").Operator = await constructOperator(
+                    account
+                );
+                client = new Client({
+                    nodes: {
+                        [settings.network.proxy]: {
+                            shard: 0,
+                            realm: 0,
+                            account: 3
+                        }
+                    },
+                    operator
+                });
+
+                await new CryptoTransferTransaction(client)
+                    .addSender(account, 0)
+                    .addRecipient({ realm: 0, shard: 0, account: 3 }, 0)
+                    .setTransactionFee(1)
+                    .build()
+                    .executeForReceipt();
+            } catch (error) {
+                if (error instanceof HederaError) {
+                    // Transaction was valid except for deliberately insufficient fee,
+                    // meaning that the account matches the key and that nothing went wrong
+                    if (error.code === ResponseCodeEnum.INSUFFICIENT_TX_FEE) {
+                        return client;
+                    }
+                }
+
+                // Else, throw the error, failed to make a client (failed to login)
+                throw error;
+            }
+        }
+
+        async function login(account: Id): Promise<void> {
+            const client:
+                | import("@hashgraph/sdk").Client
+                | undefined = await constructClient(account);
+
+            if (state.wallet !== null && client !== undefined) {
+                await store.dispatch(LOG_IN, {
+                    account,
+                    wallet: state.wallet,
+                    client
+                });
+            }
+        }
+
+        function handleClickTiles(which: string): void {
+            if (which === "hardware") {
+                state.modalAccessByHardwareState.isOpen = true;
+            } else if (which === "software") {
+                state.modalAccessBySoftwareState.isOpen = true;
+            }
+        }
+
+        function handleAccessBySoftwareSubmit(
+            which: AccessSoftwareOption
         ): void {
-            state.privateKey = newPrivateKey;
-            state.publicKey = newPrivateKey.publicKey;
+            state.modalAccessBySoftwareState.isOpen = false;
+
+            if (which === "file") {
+                if (file.value != null) {
+                    file.value.click(); // triggers loadTextFromFile via hidden input @click
+                }
+            } else {
+                setTimeout(() => {
+                    if (which === AccessSoftwareOption.Phrase) {
+                        state.modalAccessByPhraseState.isOpen = true;
+                    } else if (which === AccessSoftwareOption.Key) {
+                        state.modalAccessByPrivateKeyState.isOpen = true;
+                    }
+                }, 125);
+            }
         }
 
-        async function handlePasswordSubmit(): Promise<void> {
+        async function handleAccessByHardwareSubmit(
+            which: AccessHardwareOption
+        ): Promise<void> {
+            switch (which) {
+                case AccessHardwareOption.Ledger:
+                    try {
+                        state.wallet = new LedgerNanoS();
+                        state.publicKey = (await state.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+                        state.modalAccessByHardwareState.isOpen = false;
+                        Vue.nextTick(
+                            () => (state.modalEnterAccountIdState.isOpen = true)
+                        );
+                    } catch (error) {
+                        if (error.name === "TransportStatusError") {
+                            store.dispatch(HANDLE_LEDGER_ERROR, error);
+                        } else {
+                            throw error;
+                        }
+                    }
+                    break;
+                default:
+                    state.wallet = null;
+                    break;
+            }
+        }
+
+        async function handleAccessByKeystoreSubmit(): Promise<void> {
             const pwState = state.modalKeystoreFilePasswordState;
             pwState.isBusy = true;
-
-            if (state.keystoreFileArray == null) {
-                throw new Error(
-                    "unexepcted keystore password submission before submission of keystore file"
-                );
-            }
 
             try {
                 const { Ed25519PrivateKey } = await (import(
@@ -210,7 +347,7 @@ export default createComponent({
 
                 setPrivateKey(
                     await Ed25519PrivateKey.fromKeystore(
-                        state.keystoreFileArray as Uint8Array,
+                        state.keyFile as Uint8Array,
                         state.modalKeystoreFilePasswordState.password
                     )
                 );
@@ -218,7 +355,9 @@ export default createComponent({
                 // Close  previous modal and open another one
                 pwState.isBusy = false;
                 pwState.isOpen = false;
-                Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
+                Vue.nextTick(
+                    () => (state.modalEnterAccountIdState.isOpen = true)
+                );
             } catch (error) {
                 console.warn(error);
                 pwState.isBusy = false;
@@ -246,10 +385,11 @@ export default createComponent({
                 // Close  previous modal and open another one
                 accessByPhraseState.isBusy = false;
                 accessByPhraseState.isOpen = false;
-                Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
+                Vue.nextTick(
+                    () => (state.modalEnterAccountIdState.isOpen = true)
+                );
                 accessByPhraseState.isValid = true;
             } catch (error) {
-                console.warn("error access by mnemonic", error);
                 accessByPhraseState.isBusy = false;
 
                 store.dispatch(ALERT, {
@@ -278,49 +418,68 @@ export default createComponent({
 
             setTimeout(() => {
                 state.modalAccessByPrivateKeyState.isBusy = false;
-                state.modalEnterAccountIdIsOpen = true;
+                state.modalEnterAccountIdState.isOpen = true;
             }, 125);
         }
 
-        function openInterface(): void {
-            context.root.$router.push({ name: "interface" });
-        }
+        async function handleAccountIdSubmit(account: Id): Promise<void> {
+            state.modalEnterAccountIdState.isOpen = false;
 
-        async function handleAccountIdSubmit(
-            client: object,
-            account: Id
-        ): Promise<void> {
-            const { Client } = await (import("@hashgraph/sdk") as Promise<
-                typeof import("@hashgraph/sdk")
-            >);
-            if (!(client instanceof Client)) {
-                throw new TypeError(
-                    "client not instance of Client: Programmer Error"
-                );
+            if (state.wallet === null) {
+                // No hardware wallet construction yet, so software wallet
+                if (state.privateKey !== null && state.publicKey !== null) {
+                    state.wallet = new SoftwareWallet(
+                        state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
+                        state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
+                    );
+                }
             }
-            // Make sure there are no open modals when we navigate
-            state.modalEnterAccountIdIsOpen = false;
 
-            store.dispatch(LOG_IN, {
-                account,
-                client,
-                privateKey: state.privateKey,
-                publicKey: state.publicKey
-            });
+            try {
+                await login(account);
+                openInterface();
+            } catch (error) {
+                const result: HederaErrorTuple = await store.dispatch(
+                    HANDLE_HEDERA_ERROR,
+                    error
+                );
 
-            openInterface();
+                state.modalEnterAccountIdState.errorMessage = result.message;
+
+                if (result.message === "") {
+                    const result: LedgerErrorTuple = await store.dispatch(
+                        HANDLE_LEDGER_ERROR,
+                        error
+                    );
+
+                    if (result.message === "") {
+                        throw error;
+                    }
+
+                    state.modalEnterAccountIdState.errorMessage =
+                        result.message;
+                }
+
+                state.modalEnterAccountIdState.errorMessage = result.message;
+
+                Vue.nextTick(
+                    () => (state.modalEnterAccountIdState.isOpen = true)
+                );
+            } finally {
+                state.modalEnterAccountIdState.isBusy = false;
+            }
         }
 
         function handleDoesntHaveAccount(): void {
-            state.modalEnterAccountIdIsOpen = false;
+            state.modalEnterAccountIdState.isOpen = false;
             Vue.nextTick(
-                () => (state.modalRequestToCreateAccountIsOpen = true)
+                () => (state.modalRequestToCreateAccountState.isOpen = true)
             );
         }
 
         function handleHasAccount(): void {
-            state.modalRequestToCreateAccountIsOpen = false;
-            Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
+            state.modalRequestToCreateAccountState.isOpen = false;
+            Vue.nextTick(() => (state.modalEnterAccountIdState.isOpen = true));
         }
 
         return {
@@ -329,10 +488,11 @@ export default createComponent({
             handleClickTiles,
             handleAccessBySoftwareSubmit,
             loadTextFromFile,
-            handlePasswordSubmit,
+            handleAccessByKeystoreSubmit,
             handleAccessByPhraseSubmit,
             handleAccessByPrivateKeySubmit,
             handleAccountIdSubmit,
+            handleAccessByHardwareSubmit,
             handleDoesntHaveAccount,
             handleHasAccount
         };

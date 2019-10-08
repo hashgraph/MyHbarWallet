@@ -2,9 +2,9 @@
     <Modal :is-open="isOpen" hide-decoration @change="this.$listeners.change">
         <template>
             <div class="modal-container">
-                <div class="header">Something went wrong.</div>
+                <div class="header">{{ $t("modalReportError.title") }}</div>
                 <div class="sub-header">
-                    Do you want to inform MHW about this error?
+                    {{ $t("modalReportError.subtitle") }}
                 </div>
 
                 <div class="stack-trace">
@@ -14,14 +14,14 @@
                 <div class="button-group">
                     <Button
                         class="button-cancel"
-                        label="Cancel"
+                        :label="$t('common.cancel')"
                         :outline="true"
                         :compact="true"
                         @click="handleCancel"
                     />
                     <Button
                         class="button-send"
-                        label="Send"
+                        :label="$t('common.send')"
                         :compact="true"
                         @click="handleSend"
                     />

@@ -34,9 +34,13 @@ describe("ModalAccessByHardware.vue", (): void => {
                   <div class="content-container">
                     <form class="modal-access-by-hardware">
                       <div class="radio-button-group">
-                        <div><label for="trezor" class="radio-button"><img alt="" src="" class="icon"> <input id="trezor" type="radio" name="hardware-access-option" class="input" value="trezor"> <span class="label">Trezor</span>
+                        <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger (Nano S)</span>
                             <!----></label></div>
-                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Choose a Hardware</span>
+                      </div>
+                      <div class="instructions">
+                        <div>Continue</div>
+                        <div>Watch for prompts on your hardware wallet.</div>
+                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Continue</span>
                         <!----></button>
                       <div class="customer-support-link">
                         <div class="customer-support-container"><img alt="" src="">Customer Support
@@ -115,9 +119,13 @@ describe("ModalAccessByHardware.vue", (): void => {
                   <div class="content-container">
                     <form class="modal-access-by-hardware">
                       <div class="radio-button-group">
-                        <div><label for="trezor" class="radio-button"><img alt="" src="" class="icon"> <input id="trezor" type="radio" name="hardware-access-option" class="input" value="trezor"> <span class="label">Trezor</span>
+                        <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger (Nano S)</span>
                             <!----></label></div>
-                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Choose a Hardware</span>
+                      </div>
+                      <div class="instructions">
+                        <div>Continue</div>
+                        <div>Watch for prompts on your hardware wallet.</div>
+                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Continue</span>
                         <!----></button>
                       <div class="customer-support-link">
                         <div class="customer-support-container"><img alt="" src="">Customer Support

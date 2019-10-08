@@ -33,7 +33,7 @@ describe("ModalReportError.Vue", (): void => {
                 <div class="main">
                   <div class="content-container">
                     <div class="modal-container">
-                      <div class="header">Something went wrong.</div>
+                      <div class="header">Something Went Wrong</div>
                       <div class="sub-header">
                         Do you want to inform MHW about this error?
                       </div>
@@ -72,7 +72,7 @@ describe("ModalReportError.Vue", (): void => {
                 <div class="main">
                   <div class="content-container">
                     <div class="modal-container">
-                      <div class="header">Something went wrong.</div>
+                      <div class="header">Something Went Wrong</div>
                       <div class="sub-header">
                         Do you want to inform MHW about this error?
                       </div>

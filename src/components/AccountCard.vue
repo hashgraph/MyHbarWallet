@@ -1,6 +1,6 @@
 <template>
     <div class="account">
-        <Identicon :size="60" :value="publicKey" class="account-image" />
+        <Identicon :size="60" :value="publicKeyString" class="account-image" />
         <div class="content">
             <div class="top">
                 <div class="title">
@@ -22,7 +22,11 @@
                         @click="showQrCode"
                     />
                 </Tooltip>
-                <Tooltip :message="$t('accountCard.keys')" class="action">
+                <Tooltip
+                    v-if="hasKeys"
+                    :message="$t('accountCard.keys')"
+                    class="action"
+                >
                     <MaterialDesignIcon
                         :icon="mdiKey"
                         class="key-icon"
@@ -31,7 +35,7 @@
                 </Tooltip>
                 <ExportKeystoreButton
                     v-if="hasPrivateKey"
-                    :private-key="privateKey"
+                    :private-key="privateKeyString"
                     class="action"
                 />
             </div>
@@ -43,8 +47,8 @@
         <ModalViewKeys
             v-if="hasKeys"
             v-model="state.viewKeysIsOpen"
-            :public-key="publicKey"
-            :private-key="privateKey"
+            :public-key="publicKeyString"
+            :private-key="privateKeyString"
         />
     </div>
 </template>
@@ -53,23 +57,38 @@
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiQrcode, mdiKey } from "@mdi/js";
 import Tooltip from "../components/Tooltip.vue";
-import { computed, createComponent, reactive } from "@vue/composition-api";
+import {
+    computed,
+    createComponent,
+    reactive,
+    watch
+} from "@vue/composition-api";
 import Identicon from "../components/Identicon.vue";
 import ModalViewAccountId from "../components/ModalViewAccountId.vue";
 import ExportKeystoreButton from "./ExportKeystoreButton.vue";
 import ModalViewKeys from "./ModalViewKeys.vue";
 import store from "../store";
 
-function getPublicKey(): string | null {
-    return store.state.wallet.session != null
-        ? store.state.wallet.session.privateKey.publicKey.toString(true) // Truncate Prefix
-        : null;
+async function getPrivateKey(): Promise<
+    import("@hashgraph/sdk").Ed25519PrivateKey | null
+> {
+    if (store.state.wallet.session !== null) {
+        if (store.state.wallet.session.wallet.hasPrivateKey()) {
+            return store.state.wallet.session.wallet.getPrivateKey();
+        }
+    }
+
+    return null;
 }
 
-function getPrivateKey(): string | null {
-    return store.state.wallet.session != null
-        ? store.state.wallet.session.privateKey.toString(true) // Truncate Prefix
-        : null;
+async function getPublicKey(): Promise<
+    import("@hashgraph/sdk").PublicKey | null
+> {
+    if (store.state.wallet.session !== null) {
+        return store.state.wallet.session.wallet.getPublicKey();
+    }
+
+    return null;
 }
 
 interface Props {
@@ -93,17 +112,61 @@ export default createComponent({
         account: Number
     },
     setup() {
-        const hasPrivateKey = computed(() => getPrivateKey() !== null);
-        const hasPublicKey = computed(() => getPublicKey() !== null);
-        const hasKeys = computed(
-            () => hasPrivateKey.value && hasPublicKey.value
-        );
-        const privateKey = computed(() => getPrivateKey());
-        const publicKey = computed(() => getPublicKey());
-
         const state = reactive({
             viewAccountQrCodeIsOpen: false,
-            viewKeysIsOpen: false
+            viewKeysIsOpen: false,
+            publicKey: null as import("@hashgraph/sdk").PublicKey | null,
+            privateKey: null as
+                | import("@hashgraph/sdk").Ed25519PrivateKey
+                | null
+        });
+
+        watch(
+            getPublicKey,
+            async (
+                result: Promise<import("@hashgraph/sdk").PublicKey | null>
+            ) => {
+                state.publicKey = await result;
+            }
+        );
+
+        watch(
+            getPrivateKey,
+            async (
+                result: Promise<
+                    import("@hashgraph/sdk").Ed25519PrivateKey | null
+                >
+            ) => {
+                state.privateKey = await result;
+            }
+        );
+
+        const hasPrivateKey = computed(() =>
+            store.state.wallet.session !== null
+                ? store.state.wallet.session.wallet.hasPrivateKey()
+                : false
+        );
+        const hasPublicKey = computed(() => state.publicKey !== null);
+        const hasKeys = computed(
+            () => hasPrivateKey.value || hasPublicKey.value
+        );
+
+        const privateKeyString = computed(() => {
+            if (state.privateKey !== null) {
+                return state.privateKey.toString(true);
+            }
+
+            return "";
+        });
+
+        const publicKeyString = computed(() => {
+            if (state.publicKey !== null) {
+                return (state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey).toString(
+                    true
+                );
+            }
+
+            return "";
         });
 
         function showKeys(): void {
@@ -120,9 +183,9 @@ export default createComponent({
             state,
             hasPrivateKey,
             hasPublicKey,
+            privateKeyString,
+            publicKeyString,
             hasKeys,
-            privateKey,
-            publicKey,
             showKeys,
             showQrCode
         };

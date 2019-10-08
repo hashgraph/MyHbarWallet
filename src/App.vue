@@ -8,7 +8,7 @@
         <Alerts />
         <ZoomTopButton />
         <ModalLogOut v-model="isOpen" forgot />
-        <ModalReportError v-model="hasError" />
+        <ModalReportError v-model="errorIsOpen" />
     </div>
 </template>
 
@@ -19,7 +19,13 @@ import Alerts from "./components/Alerts.vue";
 import ModalReportError from "./components/ModalReportError.vue";
 import ModalLogOut from "./components/ModalLogOut.vue";
 import ZoomTopButton from "./components/ZoomTopButton.vue";
-import { createComponent, SetupContext, computed } from "@vue/composition-api";
+import {
+    createComponent,
+    SetupContext,
+    computed,
+    ref,
+    watch
+} from "@vue/composition-api";
 import store from "./store";
 import { HAS_ERROR } from "./store/getters";
 
@@ -54,13 +60,17 @@ export default createComponent({
             );
         });
 
-        const hasError = computed(() => {
-            return store.getters[HAS_ERROR];
-        });
+        const errorIsOpen = ref(false);
+        watch(
+            () => store.getters[HAS_ERROR],
+            (newValue: boolean) => {
+                errorIsOpen.value = newValue;
+            }
+        );
 
         return {
             isOpen,
-            hasError
+            errorIsOpen
         };
     }
 });

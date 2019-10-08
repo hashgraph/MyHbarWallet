@@ -77,8 +77,6 @@ import {
     ESTIMATED_FEE_TINYBAR,
     MAX_FEE_TINYBAR
 } from "../store/getters";
-import { ResponseCodeEnum } from "@hashgraph/sdk";
-import { HederaError } from "@hashgraph/sdk";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 
 interface State {
@@ -275,7 +273,7 @@ export default createComponent({
                 await tx.build().executeForReceipt();
 
                 // Refresh Balance
-                store.dispatch(REFRESH_BALANCE_AND_RATE);
+                await store.dispatch(REFRESH_BALANCE_AND_RATE);
 
                 // eslint-disable-next-line require-atomic-updates
                 state.successModalIsOpen = true;
@@ -284,6 +282,10 @@ export default createComponent({
                 state.idErrorMessage = "";
                 // eslint-disable-next-line require-atomic-updates
                 state.amountErrorMessage = "";
+
+                const { HederaError, ResponseCodeEnum } = await (import(
+                    "@hashgraph/sdk"
+                ) as Promise<typeof import("@hashgraph/sdk")>);
 
                 if (error instanceof HederaError) {
                     if (error.code === ResponseCodeEnum.INVALID_ACCOUNT_ID) {

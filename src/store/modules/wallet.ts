@@ -8,7 +8,32 @@ import {
     REFRESH_BALANCE_AND_RATE,
     REFRESH_EXCHANGE_RATE
 } from "../actions";
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import { State as ModalDownloadKeystoreState } from "../../components/ModalDownloadKeystore";
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import { State as ModalCreateByKeystoreState } from "../../components/ModalCreateByKeystore";
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import { State as ModalKeystoreFilePasswordState } from "../components/ModalKeystoreFilePassword";
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import { State as ModalAccessByPhraseState } from "../components/ModalAccessByPhrase";
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import { State as ModalAccessByPrivateKeyState } from "../components/ModalAccessByPrivateKey";
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import { State as ModalEnterAccountIdState } from "../components/ModalEnterAccountId";
 import BigNumber from "bignumber.js";
+import Wallet from "../../wallets/Wallet";
 
 const SET_BALANCE = "wallet#set_balance";
 const SET_EXCHANGE_RATE = "wallet#set_exchange_rate";
@@ -43,7 +68,7 @@ export interface Id {
 
 export interface Session {
     account: Id;
-    privateKey: import("@hashgraph/sdk").Ed25519PrivateKey;
+    wallet: Wallet;
     client: import("@hashgraph/sdk").Client;
 }
 
@@ -52,6 +77,46 @@ export interface State {
     balance: BigNumber | null;
     exchangeRate: BigNumber | null;
 }
+
+export interface ModalIsOpen {
+    isOpen: boolean;
+}
+
+type ModalByHardwareState = ModalIsOpen;
+type ModalBySoftwareState = ModalIsOpen;
+type ModalCreateByPhraseState = ModalIsOpen;
+type ModalRequestToCreateAccountState = ModalIsOpen;
+
+export interface AccountDTO {
+    wallet: Wallet | null;
+    privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null;
+    publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
+    keyFile: Uint8Array | null;
+}
+
+export interface AccountCreateDTO {
+    modalCreateByHardwareState: ModalByHardwareState;
+    modalCreateBySoftwareState: ModalBySoftwareState;
+    modalCreateByKeystoreState: ModalCreateByKeystoreState;
+    modalKeystoreFilePasswordState: ModalKeystoreFilePasswordState;
+    modalDownloadKeystoreState: ModalDownloadKeystoreState;
+    modalCreateByPhraseState: ModalCreateByPhraseState;
+    modalEnterAccountIdState: ModalEnterAccountIdState;
+    modalRequestToCreateAccountState: ModalRequestToCreateAccountState;
+}
+
+export interface AccountAccessDTO {
+    modalAccessByHardwareState: ModalByHardwareState;
+    modalAccessBySoftwareState: ModalBySoftwareState;
+    modalKeystoreFilePasswordState: ModalKeystoreFilePasswordState;
+    modalAccessByPhraseState: ModalAccessByPhraseState;
+    modalAccessByPrivateKeyState: ModalAccessByPrivateKeyState;
+    modalEnterAccountIdState: ModalEnterAccountIdState;
+    modalRequestToCreateAccountState: ModalRequestToCreateAccountState;
+}
+
+export type AccessAccountDTO = AccountDTO & AccountAccessDTO;
+export type CreateAccountDTO = AccountDTO & AccountCreateDTO;
 
 export default {
     state: {

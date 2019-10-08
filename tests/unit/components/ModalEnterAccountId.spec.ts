@@ -32,7 +32,7 @@ describe("ModalEnterAccountId.vue", (): void => {
 
         expect(onChange).toHaveBeenCalledTimes(0);
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-enter-account-id" state="[object Object]">
+            <div class="modal-enter-account-id">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Enter Account ID</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
@@ -94,8 +94,8 @@ describe("ModalEnterAccountId.vue", (): void => {
 
         expect(onChange).toHaveBeenCalledTimes(0);
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-enter-account-id" state="[object Object]">
-              <div role="dialog" aria-modal="true" class="modal-background">
+            <div class="modal-enter-account-id">
+              <div role="dialog" aria-modal="true" class="modal-background is-open">
                 <div class="modal">
                   <header><span class="title">Enter Account ID</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                       <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
@@ -155,7 +155,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-enter-account-id" state="[object Object]">
+            <div class="modal-enter-account-id">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Enter Account ID</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
@@ -183,7 +183,9 @@ describe("ModalEnterAccountId.vue", (): void => {
                     <!---->
                   </div>
                   <div class="buttons"><button type="button" class="button outline compact"><span>No Account ID?</span>
-                      <!----></button> <button type="submit" disabled="disabled" class="button compact"><span>Continue</span>
+                      <!----></button> <button type="submit" disabled="disabled" class="button busy compact"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                        <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
+                      </svg>
                       <!----></button></div>
                   </form>
                 </div>
@@ -216,7 +218,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-enter-account-id" state="[object Object]">
+            <div class="modal-enter-account-id">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Enter Account ID</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
@@ -236,12 +238,14 @@ describe("ModalEnterAccountId.vue", (): void => {
                     </div>
                     <div class="content-container">
                       <form>
-                        <div class="text-input"><label class="label-container">
+                        <div class="text-input has-error"><label class="label-container">
                             <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
                     </div></span>
                     <!----></span></label>
                     <!---->
-                    <!---->
+                    <div class="error">
+                      Error Message
+                    </div>
                   </div>
                   <div class="buttons"><button type="button" class="button outline compact"><span>No Account ID?</span>
                       <!----></button> <button type="submit" disabled="disabled" class="button compact"><span>Continue</span>
@@ -277,8 +281,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-enter-account-id" state="[object Object]">
-              <div role="dialog" aria-modal="true" class="modal-background">
+            <div class="modal-enter-account-id">
+              <div role="dialog" aria-modal="true" class="modal-background is-open">
                 <div class="modal">
                   <header><span class="title">Enter Account ID</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                       <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
@@ -305,7 +309,9 @@ describe("ModalEnterAccountId.vue", (): void => {
                     <!---->
                   </div>
                   <div class="buttons"><button type="button" class="button outline compact"><span>No Account ID?</span>
-                      <!----></button> <button type="submit" disabled="disabled" class="button compact"><span>Continue</span>
+                      <!----></button> <button type="submit" disabled="disabled" class="button busy compact"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                        <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
+                      </svg>
                       <!----></button></div>
                   </form>
                 </div>
@@ -338,7 +344,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-enter-account-id" state="[object Object]">
+            <div class="modal-enter-account-id">
               <div role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Enter Account ID</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
@@ -358,15 +364,19 @@ describe("ModalEnterAccountId.vue", (): void => {
                     </div>
                     <div class="content-container">
                       <form>
-                        <div class="text-input"><label class="label-container">
+                        <div class="text-input has-error"><label class="label-container">
                             <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
                     </div></span>
                     <!----></span></label>
                     <!---->
-                    <!---->
+                    <div class="error">
+                      Error Message
+                    </div>
                   </div>
                   <div class="buttons"><button type="button" class="button outline compact"><span>No Account ID?</span>
-                      <!----></button> <button type="submit" disabled="disabled" class="button compact"><span>Continue</span>
+                      <!----></button> <button type="submit" disabled="disabled" class="button busy compact"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                        <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
+                      </svg>
                       <!----></button></div>
                   </form>
                 </div>
@@ -399,8 +409,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-enter-account-id" state="[object Object]">
-              <div role="dialog" aria-modal="true" class="modal-background">
+            <div class="modal-enter-account-id">
+              <div role="dialog" aria-modal="true" class="modal-background is-open">
                 <div class="modal">
                   <header><span class="title">Enter Account ID</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                       <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
@@ -419,12 +429,14 @@ describe("ModalEnterAccountId.vue", (): void => {
                     </div>
                     <div class="content-container">
                       <form>
-                        <div class="text-input"><label class="label-container">
+                        <div class="text-input has-error"><label class="label-container">
                             <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
                     </div></span>
                     <!----></span></label>
                     <!---->
-                    <!---->
+                    <div class="error">
+                      Error Message
+                    </div>
                   </div>
                   <div class="buttons"><button type="button" class="button outline compact"><span>No Account ID?</span>
                       <!----></button> <button type="submit" disabled="disabled" class="button compact"><span>Continue</span>
@@ -460,8 +472,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-enter-account-id" state="[object Object]">
-              <div role="dialog" aria-modal="true" class="modal-background">
+            <div class="modal-enter-account-id">
+              <div role="dialog" aria-modal="true" class="modal-background is-open">
                 <div class="modal">
                   <header><span class="title">Enter Account ID</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                       <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
@@ -480,15 +492,19 @@ describe("ModalEnterAccountId.vue", (): void => {
                     </div>
                     <div class="content-container">
                       <form>
-                        <div class="text-input"><label class="label-container">
+                        <div class="text-input has-error"><label class="label-container">
                             <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
                     </div></span>
                     <!----></span></label>
                     <!---->
-                    <!---->
+                    <div class="error">
+                      Error Message
+                    </div>
                   </div>
                   <div class="buttons"><button type="button" class="button outline compact"><span>No Account ID?</span>
-                      <!----></button> <button type="submit" disabled="disabled" class="button compact"><span>Continue</span>
+                      <!----></button> <button type="submit" disabled="disabled" class="button busy compact"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                        <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
+                      </svg>
                       <!----></button></div>
                   </form>
                 </div>

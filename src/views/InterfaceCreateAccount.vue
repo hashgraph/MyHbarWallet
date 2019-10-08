@@ -67,7 +67,7 @@ import { getValueOfUnit, Unit } from "../units";
 import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
-import { formatHbar, validateHbar } from "../formatter";
+import { formatHbar } from "../formatter";
 import {
     ESTIMATED_FEE_HBAR,
     ESTIMATED_FEE_TINYBAR,
