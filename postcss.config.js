@@ -8,6 +8,7 @@ module.exports = {
         require("postcss-preset-env")({
             stage: 0,
             importFrom: [path.join(__dirname, "src/main.css")]
-        })
+        }),
+        require("postcss-font-magician")()
     ]
 };

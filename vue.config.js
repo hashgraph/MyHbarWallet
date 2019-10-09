@@ -93,6 +93,18 @@ module.exports = {
             }
         ]);
 
+        // Use font magician to package fonts
+        config.plugin("postcss-loader").tap(args => [
+            {
+                ...args[0],
+                options: {
+                    config: {
+                        path: "./postcss.config.js"
+                    }
+                }
+            }
+        ]);
+
         if (process.env.NODE_ENV === "production") {
             // Use the advanced preset for cssnano instead of the default.
             // https://cssnano.co/guides/optimisations
