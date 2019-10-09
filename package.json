@@ -1,5 +1,7 @@
 {
-    "name": "myhbarwallet",
+    "name": "MyHbarWallet",
+    "author": "Launchbadge",
+    "description": "Thin Client for Interaction with Hedera Hashgraph",
     "version": "0.3.3",
     "private": true,
     "author": "MyHbarWallet <support@myhbarwallet.com>",

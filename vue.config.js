@@ -22,7 +22,30 @@ module.exports = {
     },
     pluginOptions: {
         electronBuilder: {
-            mainProcessFile: "src/electron/background.ts",
+            builderOptions: {
+                appId: "com.myhederawallet.app",
+                extends: null,
+                productName: "MyHederaWallet",
+                copyright: "Copyright © 2019 Hedera Hashgraph",
+                files: ["**/*", "build/icons/**/*"],
+                mac: {
+                    category: "public.app-category.utility",
+                    icon: "build/icons/icon.icns",
+                    target: "dmg"
+                },
+                linux: {
+                    category: "Finance",
+                    synopsis: "Interact with the Hedera Hashgraph",
+                    icon: "build/icons/",
+                    target: "AppImage"
+                },
+                win: {
+                    icon: "build/icons/icon.ico",
+                    target: "msi"
+                }
+            },
+            mainProcessFile: "public/background.ts",
+            mainProcessWatch: ["src/**"],
             customFileProtocol: "mhw://./",
             chainWebpackRendererProcess: config => {
                 config.plugin("define").tap(args => {
