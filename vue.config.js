@@ -36,7 +36,7 @@ module.exports = {
                 copyright: "Copyright © 2019 MyHbarWallet",
                 files: ["**", "build/icon.*"],
                 win: {
-                    target: "nsis"
+                    target: ["nsis", "msi"]
                 },
                 linux: {
                     target: ["pacman", "deb", "rpm"],
