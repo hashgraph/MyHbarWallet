@@ -1,5 +1,6 @@
 import "./main.css";
 import "./directives";
+import "typeface-montserrat";
 import Vue, { VNode } from "vue";
 import App from "./App.vue";
 import router from "./router";
@@ -8,7 +9,6 @@ import Router from "vue-router";
 import VueCompositionApi from "@vue/composition-api";
 import store from "./store";
 import { ERROR_OCCURRED } from "./store/mutations";
-import "typeface-montserrat/index.css";
 
 // Globally install the Vue3 Function API
 Vue.use(VueCompositionApi);
