@@ -117,8 +117,14 @@ export default createComponent({
         });
 
         const platform = computed(() => {
+            if (navigator.userAgent.indexOf("(darwin)") > 0) {
+                // This is running in Node on macOS
+                return "Mac OS";
+            }
+
             const name = ua.getOS().name;
             const version = ua.getOS().version;
+
             return build(name, version);
         });
 
