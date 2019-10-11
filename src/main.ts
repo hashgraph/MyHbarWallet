@@ -1,4 +1,5 @@
 import "./main.css";
+import "./fonts/Montserrat.css";
 import "./directives";
 import Vue, { VNode } from "vue";
 import App from "./App.vue";
