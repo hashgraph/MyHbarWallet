@@ -31,6 +31,7 @@
         "jdenticon": "^2.2.0",
         "jspdf": "^1.5.3",
         "qrcode.vue": "^1.6.3",
+        "typeface-montserrat": "^0.0.75",
         "ua-parser-js": "^0.7.20",
         "vue": "^2.6.10",
         "vue-i18n": "^8.14.1",
