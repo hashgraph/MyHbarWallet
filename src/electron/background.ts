@@ -20,6 +20,14 @@ function createWindow(): void {
         height: 768,
         webPreferences: {
             nodeIntegration: true
+        },
+        show: false
+    });
+
+    // wait to show the window until the page is actually loaded
+    win.once("ready-to-show", () => {
+        if(win != null) {
+            win.show();
         }
     });
 
