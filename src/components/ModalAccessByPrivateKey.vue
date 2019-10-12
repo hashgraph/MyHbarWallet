@@ -17,6 +17,7 @@
                 :placeholder="$t('modalAccessByPrivateKey.enterPrivateKey')"
                 :value="state.rawPrivateKey"
                 :valid="valid"
+                :spellcheck-disabled="true"
                 show-validation
                 @input="handlePrivateKeyInput"
             />

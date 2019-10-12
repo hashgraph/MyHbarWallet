@@ -19,6 +19,8 @@
             v-model="state.publicKey"
             :error="state.keyError"
             :valid="state.isPublicKeyValid"
+            :spellcheck-disabled="true"
+            :autocomplete-disabled="true"
             :label="$t('interfaceCreateAccount.publicKey')"
             show-validation
         />
@@ -67,7 +69,7 @@ import { getValueOfUnit, Unit } from "../units";
 import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
-import { formatHbar, validateHbar } from "../formatter";
+import { formatHbar } from "../formatter";
 import {
     ESTIMATED_FEE_HBAR,
     ESTIMATED_FEE_TINYBAR,
