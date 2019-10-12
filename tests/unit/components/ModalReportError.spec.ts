@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalReportError from "../../../src/components/ModalReportError.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalReportError.Vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     Object.defineProperty(navigator, "userAgent", {
         get() {
@@ -18,6 +21,7 @@ describe("ModalReportError.Vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalReportError, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false
             },
@@ -66,6 +70,7 @@ describe("ModalReportError.Vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalReportError, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false
             },
