@@ -2,10 +2,10 @@
     <div class="modal-view-keys">
         <Modal
             :is-open="isOpen"
-            :title="$t('modalViewKeys.title')"
+            :title="title"
             @change="this.$listeners.change"
         >
-            <div v-if="publicKey !== null" class="key-container public">
+            <div v-if="hasPublicKey" class="key-container public">
                 <div
                     class="subtitle"
                     v-text="$t('modalViewKeys.publicKey')"
@@ -18,7 +18,7 @@
                     @click="handleCopyPublicKey"
                 />
             </div>
-            <div v-if="privateKey !== null" class="key-container private">
+            <div v-if="hasPrivateKey" class="key-container private">
                 <div
                     class="subtitle"
                     v-text="$t('modalViewKeys.privateKey')"
@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext } from "@vue/composition-api";
+import { computed, createComponent, SetupContext } from "@vue/composition-api";
 import Modal from "./Modal.vue";
 import ReadOnlyInput from "./ReadOnlyInput.vue";
 import { writeToClipboard } from "../clipboard";
@@ -71,6 +71,26 @@ export default createComponent({
         publicKey: String
     },
     setup(props: Props, context: SetupContext) {
+        const hasPrivateKey = computed(() => {
+            return props.privateKey !== "" && props.privateKey !== undefined;
+        });
+
+        const hasPublicKey = computed(() => {
+            return props.publicKey !== "" && props.publicKey !== undefined;
+        });
+
+        const title = computed(() => {
+            if (hasPrivateKey.value && hasPublicKey.value) {
+                return context.root.$t("modalViewKeys.title");
+            } else if (hasPublicKey.value) {
+                return context.root.$t("modalViewKeys.publicKey");
+            } else if (hasPrivateKey.value) {
+                return context.root.$t("modalViewKeys.privateKey");
+            } else {
+                return "";
+            }
+        });
+
         async function handleCopyPublicKey(): Promise<void> {
             await writeToClipboard(
                 props.publicKey == null ? "" : props.publicKey
@@ -94,6 +114,9 @@ export default createComponent({
         }
 
         return {
+            title,
+            hasPrivateKey,
+            hasPublicKey,
             handleCopyPublicKey,
             handleCopyPrivateKey
         };

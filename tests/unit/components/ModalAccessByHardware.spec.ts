@@ -27,16 +27,20 @@ describe("ModalAccessByHardware.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div role="dialog" aria-modal="true" class="modal-background is-open">
               <div class="modal">
-                <header><span class="title">Access by hardware</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                <header><span class="title">Access by Hardware</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
                 <div class="main">
                   <div class="content-container">
                     <form class="modal-access-by-hardware">
                       <div class="radio-button-group">
-                        <div><label for="trezor" class="radio-button"><img alt="" src="" class="icon"> <input id="trezor" type="radio" name="hardware-access-option" class="input" value="trezor"> <span class="label">Trezor</span>
+                        <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger (Nano S)</span>
                             <!----></label></div>
-                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Choose a Hardware</span>
+                      </div>
+                      <div class="instructions">
+                        <div>Continue</div>
+                        <div>Watch for prompts on your hardware wallet.</div>
+                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Continue</span>
                         <!----></button>
                       <div class="customer-support-link">
                         <div class="customer-support-container"><img alt="" src="">Customer Support
@@ -108,16 +112,20 @@ describe("ModalAccessByHardware.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div role="dialog" aria-modal="true" class="modal-background">
               <div class="modal">
-                <header><span class="title">Access by hardware</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                <header><span class="title">Access by Hardware</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
                 <div class="main">
                   <div class="content-container">
                     <form class="modal-access-by-hardware">
                       <div class="radio-button-group">
-                        <div><label for="trezor" class="radio-button"><img alt="" src="" class="icon"> <input id="trezor" type="radio" name="hardware-access-option" class="input" value="trezor"> <span class="label">Trezor</span>
+                        <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger (Nano S)</span>
                             <!----></label></div>
-                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Choose a Hardware</span>
+                      </div>
+                      <div class="instructions">
+                        <div>Continue</div>
+                        <div>Watch for prompts on your hardware wallet.</div>
+                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Continue</span>
                         <!----></button>
                       <div class="customer-support-link">
                         <div class="customer-support-container"><img alt="" src="">Customer Support

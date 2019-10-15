@@ -65,7 +65,12 @@ import {
     SetupContext
 } from "@vue/composition-api";
 import store from "../store";
-import { ALERT, REFRESH_BALANCE_AND_RATE } from "../store/actions";
+import {
+    ALERT,
+    HANDLE_HEDERA_ERROR,
+    HANDLE_LEDGER_ERROR,
+    REFRESH_BALANCE_AND_RATE
+} from "../store/actions";
 import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { getValueOfUnit, Unit } from "../units";
 import BigNumber from "bignumber.js";
@@ -77,8 +82,6 @@ import {
     ESTIMATED_FEE_TINYBAR,
     MAX_FEE_TINYBAR
 } from "../store/getters";
-import { ResponseCodeEnum } from "@hashgraph/sdk";
-import { HederaError } from "@hashgraph/sdk";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 
 interface State {
@@ -220,20 +223,36 @@ export default createComponent({
         }
 
         async function handleSendTransfer(): Promise<void> {
-            state.isBusy = true;
             if (store.state.wallet.session == null) {
                 throw new Error(
-                    "Session should not be null if inside Send Transfer"
+                    context.root
+                        .$t("common.error.nullAccountOnInterface")
+                        .toString()
                 );
             }
 
-            if (!state.account || !state.amount)
-                throw new Error("Neither account nor amount should be null!");
+            state.isBusy = true;
 
             const client = store.state.wallet.session.client;
 
             try {
-                const recipient: import("@hashgraph/sdk").AccountId =
+                if (state.account == null) {
+                    throw new Error(
+                        context.root
+                            .$t("common.error.nullAccountOnInterface")
+                            .toString()
+                    );
+                }
+
+                if (state.amount == null) {
+                    throw new Error(
+                        context.root
+                            .$t("common.error.nullTransferAmount")
+                            .toString()
+                    );
+                }
+
+                const recipient: import("@hashgraph/sdk").AccountId | null =
                     state.account;
 
                 const sendAmountTinybar = new BigNumber(
@@ -275,7 +294,7 @@ export default createComponent({
                 await tx.build().executeForReceipt();
 
                 // Refresh Balance
-                store.dispatch(REFRESH_BALANCE_AND_RATE);
+                await store.dispatch(REFRESH_BALANCE_AND_RATE);
 
                 // eslint-disable-next-line require-atomic-updates
                 state.successModalIsOpen = true;
@@ -285,34 +304,40 @@ export default createComponent({
                 // eslint-disable-next-line require-atomic-updates
                 state.amountErrorMessage = "";
 
+                const { HederaError, ResponseCodeEnum } = await (import(
+                    "@hashgraph/sdk"
+                ) as Promise<typeof import("@hashgraph/sdk")>);
+
                 if (error instanceof HederaError) {
-                    if (error.code === ResponseCodeEnum.INVALID_ACCOUNT_ID) {
-                        // eslint-disable-next-line require-atomic-updates
-                        state.idErrorMessage = context.root
-                            .$t("common.error.invalidAccount")
-                            .toString();
-                    } else if (
-                        error.code ===
-                        ResponseCodeEnum.ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS
-                    ) {
-                        // eslint-disable-next-line require-atomic-updates
-                        state.idErrorMessage = context.root
-                            .$t("common.error.cannotSendHbarToYourself")
-                            .toString();
-                    } else if (
-                        error.code ===
-                        ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE
-                    ) {
-                        state.amountErrorMessage = context.root
-                            .$t("common.error.insufficientBalance")
-                            .toString();
-                    } else {
-                        store.dispatch(ALERT, {
-                            message: `Received unhandled error from Hedera:  ${error.codeName}`,
-                            level: "error"
-                        });
-                        throw error;
+                    const errorMessage = (await store.dispatch(
+                        HANDLE_HEDERA_ERROR,
+                        { error, showAlert: false }
+                    )).message;
+
+                    // Small duplication of effort to assign errorMessage to correct TextInput
+                    switch (error.code) {
+                        case ResponseCodeEnum.INVALID_ACCOUNT_ID:
+                        case ResponseCodeEnum.ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS:
+                            state.idErrorMessage = errorMessage;
+                            break;
+                        case ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE:
+                            state.amountErrorMessage = errorMessage;
+                            break;
+                        default:
+                            if (errorMessage !== "") {
+                                store.dispatch(ALERT, {
+                                    message: errorMessage,
+                                    level: "warn"
+                                });
+                            } else {
+                                throw error; // Unhandled Error Modal will open
+                            }
                     }
+                } else if (error.name === "TransportStatusError") {
+                    store.dispatch(HANDLE_LEDGER_ERROR, {
+                        error,
+                        showAlert: true
+                    });
                 } else {
                     throw error;
                 }

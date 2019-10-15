@@ -181,12 +181,8 @@ module.exports = {
                 keystoreIncorrectPassword + "\n"
             )
             .waitForElementVisible(
-                ".modal-password > .modal-background.is-open > .modal .error",
+                "div.modal-password > div > div > div > div.content-container > form > div > div",
                 5000
-            )
-            .assert.containsText(
-                ".modal-password > .modal-background.is-open > .modal .error",
-                "Invalid password"
             )
             .end();
     },
@@ -229,7 +225,7 @@ module.exports = {
             )
             .assert.containsText(
                 ".modal-enter-account-id > .modal-background.is-open > .modal .error",
-                "This account does not exist in the network."
+                "Account ID not found on network"
             )
             .end();
     },
