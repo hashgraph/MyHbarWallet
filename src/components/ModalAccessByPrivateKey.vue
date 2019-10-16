@@ -89,14 +89,12 @@ export default createComponent({
                 Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;
             } catch (error) {
-                if (error instanceof Error) {
-                    // The exception message changes depending on the input
-                    if (
-                        error.message ===
-                        "invalid private key: " + props.state.rawPrivateKey
-                    ) {
-                        return false;
-                    }
+                // The exception message changes depending on the input
+                if (
+                    error instanceof Error &&
+                    error.message.includes("invalid private key")
+                ) {
+                    return false;
                 }
 
                 throw error;
