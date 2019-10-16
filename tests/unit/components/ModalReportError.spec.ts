@@ -30,38 +30,7 @@ describe("ModalReportError.Vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(`
-            <div role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal">
-                <!---->
-                <div class="main">
-                  <div class="content-container">
-                    <div class="modal-container">
-                      <div class="header">Something went wrong.</div>
-                      <div class="sub-header">
-                        Do you want to inform MHW about this error?
-                      </div>
-                      <div class="stack-trace">
-
-                      </div>
-                      <div class="sub-header">
-                        (Optional) What went wrong?
-                      </div>
-                      <div class="text-input user-details is-multiline"><label class="label-container">
-                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                          <!----></span></label>
-                        <!---->
-                        <!---->
-                      </div>
-                      <div class="button-group"><button type="submit" class="button-cancel outline compact"><span>Cancel</span>
-                          <!----></button> <button type="submit" class="button-send compact"><span>Send</span>
-                          <!----></button></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        `);
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 
     it("renders open", (): void => {
@@ -79,37 +48,6 @@ describe("ModalReportError.Vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(`
-            <div role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal">
-                <!---->
-                <div class="main">
-                  <div class="content-container">
-                    <div class="modal-container">
-                      <div class="header">Something went wrong.</div>
-                      <div class="sub-header">
-                        Do you want to inform MHW about this error?
-                      </div>
-                      <div class="stack-trace">
-
-                      </div>
-                      <div class="sub-header">
-                        (Optional) What went wrong?
-                      </div>
-                      <div class="text-input user-details is-multiline"><label class="label-container">
-                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                          <!----></span></label>
-                        <!---->
-                        <!---->
-                      </div>
-                      <div class="button-group"><button type="submit" class="button-cancel outline compact"><span>Cancel</span>
-                          <!----></button> <button type="submit" class="button-send compact"><span>Send</span>
-                          <!----></button></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        `);
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 });
