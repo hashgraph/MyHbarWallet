@@ -1,7 +1,7 @@
 <template>
     <div
+        v-if="isOpen"
         class="modal-background"
-        :class="{ 'is-open': props.isOpen }"
         role="dialog"
         aria-modal="true"
         @mousedown.self="handleClose"
@@ -42,10 +42,6 @@ let nextModalId = 0;
 
 function modalIsTop(id: number): boolean {
     return modalIds[modalIds.length - 1] === id;
-}
-
-function setModalIsOpenOnBody(): void {
-    document.body.classList.toggle("modal-is-open", modalIds.length !== 0);
 }
 
 // The isOpen property controls if the modal is open or not. It should be bound with
@@ -97,6 +93,11 @@ export default createComponent({
         window.addEventListener("keydown", handleWindowKeyDown);
 
         onMounted(() => {
+            // Do nothing if the modal is not open
+            if (!props.isOpen) {
+                return;
+            }
+
             const elModals = context.root.$el.querySelectorAll(".modal");
             elModals.forEach(element => {
                 element.addEventListener(
@@ -123,7 +124,6 @@ export default createComponent({
 
         onUnmounted(() => {
             unregister();
-            setModalIsOpenOnBody();
             window.removeEventListener("keydown", handleWindowKeyDown);
             const elModals = context.root.$el.querySelectorAll(".modal");
             elModals.forEach(element => {
@@ -156,8 +156,6 @@ export default createComponent({
                 } else if (hasClosed) {
                     unregister();
                 }
-
-                setModalIsOpenOnBody();
             }
         );
 
@@ -177,27 +175,22 @@ export default createComponent({
     background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     inset: 0;
-    opacity: 0;
+    opacity: 1;
     overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 25px 0;
-    pointer-events: none;
+    pointer-events: all;
     position: fixed;
     transition: opacity 0.15s linear;
     z-index: 2;
 
-    &.is-open {
-        opacity: 1;
-        overflow-x: hidden;
-        overflow-y: auto;
-        pointer-events: all;
+    @media (max-width: 600px) {
+        padding: 0;
+    }
 
-        @media (max-width: 600px) {
-            padding: 0;
-        }
-
-        @supports (-webkit-overflow-scrolling: touch) {
-            background-color: var(--color-white);
-        }
+    @supports (-webkit-overflow-scrolling: touch) {
+        background-color: var(--color-white);
     }
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -247,7 +240,7 @@ export default createComponent({
     max-width: 800px;
 }
 
-.modal-background.is-open .modal {
+.modal-background .modal {
     transform: none;
 }
 
