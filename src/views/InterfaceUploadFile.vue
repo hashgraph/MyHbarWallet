@@ -40,7 +40,6 @@ export default createComponent({
                 fileId.realm.toString() +
                 "." +
                 fileId.file.toString();
-            console.log(state.fileId);
             state.successModalIsOpen = true;
         }
 

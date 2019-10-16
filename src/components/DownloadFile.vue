@@ -24,6 +24,18 @@ import Button from "../components/Button.vue";
 import store from "../store";
 import fileType from "file-type";
 import IdInput from "../components/IDInput.vue";
+import { ALERT } from "../store/actions";
+
+type FileId = {
+    shard?: number;
+    realm?: number;
+    file: number;
+};
+
+type FileContentsResponse = {
+    contents: string | Uint8Array;
+    fileId: number | string | FileId;
+};
 
 export default createComponent({
     components: {
@@ -69,7 +81,7 @@ export default createComponent({
                     "@hashgraph/sdk"
                 ) as Promise<typeof import("@hashgraph/sdk")>);
 
-                const file = ref<object | null>(null);
+                const file = ref<FileContentsResponse | null>(null);
 
                 file.value = await new FileContentsQuery(client as InstanceType<
                     typeof Client
@@ -81,7 +93,7 @@ export default createComponent({
                     throw new Error("transaction returned is null");
                 }
 
-                const type = fileType(file.value.contents);
+                const type = fileType(file.value.contents as Uint8Array);
 
                 const fileBlob = new Blob([file.value.contents as Uint8Array]);
                 const fileUrl = URL.createObjectURL(fileBlob);
@@ -99,7 +111,10 @@ export default createComponent({
                     fileLink.value as HTMLAnchorElement
                 );
             } catch (error) {
-                console.log(error);
+                await store.dispatch(ALERT, {
+                    level: "error",
+                    message: error.toString()
+                });
             }
         }
 
