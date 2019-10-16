@@ -1,6 +1,8 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalRequestToCreateAccount from "../../../src/components/ModalRequestToCreateAccount.vue";
+// dynamic importing does not matter during unit tests
+// eslint-disable-next-line no-restricted-imports
 import { Ed25519PublicKey } from "@hashgraph/sdk";
 import VueI18n from "vue-i18n";
 import i18n from "../../../src/i18n";

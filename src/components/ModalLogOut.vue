@@ -45,7 +45,7 @@ import {
     computed
 } from "@vue/composition-api";
 import store from "../store";
-import { LOG_OUT } from "../store/mutations";
+import { LOG_OUT } from "../store/actions";
 import router from "../router";
 import { mdiClose } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
@@ -78,7 +78,7 @@ export default createComponent({
     },
     setup(props: Props, context: SetupContext) {
         function handleClickLogOut(): void {
-            store.commit(LOG_OUT);
+            store.dispatch(LOG_OUT);
             if (!props.forgot) {
                 Vue.nextTick(() => router.push({ name: "home" }));
                 context.emit("change", !props.isOpen);

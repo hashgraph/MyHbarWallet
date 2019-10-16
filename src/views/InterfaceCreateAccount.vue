@@ -75,7 +75,12 @@ import {
     ESTIMATED_FEE_TINYBAR,
     MAX_FEE_TINYBAR
 } from "../store/getters";
-import { ALERT, REFRESH_BALANCE_AND_RATE } from "../store/actions";
+import {
+    ALERT,
+    HANDLE_HEDERA_ERROR,
+    HANDLE_LEDGER_ERROR,
+    REFRESH_BALANCE_AND_RATE
+} from "../store/actions";
 
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
@@ -165,7 +170,9 @@ export default createComponent({
 
             if (store.state.wallet.session == null) {
                 throw new Error(
-                    "Session should not be null if inside Create Account Interface"
+                    context.root
+                        .$t("common.error.nullAccountOnInterface")
+                        .toString()
                 );
             }
 
@@ -211,9 +218,13 @@ export default createComponent({
                     .build()
                     .executeForReceipt()).getAccountid();
 
-                // Handle undefied
+                // Handle undefined
                 if (accountIdIntermediate == null) {
-                    throw new Error("Account Id returned is null");
+                    throw new Error(
+                        context.root
+                            .$t("common.error.invalidAccount")
+                            .toString()
+                    );
                 }
 
                 // state.accountIdIntermediate must be AccountID
@@ -234,25 +245,32 @@ export default createComponent({
                 state.successModalIsOpen = true;
             } catch (error) {
                 if (error instanceof HederaError) {
-                    if (
-                        error.code ===
-                        ResponseCodeEnum.INSUFFICIENT_PAYER_BALANCE
-                    ) {
-                        state.newBalanceError = context.root
-                            .$t("common.error.insufficientPayerBalance")
-                            .toString();
-                    } else if (
-                        error.code ===
-                        ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE
-                    ) {
-                        state.newBalanceError = "Insufficient Account Balance";
-                    } else {
-                        store.dispatch(ALERT, {
-                            message: `Received unhandled error from Hedera:  ${error.codeName}`,
-                            level: "error"
-                        });
-                        throw error;
+                    const errorMessage = await store.dispatch(
+                        HANDLE_HEDERA_ERROR,
+                        { error, showAlert: false }
+                    );
+
+                    // Small duplication of effort to assign errorMessage to correct TextInput
+                    switch (error.code) {
+                        case ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE:
+                        case ResponseCodeEnum.INSUFFICIENT_PAYER_BALANCE:
+                            state.newBalanceError = errorMessage;
+                            break;
+                        default:
+                            if (errorMessage !== "") {
+                                store.dispatch(ALERT, {
+                                    message: errorMessage,
+                                    level: "warn"
+                                });
+                            } else {
+                                throw error; // Unhandled Error Modal will open
+                            }
                     }
+                } else if (error.name === "TransportStatusError") {
+                    store.dispatch(HANDLE_LEDGER_ERROR, {
+                        error,
+                        showAlert: true
+                    });
                 } else {
                     throw error;
                 }

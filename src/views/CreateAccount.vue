@@ -9,35 +9,45 @@
             </PageTitle>
             <AccountTileButtons @click="handleClickTiles" />
         </div>
+
         <FAQs />
-        <ModalAccessByHardware v-model="state.modalAccessByHardwareIsOpen" />
-        <ModalCreateWithSoftware
-            v-model="state.modalCreateWithSoftwareIsOpen"
-            @submit="handleCreateWithSoftwareSubmit"
+
+        <ModalAccessByHardware
+            v-model="state.modalCreateByHardwareState.isOpen"
+            @submit="handleCreateByHardwareSubmit"
         />
+
+        <ModalCreateBySoftware
+            v-model="state.modalCreateBySoftwareState.isOpen"
+            @submit="handleCreateBySoftwareSubmit"
+        />
+
         <ModalCreateByPhrase
-            v-model="state.modalCreateByPhraseIsOpen"
+            v-model="state.modalCreateByPhraseState.isOpen"
             @submit="handleCreateByPhraseSubmit"
         />
+
         <ModalCreateByKeystore
             v-model="state.modalCreateByKeystoreState"
             @submit="handleCreateByKeystoreSubmit"
         />
+
         <ModalDownloadKeystore
             v-model="state.modalDownloadKeystoreState"
+            @continue="handleDownloadKeystoreContinue"
             @submit="handleDownloadKeystoreSubmit"
-            @continue="handleContinue"
         />
+
         <ModalEnterAccountId
-            v-model="state.modalEnterAccountIdIsOpen"
+            v-model="state.modalEnterAccountIdState"
             :private-key="state.privateKey"
-            @submit="handleAccountIdSubmit"
             @noAccount="handleDoesntHaveAccount"
+            @submit="handleAccountIdSubmit"
         />
+
         <ModalRequestToCreateAccount
-            v-if="state.privateKey != null"
-            v-model="state.modalRequestToCreateAccountIsOpen"
-            :public-key="state.privateKey.publicKey"
+            v-model="state.modalRequestToCreateAccountState.isOpen"
+            :public-key="state.publicKey"
             @hasAccount="handleHasAccount"
         />
     </div>
@@ -46,52 +56,44 @@
 <script lang="ts">
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "../components/AccountTileButtons.vue";
-import ModalAccessByHardware from "../components/ModalAccessByHardware.vue";
+import ModalAccessByHardware, {
+    AccessHardwareOption
+} from "../components/ModalAccessByHardware.vue";
+import PageTitle from "../components/PageTitle.vue";
+import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
+import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
+import ModalDownloadKeystore from "../components/ModalDownloadKeystore.vue";
 import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
-import ModalCreateWithSoftware, {
-    CreateSoftwareOption
-} from "../components/ModalCreateWithSoftware.vue";
-import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
-import ModalDownloadKeystore, {
-    State as DownloadKeystoreState
-} from "../components/ModalDownloadKeystore.vue";
-import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
-import PageTitle from "../components/PageTitle.vue";
 import {
     createComponent,
     reactive,
     ref,
     SetupContext
 } from "@vue/composition-api";
-import { State as CreateByKeystoreState } from "../components/ModalCreateByKeystore.vue";
-import store from "../store";
-import { Id } from "../store/modules/wallet";
-import { ALERT, LOG_IN } from "../store/actions";
+import { CreateAccountDTO, Id } from "../store/modules/wallet";
+import ModalCreateBySoftware, {
+    CreateSoftwareOption
+} from "../components/ModalCreateBySoftware.vue";
+import LedgerNanoS from "../wallets/hardware/LedgerNanoS";
 import Vue from "vue";
-
-interface State {
-    privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null;
-
-    modalAccessByHardwareIsOpen: boolean;
-    modalCreateWithSoftwareIsOpen: boolean;
-    modalCreateByPhraseIsOpen: boolean;
-    modalSuccessIsOpen: boolean;
-    modalEnterAccountIdIsOpen: boolean;
-    modalRequestToCreateAccountIsOpen: boolean;
-
-    modalCreateByKeystoreState: CreateByKeystoreState;
-    modalDownloadKeystoreState: DownloadKeystoreState;
-
-    keyFile: Uint8Array | null;
-}
+import store from "../store";
+import {
+    ALERT,
+    HANDLE_HEDERA_ERROR,
+    HANDLE_LEDGER_ERROR,
+    LOG_IN
+} from "../store/actions";
+import SoftwareWallet from "../wallets/software/SoftwareWallet";
+import settings from "../settings";
+import { HederaErrorTuple, LedgerErrorTuple } from "../store/modules/errors";
 
 export default createComponent({
     components: {
         FAQs,
         AccountTileButtons,
         ModalAccessByHardware,
-        ModalCreateWithSoftware,
+        ModalCreateBySoftware,
         PageTitle,
         ModalCreateByPhrase,
         ModalCreateByKeystore,
@@ -100,54 +102,209 @@ export default createComponent({
         ModalRequestToCreateAccount
     },
     setup(props: object, context: SetupContext) {
-        const state = reactive<State>({
+        const state: CreateAccountDTO = reactive({
+            wallet: null,
+            privateKey: null,
+            publicKey: null,
             keyFile: null,
-            modalAccessByHardwareIsOpen: false,
+            modalCreateByHardwareState: {
+                isOpen: false
+            },
+            modalCreateBySoftwareState: {
+                isOpen: false
+            },
             modalCreateByKeystoreState: {
                 isOpen: false,
                 isBusy: false,
                 passwordGeneratorState: {
                     password: "",
+                    confirmationPassword: "",
                     passwordStrength: 0,
-                    passwordSuggestion: "",
-                    confirmationPassword: ""
+                    passwordSuggestion: ""
                 }
             },
-            modalCreateByPhraseIsOpen: false,
-            modalCreateWithSoftwareIsOpen: false,
+            modalCreateByPhraseState: {
+                isOpen: false
+            },
+            modalKeystoreFilePasswordState: {
+                isOpen: false,
+                password: "",
+                error: null,
+                isBusy: false
+            },
             modalDownloadKeystoreState: {
                 isOpen: false,
-                isBusy: true,
+                isBusy: false,
                 downloadClicked: false
             },
-            modalEnterAccountIdIsOpen: false,
-            modalRequestToCreateAccountIsOpen: false,
-            modalSuccessIsOpen: false,
-            privateKey: null
+            modalEnterAccountIdState: {
+                failed: null,
+                errorMessage: null,
+                isOpen: false,
+                isBusy: false,
+                account: null,
+                valid: false
+            },
+            modalRequestToCreateAccountState: {
+                isOpen: false
+            }
         });
 
         const keyStoreLink = ref<HTMLAnchorElement | null>(null);
 
-        function handleClickTiles(which: string): void {
-            if (which === "hardware") {
-                state.modalAccessByHardwareIsOpen = true;
-            } else if (which === "software") {
-                state.modalCreateWithSoftwareIsOpen = true;
+        function setPrivateKey(
+            newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey
+        ): void {
+            state.privateKey = newPrivateKey;
+            state.publicKey = newPrivateKey.publicKey;
+        }
+
+        function openInterface(): void {
+            context.root.$router.push({ name: "interface" });
+        }
+
+        async function constructOperator(
+            account: Id
+        ): Promise<import("@hashgraph/sdk").Operator> {
+            if (state.wallet !== null) {
+                if (state.wallet.hasPrivateKey()) {
+                    return {
+                        account,
+                        privateKey: await state.wallet!.getPrivateKey()
+                    } as import("@hashgraph/sdk").Operator;
+                } else {
+                    return {
+                        account,
+                        publicKey: (await state.wallet!.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey,
+                        signer: state.wallet!.signTransaction.bind(
+                            state.wallet!
+                        ) as import("@hashgraph/sdk").Signer
+                    };
+                }
+            }
+
+            return {
+                account: null as Id | null,
+                privateKey: null as
+                    | import("@hashgraph/sdk").Ed25519PrivateKey
+                    | null
+            } as import("@hashgraph/sdk").Operator;
+        }
+
+        async function constructClient(
+            account: Id
+        ): Promise<import("@hashgraph/sdk").Client | undefined> {
+            let client: import("@hashgraph/sdk").Client | undefined = undefined;
+
+            const {
+                Client,
+                CryptoTransferTransaction,
+                HederaError,
+                ResponseCodeEnum
+            } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
+
+            try {
+                const operator: import("@hashgraph/sdk").Operator = await constructOperator(
+                    account
+                );
+
+                client = new Client({
+                    nodes: {
+                        [settings.network.proxy]: {
+                            shard: 0,
+                            realm: 0,
+                            account: 3
+                        }
+                    },
+                    operator
+                });
+
+                await new CryptoTransferTransaction(client)
+                    .addSender(account, 0)
+                    .addRecipient({ realm: 0, shard: 0, account: 3 }, 0)
+                    .setTransactionFee(1)
+                    .build()
+                    .executeForReceipt();
+            } catch (error) {
+                if (error instanceof HederaError) {
+                    // Transaction was valid except for deliberately insufficient fee,
+                    // meaning that the account matches the key and that nothing went wrong
+                    if (error.code === ResponseCodeEnum.INSUFFICIENT_TX_FEE) {
+                        return client;
+                    }
+                }
+
+                // Else, throw the error, failed to make a client (failed to login)
+                throw error;
             }
         }
 
-        function handleCreateWithSoftwareSubmit(
+        async function login(account: Id): Promise<void> {
+            const client:
+                | import("@hashgraph/sdk").Client
+                | undefined = await constructClient(account);
+
+            if (state.wallet !== null && client !== undefined) {
+                await store.dispatch(LOG_IN, {
+                    account,
+                    wallet: state.wallet,
+                    client
+                });
+            }
+        }
+
+        function handleClickTiles(which: string): void {
+            if (which === "hardware") {
+                state.modalCreateByHardwareState.isOpen = true;
+            } else if (which === "software") {
+                state.modalCreateBySoftwareState.isOpen = true;
+            }
+        }
+
+        function handleCreateBySoftwareSubmit(
             which: CreateSoftwareOption
         ): void {
-            state.modalCreateWithSoftwareIsOpen = false;
+            state.modalCreateBySoftwareState.isOpen = false;
 
             setTimeout(() => {
                 if (which === CreateSoftwareOption.File) {
                     state.modalCreateByKeystoreState.isOpen = true;
                 } else if (which === CreateSoftwareOption.Phrase) {
-                    state.modalCreateByPhraseIsOpen = true;
+                    state.modalCreateByPhraseState.isOpen = true;
                 }
             }, 125);
+        }
+
+        async function handleCreateByHardwareSubmit(
+            which: AccessHardwareOption
+        ): Promise<void> {
+            switch (which) {
+                case AccessHardwareOption.Ledger:
+                    try {
+                        state.wallet = new LedgerNanoS();
+                        state.publicKey = (await state.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+                        state.modalCreateByHardwareState.isOpen = false;
+                        Vue.nextTick(
+                            () =>
+                                (state.modalRequestToCreateAccountState.isOpen = true)
+                        );
+                    } catch (error) {
+                        if (error.name === "TransportStatusError") {
+                            store.dispatch(HANDLE_LEDGER_ERROR, {
+                                error,
+                                showAlert: true
+                            });
+                        } else {
+                            throw error;
+                        }
+                    }
+                    break;
+                default:
+                    state.wallet = null;
+                    break;
+            }
         }
 
         async function handleCreateByKeystoreSubmit(): Promise<void> {
@@ -161,21 +318,21 @@ export default createComponent({
                     "@hashgraph/sdk"
                 ) as Promise<typeof import("@hashgraph/sdk")>);
 
-                state.privateKey = await Ed25519PrivateKey.generate();
-                state.keyFile = await state.privateKey.createKeystore(
+                const privateKey = await Ed25519PrivateKey.generate();
+
+                state.keyFile = await privateKey.createKeystore(
                     state.modalCreateByKeystoreState.passwordGeneratorState
                         .password
                 );
-                if (state.keyFile == null) {
-                    throw new Error(
-                        "This shouldn't be possible, but we got a null from key.value.createKeystore"
-                    );
-                }
+
+                setPrivateKey(privateKey);
 
                 state.modalDownloadKeystoreState.isBusy = false;
+
                 const keyStoreBlob = new Blob([
                     state.keyFile.buffer as Uint8Array
                 ]);
+
                 const keyStoreUrl = URL.createObjectURL(keyStoreBlob);
 
                 keyStoreLink.value = document.createElement(
@@ -196,8 +353,6 @@ export default createComponent({
 
         function handleDownloadKeystoreSubmit(): void {
             context.root.$el.append(keyStoreLink.value as Node);
-            // Neither keystorelink or key should ever be null if we got to this point, however this is
-            // mostly a sanity check.
             if (keyStoreLink.value == null || state.privateKey == null) {
                 return;
             }
@@ -208,8 +363,8 @@ export default createComponent({
             );
         }
 
-        function handleContinue(): void {
-            state.modalRequestToCreateAccountIsOpen = true;
+        function handleDownloadKeystoreContinue(): void {
+            state.modalRequestToCreateAccountState.isOpen = true;
             setTimeout(
                 () => (state.modalDownloadKeystoreState.isOpen = false),
                 125
@@ -219,68 +374,83 @@ export default createComponent({
         function handleCreateByPhraseSubmit(
             newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey
         ): void {
-            state.modalCreateByPhraseIsOpen = false;
+            state.modalCreateByPhraseState.isOpen = false;
 
-            state.privateKey = newPrivateKey;
+            setPrivateKey(newPrivateKey);
 
             setTimeout(() => {
-                state.modalRequestToCreateAccountIsOpen = true;
+                state.modalRequestToCreateAccountState.isOpen = true;
             }, 125);
         }
 
-        function openInterface(): void {
-            context.root.$router.push({ name: "interface" });
-        }
+        async function handleAccountIdSubmit(account: Id): Promise<void> {
+            state.modalEnterAccountIdState.isBusy = true;
 
-        async function handleAccountIdSubmit(
-            client: object,
-            account: Id
-        ): Promise<void> {
-            // Lazy load Client until this method is called
-            const { Client } = await (import("@hashgraph/sdk") as Promise<
-                typeof import("@hashgraph/sdk")
-            >);
-
-            if (!(client instanceof Client)) {
-                throw new TypeError(
-                    "client is not instance of Client: Programmer Error"
-                );
+            if (state.wallet === null) {
+                if (state.privateKey !== null) {
+                    state.wallet = new SoftwareWallet(
+                        state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
+                        state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
+                    );
+                }
             }
-            // Make sure there are no open modals when we navigate
-            state.modalEnterAccountIdIsOpen = false;
 
-            await store.dispatch(LOG_IN, {
-                account,
-                client,
-                privateKey: state.privateKey
-            });
+            try {
+                await login(account);
+                Vue.nextTick(
+                    () => (state.modalEnterAccountIdState.isOpen = false)
+                );
+                openInterface();
+            } catch (error) {
+                const result: HederaErrorTuple = await store.dispatch(
+                    HANDLE_HEDERA_ERROR,
+                    { error, showAlert: false }
+                );
 
-            openInterface();
+                state.modalEnterAccountIdState.errorMessage = result.message;
+
+                if (result.message === "") {
+                    const result: LedgerErrorTuple = await store.dispatch(
+                        HANDLE_LEDGER_ERROR,
+                        { error, showAlert: false }
+                    );
+
+                    if (result.message === "") {
+                        throw error;
+                    }
+
+                    state.modalEnterAccountIdState.errorMessage =
+                        result.message;
+                }
+            } finally {
+                state.modalEnterAccountIdState.isBusy = false;
+            }
         }
 
         function handleDoesntHaveAccount(): void {
-            state.modalEnterAccountIdIsOpen = false;
+            state.modalEnterAccountIdState.isOpen = false;
             Vue.nextTick(
-                () => (state.modalRequestToCreateAccountIsOpen = true)
+                () => (state.modalRequestToCreateAccountState.isOpen = true)
             );
         }
 
         function handleHasAccount(): void {
-            state.modalRequestToCreateAccountIsOpen = false;
-            Vue.nextTick(() => (state.modalEnterAccountIdIsOpen = true));
+            state.modalRequestToCreateAccountState.isOpen = false;
+            Vue.nextTick(() => (state.modalEnterAccountIdState.isOpen = true));
         }
 
         return {
             state,
             handleClickTiles,
-            handleCreateWithSoftwareSubmit,
+            handleCreateByHardwareSubmit,
+            handleCreateBySoftwareSubmit,
             handleCreateByKeystoreSubmit,
             handleDownloadKeystoreSubmit,
             handleCreateByPhraseSubmit,
             handleAccountIdSubmit,
             handleHasAccount,
             handleDoesntHaveAccount,
-            handleContinue
+            handleDownloadKeystoreContinue
         };
     }
 });

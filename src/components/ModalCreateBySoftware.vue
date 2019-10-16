@@ -1,7 +1,7 @@
 <template>
     <Modal
         :is-open="isOpen"
-        :title="$t('modalCreateWithSoftware.title')"
+        :title="$t('modalCreateBySoftware.title')"
         @change="this.$listeners.change"
     >
         <template v-slot:banner>

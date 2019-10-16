@@ -122,7 +122,7 @@ export default createComponent({
         }
 
         const isHome = computed(() => {
-            // This conditional is required for unit tests to passs
+            // This conditional is required for unit tests to pass
             if (context.root != null && context.root.$route != null) {
                 return context.root.$route.name === "home";
             }
@@ -152,7 +152,7 @@ export default createComponent({
         }
 
         const isInterface = computed(() => {
-            // This conditional is required for unit tests to passs
+            // This conditional is required for unit tests to pass
             if (context.root != null) {
                 if (context.root.$route != null) {
                     return context.root.$route.path.startsWith("/interface");

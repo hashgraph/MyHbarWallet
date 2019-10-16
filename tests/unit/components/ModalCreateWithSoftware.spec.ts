@@ -1,6 +1,6 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalCreateWithSoftware from "../../../src/components/ModalCreateWithSoftware.vue";
+import ModalCreateWithSoftware from "../../../src/components/ModalCreateBySoftware.vue";
 import VueRouter from "vue-router";
 import VueI18n from "vue-i18n";
 import router from "../../../src/router";
