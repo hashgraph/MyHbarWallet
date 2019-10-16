@@ -2,26 +2,37 @@
     <Modal :is-open="isOpen" hide-decoration @change="this.$listeners.change">
         <template>
             <div class="modal-container">
-                <div class="header">Something went wrong.</div>
+                <div class="header">{{ $t("modalReportError.title") }}</div>
                 <div class="sub-header">
-                    Do you want to inform MHW about this error?
+                    {{ $t("modalReportError.informMHW") }}
                 </div>
 
                 <div class="stack-trace">
                     {{ errorMessage }}
                 </div>
 
+                <div class="sub-header">
+                    {{ $t("modalReportError.description") }}
+                </div>
+
+                <TextInput
+                    class="user-details"
+                    resizable
+                    multiline
+                    @input="handleInput"
+                />
+
                 <div class="button-group">
                     <Button
                         class="button-cancel"
-                        label="Cancel"
+                        :label="$t('common.cancel')"
                         :outline="true"
                         :compact="true"
                         @click="handleCancel"
                     />
                     <Button
                         class="button-send"
-                        label="Send"
+                        :label="$t('common.send')"
                         :compact="true"
                         @click="handleSend"
                     />
@@ -34,6 +45,7 @@
 <script lang="ts">
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
+import TextInput from "../components/TextInput.vue";
 import {
     computed,
     createComponent,
@@ -60,7 +72,8 @@ interface Props {
 export default createComponent({
     components: {
         Button,
-        Modal
+        Modal,
+        TextInput
     },
     model: {
         prop: "isOpen",
@@ -124,7 +137,8 @@ export default createComponent({
             description: "",
             device: device.value || "",
             version: "v" + VERSION + "+" + COMMIT_HASH,
-            accountId: accountId.value || ""
+            accountId: accountId.value || "",
+            details: ""
         });
 
         const errorMessage = computed((): string => {
@@ -139,7 +153,8 @@ export default createComponent({
                 state.device,
                 state.version,
                 state.accountId,
-                errorMessage.value
+                `${errorMessage.value}
+                ${state.details}`
             )
         );
 
@@ -161,6 +176,10 @@ export default createComponent({
             close();
         }
 
+        function handleInput(text: string): void {
+            state.details = text;
+        }
+
         // When the route is updated, reset the path value
         watch(
             () => context.root.$route,
@@ -174,7 +193,8 @@ export default createComponent({
         return {
             errorMessage,
             handleCancel,
-            handleSend
+            handleSend,
+            handleInput
         };
     }
 });
@@ -208,6 +228,11 @@ export default createComponent({
     overflow-x: hidden;
     overflow-y: scroll;
     padding: 20px;
+}
+
+.user-details {
+    margin-block-end: 40px;
+    margin-block-start: 20px;
 }
 
 .header {

@@ -1,10 +1,13 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import ModalReportError from "../../../src/components/ModalReportError.vue";
+import i18n from "../../../src/i18n";
+import VueI18n from "vue-i18n";
 
 describe("ModalReportError.Vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
+    localVue.use(VueI18n);
 
     Object.defineProperty(navigator, "userAgent", {
         get() {
@@ -18,6 +21,7 @@ describe("ModalReportError.Vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalReportError, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false
             },
@@ -39,6 +43,15 @@ describe("ModalReportError.Vue", (): void => {
                       </div>
                       <div class="stack-trace">
 
+                      </div>
+                      <div class="sub-header">
+                        (Optional) What went wrong?
+                      </div>
+                      <div class="text-input user-details is-multiline"><label class="label-container">
+                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
+                          <!----></span></label>
+                        <!---->
+                        <!---->
                       </div>
                       <div class="button-group"><button type="submit" class="button-cancel outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button-send compact"><span>Send</span>
@@ -57,6 +70,7 @@ describe("ModalReportError.Vue", (): void => {
         const onChange = jest.fn();
         const wrapper = mount(ModalReportError, {
             localVue,
+            i18n,
             propsData: {
                 isOpen: false
             },
@@ -78,6 +92,15 @@ describe("ModalReportError.Vue", (): void => {
                       </div>
                       <div class="stack-trace">
 
+                      </div>
+                      <div class="sub-header">
+                        (Optional) What went wrong?
+                      </div>
+                      <div class="text-input user-details is-multiline"><label class="label-container">
+                          <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
+                          <!----></span></label>
+                        <!---->
+                        <!---->
                       </div>
                       <div class="button-group"><button type="submit" class="button-cancel outline compact"><span>Cancel</span>
                           <!----></button> <button type="submit" class="button-send compact"><span>Send</span>
