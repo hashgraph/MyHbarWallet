@@ -39,6 +39,48 @@ import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiFileUpload } from "@mdi/js";
 import store from "../store";
+import { ALERT } from "../store/actions";
+
+//!Can remove with next sdk publish
+
+type AccountId = {
+    shard: number;
+    realm: number;
+    account: number;
+};
+
+type FileId = {
+    shard: number;
+    realm: number;
+    file: number;
+};
+
+type ContractId = {
+    shard: number;
+    realm: number;
+    contract: number;
+};
+
+type ExchangeRate = {
+    hbarEquiv: number;
+    centEquiv: number;
+    expirationTime: Date;
+};
+
+type ExchangeRateSet = {
+    currentRate: ExchangeRate;
+    nextRate: ExchangeRate;
+};
+
+type TransactionReceipt = {
+    status: number;
+    accountId?: AccountId;
+    fileId?: FileId;
+    contractId?: ContractId;
+    exchangeRateSet?: ExchangeRateSet;
+};
+
+//! end remove bit
 
 export default createComponent({
     components: {
@@ -93,7 +135,7 @@ export default createComponent({
             target.value = ""; // change back to initial state to gaurantee that click fires next time
             state.fileUint8Array = new Uint8Array(fileBuff);
         }
-
+        //TODO [2019-10-18]: Should combine these functions
         async function uploadFile(event: Event): Promise<void> {
             await loadArrFromFile(event);
         }
@@ -104,7 +146,6 @@ export default createComponent({
                 throw new Error("session should not be null");
             }
             const client = store.state.wallet.session.client;
-
             if (state.fileUint8Array == null) {
                 throw new Error("unexepcted submit before upload of file");
             }
@@ -120,22 +161,20 @@ export default createComponent({
 
             try {
                 state.isBusy = true;
-                const {
-                    FileCreateTransaction,
-                    Client,
-                    TransactionReceipt
-                } = await (import("@hashgraph/sdk") as Promise<
-                    typeof import("@hashgraph/sdk")
-                >);
+                const { FileCreateTransaction, Client } = await (import(
+                    "@hashgraph/sdk"
+                ) as Promise<typeof import("@hashgraph/sdk")>);
 
-                const receipt = ref<TransactionReceipt.AsObject | null>(null);
+                const receipt = ref<TransactionReceipt | null>(null);
 
                 receipt.value = await new FileCreateTransaction(
                     client as InstanceType<typeof Client>
                 )
-                    .setContents(state.fileUint8Array)
+                    .setContents(state.fileUint8Array as Uint8Array)
                     .setExpirationTime(Date.now() + 7890000000)
-                    .addKey(store.state.wallet.session.privateKey.publicKey)
+                    .addKey(
+                        (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey
+                    )
                     .setTransactionFee(1e12)
                     .build()
                     .executeForReceipt();
@@ -143,19 +182,20 @@ export default createComponent({
                 if (receipt == null) {
                     throw new Error("transaction returned is null");
                 }
-                console.log(typeof receipt.value.fileId.file);
 
                 const fileId = receipt.value.fileId;
 
                 context.emit("gotReceipt", fileId);
             } catch (error) {
-                console.log(error);
+                await store.dispatch(ALERT, {
+                    level: "error",
+                    message: error.toString()
+                });
             }
             state.isBusy = false;
         }
 
         const fileReady = computed(() => {
-            console.log(state.filename != "");
             return state.filename != "";
         });
 
