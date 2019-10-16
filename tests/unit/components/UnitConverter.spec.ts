@@ -23,7 +23,7 @@ describe("UnitConverter.vue", (): void => {
                 <div class="block-left">
                   <div class="input-block">
                     <div class="text-input is-compact is-white"><label class="label-container">
-                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Amount" type="text" step="any" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
+                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Amount" type="text" step="any" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
                         <!----></span></label>
                       <!---->
                       <!---->
@@ -68,7 +68,7 @@ describe("UnitConverter.vue", (): void => {
                 <div class="block-right">
                   <div class="input-block">
                     <div class="text-input is-compact is-white"><label class="label-container">
-                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Amount" type="text" step="any" autocomplete="on"></div> <div class="deco-flex-item"><!----></div></div></span>
+                        <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Amount" type="text" step="any" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
                         <!----></span></label>
                       <!---->
                       <!---->

@@ -32,6 +32,7 @@
                                 :autocomplete="
                                     autocompleteDisabled ? 'off' : 'on'
                                 "
+                                :spellcheck="!spellcheckDisabled"
                                 @focusin="handleFocusIn"
                                 @focusout="handleFocusOut"
                                 @input="handleInput"
@@ -108,6 +109,7 @@ interface Props {
     canClear: boolean;
     canCopy: boolean;
     autocompleteDisabled: boolean;
+    spellcheckDisabled: boolean;
     showValidation: boolean;
     valid: boolean;
     error: string;
@@ -157,6 +159,7 @@ export default createComponent({
         canClear: (Boolean as unknown) as PropType<boolean>,
         canCopy: (Boolean as unknown) as PropType<boolean>,
         autocompleteDisabled: (Boolean as unknown) as PropType<boolean>,
+        spellcheckDisabled: (Boolean as unknown) as PropType<boolean>,
 
         // Whether to hide the text being edited (e.g., for passwords).
         obscure: (Boolean as unknown) as PropType<boolean>,
