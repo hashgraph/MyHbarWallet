@@ -28,7 +28,7 @@ export default createComponent({
             fileId: "",
             successModalIsOpen: false
         });
-        // eslint-disable-next-line unicorn/consistent-function-scoping
+
         function handleReceipt(fileId: {
             file: number;
             realm: number;
