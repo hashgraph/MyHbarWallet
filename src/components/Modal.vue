@@ -1,29 +1,32 @@
 <template>
-    <div
-        v-if="isOpen"
-        class="modal-background"
-        role="dialog"
-        aria-modal="true"
-        @mousedown.self="handleClose"
-    >
-        <div class="modal" :class="{ large: props.large }">
-            <header v-if="!props.hideDecoration">
-                <span class="title">{{ props.title }}</span>
-                <MaterialDesignIcon
-                    v-if="!props.notClosable"
-                    class="close"
-                    :icon="mdiClose"
-                    @click="handleClose"
-                />
-            </header>
-            <div class="main">
-                <slot name="banner"></slot>
-                <div class="content-container">
-                    <slot></slot>
+    <transition name="ease">
+        <div
+            v-if="isOpen"
+            transition="modal-fade"
+            class="modal-background"
+            role="dialog"
+            aria-modal="true"
+            @mousedown.self="handleClose"
+        >
+            <div class="modal" :class="{ large: props.large }">
+                <header v-if="!props.hideDecoration">
+                    <span class="title">{{ props.title }}</span>
+                    <MaterialDesignIcon
+                        v-if="!props.notClosable"
+                        class="close"
+                        :icon="mdiClose"
+                        @click="handleClose"
+                    />
+                </header>
+                <div class="main">
+                    <slot name="banner"></slot>
+                    <div class="content-container">
+                        <slot></slot>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script lang="ts">
@@ -177,12 +180,10 @@ export default createComponent({
     inset: 0;
     opacity: 1;
     overflow: hidden;
-    overflow-x: hidden;
     overflow-y: auto;
     padding: 25px 0;
     pointer-events: all;
     position: fixed;
-    transition: opacity 0.15s linear;
     z-index: 2;
 
     @media (max-width: 600px) {
@@ -191,10 +192,6 @@ export default createComponent({
 
     @supports (-webkit-overflow-scrolling: touch) {
         background-color: var(--color-white);
-    }
-
-    @media screen and (prefers-reduced-motion: reduce) {
-        transition: none;
     }
 }
 
@@ -210,13 +207,8 @@ export default createComponent({
     overflow: hidden;
     overflow-y: auto;
     transform: translateY(-50px);
-    transition: transform 0.3s ease-out;
     width: 100%;
     z-index: 3;
-
-    @media screen and (prefers-reduced-motion: reduce) {
-        transition: none;
-    }
 
     @media print {
         box-shadow: none;
@@ -242,6 +234,20 @@ export default createComponent({
 
 .modal-background .modal {
     transform: none;
+}
+
+.ease-enter-active,
+.ease-leave-active {
+    transition: opacity 0.5s;
+
+    @media (prefers-reduced-motion) {
+        transition: none;
+    }
+}
+
+.ease-enter,
+.ease-leave-to {
+    opacity: 0;
 }
 
 header {
