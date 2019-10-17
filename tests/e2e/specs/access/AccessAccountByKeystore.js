@@ -54,24 +54,24 @@ module.exports = {
             .waitForElementVisible("label[for=file]", 5000)
             .click("label[for=file]")
             .click(
-                ".modal-access-by-software > .modal-background.is-open > .modal button[type=submit]"
+                ".modal-access-by-software > .modal-background > .modal button[type=submit]"
             )
             .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
-                ".modal-password > .modal-background.is-open > .modal",
+                ".modal-password > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(passwordSelector, 5000)
             .setValue(passwordSelector, keystorePassword + "\n")
             .waitForElementVisible(
-                ".modal-enter-account-id > .modal-background.is-open > .modal",
+                ".modal-enter-account-id > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(accountInputSelector, 5000)
             .setValue(accountInputSelector, keystoreAccountId)
             .click(
-                ".modal-enter-account-id > .modal-background.is-open > .modal button[type=submit]"
+                ".modal-enter-account-id > .modal-background > .modal button[type=submit]"
             )
             .waitForElementVisible(".interface-form", 10000)
             .waitForElementVisible(".interface .balance .hbar-balance", 10000)
@@ -148,9 +148,7 @@ module.exports = {
         browser
             .click("div.links:nth-child(3) > a:nth-child(1)")
             .waitForElementVisible(".home-tile-button", 10000)
-            .expect.element("div.modal-background:nth-child(6)")
-            .to.have.attribute("class")
-            .which.contains("is-open");
+            .assert.visible(".modal-forgot-to-logout");
         browser.end();
     },
 
@@ -164,20 +162,20 @@ module.exports = {
             .waitForElementVisible("label[for=file]", 5000)
             .click("label[for=file]")
             .click(
-                ".modal-access-by-software > .modal-background.is-open > .modal button[type=submit]"
+                ".modal-access-by-software > .modal-background > .modal button[type=submit]"
             )
             .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
-                ".modal-password > .modal-background.is-open > .modal",
+                ".modal-password > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(
-                ".modal-password > .modal-background.is-open > .modal input[type=password]",
+                ".modal-password > .modal-background > .modal input[type=password]",
                 5000
             )
             .setValue(
-                ".modal-password > .modal-background.is-open > .modal input[type=password]",
+                ".modal-password > .modal-background > .modal input[type=password]",
                 keystoreIncorrectPassword + "\n"
             )
             .waitForElementVisible(
@@ -197,34 +195,34 @@ module.exports = {
             .waitForElementVisible("label[for=file]", 5000)
             .click("label[for=file]")
             .click(
-                ".modal-access-by-software > .modal-background.is-open > .modal button[type=submit]"
+                ".modal-access-by-software > .modal-background > .modal button[type=submit]"
             )
             .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
-                ".modal-password > .modal-background.is-open > .modal",
+                ".modal-password > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(
-                ".modal-password > .modal-background.is-open > .modal input[type=password]",
+                ".modal-password > .modal-background > .modal input[type=password]",
                 5000
             )
             .setValue(
-                ".modal-password > .modal-background.is-open > .modal input[type=password]",
+                ".modal-password > .modal-background > .modal input[type=password]",
                 keystorePassword + "\n"
             )
             .waitForElementVisible(
-                ".modal-enter-account-id > .modal-background.is-open > .modal",
+                ".modal-enter-account-id > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(accountInputSelector, 5000)
             .setValue(accountInputSelector, keystoreIncorrectAccountId + "\n")
             .waitForElementVisible(
-                ".modal-enter-account-id > .modal-background.is-open > .modal .error",
+                ".modal-enter-account-id > .modal-background > .modal .error",
                 5000
             )
             .assert.containsText(
-                ".modal-enter-account-id > .modal-background.is-open > .modal .error",
+                ".modal-enter-account-id > .modal-background > .modal .error",
                 "Account ID not found on network"
             )
             .end();
@@ -240,36 +238,36 @@ module.exports = {
             .waitForElementVisible("label[for=file]", 5000)
             .click("label[for=file]")
             .click(
-                ".modal-access-by-software > .modal-background.is-open > .modal button[type=submit]"
+                ".modal-access-by-software > .modal-background > .modal button[type=submit]"
             )
             .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
-                ".modal-password > .modal-background.is-open > .modal",
+                ".modal-password > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(
-                ".modal-password > .modal-background.is-open > .modal input[type=password]",
+                ".modal-password > .modal-background > .modal input[type=password]",
                 5000
             )
             .setValue(
-                ".modal-password > .modal-background.is-open > .modal input[type=password]",
+                ".modal-password > .modal-background > .modal input[type=password]",
                 keystorePassword + "\n"
             )
             .waitForElementVisible(
-                ".modal-enter-account-id > .modal-background.is-open > .modal",
+                ".modal-enter-account-id > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(accountInputSelector, 5000)
             .click(
-                ".modal-enter-account-id > .modal-background.is-open > .modal button[type=button]"
+                ".modal-enter-account-id > .modal-background > .modal button[type=button]"
             )
             .waitForElementVisible(
-                ".modal-request-to-create-account > .modal-background.is-open > .modal",
+                ".modal-request-to-create-account > .modal-background > .modal",
                 5000
             )
             .assert.containsText(
-                ".modal-request-to-create-account > .modal-background.is-open > .modal .read-only-input",
+                ".modal-request-to-create-account > .modal-background > .modal .read-only-input",
                 truncatePublic(keystorePublicKey)
             )
             .end();

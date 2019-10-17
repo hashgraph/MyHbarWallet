@@ -51,15 +51,15 @@ module.exports = {
             .click("label[for=phrase]")
             .click(".modal-access-by-software > button:nth-child(3)")
             .waitForElementVisible(
-                ".modal-mnemonic-phrase > .modal-background.is-open > .modal",
+                ".modal-mnemonic-phrase > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(
-                ".modal-mnemonic-phrase > .modal-background.is-open > .modal .list-item",
+                ".modal-mnemonic-phrase > .modal-background > .modal .list-item",
                 5000
             )
             .setValue(
-                ".modal-mnemonic-phrase > .modal-background.is-open > .modal .list-item > .word",
+                ".modal-mnemonic-phrase > .modal-background > .modal .list-item > .word",
                 mnemonicPhrase + "\n"
             )
             .waitForElementVisible(accountInputSelector, 5000)
@@ -139,9 +139,7 @@ module.exports = {
         browser
             .click("div.links:nth-child(3) > a:nth-child(1)")
             .waitForElementVisible(".home-tile-button", 10000)
-            .expect.element("div.modal-background:nth-child(6)")
-            .to.have.attribute("class")
-            .which.contains("is-open");
+            .assert.visible(".modal-forgot-to-logout");
         browser.end();
     }
 };
