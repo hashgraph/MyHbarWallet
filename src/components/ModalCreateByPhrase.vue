@@ -139,9 +139,7 @@ export default createComponent({
         const state = reactive({
             isBusy: false,
             passwordValue: "",
-            result: null as
-                | import("@hashgraph/sdk/src/Keys").MnemonicResult
-                | null,
+            result: null as import("@hashgraph/sdk").MnemonicResult | null,
             printModalIsOpen: false,
             verifyPhraseIsOpen: false
         });
@@ -183,7 +181,7 @@ export default createComponent({
             state.verifyPhraseIsOpen = false;
 
             // `.derive(0)` to generate the same key as the default account of the mobile wallet
-            const key: import("@hashgraph/sdk/src/Keys").Ed25519PrivateKey = (await state.result.generateKey()).derive(
+            const key: import("@hashgraph/sdk").Ed25519PrivateKey = (await state.result.generateKey()).derive(
                 0
             );
 

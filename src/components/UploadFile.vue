@@ -187,10 +187,19 @@ export default createComponent({
 
                 context.emit("gotReceipt", fileId);
             } catch (error) {
-                await store.dispatch(ALERT, {
-                    level: "error",
-                    message: error.toString()
-                });
+                if (
+                    error.message.includes(
+                        "upstream connect error or disconnect/reset before headers. reset reason: remote reset"
+                    )
+                ) {
+                    await store.dispatch(ALERT, {
+                        level: "error",
+                        message:
+                            "Connection Error.  If your file larger than 4kB, this error will occur.  Support for larger files is expected soon."
+                    });
+                } else {
+                    throw new Error(error);
+                }
             }
             state.isBusy = false;
         }

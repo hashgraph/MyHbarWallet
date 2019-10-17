@@ -216,7 +216,7 @@ export default createComponent({
                     .setTransactionFee(maxTxFeeTinybar)
                     .setKey(key)
                     .build()
-                    .executeForReceipt()).getAccountid();
+                    .executeForReceipt()).accountId;
 
                 // Handle undefined
                 if (accountIdIntermediate == null) {
@@ -230,11 +230,11 @@ export default createComponent({
                 // state.accountIdIntermediate must be AccountID
                 // get shard, realm, state.account separately and construct a new object
                 state.account =
-                    accountIdIntermediate.getShardnum() +
+                    accountIdIntermediate.shard +
                     "." +
-                    accountIdIntermediate.getRealmnum() +
+                    accountIdIntermediate.realm +
                     "." +
-                    accountIdIntermediate.getAccountnum();
+                    accountIdIntermediate.account;
 
                 // If creating state.account succeeds then remove all the error
                 state.newBalanceError = "";
