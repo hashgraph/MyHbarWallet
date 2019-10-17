@@ -21,7 +21,7 @@
                 id="file-upload"
                 ref="file"
                 type="file"
-                @change="uploadFile"
+                @change="prepareFile"
             />
         </div>
         <Button
@@ -89,7 +89,6 @@ export default createComponent({
     },
 
     setup(props, context) {
-        // const highlight = false;  //for dragndrop
         const state = reactive({
             filename: "",
             fileUint8Array: null as Uint8Array | null,
@@ -106,7 +105,7 @@ export default createComponent({
             }
         }
 
-        async function loadArrFromFile(event: Event): Promise<void> {
+        async function prepareFile(event: Event): Promise<void> {
             const target = event.target as HTMLInputElement;
 
             if (target.files == null) {
@@ -118,7 +117,6 @@ export default createComponent({
 
             state.filename = file.name;
 
-            //placeholder until it's decided how uploading works in sdk
             const fileBuff = await new Promise<ArrayBuffer>(
                 (resolve, reject) => {
                     const reader = new FileReader();
@@ -135,13 +133,8 @@ export default createComponent({
             target.value = ""; // change back to initial state to gaurantee that click fires next time
             state.fileUint8Array = new Uint8Array(fileBuff);
         }
-        //TODO [2019-10-18]: Should combine these functions
-        async function uploadFile(event: Event): Promise<void> {
-            await loadArrFromFile(event);
-        }
 
-        // eslint-disable-next-line unicorn/consistent-function-scoping, @typescript-eslint/explicit-function-return-type
-        async function handleUploadClick() {
+        async function handleUploadClick(): Promise<void> {
             if (!store.state.wallet.session) {
                 throw new Error("session should not be null");
             }
@@ -179,10 +172,6 @@ export default createComponent({
                     .build()
                     .executeForReceipt();
 
-                if (receipt == null) {
-                    throw new Error("transaction returned is null");
-                }
-
                 const fileId = receipt.value.fileId;
 
                 context.emit("gotReceipt", fileId);
@@ -215,7 +204,7 @@ export default createComponent({
             fileReady,
             mdiFileUpload,
             hash,
-            uploadFile,
+            prepareFile,
             handleUploadClick
         };
     }
@@ -244,14 +233,6 @@ input {
     flex-direction: column;
 }
 
-.fileform {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-}
-
 .button {
     margin-block-end: 20px;
 }
@@ -259,17 +240,6 @@ input {
 .file-name-container {
     display: flex;
     margin-block-end: 20px;
-}
-
-.icon-container {
-    align-items: center;
-    background-color: var(--color-melbourne-cup);
-    border-radius: 25%;
-    display: flex;
-    height: 30px;
-    justify-content: center;
-    margin-inline-end: 5px;
-    width: 30px;
 }
 
 .icon {

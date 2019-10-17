@@ -44,7 +44,6 @@ export default createComponent({
     },
 
     setup(props, context) {
-        // const highlight = false;  //for dragndrop
         const state = reactive({
             filename: "",
             fileArrayBuff: null as Uint8Array | null,
@@ -68,7 +67,6 @@ export default createComponent({
 
         const fileLink = ref<HTMLAnchorElement | null>(null);
 
-        // eslint-disable-next-line unicorn/consistent-function-scoping
         async function handleDownloadClick(): Promise<void> {
             if (!store.state.wallet.session) {
                 throw new Error("session should not be null");
@@ -76,7 +74,6 @@ export default createComponent({
             const client = store.state.wallet.session.client;
             client.setMaxQueryPayment(1000000000000);
             try {
-                // state.isBusy = true;
                 const { FileContentsQuery, Client } = await (import(
                     "@hashgraph/sdk"
                 ) as Promise<typeof import("@hashgraph/sdk")>);
@@ -139,14 +136,6 @@ export default createComponent({
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.fileform {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
 }
 
 .button {
