@@ -82,6 +82,8 @@ type TransactionReceipt = {
 
 //! end remove bit
 
+const MAX_FILE_LENGTH = 4096;
+
 export default createComponent({
     components: {
         Button,
@@ -140,7 +142,7 @@ export default createComponent({
             }
             const client = store.state.wallet.session.client;
             if (state.fileUint8Array == null) {
-                throw new Error("unexepcted submit before upload of file");
+                throw new Error("unexpected submit before upload of file");
             }
             if (hash.value && hash.value.checked) {
                 const digest = await crypto.subtle.digest(
@@ -150,29 +152,69 @@ export default createComponent({
                 state.fileUint8Array = new Uint8Array(digest);
             }
 
-            //TODO [2019-10-18]: Handle file splitting: if upload fails with some error which indirectly means: "file too big", chop file in half and try again with create for first half and fileAppendTransaction for second half - recursively do these halves until no error
-
             try {
                 state.isBusy = true;
-                const { FileCreateTransaction, Client } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
+                console.log("uploading");
+
+                const {
+                    FileCreateTransaction,
+                    FileAppendTransaction,
+                    Client
+                } = await (import("@hashgraph/sdk") as Promise<
+                    typeof import("@hashgraph/sdk")
+                >);
+
+                const file: Uint8Array = state.fileUint8Array as Uint8Array;
+                const chunks = [];
+
+                const chunkCount = Math.ceil(file.byteLength / MAX_FILE_LENGTH);
+                console.log("file chunks " + chunkCount);
+
+                for (let i = 0; i < chunkCount; i++) {
+                    console.log("chunk " + i);
+
+                    const start = i * MAX_FILE_LENGTH;
+                    chunks.push(file.slice(start, start + MAX_FILE_LENGTH));
+                }
 
                 const receipt = ref<TransactionReceipt | null>(null);
+
+                const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+
+                // TODO[2019-10-18]: send alert to user and back out of interface
+                if (!publicKey) {
+                    throw new Error("not logged in");
+                }
 
                 receipt.value = await new FileCreateTransaction(
                     client as InstanceType<typeof Client>
                 )
-                    .setContents(state.fileUint8Array as Uint8Array)
+                    .setContents(chunks.pop() as Uint8Array)
                     .setExpirationTime(Date.now() + 7890000000)
-                    .addKey(
-                        (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey
-                    )
+                    .addKey(publicKey)
                     .setTransactionFee(1e12)
                     .build()
                     .executeForReceipt();
 
                 const fileId = receipt.value.fileId;
+
+                // TODO[2019-10-18]: handle this properly lol
+                if (!fileId) {
+                    throw new Error("no file id :(");
+                }
+
+                for (const chunk in chunks) {
+                    console.log("chunk!");
+
+                    await new FileAppendTransaction(client as InstanceType<
+                        typeof Client
+                    >)
+                        .setFileId(fileId)
+                        .setContents(chunk)
+                        .setTransactionFee(1e12)
+                        .build()
+                        .executeForReceipt();
+                }
 
                 context.emit("gotReceipt", fileId);
             } catch (error) {
@@ -183,14 +225,14 @@ export default createComponent({
                 ) {
                     await store.dispatch(ALERT, {
                         level: "error",
-                        message:
-                            "Connection Error.  If your file larger than 4kB, this error will occur.  Support for larger files is expected soon."
+                        message: "Connection Error."
                     });
                 } else {
                     throw new Error(error);
                 }
+            } finally {
+                state.isBusy = false;
             }
-            state.isBusy = false;
         }
 
         const fileReady = computed(() => {
