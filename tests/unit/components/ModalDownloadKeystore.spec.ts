@@ -54,7 +54,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-create-by-mnemonic-phrase">
-              <div role="dialog" aria-modal="true" class="modal-background">
+              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
                 <div class="modal">
                   <header><span class="title">By Keystore File</span>
                     <!---->
@@ -140,7 +140,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-create-by-mnemonic-phrase">
-              <div role="dialog" aria-modal="true" class="modal-background">
+              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
                 <div class="modal">
                   <header><span class="title">By Keystore File</span>
                     <!---->
