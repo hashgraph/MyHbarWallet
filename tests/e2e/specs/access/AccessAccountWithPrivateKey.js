@@ -132,9 +132,7 @@ module.exports = {
         browser
             .click("div.links:nth-child(3) > a:nth-child(1)")
             .waitForElementVisible(".home-tile-button", 10000)
-            .expect.element("div.modal-background:nth-child(6)")
-            .to.have.attribute("class")
-            .which.contains("is-open");
+            .assert.visible(".modal-forgot-to-logout");
         browser.end();
     }
 };
