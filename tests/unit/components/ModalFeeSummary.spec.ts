@@ -129,7 +129,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-fee-summary" title="Title">
-              <div role="dialog" aria-modal="true" class="modal-background">
+              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
                     <!---->
@@ -224,7 +224,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-fee-summary" title="Title">
-              <div role="dialog" aria-modal="true" class="modal-background">
+              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
                     <!---->
@@ -302,7 +302,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-fee-summary" title="Title">
-              <div role="dialog" aria-modal="true" class="modal-background">
+              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
                     <!---->

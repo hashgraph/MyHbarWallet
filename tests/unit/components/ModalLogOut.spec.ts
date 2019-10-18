@@ -43,7 +43,7 @@ describe("ModalLogOut.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div role="dialog" aria-modal="true" class="modal-background">
+            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
               <div class="modal">
                 <!---->
                 <div class="main">
