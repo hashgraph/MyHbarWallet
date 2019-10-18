@@ -82,6 +82,10 @@ type TransactionReceipt = {
 
 //! end remove bit
 
+// The approximate maximum size of a chunk
+// todo [2019-31-10]: look into proper estimate
+const MAX_CHUNK_LENGTH = 2923;
+
 export default createComponent({
     components: {
         Button,
@@ -138,10 +142,12 @@ export default createComponent({
             if (!store.state.wallet.session) {
                 throw new Error("session should not be null");
             }
+
             const client = store.state.wallet.session.client;
             if (state.fileUint8Array == null) {
-                throw new Error("unexepcted submit before upload of file");
+                throw new Error("unexpected submit before upload of file");
             }
+
             if (hash.value && hash.value.checked) {
                 const digest = await crypto.subtle.digest(
                     "SHA-384",
@@ -150,31 +156,48 @@ export default createComponent({
                 state.fileUint8Array = new Uint8Array(digest);
             }
 
-            //TODO [2019-10-18]: Handle file splitting: if upload fails with some error which indirectly means: "file too big", chop file in half and try again with create for first half and fileAppendTransaction for second half - recursively do these halves until no error
+            const {
+                FileCreateTransaction,
+                FileAppendTransaction,
+                Client
+            } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
+
+            state.isBusy = true;
+
+            const file: Uint8Array = state.fileUint8Array as Uint8Array;
+            const chunks: Uint8Array[] = [];
+
+            const chunkCount = Math.ceil(file.byteLength / MAX_CHUNK_LENGTH);
+
+            for (let i = 0; i < chunkCount; i++) {
+                const start = i * MAX_CHUNK_LENGTH;
+                chunks.push(file.subarray(start, start + MAX_CHUNK_LENGTH));
+            }
+
+            const receipt = ref<TransactionReceipt | null>(null);
+            const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+
+            if (!publicKey) {
+                throw new Error("public key should not be null");
+            }
+
+            let fileId: import("@hashgraph/sdk").FileId | undefined = undefined;
 
             try {
-                state.isBusy = true;
-                const { FileCreateTransaction, Client } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
-
-                const receipt = ref<TransactionReceipt | null>(null);
-
+                const chunk = chunks.shift() as Uint8Array;
                 receipt.value = await new FileCreateTransaction(
                     client as InstanceType<typeof Client>
                 )
-                    .setContents(state.fileUint8Array as Uint8Array)
+                    .setContents(chunk)
                     .setExpirationTime(Date.now() + 7890000000)
-                    .addKey(
-                        (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey
-                    )
+                    .addKey(publicKey)
                     .setTransactionFee(1e12)
                     .build()
                     .executeForReceipt();
 
-                const fileId = receipt.value.fileId;
-
-                context.emit("gotReceipt", fileId);
+                fileId = receipt.value.fileId;
             } catch (error) {
                 if (
                     error.message.includes(
@@ -183,14 +206,50 @@ export default createComponent({
                 ) {
                     await store.dispatch(ALERT, {
                         level: "error",
-                        message:
-                            "Connection Error.  If your file larger than 4kB, this error will occur.  Support for larger files is expected soon."
+                        message: "Connection Error."
                     });
                 } else {
-                    throw new Error(error);
+                    state.isBusy = false;
+                    throw error;
                 }
             }
-            state.isBusy = false;
+
+            if (!fileId) {
+                state.isBusy = false;
+                return;
+            }
+
+            try {
+                while (chunks.length > 0) {
+                    await new FileAppendTransaction(client as InstanceType<
+                        typeof Client
+                    >)
+                        .setFileId(fileId)
+                        .setContents(chunks.shift() as Uint8Array)
+                        .setTransactionFee(1e12)
+                        .build()
+                        .executeForReceipt();
+                }
+            } catch (error) {
+                if (
+                    error.message.includes(
+                        "upstream connect error or disconnect/reset before headers. reset reason: remote reset"
+                    )
+                ) {
+                    await store.dispatch(ALERT, {
+                        level: "error",
+                        message: "Connection Error."
+                    });
+                } else {
+                    state.isBusy = false;
+                    throw new Error(error);
+                }
+            } finally {
+                state.isBusy = false;
+            }
+
+            // notifies file was uploaded
+            context.emit("gotReceipt", fileId);
         }
 
         const fileReady = computed(() => {
