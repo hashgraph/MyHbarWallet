@@ -101,7 +101,7 @@ export default createComponent({
     margin-block-start: 40px;
     width: 100%;
 
-    @media (max-width: 425px) {
+    @media (max-width: 600px) {
         align-items: center;
         flex-direction: column-reverse;
     }
@@ -110,7 +110,7 @@ export default createComponent({
 .button {
     width: 200px;
 
-    @media (max-width: 425px) {
+    @media (max-width: 600px) {
         width: 100%;
 
         &:last-child {

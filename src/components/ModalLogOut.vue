@@ -109,12 +109,25 @@ export default createComponent({
     display: flex;
     justify-content: space-between;
     justify-self: center;
+
+    @media (max-width: 600px) {
+        align-items: center;
+        flex-direction: column-reverse;
+    }
 }
 
 .button-go-back,
 .button-logout {
     min-width: initial;
     width: 48.2%;
+
+    @media (max-width: 600px) {
+        width: 100%;
+
+        &:last-child {
+            margin-block-end: 15px;
+        }
+    }
 }
 
 .modal-forgot-to-logout {
