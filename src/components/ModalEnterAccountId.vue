@@ -15,6 +15,7 @@
                     ref="input"
                     :is-open="state.isOpen"
                     :error-message="state.errorMessage"
+                    :disabled="state.isBusy"
                     @valid="handleValid"
                     @input="handleAccount"
                 ></IDInput>
@@ -124,7 +125,7 @@ export default createComponent({
 .button {
     width: 213px;
 
-    @media (max-width: 425px) {
+    @media (max-width: 600px) {
         width: 100%;
 
         &:first-child {
@@ -139,7 +140,7 @@ export default createComponent({
     margin-block-start: 40px;
     width: 100%;
 
-    @media (max-width: 425px) {
+    @media (max-width: 600px) {
         align-items: center;
         flex-direction: column;
     }

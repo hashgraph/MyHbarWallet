@@ -102,7 +102,7 @@ export default createComponent({
 .button {
     width: 200px;
 
-    @media (max-width: 425px) {
+    @media (max-width: 600px) {
         width: 100%;
     }
 }

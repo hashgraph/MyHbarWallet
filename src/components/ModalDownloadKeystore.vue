@@ -82,14 +82,14 @@ export default createComponent({
     flex-flow: row nowrap;
     justify-content: space-between;
 
-    @media (max-width: 425px) {
+    @media (max-width: 600px) {
         align-items: center;
         flex-direction: column;
     }
 }
 
 .download-button {
-    @media (max-width: 425px) {
+    @media (max-width: 600px) {
         margin-block-end: 15px;
         width: 100%;
     }
@@ -98,7 +98,7 @@ export default createComponent({
 .continue-button {
     width: 213px;
 
-    @media (max-width: 425px) {
+    @media (max-width: 600px) {
         width: 100%;
     }
 }

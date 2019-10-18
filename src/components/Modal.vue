@@ -283,7 +283,7 @@ header {
 .content-container {
     padding: 40px;
 
-    @media (max-width: 415px) {
+    @media (max-width: 600px) {
         padding: 20px;
     }
 
