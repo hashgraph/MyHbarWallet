@@ -82,7 +82,9 @@ type TransactionReceipt = {
 
 //! end remove bit
 
-const MAX_FILE_LENGTH = 4096;
+// The approximate maximum size of a chunk
+// todo [2019-31-10]: look into proper estimate
+const MAX_CHUNK_LENGTH = 2923;
 
 export default createComponent({
     components: {
@@ -140,10 +142,12 @@ export default createComponent({
             if (!store.state.wallet.session) {
                 throw new Error("session should not be null");
             }
+
             const client = store.state.wallet.session.client;
             if (state.fileUint8Array == null) {
                 throw new Error("unexpected submit before upload of file");
             }
+
             if (hash.value && hash.value.checked) {
                 const digest = await crypto.subtle.digest(
                     "SHA-384",
@@ -152,71 +156,48 @@ export default createComponent({
                 state.fileUint8Array = new Uint8Array(digest);
             }
 
+            const {
+                FileCreateTransaction,
+                FileAppendTransaction,
+                Client
+            } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
+
+            state.isBusy = true;
+
+            const file: Uint8Array = state.fileUint8Array as Uint8Array;
+            const chunks: Uint8Array[] = [];
+
+            const chunkCount = Math.ceil(file.byteLength / MAX_CHUNK_LENGTH);
+
+            for (let i = 0; i < chunkCount; i++) {
+                const start = i * MAX_CHUNK_LENGTH;
+                chunks.push(file.subarray(start, start + MAX_CHUNK_LENGTH));
+            }
+
+            const receipt = ref<TransactionReceipt | null>(null);
+            const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+
+            if (!publicKey) {
+                throw new Error("public key should not be null");
+            }
+
+            let fileId: import("@hashgraph/sdk").FileId | undefined = undefined;
+
             try {
-                state.isBusy = true;
-                console.log("uploading");
-
-                const {
-                    FileCreateTransaction,
-                    FileAppendTransaction,
-                    Client
-                } = await (import("@hashgraph/sdk") as Promise<
-                    typeof import("@hashgraph/sdk")
-                >);
-
-                const file: Uint8Array = state.fileUint8Array as Uint8Array;
-                const chunks = [];
-
-                const chunkCount = Math.ceil(file.byteLength / MAX_FILE_LENGTH);
-                console.log("file chunks " + chunkCount);
-
-                for (let i = 0; i < chunkCount; i++) {
-                    console.log("chunk " + i);
-
-                    const start = i * MAX_FILE_LENGTH;
-                    chunks.push(file.slice(start, start + MAX_FILE_LENGTH));
-                }
-
-                const receipt = ref<TransactionReceipt | null>(null);
-
-                const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
-
-                // TODO[2019-10-18]: send alert to user and back out of interface
-                if (!publicKey) {
-                    throw new Error("not logged in");
-                }
-
+                const chunk = chunks.shift() as Uint8Array;
                 receipt.value = await new FileCreateTransaction(
                     client as InstanceType<typeof Client>
                 )
-                    .setContents(chunks.pop() as Uint8Array)
+                    .setContents(chunk)
                     .setExpirationTime(Date.now() + 7890000000)
                     .addKey(publicKey)
                     .setTransactionFee(1e12)
                     .build()
                     .executeForReceipt();
 
-                const fileId = receipt.value.fileId;
-
-                // TODO[2019-10-18]: handle this properly lol
-                if (!fileId) {
-                    throw new Error("no file id :(");
-                }
-
-                for (const chunk in chunks) {
-                    console.log("chunk!");
-
-                    await new FileAppendTransaction(client as InstanceType<
-                        typeof Client
-                    >)
-                        .setFileId(fileId)
-                        .setContents(chunk)
-                        .setTransactionFee(1e12)
-                        .build()
-                        .executeForReceipt();
-                }
-
-                context.emit("gotReceipt", fileId);
+                fileId = receipt.value.fileId;
             } catch (error) {
                 if (
                     error.message.includes(
@@ -228,11 +209,47 @@ export default createComponent({
                         message: "Connection Error."
                     });
                 } else {
+                    state.isBusy = false;
+                    throw error;
+                }
+            }
+
+            if (!fileId) {
+                state.isBusy = false;
+                return;
+            }
+
+            try {
+                while (chunks.length > 0) {
+                    await new FileAppendTransaction(client as InstanceType<
+                        typeof Client
+                    >)
+                        .setFileId(fileId)
+                        .setContents(chunks.shift() as Uint8Array)
+                        .setTransactionFee(1e12)
+                        .build()
+                        .executeForReceipt();
+                }
+            } catch (error) {
+                if (
+                    error.message.includes(
+                        "upstream connect error or disconnect/reset before headers. reset reason: remote reset"
+                    )
+                ) {
+                    await store.dispatch(ALERT, {
+                        level: "error",
+                        message: "Connection Error."
+                    });
+                } else {
+                    state.isBusy = false;
                     throw new Error(error);
                 }
             } finally {
                 state.isBusy = false;
             }
+
+            // notifies file was uploaded
+            context.emit("gotReceipt", fileId);
         }
 
         const fileReady = computed(() => {
