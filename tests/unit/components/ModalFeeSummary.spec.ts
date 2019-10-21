@@ -149,8 +149,10 @@ describe("ModalFeeSummary.vue", (): void => {
                           </div>
                         </div>
                       </div>
-                      <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
-                          <!----></button> <button type="submit" class="button compact"><span>Continue</span>
+                      <div class="buttons"><button type="button" class="button outline compact">
+                          <!----> <span>Cancel</span>
+                          <!----></button> <button type="submit" class="button compact">
+                          <!----> <span>Continue</span>
                           <!----></button></div>
                     </div>
                   </div>
@@ -271,8 +273,10 @@ describe("ModalFeeSummary.vue", (): void => {
                           </div>
                         </div>
                       </div>
-                      <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
-                          <!----></button> <button type="submit" class="button compact"><span>Continue</span>
+                      <div class="buttons"><button type="button" class="button outline compact">
+                          <!----> <span>Cancel</span>
+                          <!----></button> <button type="submit" class="button compact">
+                          <!----> <span>Continue</span>
                           <!----></button></div>
                     </div>
                   </div>
@@ -331,8 +335,10 @@ describe("ModalFeeSummary.vue", (): void => {
                           </div>
                         </div>
                       </div>
-                      <div class="buttons"><button type="button" class="button outline compact"><span>Cancel</span>
-                          <!----></button> <button type="submit" class="button compact"><span>Continue</span>
+                      <div class="buttons"><button type="button" class="button outline compact">
+                          <!----> <span>Cancel</span>
+                          <!----></button> <button type="submit" class="button compact">
+                          <!----> <span>Continue</span>
                           <!----></button></div>
                     </div>
                   </div>

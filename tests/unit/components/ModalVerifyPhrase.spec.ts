@@ -118,7 +118,8 @@ describe("ModalVerifyPhrase.vue", (): void => {
                       </div>
                       <form>
                         <div class="mnemonic"></div>
-                        <div class="btn-container"><button type="submit" class=""><span>Verify</span>
+                        <div class="btn-container"><button type="submit" class="">
+                            <!----> <span>Verify</span>
                             <!----></button></div>
                       </form>
                     </div>

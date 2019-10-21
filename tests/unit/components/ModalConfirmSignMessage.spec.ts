@@ -73,7 +73,8 @@ describe("ModalConfirmSignMessage.vue", (): void => {
                       </div>
                       <!---->
                     </div>
-                    <div class="center"><button type="submit" class=""><span>Confirm Signing</span>
+                    <div class="center"><button type="submit" class="">
+                        <!----> <span>Confirm Signing</span>
                         <!----></button></div>
                   </div>
                 </div>

@@ -88,8 +88,10 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
                           </div>
                           <!---->
                         </div>
-                        <div class="buttons"><button type="submit" class="button outline compact"><span>Copy Public Key</span>
-                            <!----></button> <button type="submit" class="button compact"><span>I have an Account ID</span>
+                        <div class="buttons"><button type="submit" class="button outline compact">
+                            <!----> <span>Copy Public Key</span>
+                            <!----></button> <button type="submit" class="button compact">
+                            <!----> <span>I have an Account ID</span>
                             <!----></button></div>
                       </form>
                     </div>

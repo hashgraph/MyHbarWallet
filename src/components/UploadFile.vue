@@ -7,7 +7,7 @@
                 class="button"
                 label="Select a file from your computer"
                 @click="handleBrowseClick"
-            ></Button>
+            />
             <div v-if="state.filename" class="file-name-container">
                 <MaterialDesignIcon class="icon" :icon="mdiFileUpload" />
                 <span class="file-name">{{ state.filename }}</span>
@@ -26,15 +26,22 @@
         </div>
         <Button
             class="upload-button"
-            label="Upload File"
+            :label="uploadButtonLabel"
             :busy="state.isBusy"
+            busy-label
             @click="handleUploadClick"
         />
     </div>
 </template>
 
 <script lang="ts">
-import { createComponent, computed, ref, reactive } from "@vue/composition-api";
+import {
+    createComponent,
+    computed,
+    ref,
+    reactive,
+    watch
+} from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiFileUpload } from "@mdi/js";
@@ -96,7 +103,10 @@ export default createComponent({
         const state = reactive({
             filename: "",
             fileUint8Array: null as Uint8Array | null,
-            isBusy: false
+            currentChunk: 0,
+            totalChunks: 0,
+            isBusy: false,
+            UploadButtonLabel: "Upload File"
         });
 
         const file = ref<HTMLInputElement | null>(null);
@@ -134,7 +144,7 @@ export default createComponent({
                 }
             );
 
-            target.value = ""; // change back to initial state to gaurantee that click fires next time
+            target.value = ""; // change back to initial state to guarantee that click fires next time
             state.fileUint8Array = new Uint8Array(fileBuff);
         }
 
@@ -169,9 +179,9 @@ export default createComponent({
             const file: Uint8Array = state.fileUint8Array as Uint8Array;
             const chunks: Uint8Array[] = [];
 
-            const chunkCount = Math.ceil(file.byteLength / MAX_CHUNK_LENGTH);
+            state.totalChunks = Math.ceil(file.byteLength / MAX_CHUNK_LENGTH);
 
-            for (let i = 0; i < chunkCount; i++) {
+            for (let i = 0; i < state.totalChunks; i++) {
                 const start = i * MAX_CHUNK_LENGTH;
                 chunks.push(file.subarray(start, start + MAX_CHUNK_LENGTH));
             }
@@ -196,6 +206,8 @@ export default createComponent({
                     .setTransactionFee(1e12)
                     .build()
                     .executeForReceipt();
+
+                state.currentChunk += 1;
 
                 fileId = receipt.value.fileId;
             } catch (error) {
@@ -229,6 +241,8 @@ export default createComponent({
                         .setTransactionFee(1e12)
                         .build()
                         .executeForReceipt();
+
+                    state.currentChunk += 1;
                 }
             } catch (error) {
                 if (
@@ -256,6 +270,17 @@ export default createComponent({
             return state.filename != "";
         });
 
+        const uploadButtonLabel = computed(() => {
+            if (!state.isBusy) {
+                return "Upload File";
+            }
+            const completionPercentage =
+                (state.currentChunk / state.totalChunks) * 100;
+
+            return (state.UploadButtonLabel =
+                completionPercentage.toFixed(2) + "%");
+        });
+
         return {
             handleBrowseClick,
             file,
@@ -264,7 +289,8 @@ export default createComponent({
             mdiFileUpload,
             hash,
             prepareFile,
-            handleUploadClick
+            handleUploadClick,
+            uploadButtonLabel
         };
     }
 });

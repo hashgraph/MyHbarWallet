@@ -70,7 +70,8 @@ describe("ModalMessageSigned.vue", (): void => {
                       </div>
                       <!---->
                     </div>
-                    <div class="button-container"><button type="submit" class=""><span>Copy</span>
+                    <div class="button-container"><button type="submit" class="">
+                        <!----> <span>Copy</span>
                         <!----></button></div>
                   </div>
                 </div>

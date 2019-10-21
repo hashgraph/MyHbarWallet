@@ -17,7 +17,7 @@
             spin
         />
 
-        <span v-else>{{ label }}</span>
+        <span v-if="state.showLabel">{{ label }}</span>
 
         <MaterialDesignIcon
             v-if="trailingIcon"
@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { createComponent, reactive, watch } from "@vue/composition-api";
 import { mdiLoading } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 
@@ -41,6 +41,7 @@ export default createComponent({
         compact: { type: Boolean },
         label: { type: String, required: true },
         busy: { type: Boolean },
+        busyLabel: { type: Boolean },
         disabled: { type: Boolean },
         danger: { type: Boolean },
         trailingIcon: {
@@ -48,9 +49,31 @@ export default createComponent({
             default: null
         }
     },
-    setup() {
+    setup(props) {
+        const state = reactive({
+            showLabel: true
+        });
+
+        watch(
+            () => props.busy,
+            () => {
+                if (props.busy && props.busyLabel) {
+                    state.showLabel = true;
+                    return;
+                }
+
+                if (props.busy) {
+                    state.showLabel = false;
+                    return;
+                }
+
+                state.showLabel = true;
+            }
+        );
+
         return {
-            mdiLoading
+            mdiLoading,
+            state
         };
     }
 });

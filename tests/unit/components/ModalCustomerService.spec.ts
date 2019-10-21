@@ -84,7 +84,8 @@ describe("ModalCustomerService.vue", (): void => {
                           <!----></span></label>
                         <!---->
                         <!---->
-                      </div> <button type="submit" class="send-button compact"><span>Send</span>
+                      </div> <button type="submit" class="send-button compact">
+                        <!----> <span>Send</span>
                         <!----></button>
                     </form>
                   </div>
