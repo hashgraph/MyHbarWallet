@@ -40,7 +40,8 @@ describe("ModalAccessByHardware.vue", (): void => {
                       <div class="instructions">
                         <div>Continue</div>
                         <div>Watch for prompts on your hardware wallet.</div>
-                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware"><span>Continue</span>
+                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware">
+                        <!----> <span>Continue</span>
                         <!----></button>
                       <div class="customer-support-link">
                         <div class="customer-support-container"><img alt="" src="">Customer Support

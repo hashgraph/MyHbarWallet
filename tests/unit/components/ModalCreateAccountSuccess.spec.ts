@@ -70,7 +70,8 @@ describe("ModalCreateAccountSuccess.vue", (): void => {
                             999.999.999
                           </div>
                           <!---->
-                        </div> <button type="submit" class="btn outline"><span>Copy</span>
+                        </div> <button type="submit" class="btn outline">
+                          <!----> <span>Copy</span>
                           <!----></button>
                         <div class="close">
                           Dismiss

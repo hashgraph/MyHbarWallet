@@ -116,7 +116,8 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
                         <div class="list-container"></div>
                       </div>
                     </div>
-                    <div class="button-container"><button type="submit" class="button-save outline"><span>Save</span>
+                    <div class="button-container"><button type="submit" class="button-save outline">
+                        <!----> <span>Save</span>
                         <!----></button></div>
                   </div>
                 </div>

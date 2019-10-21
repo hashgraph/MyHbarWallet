@@ -81,7 +81,8 @@ describe("ModalCreateWithSoftware.vue", (): void => {
                           Purchase a hardware wallet
                         </a>
                         for the highest security when accessing your crypto.
-                      </div> <button type="submit" disabled="disabled" class=""><span>Continue</span>
+                      </div> <button type="submit" disabled="disabled" class="">
+                        <!----> <span>Continue</span>
                         <!----></button>
                       <div class="customer-support-link support-link">
                         <div class="customer-support-container"><img alt="" src="">Customer Support

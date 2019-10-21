@@ -25,7 +25,8 @@ describe("InterfaceForm.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="interface-form-title-container">
-              <div class="interface-form-title">Bacon ipsum dolor amet strip steak pork chop eu consequat pork belly excepteur.</div> <button type="submit" class=""><span>Menu</span>
+              <div class="interface-form-title">Bacon ipsum dolor amet strip steak pork chop eu consequat pork belly excepteur.</div> <button type="submit" class="">
+                <!----> <span>Menu</span>
                 <!----></button>
             </div>
         `);
