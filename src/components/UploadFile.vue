@@ -1,6 +1,6 @@
 <template>
     <div class="upload-file">
-        <div class="upload-zone">
+        <div class="upload-zone" @dragover="handleDragOver" @drop="handleDrop">
             <div v-if="false" class="drag">Drag your file here!</div>
             <div v-if="false" class="or">Or</div>
             <Button
@@ -89,6 +89,12 @@ type TransactionReceipt = {
 
 //! end remove bit
 
+function handleDragOver(event: Event): void {
+    console.log("file dragged over");
+
+    event.preventDefault();
+}
+
 // The approximate maximum size of a chunk
 // todo [2019-31-10]: look into proper estimate
 const MAX_CHUNK_LENGTH = 2923;
@@ -119,8 +125,48 @@ export default createComponent({
             }
         }
 
+        async function handleDrop(event: DragEvent): Promise<void> {
+            event.preventDefault();
+
+            console.log(event);
+
+            if (!event.dataTransfer || event.dataTransfer.files.length === 0) {
+                // no file was present
+                return;
+            }
+
+            // only handle one file
+            const file = event.dataTransfer.items[0].getAsFile();
+
+            if (!file) {
+                // file did not actually exist
+                return;
+            }
+
+            state.filename = file.name;
+
+            const fileBuff = await new Promise<ArrayBuffer>(
+                (resolve, reject) => {
+                    const reader = new FileReader();
+
+                    reader.addEventListener("error", reject);
+                    reader.addEventListener("loadend", (): void => {
+                        resolve(reader.result as ArrayBuffer);
+                    });
+
+                    reader.readAsArrayBuffer(file);
+                }
+            );
+
+            state.fileUint8Array = new Uint8Array(fileBuff);
+        }
+
         async function prepareFile(event: Event): Promise<void> {
             const target = event.target as HTMLInputElement;
+
+            event.preventDefault();
+
+            console.log(event);
 
             if (target.files == null) {
                 // User hit cancel
@@ -283,6 +329,8 @@ export default createComponent({
 
         return {
             handleBrowseClick,
+            handleDragOver,
+            handleDrop,
             file,
             state,
             fileReady,
