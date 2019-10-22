@@ -35,7 +35,7 @@
                 @change="prepareFile"
             />
         </div>
-        <div class="fee-estimate" :hidden="state.estimatedFee ? false : true">
+        <div class="fee-estimate" :hidden="state.estimatedFee === 0">
             Estimated Fee: {{ state.estimatedFee.toFixed(2) }} ℏ
         </div>
         <Button
@@ -128,7 +128,7 @@ export default createComponent({
             currentChunk: 0,
             totalChunks: 0,
             isBusy: false,
-            UploadButtonLabel: "Upload File",
+            uploadButtonLabel: "Upload File",
             isFileHovering: false,
             estimatedFee: 0,
             hashedFile: null as Uint8Array | null,
@@ -412,7 +412,7 @@ export default createComponent({
                 return "Upload File";
             }
 
-            return (state.UploadButtonLabel =
+            return (state.uploadButtonLabel =
                 completionPercentage.toFixed(2) + "%");
         });
 
