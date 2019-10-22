@@ -17,7 +17,7 @@
             spin
         />
 
-        <span v-if="state.showLabel">{{ label }}</span>
+        <span v-if="state.showProgress">{{ label }}</span>
 
         <MaterialDesignIcon
             v-if="trailingIcon"
@@ -41,7 +41,7 @@ export default createComponent({
         compact: { type: Boolean },
         label: { type: String, required: true },
         busy: { type: Boolean },
-        busyLabel: { type: Boolean },
+        busyProgress: { type: Boolean },
         disabled: { type: Boolean },
         danger: { type: Boolean },
         trailingIcon: {
@@ -51,23 +51,23 @@ export default createComponent({
     },
     setup(props) {
         const state = reactive({
-            showLabel: true
+            showProgress: true
         });
 
         watch(
             () => props.busy,
             () => {
-                if (props.busy && props.busyLabel) {
-                    state.showLabel = true;
+                if (props.busy && props.busyProgress) {
+                    state.showProgress = true;
                     return;
                 }
 
                 if (props.busy) {
-                    state.showLabel = false;
+                    state.showProgress = false;
                     return;
                 }
 
-                state.showLabel = true;
+                state.showProgress = true;
             }
         );
 
@@ -167,5 +167,9 @@ button {
     inset-inline-end: 15px;
     margin: auto 0;
     position: absolute;
+}
+
+.spinner + span {
+    margin-inline-start: 10px;
 }
 </style>

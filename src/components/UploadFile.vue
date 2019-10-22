@@ -19,7 +19,12 @@
                 <span class="file-name">{{ state.filename }}</span>
             </div>
             <div class="hash-check-container">
-                <input id="hash" ref="hash" type="checkbox" />
+                <input
+                    id="hash"
+                    ref="hash"
+                    type="checkbox"
+                    @change="hashFile"
+                />
                 <label for="hash">Hash file</label>
             </div>
             <input
@@ -30,11 +35,14 @@
                 @change="prepareFile"
             />
         </div>
+        <div class="fee-estimate" :hidden="state.estimatedFee ? false : true">
+            Estimated Fee: {{ state.estimatedFee.toFixed(2) }} ℏ
+        </div>
         <Button
             class="upload-button"
             :label="uploadButtonLabel"
             :busy="state.isBusy"
-            busy-label
+            :busy-progress="state.showProgress"
             @click="handleUploadClick"
         />
     </div>
@@ -105,7 +113,6 @@ async function uint8ArrayOf(file: File): Promise<Uint8Array> {
 }
 
 // The approximate maximum size of a chunk
-// todo [2019-31-10]: look into proper estimate
 const MAX_CHUNK_LENGTH = 2923;
 
 export default createComponent({
@@ -121,8 +128,11 @@ export default createComponent({
             currentChunk: 0,
             totalChunks: 0,
             isBusy: false,
+            UploadButtonLabel: "Upload File",
             isFileHovering: false,
-            UploadButtonLabel: "Upload File"
+            estimatedFee: 0,
+            hashedFile: null as Uint8Array | null,
+            showProgress: false
         });
 
         const file = ref<HTMLInputElement | null>(null);
@@ -170,12 +180,13 @@ export default createComponent({
             state.fileUint8Array = await uint8ArrayOf(file);
         }
 
+        // prepares file for upload, resets file states if file has changed, gets total Chunks for fee estimate, gets hashed file if 'Hash file' is selected, gets fee estimate
         async function prepareFile(event: Event): Promise<void> {
             const target = event.target as HTMLInputElement;
+            state.fileUint8Array = null as Uint8Array | null;
+            state.hashedFile = null as Uint8Array | null;
 
             event.preventDefault();
-
-            console.log(event);
 
             if (target.files == null) {
                 // User hit cancel
@@ -188,45 +199,70 @@ export default createComponent({
             state.fileUint8Array = await uint8ArrayOf(file);
 
             target.value = ""; // change back to initial state to guarantee that click fires next time
+
+            state.totalChunks = Math.ceil(
+                state.fileUint8Array.byteLength / MAX_CHUNK_LENGTH
+            );
+
+            // No need await here, hashFile will busy the submit button and estimateFee doesn't need the hashed file to get the estimate
+            if (hash.value && hash.value.checked) hashFile();
+
+            estimateFee();
         }
 
-        async function handleUploadClick(): Promise<void> {
+        // 2.6 Hbar is current (10-21-19) full chunk estimate - (~1 hbar for empty tx plus .55 hbar per kB, then rounded up a bit)
+        // second part of expression finds estimate for the last chunk which will (most likely) not be a full chunk
+        //Estimate gives a bit of room on top - actual average is ~2.57 Hbar; deviations and ranges on file tx's seem very low (10-21-19)
+        function estimateFee(): void {
+            if (hash.value && hash.value.checked) {
+                state.estimatedFee = 1.075;
+            } else {
+                state.estimatedFee =
+                    2.6 * (state.totalChunks - 1) +
+                    ((((state.fileUint8Array as Uint8Array).byteLength %
+                        MAX_CHUNK_LENGTH) /
+                        1000) *
+                        0.55 +
+                        1.05);
+            }
+        }
+
+        async function hashFile(): Promise<void> {
+            if (hash.value && hash.value.checked) {
+                if (!state.hashedFile) {
+                    state.isBusy = true;
+                    const digest = await crypto.subtle.digest(
+                        "SHA-384",
+                        state.fileUint8Array as Uint8Array
+                    );
+                    state.hashedFile = new Uint8Array(digest);
+                    state.isBusy = false;
+                }
+                state.totalChunks = 1;
+            } else {
+                // included for fee estimate if 'Hash file' is unselected
+                state.totalChunks = Math.ceil(
+                    (state.fileUint8Array as Uint8Array).byteLength /
+                        MAX_CHUNK_LENGTH
+                );
+            }
+            estimateFee();
+        }
+
+        async function fileCreateUpload(
+            chunks: Uint8Array[],
+            client: object
+        ): Promise<FileId> {
             if (!store.state.wallet.session) {
                 throw new Error("session should not be null");
             }
 
-            const client = store.state.wallet.session.client;
-            if (state.fileUint8Array == null) {
-                throw new Error("unexpected submit before upload of file");
-            }
-
-            if (hash.value && hash.value.checked) {
-                const digest = await crypto.subtle.digest(
-                    "SHA-384",
-                    state.fileUint8Array as Uint8Array
-                );
-                state.fileUint8Array = new Uint8Array(digest);
-            }
-
-            const {
-                FileCreateTransaction,
-                FileAppendTransaction,
-                Client
-            } = await (import("@hashgraph/sdk") as Promise<
-                typeof import("@hashgraph/sdk")
-            >);
+            const { FileCreateTransaction, Client } = await (import(
+                "@hashgraph/sdk"
+            ) as Promise<typeof import("@hashgraph/sdk")>);
 
             state.isBusy = true;
-
-            const file: Uint8Array = state.fileUint8Array as Uint8Array;
-            const chunks: Uint8Array[] = [];
-
-            state.totalChunks = Math.ceil(file.byteLength / MAX_CHUNK_LENGTH);
-
-            for (let i = 0; i < state.totalChunks; i++) {
-                const start = i * MAX_CHUNK_LENGTH;
-                chunks.push(file.subarray(start, start + MAX_CHUNK_LENGTH));
-            }
+            state.showProgress = true;
 
             const receipt = ref<TransactionReceipt | null>(null);
             const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
@@ -238,6 +274,7 @@ export default createComponent({
             let fileId: import("@hashgraph/sdk").FileId | undefined = undefined;
 
             try {
+                state.currentChunk = 0;
                 const chunk = chunks.shift() as Uint8Array;
                 receipt.value = await new FileCreateTransaction(
                     client as InstanceType<typeof Client>
@@ -267,12 +304,17 @@ export default createComponent({
                     throw error;
                 }
             }
+            return fileId as FileId;
+        }
 
-            if (!fileId) {
-                state.isBusy = false;
-                return;
-            }
-
+        async function fileAppendUploads(
+            chunks: Uint8Array[],
+            fileId: FileId,
+            client: object
+        ): Promise<void> {
+            const { FileAppendTransaction, Client } = await (import(
+                "@hashgraph/sdk"
+            ) as Promise<typeof import("@hashgraph/sdk")>);
             try {
                 while (chunks.length > 0) {
                     await new FileAppendTransaction(client as InstanceType<
@@ -298,11 +340,52 @@ export default createComponent({
                     });
                 } else {
                     state.isBusy = false;
-                    throw new Error(error);
+                    console.log(error);
                 }
             } finally {
                 state.isBusy = false;
+                state.showProgress = false;
             }
+        }
+
+        async function handleUploadClick(): Promise<void> {
+            if (state.isBusy) return; //prevents upload when busy
+
+            let file = new Uint8Array();
+
+            if (hash.value && hash.value.checked) {
+                file = state.hashedFile as Uint8Array;
+            } else {
+                file = state.fileUint8Array as Uint8Array;
+            }
+
+            if (!store.state.wallet.session) {
+                throw new Error("session should not be null");
+            }
+
+            const client = store.state.wallet.session.client;
+            if (file == null) {
+                throw new Error("unexpected upload before preparing file");
+            }
+
+            // prepare chunks
+            const chunks: Uint8Array[] = [];
+
+            for (let i = 0; i < state.totalChunks; i++) {
+                const start = i * MAX_CHUNK_LENGTH;
+                chunks.push(file.subarray(start, start + MAX_CHUNK_LENGTH));
+            }
+
+            // FileCreateTransaction - first chunk
+            const fileId = await fileCreateUpload(chunks, client);
+
+            if (!fileId) {
+                state.isBusy = false;
+                return;
+            }
+
+            // FileAppendTransaction - rest of chunks
+            await fileAppendUploads(chunks, fileId, client);
 
             // notifies file was uploaded
             context.emit("gotReceipt", fileId);
@@ -313,11 +396,14 @@ export default createComponent({
         });
 
         const uploadButtonLabel = computed(() => {
+            let completionPercentage =
+                state.currentChunk < state.totalChunks
+                    ? (state.currentChunk / state.totalChunks) * 100
+                    : 0;
             if (!state.isBusy) {
+                completionPercentage = 0;
                 return "Upload File";
             }
-            const completionPercentage =
-                (state.currentChunk / state.totalChunks) * 100;
 
             return (state.UploadButtonLabel =
                 completionPercentage.toFixed(2) + "%");
@@ -335,7 +421,8 @@ export default createComponent({
             hash,
             prepareFile,
             handleUploadClick,
-            uploadButtonLabel
+            uploadButtonLabel,
+            hashFile
         };
     }
 });
@@ -353,6 +440,7 @@ input {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-height: 200px;
     width: 100%;
 }
 
@@ -370,11 +458,20 @@ input {
 
 .button {
     margin-block-end: 20px;
+    margin-block-start: 20px;
 }
 
 .file-name-container {
     display: flex;
     margin-block-end: 20px;
+}
+
+.hash-check-container {
+    margin-block-end: 20px;
+}
+
+.fee-estimate {
+    margin-block-start: 20px;
 }
 
 .icon {
