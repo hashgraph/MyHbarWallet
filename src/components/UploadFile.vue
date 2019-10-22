@@ -160,8 +160,6 @@ export default createComponent({
             event.preventDefault();
             state.isFileHovering = false;
 
-            console.log(event);
-
             if (!event.dataTransfer || event.dataTransfer.files.length === 0) {
                 // no file was present
                 return;
@@ -178,6 +176,15 @@ export default createComponent({
             state.filename = file.name;
 
             state.fileUint8Array = await uint8ArrayOf(file);
+
+            state.totalChunks = Math.ceil(
+                state.fileUint8Array.byteLength / MAX_CHUNK_LENGTH
+            );
+
+            // No need await here, hashFile will busy the submit button and estimateFee doesn't need the hashed file to get the estimate
+            if (hash.value && hash.value.checked) hashFile();
+
+            estimateFee();
         }
 
         // prepares file for upload, resets file states if file has changed, gets total Chunks for fee estimate, gets hashed file if 'Hash file' is selected, gets fee estimate
@@ -340,7 +347,7 @@ export default createComponent({
                     });
                 } else {
                     state.isBusy = false;
-                    console.log(error);
+                    throw new Error(error);
                 }
             } finally {
                 state.isBusy = false;
@@ -467,6 +474,7 @@ input {
 }
 
 .hash-check-container {
+    color: var(--color-washed-black);
     margin-block-end: 20px;
 }
 
@@ -492,16 +500,10 @@ input {
 
 .or-text {
     color: var(--color-washed-black);
-    margin-block-end: 20px;
     opacity: 0.5;
 }
 
 .upload-button {
-    margin-block-start: 20px;
-}
-
-.hash-check-container {
-    color: var(--color-washed-black);
-    margin-block-end: 20px;
+    margin-block-start: 50px;
 }
 </style>
