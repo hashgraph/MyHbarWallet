@@ -1,8 +1,14 @@
 <template>
     <div class="upload-file">
-        <div class="upload-zone">
-            <div v-if="false" class="drag">Drag your file here!</div>
-            <div v-if="false" class="or">Or</div>
+        <div
+            class="upload-zone"
+            :class="{ 'file-hover': state.isFileHovering }"
+            @dragover="handleDragOver"
+            @dragexit="handleDragExit"
+            @drop="handleDrop"
+        >
+            <div class="drop-text">Drop your file here</div>
+            <div class="or-text">or</div>
             <Button
                 class="button"
                 label="Select a file from your computer"
@@ -35,13 +41,7 @@
 </template>
 
 <script lang="ts">
-import {
-    createComponent,
-    computed,
-    ref,
-    reactive,
-    watch
-} from "@vue/composition-api";
+import { createComponent, computed, ref, reactive } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiFileUpload } from "@mdi/js";
@@ -89,6 +89,21 @@ type TransactionReceipt = {
 
 //! end remove bit
 
+async function uint8ArrayOf(file: File): Promise<Uint8Array> {
+    const fileBuff = await new Promise<ArrayBuffer>((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.addEventListener("error", reject);
+        reader.addEventListener("loadend", (): void => {
+            resolve(reader.result as ArrayBuffer);
+        });
+
+        reader.readAsArrayBuffer(file);
+    });
+
+    return new Uint8Array(fileBuff);
+}
+
 // The approximate maximum size of a chunk
 // todo [2019-31-10]: look into proper estimate
 const MAX_CHUNK_LENGTH = 2923;
@@ -106,6 +121,7 @@ export default createComponent({
             currentChunk: 0,
             totalChunks: 0,
             isBusy: false,
+            isFileHovering: false,
             UploadButtonLabel: "Upload File"
         });
 
@@ -119,8 +135,47 @@ export default createComponent({
             }
         }
 
+        async function handleDragOver(event: DragEvent): Promise<void> {
+            event.preventDefault();
+
+            state.isFileHovering = true;
+        }
+
+        async function handleDragExit(event: DragEvent): Promise<void> {
+            event.preventDefault();
+            state.isFileHovering = false;
+        }
+
+        async function handleDrop(event: DragEvent): Promise<void> {
+            event.preventDefault();
+            state.isFileHovering = false;
+
+            console.log(event);
+
+            if (!event.dataTransfer || event.dataTransfer.files.length === 0) {
+                // no file was present
+                return;
+            }
+
+            // only handle one file
+            const file = event.dataTransfer.items[0].getAsFile();
+
+            if (!file) {
+                // file did not actually exist
+                return;
+            }
+
+            state.filename = file.name;
+
+            state.fileUint8Array = await uint8ArrayOf(file);
+        }
+
         async function prepareFile(event: Event): Promise<void> {
             const target = event.target as HTMLInputElement;
+
+            event.preventDefault();
+
+            console.log(event);
 
             if (target.files == null) {
                 // User hit cancel
@@ -130,22 +185,9 @@ export default createComponent({
             const file = target.files[0];
 
             state.filename = file.name;
-
-            const fileBuff = await new Promise<ArrayBuffer>(
-                (resolve, reject) => {
-                    const reader = new FileReader();
-
-                    reader.addEventListener("error", reject);
-                    reader.addEventListener("loadend", (): void => {
-                        resolve(reader.result as ArrayBuffer);
-                    });
-
-                    reader.readAsArrayBuffer(file);
-                }
-            );
+            state.fileUint8Array = await uint8ArrayOf(file);
 
             target.value = ""; // change back to initial state to guarantee that click fires next time
-            state.fileUint8Array = new Uint8Array(fileBuff);
         }
 
         async function handleUploadClick(): Promise<void> {
@@ -283,6 +325,9 @@ export default createComponent({
 
         return {
             handleBrowseClick,
+            handleDragOver,
+            handleDragExit,
+            handleDrop,
             file,
             state,
             fileReady,
@@ -307,9 +352,14 @@ input {
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    height: 200px;
     justify-content: center;
     width: 100%;
+}
+
+.file-hover {
+    border: 4px dashed var(--color-washed-black);
+    border-radius: 5px;
+    cursor: copy;
 }
 
 .upload-file {
@@ -338,7 +388,12 @@ input {
     display: inline;
 }
 
-.drag {
+.drop-text {
+    color: var(--color-washed-black);
+    margin-block: 20px;
+}
+
+.or-text {
     color: var(--color-washed-black);
     margin-block-end: 20px;
     opacity: 0.5;
@@ -346,5 +401,10 @@ input {
 
 .upload-button {
     margin-block-start: 20px;
+}
+
+.hash-check-container {
+    color: var(--color-washed-black);
+    margin-block-end: 20px;
 }
 </style>
