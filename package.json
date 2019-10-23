@@ -45,7 +45,6 @@
         "vuex": "^3.1.1",
         "zxcvbn": "^4.4.2"
     },
-    "optionalDependencies": {},
     "devDependencies": {
         "@babel/core": "^7.6.4",
         "@improbable-eng/grpc-web-node-http-transport": "^0.11.0",

@@ -19,8 +19,13 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, PropType, Ref } from "@vue/composition-api";
-import BigNumber from "bignumber.js";
+import {
+    createComponent,
+    PropType,
+    onMounted,
+    ref,
+    Ref
+} from "@vue/composition-api";
 import { Item } from "./ModalFeeSummary.vue";
 import { formatSplit, formatRightPad } from "../formatter";
 
@@ -42,102 +47,90 @@ interface SplitItem {
     value: string | null;
 }
 
+function splitItemFrom(item: Item): SplitItem {
+    // Break item's value into int and fraction
+    const parts = formatSplit(item.value.toString());
+
+    // Get a key
+    const itemKey = nextItemKey();
+
+    // The item value isn't required to be a number so we'll get back a null here
+    // in that case we simply use the item value as the preformatted text
+    return {
+        key: itemKey,
+        description: item.description,
+        int: parts == null ? null : parts.int,
+        fraction: parts == null ? null : parts.fraction,
+        value: parts == null ? item.value.toString() : ""
+    };
+}
+
 export default createComponent({
     props: {
         items: Array as PropType<Item[]>
     },
     setup(props: { items: Item[] }) {
-        // Compute the total
-        const total: Ref<{
-            int: string;
-            fraction: string | null;
-        }> = computed(() => {
-            let total = new BigNumber(0);
-
-            // Only add to total if value is a BigNumber
-            // Assign key to each item
-            if (props.items != null) {
-                for (const item of props.items) {
-                    if (item.value instanceof BigNumber) {
-                        total = total.plus(item.value);
-                    }
-                }
-            }
-
-            const parts = formatSplit(total.toString());
-
-            // Note this should never be possible unless it's a programmer error
-            if (parts == null) {
-                return {
-                    int: "0",
-                    fraction: "0"
-                };
-            }
-
-            return {
-                int: parts.int,
-                fraction: parts.fraction
-            };
+        const splitItems: Ref<SplitItem[]> = ref(new Array<SplitItem>());
+        const total: Ref<{ int: string; fraction: string | null }> = ref({
+            int: "",
+            fraction: null
         });
 
-        const splitItems: Ref<SplitItem[]> = computed(() => {
+        onMounted(async () => {
+            const { Hbar } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
+
+            const calculatedTotal: import("@hashgraph/sdk").Hbar =
+                props.items != null && props.items.length > 0
+                    ? props.items
+                          .map((item: Item): import("@hashgraph/sdk").Hbar =>
+                              item.value instanceof Hbar
+                                  ? item.value
+                                  : Hbar.zero()
+                          )
+                          .reduce(
+                              (
+                                  a: import("@hashgraph/sdk").Hbar,
+                                  b: import("@hashgraph/sdk").Hbar
+                              ): import("@hashgraph/sdk").Hbar => a.plus(b)
+                          )
+                    : Hbar.zero();
+
+            const parts = formatSplit(calculatedTotal.as("hbar").toString());
+
+            total.value =
+                parts == null
+                    ? { int: "0", fraction: "0" }
+                    : { int: parts.int, fraction: parts.fraction };
+
+            if (props.items != null && props.items.length <= 0) {
+                // nothing else to do here
+                return;
+            }
+
             // Track the long fraction part of a string
-            // Used later to right padd all items
-            let lengthLongestString = 0;
-
-            // Loop through all the items and conver them to `SplitItem` type
-            const items = props.items.map(
-                (item): SplitItem => {
-                    // Break item's value int int and fraction
-                    const parts = formatSplit(item.value.toString());
-
-                    // Get a key
-                    const itemKey = nextItemKey();
-
-                    // The item value isn't required to be a number so we'll get back a null here
-                    // int that case we simply use the item value as the preformatted text
-                    if (parts == null) {
-                        return {
-                            key: itemKey,
-                            description: item.description,
-                            int: null,
-                            fraction: null,
-                            value: item.value.toString()
-                        };
-                    }
-
-                    // If the item was a number take the fraction part length and determine if this is the longest
-                    // fraction seen yet
-                    if (
-                        parts.fraction != null &&
-                        lengthLongestString < parts.fraction.length
-                    ) {
-                        lengthLongestString = parts.fraction.length;
-                    }
-
-                    // Return the item
-                    return {
-                        key: itemKey,
-                        description: item.description,
-                        int: parts.int,
-                        fraction: parts.fraction,
-                        value: ""
-                    };
-                }
-            );
-
-            // Hold the total so it's not recomputed in the middle
-            const computedTotal = total;
+            // Used later to right pad all items
+            // let lengthLongestString = 0;
+            const items: SplitItem[] = props.items.map((item: Item) =>
+                splitItemFrom(item)
+            ) as SplitItem[];
 
             // Push the the total onto the item array
             // The last item in the list is always treated as the total
             items.push({
                 key: nextItemKey(),
                 description: "Total",
-                int: computedTotal.value.int,
-                fraction: computedTotal.value.fraction,
+                int: total.value.int,
+                fraction: total.value.fraction,
                 value: ""
             });
+
+            const maxStringLength = Math.max(
+                ...items.map((item: SplitItem): number =>
+                    item.fraction != null ? item.fraction.length : 0
+                )
+            );
 
             // Loop through all the items and right pad all the necessary ones
             for (const item of items) {
@@ -149,11 +142,11 @@ export default createComponent({
                 item.fraction = formatRightPad(
                     item.fraction,
                     " ",
-                    lengthLongestString
+                    maxStringLength
                 );
 
-                // Determine if the item is a nubmer and period is necessary
-                // and set the result int item.value -- the preformatted string
+                // Determine if the item is a number and period is necessary
+                // and set the result int item.value -- the pre-formatted string
                 if (item.int != null) {
                     if (hasFraction) {
                         item.value = item.int + "." + item.fraction;
@@ -163,14 +156,13 @@ export default createComponent({
                 }
             }
 
-            // Return split items
-            return items;
+            splitItems.value = items;
         });
 
         return {
-            props,
+            splitItems,
             total,
-            splitItems
+            props
         };
     }
 });

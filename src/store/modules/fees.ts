@@ -1,43 +1,38 @@
-import BigNumber from "bignumber.js";
-import { getValueOfUnit, Unit } from "../../units";
-import {
-    ESTIMATED_FEE_HBAR,
-    ESTIMATED_FEE_TINYBAR,
-    MAX_FEE_HBAR,
-    MAX_FEE_TINYBAR
-} from "../getters";
+import { ESTIMATED_FEE_HBAR, MAX_FEE_HBAR } from "../getters";
 
 export interface State {
-    estimatedFeeHbar: BigNumber;
-    maxFeeHbar: BigNumber;
+    estimatedFeeHbar: import("@hashgraph/sdk").Hbar;
+    maxFeeHbar: import("@hashgraph/sdk").Hbar;
 }
 
 export default {
-    state: {
-        estimatedFeeHbar: new BigNumber(0.200_000_000),
-        maxFeeHbar: new BigNumber(1)
-    } as State,
+    constuctor: async (): Promise<State> => {
+        const { Hbar } = await (import("@hashgraph/sdk") as Promise<
+            typeof import("@hashgraph/sdk")
+        >);
+
+        return {
+            estimatedFeeHbar: Hbar.from(0.200_000_000, "hbar"),
+            maxFeeHbar: Hbar.from(1, "hbar")
+        } as State;
+    },
     getters: {
-        [ESTIMATED_FEE_HBAR]: (state: State): BigNumber => {
+        [ESTIMATED_FEE_HBAR]: (state: State): import("@hashgraph/sdk").Hbar => {
             return state.estimatedFeeHbar;
         },
-        [ESTIMATED_FEE_TINYBAR]: (state: State): BigNumber => {
-            return state.estimatedFeeHbar.multipliedBy(
-                getValueOfUnit(Unit.Hbar)
+        [MAX_FEE_HBAR]: (state: State) => async (
+            remainingBalanceHBar: import("@hashgraph/sdk").Hbar
+        ): Promise<import("@hashgraph/sdk").Hbar> => {
+            const { Hbar, BigNumber } = await (import(
+                "@hashgraph/sdk"
+            ) as Promise<typeof import("@hashgraph/sdk")>);
+
+            return Hbar.fromTinybar(
+                BigNumber.min(
+                    state.maxFeeHbar.asTinybar(),
+                    remainingBalanceHBar.asTinybar()
+                )
             );
-        },
-        [MAX_FEE_HBAR]: (state: State) => (
-            remainingBalanceHBar: BigNumber
-        ): BigNumber => {
-            return BigNumber.min(state.maxFeeHbar, remainingBalanceHBar);
-        },
-        [MAX_FEE_TINYBAR]: (state: State) => (
-            remainingBalanceTinybar: BigNumber
-        ): BigNumber => {
-            return BigNumber.min(
-                state.maxFeeHbar,
-                remainingBalanceTinybar.dividedBy(getValueOfUnit(Unit.Hbar))
-            ).multipliedBy(getValueOfUnit(Unit.Hbar));
         }
     }
 };

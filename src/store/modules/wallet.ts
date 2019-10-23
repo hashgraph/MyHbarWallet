@@ -37,7 +37,6 @@ import { State as ModalAccessByPrivateKeyState } from "../components/ModalAccess
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
 import { State as ModalEnterAccountIdState } from "../components/ModalEnterAccountId";
-import BigNumber from "bignumber.js";
 import Wallet from "../../wallets/Wallet";
 
 const SET_BALANCE = "wallet#set_balance";
@@ -79,8 +78,8 @@ export interface Session {
 
 export interface State {
     session: Session | null;
-    balance: BigNumber | null;
-    exchangeRate: BigNumber | null;
+    balance: import("@hashgraph/sdk").Hbar | null;
+    exchangeRate: import("@hashgraph/sdk").BigNumber | null;
 }
 
 export interface ModalIsOpen {
@@ -142,10 +141,16 @@ export default {
             state.session = null;
             state.balance = null;
         },
-        [SET_BALANCE](state: State, balance: BigNumber): void {
+        [SET_BALANCE](
+            state: State,
+            balance: import("@hashgraph/sdk").Hbar
+        ): void {
             state.balance = balance;
         },
-        [SET_EXCHANGE_RATE](state: State, rate: BigNumber): void {
+        [SET_EXCHANGE_RATE](
+            state: State,
+            rate: import("@hashgraph/sdk").BigNumber
+        ): void {
             state.exchangeRate = rate;
         }
     },
@@ -183,6 +188,10 @@ export default {
                 );
                 return;
             }
+
+            const { BigNumber } = await (import("@hashgraph/sdk") as Promise<
+                typeof import("@hashgraph/sdk")
+            >);
 
             // Get response, clone, get text, parse to JSON
             const response: Response = await fetch(coingeckoEndpoint);

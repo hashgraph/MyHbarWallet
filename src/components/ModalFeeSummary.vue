@@ -36,7 +36,6 @@
 
 <script lang="ts">
 import { createComponent, PropType, SetupContext } from "@vue/composition-api";
-import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import ModalFeeSummaryTitle from "../components/ModalFeeSummaryTitle.vue";
@@ -44,7 +43,7 @@ import ModalFeeSummaryItems from "../components/ModalFeeSummaryItems.vue";
 
 export interface Item {
     description: string;
-    value: BigNumber | string;
+    value: import("@hashgraph/sdk").Hbar | string;
 }
 
 export default createComponent({
@@ -86,7 +85,6 @@ export default createComponent({
 
         return {
             props,
-            BigNumber,
             handleCancel,
             handleSubmit
         };

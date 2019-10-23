@@ -9,7 +9,7 @@
             :error="state.newBalanceError"
             :min="1"
             :suffix="Unit.Hbar"
-            :valid="validBalance"
+            :valid="state.validBalance"
             has-input
             :label="$t('interfaceCreateAccount.initialBalance')"
             show-validation
@@ -42,8 +42,8 @@
 
         <ModalFeeSummary
             v-model="state.summaryModalIsOpen"
-            :amount="summaryAmount"
-            :items="summaryItems"
+            :amount="state.summaryAmount"
+            :items="summaryItems.value"
             account=""
             tx-type="createAccount"
             @submit="handleCreateAccount"
@@ -59,22 +59,19 @@ import {
     computed,
     createComponent,
     reactive,
+    Ref,
+    ref,
     SetupContext,
     watch
 } from "@vue/composition-api";
 import store from "../store";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
-import { getValueOfUnit, Unit } from "../units";
-import { BigNumber } from "bignumber.js";
+import { Unit } from "../units";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
 import { formatHbar } from "../formatter";
-import {
-    ESTIMATED_FEE_HBAR,
-    ESTIMATED_FEE_TINYBAR,
-    MAX_FEE_TINYBAR
-} from "../store/getters";
+import { ESTIMATED_FEE_HBAR, MAX_FEE_TINYBAR } from "../store/getters";
 import {
     ALERT,
     HANDLE_HEDERA_ERROR,
@@ -82,15 +79,16 @@ import {
     REFRESH_BALANCE_AND_RATE
 } from "../store/actions";
 
-const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
-const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
+const estimatedFee = store.getters[ESTIMATED_FEE_HBAR];
 
 interface State {
     newBalance: string;
     publicKey: string;
     isBusy: boolean;
+    validBalance: boolean;
     successModalIsOpen: boolean;
     summaryModalIsOpen: boolean;
+    summaryAmount: string;
     keyError: string;
     newBalanceError: string;
     account: string;
@@ -131,13 +129,43 @@ export default createComponent({
             newBalance: "",
             publicKey: "",
             isBusy: false,
+            validBalance: true,
             successModalIsOpen: false,
             summaryModalIsOpen: false,
+            summaryAmount: "",
             keyError: "",
             newBalanceError: "",
             account: "",
             isPublicKeyValid: false
         });
+
+        const summaryItems: Ref<Item[]> = ref(new Array<Item>());
+
+        watch(
+            () => state.newBalance,
+            async (newBalance: string) => {
+                const { Hbar } = await (import("@hashgraph/sdk") as Promise<
+                    typeof import("@hashgraph/sdk")
+                >);
+
+                const newBalanceHbar = Hbar.from(newBalance, "hbar");
+
+                state.validBalance =
+                    newBalance != null &&
+                    newBalanceHbar.isGreaterThanOrEqualTo(Hbar.ZERO);
+
+                // used for display in modal title
+                state.summaryAmount = formatHbar(newBalanceHbar);
+
+                summaryItems.value = [
+                    {
+                        description: "Initial Balance",
+                        value: state.validBalance ? newBalanceHbar : Hbar.zero()
+                    },
+                    { description: "Estimated Fee", value: estimatedFee }
+                ] as Item[];
+            }
+        );
 
         const validBalance = computed(() => {
             // All we should check is that this is, in fact, a number
@@ -146,23 +174,6 @@ export default createComponent({
 
         watch(async () => {
             state.isPublicKeyValid = await isPublicKeyValid(state.publicKey);
-        });
-
-        // Just for display in modal title
-        const summaryAmount = computed(() => {
-            return formatHbar(new BigNumber(state.newBalance));
-        });
-
-        const summaryItems = computed(() => {
-            return [
-                {
-                    description: "Initial Balance",
-                    value: validBalance.value
-                        ? new BigNumber(state.newBalance)
-                        : new BigNumber(0)
-                },
-                { description: "Estimated Fee", value: estimatedFeeHbar }
-            ] as Item[];
         });
 
         async function handleCreateAccount(): Promise<void> {
@@ -178,21 +189,18 @@ export default createComponent({
 
             const client = store.state.wallet.session.client;
 
-            const { HederaError, ResponseCodeEnum } = await (import(
+            const { HederaError, ResponseCodeEnum, Hbar } = await (import(
                 "@hashgraph/sdk"
             ) as Promise<typeof import("@hashgraph/sdk")>);
 
             try {
                 // The new wallet's initial balance
-                const newBalanceTinybar = new BigNumber(
-                    state.newBalance
-                ).multipliedBy(getValueOfUnit(Unit.Hbar));
+                const newBalance = Hbar.from(state.newBalance, "hbar");
 
                 // The current user's balance
-                const balanceTinybar =
-                    store.state.wallet.balance == null
-                        ? new BigNumber(0)
-                        : store.state.wallet.balance;
+                const userBalance = !store.state.wallet.balance
+                    ? Hbar.zero()
+                    : store.state.wallet.balance;
 
                 const {
                     AccountCreateTransaction,
@@ -203,17 +211,15 @@ export default createComponent({
                 >);
 
                 const key = Ed25519PublicKey.fromString(state.publicKey);
-                const maxTxFeeTinybar = store.getters[MAX_FEE_TINYBAR](
-                    balanceTinybar.minus(
-                        newBalanceTinybar.plus(estimatedFeeTinybar)
-                    )
+                const maxTxFee = store.getters[MAX_FEE_TINYBAR](
+                    userBalance.minus(estimatedFee)
                 );
 
                 const accountIdIntermediate = (await new AccountCreateTransaction(
                     client as InstanceType<typeof Client>
                 )
-                    .setInitialBalance(newBalanceTinybar)
-                    .setTransactionFee(maxTxFeeTinybar)
+                    .setInitialBalance(newBalance)
+                    .setTransactionFee(maxTxFee)
                     .setKey(key)
                     .build()
                     .executeForReceipt()).accountId;
@@ -240,7 +246,7 @@ export default createComponent({
                 state.newBalanceError = "";
 
                 // Refresh Balance
-                store.dispatch(REFRESH_BALANCE_AND_RATE);
+                await store.dispatch(REFRESH_BALANCE_AND_RATE);
 
                 state.successModalIsOpen = true;
             } catch (error) {
@@ -294,7 +300,6 @@ export default createComponent({
 
         return {
             state,
-            summaryAmount,
             summaryItems,
             validBalance,
             handleCreateAccount,

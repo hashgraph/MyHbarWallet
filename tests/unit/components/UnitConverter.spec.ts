@@ -36,29 +36,7 @@ describe("UnitConverter.vue", (): void => {
                           <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
                         </svg>
                       </div>
-                      <div class="select-menu">
-                        <div class="select-option">
-                          tinybar
-                        </div>
-                        <div class="select-option">
-                          microbar
-                        </div>
-                        <div class="select-option">
-                          millibar
-                        </div>
-                        <div class="select-option">
-                          hbar
-                        </div>
-                        <div class="select-option">
-                          kilobar
-                        </div>
-                        <div class="select-option">
-                          megabar
-                        </div>
-                        <div class="select-option">
-                          gigabar
-                        </div>
-                      </div>
+                      <div class="select-menu"></div>
                     </div>
                   </div>
                 </div>
@@ -81,29 +59,7 @@ describe("UnitConverter.vue", (): void => {
                           <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
                         </svg>
                       </div>
-                      <div class="select-menu">
-                        <div class="select-option">
-                          tinybar
-                        </div>
-                        <div class="select-option">
-                          microbar
-                        </div>
-                        <div class="select-option">
-                          millibar
-                        </div>
-                        <div class="select-option">
-                          hbar
-                        </div>
-                        <div class="select-option">
-                          kilobar
-                        </div>
-                        <div class="select-option">
-                          megabar
-                        </div>
-                        <div class="select-option">
-                          gigabar
-                        </div>
-                      </div>
+                      <div class="select-menu"></div>
                     </div>
                   </div>
                 </div>

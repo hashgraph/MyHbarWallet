@@ -7,9 +7,11 @@
                     {{ $t("balanceCard.balance") }}
                 </div>
                 <div v-if="hasFetchedBalance" class="subtitle" type="string">
-                    <div class="hbar-balance">{{ balanceHBarFormatted }} ℏ</div>
+                    <div class="hbar-balance">
+                        {{ state.balanceHbarFormatted }} ℏ
+                    </div>
                     <div v-if="hasFetchedRate" class="usd-balance">
-                        {{ balanceUSDFormatted }}
+                        {{ state.balanceUSDFormatted }}
                     </div>
                 </div>
                 <div v-else class="subtitle-null" type="string">
@@ -44,21 +46,33 @@
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiLoading, mdiRefresh } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
-import { computed, createComponent, reactive } from "@vue/composition-api";
+import {
+    computed,
+    createComponent,
+    onMounted,
+    reactive
+} from "@vue/composition-api";
 import walletHbar from "../assets/wallet-hbar.svg";
 import store from "../store";
 import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import { formatHbar, formatUSD } from "../formatter";
-import BigNumber from "bignumber.js";
+
+interface State {
+    isBusy: boolean;
+    balanceHbarFormatted: string;
+    balanceUSDFormatted: string;
+}
 
 export default createComponent({
     components: {
         MaterialDesignIcon,
         Tooltip
     },
-    setup() {
-        const state = reactive({
-            isBusy: false
+    async setup() {
+        const state = reactive<State>({
+            isBusy: false,
+            balanceHbarFormatted: "",
+            balanceUSDFormatted: ""
         });
 
         const hasFetchedBalance = computed(
@@ -69,30 +83,21 @@ export default createComponent({
             () => store.state.wallet.exchangeRate != null
         );
 
-        const balanceHbar = computed(() =>
-            (store.state.wallet.balance || new BigNumber(0)).div(100000000)
-        );
+        onMounted(async () => {
+            const { Hbar, BigNumber } = await (import(
+                "@hashgraph/sdk"
+            ) as Promise<typeof import("@hashgraph/sdk")>);
 
-        const exchangeRate = computed(
-            () => (store.state.wallet.exchangeRate || new BigNumber(0)).div(1) // computed with null | undefined is broken
-        );
+            const balance = store.state.wallet.balance || Hbar.zero();
+            const exchangeRate =
+                store.state.wallet.exchangeRate || new BigNumber(0);
 
-        const balanceHBarFormatted = computed(() => {
-            const balance = balanceHbar.value;
-            return formatHbar(
-                balance.isLessThan(0.0001) ? balance : balance.decimalPlaces(4)
+            const formattedUSD = await formatUSD(
+                balance.as("hbar").multipliedBy(exchangeRate)
             );
-        });
 
-        const balanceUSDFormatted = computed(() => {
-            const rate = exchangeRate.value;
-
-            if (rate.isGreaterThan(0)) {
-                const balanceUSD = balanceHbar.value.multipliedBy(rate);
-                return "≈ " + formatUSD(balanceUSD);
-            }
-
-            return "";
+            state.balanceHbarFormatted = formatHbar(balance);
+            state.balanceUSDFormatted = "≈ " + formattedUSD;
         });
 
         async function handleRefreshBalance(): Promise<void> {
@@ -114,10 +119,7 @@ export default createComponent({
             state,
             hasFetchedBalance,
             hasFetchedRate,
-            handleRefreshBalance,
-            balanceHbar,
-            balanceHBarFormatted,
-            balanceUSDFormatted
+            handleRefreshBalance
         };
     }
 });

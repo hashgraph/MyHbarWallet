@@ -1,8 +1,8 @@
-import BigNumber from "bignumber.js";
-
 // Trim leading and trailing 0's from the input,
 // and restrict significant digits past the decimal point.
 // The captured group is the desired end result.
+import BigNumber from "bignumber.js";
+
 const hbarAmountRegex = /^0*(\d+(?:\.\d{1,9}?)?)0*$/;
 const splitHbarRegex = /^0*(\d+)(?:\.(\d{1,9}?))?0*$/;
 const markdownBoldRegex = /(?:\*{2}((?:\w| |\+|-)+)\*{2})/g;
@@ -11,7 +11,7 @@ export function validateHbar(input: string): boolean {
     return hbarAmountRegex.test(input);
 }
 
-export function formatHbar(input: BigNumber): string {
+export function formatHbar(input: import("@hashgraph/sdk").Hbar): string {
     const fmt = {
         decimalSeparator: ".",
         groupSeparator: ",",
@@ -21,7 +21,7 @@ export function formatHbar(input: BigNumber): string {
         fractionGroupSize: 0
     };
 
-    return input.toFormat(fmt);
+    return input.as("hbar").toFormat(fmt);
 }
 
 // Splits string into the int and fraction parts
@@ -62,7 +62,12 @@ export function formatRightPad(
     return str;
 }
 
-export function formatUSD(input: BigNumber): string {
+export function formatUSD(
+    input: BigNumber
+): string {
+    console.log("usdusdusd");
+    console.log("hello");
+
     const fmt = {
         prefix: "$",
         decimalSeparator: ".",
@@ -73,17 +78,14 @@ export function formatUSD(input: BigNumber): string {
         fractionGroupSize: 0
     };
 
+    console.log("max big => " + fmt);
+
     return input.toFormat(2, BigNumber.ROUND_HALF_CEIL, fmt);
 }
 
 export function formatRich(
     input: string,
-    elements:
-        | {
-              strongClass: string;
-          }
-        | null
-        | undefined
+    elements: { strongClass: string } | null | undefined
 ): string {
     if (elements != null) {
         const replaceValue =
