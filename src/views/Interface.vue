@@ -15,6 +15,7 @@
             <BalanceCard class="info-balance" />
             <NetworkCard class="info-network" />
         </div>
+        <TxHistory :columns="columns" :rows="rows" />
     </div>
 </template>
 
@@ -23,17 +24,29 @@ import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "../components/NetworkCard.vue";
 import BalanceCard from "../components/BalanceCard.vue";
 import AccountCard from "../components/AccountCard.vue";
-import { computed, createComponent } from "@vue/composition-api";
+import TxHistory from "../components/TxHistory.vue";
+import {
+    computed,
+    createComponent,
+    watch,
+    reactive
+} from "@vue/composition-api";
 import store from "../store";
+import axios from "axios";
+import { Id } from "../store/modules/wallet";
+import { Transactions } from "../transactions";
 
 export default createComponent({
     components: {
         InterfaceNavigation,
         NetworkCard,
         BalanceCard,
-        AccountCard
+        AccountCard,
+        TxHistory
     },
     setup() {
+        const state = reactive({ rows: (null as unknown) as Transactions });
+
         // Boolean used to determine if the user has been to interface
         // Otherwise don't show the Logout modal
         store.state.interfaceMenu.hasBeenToInterface = true;
@@ -44,8 +57,38 @@ export default createComponent({
                 : null
         );
 
+        async function getData(): Promise<Transactions> {
+            const reqAccount = account.value as Id;
+            const response = await axios.get(
+                "http://api.kabuto.sh/v1/account/" +
+                    reqAccount.realm +
+                    "." +
+                    reqAccount.shard +
+                    "." +
+                    reqAccount.account +
+                    "/transaction"
+            );
+            return response.data;
+        }
+
+        watch(getData, async (result: Promise<Transactions>) => {
+            state.rows = await result;
+        });
+
+        const columns = ["1", "2", "3"];
+
+        const rows = computed(() => {
+            if (state.rows !== null) {
+                return state.rows.transactions;
+            }
+
+            return "";
+        });
+
         return {
-            account
+            account,
+            columns,
+            rows
         };
     }
 });
