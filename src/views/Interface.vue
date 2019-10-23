@@ -29,7 +29,8 @@ import {
     computed,
     createComponent,
     watch,
-    reactive
+    ref,
+    Ref
 } from "@vue/composition-api";
 import store from "../store";
 import axios from "axios";
@@ -45,7 +46,7 @@ export default createComponent({
         TxHistory
     },
     setup() {
-        const state = reactive({ rows: (null as unknown) as Transactions });
+        const txRows: Ref<Transactions | null> = ref(null);
 
         // Boolean used to determine if the user has been to interface
         // Otherwise don't show the Logout modal
@@ -72,14 +73,14 @@ export default createComponent({
         }
 
         watch(getData, async (result: Promise<Transactions>) => {
-            state.rows = await result;
+            txRows.value = await result;
         });
 
         const columns = ["1", "2", "3"];
 
         const rows = computed(() => {
-            if (state.rows !== null) {
-                return state.rows.transactions;
+            if (txRows.value !== null) {
+                return txRows.value.transactions;
             }
 
             return "";

@@ -1,9 +1,9 @@
-export interface Transactions {
+export type Transactions = {
     transactions: Transaction[];
-}
+};
 
-export interface Transaction {
-    id: Id;
+export type Transaction = {
+    id: TxId;
     event: null;
     hash: string;
     node: string;
@@ -15,27 +15,27 @@ export interface Transaction {
     memo: null;
     receipt: Receipt;
     transfers: Transfer[];
-}
+};
 
-export interface Id {
+export type TxId = {
     valid_start_at: string;
     account: string;
-}
+};
 
-export interface Receipt {
+export type Receipt = {
     status: Status;
     id: null;
-}
+};
 
 export enum Status {
     Success = "SUCCESS"
 }
 
-export interface Transfer {
+export type Transfer = {
     account: string;
     amount: number;
     type: TransferType;
-}
+};
 
 export enum TransferType {
     Fee = "fee",
