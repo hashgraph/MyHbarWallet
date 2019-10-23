@@ -65,7 +65,7 @@ describe("ModalAccessBySoftware.vue", (): void => {
                     <materialdesignicon-stub icon="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" class="close"></materialdesignicon-stub>
                   </header>
                   <div class="main">
-                    <div class="warning">
+                    <div class="warning" which-modal="software">
                       <div class="notice">
                         <div class="symbol-container">
                           <materialdesignicon-stub icon="M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16" class="symbol"></materialdesignicon-stub>
