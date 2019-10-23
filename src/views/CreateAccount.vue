@@ -402,25 +402,36 @@ export default createComponent({
                 );
                 openInterface();
             } catch (error) {
-                const result: HederaErrorTuple = await store.dispatch(
-                    HANDLE_HEDERA_ERROR,
-                    { error, showAlert: false }
-                );
+                const HederaError = (await import("@hashgraph/sdk"))
+                    .HederaError;
+                if (error instanceof HederaError) {
+                    const result: HederaErrorTuple = await store.dispatch(
+                        HANDLE_HEDERA_ERROR,
+                        { error, showAlert: false }
+                    );
 
-                state.modalEnterAccountIdState.errorMessage = result.message;
+                    // set input error to error message
+                    state.modalEnterAccountIdState.errorMessage =
+                        result.message;
 
-                if (result.message === "") {
+                    // In this case, the error should pop up
+                    if (
+                        error.message.includes(
+                            context.root.$t("common.error.unhandled").toString()
+                        )
+                    ) {
+                        throw error;
+                    }
+                } else if (error.name === "TransportStatusError") {
                     const result: LedgerErrorTuple = await store.dispatch(
                         HANDLE_LEDGER_ERROR,
                         { error, showAlert: false }
                     );
 
-                    if (result.message === "") {
-                        throw error;
-                    }
-
                     state.modalEnterAccountIdState.errorMessage =
                         result.message;
+
+                    // But don't throw device errors
                 }
             } finally {
                 state.modalEnterAccountIdState.isBusy = false;

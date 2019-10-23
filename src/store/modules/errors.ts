@@ -136,6 +136,8 @@ export default {
                     severity = "warn";
                     break;
                 default:
+                    console.log(payload.error.statusCode);
+                    console.log(payload.error);
                     message = i18n
                         .t("common.error.generalDeviceError")
                         .toString();
