@@ -56,6 +56,7 @@ import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiRayStartArrow } from "@mdi/js";
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
+import { Unit, convert } from "../units";
 
 interface Props {
     tableHeader: boolean;
@@ -92,7 +93,11 @@ function getTo(entry: Transaction): string {
 function getValue(entry: Transaction): string {
     for (const tx of entry.transfers) {
         if (tx.type === "value" && tx.amount > 0) {
-            return formatHbar(new BigNumber(tx.amount));
+            return formatHbar(
+                new BigNumber(
+                    convert(tx.amount.toString(), Unit.Tinybar, Unit.Hbar)
+                )
+            );
         }
     }
     return "";
@@ -134,7 +139,7 @@ export default createComponent({
 
 table {
     border-collapse: collapse;
-    max-width: 45vw;
+    width: 100%;
 }
 
 .table-header {
@@ -148,7 +153,7 @@ table {
     grid-template-areas:
         "to-from value-fee"
         "age age";
-    grid-template-columns: 23.5% 8% 23.5% 45%;
+    grid-template-columns: 25% 8% 25% 42%;
 }
 
 td {
@@ -172,7 +177,7 @@ td {
 
 .icon {
     color: var(--color-basalt-grey);
-    margin-block-start: 2px;
+    margin-block-start: 3px;
     margin-inline-start: 5px;
     opacity: 0.5;
     transform: scale(1, 1);
