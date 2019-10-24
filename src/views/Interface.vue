@@ -33,7 +33,6 @@ import {
     Ref
 } from "@vue/composition-api";
 import store from "../store";
-import axios from "axios";
 import { Id } from "../store/modules/wallet";
 import { Transactions } from "../transactions";
 
@@ -60,6 +59,7 @@ export default createComponent({
 
         async function getData(): Promise<Transactions> {
             const reqAccount = account.value as Id;
+            const axios = (await import("axios")).default;
             const response = await axios.get(
                 "http://api.kabuto.sh/v1/account/" +
                     reqAccount.realm +
@@ -97,6 +97,7 @@ export default createComponent({
 
 <style lang="postcss" scoped>
 .interface {
+    background-color: var(--color-boysenberry-shadow);
     display: flex;
     flex-grow: 1;
 }

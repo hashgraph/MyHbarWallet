@@ -7,31 +7,38 @@
                 </div>
                 <tbody>
                     <tr
-                        v-for="entry in rows.slice(0, 6)"
+                        v-for="entry in rows.slice(0, 10)"
                         :key="entry.hash"
                         class="entry-rows"
                     >
-                        <td class="entries">
-                            <div>From {{ getFrom(entry) }}</div>
-                            <div>To {{ getTo(entry) }}</div>
-                        </td>
-                        <td class="entries">
-                            <div>
-                                Value {{ (entry.value / 100000000).toFixed(2) }}
-                            </div>
-                            <div>
-                                Fee {{ (entry.fee / 100000000).toFixed(2) }}
+                        <td class="entries to-from">
+                            <div class="to">
+                                {{ getTo(entry) }}
                             </div>
                         </td>
-                        <div class="age-entry">
-                            {{ getAge(entry) }}
-                        </div>
+                        <td class="entries to-from">
+                            <MaterialDesignIcon
+                                class="icon"
+                                :icon="mdiRayStartArrow"
+                                viewbox="7 0 24 24"
+                            />
+                        </td>
+                        <td class="entries to-from">
+                            <div class="from">
+                                {{ getFrom(entry) }}
+                            </div>
+                        </td>
+                        <td class="entries">
+                            <div class="value">{{ getValue(entry) }} ℏ</div>
+                            <div class="age-entry">
+                                {{ getAge(entry) }}
+                            </div>
+                        </td>
                     </tr>
                     <tr>
-                        <td center colspan="3">
-                            <router-link class="view-all" :to="{ name: 'txs' }">
-                                Powered By Kabuto
-                            </router-link>
+                        <td class="table-footer" center colspan="3">
+                            Powered By
+                            <img class="logo" :src="logoKabuto" />
                         </td>
                     </tr>
                 </tbody>
@@ -42,8 +49,13 @@
 
 <script lang="ts">
 import { createComponent } from "@vue/composition-api";
-import { formatDistanceToNow } from "date-fns";
 import { Transaction } from "../transactions";
+import { formatDistanceToNow } from "date-fns";
+import logoKabuto from "../assets/logo_kabuto.svg";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
+import { mdiRayStartArrow } from "@mdi/js";
+import { formatHbar } from "../formatter";
+import BigNumber from "bignumber.js";
 
 interface Props {
     tableHeader: boolean;
@@ -77,8 +89,17 @@ function getTo(entry: Transaction): string {
     return "";
 }
 
+function getValue(entry: Transaction): string {
+    for (const tx of entry.transfers) {
+        if (tx.type === "value" && tx.amount > 0) {
+            return formatHbar(new BigNumber(tx.amount));
+        }
+    }
+    return "";
+}
+
 export default createComponent({
-    components: {},
+    components: { MaterialDesignIcon },
     props: {
         tableHeader: Boolean,
         rows: Array,
@@ -86,14 +107,28 @@ export default createComponent({
     },
 
     setup(props) {
-        return { props, getAge, getFrom, getTo };
+        return {
+            props,
+            getAge,
+            getFrom,
+            getTo,
+            logoKabuto,
+            mdiRayStartArrow,
+            getValue
+        };
     }
 });
 </script>
 
 <style lang="postcss" scoped>
 .table-card {
+    background-color: var(--color-white);
+    border-radius: 5px;
     display: block;
+    margin-block-end: auto;
+    margin-block-start: 20px;
+    max-width: 300px;
+    min-width: 300px;
     overflow-x: auto;
 }
 
@@ -113,33 +148,68 @@ table {
     grid-template-areas:
         "to-from value-fee"
         "age age";
-    grid-template-columns: 50% 50%;
-    grid-template-rows:
-        calc(100% * (2 / 3) - (30px / 3))
-        calc(100% * (1 / 3) - (30px / 3));
+    grid-template-columns: 23.5% 8% 23.5% 45%;
 }
 
 td {
-    padding: 10px;
+    padding: 5px;
 }
 
 .entries {
     border-top: 1px solid #e3e3e3;
     font-size: 10pt;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.to-from {
+    color: var(--color-california-orange);
+    padding-block-start: 18px;
+    padding-inline-end: 0;
+    padding-inline-start: 0;
+}
+
+.icon {
+    color: var(--color-basalt-grey);
+    margin-block-start: 2px;
+    margin-inline-start: 5px;
+    opacity: 0.5;
+    transform: scale(1, 1);
+}
+
+.value {
+    display: inline-block;
+    max-width: 132px;
+    overflow: hidden;
+    padding-inline-end: 10px;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    white-space: nowrap;
 }
 
 .age-entry {
-    font-size: 10pt;
+    font-size: 8pt;
     grid-area: age;
     margin-block-end: auto;
     margin-block-start: auto;
-    padding: 10px;
-    text-align: center;
 }
 
 tr:last-child {
     border-top: 1px solid #e3e3e3;
     text-align: center;
+}
+
+.table-footer {
+    color: var(--color-fluorescent-red-orange);
+    font-size: 22px;
+    font-weight: 500;
+    padding-block-start: 15px;
+}
+
+.logo {
+    margin-block-start: -6px;
+    margin-inline-start: 2px;
 }
 
 div {
