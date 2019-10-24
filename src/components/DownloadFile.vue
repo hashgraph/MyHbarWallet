@@ -4,14 +4,14 @@
             class="file-id"
             file
             :error="state.idErrorMessage"
-            label="File ID"
+            :label="$t('downloadFile.fileId')"
             show-validation
             @valid="handleValid"
             @input="handleFileId"
         />
         <Button
             class="button"
-            label="Download File"
+            :label="$t('downloadFile.download')"
             :disabled="!state.idValid"
             @click="handleDownloadClick"
         ></Button>
@@ -69,7 +69,9 @@ export default createComponent({
 
         async function handleDownloadClick(): Promise<void> {
             if (!store.state.wallet.session) {
-                throw new Error("session should not be null");
+                throw new Error(
+                    context.root.$t("common.error.noSession").toString()
+                );
             }
             const client = store.state.wallet.session.client;
             client.setMaxQueryPayment(1000000000000);
@@ -87,7 +89,11 @@ export default createComponent({
                     .execute();
 
                 if (file.value.contents == null) {
-                    throw new Error("transaction returned is null");
+                    throw new Error(
+                        context.root
+                            .$t("common.error.nullTransaction")
+                            .toString()
+                    );
                 }
 
                 const type = fileType(file.value.contents as Uint8Array);
