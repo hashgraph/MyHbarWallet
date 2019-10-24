@@ -2,15 +2,20 @@ import Wallet from "../Wallet";
 import "regenerator-runtime"; // https://github.com/LedgerHQ/ledgerjs/issues/332
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 
-export const LEDGER_HEDERA_PATH = "44'/3030'/0'/0'/0'";
+// Preserving, in case we need this later
+// export const LEDGER_HEDERA_PATH = "44'/3030'/0'/0'/0'";
+
+export const INDEX = 0x01; // Key Index on Ledger
 
 export const CLA = 0xE0;
 const INS_GET_PK = 0x02;
 const INS_SIGN_TX = 0x04;
 
-const P1_MORE_APDU = 0x80;
-const P1_NO_VERIFY_APDU = 0x00;
-const P2_MORE_APDU = 0x80;
+const P1_UNUSED_APDU = 0x00;
+const P2_UNUSED_APDU = 0x00;
+
+const P1_FIRST = 0x01;
+const P1_LAST = 0x08;
 
 export type LedgerDeviceStatus = {
     deviceStatus: number;
@@ -18,28 +23,17 @@ export type LedgerDeviceStatus = {
     deviceId?: string;
 };
 
-function splitPath(path: string): number[] {
-    const result: number[] = [];
-    const components = path.split("/");
-
-    components.forEach(element => {
-        let number = parseInt(element, 10);
-
-        if (isNaN(number)) {
-            throw new TypeError("Path element is NaN");
-        }
-
-        if (element.length > 1 && element[element.length - 1] === "'") {
-            number += 0x80000000;
-        }
-
-        result.push(number);
-    });
-
-    return result;
+interface APDU {
+    CLA: number;
+    INS: number;
+    P1: number;
+    P2: number;
+    buffer: Buffer;
 }
 
 export default class LedgerNanoS implements Wallet {
+    private publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null = null;
+
     public hasPrivateKey(): boolean {
         return false;
     }
@@ -53,29 +47,17 @@ export default class LedgerNanoS implements Wallet {
     public async getPublicKey(): Promise<
         import("@hashgraph/sdk").PublicKey | null
     > {
-        const paths = splitPath(LEDGER_HEDERA_PATH);
-        const buffer = Buffer.alloc(1 + paths.length * 4);
+        if (this.publicKey === null) {
+            const buffer = Buffer.alloc(4);
+            buffer.writeUInt32LE(INDEX, 0);
 
-        buffer[0] = paths.length;
-        paths.forEach((element, index) => {
-            buffer.writeUInt32BE(element, 1 + 4 * index);
-        });
-
-        let transport: TransportWebUSB | null | void = null;
-        let response: Buffer | null = null;
-
-        try {
-            transport = await TransportWebUSB.create().then(
-                async (transport: TransportWebUSB) => {
-                    response = await transport.send(
-                        CLA,
-                        INS_GET_PK,
-                        P1_NO_VERIFY_APDU, // P1_MORE_APDU
-                        P2_MORE_APDU,
-                        buffer
-                    );
-                }
-            );
+            const response = await this.sendAPDU({
+                CLA,
+                INS: INS_GET_PK,
+                P1: P1_UNUSED_APDU,
+                P2: P2_UNUSED_APDU,
+                buffer
+            });
 
             if (response !== null) {
                 const publicKeyStr = response
@@ -88,55 +70,61 @@ export default class LedgerNanoS implements Wallet {
                     "@hashgraph/sdk"
                 )).Ed25519PublicKey.fromString(publicKeyStr);
 
-                return publicKey;
-            }
-
-            return null;
-        } finally {
-            if (transport !== null && transport !== undefined) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                await transport.close();
+                this.publicKey = publicKey;
+            } else {
+                throw new Error("Unexpected Empty Response from Ledger Device");
             }
         }
+
+        return this.publicKey;
     }
 
     public async signTransaction(
         txnData: Buffer | Uint8Array
     ): Promise<Uint8Array | null> {
-        const paths = splitPath(LEDGER_HEDERA_PATH);
         const dataBuffer = Buffer.from(txnData);
-        const buffer = Buffer.alloc(1 + dataBuffer.length + paths.length * 4);
+        const buffer = Buffer.alloc(4 + dataBuffer.length);
 
-        buffer[0] = paths.length;
-        buffer.fill(dataBuffer, 1 + paths.length * 4);
-        paths.forEach((element, index) => {
-            buffer.writeUInt32BE(element, 1 + 4 * index);
+        buffer.writeUInt32LE(INDEX, 0);
+        buffer.fill(dataBuffer, 4);
+
+        const response = await this.sendAPDU({
+            CLA,
+            INS: INS_SIGN_TX,
+            P1: P1_UNUSED_APDU,
+            P2: P2_UNUSED_APDU,
+            buffer
         });
 
+        if (response !== null) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore1
+            return new Uint8Array(response.slice(0, response.length - 2));
+        }
+
+        throw new Error("Unexpected Empty Response From Ledger Device");
+    }
+
+    private async sendAPDU(message: APDU): Promise<Buffer | null> {
         let transport: TransportWebUSB | null | void = null;
         let response: Buffer | null = null;
 
         try {
+            // DO NOT SEPARATE CREATE THEN.
+            // TransportWebUSB REQUIRES a context managed async callback
             transport = await TransportWebUSB.create().then(
                 async (transport: TransportWebUSB) => {
                     response = await transport.send(
-                        CLA,
-                        INS_SIGN_TX,
-                        P1_MORE_APDU,
-                        P2_MORE_APDU,
-                        buffer
+                        message.CLA,
+                        message.INS,
+                        message.P1,
+                        message.P2,
+                        message.buffer
                     );
                 }
             );
 
-            if (response !== null) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                return new Uint8Array(response.slice(0, response.length - 2));
-            }
-
-            return null;
+            return response;
         } finally {
             if (transport !== null && transport !== undefined) {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

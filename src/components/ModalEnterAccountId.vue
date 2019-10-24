@@ -91,7 +91,7 @@ export default createComponent({
         }
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
-            context.emit("change", isOpen);
+            context.emit("change", { ...props.state, isOpen });
         }
 
         function handleDontHaveAccount(): void {
