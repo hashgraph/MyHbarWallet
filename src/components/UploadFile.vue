@@ -39,6 +39,7 @@
             Estimated Fee: {{ state.estimatedFee.toFixed(2) }} ℏ
         </div>
         <Button
+            :disabled="state.disableButton"
             class="upload-button"
             :label="uploadButtonLabel"
             :busy="state.isBusy"
@@ -132,7 +133,8 @@ export default createComponent({
             isFileHovering: false,
             estimatedFee: 0,
             hashedFile: null as Uint8Array | null,
-            showProgress: false
+            showProgress: false,
+            disableButton: true
         });
 
         const file = ref<HTMLInputElement | null>(null);
@@ -232,6 +234,7 @@ export default createComponent({
                         0.55 +
                         1.05);
             }
+            state.disableButton = false;
         }
 
         async function hashFile(): Promise<void> {
