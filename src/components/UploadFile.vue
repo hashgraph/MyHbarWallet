@@ -7,11 +7,11 @@
             @dragexit="handleDragExit"
             @drop="handleDrop"
         >
-            <div class="drop-text">Drop your file here</div>
-            <div class="or-text">or</div>
+            <div class="drop-text">{{ $t("uploadFile.drop") }}</div>
+            <div class="or-text">{{ $t("uploadFile.or") }}</div>
             <Button
                 class="button"
-                label="Select a file from your computer"
+                :label="$t('uploadFile.select')"
                 @click="handleBrowseClick"
             />
             <div v-if="state.filename" class="file-name-container">
@@ -25,7 +25,7 @@
                     type="checkbox"
                     @change="hashFile"
                 />
-                <label for="hash">Hash file</label>
+                <label for="hash">{{ $t("uploadFile.hash") }}</label>
             </div>
             <input
                 v-show="false"
@@ -129,7 +129,7 @@ export default createComponent({
             currentChunk: 0,
             totalChunks: 0,
             isBusy: false,
-            uploadButtonLabel: "Upload File",
+            uploadButtonLabel: context.root.$t("uploadFile.upload").toString(),
             isFileHovering: false,
             estimatedFee: 0,
             hashedFile: null as Uint8Array | null,
@@ -278,7 +278,11 @@ export default createComponent({
             const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
 
             if (!publicKey) {
-                throw new Error("public key should not be null");
+                throw new Error(
+                    context.root
+                        .$t("uploadFile.errors.nullPublicKey")
+                        .toString()
+                );
             }
 
             let fileId: import("@hashgraph/sdk").FileId | undefined = undefined;
@@ -307,7 +311,9 @@ export default createComponent({
                 ) {
                     await store.dispatch(ALERT, {
                         level: "error",
-                        message: "Connection Error."
+                        message: context.root
+                            .$t("common.error.noConnection")
+                            .toString()
                     });
                 } else {
                     state.isBusy = false;
@@ -346,7 +352,9 @@ export default createComponent({
                 ) {
                     await store.dispatch(ALERT, {
                         level: "error",
-                        message: "Connection Error."
+                        message: context.root
+                            .$t("common.error.noConnection")
+                            .toString()
                     });
                 } else {
                     state.isBusy = false;
@@ -370,12 +378,16 @@ export default createComponent({
             }
 
             if (!store.state.wallet.session) {
-                throw new Error("session should not be null");
+                throw new Error(
+                    context.root.$t("common.error.noSession").toString()
+                );
             }
 
             const client = store.state.wallet.session.client;
             if (file == null) {
-                throw new Error("unexpected upload before preparing file");
+                throw new Error(
+                    context.root.$t("uploadFile.errors.earlyUpload").toString()
+                );
             }
 
             // prepare chunks
@@ -412,7 +424,7 @@ export default createComponent({
                     : 0;
             if (!state.isBusy) {
                 completionPercentage = 0;
-                return "Upload File";
+                return context.root.$t("uploadFile.upload").toString();
             }
 
             return (state.uploadButtonLabel =
