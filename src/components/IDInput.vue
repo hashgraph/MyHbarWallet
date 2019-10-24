@@ -36,7 +36,7 @@ interface State {
 
 export interface Props {
     isOpen: boolean;
-    errorMessage: string | null;
+    error: string | null;
     canCopy: boolean;
     label: string;
     file: boolean;
@@ -48,7 +48,7 @@ export default createComponent({
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
-        errorMessage: (String as unknown) as PropType<string>,
+        error: (String as unknown) as PropType<string>,
         canCopy: (Boolean as unknown) as PropType<boolean>,
         label: (String as unknown) as PropType<string>,
         file: (Boolean as unknown) as PropType<boolean>
@@ -112,10 +112,9 @@ export default createComponent({
         }
 
         watch(
-            () => props.errorMessage,
+            () => props.error,
             newVal => {
-                if (newVal && props.errorMessage)
-                    state.errorMessage = props.errorMessage;
+                if (newVal && props.error) state.errorMessage = props.error;
             }
         );
 

@@ -14,7 +14,7 @@
                 <IDInput
                     ref="input"
                     :is-open="state.isOpen"
-                    :error-message="state.errorMessage"
+                    :error="state.errorMessage"
                     :disabled="state.isBusy"
                     @valid="handleValid"
                     @input="handleAccount"
