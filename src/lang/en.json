@@ -338,5 +338,7 @@
     "uploadFile.select": "Select a file from your computer",
     "uploadFile.upload": "Upload File",
     "warning.thisIsNotARecommendedWayToAccessYourWallet": "This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.",
-    "warning.title": "NOT RECOMMENDED"
+    "warning.title": "NOT RECOMMENDED",
+    "warning.browserWarningTitle": "BROWSER WARNING",
+    "warning.browserWarningBody": "You must be using Chrome web browser to sign in with a hardware wallet"
 }
