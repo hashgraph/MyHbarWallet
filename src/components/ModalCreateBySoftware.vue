@@ -5,7 +5,7 @@
         @change="this.$listeners.change"
     >
         <template v-slot:banner>
-            <Warning />
+            <Warning which-modal="software" />
         </template>
         <template>
             <form

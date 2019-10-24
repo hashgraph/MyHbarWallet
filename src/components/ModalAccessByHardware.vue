@@ -4,6 +4,9 @@
         :title="$t('modalAccessByHardware.title')"
         @change="this.$listeners.change"
     >
+        <template v-slot:banner>
+            <Warning v-if="!checkIsChrome" which-modal="hardware" />
+        </template>
         <form class="modal-access-by-hardware" @submit.prevent="handleSubmit">
             <RadioButtonGroup
                 v-model="state.optionSelected"
@@ -15,7 +18,7 @@
                 <div>{{ $t("modalAccessByHardware.watchForPrompts") }}</div>
             </div>
             <Button
-                :disabled="state.optionSelected.length === 0"
+                :disabled="!state.disableButton"
                 class="button-choose-a-hardware"
                 :label="$t('modalAccessByHardware.chooseAHardware')"
             />
@@ -42,6 +45,7 @@ import imageSecalot from "../assets/button-secalot.svg";
 import imageKeepKey from "../assets/button-keepkey.svg";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
+import Warning from "../components/Warning.vue";
 
 export enum AccessHardwareOption {
     Ledger = "ledger",
@@ -124,7 +128,8 @@ export default createComponent({
         RadioButtonGroup,
         Button,
         Modal,
-        CustomerSupportLink
+        CustomerSupportLink,
+        Warning
     },
     model: {
         prop: "isOpen",
@@ -135,7 +140,9 @@ export default createComponent({
     },
     setup(props: { isOpen: boolean }, context: SetupContext) {
         const state = reactive({
-            optionSelected: ""
+            optionSelected: "",
+            disableButton: false,
+            isChrome: false
         });
 
         function handleSubmit(): void {
@@ -148,6 +155,22 @@ export default createComponent({
                 if (newVal) {
                     state.optionSelected = "";
                 }
+            }
+        );
+
+        const checkIsChrome = computed(() => {
+            return (state.isChrome = navigator.userAgent.includes("Chrome"));
+        });
+
+        watch(
+            () => state.optionSelected.length,
+            () => {
+                if (!state.isChrome && state.optionSelected.length === 0) {
+                    state.disableButton = false;
+                    return;
+                }
+
+                state.disableButton = true;
             }
         );
 
@@ -180,7 +203,8 @@ export default createComponent({
             options,
             selected,
             instructions,
-            handleSubmit
+            handleSubmit,
+            checkIsChrome
         };
     }
 });
