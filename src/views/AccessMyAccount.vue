@@ -237,6 +237,7 @@ export default createComponent({
                 const operator: import("@hashgraph/sdk").Operator = await constructOperator(
                     account
                 );
+
                 client = new Client({
                     nodes: {
                         [settings.network.proxy]: {
@@ -248,9 +249,17 @@ export default createComponent({
                     operator
                 });
 
+                const recipient = {
+                    realm: 0,
+                    shard: 0,
+                    // If the account requested is 3, use a different account as the recipient to avoid an
+                    // ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS error
+                    account: account.account === 3 ? 4 : 3
+                };
+
                 await new CryptoTransferTransaction(client)
                     .addSender(account, 0)
-                    .addRecipient({ realm: 0, shard: 0, account: 3 }, 0)
+                    .addRecipient(recipient, 0)
                     .setTransactionFee(1)
                     .build()
                     .executeForReceipt();
