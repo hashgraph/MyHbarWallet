@@ -9,12 +9,12 @@
         "test": "npm-run-all test:unit",
         "lint": "npm-run-all lint:js lint:css",
         "ci": "npm-run-all lint test:unit build",
+        "electron:install": "electron-builder install-app-deps || true",
         "electron:build": "cross-env SHELL=bash vue-cli-service electron:build",
         "electron:serve": "vue-cli-service electron:serve",
         "electron:generate-icons": "electron-icon-builder --input=./public/android-chrome-512x512.png --output=build --flatten",
         "lint:css": "stylelint --fix 'src/**/*.vue' 'src/**/*.css'",
         "lint:js": "vue-cli-service lint",
-        "postinstall": "electron-builder install-app-deps || true",
         "test:e2e": "vue-cli-service test:e2e",
         "test:unit": "vue-cli-service test:unit"
     },
