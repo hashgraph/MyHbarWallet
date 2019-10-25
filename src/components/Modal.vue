@@ -179,16 +179,18 @@ export default createComponent({
     align-items: center;
     background-color: rgba(0, 0, 0, 0.4);
     display: flex;
+    height: 105vh;
     inset: 0;
     opacity: 1;
     overflow: hidden;
     overflow-y: auto;
-    padding: 25px 0;
+    padding: 0 0 50px 0;
     pointer-events: all;
     position: fixed;
     z-index: 2;
 
     @media (max-width: 600px) {
+        height: 100vh;
         padding: 0;
     }
 
@@ -208,7 +210,6 @@ export default createComponent({
     max-width: 530px;
     overflow: hidden;
     overflow-y: auto;
-    transform: translateY(-50px);
     width: 100%;
     z-index: 3;
 
@@ -240,7 +241,7 @@ export default createComponent({
 
 .ease-enter-active,
 .ease-leave-active {
-    transition: opacity 0.5s;
+    transition: all 0.35s;
 
     @media (prefers-reduced-motion) {
         transition: none;
@@ -250,6 +251,7 @@ export default createComponent({
 .ease-enter,
 .ease-leave-to {
     opacity: 0;
+    transform: translate(0, -50px);
 }
 
 header {
