@@ -46,6 +46,7 @@ import imageKeepKey from "../assets/button-keepkey.svg";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
+import { UAParser } from "ua-parser-js";
 
 export enum AccessHardwareOption {
     Ledger = "ledger",
@@ -145,6 +146,8 @@ export default createComponent({
             isChrome: false
         });
 
+        const browser = new UAParser(navigator.userAgent).getBrowser().name;
+
         function handleSubmit(): void {
             context.emit("submit", state.optionSelected);
         }
@@ -159,7 +162,7 @@ export default createComponent({
         );
 
         const checkIsChrome = computed(() => {
-            return (state.isChrome = navigator.userAgent.includes("Chrome"));
+            return (state.isChrome = browser === "Chrome");
         });
 
         watch(
