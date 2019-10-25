@@ -58,14 +58,6 @@ interface Props {
     state: State;
 }
 
-type Context = SetupContext & {
-    refs: {
-        passwordGenerator: Vue & {
-            focusInput(): void;
-        };
-    };
-};
-
 export default createComponent({
     components: {
         Modal,

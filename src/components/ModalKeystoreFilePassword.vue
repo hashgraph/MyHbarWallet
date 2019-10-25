@@ -11,6 +11,7 @@
             </template>
             <form @submit.prevent="handleSubmit">
                 <TextInput
+                    ref="input"
                     class="input"
                     :value="state.password"
                     :error="state.error"
@@ -39,7 +40,8 @@ import {
     createComponent,
     PropType,
     watch,
-    SetupContext
+    SetupContext,
+    ref
 } from "@vue/composition-api";
 
 export interface State {
@@ -68,6 +70,8 @@ export default createComponent({
         event: "change"
     },
     setup(props: Props, context: SetupContext) {
+        const input = ref<HTMLInputElement | null>(null);
+
         const disabled = computed(() => {
             return (
                 props.state.password === "" || props.state.password.length < 9
@@ -93,6 +97,11 @@ export default createComponent({
                 if (newVal) {
                     context.emit("change", { ...props.state, password: "" });
                 }
+                if (newVal && input.value) {
+                    // Clear input every time we reopen this modal
+                    props.state.password = "";
+                    input.value.focus();
+                }
             }
         );
 
@@ -100,7 +109,8 @@ export default createComponent({
             disabled,
             handleModalChangeIsOpen,
             handleInputChange,
-            handleSubmit
+            handleSubmit,
+            input
         };
     }
 });

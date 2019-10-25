@@ -44,12 +44,7 @@
 </template>
 
 <script lang="ts">
-import {
-    createComponent,
-    PropType,
-    SetupContext,
-    watch
-} from "@vue/composition-api";
+import { createComponent, PropType } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
@@ -58,7 +53,6 @@ import PasswordGenerator, {
 } from "../components/PasswordGenerator.vue";
 import { mdiArrowRight } from "@mdi/js";
 import { formatRich } from "../formatter";
-import { Vue } from "vue/types/vue";
 
 export interface State {
     isOpen: boolean;
@@ -69,14 +63,6 @@ export interface State {
 interface Props {
     state: State;
 }
-
-type Context = SetupContext & {
-    refs: {
-        passwordGenerator: Vue & {
-            focusInput(): void;
-        };
-    };
-};
 
 export default createComponent({
     components: {
@@ -92,20 +78,7 @@ export default createComponent({
     props: {
         state: (Object as unknown) as PropType<State>
     },
-    setup(props: Props, context: SetupContext) {
-        watch(
-            () => props.state.isOpen,
-            (newVal: boolean) => {
-                if (newVal) {
-                    if (
-                        (context as Context).refs.passwordGenerator != undefined
-                    ) {
-                        (context as Context).refs.passwordGenerator.focusInput();
-                    }
-                }
-            }
-        );
-
+    setup(props: Props, context) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
         }

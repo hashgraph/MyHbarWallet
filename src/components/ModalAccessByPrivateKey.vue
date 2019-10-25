@@ -54,12 +54,6 @@ export interface State {
     isBusy: boolean;
 }
 
-type Context = SetupContext & {
-    refs: {
-        input: TextInputComponent;
-    };
-};
-
 export default createComponent({
     components: {
         Button,
@@ -77,6 +71,7 @@ export default createComponent({
     },
     setup(props: { state: State }, context: SetupContext) {
         const valid = ref<boolean>(false);
+        const input = ref<HTMLInputElement | null>(null);
 
         // No, it cannot be moved to enclosing scope
         // eslint-disable-next-line unicorn/consistent-function-scoping
@@ -132,8 +127,8 @@ export default createComponent({
                         ...props.state,
                         rawPrivateKey: ""
                     });
-                    if ((context as Context).refs.input != undefined) {
-                        (context as Context).refs.input.focus();
+                    if (input.value) {
+                        input.value.focus();
                     }
                 }
             }
@@ -142,7 +137,8 @@ export default createComponent({
         return {
             valid,
             handleModalChangeIsOpen,
-            handlePrivateKeyInput
+            handlePrivateKeyInput,
+            input
         };
     }
 });
