@@ -154,6 +154,8 @@ export default createComponent({
                 const hasOpened = isOpen && !prevIsOpen;
                 const hasClosed = !isOpen && prevIsOpen;
 
+                document.body.classList.toggle("modal-is-open", isOpen);
+
                 if (hasOpened) {
                     modalIds.push(id);
                 } else if (hasClosed) {
