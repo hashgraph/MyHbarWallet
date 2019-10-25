@@ -18,7 +18,7 @@
                     :disabled="state.isBusy"
                     @valid="handleValid"
                     @input="handleAccount"
-                ></IDInput>
+                />
                 <div class="buttons">
                     <Button
                         compact
@@ -45,7 +45,6 @@
 <script lang="ts">
 import { createComponent, PropType, SetupContext } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
-import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import IDInput from "../components/IDInput.vue";
 import { Id } from "../store/modules/wallet";
@@ -68,7 +67,6 @@ export interface Props {
 export default createComponent({
     components: {
         Modal,
-        TextInput,
         Button,
         Notice,
         IDInput
