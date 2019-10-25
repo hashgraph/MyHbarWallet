@@ -63,9 +63,7 @@ describe("ModalCreateByPhrase.vue", (): void => {
                           <div class="title">
                             NOT RECOMMENDED
                           </div>
-                          <div class="message">
-                            This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.
-                          </div>
+                          <div class="message">This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.</div>
                         </div>
                       </div>
                     </div>
