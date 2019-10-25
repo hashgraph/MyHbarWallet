@@ -184,7 +184,7 @@ export default createComponent({
     opacity: 1;
     overflow: hidden;
     overflow-y: auto;
-    padding: 25px 0;
+    padding: 0 0 50px 0;
     pointer-events: all;
     position: fixed;
     z-index: 2;
