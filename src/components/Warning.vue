@@ -16,7 +16,7 @@ export default createComponent({
         Notice
     },
     props: {
-        whichModal: { type: String, required: true }
+        whichModal: { type: String }
     },
     setup({ whichModal }, context: SetupContext) {
         const warningDisplay = computed(() => {
