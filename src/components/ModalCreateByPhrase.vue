@@ -33,6 +33,7 @@
                 :words="24"
                 :value="words"
                 :editable="false"
+                :is-open="isOpen"
             />
 
             <HiddenPasswordInput

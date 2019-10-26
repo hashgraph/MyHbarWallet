@@ -25,6 +25,7 @@
             <PasswordGenerator
                 ref="passwordGenerator"
                 v-model="state.passwordGeneratorState"
+                :is-open="state.isOpen"
                 @submit="handleSubmitPassword"
             />
 

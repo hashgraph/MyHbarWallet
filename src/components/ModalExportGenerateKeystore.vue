@@ -14,6 +14,7 @@
             <PasswordGenerator
                 ref="passwordGenerator"
                 v-model="state.passwordGeneratorState"
+                :is-open="state.isOpen"
                 @submit="handleSubmitPassword"
             />
             <p
@@ -46,7 +47,6 @@ import { formatRich } from "../formatter";
 import PasswordGenerator, {
     State as PasswordGeneratorState
 } from "../components/PasswordGenerator.vue";
-import { Vue } from "vue/types/vue";
 
 export interface State {
     isOpen: boolean;

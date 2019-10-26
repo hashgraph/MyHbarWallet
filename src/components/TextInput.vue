@@ -10,6 +10,7 @@
                         <div class="text-flex-item">
                             <textarea
                                 v-if="multiline"
+                                ref="input"
                                 class="text-area"
                                 :placeholder="placeholder"
                                 :tabindex="tabindex"

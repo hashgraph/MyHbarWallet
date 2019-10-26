@@ -20,6 +20,7 @@
                     >
                         <span class="number">{{ index }}.</span>
                         <input
+                            ref="input"
                             class="word"
                             :readonly="isDisabled(index - 1)"
                             :value="valueForIndex(index - 1)"
@@ -44,13 +45,15 @@ import {
     PropType,
     reactive,
     watch,
-    SetupContext
+    SetupContext,
+    ref
 } from "@vue/composition-api";
 import Modal from "./Modal.vue";
 import Button from "../components/Button.vue";
 import store from "../store";
 import { ALERT } from "../store/actions";
 import TextInput from "../components/TextInput.vue";
+import Vue from "vue";
 
 interface Props {
     isOpen: boolean;
@@ -74,9 +77,12 @@ export default createComponent({
     setup(props: Props, context: SetupContext) {
         // let inputMap: Map<number, string> = ;
 
+        const input = ref<HTMLInputElement[] | null>(null);
+
         const state = reactive({
             focused: null as number | null,
-            inputMap: new Map() as Map<number, string>
+            inputMap: new Map() as Map<number, string>,
+            firstIndex: null as number | null
         });
 
         function randomizeEmpties(): void {
@@ -86,15 +92,20 @@ export default createComponent({
 
             const newMap = new Map<number, string>([]);
 
+            // i gets index of first text input for focus
+            let i = 24;
+
             while (newMap.size < maxSize) {
                 const num = Math.floor(
                     Math.random() * (props.words.length - 1)
                 );
                 if (!newMap.has(num)) {
                     newMap.set(num, "");
+                    if (num < i) i = num;
                 }
             }
             state.inputMap = newMap;
+            state.firstIndex = i;
         }
 
         watch(
@@ -152,6 +163,17 @@ export default createComponent({
             state.inputMap.set(index, target.value);
         }
 
+        watch(
+            () => props.isOpen,
+            (newVal: boolean) => {
+                Vue.nextTick(() => {
+                    if (newVal && input.value) {
+                        input.value[state.firstIndex as number].focus();
+                    }
+                });
+            }
+        );
+
         return {
             state,
             handleModalChangeIsOpen,
@@ -159,7 +181,8 @@ export default createComponent({
             handleVerify,
             isDisabled,
             handleFocus,
-            handleInput
+            handleInput,
+            input
         };
     }
 });

@@ -6,6 +6,7 @@
     >
         <!-- fixme: either bind this to save edits or make it non-editable -->
         <TextInput
+            ref="input"
             :label="$t('modalMessageSigned.signedMessage')"
             can-copy
             multiline
