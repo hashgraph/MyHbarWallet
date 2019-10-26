@@ -92,7 +92,7 @@ export default createComponent({
             () => props.isOpen,
             (newVal: boolean) => {
                 Vue.nextTick(() => {
-                    if (newVal && input.value && props.editable == true) {
+                    if (newVal && input.value && props.editable) {
                         input.value[0].focus();
                     }
                 });

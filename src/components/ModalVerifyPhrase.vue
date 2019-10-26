@@ -80,9 +80,10 @@ export default createComponent({
 
         const state = reactive({
             focused: null as number | null,
-            inputMap: new Map() as Map<number, string>,
-            firstIndex: null as number | null
+            inputMap: new Map() as Map<number, string>
         });
+
+        let firstIndex = 24;
 
         function randomizeEmpties(): void {
             // there should never be a case where the list of words is less than 5, except in test or some odd error
@@ -92,19 +93,16 @@ export default createComponent({
             const newMap = new Map<number, string>([]);
 
             // i gets index of first text input for focus
-            let i = 24;
-
             while (newMap.size < maxSize) {
                 const num = Math.floor(
                     Math.random() * (props.words.length - 1)
                 );
                 if (!newMap.has(num)) {
                     newMap.set(num, "");
-                    if (num < i) i = num;
+                    if (num < firstIndex) firstIndex = num;
                 }
             }
             state.inputMap = newMap;
-            state.firstIndex = i;
         }
 
         watch(
@@ -166,7 +164,7 @@ export default createComponent({
             () => props.isOpen,
             (newVal: boolean) => {
                 if (newVal && input.value) {
-                    input.value[state.firstIndex as number].focus();
+                    input.value[firstIndex].focus();
                 }
             }
         );
