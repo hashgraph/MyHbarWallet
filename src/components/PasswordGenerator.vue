@@ -84,12 +84,13 @@ import {
     computed,
     createComponent,
     PropType,
-    SetupContext
+    ref,
+    watch
 } from "@vue/composition-api";
-import { Component as TextInputComponent } from "../components/TextInput.vue";
 import Button from "./Button.vue";
 import TextInput from "./TextInput.vue";
 import { mdiArrowRight } from "@mdi/js";
+import Vue from "vue";
 
 // Disallowed words for creating a password
 const wordlist: string[] = [
@@ -112,17 +113,15 @@ export interface State {
     passwordSuggestion: string;
 }
 
-type ReferenceType = {
-    refs: {
-        input: TextInputComponent;
-    };
-};
-
-type Context = SetupContext & ReferenceType;
+interface Props {
+    state: State;
+    isOpen: boolean;
+}
 
 export default createComponent({
     props: {
-        state: (Object as unknown) as PropType<State>
+        state: (Object as unknown) as PropType<State>,
+        isOpen: Boolean
     },
     model: {
         prop: "state",
@@ -132,7 +131,9 @@ export default createComponent({
         Button,
         TextInput
     },
-    setup(props: { state: State }, context: SetupContext) {
+    setup(props: Props, context) {
+        const input = ref<HTMLInputElement | null>(null);
+
         const confirmPassword = computed(
             () => props.state.confirmationPassword === props.state.password
         );
@@ -165,20 +166,27 @@ export default createComponent({
             );
         });
 
-        const focusInput = function(): void {
-            // In place typecast to intersection type because setup erasure does not
-            // match the intersection type (although it should)
-            if ((context as Context).refs.input !== undefined) {
-                (context as Context).refs.input.focus();
+        watch(
+            () => props.isOpen,
+            newVal => {
+                // input.value is not set until after modal is open
+                Vue.nextTick(() => {
+                    if (newVal && input.value) {
+                        // Clear inputs every time we reopen this modal
+                        props.state.password = "";
+                        props.state.confirmationPassword = "";
+                        input.value.focus();
+                    }
+                });
             }
-        };
+        );
 
         return {
             mdiArrowRight,
             meritsSuggestions,
             isDisabled,
             handleInputPassword,
-            focusInput
+            input
         };
     }
 });

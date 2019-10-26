@@ -26,6 +26,7 @@ import {
 } from "@vue/composition-api";
 import TextInput from "../components/TextInput.vue";
 import { Id } from "../store/modules/wallet";
+import Vue from "vue";
 
 interface State {
     input: string;
@@ -121,11 +122,14 @@ export default createComponent({
         watch(
             () => props.isOpen,
             newVal => {
-                if (newVal && input.value) {
-                    // Clear input every time we reopen this modal
-                    state.input = "";
-                    input.value.focus();
-                }
+                // input.value is not set until after modal is open
+                Vue.nextTick(() => {
+                    if (newVal && input.value) {
+                        // Clear input every time we reopen this modal
+                        state.input = "";
+                        input.value.focus();
+                    }
+                });
             }
         );
 

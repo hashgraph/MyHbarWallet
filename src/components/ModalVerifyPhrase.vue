@@ -20,6 +20,7 @@
                     >
                         <span class="number">{{ index }}.</span>
                         <input
+                            ref="input"
                             class="word"
                             :readonly="isDisabled(index - 1)"
                             :value="valueForIndex(index - 1)"
@@ -44,7 +45,8 @@ import {
     PropType,
     reactive,
     watch,
-    SetupContext
+    SetupContext,
+    ref
 } from "@vue/composition-api";
 import Modal from "./Modal.vue";
 import Button from "../components/Button.vue";
@@ -74,10 +76,14 @@ export default createComponent({
     setup(props: Props, context: SetupContext) {
         // let inputMap: Map<number, string> = ;
 
+        const input = ref<HTMLInputElement[] | null>(null);
+
         const state = reactive({
             focused: null as number | null,
             inputMap: new Map() as Map<number, string>
         });
+
+        let firstIndex = 24;
 
         function randomizeEmpties(): void {
             // there should never be a case where the list of words is less than 5, except in test or some odd error
@@ -86,12 +92,14 @@ export default createComponent({
 
             const newMap = new Map<number, string>([]);
 
+            // i gets index of first text input for focus
             while (newMap.size < maxSize) {
                 const num = Math.floor(
                     Math.random() * (props.words.length - 1)
                 );
                 if (!newMap.has(num)) {
                     newMap.set(num, "");
+                    if (num < firstIndex) firstIndex = num;
                 }
             }
             state.inputMap = newMap;
@@ -152,6 +160,15 @@ export default createComponent({
             state.inputMap.set(index, target.value);
         }
 
+        watch(
+            () => props.isOpen,
+            (newVal: boolean) => {
+                if (newVal && input.value) {
+                    input.value[firstIndex].focus();
+                }
+            }
+        );
+
         return {
             state,
             handleModalChangeIsOpen,
@@ -159,7 +176,8 @@ export default createComponent({
             handleVerify,
             isDisabled,
             handleFocus,
-            handleInput
+            handleInput,
+            input
         };
     }
 });

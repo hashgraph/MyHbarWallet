@@ -9,6 +9,7 @@
             <span class="number">{{ index }}.</span>
 
             <input
+                ref="input"
                 type="text"
                 class="word"
                 :value="value.length < index ? '' : value[index - 1]"
@@ -30,8 +31,11 @@ import {
     createComponent,
     PropType,
     reactive,
-    SetupContext
+    SetupContext,
+    ref,
+    watch
 } from "@vue/composition-api";
+import Vue from "vue";
 
 interface State {
     focused: number | null;
@@ -41,18 +45,22 @@ interface Props {
     editable: boolean;
     words: number;
     value: string[];
+    isOpen: boolean;
 }
 
 export default createComponent({
     props: {
         editable: Boolean,
         words: Number,
-        value: (Array as unknown) as PropType<string[]>
+        value: (Array as unknown) as PropType<string[]>,
+        isOpen: Boolean
     },
     setup(props: Props, context: SetupContext) {
         const state = reactive<State>({
             focused: null as number | null
         });
+
+        const input = ref<HTMLInputElement[] | null>(null);
 
         function handleInput(event: Event): void {
             if (props.value == null) {
@@ -76,15 +84,26 @@ export default createComponent({
                 // Non-editable controls should not set focus
                 return;
             }
-
             const target = event.target as HTMLInputElement;
             state.focused = Number.parseInt(target.dataset.index || "0", 10);
         }
 
+        watch(
+            () => props.isOpen,
+            (newVal: boolean) => {
+                Vue.nextTick(() => {
+                    if (newVal && input.value && props.editable) {
+                        input.value[0].focus();
+                    }
+                });
+            }
+        );
+
         return {
             state,
             handleInput,
-            handleFocus
+            handleFocus,
+            input
         };
     }
 });

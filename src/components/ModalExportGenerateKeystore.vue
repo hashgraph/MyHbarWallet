@@ -14,6 +14,7 @@
             <PasswordGenerator
                 ref="passwordGenerator"
                 v-model="state.passwordGeneratorState"
+                :is-open="state.isOpen"
                 @submit="handleSubmitPassword"
             />
             <p
@@ -46,7 +47,6 @@ import { formatRich } from "../formatter";
 import PasswordGenerator, {
     State as PasswordGeneratorState
 } from "../components/PasswordGenerator.vue";
-import { Vue } from "vue/types/vue";
 
 export interface State {
     isOpen: boolean;
@@ -57,14 +57,6 @@ export interface State {
 interface Props {
     state: State;
 }
-
-type Context = SetupContext & {
-    refs: {
-        passwordGenerator: Vue & {
-            focusInput(): void;
-        };
-    };
-};
 
 export default createComponent({
     components: {
@@ -81,19 +73,6 @@ export default createComponent({
         state: (Object as unknown) as PropType<State>
     },
     setup(props: Props, context: SetupContext) {
-        watch(
-            () => props.state.isOpen,
-            (newVal: boolean) => {
-                if (newVal) {
-                    if (
-                        (context as Context).refs.passwordGenerator != undefined
-                    ) {
-                        (context as Context).refs.passwordGenerator.focusInput();
-                    }
-                }
-            }
-        );
-
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
         }

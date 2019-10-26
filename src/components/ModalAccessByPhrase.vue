@@ -19,6 +19,7 @@
                     :words="24"
                     :value="state.words"
                     :editable="true"
+                    :is-open="state.isOpen"
                     @input="handleMnemonicInput"
                 />
 

@@ -42,6 +42,7 @@
                     :placeholder="$t('modalCustomerService.url')"
                 />
                 <TextInput
+                    ref="input"
                     v-model="state.description"
                     multiline
                     class="issue-item"
@@ -68,7 +69,8 @@ import {
     PropType,
     computed,
     watch,
-    reactive
+    reactive,
+    ref
 } from "@vue/composition-api";
 import store from "../store";
 import { Id } from "../store/modules/wallet";
@@ -93,6 +95,7 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>
     },
     setup(props, context) {
+        const input = ref<HTMLInputElement | null>(null);
         const ua = new UAParser(navigator.userAgent);
 
         const account = computed(() => {
@@ -182,6 +185,15 @@ export default createComponent({
             }
         );
 
+        watch(
+            () => props.isOpen,
+            newVal => {
+                if (newVal && input.value) {
+                    input.value.focus();
+                }
+            }
+        );
+
         return {
             hasAccountId: accountId.value !== null,
             hasPlatform: platform.value !== null,
@@ -190,7 +202,8 @@ export default createComponent({
             hasDevice: device.value !== null,
             state,
             sendLink,
-            handleSubmit
+            handleSubmit,
+            input
         };
     }
 });

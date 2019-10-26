@@ -34,9 +34,7 @@
 
 <script lang="ts">
 import Warning from "../components/Warning.vue";
-import TextInput, {
-    Component as TextInputComponent
-} from "../components/TextInput.vue";
+import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
@@ -53,12 +51,6 @@ export interface State {
     rawPrivateKey: string;
     isBusy: boolean;
 }
-
-type Context = SetupContext & {
-    refs: {
-        input: TextInputComponent;
-    };
-};
 
 export default createComponent({
     components: {
@@ -77,6 +69,7 @@ export default createComponent({
     },
     setup(props: { state: State }, context: SetupContext) {
         const valid = ref<boolean>(false);
+        const input = ref<HTMLInputElement | null>(null);
 
         // No, it cannot be moved to enclosing scope
         // eslint-disable-next-line unicorn/consistent-function-scoping
@@ -132,8 +125,8 @@ export default createComponent({
                         ...props.state,
                         rawPrivateKey: ""
                     });
-                    if ((context as Context).refs.input != undefined) {
-                        (context as Context).refs.input.focus();
+                    if (input.value) {
+                        input.value.focus();
                     }
                 }
             }
@@ -142,7 +135,8 @@ export default createComponent({
         return {
             valid,
             handleModalChangeIsOpen,
-            handlePrivateKeyInput
+            handlePrivateKeyInput,
+            input
         };
     }
 });
