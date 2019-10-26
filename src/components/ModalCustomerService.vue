@@ -188,7 +188,6 @@ export default createComponent({
         watch(
             () => props.isOpen,
             newVal => {
-                // input.value is not set until after modal is open
                 if (newVal && input.value) {
                     input.value.focus();
                 }

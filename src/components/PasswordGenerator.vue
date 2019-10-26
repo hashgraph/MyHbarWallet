@@ -172,7 +172,9 @@ export default createComponent({
                 // input.value is not set until after modal is open
                 Vue.nextTick(() => {
                     if (newVal && input.value) {
-                        // Clear input every time we reopen this modal
+                        // Clear inputs every time we reopen this modal
+                        props.state.password = "";
+                        props.state.confirmationPassword = "";
                         input.value.focus();
                     }
                 });

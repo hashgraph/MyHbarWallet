@@ -82,10 +82,8 @@ export default createComponent({
         function handleFocus(event: Event): void {
             if (!props.editable) {
                 // Non-editable controls should not set focus
-                console.log("not editable");
                 return;
             }
-            console.log("editable");
             const target = event.target as HTMLInputElement;
             state.focused = Number.parseInt(target.dataset.index || "0", 10);
         }
@@ -95,7 +93,6 @@ export default createComponent({
             (newVal: boolean) => {
                 Vue.nextTick(() => {
                     if (newVal && input.value && props.editable == true) {
-                        console.log("hello");
                         input.value[0].focus();
                     }
                 });

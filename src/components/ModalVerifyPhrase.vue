@@ -53,7 +53,6 @@ import Button from "../components/Button.vue";
 import store from "../store";
 import { ALERT } from "../store/actions";
 import TextInput from "../components/TextInput.vue";
-import Vue from "vue";
 
 interface Props {
     isOpen: boolean;
@@ -166,11 +165,9 @@ export default createComponent({
         watch(
             () => props.isOpen,
             (newVal: boolean) => {
-                Vue.nextTick(() => {
-                    if (newVal && input.value) {
-                        input.value[state.firstIndex as number].focus();
-                    }
-                });
+                if (newVal && input.value) {
+                    input.value[state.firstIndex as number].focus();
+                }
             }
         );
 

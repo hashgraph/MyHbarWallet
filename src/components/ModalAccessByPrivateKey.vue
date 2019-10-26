@@ -34,9 +34,7 @@
 
 <script lang="ts">
 import Warning from "../components/Warning.vue";
-import TextInput, {
-    Component as TextInputComponent
-} from "../components/TextInput.vue";
+import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";

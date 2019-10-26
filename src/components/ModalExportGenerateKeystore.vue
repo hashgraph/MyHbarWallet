@@ -73,19 +73,6 @@ export default createComponent({
         state: (Object as unknown) as PropType<State>
     },
     setup(props: Props, context: SetupContext) {
-        watch(
-            () => props.state.isOpen,
-            (newVal: boolean) => {
-                if (newVal) {
-                    if (
-                        (context as Context).refs.passwordGenerator != undefined
-                    ) {
-                        (context as Context).refs.passwordGenerator.focusInput();
-                    }
-                }
-            }
-        );
-
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
         }
