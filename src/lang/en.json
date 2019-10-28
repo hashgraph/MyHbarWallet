@@ -202,6 +202,7 @@
     "modalFeeSummaryTitle.creatingAccountWithBalance": "Creating account with balance {0} ℏ",
     "modalFeeSummaryTitle.sendingToAccount": "Sending {0} ℏ to account {1}",
     "modalFeeSummaryTitle.transaction": "Transaction: {0} ℏ",
+    "modalFeeSummaryTitle.fileTransaction": "Estimated Transaction cost: {0} ℏ",
     "modalForgotToLogout.areYouSure": "Are you sure?",
     "modalForgotToLogout.logOut": "Log Out",
     "modalForgotToLogout.looksLikeYouForgotToLogOut": "Looks like you forgot to log out of your account! For your security, either log out, or return to your account.",

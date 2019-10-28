@@ -9,11 +9,13 @@
 import InterfaceForm from "../components/InterfaceForm.vue";
 import { createComponent } from "@vue/composition-api";
 import DownloadFile from "../components/DownloadFile.vue";
+import ModalFeeSummary from "../components/ModalFeeSummary.vue";
 
 export default createComponent({
     components: {
         InterfaceForm,
-        DownloadFile
+        DownloadFile,
+        ModalFeeSummary
     },
     setup() {
         return {};

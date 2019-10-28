@@ -11,6 +11,11 @@
                 <strong>{{ props.amount }}</strong>
             </i18n>
         </span>
+        <span v-else-if="props.type === 'file'" class="title">
+            <i18n path="modalFeeSummaryTitle.fileTransaction">
+                <strong>{{ props.amount }}</strong>
+            </i18n>
+        </span>
         <span v-else>
             <i18n path="modalFeeSummaryTitle.transaction">
                 <strong>{{ props.amount }}</strong>
