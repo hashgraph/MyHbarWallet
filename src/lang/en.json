@@ -337,6 +337,7 @@
     "uploadFile.or": "or",
     "uploadFile.select": "Select a file from your computer",
     "uploadFile.upload": "Upload File",
+    "uploadFile.uploadHash": "Upload File Hash",
     "warning.thisIsNotARecommendedWayToAccessYourWallet": "This is not a recommended way to access your wallet. Due to the sensitivity of the information involved, these options should only be used in offline settings by experienced users.",
     "warning.title": "NOT RECOMMENDED",
     "warning.browserWarningTitle": "BROWSER WARNING",

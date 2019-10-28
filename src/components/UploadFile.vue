@@ -18,34 +18,31 @@
                 <MaterialDesignIcon class="icon" :icon="mdiFileUpload" />
                 <span class="file-name">{{ state.filename }}</span>
             </div>
-            <div class="hash-check-container">
-                <input
-                    id="hash"
-                    ref="hash"
-                    type="checkbox"
-                    @change="hashFile"
-                />
-                <label for="hash">{{ $t("uploadFile.hash") }}</label>
-            </div>
             <input
                 v-show="false"
                 id="file-upload"
-                ref="file"
+                ref="fileTarget"
                 type="file"
                 @change="prepareFile"
             />
         </div>
-        <div class="fee-estimate" :hidden="state.estimatedFee === 0">
-            Estimated Fee: {{ state.estimatedFee.toFixed(2) }} ℏ
+        <div class="buttons">
+            <Button
+                :disabled="state.disableButton"
+                class="upload-button"
+                :label="uploadButtonLabel"
+                :busy="state.isBusy"
+                :busy-progress="state.showProgress"
+                @click="handleUploadClick"
+            />
+            <Button
+                :disabled="state.disableButton"
+                :label="uploadHashButtonLabel"
+                :busy="state.isBusy"
+                :busy-progress="state.showProgress"
+                @click="handleHashUploadClick"
+            />
         </div>
-        <Button
-            :disabled="state.disableButton"
-            class="upload-button"
-            :label="uploadButtonLabel"
-            :busy="state.isBusy"
-            :busy-progress="state.showProgress"
-            @click="handleUploadClick"
-        />
     </div>
 </template>
 
@@ -132,18 +129,15 @@ export default createComponent({
             uploadButtonLabel: context.root.$t("uploadFile.upload").toString(),
             isFileHovering: false,
             estimatedFee: 0,
-            hashedFile: null as Uint8Array | null,
             showProgress: false,
             disableButton: true
         });
 
-        const file = ref<HTMLInputElement | null>(null);
-
-        const hash = ref<HTMLInputElement | null>(null);
+        const fileTarget = ref<HTMLInputElement | null>(null);
 
         function handleBrowseClick(): void {
-            if (file.value != null) {
-                file.value.click(); // triggers loadTextFromFile via hidden input @click
+            if (fileTarget.value != null) {
+                fileTarget.value.click(); // triggers loadTextFromFile via hidden input @click
             }
         }
 
@@ -183,80 +177,69 @@ export default createComponent({
                 state.fileUint8Array.byteLength / MAX_CHUNK_LENGTH
             );
 
-            // No need await here, hashFile will busy the submit button and estimateFee doesn't need the hashed file to get the estimate
-            if (hash.value && hash.value.checked) hashFile();
-
             estimateFee();
         }
 
         // prepares file for upload, resets file states if file has changed, gets total Chunks for fee estimate, gets hashed file if 'Hash file' is selected, gets fee estimate
-        async function prepareFile(event: Event): Promise<void> {
-            const target = event.target as HTMLInputElement;
+        async function prepareFile(): Promise<void> {
+            if (!fileTarget.value) return;
             state.fileUint8Array = null as Uint8Array | null;
-            state.hashedFile = null as Uint8Array | null;
 
-            event.preventDefault();
-
-            if (target.files == null) {
+            if (fileTarget.value.files == null) {
                 // User hit cancel
                 return;
             }
 
-            const file = target.files[0];
+            console.log(fileTarget.value.files[0]);
 
-            state.filename = file.name;
-            state.fileUint8Array = await uint8ArrayOf(file);
+            const fileData = fileTarget.value.files[0];
 
-            target.value = ""; // change back to initial state to guarantee that click fires next time
+            state.filename = fileData.name;
+            state.fileUint8Array = await uint8ArrayOf(fileData);
+
+            // fileTarget.value.value = ""; // change back to initial state to guarantee that click fires next time
 
             state.totalChunks = Math.ceil(
                 state.fileUint8Array.byteLength / MAX_CHUNK_LENGTH
             );
 
-            // No need await here, hashFile will busy the submit button and estimateFee doesn't need the hashed file to get the estimate
-            if (hash.value && hash.value.checked) hashFile();
-
             estimateFee();
+        }
+
+        async function handleHashUploadClick(): Promise<void> {
+            await hashFile();
+            await handleUpload();
+        }
+
+        async function handleUploadClick(): Promise<void> {
+            await prepareFile();
+            await handleUpload();
         }
 
         // 2.6 Hbar is current (10-21-19) full chunk estimate - (~1 hbar for empty tx plus .55 hbar per kB, then rounded up a bit)
         // second part of expression finds estimate for the last chunk which will (most likely) not be a full chunk
         //Estimate gives a bit of room on top - actual average is ~2.57 Hbar; deviations and ranges on file tx's seem very low (10-21-19)
         function estimateFee(): void {
-            if (hash.value && hash.value.checked) {
-                state.estimatedFee = 1.075;
-            } else {
-                state.estimatedFee =
-                    2.6 * (state.totalChunks - 1) +
-                    ((((state.fileUint8Array as Uint8Array).byteLength %
-                        MAX_CHUNK_LENGTH) /
-                        1000) *
-                        0.55 +
-                        1.05);
-            }
+            state.estimatedFee =
+                2.6 * (state.totalChunks - 1) +
+                ((((state.fileUint8Array as Uint8Array).byteLength %
+                    MAX_CHUNK_LENGTH) /
+                    1000) *
+                    0.55 +
+                    1.05);
             state.disableButton = false;
         }
 
         async function hashFile(): Promise<void> {
-            if (hash.value && hash.value.checked) {
-                if (!state.hashedFile) {
-                    state.isBusy = true;
-                    const digest = await crypto.subtle.digest(
-                        "SHA-384",
-                        state.fileUint8Array as Uint8Array
-                    );
-                    state.hashedFile = new Uint8Array(digest);
-                    state.isBusy = false;
-                }
-                state.totalChunks = 1;
-            } else {
-                // included for fee estimate if 'Hash file' is unselected
-                state.totalChunks = Math.ceil(
-                    (state.fileUint8Array as Uint8Array).byteLength /
-                        MAX_CHUNK_LENGTH
-                );
-            }
-            estimateFee();
+            state.isBusy = true;
+            const digest = await crypto.subtle.digest(
+                "SHA-384",
+                state.fileUint8Array as Uint8Array
+            );
+            state.fileUint8Array = new Uint8Array(digest);
+            state.totalChunks = 1;
+            state.estimatedFee = 1.075;
+            console.log("hashing complete");
         }
 
         async function fileCreateUpload(
@@ -366,16 +349,8 @@ export default createComponent({
             }
         }
 
-        async function handleUploadClick(): Promise<void> {
-            if (state.isBusy) return; //prevents upload when busy
-
-            let file = new Uint8Array();
-
-            if (hash.value && hash.value.checked) {
-                file = state.hashedFile as Uint8Array;
-            } else {
-                file = state.fileUint8Array as Uint8Array;
-            }
+        async function handleUpload(): Promise<void> {
+            const file = state.fileUint8Array as Uint8Array;
 
             if (!store.state.wallet.session) {
                 throw new Error(
@@ -431,19 +406,24 @@ export default createComponent({
                 completionPercentage.toFixed(2) + "%");
         });
 
+        const uploadHashButtonLabel = computed(() => {
+            return context.root.$t("uploadFile.uploadHash").toString();
+        });
+
         return {
             handleBrowseClick,
             handleDragOver,
             handleDragExit,
             handleDrop,
-            file,
+            fileTarget,
             state,
             fileReady,
             mdiFileUpload,
-            hash,
             prepareFile,
+            handleHashUploadClick,
             handleUploadClick,
             uploadButtonLabel,
+            uploadHashButtonLabel,
             hashFile
         };
     }
@@ -518,7 +498,12 @@ input {
     opacity: 0.5;
 }
 
-.upload-button {
+.buttons {
+    display: flex;
     margin-block-start: 50px;
+}
+
+.upload-button {
+    margin-inline-end: 10px;
 }
 </style>
