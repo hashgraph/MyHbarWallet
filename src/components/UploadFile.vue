@@ -182,7 +182,9 @@ export default createComponent({
 
         // prepares file for upload, resets file states if file has changed, gets total Chunks for fee estimate, gets hashed file if 'Hash file' is selected, gets fee estimate
         async function prepareFile(): Promise<void> {
-            if (!fileTarget.value) return;
+            if (!fileTarget.value) {
+                throw new Error("fileTarget should not be null");
+            }
             state.fileUint8Array = null as Uint8Array | null;
 
             if (fileTarget.value.files == null) {
@@ -190,14 +192,10 @@ export default createComponent({
                 return;
             }
 
-            console.log(fileTarget.value.files[0]);
-
             const fileData = fileTarget.value.files[0];
 
             state.filename = fileData.name;
             state.fileUint8Array = await uint8ArrayOf(fileData);
-
-            // fileTarget.value.value = ""; // change back to initial state to guarantee that click fires next time
 
             state.totalChunks = Math.ceil(
                 state.fileUint8Array.byteLength / MAX_CHUNK_LENGTH
@@ -239,7 +237,6 @@ export default createComponent({
             state.fileUint8Array = new Uint8Array(digest);
             state.totalChunks = 1;
             state.estimatedFee = 1.075;
-            console.log("hashing complete");
         }
 
         async function fileCreateUpload(
