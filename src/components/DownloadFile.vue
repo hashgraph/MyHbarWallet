@@ -105,8 +105,9 @@ export default createComponent({
                     "a"
                 ) as HTMLAnchorElement;
                 fileLink.value.href = fileUrl;
-                fileLink.value.download =
-                    "MHW_File" + (type ? "." + type.ext : "");
+                fileLink.value.download = `MHW_File_${state.fileId.shard}_${
+                    state.fileId.realm
+                }_${state.fileId.file}${type ? `.${type.ext}` : ""}`;
 
                 context.root.$el.append(fileLink.value as Node);
                 fileLink.value.click();
