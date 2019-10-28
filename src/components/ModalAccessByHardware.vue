@@ -46,6 +46,7 @@ import imageKeepKey from "../assets/button-keepkey.svg";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
+import { UAParser } from "ua-parser-js";
 
 export enum AccessHardwareOption {
     Ledger = "ledger",
@@ -141,9 +142,11 @@ export default createComponent({
     setup(props: { isOpen: boolean }, context: SetupContext) {
         const state = reactive({
             optionSelected: "",
-            disableButton: false,
-            isChrome: false
+            disableButton: false
         });
+
+        const checkIsChrome =
+            new UAParser(navigator.userAgent).getBrowser().name === "Chrome";
 
         function handleSubmit(): void {
             context.emit("submit", state.optionSelected);
@@ -158,14 +161,10 @@ export default createComponent({
             }
         );
 
-        const checkIsChrome = computed(() => {
-            return (state.isChrome = navigator.userAgent.includes("Chrome"));
-        });
-
         watch(
             () => state.optionSelected.length,
             () => {
-                if (!state.isChrome && state.optionSelected.length === 0) {
+                if (!checkIsChrome && state.optionSelected.length === 0) {
                     state.disableButton = false;
                     return;
                 }
