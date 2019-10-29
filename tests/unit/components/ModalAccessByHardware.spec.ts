@@ -40,7 +40,9 @@ describe("ModalAccessByHardware.vue", (): void => {
                         <div class="title">
                           BROWSER WARNING
                         </div>
-                        <div class="message">You must be using Chrome web browser to sign in with a hardware wallet</div>
+                        <div class="message">
+                          You must be using Chrome web browser to sign in with a hardware wallet
+                        </div>
                       </div>
                     </div>
                   </div>

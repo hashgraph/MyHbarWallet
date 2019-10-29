@@ -5,7 +5,12 @@
         @change="this.$listeners.change"
     >
         <template v-slot:banner>
-            <Warning which-modal="software" />
+            <Warning
+                :title="$t('warning.title')"
+                :message="
+                    $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+                "
+            />
         </template>
         <template>
             <form

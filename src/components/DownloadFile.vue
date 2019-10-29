@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts">
+// todo [2019-15-11]: refactor this into a view https://github.com/hashgraph/MyHbarWallet/issues/74
 import { createComponent, ref, reactive } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import store from "../store";

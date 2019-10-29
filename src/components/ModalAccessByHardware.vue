@@ -5,7 +5,11 @@
         @change="this.$listeners.change"
     >
         <template v-slot:banner>
-            <Warning v-if="!checkIsChrome" which-modal="hardware" />
+            <Warning
+                v-if="!checkIsChrome"
+                :title="$t('warning.browserWarningTitle')"
+                :message="$t('warning.browserWarningBody')"
+            />
         </template>
         <form class="modal-access-by-hardware" @submit.prevent="handleSubmit">
             <RadioButtonGroup

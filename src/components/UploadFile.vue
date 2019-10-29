@@ -114,6 +114,7 @@ async function uint8ArrayOf(file: File): Promise<Uint8Array> {
 // The approximate maximum size of a chunk
 const MAX_CHUNK_LENGTH = 2923;
 
+// todo [2019-15-11]: refactor everything except the upload zone into a view https://github.com/hashgraph/MyHbarWallet/issues/74
 export default createComponent({
     components: {
         Button,

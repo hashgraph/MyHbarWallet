@@ -35,7 +35,6 @@
 <script lang="ts">
 import { createComponent, PropType, SetupContext } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
-import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
 import { mdiArrowRight } from "@mdi/js";
 import { formatRich } from "../formatter";
@@ -56,7 +55,6 @@ interface Props {
 export default createComponent({
     components: {
         Modal,
-        Warning,
         InfoButton,
         PasswordGenerator
     },

@@ -6,7 +6,12 @@
             @change="this.$listeners.change"
         >
             <template v-slot:banner>
-                <Warning />
+                <Warning
+                    :title="$t('warning.title')"
+                    :message="
+                        $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+                    "
+                />
             </template>
             <div class="password-info-header-wrapper">
                 <div class="password-info-header">
