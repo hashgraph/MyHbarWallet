@@ -3,9 +3,10 @@
         <div
             class="upload-zone"
             :class="{ 'file-hover': state.isFileHovering }"
-            @dragover="handleDragOver"
-            @dragexit="handleDragExit"
-            @drop="handleDrop"
+            @dragenter.prevent="handleDragEnter"
+            @dragleave.prevent="handleDragLeave"
+            @dragover.prevent
+            @drop.prevent="handleDrop"
         >
             <div class="drop-text">{{ $t("uploadFile.drop") }}</div>
             <div class="or-text">{{ $t("uploadFile.or") }}</div>
@@ -130,7 +131,8 @@ export default createComponent({
             isFileHovering: false,
             estimatedFee: 0,
             showProgress: false,
-            disableButton: true
+            disableButton: true,
+            dragCounter: 0
         });
 
         const fileTarget = ref<HTMLInputElement | null>(null);
@@ -141,19 +143,18 @@ export default createComponent({
             }
         }
 
-        async function handleDragOver(event: DragEvent): Promise<void> {
-            event.preventDefault();
-
-            state.isFileHovering = true;
+        async function handleDragEnter(): Promise<void> {
+            state.dragCounter++;
+            if (state.dragCounter >= 0) state.isFileHovering = true;
         }
 
-        async function handleDragExit(event: DragEvent): Promise<void> {
-            event.preventDefault();
-            state.isFileHovering = false;
+        async function handleDragLeave(): Promise<void> {
+            state.dragCounter--;
+            if (state.dragCounter === 0) state.isFileHovering = false;
         }
 
         async function handleDrop(event: DragEvent): Promise<void> {
-            event.preventDefault();
+            state.dragCounter = 0;
             state.isFileHovering = false;
 
             if (!event.dataTransfer || event.dataTransfer.files.length === 0) {
@@ -409,8 +410,8 @@ export default createComponent({
 
         return {
             handleBrowseClick,
-            handleDragOver,
-            handleDragExit,
+            handleDragEnter,
+            handleDragLeave,
             handleDrop,
             fileTarget,
             state,
@@ -434,16 +435,19 @@ input {
 
 .upload-zone {
     align-items: center;
-    border: 4px dashed var(--color-boysenberry-shadow);
+    background-color: var(--color-boysenberry-shadow);
+    border: 4px dashed var(--color-ashen-wind);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 200px;
+    padding-block-end: 100px;
     width: 100%;
 }
 
 .file-hover {
+    background-color: var(--color-boysenberry-shadow-transparent);
     border: 4px dashed var(--color-washed-black);
     border-radius: 5px;
     cursor: copy;
@@ -456,21 +460,11 @@ input {
 }
 
 .button {
-    margin-block-end: 20px;
-    margin-block-start: 20px;
+    margin-block-start: 8px;
 }
 
 .file-name-container {
     display: flex;
-    margin-block-end: 20px;
-}
-
-.hash-check-container {
-    color: var(--color-washed-black);
-    margin-block-end: 20px;
-}
-
-.fee-estimate {
     margin-block-start: 20px;
 }
 
@@ -487,11 +481,12 @@ input {
 
 .drop-text {
     color: var(--color-washed-black);
-    margin-block: 20px;
+    margin-block-start: 100px;
 }
 
 .or-text {
     color: var(--color-washed-black);
+    margin-block-start: 5px;
     opacity: 0.5;
 }
 
@@ -501,6 +496,6 @@ input {
 }
 
 .upload-button {
-    margin-inline-end: 10px;
+    margin-inline-end: 20px;
 }
 </style>

@@ -83,8 +83,8 @@ export default createComponent({
         ];
 
         const filesRoutes = [
-            { name: "upload-file", label: "Upload Files" },
-            { name: "download-file", label: "Download Files" }
+            { name: "upload-file", label: "Upload" },
+            { name: "download-file", label: "Download" }
         ];
 
         const menuOpen = computed(() => store.state.interfaceMenu.isOpen);
