@@ -1,6 +1,6 @@
 <template>
     <Modal
-        :is-open="isOpen"
+        :is-open="state.isOpen"
         :title="$t('modalUploadProgress.title')"
         hide-decoration
         not-closeable
@@ -9,16 +9,32 @@
         <template v-slot:banner>
             <Warning
                 :title="$t('modalUploadProgress.warning.title')"
-                :message="$t('modalUploadProgress.warning.message')"
+                :message="
+                    IS_ELECTRON
+                        ? $t('modalUploadProgress.warning.messageElectron')
+                        : $t('modalUploadProgress.warning.message')
+                "
             />
         </template>
         <template>
             <div class="modal-upload-progress">
-                <div class="be-patient-text">
-                    {{ $t("modalUploadProgress.bePatient") }}
+                <div class="upload-text">
+                    {{
+                        state.inProgress
+                            ? $t("modalUploadProgress.inProgress.text")
+                            : state.wasSuccess
+                            ? $t("modalUploadProgress.success.text")
+                            : $t("modalUploadProgress.failure.text")
+                    }}
                 </div>
-                <div class="be-patient-subtext">
-                    {{ $t("modalUploadProgress.bePatientL2") }}
+                <div class="upload-subtext">
+                    {{
+                        state.inProgress
+                            ? $t("modalUploadProgress.inProgress.subText")
+                            : state.wasSuccess
+                            ? $t("modalUploadProgress.success.subText")
+                            : $t("modalUploadProgress.failure.subText")
+                    }}
                 </div>
                 <div class="visual-container">
                     <MaterialDesignIcon
@@ -46,10 +62,20 @@
                 </div>
                 <div class="button-container">
                     <Button
-                        :label="state.buttonLabel"
+                        v-if="!state.inProgress && !state.wasSuccess"
+                        :label="$t('modalUploadProgress.failure.buttonLabel2')"
+                        :disabled="state.inProgress"
+                        class="cancel-button"
+                        outline
+                        danger
+                        @click="onClickCancel"
+                    />
+
+                    <Button
+                        :label="buttonLabel"
                         :disabled="state.inProgress"
                         class="progress-button"
-                        @click="handleDownloadClick"
+                        @click="onClickFinish"
                     />
                 </div>
             </div>
@@ -58,12 +84,20 @@
 </template>
 
 <script lang="ts">
-import { createComponent, reactive, watch } from "@vue/composition-api";
+import { computed, createComponent, SetupContext } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import { mdiLoading, mdiFileCheckOutline, mdiFileRemoveOutline } from "@mdi/js";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
+
+export interface State {
+    isOpen: boolean;
+    inProgress: boolean;
+    wasSuccess: boolean;
+    currentChunk: number;
+    totalChunks: number;
+}
 
 export default createComponent({
     components: {
@@ -73,34 +107,60 @@ export default createComponent({
         MaterialDesignIcon
     },
     model: {
-        prop: "isOpen",
+        prop: "state",
         event: "change"
     },
     props: {
-        isOpen: { type: Boolean }
+        state: { type: Object, required: true }
     },
-    setup(props: { isOpen: boolean }) {
-        const state = reactive({
-            inProgress: true,
-            wasSuccess: true,
-            percentage: 0,
-            buttonLabel: "0%"
+    setup(props: { state: State }, context: SetupContext) {
+        const buttonLabel = computed<string>(() => {
+            if (props.state.inProgress) {
+                const completionPercentage =
+                    props.state.currentChunk < props.state.totalChunks
+                        ? (props.state.currentChunk / props.state.totalChunks) *
+                          100
+                        : 0;
+                return completionPercentage.toFixed(2) + "%";
+            }
+
+            if (props.state.wasSuccess) {
+                return context.root
+                    .$t("modalUploadProgress.success.buttonLabel")
+                    .toString();
+            }
+
+            return context.root
+                .$t("modalUploadProgress.failure.buttonLabel")
+                .toString();
         });
 
-        watch(
-            () => props.isOpen,
-            (newVal: boolean) => {
-                if (newVal) {
-                    console.log("hi");
-                }
+        function close(): void {
+            context.emit("change", false);
+        }
+
+        function onClickFinish(): void {
+            if (!props.state.wasSuccess) {
+                // user clicked retry
+                context.emit("retry");
+                return;
             }
-        );
+
+            context.emit("finish");
+            return;
+        }
+
+        function onClickCancel(): void {
+            close();
+        }
 
         return {
-            state,
+            buttonLabel,
             mdiLoading,
             mdiFileCheckOutline,
-            mdiFileRemoveOutline
+            mdiFileRemoveOutline,
+            onClickFinish,
+            onClickCancel
         };
     }
 });
@@ -113,7 +173,7 @@ export default createComponent({
     flex-direction: column;
 }
 
-.be-patient-text {
+.upload-text {
     color: var(--color-ghostlands-coal);
     display: flex;
     font-size: 20px;
@@ -123,7 +183,7 @@ export default createComponent({
     text-align: center;
 }
 
-.be-patient-subtext {
+.upload-subtext {
     color: var(--color-china-blue);
     font-size: 18px;
     margin-block-end: 60px;
