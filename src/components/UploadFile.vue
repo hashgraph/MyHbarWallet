@@ -175,11 +175,7 @@ export default createComponent({
 
             state.fileUint8Array = await uint8ArrayOf(file);
 
-            state.totalChunks = Math.ceil(
-                state.fileUint8Array.byteLength / MAX_CHUNK_LENGTH
-            );
-
-            estimateFee();
+            state.disableButton = false;
         }
 
         // prepares file for upload, resets file states if file has changed, gets total Chunks for fee estimate, gets hashed file if 'Hash file' is selected, gets fee estimate
@@ -198,6 +194,8 @@ export default createComponent({
 
             state.filename = fileData.name;
             state.fileUint8Array = await uint8ArrayOf(fileData);
+
+            state.disableButton = false;
         }
 
         const fileReady = computed(() => {
@@ -240,7 +238,6 @@ export default createComponent({
                     1000) *
                     0.55 +
                     1.05);
-            state.disableButton = false;
         }
 
         async function handleUpload(file: Uint8Array): Promise<void> {
