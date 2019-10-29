@@ -6,7 +6,12 @@
         @change="handleModalChangeIsOpen"
     >
         <template v-slot:banner>
-            <Warning />
+            <Warning
+                :title="$t('warning.title')"
+                :message="
+                    $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+                "
+            />
         </template>
         <form
             class="modal-access-by-private-key"

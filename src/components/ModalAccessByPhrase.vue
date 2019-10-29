@@ -7,7 +7,12 @@
             @change="handleModalChangeIsOpen"
         >
             <template v-slot:banner>
-                <Warning />
+                <Warning
+                    :title="$t('warning.title')"
+                    :message="
+                        $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+                    "
+                />
             </template>
 
             <div class="instruction">
