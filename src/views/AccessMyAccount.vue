@@ -452,6 +452,7 @@ export default createComponent({
             state.modalEnterAccountIdState.isBusy = true;
 
             if (state.loginMethod === null) {
+                state.modalEnterAccountIdState.isBusy = false;
                 throw new Error(
                     context.root.$t("common.error.illegalState").toString()
                 );

@@ -27,7 +27,6 @@ export default createComponent({
         });
 
         function onScroll(): void {
-            console.log("scrolled");
             state.scrolled = window.scrollY > 150;
         }
 
