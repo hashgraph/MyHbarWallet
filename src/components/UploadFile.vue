@@ -3,9 +3,10 @@
         <div
             class="upload-zone"
             :class="{ 'file-hover': state.isFileHovering }"
-            @dragover="handleDragOver"
-            @dragexit="handleDragExit"
-            @drop="handleDrop"
+            @dragenter.prevent="handleDragEnter"
+            @dragleave.prevent="handleDragLeave"
+            @dragover.prevent
+            @drop.prevent="handleDrop"
         >
             <div class="drop-text">{{ $t("uploadFile.drop") }}</div>
             <div class="or-text">{{ $t("uploadFile.or") }}</div>
@@ -130,7 +131,9 @@ export default createComponent({
             isFileHovering: false,
             estimatedFee: 0,
             showProgress: false,
-            disableButton: true
+            disableButton: true,
+            dragCounter: 0,
+            hashFileArray: null as Uint8Array | null
         });
 
         const fileTarget = ref<HTMLInputElement | null>(null);
@@ -141,19 +144,18 @@ export default createComponent({
             }
         }
 
-        async function handleDragOver(event: DragEvent): Promise<void> {
-            event.preventDefault();
-
-            state.isFileHovering = true;
+        async function handleDragEnter(): Promise<void> {
+            state.dragCounter++;
+            if (state.dragCounter >= 0) state.isFileHovering = true;
         }
 
-        async function handleDragExit(event: DragEvent): Promise<void> {
-            event.preventDefault();
-            state.isFileHovering = false;
+        async function handleDragLeave(): Promise<void> {
+            state.dragCounter--;
+            if (state.dragCounter === 0) state.isFileHovering = false;
         }
 
         async function handleDrop(event: DragEvent): Promise<void> {
-            event.preventDefault();
+            state.dragCounter = 0;
             state.isFileHovering = false;
 
             if (!event.dataTransfer || event.dataTransfer.files.length === 0) {
@@ -173,11 +175,7 @@ export default createComponent({
 
             state.fileUint8Array = await uint8ArrayOf(file);
 
-            state.totalChunks = Math.ceil(
-                state.fileUint8Array.byteLength / MAX_CHUNK_LENGTH
-            );
-
-            estimateFee();
+            state.disableButton = false;
         }
 
         // prepares file for upload, resets file states if file has changed, gets total Chunks for fee estimate, gets hashed file if 'Hash file' is selected, gets fee estimate
@@ -197,21 +195,36 @@ export default createComponent({
             state.filename = fileData.name;
             state.fileUint8Array = await uint8ArrayOf(fileData);
 
-            state.totalChunks = Math.ceil(
-                state.fileUint8Array.byteLength / MAX_CHUNK_LENGTH
-            );
-
-            estimateFee();
+            state.disableButton = false;
         }
+
+        const fileReady = computed(() => {
+            return state.filename != "";
+        });
 
         async function handleHashUploadClick(): Promise<void> {
             await hashFile();
-            await handleUpload();
+            const file = state.hashFileArray as Uint8Array;
+            state.totalChunks = 1;
+            await handleUpload(file);
         }
 
         async function handleUploadClick(): Promise<void> {
-            await prepareFile();
-            await handleUpload();
+            const file = state.fileUint8Array as Uint8Array;
+            state.totalChunks = Math.ceil(file.byteLength / MAX_CHUNK_LENGTH);
+            estimateFee();
+            await handleUpload(file);
+        }
+
+        async function hashFile(): Promise<void> {
+            state.isBusy = true;
+            const digest = await crypto.subtle.digest(
+                "SHA-384",
+                state.fileUint8Array as Uint8Array
+            );
+            state.hashFileArray = new Uint8Array(digest);
+            state.totalChunks = 1;
+            state.estimatedFee = 1.075;
         }
 
         // 2.6 Hbar is current (10-21-19) full chunk estimate - (~1 hbar for empty tx plus .55 hbar per kB, then rounded up a bit)
@@ -225,18 +238,43 @@ export default createComponent({
                     1000) *
                     0.55 +
                     1.05);
-            state.disableButton = false;
         }
 
-        async function hashFile(): Promise<void> {
-            state.isBusy = true;
-            const digest = await crypto.subtle.digest(
-                "SHA-384",
-                state.fileUint8Array as Uint8Array
-            );
-            state.fileUint8Array = new Uint8Array(digest);
-            state.totalChunks = 1;
-            state.estimatedFee = 1.075;
+        async function handleUpload(file: Uint8Array): Promise<void> {
+            if (!store.state.wallet.session) {
+                throw new Error(
+                    context.root.$t("common.error.noSession").toString()
+                );
+            }
+
+            const client = store.state.wallet.session.client;
+            if (file == null) {
+                throw new Error(
+                    context.root.$t("uploadFile.errors.earlyUpload").toString()
+                );
+            }
+
+            // prepare chunks
+            const chunks: Uint8Array[] = [];
+
+            for (let i = 0; i < state.totalChunks; i++) {
+                const start = i * MAX_CHUNK_LENGTH;
+                chunks.push(file.subarray(start, start + MAX_CHUNK_LENGTH));
+            }
+
+            // FileCreateTransaction - first chunk
+            const fileId = await fileCreateUpload(chunks, client);
+
+            if (!fileId) {
+                state.isBusy = false;
+                return;
+            }
+
+            // FileAppendTransaction - rest of chunks
+            await fileAppendUploads(chunks, fileId, client);
+
+            // notifies file was uploaded
+            context.emit("gotReceipt", fileId);
         }
 
         async function fileCreateUpload(
@@ -346,49 +384,6 @@ export default createComponent({
             }
         }
 
-        async function handleUpload(): Promise<void> {
-            const file = state.fileUint8Array as Uint8Array;
-
-            if (!store.state.wallet.session) {
-                throw new Error(
-                    context.root.$t("common.error.noSession").toString()
-                );
-            }
-
-            const client = store.state.wallet.session.client;
-            if (file == null) {
-                throw new Error(
-                    context.root.$t("uploadFile.errors.earlyUpload").toString()
-                );
-            }
-
-            // prepare chunks
-            const chunks: Uint8Array[] = [];
-
-            for (let i = 0; i < state.totalChunks; i++) {
-                const start = i * MAX_CHUNK_LENGTH;
-                chunks.push(file.subarray(start, start + MAX_CHUNK_LENGTH));
-            }
-
-            // FileCreateTransaction - first chunk
-            const fileId = await fileCreateUpload(chunks, client);
-
-            if (!fileId) {
-                state.isBusy = false;
-                return;
-            }
-
-            // FileAppendTransaction - rest of chunks
-            await fileAppendUploads(chunks, fileId, client);
-
-            // notifies file was uploaded
-            context.emit("gotReceipt", fileId);
-        }
-
-        const fileReady = computed(() => {
-            return state.filename != "";
-        });
-
         const uploadButtonLabel = computed(() => {
             let completionPercentage =
                 state.currentChunk < state.totalChunks
@@ -409,8 +404,8 @@ export default createComponent({
 
         return {
             handleBrowseClick,
-            handleDragOver,
-            handleDragExit,
+            handleDragEnter,
+            handleDragLeave,
             handleDrop,
             fileTarget,
             state,
@@ -434,16 +429,19 @@ input {
 
 .upload-zone {
     align-items: center;
-    border: 4px dashed var(--color-boysenberry-shadow);
+    background-color: var(--color-boysenberry-shadow);
+    border: 4px dashed var(--color-ashen-wind);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-height: 200px;
+    padding-block-end: 100px;
     width: 100%;
 }
 
 .file-hover {
+    background-color: var(--color-boysenberry-shadow-transparent);
     border: 4px dashed var(--color-washed-black);
     border-radius: 5px;
     cursor: copy;
@@ -456,21 +454,11 @@ input {
 }
 
 .button {
-    margin-block-end: 20px;
-    margin-block-start: 20px;
+    margin-block-start: 8px;
 }
 
 .file-name-container {
     display: flex;
-    margin-block-end: 20px;
-}
-
-.hash-check-container {
-    color: var(--color-washed-black);
-    margin-block-end: 20px;
-}
-
-.fee-estimate {
     margin-block-start: 20px;
 }
 
@@ -487,11 +475,12 @@ input {
 
 .drop-text {
     color: var(--color-washed-black);
-    margin-block: 20px;
+    margin-block-start: 100px;
 }
 
 .or-text {
     color: var(--color-washed-black);
+    margin-block-start: 5px;
     opacity: 0.5;
 }
 
@@ -501,6 +490,6 @@ input {
 }
 
 .upload-button {
-    margin-inline-end: 10px;
+    margin-inline-end: 20px;
 }
 </style>

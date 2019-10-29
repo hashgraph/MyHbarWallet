@@ -56,9 +56,10 @@ export default {
         [ERROR_MESSAGE]: (state: State): string | null => {
             const error = state.errors.length > 0 ? state.errors[0] : null;
             if (error == null) return null;
-            if (error instanceof Error) { 
+            if (error instanceof Error) {
                 console.warn(error.toString());
-                return error.toString() || "";}
+                return error.toString() || "";
+            }
 
             return error;
         }

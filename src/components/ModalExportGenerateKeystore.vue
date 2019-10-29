@@ -33,12 +33,7 @@
 </template>
 
 <script lang="ts">
-import {
-    createComponent,
-    PropType,
-    SetupContext,
-    watch
-} from "@vue/composition-api";
+import { createComponent, PropType, SetupContext } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";

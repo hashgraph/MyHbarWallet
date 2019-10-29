@@ -134,7 +134,7 @@ export default createComponent({
 
 <style lang="postcss" scoped>
 .file-id {
-    margin-block-end: 20px;
+    margin-block-end: 50px;
 }
 
 .download-container {
