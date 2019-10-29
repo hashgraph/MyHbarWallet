@@ -1,20 +1,28 @@
-import Wallet from "../Wallet";
+import Wallet, {LoginMethod} from "../Wallet";
 
 export default class SoftwareWallet implements Wallet {
     private readonly privateKey: import("@hashgraph/sdk").Ed25519PrivateKey;
     private readonly publicKey: import("@hashgraph/sdk").PublicKey;
 
+    private readonly loginMethod: LoginMethod;
+
     public constructor(
+        loginMethod: LoginMethod,
         privateKey: import("@hashgraph/sdk").Ed25519PrivateKey,
-        publicKey?: import("@hashgraph/sdk").PublicKey
+        publicKey?: import("@hashgraph/sdk").PublicKey,
     ) {
         this.privateKey = privateKey;
         this.publicKey =
             publicKey !== undefined ? publicKey : privateKey.publicKey;
+        this.loginMethod = loginMethod;
     }
 
     public hasPrivateKey(): boolean {
         return true;
+    }
+
+    public getLoginMethod(): LoginMethod {
+        return this.loginMethod;
     }
 
     public async getPrivateKey(): Promise<

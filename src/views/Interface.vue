@@ -1,5 +1,10 @@
 <template>
     <div class="interface">
+        <WarningHeaderBanner
+            v-if="state.showWarning"
+            :message="$t('interface.warnings.insecureSession')"
+            @dismiss="onDismiss"
+        />
         <InterfaceNavigation />
         <div class="main-container">
             <div class="main">
@@ -23,20 +28,46 @@ import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "../components/NetworkCard.vue";
 import BalanceCard from "../components/BalanceCard.vue";
 import AccountCard from "../components/AccountCard.vue";
-import { computed, createComponent } from "@vue/composition-api";
+import WarningHeaderBanner from "../components/WarningHeaderBanner.vue";
+import {
+    computed,
+    createComponent,
+    reactive,
+    SetupContext
+} from "@vue/composition-api";
 import store from "../store";
+import { LoginMethod } from "../wallets/Wallet";
 
 export default createComponent({
     components: {
+        WarningHeaderBanner,
         InterfaceNavigation,
         NetworkCard,
         BalanceCard,
         AccountCard
     },
-    setup() {
+    setup(props: object, context: SetupContext) {
+        if (store.state.wallet.session === null) {
+            throw new Error(
+                context.root.$t("common.error.noSession").toString()
+            );
+        }
+
         // Boolean used to determine if the user has been to interface
         // Otherwise don't show the Logout modal
         store.state.interfaceMenu.hasBeenToInterface = true;
+
+        const loginMethod = store.state.wallet.session.wallet.getLoginMethod();
+
+        const state = reactive({
+            showWarning:
+                loginMethod != LoginMethod.KeyStore &&
+                loginMethod != LoginMethod.Hardware
+        });
+
+        function onDismiss(): void {
+            state.showWarning = false;
+        }
 
         const account = computed(() =>
             store.state.wallet.session != null
@@ -45,7 +76,9 @@ export default createComponent({
         );
 
         return {
-            account
+            state,
+            account,
+            onDismiss
         };
     }
 });
