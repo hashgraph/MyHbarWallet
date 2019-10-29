@@ -1,3 +1,5 @@
+import {LoginMethod} from "../wallets/Wallet"; import {LoginMethod} from
+"../wallets/Wallet"; import {LoginMethod} from "../wallets/Wallet";
 <template>
     <div class="access-my-account">
         <div class="wrap">
@@ -87,6 +89,11 @@ import {
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import settings from "../settings";
 import { HederaErrorTuple, LedgerErrorTuple } from "../store/modules/errors";
+import { LoginMethod } from "../wallets/Wallet";
+
+interface State {
+    loginMethod: LoginMethod | null;
+}
 
 export default createComponent({
     components: {
@@ -102,7 +109,7 @@ export default createComponent({
         ModalRequestToCreateAccount
     },
     setup(props: object, context: SetupContext) {
-        const state: CreateAccountDTO = reactive({
+        const state: CreateAccountDTO & State = reactive({
             wallet: null,
             privateKey: null,
             publicKey: null,
@@ -147,7 +154,8 @@ export default createComponent({
             },
             modalRequestToCreateAccountState: {
                 isOpen: false
-            }
+            },
+            loginMethod: null
         });
 
         const keyStoreLink = ref<HTMLAnchorElement | null>(null);
@@ -258,6 +266,7 @@ export default createComponent({
         function handleClickTiles(which: string): void {
             if (which === "hardware") {
                 state.modalCreateByHardwareState.isOpen = true;
+                state.loginMethod = LoginMethod.Hardware;
             } else if (which === "software") {
                 state.modalCreateBySoftwareState.isOpen = true;
             }
@@ -270,8 +279,11 @@ export default createComponent({
 
             setTimeout(() => {
                 if (which === CreateSoftwareOption.File) {
+                    state.loginMethod = LoginMethod.KeyStore;
                     state.modalCreateByKeystoreState.isOpen = true;
                 } else if (which === CreateSoftwareOption.Phrase) {
+                    // todo [2019-15-11]: differentiate between mnemonic and mnemonic with password
+                    state.loginMethod = LoginMethod.Mnemonic;
                     state.modalCreateByPhraseState.isOpen = true;
                 }
             }, 125);
@@ -386,9 +398,17 @@ export default createComponent({
         async function handleAccountIdSubmit(account: Id): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
 
+            if (state.loginMethod === null) {
+                state.modalEnterAccountIdState.isBusy = false;
+                throw new Error(
+                    context.root.$t("common.error.illegalState").toString()
+                );
+            }
+
             if (state.wallet === null) {
                 if (state.privateKey !== null) {
                     state.wallet = new SoftwareWallet(
+                        state.loginMethod,
                         state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
                         state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
                     );

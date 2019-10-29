@@ -1,3 +1,5 @@
+import {LoginMethod} from "../wallets/Wallet"; import {LoginMethod} from
+"../wallets/Wallet";
 <template>
     <div class="access-my-account">
         <div class="wrap">
@@ -94,6 +96,11 @@ import {
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import settings from "../settings";
 import { HederaErrorTuple, LedgerErrorTuple } from "src/store/modules/errors";
+import { LoginMethod } from "../wallets/Wallet";
+
+interface State {
+    loginMethod: LoginMethod | null;
+}
 
 export default createComponent({
     components: {
@@ -109,7 +116,7 @@ export default createComponent({
         ModalRequestToCreateAccount
     },
     setup(props: object, context: SetupContext) {
-        const state: AccessAccountDTO = reactive({
+        const state: AccessAccountDTO & State = reactive({
             wallet: null,
             privateKey: null,
             publicKey: null,
@@ -147,7 +154,8 @@ export default createComponent({
             },
             modalRequestToCreateAccountState: {
                 isOpen: false
-            }
+            },
+            loginMethod: null
         });
 
         const file = ref<HTMLInputElement | null>(null);
@@ -305,14 +313,19 @@ export default createComponent({
             state.modalAccessBySoftwareState.isOpen = false;
 
             if (which === "file") {
+                state.loginMethod = LoginMethod.KeyStore;
+
                 if (file.value != null) {
                     file.value.click(); // triggers loadTextFromFile via hidden input @click
                 }
             } else {
                 setTimeout(() => {
                     if (which === AccessSoftwareOption.Phrase) {
+                        // todo [2019-15-11]: differentiate between mnemonic and mnemonic with password
+                        state.loginMethod = LoginMethod.Mnemonic;
                         state.modalAccessByPhraseState.isOpen = true;
                     } else if (which === AccessSoftwareOption.Key) {
+                        state.loginMethod = LoginMethod.PrivateKey;
                         state.modalAccessByPrivateKeyState.isOpen = true;
                     }
                 }, 125);
@@ -322,6 +335,7 @@ export default createComponent({
         async function handleAccessByHardwareSubmit(
             which: AccessHardwareOption
         ): Promise<void> {
+            state.loginMethod = LoginMethod.Hardware;
             switch (which) {
                 case AccessHardwareOption.Ledger:
                     try {
@@ -437,9 +451,17 @@ export default createComponent({
         async function handleAccountIdSubmit(account: Id): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
 
+            if (state.loginMethod === null) {
+                state.modalEnterAccountIdState.isBusy = false;
+                throw new Error(
+                    context.root.$t("common.error.illegalState").toString()
+                );
+            }
+
             if (state.wallet === null) {
                 if (state.privateKey !== null) {
                     state.wallet = new SoftwareWallet(
+                        state.loginMethod,
                         state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
                         state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
                     );
