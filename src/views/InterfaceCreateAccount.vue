@@ -156,11 +156,13 @@ export default createComponent({
         const summaryItems = computed(() => {
             return [
                 {
+                    // todo [2019-11-05]: needs i18t
                     description: "Initial Balance",
                     value: validBalance.value
                         ? new BigNumber(state.newBalance)
                         : new BigNumber(0)
                 },
+                // todo [2019-11-05]: needs i18t
                 { description: "Estimated Fee", value: estimatedFeeHbar }
             ] as Item[];
         });
@@ -240,7 +242,7 @@ export default createComponent({
                 state.newBalanceError = "";
 
                 // Refresh Balance
-                store.dispatch(REFRESH_BALANCE_AND_RATE);
+                await store.dispatch(REFRESH_BALANCE_AND_RATE);
 
                 state.successModalIsOpen = true;
             } catch (error) {
@@ -267,7 +269,7 @@ export default createComponent({
                             }
                     }
                 } else if (error.name === "TransportStatusError") {
-                    store.dispatch(HANDLE_LEDGER_ERROR, {
+                    await store.dispatch(HANDLE_LEDGER_ERROR, {
                         error,
                         showAlert: true
                     });
