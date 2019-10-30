@@ -95,7 +95,7 @@ export default createComponent({
                 )
                     .setFileId(state.fileId)
                     .requestCost();
-                console.log(getEstimate.value());
+
                 context.emit("summary", getEstimate.value());
                 context.emit("trigger", true);
             } catch (error) {

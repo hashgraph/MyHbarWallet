@@ -44,7 +44,7 @@ export default createComponent({
         DownloadFile,
         ModalFeeSummary
     },
-    setup() {
+    setup(props, context) {
         const state = reactive({
             isDownloading: false,
             isOpen: false,
@@ -57,26 +57,24 @@ export default createComponent({
         });
 
         const amount = computed(() => {
-            return state.fee.toPrecision(4).toString();
+            return formatHbar(new BigNumber(state.fee.toFixed(4, 2)));
         });
 
         function handleFee(value: number): void {
             state.fee = new BigNumber(value.toPrecision(4));
-            if (state.fee.isLessThan(new BigNumber(0.0001))) {
-                summary.value = {
-                    value: "< 0.0001",
-                    description: "Your Upload" //needs i18t
-                };
-            } else {
-                summary.value = {
-                    value: new BigNumber(value.toPrecision(4)),
-                    description: "Your Upload" //needs i18t
-                };
-            }
+            summary.value = {
+                value: new BigNumber(
+                    new BigNumber(value.toPrecision(4)).toFixed(4, 2)
+                ),
+                description: context.root
+                    .$t("modalFeeSummaryDesc.downlaod")
+                    .toString() //needs i18t
+            };
         }
 
         function handleFeeSubmit(isDownloading: boolean): void {
             state.isDownloading = isDownloading;
+            state.isOpen = false;
         }
 
         function handleFeeModalChange(isOpen: boolean): void {

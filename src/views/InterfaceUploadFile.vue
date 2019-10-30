@@ -61,7 +61,7 @@ export default createComponent({
         ModalUploadProgress,
         ModalFeeSummary
     },
-    setup() {
+    setup(props, context) {
         const state = reactive({
             fileId: "",
             successModalIsOpen: false,
@@ -91,7 +91,9 @@ export default createComponent({
         function handleFee(value: number): void {
             summary.value = {
                 value: new BigNumber(value.toPrecision(4)),
-                description: "Your Upload" //needs i18t
+                description: context.root
+                    .$t("modalFeeSummaryDesc.upload")
+                    .toString() //needs i18t
             };
         }
 
