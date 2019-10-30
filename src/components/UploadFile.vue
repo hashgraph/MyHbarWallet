@@ -48,7 +48,13 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, ref, reactive } from "@vue/composition-api";
+import {
+    createComponent,
+    computed,
+    ref,
+    reactive,
+    watch
+} from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiFileUpload } from "@mdi/js";
@@ -120,11 +126,14 @@ export default createComponent({
         Button,
         MaterialDesignIcon
     },
-
-    setup(props, context) {
+    props: {
+        isUploading: Boolean
+    },
+    setup(props: { isUploading: boolean }, context) {
         const state = reactive({
             filename: "",
             fileUint8Array: null as Uint8Array | null,
+            file: null as Uint8Array | null,
             currentChunk: 0,
             totalChunks: 0,
             isBusy: false,
@@ -134,10 +143,21 @@ export default createComponent({
             showProgress: false,
             disableButton: true,
             dragCounter: 0,
-            hashFileArray: null as Uint8Array | null
+            hashFileArray: null as Uint8Array | null,
+            isHashed: false
         });
 
         const fileTarget = ref<HTMLInputElement | null>(null);
+
+        watch(
+            () => props.isUploading,
+            () => {
+                if (props.isUploading) {
+                    state.isBusy = true;
+                    handleUpload(state.file as Uint8Array);
+                }
+            }
+        );
 
         function handleBrowseClick(): void {
             if (fileTarget.value != null) {
@@ -205,20 +225,24 @@ export default createComponent({
 
         async function handleHashUploadClick(): Promise<void> {
             await hashFile();
-            const file = state.hashFileArray as Uint8Array;
+            state.isHashed = true;
+            state.file = state.hashFileArray as Uint8Array;
             state.totalChunks = 1;
-            await handleUpload(file);
+            context.emit("summary", state.estimatedFee);
+            context.emit("upload", true);
         }
 
         async function handleUploadClick(): Promise<void> {
-            const file = state.fileUint8Array as Uint8Array;
-            state.totalChunks = Math.ceil(file.byteLength / MAX_CHUNK_LENGTH);
+            state.file = state.fileUint8Array as Uint8Array;
+            state.totalChunks = Math.ceil(
+                state.file.byteLength / MAX_CHUNK_LENGTH
+            );
             estimateFee();
-            await handleUpload(file);
+            context.emit("summary", state.estimatedFee);
+            context.emit("upload", true);
         }
 
         async function hashFile(): Promise<void> {
-            state.isBusy = true;
             const digest = await crypto.subtle.digest(
                 "SHA-384",
                 state.fileUint8Array as Uint8Array
@@ -239,6 +263,8 @@ export default createComponent({
                     1000) *
                     0.55 +
                     1.05);
+
+            state.disableButton = false;
         }
 
         async function handleUpload(file: Uint8Array): Promise<void> {
@@ -276,6 +302,7 @@ export default createComponent({
 
             // notifies file was uploaded
             context.emit("gotReceipt", fileId);
+            context.emit("upload", false);
         }
 
         async function fileCreateUpload(

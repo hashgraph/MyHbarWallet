@@ -49,6 +49,7 @@ export interface Item {
 
 export default createComponent({
     props: {
+        isFileSummary: Boolean,
         isOpen: Boolean,
         items: Array as PropType<Item[]>,
         amount: String,
@@ -67,6 +68,7 @@ export default createComponent({
     },
     setup(
         props: {
+            isFileSummary: boolean;
             isOpen: boolean;
             items: Item[];
             amount: string;
@@ -80,8 +82,12 @@ export default createComponent({
         }
 
         function handleSubmit(): void {
-            context.emit("change", false);
-            context.emit("submit");
+            if (!props.isFileSummary) {
+                context.emit("change", false);
+                context.emit("submit");
+            } else {
+                context.emit("submit", true);
+            }
         }
 
         return {
