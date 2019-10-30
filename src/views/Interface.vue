@@ -1,7 +1,7 @@
 <template>
     <div class="interface">
         <WarningHeaderBanner
-            v-if="state.showWarning"
+            v-if="false"
             :message="$t('interface.warnings.insecureSession')"
             @dismiss="onDismiss"
         />
@@ -22,7 +22,7 @@
         </div>
     </div>
 </template>
-
+// TODO[11-15-2019] change v-if in Warning Header Banner to state.showWarning
 <script lang="ts">
 import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "../components/NetworkCard.vue";
