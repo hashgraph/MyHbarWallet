@@ -60,7 +60,10 @@ export default createComponent({
         context: SetupContext
     ) {
         function handleCopy(): void {
-            store.dispatch(ALERT, { message: "Copied", level: "info" });
+            store.dispatch(ALERT, {
+                message: context.root.$t("common.copied"),
+                level: "info"
+            });
             writeToClipboard(props.accountId);
         }
 

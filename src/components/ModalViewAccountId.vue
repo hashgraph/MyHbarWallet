@@ -58,7 +58,7 @@ export default createComponent({
         isOpen: (Boolean as unknown) as PropType<boolean>,
         event: (String as unknown) as PropType<string>
     },
-    setup(props: Props) {
+    setup(props: Props, context) {
         const accountId = computed(() => {
             return props.value
                 ? `${props.value.shard}.${props.value.realm}.${props.value.account}`
@@ -69,7 +69,10 @@ export default createComponent({
             const id = accountId.value;
             if (id != null) {
                 await writeToClipboard(id);
-                store.dispatch(ALERT, { message: "Copied", level: "info" });
+                store.dispatch(ALERT, {
+                    message: context.root.$t("common.copied"),
+                    level: "info"
+                });
             }
         }
 
