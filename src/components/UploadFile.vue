@@ -382,6 +382,7 @@ export default createComponent({
             } finally {
                 state.isBusy = false;
                 state.showProgress = false;
+                clearForm();
             }
         }
 
@@ -402,6 +403,11 @@ export default createComponent({
         const uploadHashButtonLabel = computed(() => {
             return context.root.$t("uploadFile.uploadHash").toString();
         });
+
+        function clearForm(): void {
+            state.filename = "";
+            state.disableButton = true;
+        }
 
         return {
             handleBrowseClick,

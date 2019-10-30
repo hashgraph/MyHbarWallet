@@ -46,10 +46,7 @@ export default createComponent({
 
     setup(props, context) {
         const state = reactive({
-            filename: "",
-            fileArrayBuff: null as Uint8Array | null,
             fileId: { shard: 0, realm: 0, file: 0 },
-            input: "",
             idValid: false,
             idErrorMessage: ""
         });
