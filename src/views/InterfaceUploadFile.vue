@@ -14,7 +14,7 @@
         />
         <ModalFeeSummary
             :is-open="state.feeModalIsOpen"
-            :items="[state.summary]"
+            :items="[summary]"
             :amount="amount"
             :is-file-summary="true"
             tx-type="file"
@@ -27,7 +27,13 @@
 <script lang="ts">
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
-import { createComponent, computed, reactive } from "@vue/composition-api";
+import {
+    createComponent,
+    computed,
+    reactive,
+    Ref,
+    ref
+} from "@vue/composition-api";
 import UploadFile from "../components/UploadFile.vue";
 import ModalUploadProgress from "../components/ModalUploadProgress.vue";
 import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
@@ -39,6 +45,11 @@ type FileId = {
     file: number;
     realm: number;
     shard: number;
+};
+
+type Summary = {
+    value: BigNumber;
+    description: string;
 };
 
 export default createComponent({
@@ -53,17 +64,18 @@ export default createComponent({
     setup() {
         const state = reactive({
             fileId: "",
-            summary: {
-                value: 0,
-                description: ""
-            },
             successModalIsOpen: false,
             feeModalIsOpen: false,
             isUploading: false
         });
 
+        const summary: Ref<Summary | null> = ref({
+            value: new BigNumber(0),
+            description: ""
+        });
+
         const amount = computed(() => {
-            return formatHbar(new BigNumber(state.summary.value));
+            return formatHbar(new BigNumber((summary.value as Summary).value));
         });
 
         function handleReceipt(fileId: FileId): void {
@@ -77,8 +89,8 @@ export default createComponent({
         }
 
         function handleFee(value: number): void {
-            state.summary = {
-                value: new BigNumber(value),
+            summary.value = {
+                value: new BigNumber(value.toPrecision(4)),
                 description: "Your Upload" //needs i18t
             };
         }
@@ -105,7 +117,8 @@ export default createComponent({
             handleSuccessModalChange,
             handleFeeModalChange,
             amount,
-            state
+            state,
+            summary
         };
     }
 });

@@ -154,7 +154,7 @@ export default createComponent({
             () => {
                 if (props.isUploading) {
                     state.isBusy = true;
-                    handleUpload(state.file);
+                    handleUpload(state.file as Uint8Array);
                 }
             }
         );
