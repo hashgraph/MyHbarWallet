@@ -100,7 +100,7 @@ export default createComponent({
         async function handleClickCopy(): Promise<void> {
             await writeToClipboard(props.publicKey.toString());
             await store.dispatch(ALERT, {
-                message: context.root.$t("common.copy"),
+                message: context.root.$t("common.copied"),
                 level: "info"
             });
         }
