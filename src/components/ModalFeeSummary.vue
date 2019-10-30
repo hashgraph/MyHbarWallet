@@ -80,6 +80,7 @@ export default createComponent({
         function handleCancel(): void {
             context.emit("change", false);
         }
+        console.log("modal fee title", props.amount);
 
         function handleSubmit(): void {
             if (!props.isFileSummary) {
