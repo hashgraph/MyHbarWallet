@@ -22,12 +22,10 @@
 // todo [2019-15-11]: refactor this into a view https://github.com/hashgraph/MyHbarWallet/issues/74
 import { createComponent, ref, reactive, watch } from "@vue/composition-api";
 import Button from "../components/Button.vue";
-import ModalFeeSummary from "../components/ModalFeeSummary.vue";
 import store from "../store";
 import fileType from "file-type";
 import IdInput from "../components/IDInput.vue";
 import { ALERT } from "../store/actions";
-import { get } from "http";
 
 type FileId = {
     shard?: number;
@@ -84,7 +82,7 @@ export default createComponent({
             }
 
             const client = store.state.wallet.session.client;
-            client.setMaxQueryPayment(1000000000000);
+            client.setMaxQueryPayment(100000000);
             try {
                 const { FileContentsQuery, Client } = await (import(
                     "@hashgraph/sdk"
@@ -115,7 +113,7 @@ export default createComponent({
                 );
             }
             const client = store.state.wallet.session.client;
-            client.setMaxQueryPayment(1000000000000);
+            client.setMaxQueryPayment(100000000);
             try {
                 const { FileContentsQuery, Client } = await (import(
                     "@hashgraph/sdk"

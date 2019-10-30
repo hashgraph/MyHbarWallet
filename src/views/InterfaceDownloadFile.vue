@@ -61,13 +61,14 @@ export default createComponent({
         });
 
         function handleFee(value: number): void {
+            console.log(value);
             state.fee = new BigNumber(value.toPrecision(4));
             summary.value = {
                 value: new BigNumber(
                     new BigNumber(value.toPrecision(4)).toFixed(4, 2)
                 ),
                 description: context.root
-                    .$t("modalFeeSummaryDesc.downlaod")
+                    .$t("modalFeeSummaryDesc.download")
                     .toString() //needs i18t
             };
         }
