@@ -175,6 +175,12 @@ export default createComponent({
             window.open(sendLink.value);
         }
 
+        function clearForms(): void {
+            state.device = "";
+            state.accountId = "";
+            state.description = "";
+        }
+
         // When the route is updated, reset the path value
         watch(
             () => context.root.$route,
@@ -190,6 +196,9 @@ export default createComponent({
             newVal => {
                 if (newVal && input.value) {
                     input.value.focus();
+                }
+                if (!newVal) {
+                    clearForms();
                 }
             }
         );
