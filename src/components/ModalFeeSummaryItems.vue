@@ -191,6 +191,7 @@ export default createComponent({
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-block-end: 5px;
 }
 
 .text {
@@ -204,6 +205,8 @@ export default createComponent({
     color: var(--color-china-blue);
     font-family: monospace;
     font-size: 16px;
+    font-weight: 500;
+    height: 14px;
     padding: 0;
     text-align: end;
     white-space: pre;
@@ -217,7 +220,7 @@ export default createComponent({
 /* Total is used in an active class Intellij cannot figure that out so it's greyed out */
 .total {
     border-top: 1px solid var(--color-jupiter);
-    margin-block-start: 5px;
-    padding-block-start: 5px;
+    margin-block-start: 12px;
+    padding-block-start: 12px;
 }
 </style>

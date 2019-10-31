@@ -128,7 +128,7 @@ export default createComponent({
 .separator {
     border-bottom: 1px solid var(--color-jupiter);
     height: 1px;
-    margin-block: 17.5px;
+    margin-block: 15px;
     width: 100%;
 }
 </style>

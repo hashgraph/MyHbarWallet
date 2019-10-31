@@ -11,7 +11,7 @@
             :is-file-summary="true"
             :items="[summary]"
             :amount="amount"
-            tx-type="file"
+            tx-type="downloadFile"
             @change="handleFeeModalChange"
             @submit="handleFeeSubmit"
         />
@@ -61,15 +61,12 @@ export default createComponent({
         });
 
         function handleFee(value: number): void {
-            console.log(value);
             state.fee = new BigNumber(value.toPrecision(4));
             summary.value = {
                 value: new BigNumber(
                     new BigNumber(value.toPrecision(4)).toFixed(4, 2)
                 ),
-                description: context.root
-                    .$t("modalFeeSummaryDesc.download")
-                    .toString() //needs i18t
+                description: context.root.$t("common.estimatedFee").toString() //needs i18t
             };
         }
 

@@ -187,6 +187,7 @@ input {
 .file-name {
     align-self: center;
     display: inline;
+    margin-inline-start: 5px;
 }
 
 .drop-text {

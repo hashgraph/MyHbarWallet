@@ -27,7 +27,7 @@
             :items="summaryItems"
             :amount="summaryAmount"
             :is-file-summary="true"
-            tx-type="file"
+            :tx-type="state.uploadHash ? 'uploadFileHash' : 'uploadFile'"
             @change="handleFeeModalChange"
             @submit="handleUploadSubmit"
         />
@@ -126,6 +126,7 @@ export default createComponent({
             fileName: "",
             fileBytes: null as Uint8Array | null,
             uploadBytes: null as Uint8Array | null,
+            uploadHash: false,
             successModalIsOpen: false,
             feeModalIsOpen: false,
             isUploading: false,
@@ -157,9 +158,7 @@ export default createComponent({
         const summaryItems = computed(() => {
             return [
                 {
-                    description: context.root
-                        .$t("modalFeeSummaryDesc.upload")
-                        .toString(),
+                    description: context.root.$t("common.estimatedFee"),
                     value: new BigNumber(state.estimatedFee.toFixed(4))
                 }
             ] as Item[];
@@ -367,7 +366,7 @@ export default createComponent({
 
         async function handleHashUploadClick(): Promise<void> {
             state.uploadBytes = await hashFile(state.fileBytes as Uint8Array);
-
+            state.uploadHash = true;
             state.uploadProgress.totalChunks = 1;
 
             estimateFee();
@@ -380,6 +379,7 @@ export default createComponent({
                 (state.fileBytes as Uint8Array).byteLength / MAX_CHUNK_LENGTH
             );
 
+            state.uploadHash = false;
             state.uploadBytes = state.fileBytes;
 
             estimateFee();
