@@ -34,11 +34,16 @@
             />
         </template>
 
-        <ModalCreateAccountSuccess
-            :account-id="state.account"
-            :is-open="state.successModalIsOpen"
+        <ModalSuccess
+            v-model="state.modalSuccessState"
             @change="handleSuccessModalChange"
-        />
+            @continue="handleSuccessModalContinue"
+        >
+            <i18n path="modalSuccess.createdAccount">
+                <strong>{{ state.account }}</strong>
+                <strong>{{ state.newBalance }}</strong>
+            </i18n>
+        </ModalSuccess>
 
         <ModalFeeSummary
             v-model="state.summaryModalIsOpen"
@@ -63,7 +68,6 @@ import {
     watch
 } from "@vue/composition-api";
 import store from "../store";
-import ModalCreateAccountSuccess from "../components/ModalCreateAccountSuccess.vue";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { getValueOfUnit, Unit } from "../units";
 import { BigNumber } from "bignumber.js";
@@ -81,6 +85,9 @@ import {
     HANDLE_LEDGER_ERROR,
     REFRESH_BALANCE_AND_RATE
 } from "../store/actions";
+import ModalSuccess, {
+    State as ModalSuccessState
+} from "../components/ModalSuccess.vue";
 
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
@@ -89,12 +96,12 @@ interface State {
     newBalance: string;
     publicKey: string;
     isBusy: boolean;
-    successModalIsOpen: boolean;
     summaryModalIsOpen: boolean;
     keyError: string;
     newBalanceError: string;
     account: string;
     isPublicKeyValid: boolean;
+    modalSuccessState: ModalSuccessState;
 }
 
 async function isPublicKeyValid(key: string): Promise<boolean> {
@@ -122,7 +129,7 @@ export default createComponent({
         TextInput,
         InterfaceForm,
         Button,
-        ModalCreateAccountSuccess,
+        ModalSuccess,
         Notice,
         ModalFeeSummary
     },
@@ -131,12 +138,15 @@ export default createComponent({
             newBalance: "",
             publicKey: "",
             isBusy: false,
-            successModalIsOpen: false,
             summaryModalIsOpen: false,
             keyError: "",
             newBalanceError: "",
             account: "",
-            isPublicKeyValid: false
+            isPublicKeyValid: false,
+            modalSuccessState: {
+                isOpen: false,
+                copyInfo: ""
+            }
         });
 
         const validBalance = computed(() => {
@@ -237,6 +247,7 @@ export default createComponent({
                     accountIdIntermediate.realm +
                     "." +
                     accountIdIntermediate.account;
+                state.modalSuccessState.copyInfo = state.account;
 
                 // If creating state.account succeeds then remove all the error
                 state.newBalanceError = "";
@@ -244,7 +255,7 @@ export default createComponent({
                 // Refresh Balance
                 await store.dispatch(REFRESH_BALANCE_AND_RATE);
 
-                state.successModalIsOpen = true;
+                state.modalSuccessState.isOpen = true;
             } catch (error) {
                 if (error instanceof HederaError) {
                     const errorMessage = await store.dispatch(
@@ -281,9 +292,16 @@ export default createComponent({
             }
         }
 
+        function handleSuccessModalContinue(): void {
+            state.modalSuccessState.isOpen = false;
+            state.isBusy = false;
+            state.publicKey = "";
+            state.newBalance = "";
+        }
+
         function handleSuccessModalChange(isOpen: boolean): void {
             if (!isOpen) {
-                state.successModalIsOpen = isOpen;
+                state.modalSuccessState.isOpen = isOpen;
                 state.isBusy = false;
                 state.publicKey = "";
                 state.newBalance = "";
@@ -302,6 +320,7 @@ export default createComponent({
             handleCreateAccount,
             handleShowSummary,
             handleSuccessModalChange,
+            handleSuccessModalContinue,
             Unit,
             mdiHelpCircleOutline
         };
