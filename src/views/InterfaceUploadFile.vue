@@ -4,6 +4,7 @@
             <UploadZone
                 class="upload"
                 :is-uploading="state.isUploading"
+                :file-name="state.fileName"
                 @fileSelect="handleFileSelect"
             />
 
@@ -145,7 +146,7 @@ export default createComponent({
         });
 
         const summaryAmount = computed(() => {
-            return formatHbar(new BigNumber(state.estimatedFee));
+            return formatHbar(new BigNumber(state.estimatedFee.toFixed(4)));
         });
 
         function handleReceipt(fileId: FileId): void {
@@ -156,16 +157,19 @@ export default createComponent({
         const summaryItems = computed(() => {
             return [
                 {
-                    // todo [2019-11-05]: needs i18t
                     description: context.root
                         .$t("modalFeeSummaryDesc.upload")
                         .toString(),
-                    value: new BigNumber(state.estimatedFee).toPrecision(4)
+                    value: new BigNumber(state.estimatedFee.toFixed(4))
                 }
             ] as Item[];
         });
 
-        function handleFileSelect(event: { contents: Uint8Array }): void {
+        function handleFileSelect(event: {
+            fileName: string;
+            contents: Uint8Array;
+        }): void {
+            state.fileName = event.fileName;
             state.fileBytes = event.contents;
             state.buttonsDisabled = false;
         }
@@ -395,6 +399,7 @@ export default createComponent({
             state.estimatedFee = 0;
             state.fileBytes = null;
             state.uploadBytes = null;
+            state.fileName = "";
         }
 
         function handleUploadFinish(): void {

@@ -14,9 +14,12 @@
             :label="$t('uploadFile.select')"
             @click="handleBrowseClick"
         />
-        <div v-if="state.filename" class="file-name-container">
+        <div
+            v-if="fileName !== null && fileName !== ''"
+            class="file-name-container"
+        >
             <MaterialDesignIcon class="icon" :icon="mdiFileUpload" />
-            <span class="file-name">{{ state.filename }}</span>
+            <span class="file-name">{{ fileName }}</span>
         </div>
         <input
             v-show="false"
@@ -29,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, reactive } from "@vue/composition-api";
+import { createComponent, ref, reactive, watch } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiFileUpload } from "@mdi/js";
@@ -55,11 +58,10 @@ export default createComponent({
         MaterialDesignIcon
     },
     props: {
-        isUploading: Boolean
+        fileName: String
     },
     setup(props, context) {
         const state = reactive({
-            filename: "",
             isFileHovering: false,
             dragCounter: 0
         });
@@ -99,11 +101,12 @@ export default createComponent({
                 return;
             }
 
-            state.filename = file.name;
-
             const fileBytes = await uint8ArrayOf(file);
 
-            context.emit("fileSelect", { contents: fileBytes });
+            context.emit("fileSelect", {
+                fileName: file.name,
+                contents: fileBytes
+            });
         }
 
         // prepares file for upload, resets file states if file has changed, gets total Chunks for fee estimate, gets hashed file if 'Hash file' is selected, gets fee estimate
@@ -119,14 +122,12 @@ export default createComponent({
 
             const fileData = fileTarget.value.files[0];
 
-            state.filename = fileData.name;
             const fileBytes = await uint8ArrayOf(fileData);
 
-            context.emit("fileSelect", { contents: fileBytes });
-        }
-
-        function clearForm(): void {
-            state.filename = "";
+            context.emit("fileSelect", {
+                fileName: fileData.name,
+                contents: fileBytes
+            });
         }
 
         return {
