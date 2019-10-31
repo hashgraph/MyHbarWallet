@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, reactive } from "@vue/composition-api";
+import { createComponent, ref, reactive, Ref } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiFileUpload } from "@mdi/js";
@@ -70,6 +70,7 @@ export default createComponent({
 
         function handleBrowseClick(): void {
             if (fileTarget.value != null) {
+                (fileTarget as Ref<HTMLInputElement>).value.value = "";
                 fileTarget.value.click(); // triggers loadTextFromFile via hidden input @click
             }
         }
