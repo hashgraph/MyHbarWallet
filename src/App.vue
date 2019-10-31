@@ -24,8 +24,7 @@ import {
     SetupContext,
     computed,
     ref,
-    watch,
-    onMounted
+    watch
 } from "@vue/composition-api";
 import store from "./store";
 import { HAS_ERROR } from "./store/getters";

@@ -63,7 +63,6 @@ export default createComponent({
                     }
                 }
             }
-
             const parts = formatSplit(total.toString());
 
             // Note this should never be possible unless it's a programmer error

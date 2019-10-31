@@ -4,13 +4,12 @@
         :title="$t('modalUploadProgress.title')"
         hide-decoration
         not-closeable
-        @change="this.$listeners.change"
     >
         <template v-slot:banner>
             <Warning
                 :title="$t('modalUploadProgress.warning.title')"
                 :message="
-                    IS_ELECTRON
+                    isElectron
                         ? $t('modalUploadProgress.warning.messageElectron')
                         : $t('modalUploadProgress.warning.message')
                 "
@@ -60,6 +59,14 @@
                         width="120"
                     />
                 </div>
+
+                <div
+                    v-if="!state.inProgress && state.wasSuccess"
+                    class="upload-text"
+                >
+                    File ID: {{ state.fileId }}
+                </div>
+
                 <div class="button-container">
                     <Button
                         v-if="!state.inProgress && !state.wasSuccess"
@@ -97,6 +104,7 @@ export interface State {
     wasSuccess: boolean;
     currentChunk: number;
     totalChunks: number;
+    fileId: string;
 }
 
 export default createComponent({
@@ -135,6 +143,11 @@ export default createComponent({
                 .toString();
         });
 
+        const isElectron = computed(() => {
+            // todo [2019-15-11]: actually detect if this is electron.
+            return false;
+        });
+
         function close(): void {
             context.emit("change", false);
         }
@@ -146,6 +159,7 @@ export default createComponent({
                 return;
             }
 
+            context.emit("change", false);
             context.emit("finish");
             return;
         }
@@ -159,6 +173,7 @@ export default createComponent({
             mdiLoading,
             mdiFileCheckOutline,
             mdiFileRemoveOutline,
+            isElectron,
             onClickFinish,
             onClickCancel
         };
