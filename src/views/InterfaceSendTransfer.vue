@@ -17,7 +17,6 @@
             :error="state.idErrorMessage"
             :valid="state.idValid"
             can-copy
-            :is-open="state.successModalIsOpen"
             :label="$t('common.toAccount')"
             show-validation
             @valid="handleValid"
@@ -35,12 +34,16 @@
             />
         </template>
 
-        <ModalSendTransferSuccess
-            :amount="state.amount"
-            :is-open="state.successModalIsOpen"
-            :to-account="state.accountString"
+        <ModalSuccess
+            v-model="state.modalSuccessState"
             @change="handleSuccessModalChange"
-        />
+            @continue="handleSuccessModalContinue"
+        >
+            <i18n path="modalSuccess.transferred">
+                <strong>{{ amount }}</strong>
+                <strong>{{ state.accountString }}</strong>
+            </i18n>
+        </ModalSuccess>
 
         <ModalFeeSummary
             v-model="state.summaryIsOpen"
@@ -71,7 +74,6 @@ import {
     HANDLE_LEDGER_ERROR,
     REFRESH_BALANCE_AND_RATE
 } from "../store/actions";
-import ModalSendTransferSuccess from "../components/ModalSendTransferSuccess.vue";
 import { getValueOfUnit, Unit } from "../units";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
@@ -83,6 +85,9 @@ import {
     MAX_FEE_TINYBAR
 } from "../store/getters";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
+import ModalSuccess, {
+    State as ModalSuccessState
+} from "../components/ModalSuccess.vue";
 
 interface State {
     amount: string | null;
@@ -92,9 +97,9 @@ interface State {
     isBusy: boolean;
     idErrorMessage: string | null;
     amountErrorMessage: string | null;
-    successModalIsOpen: boolean;
     summaryIsOpen: boolean;
     idValid: boolean;
+    modalSuccessState: ModalSuccessState;
 }
 
 // const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
@@ -106,7 +111,7 @@ export default createComponent({
         TextInput,
         InterfaceForm,
         Button,
-        ModalSendTransferSuccess,
+        ModalSuccess,
         ModalFeeSummary,
         OptionalMemoField,
         IDInput
@@ -120,9 +125,12 @@ export default createComponent({
             isBusy: false,
             idErrorMessage: "",
             amountErrorMessage: "",
-            successModalIsOpen: false,
             summaryIsOpen: false,
-            idValid: false
+            idValid: false,
+            modalSuccessState: {
+                isOpen: false,
+                copyInfo: ""
+            }
         });
 
         function handleAccount(value: string, account: Id | null): void {
@@ -297,7 +305,7 @@ export default createComponent({
                 await store.dispatch(REFRESH_BALANCE_AND_RATE);
 
                 // eslint-disable-next-line require-atomic-updates
-                state.successModalIsOpen = true;
+                state.modalSuccessState.isOpen = true;
             } catch (error) {
                 // eslint-disable-next-line require-atomic-updates
                 state.idErrorMessage = "";
@@ -349,7 +357,7 @@ export default createComponent({
 
         function handleSuccessModalChange(isOpen: boolean): void {
             if (!isOpen) {
-                state.successModalIsOpen = isOpen;
+                state.modalSuccessState.isOpen = isOpen;
                 state.isBusy = false;
                 state.amount = "";
                 state.memo = "";
@@ -357,7 +365,16 @@ export default createComponent({
             }
         }
 
+        function handleSuccessModalContinue(): void {
+            state.modalSuccessState.isOpen = false;
+            state.isBusy = false;
+            state.amount = "";
+            state.memo = "";
+            state.accountString = "";
+        }
+
         return {
+            amount,
             state,
             summaryAmount,
             summaryAccount,
@@ -370,6 +387,7 @@ export default createComponent({
             handleClickEntireBalance,
             handleSendTransfer,
             handleSuccessModalChange,
+            handleSuccessModalContinue,
             truncate,
             handleInput,
             handleValid,
