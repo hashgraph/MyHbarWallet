@@ -304,10 +304,7 @@ export default createComponent({
                         state.modalEnterAccountIdState.publicKey =
                             state.publicKey;
                         state.modalCreateByHardwareState.isOpen = false;
-                        Vue.nextTick(
-                            () =>
-                                (state.modalRequestToCreateAccountState.isOpen = true)
-                        );
+                        state.modalRequestToCreateAccountState.isOpen = true;
                     } catch (error) {
                         if (error.name === "TransportStatusError") {
                             store.dispatch(HANDLE_LEDGER_ERROR, {
@@ -425,9 +422,7 @@ export default createComponent({
 
             try {
                 await login(account);
-                Vue.nextTick(
-                    () => (state.modalEnterAccountIdState.isOpen = false)
-                );
+                state.modalEnterAccountIdState.isOpen = false;
                 openInterface();
             } catch (error) {
                 const HederaError = (await import("@hashgraph/sdk"))
@@ -468,14 +463,12 @@ export default createComponent({
 
         function handleDoesntHaveAccount(): void {
             state.modalEnterAccountIdState.isOpen = false;
-            Vue.nextTick(
-                () => (state.modalRequestToCreateAccountState.isOpen = true)
-            );
+            state.modalRequestToCreateAccountState.isOpen = true;
         }
 
         function handleHasAccount(): void {
             state.modalRequestToCreateAccountState.isOpen = false;
-            Vue.nextTick(() => (state.modalEnterAccountIdState.isOpen = true));
+            state.modalEnterAccountIdState.isOpen = true;
         }
 
         return {

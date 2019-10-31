@@ -57,7 +57,7 @@ export default {
             const error = state.errors.length > 0 ? state.errors[0] : null;
             if (error == null) return null;
             if (error instanceof Error) {
-                console.warn(error.toString());
+                console.log(error);
                 return error.toString() || "";
             }
 
@@ -106,6 +106,9 @@ export default {
                         .toString();
                     break;
                 default:
+                    console.log(payload.error.code);
+                    console.log(payload.error.message);
+                    console.log(payload.error);
                     message =
                         i18n.t("common.error.unhandled") +
                         `${payload.error.codeName}`;
