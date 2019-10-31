@@ -205,7 +205,7 @@ export default createComponent({
     color: var(--color-china-blue);
     font-family: monospace;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     height: 14px;
     padding: 0;
     text-align: end;
