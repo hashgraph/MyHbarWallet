@@ -26,6 +26,7 @@ import store from "../store";
 import fileType from "file-type";
 import IdInput from "../components/IDInput.vue";
 import { ALERT } from "../store/actions";
+import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 
 type FileId = {
     shard?: number;
@@ -156,6 +157,7 @@ export default createComponent({
                 context.root.$el.removeChild(
                     fileLink.value as HTMLAnchorElement
                 );
+                await store.dispatch(REFRESH_BALANCE_AND_RATE);
             } catch (error) {
                 await store.dispatch(ALERT, {
                     level: "error",
