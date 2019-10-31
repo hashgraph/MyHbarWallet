@@ -60,6 +60,7 @@ import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
 import store from "../store";
 import { ALERT } from "../store/actions";
+import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 
 //!Can remove with next sdk publish
 
@@ -246,7 +247,7 @@ export default createComponent({
 
             // FileAppendTransaction - rest of chunks
             await fileAppendUploads(chunks, fileId, client);
-
+            await store.dispatch(REFRESH_BALANCE_AND_RATE);
             // notifies file was uploaded
             state.uploadProgress.inProgress = false;
             state.uploadProgress.wasSuccess = true;
