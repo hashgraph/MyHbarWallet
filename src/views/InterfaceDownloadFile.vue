@@ -5,12 +5,14 @@
             :is-downloading="state.isDownloading"
             @summary="handleFee"
             @trigger="handleFeeModalChange"
+            @fileId="handleFileId"
         />
         <ModalFeeSummary
             :is-open="state.isOpen"
             :is-file-summary="true"
             :items="[summary]"
             :amount="amount"
+            :account="state.fileId"
             tx-type="downloadFile"
             @change="handleFeeModalChange"
             @submit="handleFeeSubmit"
@@ -48,7 +50,8 @@ export default createComponent({
         const state = reactive({
             isDownloading: false,
             isOpen: false,
-            fee: new BigNumber(0)
+            fee: new BigNumber(0),
+            fileId: ""
         });
 
         const summary: Ref<Summary | null> = ref({
@@ -80,13 +83,18 @@ export default createComponent({
             if (state.isDownloading) state.isDownloading = false;
         }
 
+        function handleFileId(fileId: string): void {
+            state.fileId = fileId;
+        }
+
         return {
             state,
             summary,
             amount,
             handleFeeSubmit,
             handleFee,
-            handleFeeModalChange
+            handleFeeModalChange,
+            handleFileId
         };
     }
 });

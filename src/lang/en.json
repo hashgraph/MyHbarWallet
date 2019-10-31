@@ -208,7 +208,7 @@
     "modalFeeSummaryTitle.sendingToAccount": "Sending {0} ℏ to account {1}",
     "modalFeeSummaryTitle.transaction": "Transaction: {0} ℏ",
     "modalFeeSummaryTitle.uploadFile": "Uploading file",
-    "modalFeeSummaryTitle.downloadFile": "Downloading file {0}",
+    "modalFeeSummaryTitle.downloadFile": "Downloading file: {0}",
     "modalFeeSummaryTitle.uploadFileHash": "Uploading SHA-384 hash of file",
     "modalForgotToLogout.areYouSure": "Are you sure?",
     "modalForgotToLogout.logOut": "Log Out",
