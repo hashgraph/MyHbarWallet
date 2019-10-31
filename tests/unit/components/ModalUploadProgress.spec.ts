@@ -191,7 +191,7 @@ describe("ModalUploadProgress.vue", (): void => {
                       </div>
                       <div class="button-container">
                         <!----> <button type="submit" class="progress-button">
-                          <!----> <span>finish</span>
+                          <!----> <span>Finish</span>
                           <!----></button></div>
                     </div>
                   </div>
@@ -253,9 +253,9 @@ describe("ModalUploadProgress.vue", (): void => {
                         </svg></div>
                       <!---->
                       <div class="button-container"><button type="submit" class="cancel-button outline danger">
-                          <!----> <span>cancel</span>
+                          <!----> <span>Cancel</span>
                           <!----></button> <button type="submit" class="progress-button">
-                          <!----> <span>retry</span>
+                          <!----> <span>Retry</span>
                           <!----></button></div>
                     </div>
                   </div>

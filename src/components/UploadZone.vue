@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, reactive, watch } from "@vue/composition-api";
+import { createComponent, ref, reactive } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiFileUpload } from "@mdi/js";
