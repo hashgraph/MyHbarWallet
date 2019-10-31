@@ -20,9 +20,8 @@
 
 <script lang="ts">
 // todo [2019-15-11]: refactor this into a view https://github.com/hashgraph/MyHbarWallet/issues/74
-import { createComponent, ref, reactive } from "@vue/composition-api";
+import { createComponent, ref, reactive, watch } from "@vue/composition-api";
 import Button from "../components/Button.vue";
-import ModalFeeSummary from "../components/ModalFeeSummary.vue";
 import store from "../store";
 import fileType from "file-type";
 import IdInput from "../components/IDInput.vue";
@@ -44,7 +43,9 @@ export default createComponent({
         Button,
         IdInput
     },
-
+    props: {
+        isDownloading: Boolean
+    },
     setup(props, context) {
         const state = reactive({
             fileId: { shard: 0, realm: 0, file: 0 },
@@ -64,7 +65,14 @@ export default createComponent({
             if (fileId) state.fileId = fileId;
         }
 
-        const fileLink = ref<HTMLAnchorElement | null>(null);
+        watch(
+            () => props.isDownloading,
+            () => {
+                if (props.isDownloading) {
+                    triggerDownload();
+                }
+            }
+        );
 
         async function handleDownloadClick(): Promise<void> {
             if (!store.state.wallet.session) {
@@ -72,8 +80,40 @@ export default createComponent({
                     context.root.$t("common.error.noSession").toString()
                 );
             }
+
             const client = store.state.wallet.session.client;
-            client.setMaxQueryPayment(1000000000000);
+            client.setMaxQueryPayment(100000000);
+            try {
+                const { FileContentsQuery, Client } = await (import(
+                    "@hashgraph/sdk"
+                ) as Promise<typeof import("@hashgraph/sdk")>);
+
+                const getEstimate = await new FileContentsQuery(
+                    client as InstanceType<typeof Client>
+                )
+                    .setFileId(state.fileId)
+                    .requestCost();
+
+                context.emit("summary", getEstimate.value());
+                context.emit("trigger", true);
+            } catch (error) {
+                await store.dispatch(ALERT, {
+                    level: "error",
+                    message: error.toString()
+                });
+            }
+        }
+
+        const fileLink = ref<HTMLAnchorElement | null>(null);
+
+        async function triggerDownload(): Promise<void> {
+            if (!store.state.wallet.session) {
+                throw new Error(
+                    context.root.$t("common.error.noSession").toString()
+                );
+            }
+            const client = store.state.wallet.session.client;
+            client.setMaxQueryPayment(100000000);
             try {
                 const { FileContentsQuery, Client } = await (import(
                     "@hashgraph/sdk"
