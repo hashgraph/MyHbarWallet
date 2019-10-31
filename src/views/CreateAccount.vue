@@ -15,7 +15,7 @@ import {LoginMethod} from "../wallets/Wallet"; import {LoginMethod} from
         <FAQs />
 
         <ModalAccessByHardware
-            v-model="state.modalCreateByHardwareState.isOpen"
+            v-model="state.modalCreateByHardwareState"
             @submit="handleCreateByHardwareSubmit"
         />
 
@@ -42,7 +42,6 @@ import {LoginMethod} from "../wallets/Wallet"; import {LoginMethod} from
 
         <ModalEnterAccountId
             v-model="state.modalEnterAccountIdState"
-            :private-key="state.privateKey"
             @noAccount="handleDoesntHaveAccount"
             @submit="handleAccountIdSubmit"
         />
@@ -115,7 +114,10 @@ export default createComponent({
             publicKey: null,
             keyFile: null,
             modalCreateByHardwareState: {
-                isOpen: false
+                isOpen: false,
+                isBusy: false,
+                optionSelected: "",
+                disableButton: false
             },
             modalCreateBySoftwareState: {
                 isOpen: false
@@ -150,7 +152,8 @@ export default createComponent({
                 isOpen: false,
                 isBusy: false,
                 account: null,
-                valid: false
+                valid: false,
+                publicKey: null
             },
             modalRequestToCreateAccountState: {
                 isOpen: false
@@ -165,6 +168,7 @@ export default createComponent({
         ): void {
             state.privateKey = newPrivateKey;
             state.publicKey = newPrivateKey.publicKey;
+            state.modalEnterAccountIdState.publicKey = newPrivateKey.publicKey;
         }
 
         function openInterface(): void {
@@ -266,7 +270,6 @@ export default createComponent({
         function handleClickTiles(which: string): void {
             if (which === "hardware") {
                 state.modalCreateByHardwareState.isOpen = true;
-                state.loginMethod = LoginMethod.Hardware;
             } else if (which === "software") {
                 state.modalCreateBySoftwareState.isOpen = true;
             }
@@ -282,7 +285,6 @@ export default createComponent({
                     state.loginMethod = LoginMethod.KeyStore;
                     state.modalCreateByKeystoreState.isOpen = true;
                 } else if (which === CreateSoftwareOption.Phrase) {
-                    // todo [2019-15-11]: differentiate between mnemonic and mnemonic with password
                     state.loginMethod = LoginMethod.Mnemonic;
                     state.modalCreateByPhraseState.isOpen = true;
                 }
@@ -294,9 +296,13 @@ export default createComponent({
         ): Promise<void> {
             switch (which) {
                 case AccessHardwareOption.Ledger:
+                    state.loginMethod = LoginMethod.LedgerNanoS;
                     try {
+                        state.modalCreateByHardwareState.isBusy = true;
                         state.wallet = new LedgerNanoS();
                         state.publicKey = (await state.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+                        state.modalEnterAccountIdState.publicKey =
+                            state.publicKey;
                         state.modalCreateByHardwareState.isOpen = false;
                         Vue.nextTick(
                             () =>
@@ -311,6 +317,8 @@ export default createComponent({
                         } else {
                             throw error;
                         }
+                    } finally {
+                        state.modalCreateByHardwareState.isBusy = false;
                     }
                     break;
                 default:

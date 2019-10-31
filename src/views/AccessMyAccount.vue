@@ -25,7 +25,7 @@ import {LoginMethod} from "../wallets/Wallet"; import {LoginMethod} from
         />
 
         <ModalAccessByHardware
-            v-model="state.modalAccessByHardwareState.isOpen"
+            v-model="state.modalAccessByHardwareState"
             @submit="handleAccessByHardwareSubmit"
         />
 
@@ -41,7 +41,6 @@ import {LoginMethod} from "../wallets/Wallet"; import {LoginMethod} from
 
         <ModalEnterAccountId
             v-model="state.modalEnterAccountIdState"
-            :private-key="state.privateKey"
             @noAccount="handleDoesntHaveAccount"
             @submit="handleAccountIdSubmit"
         />
@@ -122,7 +121,10 @@ export default createComponent({
             publicKey: null,
             keyFile: null,
             modalAccessByHardwareState: {
-                isOpen: false
+                isOpen: false,
+                isBusy: false,
+                optionSelected: "",
+                disableButton: false
             },
             modalAccessBySoftwareState: {
                 isOpen: false
@@ -150,7 +152,8 @@ export default createComponent({
                 isOpen: false,
                 isBusy: false,
                 account: null,
-                valid: false
+                valid: false,
+                publicKey: null
             },
             modalRequestToCreateAccountState: {
                 isOpen: false
@@ -165,6 +168,7 @@ export default createComponent({
         ): void {
             state.privateKey = newPrivateKey;
             state.publicKey = newPrivateKey.publicKey;
+            state.modalEnterAccountIdState.publicKey = newPrivateKey.publicKey;
         }
 
         async function loadTextFromFile(event: Event): Promise<void> {
@@ -321,7 +325,6 @@ export default createComponent({
             } else {
                 setTimeout(() => {
                     if (which === AccessSoftwareOption.Phrase) {
-                        // todo [2019-15-11]: differentiate between mnemonic and mnemonic with password
                         state.loginMethod = LoginMethod.Mnemonic;
                         state.modalAccessByPhraseState.isOpen = true;
                     } else if (which === AccessSoftwareOption.Key) {
@@ -335,12 +338,15 @@ export default createComponent({
         async function handleAccessByHardwareSubmit(
             which: AccessHardwareOption
         ): Promise<void> {
-            state.loginMethod = LoginMethod.Hardware;
             switch (which) {
                 case AccessHardwareOption.Ledger:
+                    state.loginMethod = LoginMethod.LedgerNanoS;
+                    state.modalAccessByHardwareState.isBusy = true;
                     try {
                         state.wallet = new LedgerNanoS();
                         state.publicKey = (await state.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+                        state.modalEnterAccountIdState.publicKey =
+                            state.publicKey;
                         state.modalAccessByHardwareState.isOpen = false;
                         Vue.nextTick(
                             () => (state.modalEnterAccountIdState.isOpen = true)
@@ -354,6 +360,8 @@ export default createComponent({
                         } else {
                             throw error;
                         }
+                    } finally {
+                        state.modalAccessByHardwareState.isBusy = false;
                     }
                     break;
                 default:

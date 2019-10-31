@@ -1,16 +1,9 @@
 <template>
     <Modal
-        :is-open="isOpen"
+        :is-open="state.isOpen"
         :title="$t('modalAccessByHardware.title')"
-        @change="this.$listeners.change"
+        @change="handleModalChangeIsOpen"
     >
-        <template v-slot:banner>
-            <Warning
-                v-if="!checkIsChrome"
-                :title="$t('warning.browserWarningTitle')"
-                :message="$t('warning.browserWarningBody')"
-            />
-        </template>
         <form class="modal-access-by-hardware" @submit.prevent="handleSubmit">
             <RadioButtonGroup
                 v-model="state.optionSelected"
@@ -19,10 +12,28 @@
             />
             <div :class="{ instructions: true, open: selected }">
                 <div>{{ instructions }}</div>
+            </div>
+            <div
+                :class="{
+                    instructions: true,
+                    bold: true,
+                    open: requiresChrome && !isChrome
+                }"
+            >
+                <div>{{ $t("modalAccessByHardware.useChromeContinue") }}</div>
+            </div>
+            <div
+                :class="{
+                    instructions: true,
+                    bold: true,
+                    open: !state.disableButton
+                }"
+            >
                 <div>{{ $t("modalAccessByHardware.watchForPrompts") }}</div>
             </div>
             <Button
-                :disabled="!state.disableButton"
+                :busy="state.isBusy"
+                :disabled="state.disableButton"
                 class="button-choose-a-hardware"
                 :label="$t('modalAccessByHardware.chooseAHardware')"
             />
@@ -37,7 +48,8 @@ import {
     reactive,
     watch,
     SetupContext,
-    computed
+    computed,
+    PropType
 } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
@@ -128,6 +140,17 @@ export const HardwareOptions: Map<
     ]
 ]);
 
+export interface State {
+    isOpen: boolean;
+    isBusy: boolean;
+    optionSelected: string;
+    disableButton: boolean;
+}
+
+export interface Props {
+    state: State;
+}
+
 export default createComponent({
     components: {
         RadioButtonGroup,
@@ -137,43 +160,53 @@ export default createComponent({
         Warning
     },
     model: {
-        prop: "isOpen",
+        prop: "state",
         event: "change"
     },
     props: {
-        isOpen: { type: Boolean }
+        state: (Object as unknown) as PropType<State>
     },
-    setup(props: { isOpen: boolean }, context: SetupContext) {
-        const state = reactive({
-            optionSelected: "",
-            disableButton: false
+    setup(props: Props, context: SetupContext) {
+        const chromeWarning = computed(
+            () =>
+                context.root.$t("warning.browserWarningBody1").toString() +
+                "\n" +
+                context.root.$t("warning.browserWarningBody2").toString()
+        );
+
+        const isChrome = computed(
+            () =>
+                new UAParser(navigator.userAgent).getBrowser().name === "Chrome"
+        );
+
+        const requiresChrome = computed(() => {
+            return props.state.optionSelected === AccessHardwareOption.Ledger;
         });
 
-        const checkIsChrome =
-            new UAParser(navigator.userAgent).getBrowser().name === "Chrome";
+        function handleModalChangeIsOpen(isOpen: boolean): void {
+            context.emit("change", { ...props.state, isOpen });
+        }
 
         function handleSubmit(): void {
-            context.emit("submit", state.optionSelected);
+            context.emit("submit", props.state.optionSelected);
         }
 
         watch(
-            () => props.isOpen,
+            () => props.state.isOpen,
             (newVal: boolean) => {
                 if (newVal) {
-                    state.optionSelected = "";
+                    props.state.optionSelected = "";
                 }
             }
         );
 
         watch(
-            () => state.optionSelected.length,
+            () => props.state.optionSelected.length,
             () => {
-                if (!checkIsChrome && state.optionSelected.length === 0) {
-                    state.disableButton = false;
-                    return;
-                }
-
-                state.disableButton = true;
+                // if require chrome but not chrome, or if nothing selected, disable button
+                props.state.disableButton =
+                    (!isChrome.value && requiresChrome.value) ||
+                    props.state.optionSelected.length === 0;
             }
         );
 
@@ -182,15 +215,21 @@ export default createComponent({
         });
 
         const selected = computed(() => {
-            return state.optionSelected !== "";
+            return props.state.optionSelected !== "";
         });
 
         const instructions = computed(() => {
-            switch (state.optionSelected) {
+            switch (props.state.optionSelected) {
                 case AccessHardwareOption.Ledger:
-                    return context.root
-                        .$t("modalAccessByHardware.ledgerInstructions")
-                        .toString();
+                    if (isChrome.value) {
+                        return context.root
+                            .$t("modalAccessByHardware.ledgerInstructions")
+                            .toString();
+                    } else {
+                        return context.root
+                            .$t("modalAccessByHardware.ledgerChromeOnly")
+                            .toString();
+                    }
                 case AccessHardwareOption.Trezor:
                     return context.root
                         .$t("modalAccessByHardware.trezorInstructions")
@@ -202,12 +241,14 @@ export default createComponent({
         });
 
         return {
-            state,
             options,
             selected,
             instructions,
+            handleModalChangeIsOpen,
             handleSubmit,
-            checkIsChrome
+            isChrome,
+            chromeWarning,
+            requiresChrome
         };
     }
 });
@@ -231,16 +272,12 @@ export default createComponent({
     text-align: center;
     transition: 0.3s;
 
-    & div:first-child {
-        padding-block-end: 10px;
-    }
-
-    & div:last-child {
+    &.bold {
         font-weight: 500;
     }
 
     &.open {
-        margin-block-start: 40px;
+        margin-block-start: 20px;
         max-height: 100px;
     }
 
