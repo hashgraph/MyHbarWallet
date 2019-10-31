@@ -1,3 +1,4 @@
+import {LoginMethod} from "../wallets/Wallet";
 <template>
     <div>
         <div :class="classObject" class="side-nav-top">
@@ -16,6 +17,7 @@
             />
 
             <InterfaceNavigationSection
+                v-if="notLedger"
                 :icon="mdiFileDocumentBoxMultipleOutline"
                 :title="$t('interfaceNavigation.files')"
                 :routes="filesRoutes"
@@ -53,7 +55,8 @@ import {
     mdiCoinOutline,
     mdiFileDocumentBoxMultipleOutline
 } from "@mdi/js";
-import { createComponent, computed } from "@vue/composition-api";
+import { computed, createComponent } from "@vue/composition-api";
+import { LoginMethod } from "../wallets/Wallet";
 
 // Yes, it is used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -94,7 +97,19 @@ export default createComponent({
             else return "menu-closed";
         });
 
+        const notLedger = computed(() => {
+            if (store.state.wallet.session !== null) {
+                return (
+                    store.state.wallet.session.wallet.getLoginMethod() !==
+                    LoginMethod.LedgerNanoS
+                );
+            }
+
+            return true;
+        });
+
         return {
+            notLedger,
             cryptoRoutes,
             contractRoutes,
             messageRoutes,

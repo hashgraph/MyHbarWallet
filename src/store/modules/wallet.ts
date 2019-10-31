@@ -16,6 +16,10 @@ import {
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
+import { State as ModalByHardwareState } from "../../components/ModalAccessByHardware";
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
 import { State as ModalDownloadKeystoreState } from "../../components/ModalDownloadKeystore";
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -87,7 +91,6 @@ export interface ModalIsOpen {
     isOpen: boolean;
 }
 
-type ModalByHardwareState = ModalIsOpen;
 type ModalBySoftwareState = ModalIsOpen;
 type ModalCreateByPhraseState = ModalIsOpen;
 type ModalRequestToCreateAccountState = ModalIsOpen;

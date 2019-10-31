@@ -60,6 +60,7 @@ export default createComponent({
     /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
     transition: background-color, transform 0.3s ease;
     user-select: none;
+    width: 100%;
 
     & .title,
     & .content,

@@ -10,7 +10,18 @@
                     {{ $t("modalEnterAccountId.hederaAccountIdsAre") }}
                 </Notice>
             </template>
+            <div v-if="hasPublicKey" class="key-container">
+                <div
+                    class="subtitle"
+                    v-text="$t('modalEnterAccountId.verifyKey')"
+                ></div>
+                <ReadOnlyInput class="input" :value="publicKey" multiline />
+            </div>
             <form @submit.stop.prevent="handleSubmit">
+                <div
+                    class="subtitle"
+                    v-text="$t('modalEnterAccountId.accountId')"
+                ></div>
                 <IDInput
                     ref="input"
                     :is-open="state.isOpen"
@@ -43,13 +54,19 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, SetupContext } from "@vue/composition-api";
+import {
+    computed,
+    createComponent,
+    PropType,
+    SetupContext
+} from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import IDInput from "../components/IDInput.vue";
 import { Id } from "../store/modules/wallet";
 import Notice from "../components/Notice.vue";
 import { mdiHelpCircleOutline } from "@mdi/js";
+import ReadOnlyInput from "./ReadOnlyInput.vue";
 
 export interface State {
     failed: string | null;
@@ -58,6 +75,7 @@ export interface State {
     isBusy: boolean;
     account: Id | null;
     valid: boolean;
+    publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
 }
 
 export interface Props {
@@ -69,7 +87,8 @@ export default createComponent({
         Modal,
         Button,
         Notice,
-        IDInput
+        IDInput,
+        ReadOnlyInput
     },
     model: {
         prop: "state",
@@ -79,6 +98,21 @@ export default createComponent({
         state: Object as PropType<State>
     },
     setup(props: Props, context: SetupContext) {
+        const hasPublicKey = computed(() => {
+            return (
+                props.state.publicKey !== null &&
+                props.state.publicKey !== undefined
+            );
+        });
+
+        const publicKey = computed(() => {
+            if (hasPublicKey.value) {
+                return props.state.publicKey!.toString(true);
+            }
+
+            return null;
+        });
+
         function handleAccount(value: string, account: Id | null): void {
             props.state.errorMessage = null;
             props.state.account = account;
@@ -101,13 +135,17 @@ export default createComponent({
             props.state.isBusy = true;
 
             if (props.state.account == null) {
-                throw new Error("unexpected submission of EnterAccountID");
+                throw new Error(
+                    context.root.$t("common.error.illegalState").toString()
+                );
             }
 
             context.emit("submit", props.state.account);
         }
 
         return {
+            hasPublicKey,
+            publicKey,
             handleAccount,
             handleModalChangeIsOpen,
             handleDontHaveAccount,
@@ -120,6 +158,21 @@ export default createComponent({
 </script>
 
 <style scoped lang="postcss">
+.key-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-block-end: 40px;
+}
+
+.subtitle {
+    color: var(--color-china-blue);
+    font-size: 24px;
+    margin-block-end: 30px;
+    text-align: center;
+}
+
 .button {
     width: 213px;
 

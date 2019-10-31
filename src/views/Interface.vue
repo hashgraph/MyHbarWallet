@@ -62,7 +62,8 @@ export default createComponent({
         const state = reactive({
             showWarning:
                 loginMethod != LoginMethod.KeyStore &&
-                loginMethod != LoginMethod.Hardware
+                loginMethod != LoginMethod.LedgerNanoS &&
+                loginMethod != LoginMethod.Trezor
         });
 
         function onDismiss(): void {

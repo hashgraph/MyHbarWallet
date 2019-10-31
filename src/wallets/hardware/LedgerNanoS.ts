@@ -5,7 +5,7 @@ import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 // Preserving, in case we need this later
 // export const LEDGER_HEDERA_PATH = "44'/3030'/0'/0'/0'";
 
-export const INDEX = 0x01; // Key Index on Ledger
+export const INDEX = 0x00; // Key Index on Ledger
 
 export const CLA = 0xE0;
 const INS_GET_PK = 0x02;
@@ -80,7 +80,7 @@ export default class LedgerNanoS implements Wallet {
     }
 
     public getLoginMethod(): LoginMethod {
-        return LoginMethod.Hardware;
+        return LoginMethod.LedgerNanoS;
     }
 
     public async signTransaction(

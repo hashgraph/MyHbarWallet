@@ -11,5 +11,6 @@ export enum LoginMethod {
     PrivateKey,
     Mnemonic,
     PasswordMnemonic,
-    Hardware
+    LedgerNanoS,
+    Trezor
 }
