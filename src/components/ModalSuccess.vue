@@ -35,7 +35,7 @@
                         :label="$t('common.continue')"
                         :disabled="hasCopyable && !copyClicked"
                         compact
-                        class="continue-button"
+                        :class="{ 'continue-button': true, full: !hasCopyable }"
                         @click="handleContinue"
                     />
                 </div>
@@ -176,6 +176,10 @@ export default createComponent({
 
 .continue-button {
     width: 213px;
+
+    &.full {
+        width: 100%;
+    }
 
     @media (max-width: 600px) {
         width: 100%;
