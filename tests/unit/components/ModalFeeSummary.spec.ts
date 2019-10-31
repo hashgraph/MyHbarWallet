@@ -233,7 +233,7 @@ describe("ModalFeeSummary.vue", (): void => {
                   </header>
                   <div class="main">
                     <div class="content-container">
-                      <div class="modal-fee-summary-title"><span class="title"><span>Creating account with balance <strong>100</strong> ℏ</span></span></div>
+                      <div class="modal-fee-summary-title"><span class="title"><span>Creating account with a balance of <strong>100</strong> ℏ</span></span></div>
                       <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row">

@@ -93,7 +93,10 @@ export default createComponent({
                 )
                     .setFileId(state.fileId)
                     .requestCost();
-
+                context.emit(
+                    "fileId",
+                    `${state.fileId.shard}.${state.fileId.realm}.${state.fileId.file}`
+                );
                 context.emit("summary", getEstimate.value());
                 context.emit("trigger", true);
             } catch (error) {
