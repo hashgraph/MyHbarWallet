@@ -70,6 +70,7 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
                   <header><span class="title">Request to Create Account</span>
                     <!---->
                   </header>
+                  <!---->
                   <div class="main">
                     <div class="content-container">
                       <div class="instructions">

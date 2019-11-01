@@ -8,7 +8,13 @@
             aria-modal="true"
             @mousedown.self="handleClose"
         >
-            <div class="modal" :class="{ large: props.large }">
+            <div
+                class="modal"
+                :class="{
+                    large: !props.small && props.large,
+                    small: !props.large && props.small
+                }"
+            >
                 <header v-if="!props.hideDecoration">
                     <span class="title">{{ props.title }}</span>
                     <MaterialDesignIcon
@@ -18,7 +24,13 @@
                         @click="handleClose"
                     />
                 </header>
-                <div class="main">
+                <MaterialDesignIcon
+                    v-if="crown"
+                    :icon="crown"
+                    :size="140"
+                    class="crown"
+                />
+                <div :class="{ main: true, garlands }">
                     <slot name="banner"></slot>
                     <div class="content-container">
                         <slot></slot>
@@ -55,7 +67,10 @@ export default createComponent({
         isOpen: Boolean,
         title: String,
         hideDecoration: Boolean,
-        large: Boolean
+        small: Boolean,
+        large: Boolean,
+        garlands: Boolean,
+        crown: String
     },
     components: {
         MaterialDesignIcon
@@ -213,6 +228,17 @@ export default createComponent({
     width: 100%;
     z-index: 3;
 
+    & .crown {
+        background-color: var(--color-melbourne-cup);
+        border-color: var(--color-melbourne-cup);
+        border-radius: 1200px;
+        border-style: solid;
+        color: var(--color-white);
+        padding: 20px;
+        position: absolute;
+        transform: translate(230px, -70px);
+    }
+
     @media print {
         box-shadow: none;
     }
@@ -231,8 +257,20 @@ export default createComponent({
     }
 }
 
+.modal.small {
+    max-width: 440px;
+
+    & .crown {
+        transform: translate(150px, -70px);
+    }
+}
+
 .modal.large {
     max-width: 800px;
+
+    & .crown {
+        transform: translate(330px, -70px);
+    }
 }
 
 .modal-background .modal {
@@ -274,6 +312,12 @@ header {
 
 .main {
     background-color: var(--color-white);
+
+    &.garlands {
+        background-image: url("../assets/garlands.png");
+        background-repeat: no-repeat;
+        background-size: 100%;
+    }
 
     @media (max-width: 600px) {
         height: 100vh;

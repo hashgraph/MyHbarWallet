@@ -2,41 +2,33 @@
     <div class="modal-success">
         <Modal
             :is-open="state.isOpen"
+            small
             hide-decoration
-            @change="handleModalChangeIsOpen"
+            garlands
+            :crown="mdiCheck"
         >
             <div class="container">
-                <MaterialDesignIcon
-                    class="large-checkbox"
-                    :icon="mdiCheck"
-                    :size="210"
-                />
                 <div class="title">
                     {{ $t("common.success") }}
                 </div>
                 <div class="description">
                     <slot></slot>
                 </div>
-                <ReadOnlyInput
-                    v-if="hasCopyable"
-                    :value="state.copyInfo"
-                    class="copyable"
-                />
                 <div class="button-container">
                     <Button
-                        v-if="hasCopyable"
-                        :label="$t('common.copy')"
-                        :outline="hasCopyable && copyClicked"
+                        v-if="hasAction"
+                        :label="actionLabel"
+                        :outline="hasAction && actionClicked"
                         compact
                         class="copy-button"
-                        @click="handleCopy"
+                        @click="handleAction"
                     />
                     <Button
-                        :label="$t('common.continue')"
-                        :disabled="hasCopyable && !copyClicked"
+                        :label="dismissLabel"
+                        :disabled="hasAction && !actionClicked"
                         compact
-                        :class="{ 'continue-button': true, full: !hasCopyable }"
-                        @click="handleContinue"
+                        :class="{ 'dismiss-button': true, full: !hasAction }"
+                        @click="handleDismiss"
                     />
                 </div>
             </div>
@@ -50,14 +42,17 @@ import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import { mdiCheck } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
-import { writeToClipboard } from "../clipboard";
-import { ALERT } from "../store/actions";
-import store from "../store";
 import ReadOnlyInput from "./ReadOnlyInput.vue";
 
 export interface State {
     isOpen: boolean;
-    copyInfo: string | null;
+    hasAction?: boolean | undefined;
+    actionLabel?: string | undefined;
+    dismissLabel?: string | undefined;
+}
+
+interface Props {
+    state: State;
 }
 
 export default createComponent({
@@ -74,38 +69,39 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    setup(props: { state: State }, context): object {
-        const copyClicked = ref(false);
-
-        const hasCopyable = computed(
-            () => props.state.copyInfo !== "" && props.state.copyInfo !== null
+    setup(props: Props, context): object {
+        const hasAction = computed(() =>
+            props.state.hasAction === undefined ? false : props.state.hasAction
         );
+        const actionLabel = computed(() =>
+            props.state.actionLabel !== undefined
+                ? props.state.actionLabel
+                : "Action"
+        );
+        const dismissLabel = computed(() =>
+            props.state.dismissLabel !== undefined
+                ? props.state.dismissLabel
+                : "Dismiss"
+        );
+        const actionClicked = ref(false);
 
-        function handleModalChangeIsOpen(isOpen: boolean): void {
-            context.emit("change", { ...props.state, isOpen });
+        function handleAction(): void {
+            actionClicked.value = true;
+            context.emit("action");
         }
 
-        async function handleCopy(): Promise<void> {
-            await writeToClipboard(props.state.copyInfo!);
-            copyClicked.value = true;
-
-            await store.dispatch(ALERT, {
-                level: "info",
-                message: context.root.$t("common.copied").toString()
-            });
-        }
-
-        function handleContinue(): void {
-            copyClicked.value = false;
-            context.emit("continue");
+        function handleDismiss(): void {
+            actionClicked.value = false;
+            context.emit("dismiss");
         }
 
         return {
-            copyClicked,
-            hasCopyable,
-            handleModalChangeIsOpen,
-            handleCopy,
-            handleContinue,
+            hasAction,
+            actionLabel,
+            dismissLabel,
+            actionClicked,
+            handleAction,
+            handleDismiss,
             mdiCheck
         };
     }
@@ -115,38 +111,26 @@ export default createComponent({
 <style scoped lang="postcss">
 .container {
     align-items: center;
-    background-image: url("../assets/garlands.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
-.copyable {
+.action {
     margin-block-end: 25px;
     width: 100%;
 }
 
 .title {
-    color: var(--color-yankees-blue);
-    font-size: 30px;
-    font-weight: 700;
+    color: var(--color-melbourne-cup);
+    font-size: 42px;
+    font-weight: 600;
     margin-block-end: 20px;
+    margin-block-start: 50px;
 }
 
 .description {
     color: var(--color-china-blue);
-    margin-block-end: 25px;
-}
-
-.large-checkbox {
-    border-color: var(--color-melbourne-cup);
-    border-radius: 1200px;
-    border-style: solid;
-    color: var(--color-melbourne-cup);
-    margin-block-end: 25px;
-    padding: 15px;
+    margin-block-end: 50px;
 }
 
 .button-container {
@@ -162,7 +146,7 @@ export default createComponent({
 }
 
 .copy-button {
-    width: 213px;
+    width: 45%;
 
     @media (max-width: 600px) {
         margin-block-end: 15px;
@@ -170,8 +154,8 @@ export default createComponent({
     }
 }
 
-.continue-button {
-    width: 213px;
+.dismiss-button {
+    width: 45%;
 
     &.full {
         width: 100%;

@@ -98,7 +98,9 @@ export default createComponent({
 
             store.dispatch(ALERT, {
                 level: "info",
-                message: context.root.$t("modalViewKeys.copiedPublic")
+                message: context.root
+                    .$t("modalViewKeys.copiedPublic")
+                    .toString()
             });
         }
 
@@ -109,7 +111,9 @@ export default createComponent({
 
             store.dispatch(ALERT, {
                 level: "info",
-                message: context.root.$t("modalViewKeys.copiedPrivate")
+                message: context.root
+                    .$t("modalViewKeys.copiedPrivate")
+                    .toString()
             });
         }
 
