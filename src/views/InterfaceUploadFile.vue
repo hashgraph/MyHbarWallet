@@ -38,8 +38,8 @@
         />
         <ModalSuccess
             v-model="state.success"
-            @change="handleUploadFinish"
-            @continue="handleUploadFinish"
+            @action="handleCopyFileID"
+            @dismiss="handleUploadFinish"
         >
             <i18n path="modalSuccess.uploadedFile">
                 <strong>{{ state.filename }}</strong>
@@ -73,6 +73,7 @@ import BigNumber from "bignumber.js";
 import store from "../store";
 import { ALERT } from "../store/actions";
 import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
+import { writeToClipboard } from "../clipboard";
 
 //!Can remove with next sdk publish
 
@@ -140,7 +141,6 @@ export default createComponent({
             fileBytes: null as Uint8Array | null,
             uploadBytes: null as Uint8Array | null,
             uploadHash: false,
-            successModalIsOpen: false,
             feeModalIsOpen: false,
             isUploading: false,
             isBusy: false,
@@ -154,9 +154,12 @@ export default createComponent({
             } as UploadProgressState,
             success: {
                 isOpen: false,
-                copyInfo: ""
+                hasAction: true,
+                actionLabel: "Copy File ID"
             } as SuccessState
         });
+
+        const fileID: Ref<FileId | null> = ref(null);
 
         const summary: Ref<Item | null> = ref({
             value: new BigNumber(0),
@@ -252,11 +255,9 @@ export default createComponent({
             await fileAppendUploads(chunks, fileId, client);
             await store.dispatch(REFRESH_BALANCE_AND_RATE);
 
+            fileID.value = fileId;
             state.uploadProgress.wasSuccess = true;
             state.uploadProgress.inProgress = false;
-
-            state.success.copyInfo = `${fileId.shard.toString()}.${fileId.realm.toString()}.${fileId.file.toString()}`;
-
             state.uploadProgress.isOpen = false;
             state.success.isOpen = true;
         }
@@ -417,6 +418,26 @@ export default createComponent({
             state.fileName = "";
         }
 
+        async function handleCopyFileID(): Promise<void> {
+            if (fileID !== null) {
+                await writeToClipboard(
+                    `${fileID.value!.shard.toString()}.${fileID.value!.realm.toString()}.${fileID.value!.file.toString()}`
+                );
+                store.dispatch(ALERT, {
+                    level: "info",
+                    message: context.root
+                        .$t("modalSuccess.copiedFileID")
+                        .toString()
+                });
+            } else {
+                store.dispatch(ALERT, {
+                    level: "error",
+                    message: context.root.$t("modalSuccess.noFileID").toString()
+                });
+            }
+            fileID.value = null;
+        }
+
         function handleUploadFinish(): void {
             reset();
         }
@@ -440,6 +461,7 @@ export default createComponent({
             handleUploadRetry,
             handleHashUploadClick,
             handleFeeModalChange,
+            handleCopyFileID,
             handleUploadFinish,
             summaryAmount,
             summaryItems,

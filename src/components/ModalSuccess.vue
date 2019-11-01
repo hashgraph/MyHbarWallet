@@ -46,9 +46,13 @@ import ReadOnlyInput from "./ReadOnlyInput.vue";
 
 export interface State {
     isOpen: boolean;
-    hasAction: boolean | undefined;
-    actionLabel: string | undefined;
-    dismissLabel: string | undefined;
+    hasAction?: boolean | undefined;
+    actionLabel?: string | undefined;
+    dismissLabel?: string | undefined;
+}
+
+interface Props {
+    state: State;
 }
 
 export default createComponent({

@@ -234,6 +234,8 @@
     "modalRequestToCreateAccount.title": "Request to Create Account",
     "modalSuccess.createdAccount": "Created account {0} with {1} ℏ",
     "modalSuccess.copiedAccountID": "Copied Account ID",
+    "modalSuccess.copiedFileID": "Copied File ID",
+    "modalSuccess.noFileID": "No File present. Please try again.",
     "modalSuccess.transferred": "Transferred {0} ℏ to account {1}",
     "modalSuccess.uploadedFile": "Uploaded file {0} with id {1}",
     "modalUploadProgress.failure.buttonLabel":  "Retry",
