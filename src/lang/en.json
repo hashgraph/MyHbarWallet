@@ -233,6 +233,7 @@
     "modalRequestToCreateAccount.theyMustCreateAndFundYourAccount": "They must create and fund your account, then provide you with your new account ID.",
     "modalRequestToCreateAccount.title": "Request to Create Account",
     "modalSuccess.createdAccount": "Created account {0} with {1} ℏ",
+    "modalSuccess.copiedAccountID": "Copied Account ID",
     "modalSuccess.transferred": "Transferred {0} ℏ to account {1}",
     "modalUploadProgress.failure.buttonLabel":  "Retry",
     "modalUploadProgress.failure.buttonLabel2": "Cancel",

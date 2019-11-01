@@ -36,8 +36,8 @@
 
         <ModalSuccess
             v-model="state.modalSuccessState"
-            @change="handleSuccessModalChange"
-            @continue="handleSuccessModalContinue"
+            @action="handleModalSuccessAction"
+            @dismiss="handleModalSuccessDismiss"
         >
             <i18n path="modalSuccess.createdAccount">
                 <strong>{{ state.account }}</strong>
@@ -88,6 +88,7 @@ import {
 import ModalSuccess, {
     State as ModalSuccessState
 } from "../components/ModalSuccess.vue";
+import { writeToClipboard } from "../clipboard";
 
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
@@ -145,7 +146,8 @@ export default createComponent({
             isPublicKeyValid: false,
             modalSuccessState: {
                 isOpen: false,
-                copyInfo: ""
+                hasAction: true,
+                actionLabel: "Copy Account ID"
             }
         });
 
@@ -247,7 +249,6 @@ export default createComponent({
                     accountIdIntermediate.realm +
                     "." +
                     accountIdIntermediate.account;
-                state.modalSuccessState.copyInfo = state.account;
 
                 // If creating state.account succeeds then remove all the error
                 state.newBalanceError = "";
@@ -292,20 +293,23 @@ export default createComponent({
             }
         }
 
-        function handleSuccessModalContinue(): void {
+        async function handleModalSuccessAction(): Promise<void> {
+            // Copy created AccountID
+            await writeToClipboard(state.account);
+            store.dispatch(ALERT, {
+                level: "info",
+                message: context.root
+                    .$t("modalSuccess.copiedAccountID")
+                    .toString()
+            });
+        }
+
+        function handleModalSuccessDismiss(): void {
             state.modalSuccessState.isOpen = false;
             state.isBusy = false;
             state.publicKey = "";
             state.newBalance = "";
-        }
-
-        function handleSuccessModalChange(isOpen: boolean): void {
-            if (!isOpen) {
-                state.modalSuccessState.isOpen = isOpen;
-                state.isBusy = false;
-                state.publicKey = "";
-                state.newBalance = "";
-            }
+            state.account = "";
         }
 
         function handleShowSummary(): void {
@@ -319,8 +323,8 @@ export default createComponent({
             validBalance,
             handleCreateAccount,
             handleShowSummary,
-            handleSuccessModalChange,
-            handleSuccessModalContinue,
+            handleModalSuccessAction,
+            handleModalSuccessDismiss,
             Unit,
             mdiHelpCircleOutline
         };

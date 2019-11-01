@@ -46,6 +46,7 @@ describe("ModalLogOut.vue", (): void => {
             <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
               <div class="modal">
                 <!---->
+                <!---->
                 <div class="main">
                   <div class="content-container">
                     <div class="modal-forgot-to-logout"><span>Log Out</span>
