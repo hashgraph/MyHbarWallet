@@ -6,14 +6,6 @@
             :is-open="state.isOpen"
             @change="handleModalChangeIsOpen"
         >
-            <template v-slot:banner>
-                <Warning
-                    :title="$t('warning.title')"
-                    :message="
-                        $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
-                    "
-                />
-            </template>
             <form @submit.prevent="handleSubmit">
                 <TextInput
                     ref="input"
