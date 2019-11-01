@@ -43,7 +43,7 @@
         >
             <i18n path="modalSuccess.uploadedFile">
                 <strong>{{ state.filename }}</strong>
-                <strong>{{ state.success.copyInfo }}</strong>
+                <strong>{{ fileIDString }}</strong>
             </i18n>
         </ModalSuccess>
     </InterfaceForm>
@@ -74,8 +74,6 @@ import store from "../store";
 import { ALERT } from "../store/actions";
 import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import { writeToClipboard } from "../clipboard";
-
-//!Can remove with next sdk publish
 
 type AccountId = {
     shard: number;
@@ -113,8 +111,6 @@ type TransactionReceipt = {
     contractId?: ContractId;
     exchangeRateSet?: ExchangeRateSet;
 };
-
-//! end remove bit
 
 async function hashFile(file: Uint8Array): Promise<Uint8Array> {
     const digest = await crypto.subtle.digest("SHA-384", file);
@@ -160,6 +156,14 @@ export default createComponent({
         });
 
         const fileID: Ref<FileId | null> = ref(null);
+
+        const fileIDString = computed(() => {
+            if (fileID.value !== null) {
+                return `${fileID.value!.shard.toString()}.${fileID.value!.realm.toString()}.${fileID.value!.file.toString()}`;
+            }
+
+            return "";
+        });
 
         const summary: Ref<Item | null> = ref({
             value: new BigNumber(0),
@@ -408,7 +412,8 @@ export default createComponent({
 
             state.success = {
                 isOpen: false,
-                copyInfo: ""
+                hasAction: true,
+                actionLabel: "Copy File ID"
             } as SuccessState;
 
             state.buttonsDisabled = true;
@@ -420,9 +425,7 @@ export default createComponent({
 
         async function handleCopyFileID(): Promise<void> {
             if (fileID !== null) {
-                await writeToClipboard(
-                    `${fileID.value!.shard.toString()}.${fileID.value!.realm.toString()}.${fileID.value!.file.toString()}`
-                );
+                await writeToClipboard(fileIDString.value);
                 store.dispatch(ALERT, {
                     level: "info",
                     message: context.root
@@ -463,6 +466,7 @@ export default createComponent({
             handleFeeModalChange,
             handleCopyFileID,
             handleUploadFinish,
+            fileIDString,
             summaryAmount,
             summaryItems,
             state,
