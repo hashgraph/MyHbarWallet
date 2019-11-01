@@ -60,10 +60,6 @@ export interface State {
     copyInfo: string | null;
 }
 
-export interface Props {
-    state: State;
-}
-
 export default createComponent({
     components: {
         Modal,
@@ -78,7 +74,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    setup(props: Props, context): object {
+    setup(props: { state: State }, context): object {
         const copyClicked = ref(false);
 
         const hasCopyable = computed(
@@ -93,7 +89,7 @@ export default createComponent({
             await writeToClipboard(props.state.copyInfo!);
             copyClicked.value = true;
 
-            store.dispatch(ALERT, {
+            await store.dispatch(ALERT, {
                 level: "info",
                 message: context.root.$t("common.copied").toString()
             });
