@@ -40,7 +40,12 @@
             v-model="state.success"
             @change="handleUploadFinish"
             @continue="handleUploadFinish"
-        />
+        >
+            <i18n path="modalSuccess.uploadedFile">
+                <strong>{{ state.filename }}</strong>
+                <strong>{{ state.success.copyInfo }}</strong>
+            </i18n>
+        </ModalSuccess>
     </InterfaceForm>
 </template>
 
