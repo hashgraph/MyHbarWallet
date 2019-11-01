@@ -1,4 +1,4 @@
-import Wallet, {LoginMethod} from "../Wallet";
+import Wallet, { LoginMethod } from "../Wallet";
 import "regenerator-runtime"; // https://github.com/LedgerHQ/ledgerjs/issues/332
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 

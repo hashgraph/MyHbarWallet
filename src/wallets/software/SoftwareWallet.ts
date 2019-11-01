@@ -1,4 +1,4 @@
-import Wallet, {LoginMethod} from "../Wallet";
+import Wallet, { LoginMethod } from "../Wallet";
 
 export default class SoftwareWallet implements Wallet {
     private readonly privateKey: import("@hashgraph/sdk").Ed25519PrivateKey;
@@ -9,7 +9,7 @@ export default class SoftwareWallet implements Wallet {
     public constructor(
         loginMethod: LoginMethod,
         privateKey: import("@hashgraph/sdk").Ed25519PrivateKey,
-        publicKey?: import("@hashgraph/sdk").PublicKey,
+        publicKey?: import("@hashgraph/sdk").PublicKey
     ) {
         this.privateKey = privateKey;
         this.publicKey =
