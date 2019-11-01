@@ -60,16 +60,15 @@
                     />
                 </div>
 
-                <div
-                    v-if="!state.inProgress && state.wasSuccess"
-                    class="upload-text"
-                >
-                    File ID: {{ state.fileId }}
+                <div class="progress-text">
+                    {{ progressString }}
                 </div>
 
-                <div class="button-container">
+                <div
+                    v-if="!state.inProgress && !state.wasSuccess"
+                    class="button-container"
+                >
                     <Button
-                        v-if="!state.inProgress && !state.wasSuccess"
                         :label="$t('modalUploadProgress.failure.buttonLabel2')"
                         :disabled="state.inProgress"
                         class="cancel-button"
@@ -79,10 +78,10 @@
                     />
 
                     <Button
-                        :label="buttonLabel"
+                        :label="$t('modalUploadProgress.failure.buttonLabel')"
                         :disabled="state.inProgress"
-                        class="progress-button"
-                        @click="onClickFinish"
+                        class="retry-button"
+                        @click="onClickRetry"
                     />
                 </div>
             </div>
@@ -104,7 +103,6 @@ export interface State {
     wasSuccess: boolean;
     currentChunk: number;
     totalChunks: number;
-    fileId: string;
 }
 
 export default createComponent({
@@ -123,24 +121,18 @@ export default createComponent({
     },
     setup(props: { state: State }, context: SetupContext) {
         const buttonLabel = computed<string>(() => {
-            if (props.state.inProgress) {
-                const completionPercentage =
-                    props.state.currentChunk < props.state.totalChunks
-                        ? (props.state.currentChunk / props.state.totalChunks) *
-                          100
-                        : 0;
-                return completionPercentage.toFixed(2) + "%";
-            }
-
-            if (props.state.wasSuccess) {
-                return context.root
-                    .$t("modalUploadProgress.success.buttonLabel")
-                    .toString();
-            }
-
             return context.root
                 .$t("modalUploadProgress.failure.buttonLabel")
                 .toString();
+        });
+
+        const progressString = computed<string>(() => {
+            const completionPercentage =
+                props.state.currentChunk <= props.state.totalChunks
+                    ? (props.state.currentChunk / props.state.totalChunks) * 100
+                    : 0;
+
+            return completionPercentage.toFixed(2) + "%";
         });
 
         const isElectron = computed(() => {
@@ -152,16 +144,9 @@ export default createComponent({
             context.emit("change", false);
         }
 
-        function onClickFinish(): void {
-            if (!props.state.wasSuccess) {
-                // user clicked retry
-                context.emit("retry");
-                return;
-            }
-
-            context.emit("change", false);
-            context.emit("finish");
-            return;
+        function onClickRetry(): void {
+            // user clicked retry
+            context.emit("retry");
         }
 
         function onClickCancel(): void {
@@ -173,8 +158,9 @@ export default createComponent({
             mdiLoading,
             mdiFileCheckOutline,
             mdiFileRemoveOutline,
+            progressString,
             isElectron,
-            onClickFinish,
+            onClickRetry,
             onClickCancel
         };
     }
@@ -196,6 +182,12 @@ export default createComponent({
     justify-content: center;
     margin-block-end: 20px;
     text-align: center;
+}
+
+.progress-text {
+    color: var(--color-china-blue);
+    font-size: 18px;
+    margin-block-start: 60px;
 }
 
 .upload-subtext {
