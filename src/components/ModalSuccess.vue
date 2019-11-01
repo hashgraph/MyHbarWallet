@@ -51,10 +51,6 @@ export interface State {
     dismissLabel: string | undefined;
 }
 
-export interface Props {
-    state: State;
-}
-
 export default createComponent({
     components: {
         Modal,
