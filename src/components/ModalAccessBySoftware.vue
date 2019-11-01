@@ -5,14 +5,6 @@
             :title="$t('modalAccessBySoftware.title')"
             @change="this.$listeners.change"
         >
-            <template v-slot:banner>
-                <Warning
-                    :title="$t('warning.title')"
-                    :message="
-                        $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
-                    "
-                />
-            </template>
             <template>
                 <form
                     class="modal-access-by-software"
