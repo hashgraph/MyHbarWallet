@@ -34,8 +34,12 @@
         <ModalUploadProgress
             v-model="state.uploadProgress"
             @change="handleUploadCancel"
-            @finish="handleUploadFinish"
             @retry="handleUploadRetry"
+        />
+        <ModalSuccess
+            v-model="state.success"
+            @change="handleUploadFinish"
+            @continue="handleUploadFinish"
         />
     </InterfaceForm>
 </template>
@@ -53,9 +57,12 @@ import {
 } from "@vue/composition-api";
 import UploadZone from "../components/UploadZone.vue";
 import ModalUploadProgress, {
-    State
+    State as UploadProgressState
 } from "../components/ModalUploadProgress.vue";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+import ModalSuccess, {
+    State as SuccessState
+} from "../components/ModalSuccess.vue";
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
 import store from "../store";
@@ -118,12 +125,12 @@ export default createComponent({
         UploadZone,
         Button,
         ModalUploadProgress,
-        ModalFeeSummary
+        ModalFeeSummary,
+        ModalSuccess
     },
     setup(props: object, context: SetupContext) {
         const state = reactive({
             estimatedFee: 0,
-            fileId: "",
             fileName: "",
             fileBytes: null as Uint8Array | null,
             uploadBytes: null as Uint8Array | null,
@@ -139,7 +146,11 @@ export default createComponent({
                 wasSuccess: false,
                 currentChunk: 0,
                 totalChunks: 0
-            } as State
+            } as UploadProgressState,
+            success: {
+                isOpen: false,
+                copyInfo: ""
+            } as SuccessState
         });
 
         const summary: Ref<Item | null> = ref({
@@ -150,11 +161,6 @@ export default createComponent({
         const summaryAmount = computed(() => {
             return formatHbar(new BigNumber(state.estimatedFee.toFixed(4)));
         });
-
-        function handleReceipt(fileId: FileId): void {
-            state.fileId = `${fileId.shard.toString()}.${fileId.realm.toString()}.${fileId.file.toString()}`;
-            state.successModalIsOpen = true;
-        }
 
         const summaryItems = computed(() => {
             return [
@@ -185,12 +191,6 @@ export default createComponent({
             state.uploadProgress.inProgress = true;
 
             handleUpload(state.uploadBytes as Uint8Array);
-        }
-
-        function handleSuccessModalChange(isOpen: boolean): void {
-            if (!isOpen) {
-                state.successModalIsOpen = isOpen;
-            }
         }
 
         function handleFeeModalChange(isOpen: boolean): void {
@@ -243,14 +243,17 @@ export default createComponent({
                 return;
             }
 
-            state.uploadProgress.fileId = `${fileId.shard.toString()}.${fileId.realm.toString()}.${fileId.file.toString()}`;
-
             // FileAppendTransaction - rest of chunks
             await fileAppendUploads(chunks, fileId, client);
             await store.dispatch(REFRESH_BALANCE_AND_RATE);
-            // notifies file was uploaded
-            state.uploadProgress.inProgress = false;
+
             state.uploadProgress.wasSuccess = true;
+            state.uploadProgress.inProgress = false;
+
+            state.success.copyInfo = `${fileId.shard.toString()}.${fileId.realm.toString()}.${fileId.file.toString()}`;
+
+            state.uploadProgress.isOpen = false;
+            state.success.isOpen = true;
         }
 
         async function fileCreateUpload(
@@ -317,6 +320,7 @@ export default createComponent({
                     throw error;
                 }
             }
+
             return fileId as FileId;
         }
 
@@ -344,6 +348,7 @@ export default createComponent({
             } catch (error) {
                 state.uploadProgress.wasSuccess = false;
                 state.uploadProgress.inProgress = false;
+                state.isBusy = false;
                 if (
                     error.message.includes(
                         "upstream connect error or disconnect/reset before headers. reset reason: remote reset"
@@ -356,12 +361,10 @@ export default createComponent({
                             .toString()
                     });
                 } else {
-                    state.isBusy = false;
                     throw new Error(error);
                 }
             } finally {
                 state.isBusy = false;
-                state.uploadProgress.inProgress = false;
             }
         }
 
@@ -395,7 +398,13 @@ export default createComponent({
                 wasSuccess: false,
                 currentChunk: 0,
                 totalChunks: 0
-            } as State;
+            } as UploadProgressState;
+
+            state.success = {
+                isOpen: false,
+                copyInfo: ""
+            } as SuccessState;
+
             state.buttonsDisabled = true;
             state.estimatedFee = 0;
             state.fileBytes = null;
@@ -419,9 +428,7 @@ export default createComponent({
         }
 
         return {
-            handleReceipt,
             handleUploadSubmit,
-            handleSuccessModalChange,
             handleFileSelect,
             handleUploadClick,
             handleUploadCancel,
