@@ -16,14 +16,14 @@
                 <Button
                     compact
                     outline
-                    :label="$t('common.cancel')"
+                    :label="cancelLabel ? cancelLabel : $t('common.cancel')"
                     class="button"
                     type="button"
                     @click="handleCancel"
                 />
                 <Button
                     compact
-                    :label="$t('common.continue')"
+                    :label="submitLabel ? submitLabel : $t('common.continue')"
                     class="button"
                     type="submit"
                     @submit="handleSubmit"
@@ -54,7 +54,15 @@ export default createComponent({
         items: Array as PropType<Item[]>,
         amount: String,
         account: String,
-        txType: String
+        txType: String,
+        submitLabel: {
+            type: String,
+            default: null
+        },
+        cancelLabel: {
+            type: String,
+            default: null
+        }
     },
     components: {
         Button,
@@ -74,6 +82,8 @@ export default createComponent({
             amount: string;
             account: string;
             txType: string;
+            submitLabel: string | null;
+            cancelLabel: string | null;
         },
         context: SetupContext
     ): object {

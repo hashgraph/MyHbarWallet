@@ -23,6 +23,8 @@
             :items="summaryItems"
             :amount="summaryAmount"
             :account="formattedFileId"
+            :submit-label="$t('interfaceDownloadFile.feeSummary.submit')"
+            :cancel-label="$t('interfaceDownloadFile.feeSummary.cancel')"
             tx-type="downloadFile"
             @action="handleFeeModalChange"
             @submit="handleFeeSubmit"

@@ -129,6 +129,8 @@
     "interfaceCreateAccount.initialBalance": "Initial Balance",
     "interfaceCreateAccount.publicKey": "Public Key",
     "interfaceCreateAccount.toCreateAccount": " To create an account, you need the public key of the person requesting an account and you need to fund the new account with some amount of hbars.",
+    "interfaceDownloadFile.feeSummary.submit": "Save File",
+    "interfaceDownloadFile.feeSummary.cancel": "Dismiss",
     "interfaceDownloadFile.title": "Download",
     "interfaceInteractWithContract.title": "Interact With Contract",
     "interfaceNavigation.contract": "Contract",
