@@ -126,14 +126,19 @@ export default createComponent({
                 Vue.nextTick(() => {
                     if (newVal && input.value) {
                         // Clear input every time we reopen this modal
-                        state.input = "";
+                        clear();
                         input.value.focus();
                     }
                 });
             }
         );
 
+        function clear(): void {
+            state.input = "";
+        }
+
         return {
+            clear,
             state,
             valid,
             partialValid,

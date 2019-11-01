@@ -59,6 +59,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
                   <header><span class="title">By Keystore File</span>
                     <!---->
                   </header>
+                  <!---->
                   <div class="main">
                     <div class="content-container">
                       <div class="save-my-keystore-cards"><span class="body-title">Save This Keystore File!</span>
@@ -147,6 +148,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
                   <header><span class="title">By Keystore File</span>
                     <!---->
                   </header>
+                  <!---->
                   <div class="main">
                     <div class="content-container">
                       <div class="save-my-keystore-cards"><span class="body-title">Save This Keystore File!</span>

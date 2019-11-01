@@ -14,6 +14,7 @@
         />
 
         <IDInput
+            ref="idInput"
             :error="state.idErrorMessage"
             :valid="state.idValid"
             can-copy
@@ -36,8 +37,7 @@
 
         <ModalSuccess
             v-model="state.modalSuccessState"
-            @change="handleSuccessModalChange"
-            @continue="handleSuccessModalContinue"
+            @dismiss="handleModalSuccessDismiss"
         >
             <i18n path="modalSuccess.transferred">
                 <strong>{{ amount }}</strong>
@@ -65,7 +65,10 @@ import {
     createComponent,
     reactive,
     computed,
-    SetupContext
+    SetupContext,
+    watch,
+    ref,
+    Ref
 } from "@vue/composition-api";
 import store from "../store";
 import {
@@ -88,6 +91,12 @@ import OptionalMemoField from "../components/OptionalMemoField.vue";
 import ModalSuccess, {
     State as ModalSuccessState
 } from "../components/ModalSuccess.vue";
+import { Vue } from "vue/types/vue";
+
+// Shim for IDInput ref
+type IdInput = Vue & {
+    clear(): void;
+};
 
 interface State {
     amount: string | null;
@@ -102,7 +111,6 @@ interface State {
     modalSuccessState: ModalSuccessState;
 }
 
-// const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
 
@@ -129,22 +137,30 @@ export default createComponent({
             idValid: false,
             modalSuccessState: {
                 isOpen: false,
-                copyInfo: ""
+                hasAction: false
             }
         });
+
+        const idInput: Ref<Vue | null> = ref(null);
 
         function handleAccount(value: string, account: Id | null): void {
             state.idErrorMessage = "";
             state.account = account;
-            if (state.account) {
-                state.accountString =
-                    state.account.shard +
-                    "." +
-                    state.account.realm +
-                    "." +
-                    state.account.account;
-            }
         }
+
+        watch(
+            () => state.account,
+            (newValue: Id | null) => {
+                if (newValue) {
+                    state.accountString =
+                        newValue.shard +
+                        "." +
+                        newValue.realm +
+                        "." +
+                        newValue.account;
+                }
+            }
+        );
 
         function handleValid(valid: boolean): void {
             state.idValid = valid;
@@ -355,20 +371,13 @@ export default createComponent({
             }
         }
 
-        function handleSuccessModalChange(isOpen: boolean): void {
-            if (!isOpen) {
-                state.modalSuccessState.isOpen = isOpen;
-                state.isBusy = false;
-                state.amount = "";
-                state.memo = "";
-                state.accountString = "";
-            }
-        }
-
-        function handleSuccessModalContinue(): void {
+        function handleModalSuccessDismiss(): void {
             state.modalSuccessState.isOpen = false;
             state.isBusy = false;
             state.amount = "";
+            state.account = null;
+            state.accountString = "";
+            (idInput.value! as IdInput).clear();
             state.memo = "";
             state.accountString = "";
         }
@@ -383,11 +392,11 @@ export default createComponent({
             isAmountValid,
             hbarSuffix: Unit.Hbar,
             tinybarSuffix: Unit.Tinybar,
+            idInput,
             handleShowSummary,
             handleClickEntireBalance,
             handleSendTransfer,
-            handleSuccessModalChange,
-            handleSuccessModalContinue,
+            handleModalSuccessDismiss,
             truncate,
             handleInput,
             handleValid,
