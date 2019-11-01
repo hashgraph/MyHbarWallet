@@ -1,10 +1,5 @@
 <template>
     <div class="interface">
-        <WarningHeaderBanner
-            v-if="false"
-            :message="$t('interface.warnings.insecureSession')"
-            @dismiss="onDismiss"
-        />
         <InterfaceNavigation />
         <div class="main-container">
             <div class="main">
@@ -22,13 +17,11 @@
         </div>
     </div>
 </template>
-// TODO[11-15-2019] change v-if in Warning Header Banner to state.showWarning
 <script lang="ts">
 import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "../components/NetworkCard.vue";
 import BalanceCard from "../components/BalanceCard.vue";
 import AccountCard from "../components/AccountCard.vue";
-import WarningHeaderBanner from "../components/WarningHeaderBanner.vue";
 import {
     computed,
     createComponent,
@@ -40,7 +33,6 @@ import { LoginMethod } from "../wallets/Wallet";
 
 export default createComponent({
     components: {
-        WarningHeaderBanner,
         InterfaceNavigation,
         NetworkCard,
         BalanceCard,
@@ -57,19 +49,6 @@ export default createComponent({
         // Otherwise don't show the Logout modal
         store.state.interfaceMenu.hasBeenToInterface = true;
 
-        const loginMethod = store.state.wallet.session.wallet.getLoginMethod();
-
-        const state = reactive({
-            showWarning:
-                loginMethod != LoginMethod.KeyStore &&
-                loginMethod != LoginMethod.LedgerNanoS &&
-                loginMethod != LoginMethod.Trezor
-        });
-
-        function onDismiss(): void {
-            state.showWarning = false;
-        }
-
         const account = computed(() =>
             store.state.wallet.session != null
                 ? store.state.wallet.session.account
@@ -77,9 +56,7 @@ export default createComponent({
         );
 
         return {
-            state,
-            account,
-            onDismiss
+            account
         };
     }
 });
