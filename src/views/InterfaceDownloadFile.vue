@@ -17,7 +17,15 @@
             @change="handleFeeModalChange"
             @submit="handleFeeSubmit"
         />
-        <template v-slot:footer> </template>
+        <ModalSuccess
+            v-model="state.success"
+            @change="handleDownloadFinish"
+            @continue="handleDownloadFinish"
+        >
+            <i18n path="modalSuccess.downloadFile">
+                <strong>{{ state.fileId }}</strong>
+            </i18n>
+        </ModalSuccess>
     </InterfaceForm>
 </template>
 
@@ -32,6 +40,9 @@ import {
 } from "@vue/composition-api";
 import DownloadFile from "../components/DownloadFile.vue";
 import ModalFeeSummary from "../components/ModalFeeSummary.vue";
+import ModalSuccess, {
+    State as SuccessState
+} from "../components/ModalSuccess.vue";
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
 
@@ -44,14 +55,19 @@ export default createComponent({
     components: {
         InterfaceForm,
         DownloadFile,
-        ModalFeeSummary
+        ModalFeeSummary,
+        ModalSuccess
     },
     setup(props, context) {
         const state = reactive({
             isDownloading: false,
             isOpen: false,
             fee: new BigNumber(0),
-            fileId: ""
+            fileId: "",
+            success: {
+                isOpen: false,
+                copyInfo: null
+            } as SuccessState
         });
 
         const summary: Ref<Summary | null> = ref({
@@ -76,6 +92,7 @@ export default createComponent({
         function handleFeeSubmit(isDownloading: boolean): void {
             state.isDownloading = isDownloading;
             state.isOpen = false;
+            state.success.isOpen = true;
         }
 
         function handleFeeModalChange(isOpen: boolean): void {
@@ -87,13 +104,25 @@ export default createComponent({
             state.fileId = fileId;
         }
 
+        function handleDownloadFinish(): void {
+            state.isDownloading = false;
+            state.isOpen = false;
+            state.fee = new BigNumber(0);
+            state.fileId = "";
+            state.success = {
+                isOpen: false,
+                copyInfo: null
+            } as SuccessState;
+        }
+
         return {
             state,
             summary,
             amount,
-            handleFeeSubmit,
+            handleDownloadFinish,
             handleFee,
             handleFeeModalChange,
+            handleFeeSubmit,
             handleFileId
         };
     }
