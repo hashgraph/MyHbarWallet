@@ -79,6 +79,7 @@
     "customerSupport.customerSupport": "Customer Support",
     "downloadFile.download": "Download File",
     "downloadFile.fileId": "File ID",
+    "downloadFile.invalidFileId": "File \"{0}\" Does Not Exist",
     "error404.404": "404",
     "error404.oops": "Oops! Looks like you're lost.",
     "exportKeystoreButton.message": "Download Keystore File",
