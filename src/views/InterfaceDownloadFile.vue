@@ -144,11 +144,12 @@ export default createComponent({
             } catch (error) {
                 if (
                     error.toString() ===
-                    "Error: invalid file ID: [object Object]"
+                        "Error: invalid file ID: [object Object]" ||
+                    error.code.toString() === "14"
                 ) {
                     state.idErrorMessage = context.root
                         .$t("downloadFile.invalidFileId", {
-                            "0": formattedFileId.value
+                            "0": ` ${formattedFileId.value}`
                         })
                         .toString();
                 } else {
