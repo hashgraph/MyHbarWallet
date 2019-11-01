@@ -12,6 +12,8 @@ export function validateHbar(input: string): boolean {
 }
 
 export function formatHbar(input: BigNumber): string {
+    //allows greater precision without exponential notation
+    BigNumber.config({EXPONENTIAL_AT: 1e+9})
     const fmt = {
         decimalSeparator: ".",
         groupSeparator: ",",
