@@ -421,6 +421,7 @@ export default createComponent({
             state.fileBytes = null;
             state.uploadBytes = null;
             state.fileName = "";
+            fileID.value = null;
         }
 
         async function handleCopyFileID(): Promise<void> {
@@ -438,7 +439,6 @@ export default createComponent({
                     message: context.root.$t("modalSuccess.noFileID").toString()
                 });
             }
-            fileID.value = null;
         }
 
         function handleUploadFinish(): void {
