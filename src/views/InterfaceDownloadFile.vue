@@ -142,10 +142,21 @@ export default createComponent({
                 state.fee = new BigNumber(await getEstimate.value());
                 state.isOpen = true;
             } catch (error) {
-                await store.dispatch(ALERT, {
-                    level: "error",
-                    message: error.toString()
-                });
+                if (
+                    error.toString() ===
+                    "Error: invalid file ID: [object Object]"
+                ) {
+                    state.idErrorMessage = context.root
+                        .$t("downloadFile.invalidFileId", {
+                            "0": formattedFileId.value
+                        })
+                        .toString();
+                } else {
+                    await store.dispatch(ALERT, {
+                        level: "error",
+                        message: error.toString()
+                    });
+                }
             }
         }
 
