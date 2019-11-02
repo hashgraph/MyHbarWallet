@@ -23,11 +23,21 @@
             :items="summaryItems"
             :amount="summaryAmount"
             :account="formattedFileId"
+            :submit-label="$t('interfaceDownloadFile.feeSummary.submit')"
+            :cancel-label="$t('interfaceDownloadFile.feeSummary.cancel')"
             tx-type="downloadFile"
-            @change="handleFeeModalChange"
+            @action="handleFeeModalChange"
             @submit="handleFeeSubmit"
         />
-        <template v-slot:footer> </template>
+        <ModalSuccess
+            v-model="state.success"
+            @change="handleDownloadFinish"
+            @dismiss="handleDownloadFinish"
+        >
+            <i18n path="modalSuccess.downloadFile">
+                <strong>{{ formattedFileId }}</strong>
+            </i18n>
+        </ModalSuccess>
     </InterfaceForm>
 </template>
 
@@ -35,6 +45,9 @@
 import InterfaceForm from "../components/InterfaceForm.vue";
 import { createComponent, reactive, ref, computed } from "@vue/composition-api";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+import ModalSuccess, {
+    State as SuccessState
+} from "../components/ModalSuccess.vue";
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
@@ -65,15 +78,20 @@ export default createComponent({
         InterfaceForm,
         Button,
         IdInput,
-        ModalFeeSummary
+        ModalFeeSummary,
+        ModalSuccess
     },
     setup(props, context) {
         const state = reactive({
             isOpen: false,
             fee: new BigNumber(0),
-            fileId: { shard: 0, realm: 0, file: 0 },
+            fileId: { shard: 0, realm: 0, file: 0 } as FileId,
             idValid: false,
-            idErrorMessage: ""
+            idErrorMessage: "",
+            success: {
+                isOpen: false,
+                copyInfo: null
+            } as SuccessState
         });
 
         const formattedFileId = computed(
@@ -113,6 +131,7 @@ export default createComponent({
         function handleFeeSubmit(): void {
             triggerDownload();
             state.isOpen = false;
+            state.success.isOpen = true;
         }
 
         function handleFeeModalChange(isOpen: boolean): void {
@@ -217,17 +236,31 @@ export default createComponent({
                 });
             }
         }
+
+        function handleDownloadFinish(): void {
+            state.isOpen = false;
+            state.fee = new BigNumber(0);
+            state.fileId = { shard: 0, realm: 0, file: 0 } as FileId;
+            state.idValid = false;
+            state.idErrorMessage = "";
+            state.success = {
+                isOpen: false,
+                copyInfo: null
+            } as SuccessState;
+        }
+
         return {
             state,
             summaryItems,
             summaryAmount,
-            handleFeeSubmit,
+            handleDownloadFinish,
             handleFee,
             handleFeeModalChange,
             handleValid,
             handleDownloadClick,
             handleFileId,
-            formattedFileId
+            formattedFileId,
+            handleFeeSubmit,
         };
     }
 });
