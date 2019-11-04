@@ -1,3 +1,4 @@
+import {LoginMethod} from "../wallets/Wallet";
 <template>
     <InterfaceForm :title="$t('interfaceSendTransfer.title')">
         <TextInput
@@ -62,13 +63,13 @@ import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
 import IDInput from "../components/IDInput.vue";
 import {
+    computed,
     createComponent,
     reactive,
-    computed,
-    SetupContext,
-    watch,
     ref,
-    Ref
+    Ref,
+    SetupContext,
+    watch
 } from "@vue/composition-api";
 import store from "../store";
 import {
@@ -92,6 +93,7 @@ import ModalSuccess, {
     State as ModalSuccessState
 } from "../components/ModalSuccess.vue";
 import { Vue } from "vue/types/vue";
+import { LoginMethod } from "../wallets/Wallet";
 
 // Shim for IDInput ref
 type IdInput = Vue & {
@@ -357,7 +359,11 @@ export default createComponent({
                                 throw error; // Unhandled Error Modal will open
                             }
                     }
-                } else if (error.name === "TransportStatusError") {
+                } else if (
+                    error.name === "TransportStatusError" &&
+                    store.state.wallet.session.wallet.getLoginMethod() ===
+                        LoginMethod.LedgerNanoS
+                ) {
                     store.dispatch(HANDLE_LEDGER_ERROR, {
                         error,
                         showAlert: true

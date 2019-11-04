@@ -1,3 +1,4 @@
+import {LoginMethod} from "../wallets/Wallet";
 <template>
     <InterfaceForm :title="$t('common.createAccount')">
         <Notice :symbol="mdiHelpCircleOutline">
@@ -89,6 +90,7 @@ import ModalSuccess, {
     State as ModalSuccessState
 } from "../components/ModalSuccess.vue";
 import { writeToClipboard } from "../clipboard";
+import { LoginMethod } from "../wallets/Wallet";
 
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
@@ -280,7 +282,11 @@ export default createComponent({
                                 throw error; // Unhandled Error Modal will open
                             }
                     }
-                } else if (error.name === "TransportStatusError") {
+                } else if (
+                    error.name === "TransportStatusError" &&
+                    store.state.wallet.session.wallet.getLoginMethod() ===
+                        LoginMethod.LedgerNanoS
+                ) {
                     await store.dispatch(HANDLE_LEDGER_ERROR, {
                         error,
                         showAlert: true

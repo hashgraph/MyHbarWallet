@@ -135,24 +135,60 @@ export default {
             let severity = "error";
 
             switch (payload.error.statusCode) {
-                case StatusCodes.SECURITY_STATUS_NOT_SATISFIED:
-                case StatusCodes.CONDITIONS_OF_USE_NOT_SATISFIED:
-                case StatusCodes.ACCESS_CONDITION_NOT_FULFILLED:
+                // Security Exceptions (not allowed)
+                case StatusCodes.PIN_REMAINING_ATTEMPTS: // 0x63c0,
+                case StatusCodes.SECURITY_STATUS_NOT_SATISFIED: //0x6982,
+                case StatusCodes.CONDITIONS_OF_USE_NOT_SATISFIED: //0x6985,
+                case StatusCodes.ACCESS_CONDITION_NOT_FULFILLED: //0x9804,
                     message = i18n.t("common.error.lockedDevice").toString();
                     severity = "warn";
                     break;
-                case StatusCodes.INCORRECT_LENGTH:
-                case StatusCodes.FILE_NOT_FOUND:
-                case StatusCodes.COMMAND_INCOMPATIBLE_FILE_STRUCTURE:
+
+                // Attestation / Verification failures
+                case StatusCodes.CONTRADICTION_SECRET_CODE_STATUS: //0x9808,
+                case StatusCodes.CONTRADICTION_INVALIDATION: //0x9810,
+                case StatusCodes.LICENSING: //0x6f42,
+                    message = i18n.t("common.error.traitorDevice").toString();
+                    break;
+
+                // Command Error (does not make sense to device)
+                case StatusCodes.INCORRECT_LENGTH: //0x6700,
+                case StatusCodes.COMMAND_INCOMPATIBLE_FILE_STRUCTURE: //0x6981,
+                case StatusCodes.INCORRECT_DATA: //0x6a80,
+                case StatusCodes.REFERENCED_DATA_NOT_FOUND: //0x6a88,
+                case StatusCodes.INCORRECT_P1_P2: //0x6b00,
+                case StatusCodes.INS_NOT_SUPPORTED: //0x6d00,
+                case StatusCodes.CLA_NOT_SUPPORTED: //0x6e00,
+                case StatusCodes.NO_EF_SELECTED: //0x9400,
+                case StatusCodes.INVALID_OFFSET: //0x9402,
+                case StatusCodes.INVALID_KCV: //0x9485,
                     message = i18n.t("common.error.wrongApp").toString();
                     severity = "warn";
                     break;
+
+                // Device Failure (irrecoverable device errors)
+                case StatusCodes.NOT_ENOUGH_MEMORY_SPACE: //0x6a84,
+                case StatusCodes.FILE_ALREADY_EXISTS: //0x6a89,
+                case StatusCodes.TECHNICAL_PROBLEM: //0x6f00,
+                case StatusCodes.MEMORY_PROBLEM: //0x9240,
+                case StatusCodes.FILE_NOT_FOUND: //0x9404,
+                case StatusCodes.INCONSISTENT_FILE: //0x9408,
+                case StatusCodes.ALGORITHM_NOT_SUPPORTED: //0x9484,
+                case StatusCodes.CODE_NOT_INITIALIZED: //0x9802,
+                case StatusCodes.CODE_BLOCKED: //0x9840,
+                case StatusCodes.MAX_VALUE_REACHED: //0x9850,
+                case StatusCodes.GP_AUTH_FAILED: //0x6300,
+                case StatusCodes.HALTED: //0x6faa
+                    message = i18n.t("common.error.generalDeviceError").toString();
+                    severity = "error";
+                    break;
+
                 default:
-                    console.log(payload.error.statusCode);
-                    console.log(payload.error);
-                    message = i18n
-                        .t("common.error.generalDeviceError")
-                        .toString();
+                    console.warn(payload.error.statusCode);
+                    console.warn(payload.error);
+                    message = i18n.t("common.error.generalDeviceError").toString();
+                    severity = "warn";
+                    break;
             }
 
             if (payload.showAlert) {
