@@ -124,39 +124,6 @@ button {
     }
 }
 
-.danger {
-    background-color: var(--color-infra-red);
-    border-color: var(--color-infra-red);
-
-    &:hover:not(.busy):not(:disabled),
-    &:focus:not(.busy):not(:disabled) {
-        background-color: var(--color-aggressive-salmon);
-        border-color: var(--color-aggressive-salmon);
-    }
-
-    &:active:not(.busy):not(:disabled) {
-        background-color: var(--color-warm-pink);
-        border-color: var(--color-warm-pink);
-    }
-}
-
-.outline {
-    background-color: transparent;
-    color: var(--color-melbourne-cup);
-
-    &:hover:not(.busy):not(:disabled),
-    &:focus:not(.busy):not(:disabled) {
-        background-color: transparent;
-        color: var(--color-celestial-green);
-    }
-
-    &:active:not(.busy):not(:disabled) {
-        background-color: var(--color-distant-horizon);
-        border-color: var(--color-green-fluorite);
-        color: var(--color-green-fluorite);
-    }
-}
-
 .compact {
     min-width: initial;
     padding: 10px 20px;
@@ -171,5 +138,58 @@ button {
 
 .spinner + span {
     margin-inline-start: 10px;
+}
+
+.danger {
+    &:not(:disabled) {
+        background-color: var(--color-infra-red);
+        border-color: var(--color-infra-red);
+    }
+
+    &:hover:not(.busy):not(:disabled),
+    &:focus:not(.busy):not(:disabled) {
+        background-color: var(--color-aggressive-salmon);
+        border-color: var(--color-aggressive-salmon);
+    }
+
+    &:active:not(.busy):not(:disabled) {
+        background-color: var(--color-warm-pink);
+        border-color: var(--color-warm-pink);
+    }
+}
+
+.outline {
+    &:not(:disabled) {
+        background-color: transparent;
+        color: var(--color-melbourne-cup);
+    }
+
+    &.danger:not(:disabled) {
+        background-color: transparent;
+        border-color: var(--color-infra-red);
+        color: var(--color-infra-red);
+    }
+
+    &:hover:not(.busy):not(:disabled),
+    &:focus:not(.busy):not(:disabled) {
+        background-color: transparent;
+        color: var(--color-celestial-green);
+
+        &.danger {
+            color: var(--color-aggressive-salmon);
+        }
+    }
+
+    &:active:not(.busy):not(:disabled) {
+        background-color: var(--color-distant-horizon);
+        border-color: var(--color-green-fluorite);
+        color: var(--color-green-fluorite);
+
+        &.danger {
+            background-color: var(--color-distant-horizon);
+            border-color: var(--color-warm-pink);
+            color: var(--color-warm-pink);
+        }
+    }
 }
 </style>
