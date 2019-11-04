@@ -28,7 +28,7 @@
     "common.copy": "Copy",
     "common.createAccount": "Create Account",
     "common.dismiss": "Dismiss",
-    "common.error.cannotSendHbarToYourself": "Cannot send HBar to yourself",
+    "common.error.cannotSendHbarToYourself": "Cannot send Hbar to yourself",
     "common.error.generalDeviceError": "Could not communicate with Device",
     "common.error.illegalState": "an illegal state has been reached",
     "common.error.insufficientBalance": "Insufficient balance",
