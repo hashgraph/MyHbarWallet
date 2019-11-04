@@ -1,14 +1,24 @@
 import Router, { Route } from "vue-router";
 import Home from "./views/Home.vue";
-import AccessMyAccount from "./views/AccessMyAccount.vue";
-import CreateAccount from "./views/CreateAccount.vue";
-import HardwareWalletAffiliates from "./views/HardwareWalletAffiliates.vue";
-import InterfaceCreateAccount from "./views/InterfaceCreateAccount.vue";
-import TermsConditions from "./views/TermsConditions.vue";
 import Error404 from "./views/Error404.vue";
-import PrivacyPolicy from "./views/PrivacyPolicy.vue";
 import { PositionResult } from "vue-router/types/router";
 import store from "./store";
+
+function HardwareWalletAffiliates(): Promise<typeof import("./views/HardwareWalletAffiliates.vue")> {
+    return import(/* webpackChunkName: "affiliates" */ "./views/HardwareWalletAffiliates.vue");
+}
+
+function InterfaceCreateAccount(): Promise<typeof import("./views/InterfaceCreateAccount.vue")> {
+    return import(/* webpackChunkName: "interface" */ "./views/InterfaceCreateAccount.vue");
+}
+
+function TermsConditions(): Promise<typeof import("./views/TermsConditions.vue")> {
+    return import(/* webpackChunkName: "terms" */ "./views/TermsConditions.vue");
+}
+
+function PrivacyPolicy(): Promise<typeof import("./views/PrivacyPolicy.vue")> {
+    return import(/* webpackChunkName: "PrivacyPolicy" */ "./views/PrivacyPolicy.vue");
+}
 
 function ConvertUnits(): Promise<typeof import("./views/ConvertUnits.vue")> {
     return import(/* webpackChunkName: "units" */ "./views/ConvertUnits.vue");
@@ -79,6 +89,23 @@ function InterfaceDownloadFile(): Promise<
         /* webpackChunkName: "interface" */
         "./views/InterfaceDownloadFile.vue"
     );
+}
+
+function CreateAccount(): Promise<
+    typeof import("./views/CreateAccount.vue")> {
+    return import(
+        /* webpackChunkName: "createAccount" */
+        "./views/CreateAccount.vue"
+        );
+}
+
+function AccessMyAccount(): Promise<
+    typeof import("./views/AccessMyAccount.vue")
+    > {
+    return import(
+        /* webpackChunkName: "accessAccount" */
+        "./views/AccessMyAccount.vue"
+        );
 }
 
 // auth function that redirects visitors who have not logged in back to the home route
