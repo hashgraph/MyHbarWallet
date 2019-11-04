@@ -260,7 +260,7 @@ export default createComponent({
             handleDownloadClick,
             handleFileId,
             formattedFileId,
-            handleFeeSubmit,
+            handleFeeSubmit
         };
     }
 });

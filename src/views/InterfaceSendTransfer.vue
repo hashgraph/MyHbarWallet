@@ -190,7 +190,7 @@ export default createComponent({
 
         const buttonLabel = computed(() =>
             state.amount &&
-            new BigNumber(state.amount).isGreaterThan(new BigNumber(0))
+            new BigNumber(state.amount).isGreaterThan(new BigNumber(1))
                 ? context.root
                       .$t("interfaceSendTransfer.sendHbars", [truncate.value])
                       .toString()
