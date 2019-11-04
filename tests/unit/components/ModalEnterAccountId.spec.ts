@@ -81,15 +81,17 @@ describe("ModalEnterAccountId.vue", (): void => {
                       </div>
                     </div>
                     <div class="content-container">
-                      <!---->
                       <form>
-                        <div class="subtitle">Account ID</div>
-                        <div class="text-input"><label class="label-container">
-                            <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
-                    </div></span>
-                    <!----></span></label>
-                    <!---->
-                    <!---->
+                        <!---->
+                        <div class="container">
+                          <div class="subtitle">Account ID</div>
+                          <div class="text-input"><label class="label-container">
+                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
+                        </div></span>
+                        <!----></span></label>
+                        <!---->
+                        <!---->
+                    </div>
                   </div>
                   <div class="buttons"><button type="button" class="button outline compact">
                       <!----> <span>No Account ID?</span>
@@ -203,15 +205,17 @@ describe("ModalEnterAccountId.vue", (): void => {
                       </div>
                     </div>
                     <div class="content-container">
-                      <!---->
                       <form>
-                        <div class="subtitle">Account ID</div>
-                        <div class="text-input" disabled="disabled"><label class="label-container">
-                            <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
-                    </div></span>
-                    <!----></span></label>
-                    <!---->
-                    <!---->
+                        <!---->
+                        <div class="container">
+                          <div class="subtitle">Account ID</div>
+                          <div class="text-input" disabled="disabled"><label class="label-container">
+                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
+                        </div></span>
+                        <!----></span></label>
+                        <!---->
+                        <!---->
+                    </div>
                   </div>
                   <div class="buttons"><button type="button" class="button outline compact">
                       <!----> <span>No Account ID?</span>
@@ -299,16 +303,18 @@ describe("ModalEnterAccountId.vue", (): void => {
                       </div>
                     </div>
                     <div class="content-container">
-                      <!---->
                       <form>
-                        <div class="subtitle">Account ID</div>
-                        <div class="text-input has-error"><label class="label-container">
-                            <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
-                    </div></span>
-                    <!----></span></label>
-                    <!---->
-                    <div class="error">
-                      Error Message
+                        <!---->
+                        <div class="container">
+                          <div class="subtitle">Account ID</div>
+                          <div class="text-input has-error"><label class="label-container">
+                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
+                        </div></span>
+                        <!----></span></label>
+                        <!---->
+                        <div class="error">
+                          Error Message
+                        </div>
                     </div>
                   </div>
                   <div class="buttons"><button type="button" class="button outline compact">
@@ -367,16 +373,18 @@ describe("ModalEnterAccountId.vue", (): void => {
                       </div>
                     </div>
                     <div class="content-container">
-                      <!---->
                       <form>
-                        <div class="subtitle">Account ID</div>
-                        <div class="text-input has-error" disabled="disabled"><label class="label-container">
-                            <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
-                    </div></span>
-                    <!----></span></label>
-                    <!---->
-                    <div class="error">
-                      Error Message
+                        <!---->
+                        <div class="container">
+                          <div class="subtitle">Account ID</div>
+                          <div class="text-input has-error" disabled="disabled"><label class="label-container">
+                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="shard.realm.account or account" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><span class="decorations"><svg width="24" height="24" viewBox="0 0 24 24" class="checkmark"><path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"></path></svg></span></div>
+                        </div></span>
+                        <!----></span></label>
+                        <!---->
+                        <div class="error">
+                          Error Message
+                        </div>
                     </div>
                   </div>
                   <div class="buttons"><button type="button" class="button outline compact">
