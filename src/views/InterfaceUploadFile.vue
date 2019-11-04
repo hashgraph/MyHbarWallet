@@ -42,7 +42,6 @@
             @dismiss="handleUploadFinish"
         >
             <i18n path="modalSuccess.uploadedFile">
-                <strong>{{ state.filename }}</strong>
                 <strong>{{ fileIDString }}</strong>
             </i18n>
         </ModalSuccess>
