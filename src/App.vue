@@ -16,8 +16,6 @@
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import Alerts from "./components/Alerts.vue";
-import ModalReportError from "./components/ModalReportError.vue";
-import ModalLogOut from "./components/ModalLogOut.vue";
 import ZoomTopButton from "./components/ZoomTopButton.vue";
 import {
     createComponent,
@@ -35,8 +33,8 @@ export default createComponent({
         Footer,
         Alerts,
         ZoomTopButton,
-        ModalLogOut,
-        ModalReportError
+        ModalLogOut: () => import("./components/ModalLogOut.vue"),
+        ModalReportError: () => import("./components/ModalReportError.vue")
     },
     model: {
         event: "error"
