@@ -99,7 +99,7 @@ module.exports = {
     "It Can View Public Key": browser => {
         browser
             .pause(500)
-            .click(".key-icon")
+            .click(".key-icon > path:nth-child(1)")
             .waitForElementVisible(".modal-view-keys", 5000)
             .pause(500)
             .expect.element(publicKeySelector)

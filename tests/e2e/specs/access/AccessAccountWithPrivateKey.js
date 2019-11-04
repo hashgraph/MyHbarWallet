@@ -99,6 +99,7 @@ module.exports = {
             .pause(500)
             .click(".key-icon > path:nth-child(1)")
             .waitForElementVisible(".modal-view-keys", 5000)
+            .pause(500)
             .expect.element(privateKeySelector)
             .text.to.equal(truncatePrivate(keyPrivateKey));
         browser.expect
