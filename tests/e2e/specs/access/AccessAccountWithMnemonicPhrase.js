@@ -64,7 +64,8 @@ module.exports = {
             )
             .waitForElementVisible(accountInputSelector, 5000)
             .setValue(accountInputSelector, mnemonicPhraseAccountId)
-            .click("div.buttons:nth-child(2) > button:nth-child(2)")
+            .pause(500)
+            .click("div.buttons > button:nth-child(2)")
             .waitForElementVisible(".interface-form", 10000)
             .assert.urlContains("interface/send-transfer")
             .assert.containsText(".account .subtitle", mnemonicPhraseAccountId);
@@ -89,9 +90,9 @@ module.exports = {
 
     "It Can View Public Key": browser => {
         browser
+            .pause(500)
             .click(".key-icon > path:nth-child(1)")
             .waitForElementVisible(".modal-view-keys", 5000)
-            .pause(500)
             .expect.element(publicKeySelector)
             .text.to.equal(truncatePublic(mnemonicPhrasePublicKey));
         browser
@@ -102,6 +103,7 @@ module.exports = {
 
     "It Can View Private Key": browser => {
         browser
+            .pause(500)
             .click(".key-icon > path:nth-child(1)")
             .waitForElementVisible(".modal-view-keys", 5000)
             .expect.element(privateKeySelector)
@@ -123,6 +125,7 @@ module.exports = {
 
     "It Can Download Keystore": browser => {
         browser
+            .pause(500)
             .click(".export-keystore-icon > path:nth-child(1)")
             .waitForElementVisible(passwordSelector, 5000)
             .setValue(passwordSelector, keystorePassword)
@@ -137,8 +140,9 @@ module.exports = {
 
     "It Can See Log Out": browser => {
         browser
+            .pause(500)
             .click("div.links:nth-child(3) > a:nth-child(1)")
-            .waitForElementVisible(".home-tile-button", 10000)
+            .waitForElementVisible(".modal-background", 5000)
             .assert.visible(".modal-forgot-to-logout");
         browser.end();
     }

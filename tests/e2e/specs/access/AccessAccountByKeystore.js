@@ -98,7 +98,8 @@ module.exports = {
 
     "It Can View Public Key": browser => {
         browser
-            .click(".key-icon > path:nth-child(1)")
+            .pause(500)
+            .click(".key-icon")
             .waitForElementVisible(".modal-view-keys", 5000)
             .pause(500)
             .expect.element(publicKeySelector)
@@ -111,8 +112,10 @@ module.exports = {
 
     "It Can View Private Key": browser => {
         browser
+            .pause(500)
             .click(".key-icon > path:nth-child(1)")
             .waitForElementVisible(".modal-view-keys", 5000)
+            .pause(500)
             .expect.element(privateKeySelector)
             .text.to.equal(truncatePrivate(keystorePrivateKey));
         browser.expect
@@ -132,6 +135,7 @@ module.exports = {
 
     "It Can Download Keystore": browser => {
         browser
+            .pause(500)
             .click(".export-keystore-icon > path:nth-child(1)")
             .waitForElementVisible(passwordSelector, 5000)
             .setValue(passwordSelector, keystorePassword)
@@ -146,8 +150,10 @@ module.exports = {
 
     "It Can See Log Out": browser => {
         browser
-            .click("div.links:nth-child(3) > a:nth-child(1)")
-            .waitForElementVisible(".home-tile-button", 10000)
+            .pause(500)
+            .click("div.links:nth-child(3) a.router-link-active")
+            .waitForElementVisible(".modal-background", 5000)
+            .pause(500)
             .assert.visible(".modal-forgot-to-logout");
         browser.end();
     },
