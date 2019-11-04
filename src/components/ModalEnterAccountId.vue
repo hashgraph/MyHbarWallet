@@ -10,26 +10,28 @@
                     {{ $t("modalEnterAccountId.hederaAccountIdsAre") }}
                 </Notice>
             </template>
-            <div v-if="hasPublicKey" class="key-container">
-                <div
-                    class="subtitle"
-                    v-text="$t('modalEnterAccountId.verifyKey')"
-                ></div>
-                <ReadOnlyInput class="input" :value="publicKey" multiline />
-            </div>
             <form @submit.stop.prevent="handleSubmit">
-                <div
-                    class="subtitle"
-                    v-text="$t('modalEnterAccountId.accountId')"
-                ></div>
-                <IDInput
-                    ref="input"
-                    :is-open="state.isOpen"
-                    :error="state.errorMessage"
-                    :disabled="state.isBusy"
-                    @valid="handleValid"
-                    @input="handleAccount"
-                />
+                <div v-if="hasPublicKey" class="container">
+                    <div
+                        class="subtitle"
+                        v-text="$t('modalEnterAccountId.verifyKey')"
+                    ></div>
+                    <ReadOnlyInput class="input" :value="publicKey" multiline />
+                </div>
+                <div class="container">
+                    <div
+                        class="subtitle"
+                        v-text="$t('modalEnterAccountId.accountId')"
+                    ></div>
+                    <IDInput
+                        ref="input"
+                        :is-open="state.isOpen"
+                        :error="state.errorMessage"
+                        :disabled="state.isBusy"
+                        @valid="handleValid"
+                        @input="handleAccount"
+                    />
+                </div>
                 <div class="buttons">
                     <Button
                         compact
@@ -158,19 +160,17 @@ export default createComponent({
 </script>
 
 <style scoped lang="postcss">
-.key-container {
+.container {
     align-items: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    padding-block-end: 40px;
+    margin-block-end: 40px;
 }
 
 .subtitle {
     color: var(--color-china-blue);
     font-size: 24px;
-    margin-block-end: 30px;
-    text-align: center;
+    margin-block-end: 10px;
 }
 
 .button {
@@ -188,7 +188,6 @@ export default createComponent({
 .buttons {
     display: flex;
     justify-content: space-between;
-    margin-block-start: 40px;
     width: 100%;
 
     @media (max-width: 600px) {
