@@ -5,7 +5,10 @@
                 $t("customerSupport.customerSupport")
             }}
         </div>
-        <ModalCustomerService v-model="state.modalCustomerServiceIsOpen" />
+        <ModalCustomerService
+            v-if="state.modalCustomerServiceIsOpen"
+            v-model="state.modalCustomerServiceIsOpen"
+        />
     </div>
 </template>
 
@@ -13,11 +16,10 @@
 import serviceBell from "../assets/help-center.svg";
 import { createComponent, reactive } from "@vue/composition-api";
 
-import ModalCustomerService from "../components/ModalCustomerService.vue";
-
 export default createComponent({
     components: {
-        ModalCustomerService
+        ModalCustomerService: () =>
+            import("../components/ModalCustomerService.vue")
     },
     setup() {
         const state = reactive({
