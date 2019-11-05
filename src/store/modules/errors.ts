@@ -48,16 +48,19 @@ export default {
     },
     getters: {
         [RAW_ERROR]: (state: State): Error | string | null => {
-            return state.errors.length > 0 ? state.errors[0] : null;
+            const error: Error | string | null = state.errors.length > 0 ? state.errors[0] : null;
+            if (process.env.NODE_ENV !== "production") console.log(error);
+            return error;
         },
         [HAS_ERROR]: (state: State): boolean => {
             return state.errors.length > 0;
         },
         [ERROR_MESSAGE]: (state: State): string | null => {
             const error = state.errors.length > 0 ? state.errors[0] : null;
+            if (process.env.NODE_ENV !== "production") console.log(error);
             if (error == null) return null;
             if (error instanceof Error) {
-                console.log(error);
+                console.warn(error);
                 return error.toString() || "";
             }
 
@@ -69,6 +72,8 @@ export default {
             { dispatch }: ActionContext<State, RootState>,
             payload: HederaErrorPayload
         ): Promise<HederaErrorTuple> {
+            if (process.env.NODE_ENV !== "production") console.log(payload.error);
+
             let message = "";
             const severity = "error";
 
@@ -106,9 +111,9 @@ export default {
                         .toString();
                     break;
                 default:
-                    console.log(payload.error.code);
-                    console.log(payload.error.message);
-                    console.log(payload.error);
+                    console.warn(payload.error.code);
+                    console.warn(payload.error.message);
+                    console.warn(payload.error);
                     message =
                         i18n.t("common.error.unhandled") +
                         `${payload.error.codeName}`;
@@ -124,6 +129,7 @@ export default {
             { dispatch }: ActionContext<State, RootState>,
             payload: LedgerErrorPayload
         ): Promise<LedgerErrorTuple> {
+            if (process.env.NODE_ENV !== "production") console.log(payload.error);
             // https://github.com/LedgerHQ/ledgerjs/blob/master/packages/errors/src/index.js#L196-L227
             let message = "";
             let severity = "error";
