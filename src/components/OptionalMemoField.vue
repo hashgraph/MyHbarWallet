@@ -20,7 +20,6 @@
                 ref="input"
                 :value="value"
                 :placeholder="$t('common.memo')"
-                compact
                 :tabindex="state.showMemo ? null : '-1'"
                 @input="handleInput"
             />
