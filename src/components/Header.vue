@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div
-                v-if="loggedIn && isInterface"
+                v-if="loggedIn && isInterface && !state.scrolled"
                 class="logout"
                 @click="handleLogout"
             >
@@ -53,6 +53,7 @@
             </div>
             <HeaderHamburgerButton
                 :is-open="state.isHamburgerOpen"
+                :is-interface="isInterface"
                 @toggle="toggle"
             />
             <div v-if="state.scrolled" class="button-container">

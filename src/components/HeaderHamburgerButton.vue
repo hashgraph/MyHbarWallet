@@ -1,5 +1,5 @@
 <template>
-    <div class="button-wrapper" @click="handleToggle">
+    <div :class="wrapperStyle" @click="handleToggle">
         <div :class="style('1')">
             <MaterialDesignIcon class="icon" :icon="icon" />
         </div>
@@ -15,10 +15,16 @@
 <script lang="ts">
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiMinus } from "@mdi/js";
-import { createComponent, PropType, SetupContext } from "@vue/composition-api";
+import {
+    createComponent,
+    PropType,
+    SetupContext,
+    computed
+} from "@vue/composition-api";
 
 interface Props {
     isOpen: boolean;
+    isInterface: boolean;
 }
 
 export default createComponent({
@@ -26,7 +32,8 @@ export default createComponent({
         MaterialDesignIcon
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>
+        isOpen: (Boolean as unknown) as PropType<boolean>,
+        isInterface: (Boolean as unknown) as PropType<boolean>
     },
     setup(props: Props, context: SetupContext) {
         const icon = mdiMinus;
@@ -34,6 +41,10 @@ export default createComponent({
         function style(ind: string): string {
             return props.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
         }
+
+        const wrapperStyle = computed(() =>
+            props.isInterface ? "interface-button-wrapper" : "button-wrapper"
+        );
 
         function handleToggle(): void {
             context.emit("toggle", !props.isOpen);
@@ -43,7 +54,8 @@ export default createComponent({
         return {
             icon,
             style,
-            handleToggle
+            handleToggle,
+            wrapperStyle
         };
     }
 });
@@ -63,6 +75,26 @@ export default createComponent({
 
     &:active {
         background-color: rgba(0, 0, 0, 0.1);
+    }
+}
+
+.interface-button-wrapper {
+    border-color: var(--color-white);
+    border-radius: 50%;
+    cursor: pointer;
+    inset-inline-end: 15px;
+    max-height: 40px;
+    min-width: 40px;
+    overflow: hidden;
+    position: absolute;
+    transform: translate(-10px, 10px);
+
+    &:active {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    @media screen and (max-width: 1024px) {
+        inset-inline-end: 50px;
     }
 }
 
