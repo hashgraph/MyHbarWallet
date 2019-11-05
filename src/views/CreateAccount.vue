@@ -1,5 +1,7 @@
 import {LoginMethod} from "../wallets/Wallet"; import {LoginMethod} from
-"../wallets/Wallet"; import {LoginMethod} from "../wallets/Wallet";
+"../wallets/Wallet"; import {LoginMethod} from "../wallets/Wallet"; import
+{LoginMethod} from "../wallets/Wallet"; import {LoginMethod} from
+"../wallets/Wallet";
 <template>
     <div class="access-my-account">
         <div class="wrap">
@@ -77,7 +79,6 @@ import ModalCreateBySoftware, {
     CreateSoftwareOption
 } from "../components/ModalCreateBySoftware.vue";
 import LedgerNanoS from "../wallets/hardware/LedgerNanoS";
-import Vue from "vue";
 import store from "../store";
 import {
     ALERT,
@@ -306,7 +307,10 @@ export default createComponent({
                         state.modalCreateByHardwareState.isOpen = false;
                         state.modalRequestToCreateAccountState.isOpen = true;
                     } catch (error) {
-                        if (error.name === "TransportStatusError") {
+                        if (
+                            error.name === "TransportStatusError" &&
+                            state.loginMethod === LoginMethod.LedgerNanoS
+                        ) {
                             store.dispatch(HANDLE_LEDGER_ERROR, {
                                 error,
                                 showAlert: true
@@ -445,7 +449,10 @@ export default createComponent({
                     ) {
                         throw error;
                     }
-                } else if (error.name === "TransportStatusError") {
+                } else if (
+                    error.name === "TransportStatusError" &&
+                    state.loginMethod === LoginMethod.LedgerNanoS
+                ) {
                     const result: LedgerErrorTuple = await store.dispatch(
                         HANDLE_LEDGER_ERROR,
                         { error, showAlert: false }
