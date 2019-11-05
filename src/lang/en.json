@@ -241,7 +241,7 @@
     "modalSuccess.noFileID": "No File present. Please try again.",
     "modalSuccess.transferred": "Transferred {0} ℏ to account {1}",
     "modalSuccess.downloadFile": "Downloading file {0}",
-    "modalSuccess.uploadedFile": "Uploaded file {0} with id {1}",
+    "modalSuccess.uploadedFile": "Uploaded file {0}",
     "modalUploadProgress.failure.buttonLabel":  "Retry",
     "modalUploadProgress.failure.buttonLabel2": "Cancel",
     "modalUploadProgress.failure.subText": "Try again?",
