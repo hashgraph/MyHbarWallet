@@ -125,10 +125,12 @@ export default createComponent({
         }
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
+            if (!isOpen) props.state.errorMessage = null;
             context.emit("change", { ...props.state, isOpen });
         }
 
         function handleDontHaveAccount(): void {
+            props.state.errorMessage = null;
             context.emit("noAccount");
         }
 

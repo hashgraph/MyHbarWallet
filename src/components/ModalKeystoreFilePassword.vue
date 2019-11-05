@@ -76,6 +76,7 @@ export default createComponent({
         });
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
+            if (!isOpen) props.state.error = null;
             context.emit("change", { ...props.state, isOpen });
         }
 
