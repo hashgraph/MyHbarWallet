@@ -42,7 +42,6 @@
             />
 
             <HiddenPasswordInput
-                v-if="false"
                 :value="state.passwordValue"
                 :password-warning="$t('modalCreateByPhrase.passwordWarning')"
                 @input="handlePasswordChange"
@@ -188,9 +187,9 @@ export default createComponent({
             state.verifyPhraseIsOpen = false;
 
             // `.derive(0)` to generate the same key as the default account of the mobile wallet
-            const key: Ed25519PrivateKey = (await state.result.generateKey()).derive(
-                0
-            );
+            const key: Ed25519PrivateKey = (await state.result.generateKey(
+                state.passwordValue !== "" ? state.passwordValue : undefined
+            )).derive(0);
 
             // eslint-disable-next-line require-atomic-updates
             state.isBusy = false;

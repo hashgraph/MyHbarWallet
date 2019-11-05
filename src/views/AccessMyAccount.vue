@@ -140,6 +140,7 @@ export default createComponent({
             modalAccessByPhraseState: {
                 isOpen: false,
                 isBusy: false,
+                password: "",
                 words: [],
                 isValid: true
             },
@@ -431,7 +432,10 @@ export default createComponent({
                 setPrivateKey(
                     // `.derive(0)` to use the same key as the default account of the mobile wallet
                     (await Ed25519PrivateKey.fromMnemonic(
-                        accessByPhraseState.words
+                        accessByPhraseState.words,
+                        accessByPhraseState.password === ""
+                            ? undefined
+                            : accessByPhraseState.password
                     )).derive(0)
                 );
 

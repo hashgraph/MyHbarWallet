@@ -28,6 +28,8 @@
                     @input="handleMnemonicInput"
                 />
 
+                <OptionalPasswordInput @input="handlePasswordInput" />
+
                 <Button
                     class="continue-btn"
                     :label="$t('common.continue')"
@@ -49,6 +51,7 @@ import SwitchButton from "../components/SwitchButton.vue";
 import MnemonicInput from "../components/MnemonicInput.vue";
 import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
+import OptionalPasswordInput from "./OptionalPasswordInput.vue";
 import Warning from "../components/Warning.vue";
 import {
     computed,
@@ -60,6 +63,7 @@ import {
 export interface State {
     isOpen: boolean;
     words: string[];
+    password: string;
     isBusy: boolean;
     isValid: boolean;
 }
@@ -71,7 +75,8 @@ export default createComponent({
         SwitchButton,
         Button,
         CustomerSupportLink,
-        Warning
+        Warning,
+        OptionalPasswordInput
     },
     model: {
         prop: "state",
@@ -86,6 +91,9 @@ export default createComponent({
         }
         function handleMnemonicInput(words: string[]): void {
             context.emit("change", { ...props.state, words });
+        }
+        function handlePasswordInput(password: string): void {
+            context.emit("change", { ...props.state, password });
         }
 
         const areFieldsFilled = computed(() => {
@@ -112,6 +120,7 @@ export default createComponent({
         return {
             handleModalChangeIsOpen,
             handleMnemonicInput,
+            handlePasswordInput,
             areFieldsFilled
         };
     }
