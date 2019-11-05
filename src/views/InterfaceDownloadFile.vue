@@ -2,6 +2,7 @@
     <InterfaceForm :title="$t('interfaceDownloadFile.title')">
         <div class="download-container">
             <IdInput
+                ref="idInput"
                 class="file-id"
                 file
                 :error="state.idErrorMessage"
@@ -33,6 +34,7 @@
             v-model="state.success"
             @change="handleDownloadFinish"
             @dismiss="handleDownloadFinish"
+            @action="triggerDownload"
         >
             <i18n path="modalSuccess.downloadFile">
                 <strong>{{ formattedFileId }}</strong>
@@ -43,7 +45,13 @@
 
 <script lang="ts">
 import InterfaceForm from "../components/InterfaceForm.vue";
-import { createComponent, reactive, ref, computed } from "@vue/composition-api";
+import {
+    createComponent,
+    reactive,
+    ref,
+    computed,
+    Ref
+} from "@vue/composition-api";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import ModalSuccess, {
     State as SuccessState
@@ -56,6 +64,7 @@ import fileType from "file-type";
 import IdInput from "../components/IDInput.vue";
 import { ALERT } from "../store/actions";
 import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
+import { Vue } from "vue/types/vue";
 
 type Summary = {
     value: BigNumber | string;
@@ -71,6 +80,11 @@ type FileId = {
 type FileContentsResponse = {
     contents: string | Uint8Array;
     fileId: number | string | FileId;
+};
+
+// Shim for IDInput ref
+type IdInput = Vue & {
+    clear(): void;
 };
 
 export default createComponent({
@@ -90,9 +104,13 @@ export default createComponent({
             idErrorMessage: "",
             success: {
                 isOpen: false,
+                hasAction: true,
+                actionLabel: "Save File",
                 copyInfo: null
             } as SuccessState
         });
+
+        const idInput: Ref<Vue | null> = ref(null);
 
         const formattedFileId = computed(
             () =>
@@ -129,7 +147,7 @@ export default createComponent({
         }
 
         function handleFeeSubmit(): void {
-            triggerDownload();
+            // triggerDownload();
             state.isOpen = false;
             state.success.isOpen = true;
         }
@@ -245,8 +263,11 @@ export default createComponent({
             state.idErrorMessage = "";
             state.success = {
                 isOpen: false,
+                hasAction: true,
+                actionLabel: "Save File",
                 copyInfo: null
             } as SuccessState;
+            (idInput.value! as IdInput).clear();
         }
 
         return {
@@ -260,7 +281,9 @@ export default createComponent({
             handleDownloadClick,
             handleFileId,
             formattedFileId,
-            handleFeeSubmit
+            handleFeeSubmit,
+            triggerDownload,
+            idInput
         };
     }
 });
