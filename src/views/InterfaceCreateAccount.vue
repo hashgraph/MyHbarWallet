@@ -170,14 +170,19 @@ export default createComponent({
         const summaryItems = computed(() => {
             return [
                 {
-                    // todo [2019-11-05]: needs i18t
-                    description: "Initial Balance",
+                    description: context.root
+                        .$t("interfaceCreateAccount.initialBalance")
+                        .toString(),
                     value: validBalance.value
                         ? new BigNumber(state.newBalance)
                         : new BigNumber(0)
                 },
-                // todo [2019-11-05]: needs i18t
-                { description: "Estimated Fee", value: estimatedFeeHbar }
+                {
+                    description: context.root
+                        .$t("common.estimatedFee")
+                        .toString(),
+                    value: estimatedFeeHbar
+                }
             ] as Item[];
         });
 
