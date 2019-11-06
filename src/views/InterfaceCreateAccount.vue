@@ -1,8 +1,8 @@
 <template>
     <InterfaceForm :title="$t('common.createAccount')">
-        <Notice :symbol="mdiHelpCircleOutline">
-            {{ $t("interfaceCreateAccount.toCreateAccount") }}
-        </Notice>
+        <Notice :symbol="mdiHelpCircleOutline">{{
+            $t("interfaceCreateAccount.toCreateAccount")
+        }}</Notice>
 
         <TextInput
             v-model="state.newBalance"
@@ -14,16 +14,9 @@
             :label="$t('interfaceCreateAccount.initialBalance')"
             show-validation
         />
-
-        <TextInput
-            v-model="state.publicKey"
-            :error="state.keyError"
-            :valid="state.isPublicKeyValid"
-            :spellcheck-disabled="true"
-            :autocomplete-disabled="true"
-            :label="$t('interfaceCreateAccount.publicKey')"
-            show-validation
-        />
+        <div>
+            <CreateAccountKeyRing @keyRing="handleKeyRing" />
+        </div>
 
         <template v-slot:footer>
             <Button
@@ -49,7 +42,7 @@
             v-model="state.summaryModalIsOpen"
             :amount="summaryAmount"
             :items="summaryItems"
-            account=""
+            account
             tx-type="createAccount"
             @submit="handleCreateAccount"
         />
@@ -64,8 +57,7 @@ import {
     computed,
     createComponent,
     reactive,
-    SetupContext,
-    watch
+    SetupContext
 } from "@vue/composition-api";
 import { actions, getters, store } from "../store";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
@@ -78,16 +70,60 @@ import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuc
 import { writeToClipboard } from "../clipboard";
 import { LoginMethod } from "../wallets/Wallet";
 import { BadKeyError } from "@hashgraph/sdk";
+import CreateAccountKeyRing, {
+    FormatedKey
+} from "../components/CreateAccountKeyRing.vue";
 
 // const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 // const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
 
+async function buildThresholdKeys(
+    keys: FormatedKey
+): Promise<import("@hashgraph/sdk").ThresholdKey> {
+    const { ThresholdKey, Ed25519PublicKey } = await (import(
+        "@hashgraph/sdk"
+    ) as Promise<typeof import("@hashgraph/sdk")>);
+    console.log("107", keys);
+    const thresholdKey = new ThresholdKey(keys.threshold as number);
+    (keys.keyList as FormatedKey[]).forEach(async key => {
+        if (key.threshold !== key.keyList.length && key.threshold !== 0) {
+            thresholdKey.addAll(await buildThresholdKeys(key));
+        } else if (key.keyList.length > 1) {
+            thresholdKey.addAll(await buildKeyList(key));
+        } else {
+            thresholdKey.add(
+                await Ed25519PublicKey.fromString(key.keyList[0].toString())
+            );
+        }
+    });
+    return thresholdKey;
+}
+async function buildKeyList(
+    keys: FormatedKey
+): Promise<import("@hashgraph/sdk").KeyList> {
+    const { Ed25519PublicKey, KeyList } = await (import(
+        "@hashgraph/sdk"
+    ) as Promise<typeof import("@hashgraph/sdk")>);
+    //key list
+    const keyList = new KeyList();
+    (keys.keyList as FormatedKey[]).forEach(async key => {
+        if (key.threshold !== key.keyList.length && key.threshold !== 0) {
+            keyList.addAll(await buildThresholdKeys(key));
+        } else if (key.keyList.length > 1) {
+            keyList.addAll(await buildKeyList(key));
+        } else {
+            keyList.add(Ed25519PublicKey.fromString(key.keyList[0].toString()));
+        }
+    });
+    return keyList;
+}
+
 interface State {
     newBalance: string;
     publicKey: string;
+    keys?: FormatedKey;
     isBusy: boolean;
     summaryModalIsOpen: boolean;
-    keyError: string;
     newBalanceError: string;
     account: string;
     isPublicKeyValid: boolean;
@@ -117,15 +153,16 @@ export default createComponent({
         Button,
         ModalSuccess,
         Notice,
+        CreateAccountKeyRing,
         ModalFeeSummary
     },
     setup(_: object | null, context: SetupContext) {
         const state = reactive<State>({
             newBalance: "",
             publicKey: "",
+            keys: undefined,
             isBusy: false,
             summaryModalIsOpen: false,
-            keyError: "",
             newBalanceError: "",
             account: "",
             isPublicKeyValid: false,
@@ -134,10 +171,6 @@ export default createComponent({
                 hasAction: true,
                 actionLabel: "Copy Account ID"
             }
-        });
-
-        watch(async() => {
-            state.isPublicKeyValid = await isPublicKeyValid(state.publicKey);
         });
 
         // Just for display in modal title
@@ -193,12 +226,37 @@ export default createComponent({
                     Ed25519PublicKey
                 } = await import("@hashgraph/sdk");
 
-                const key = Ed25519PublicKey.fromString(state.publicKey);
-                const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(balanceTinybar.minus(newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())));
+                const keyRing = state.keys as FormatedKey;
+                let key;
+                //checks for determining the type of key you will be creating
+                if (
+                    keyRing.keyList.length != keyRing.threshold &&
+                    keyRing.threshold != 0
+                ) {
+                    key = await buildThresholdKeys(keyRing);
+                } else if (
+                    keyRing.keyList.length > 1 &&
+                    keyRing.threshold == keyRing.keyList.length
+                ) {
+                    key = await buildKeyList(keyRing);
+                } else {
+                    key = Ed25519PublicKey.fromString(
+                        (keyRing
+                            .keyList[0] as FormatedKey).keyList[0].toString()
+                    );
+                }
 
-                const accountIdIntermediate = (await (await new AccountCreateTransaction()
-                    .setInitialBalance(Hbar.fromTinybar(newBalanceTinybar))
-                    .setMaxTransactionFee(Hbar.fromTinybar(maxTxFeeTinybar))
+                const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(
+                    balanceTinybar.minus(
+                        newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())
+                    )
+                );
+
+                const accountIdIntermediate = (await new AccountCreateTransaction(
+                    client as InstanceType<typeof Client>
+                )
+                    .setInitialBalance(newBalanceTinybar)
+                    .setTransactionFee(maxTxFeeTinybar)
                     .setKey(key)
                     .execute(client))
                     .getReceipt(client))
@@ -290,10 +348,19 @@ export default createComponent({
             state.summaryModalIsOpen = true;
         }
 
+        function handleKeyRing(keyRing: {
+            key: FormatedKey;
+            validity: boolean;
+        }): void {
+            state.keys = keyRing.key;
+            state.isPublicKeyValid = keyRing.validity;
+        }
+
         return {
             state,
             summaryAmount,
             summaryItems,
+            handleKeyRing,
             validBalance,
             handleCreateAccount,
             handleShowSummary,
@@ -304,4 +371,11 @@ export default createComponent({
         };
     }
 });
+
+                // const key = Ed25519PublicKey.fromString(state.publicKey);
+                // const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(balanceTinybar.minus(newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())));
+
+                // const accountIdIntermediate = (await (await new AccountCreateTransaction()
+                //     .setInitialBalance(Hbar.fromTinybar(newBalanceTinybar))
+                //     .setMaxTransactionFee(Hbar.fromTinybar(maxTxFeeTinybar))
 </script>
