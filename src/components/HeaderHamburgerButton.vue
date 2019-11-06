@@ -158,5 +158,9 @@ export default createComponent({
     .button-wrapper {
         visibility: hidden;
     }
+
+    .interface-button-wrapper {
+        visibility: hidden;
+    }
 }
 </style>
