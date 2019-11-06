@@ -1,9 +1,8 @@
-import {LoginMethod} from "../wallets/Wallet";
 <template>
     <InterfaceForm :title="$t('common.createAccount')">
-        <Notice :symbol="mdiHelpCircleOutline">
-            {{ $t("interfaceCreateAccount.toCreateAccount") }}
-        </Notice>
+        <Notice :symbol="mdiHelpCircleOutline">{{
+            $t("interfaceCreateAccount.toCreateAccount")
+        }}</Notice>
 
         <TextInput
             v-model="state.newBalance"
@@ -15,16 +14,9 @@ import {LoginMethod} from "../wallets/Wallet";
             :label="$t('interfaceCreateAccount.initialBalance')"
             show-validation
         />
-
-        <TextInput
-            v-model="state.publicKey"
-            :error="state.keyError"
-            :valid="state.isPublicKeyValid"
-            :spellcheck-disabled="true"
-            :autocomplete-disabled="true"
-            :label="$t('interfaceCreateAccount.publicKey')"
-            show-validation
-        />
+        <div>
+            <CreateAccountKeyRing @keyRing="handleKeyRing" />
+        </div>
 
         <template v-slot:footer>
             <Button
@@ -50,7 +42,7 @@ import {LoginMethod} from "../wallets/Wallet";
             v-model="state.summaryModalIsOpen"
             :amount="summaryAmount"
             :items="summaryItems"
-            account=""
+            account
             tx-type="createAccount"
             @submit="handleCreateAccount"
         />
@@ -65,8 +57,7 @@ import {
     computed,
     createComponent,
     reactive,
-    SetupContext,
-    watch
+    SetupContext
 } from "@vue/composition-api";
 import store from "../store";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
@@ -91,40 +82,64 @@ import ModalSuccess, {
 } from "../components/ModalSuccess.vue";
 import { writeToClipboard } from "../clipboard";
 import { LoginMethod } from "../wallets/Wallet";
+import CreateAccountKeyRing, {
+    FormatedKey
+} from "../components/CreateAccountKeyRing.vue";
 
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
 
+async function buildThresholdKeys(
+    keys: FormatedKey
+): Promise<import("@hashgraph/sdk").ThresholdKey> {
+    const { ThresholdKey, Ed25519PublicKey } = await (import(
+        "@hashgraph/sdk"
+    ) as Promise<typeof import("@hashgraph/sdk")>);
+    console.log("107", keys);
+    const thresholdKey = new ThresholdKey(keys.threshold as number);
+    (keys.keyList as FormatedKey[]).forEach(async key => {
+        if (key.threshold !== key.keyList.length && key.threshold !== 0) {
+            thresholdKey.addAll(await buildThresholdKeys(key));
+        } else if (key.keyList.length > 1) {
+            thresholdKey.addAll(await buildKeyList(key));
+        } else {
+            thresholdKey.add(
+                await Ed25519PublicKey.fromString(key.keyList[0].toString())
+            );
+        }
+    });
+    return thresholdKey;
+}
+async function buildKeyList(
+    keys: FormatedKey
+): Promise<import("@hashgraph/sdk").KeyList> {
+    const { Ed25519PublicKey, KeyList } = await (import(
+        "@hashgraph/sdk"
+    ) as Promise<typeof import("@hashgraph/sdk")>);
+    //key list
+    const keyList = new KeyList();
+    (keys.keyList as FormatedKey[]).forEach(async key => {
+        if (key.threshold !== key.keyList.length && key.threshold !== 0) {
+            keyList.addAll(await buildThresholdKeys(key));
+        } else if (key.keyList.length > 1) {
+            keyList.addAll(await buildKeyList(key));
+        } else {
+            keyList.add(Ed25519PublicKey.fromString(key.keyList[0].toString()));
+        }
+    });
+    return keyList;
+}
+
 interface State {
     newBalance: string;
     publicKey: string;
+    keys?: FormatedKey;
     isBusy: boolean;
     summaryModalIsOpen: boolean;
-    keyError: string;
     newBalanceError: string;
     account: string;
     isPublicKeyValid: boolean;
     modalSuccessState: ModalSuccessState;
-}
-
-async function isPublicKeyValid(key: string): Promise<boolean> {
-    try {
-        const { Ed25519PublicKey } = await (import("@hashgraph/sdk") as Promise<
-            typeof import("@hashgraph/sdk")
-        >);
-
-        Ed25519PublicKey.fromString(key);
-        return true;
-    } catch (error) {
-        if (error instanceof Error) {
-            // The exception message changes depending on the input
-            if (error.message === "invalid public key: " + key) {
-                return false;
-            }
-        }
-
-        throw error;
-    }
 }
 
 export default createComponent({
@@ -134,15 +149,16 @@ export default createComponent({
         Button,
         ModalSuccess,
         Notice,
+        CreateAccountKeyRing,
         ModalFeeSummary
     },
     setup(_: object | null, context: SetupContext) {
         const state = reactive<State>({
             newBalance: "",
             publicKey: "",
+            keys: undefined,
             isBusy: false,
             summaryModalIsOpen: false,
-            keyError: "",
             newBalanceError: "",
             account: "",
             isPublicKeyValid: false,
@@ -156,10 +172,6 @@ export default createComponent({
         const validBalance = computed(() => {
             // All we should check is that this is, in fact, a number
             return !isNaN(parseInt(state.newBalance, 10));
-        });
-
-        watch(async () => {
-            state.isPublicKeyValid = await isPublicKeyValid(state.publicKey);
         });
 
         // Just for display in modal title
@@ -223,7 +235,26 @@ export default createComponent({
                     typeof import("@hashgraph/sdk")
                 >);
 
-                const key = Ed25519PublicKey.fromString(state.publicKey);
+                const keyRing = state.keys as FormatedKey;
+                let key;
+                //checks for determining the type of key you will be creating
+                if (
+                    keyRing.keyList.length != keyRing.threshold &&
+                    keyRing.threshold != 0
+                ) {
+                    key = await buildThresholdKeys(keyRing);
+                } else if (
+                    keyRing.keyList.length > 1 &&
+                    keyRing.threshold == keyRing.keyList.length
+                ) {
+                    key = await buildKeyList(keyRing);
+                } else {
+                    key = Ed25519PublicKey.fromString(
+                        (keyRing
+                            .keyList[0] as FormatedKey).keyList[0].toString()
+                    );
+                }
+
                 const maxTxFeeTinybar = store.getters[MAX_FEE_TINYBAR](
                     balanceTinybar.minus(
                         newBalanceTinybar.plus(estimatedFeeTinybar)
@@ -268,7 +299,10 @@ export default createComponent({
                 if (error instanceof HederaError) {
                     const errorMessage = await store.dispatch(
                         HANDLE_HEDERA_ERROR,
-                        { error, showAlert: false }
+                        {
+                            error,
+                            showAlert: false
+                        }
                     );
 
                     // Small duplication of effort to assign errorMessage to correct TextInput
@@ -327,10 +361,19 @@ export default createComponent({
             state.summaryModalIsOpen = true;
         }
 
+        function handleKeyRing(keyRing: {
+            key: FormatedKey;
+            validity: boolean;
+        }): void {
+            state.keys = keyRing.key;
+            state.isPublicKeyValid = keyRing.validity;
+        }
+
         return {
             state,
             summaryAmount,
             summaryItems,
+            handleKeyRing,
             validBalance,
             handleCreateAccount,
             handleShowSummary,

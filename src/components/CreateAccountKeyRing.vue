@@ -1,0 +1,341 @@
+<template>
+    <div>
+        <div class="head">
+            <span class="title">Public Key</span>
+            <div class="spacer" />
+            <div class="threshold">
+                <p>
+                    Threshold limit
+                    <input
+                        v-model="state.rootThreshold"
+                        type="number"
+                        class="number-input"
+                    />
+                    /
+                    <!-- this will be the threshold input -->
+                    {{ state.numOfInputs }}
+                </p>
+            </div>
+            <FlatButton
+                class="add-key"
+                :icon="mdiPlus"
+                @click="genNewKey('single')"
+            />
+            <FlatButton
+                class="add-list"
+                :icon="mdiPlaylistPlus"
+                @click="genNewKey('list')"
+            />
+        </div>
+        <hr />
+        <div v-for="(key, index) in state.keyRing" :key="key.listKey">
+            <div v-if="key.keyType === 'list'" class="key-list key">
+                <div class="head">
+                    <span class="title">List</span>
+                    <div class="spacer" />
+                    <div class="threshold">
+                        <p>
+                            Threshold limit
+                            <input
+                                v-model="key.thresholdLimit"
+                                class="number-input"
+                                type="number"
+                            />
+                            /
+                            <!-- this will be the threshold input -->
+                            {{ key.key.length }}
+                        </p>
+                    </div>
+                    <FlatButton
+                        class="add-key"
+                        :icon="mdiPlus"
+                        @click="handleAddSubKey(index)"
+                    />
+                </div>
+                <div
+                    v-for="(subKey, subIndex) in key.key"
+                    :key="subKey.listKey"
+                    class="single-key"
+                >
+                    <TextInput
+                        v-model="subKey.key[0]"
+                        :error="subKey.keyError"
+                        :valid="subKey.isPublicKeyValid"
+                        :spellcheck-disabled="true"
+                        :autocomplete-disabled="true"
+                        show-validation
+                    />
+                    <FlatButton
+                        :icon="mdiMinus"
+                        @click="handleRemoveSubField(index, subIndex)"
+                    />
+                </div>
+            </div>
+            <div v-else class="single-key key">
+                <TextInput
+                    v-model="key.key[0]"
+                    :label="'Public Key'"
+                    :error="key.keyError"
+                    :valid="key.isPublicKeyValid"
+                    :spellcheck-disabled="true"
+                    :autocomplete-disabled="true"
+                    show-validation
+                />
+                <FlatButton
+                    :icon="mdiMinus"
+                    @click="handleRemoveField(index)"
+                />
+            </div>
+            <hr />
+        </div>
+    </div>
+</template>
+<script lang="ts">
+import TextInput from "../components/TextInput.vue";
+import Button from "../components/Button.vue";
+import SwitchButton from "../components/SwitchButton.vue";
+import {
+    createComponent,
+    reactive,
+    watch,
+    computed
+} from "@vue/composition-api";
+import FlatButton from "../components/FlatButton.vue";
+import { mdiPlus, mdiMinus, mdiPlaylistPlus } from "@mdi/js";
+
+export interface Key {
+    keyError: string;
+    isPublicKeyValid: boolean;
+    keyType: string;
+    thresholdLimit: number;
+    key: Key[] | string[];
+}
+
+export interface FormatedKey {
+    threshold?: number;
+    keyList: FormatedKey[] | string[];
+}
+
+interface State {
+    keyRing: Key[];
+    rootThreshold: number;
+    areKeysValid: boolean;
+    numOfInputs: number;
+}
+
+function newKey(type: string): Key {
+    return {
+        keyError: "",
+        isPublicKeyValid: false,
+        thresholdLimit: 1,
+        keyType: type,
+        key: type === "single" ? [""] : [newKey("single")]
+    };
+}
+
+async function isPublicKeyValid(key: string): Promise<boolean> {
+    try {
+        const { Ed25519PublicKey } = await (import("@hashgraph/sdk") as Promise<
+            typeof import("@hashgraph/sdk")
+        >);
+
+        Ed25519PublicKey.fromString(key);
+        return true;
+    } catch (error) {
+        if (error instanceof Error) {
+            // The exception message changes depending on the input
+            if (error.message === "invalid public key: " + key) {
+                return false;
+            }
+        }
+
+        throw error;
+    }
+}
+
+function formatedKeys(keyRing: Key[]): FormatedKey[] {
+    const keys: unknown[] = [];
+    keyRing.forEach(key => {
+        let keyList: unknown[] = [];
+        if (typeof key.key[0] === "string") {
+            keyList = key.key;
+        } else {
+            (key.key as Key[]).forEach(subKey => {
+                keyList.push({ keyList: subKey.key, threshold: 1 });
+            });
+        }
+        keys.push({ keyList, threshold: key.thresholdLimit });
+    });
+
+    return keys as FormatedKey[];
+}
+
+export default createComponent({
+    components: {
+        TextInput,
+        Button,
+        SwitchButton,
+        FlatButton
+    },
+    setup(props, context) {
+        const state = reactive<State>({
+            keyRing: [
+                {
+                    keyError: "",
+                    isPublicKeyValid: false,
+                    keyType: "single",
+                    thresholdLimit: 0,
+                    key: [""]
+                }
+            ],
+            rootThreshold: 0,
+            areKeysValid: false,
+            numOfInputs: 1
+        });
+
+        async function validateKeys(keyRing: Key[]): Promise<void> {
+            let valid = 0;
+            for (const key of keyRing) {
+                if (typeof key.key[0] === "string") {
+                    key.isPublicKeyValid = await isPublicKeyValid(key
+                        .key[0] as string);
+                    if (key.isPublicKeyValid === false) {
+                        valid++;
+                    }
+                } else {
+                    for (const subKey of key.key as Key[]) {
+                        subKey.isPublicKeyValid = await isPublicKeyValid(subKey
+                            .key[0] as string);
+                        if (subKey.isPublicKeyValid === false) {
+                            valid++;
+                        }
+                    }
+                }
+            }
+            state.areKeysValid = valid < 1;
+        }
+
+        watch(
+            //watches the nested content to maintain valid threshold limits
+            () => [
+                state.keyRing.map(key => {
+                    return key.thresholdLimit;
+                }),
+                state.keyRing.map(key => {
+                    return key.key.length;
+                })
+            ],
+            () => {
+                state.keyRing.forEach(key => {
+                    if (key.key.length < key.thresholdLimit) {
+                        key.thresholdLimit = key.key.length;
+                    } else if (
+                        key.thresholdLimit <= 0 ||
+                        (key.key.length === 1 && key.thresholdLimit !== 1)
+                    ) {
+                        key.thresholdLimit = 1;
+                    }
+                });
+            }
+        );
+
+        watch(
+            //watches for changes in the root keyring and keeps the threshold valid
+            () => [state.keyRing.length, state.rootThreshold],
+            ([newLength, newThreshold]) => {
+                if (state.rootThreshold > state.keyRing.length) {
+                    state.rootThreshold = state.keyRing.length;
+                }
+                if (newThreshold <= 0) {
+                    state.rootThreshold = 1;
+                }
+            }
+        );
+
+        watch(
+            ///watches for changes on the text input fields
+            () =>
+                state.keyRing.map(key => {
+                    return key.keyType === "single"
+                        ? key.key[0]
+                        : (key.key as Key[]).map(subKey => subKey.key[0]);
+                }),
+            async () => {
+                await validateKeys(state.keyRing).then(() => {
+                    context.emit("keyRing", {
+                        key: {
+                            keyList: formatedKeys(state.keyRing),
+                            threshold: state.rootThreshold
+                        },
+                        validity: state.areKeysValid
+                    });
+                });
+            }
+        );
+
+        function genNewKey(type: string): void {
+            state.numOfInputs++;
+            state.keyRing.push(newKey(type));
+        }
+
+        function handleAddSubKey(idx: number): void {
+            (state.keyRing[idx].key as Key[]).push(newKey("single"));
+        }
+
+        function handleRemoveField(idx: number): void {
+            if (state.numOfInputs > 1) {
+                state.keyRing.splice(idx, 1);
+                state.numOfInputs--;
+            }
+        }
+        function handleRemoveSubField(pIdx: number, idx: number): void {
+            if (state.keyRing[pIdx].key.length > 1) {
+                state.keyRing[pIdx].key.splice(idx, 1);
+            } else if (state.keyRing[pIdx].key.length === 1) {
+                handleRemoveField(pIdx);
+            }
+        }
+
+        return {
+            state,
+            genNewKey,
+            handleRemoveField,
+            handleRemoveSubField,
+            handleAddSubKey,
+            mdiPlus,
+            mdiPlaylistPlus,
+            mdiMinus
+        };
+    }
+});
+</script>
+
+<style lang="postcss" scoped>
+.title {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    height: 24px;
+    margin-block-end: 13px;
+    padding: 0 8px;
+}
+
+.head {
+    display: flex;
+    flex-direction: row;
+}
+
+.number-input {
+    width: 2.5rem;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+.single-key {
+    display: flex;
+    flex-direction: row;
+    margin-block-end: 10px;
+}
+</style>
