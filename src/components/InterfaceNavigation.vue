@@ -72,7 +72,8 @@ export default createComponent({
     setup() {
         const cryptoRoutes = [
             { name: "send-transfer", label: "Send" },
-            { name: "create-account-transaction", label: "Create Account" }
+            { name: "create-account-transaction", label: "Create Account" },
+            { name: "sign-execute", label: "Sign | Execute" }
         ];
 
         const contractRoutes = [

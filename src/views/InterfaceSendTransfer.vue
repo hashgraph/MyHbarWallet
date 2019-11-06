@@ -1,4 +1,3 @@
-import {LoginMethod} from "../wallets/Wallet";
 <template>
     <InterfaceForm :title="$t('interfaceSendTransfer.title')">
         <TextInput
@@ -26,6 +25,12 @@ import {LoginMethod} from "../wallets/Wallet";
         />
 
         <OptionalMemoField v-model.trim="state.memo" />
+
+        <OptionalOfflineTransfer
+            v-model.trim="state.transactionHex"
+            :show="state.offline"
+            @offline="handleChangeOffline"
+        />
 
         <template v-slot:footer>
             <Button
@@ -89,6 +94,7 @@ import {
     MAX_FEE_TINYBAR
 } from "../store/getters";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
+import OptionalOfflineTransfer from "../components/OptionalOfflineTransfer.vue";
 import ModalSuccess, {
     State as ModalSuccessState
 } from "../components/ModalSuccess.vue";
@@ -111,6 +117,8 @@ interface State {
     summaryIsOpen: boolean;
     idValid: boolean;
     modalSuccessState: ModalSuccessState;
+    transactionHex: string;
+    offline: boolean;
 }
 
 const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
@@ -124,6 +132,7 @@ export default createComponent({
         ModalSuccess,
         ModalFeeSummary,
         OptionalMemoField,
+        OptionalOfflineTransfer,
         IDInput
     },
     setup(_: object | null, context: SetupContext) {
@@ -140,7 +149,9 @@ export default createComponent({
             modalSuccessState: {
                 isOpen: false,
                 hasAction: false
-            }
+            },
+            transactionHex: "",
+            offline: false
         });
 
         const idInput: Ref<Vue | null> = ref(null);
@@ -251,6 +262,10 @@ export default createComponent({
             state.amountErrorMessage = "";
         }
 
+        function handleChangeOffline(offline: boolean): void {
+            state.offline = offline;
+        }
+
         async function handleSendTransfer(): Promise<void> {
             if (store.state.wallet.session == null) {
                 throw new Error(
@@ -306,9 +321,9 @@ export default createComponent({
                     )
                 );
 
-                const tx = new CryptoTransferTransaction(client as InstanceType<
-                    typeof Client
-                >)
+                const txBuilder = new CryptoTransferTransaction(
+                    client as InstanceType<typeof Client>
+                )
                     .addSender(
                         store.state.wallet.session.account,
                         sendAmountTinybar
@@ -317,10 +332,19 @@ export default createComponent({
                     .setTransactionFee(maxTxFeeTinybar);
 
                 if (state.memo !== "" && state.memo != null) {
-                    tx.setMemo(state.memo);
+                    txBuilder.setMemo(state.memo);
                 }
 
-                await tx.build().executeForReceipt();
+                const tx = txBuilder.build();
+
+                if (state.offline) {
+                    state.transactionHex = Buffer.from(tx.toBytes()).toString(
+                        "hex"
+                    );
+                    return;
+                } else {
+                    await tx.executeForReceipt();
+                }
 
                 // Refresh Balance
                 await store.dispatch(REFRESH_BALANCE_AND_RATE);
@@ -409,7 +433,8 @@ export default createComponent({
             truncate,
             handleInput,
             handleValid,
-            handleAccount
+            handleAccount,
+            handleChangeOffline
         };
     }
 });

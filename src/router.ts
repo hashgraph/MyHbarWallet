@@ -78,6 +78,15 @@ function InterfaceSignMessage(): Promise<
     );
 }
 
+function InterfaceSignExecute(): Promise<
+    typeof import("./views/InterfaceSignExecute.vue")
+> {
+    return import(
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceSignExecute.vue"
+    );
+}
+
 function InterfaceVerifyMessage(): Promise<
     typeof import("./views/InterfaceVerifyMessage.vue")
 > {
@@ -204,6 +213,11 @@ export default new Router({
                     path: "create-account",
                     name: "create-account-transaction",
                     component: InterfaceCreateAccount
+                },
+                {
+                    path: "sign-execute",
+                    name: "sign-execute",
+                    component: InterfaceSignExecute
                 },
                 {
                     path: "sign-message",
