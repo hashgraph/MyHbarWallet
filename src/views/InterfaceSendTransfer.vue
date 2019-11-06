@@ -191,12 +191,15 @@ export default createComponent({
         );
 
         const buttonLabel = computed(() =>
-            state.amount &&
-            new BigNumber(state.amount).isGreaterThan(new BigNumber(1))
-                ? context.root
-                      .$t("interfaceSendTransfer.sendHbars", [truncate.value])
-                      .toString()
-                : context.root.$t("interfaceSendTransfer.sendHbar").toString()
+            context.root
+                .$tc(
+                    "interfaceSendTransfer.sendHbar",
+                    parseFloat(amount.toString()),
+                    {
+                        count: truncate.value
+                    }
+                )
+                .toString()
         );
 
         const summaryAmount = computed(() => {
