@@ -48,7 +48,8 @@ export default {
     },
     getters: {
         [RAW_ERROR]: (state: State): Error | string | null => {
-            const error: Error | string | null = state.errors.length > 0 ? state.errors[0] : null;
+            const error: Error | string | null =
+                state.errors.length > 0 ? state.errors[0] : null;
             if (process.env.NODE_ENV !== "production") console.log(error);
             return error;
         },
@@ -72,7 +73,8 @@ export default {
             { dispatch }: ActionContext<State, RootState>,
             payload: HederaErrorPayload
         ): Promise<HederaErrorTuple> {
-            if (process.env.NODE_ENV !== "production") console.log(payload.error);
+            if (process.env.NODE_ENV !== "production")
+                console.log(payload.error);
 
             let message = "";
             const severity = "error";
@@ -129,7 +131,8 @@ export default {
             { dispatch }: ActionContext<State, RootState>,
             payload: LedgerErrorPayload
         ): Promise<LedgerErrorTuple> {
-            if (process.env.NODE_ENV !== "production") console.log(payload.error);
+            if (process.env.NODE_ENV !== "production")
+                console.log(payload.error);
             // https://github.com/LedgerHQ/ledgerjs/blob/master/packages/errors/src/index.js#L196-L227
             let message = "";
             let severity = "error";
@@ -179,14 +182,18 @@ export default {
                 case StatusCodes.MAX_VALUE_REACHED: //0x9850,
                 case StatusCodes.GP_AUTH_FAILED: //0x6300,
                 case StatusCodes.HALTED: //0x6faa
-                    message = i18n.t("common.error.generalDeviceError").toString();
+                    message = i18n
+                        .t("common.error.generalDeviceError")
+                        .toString();
                     severity = "error";
                     break;
 
                 default:
                     console.warn(payload.error.statusCode);
                     console.warn(payload.error);
-                    message = i18n.t("common.error.generalDeviceError").toString();
+                    message = i18n
+                        .t("common.error.generalDeviceError")
+                        .toString();
                     severity = "warn";
                     break;
             }
