@@ -51,6 +51,15 @@ function InterfaceSendTransfer(): Promise<
     );
 }
 
+function InterfaceUpdateAccount(): Promise<
+    typeof import("./views/InterfaceUpdateAccount.vue")
+> {
+    return import(
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceUpdateAccount.vue"
+    );
+}
+
 function InterfaceDeployContract(): Promise<
     typeof import("./views/InterfaceDeployContract.vue")
 > {
@@ -189,6 +198,11 @@ export default new Router({
                     path: "send-transfer",
                     name: "send-transfer",
                     component: InterfaceSendTransfer
+                },
+                {
+                    path: "update-account",
+                    name: "update-account",
+                    component: InterfaceUpdateAccount
                 },
                 {
                     path: "deploy-contract",
