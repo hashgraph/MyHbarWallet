@@ -194,7 +194,7 @@ export default createComponent({
             context.root
                 .$tc(
                     "interfaceSendTransfer.sendHbar",
-                    parseFloat(amount.toString()),
+                    state.amount == null ? 0 : Number(state.amount.toString()),
                     {
                         count: truncate.value
                     }
