@@ -107,7 +107,7 @@ function InterfaceDownloadFile(): Promise<
 
 function CreateAccount(): Promise<typeof import("./views/CreateAccount.vue")> {
     return import(
-        /* webpackChunkName: "createAccount" */
+        /* webpackChunkName: "interface" */
         "./views/CreateAccount.vue"
     );
 }
@@ -116,7 +116,7 @@ function AccessMyAccount(): Promise<
     typeof import("./views/AccessMyAccount.vue")
 > {
     return import(
-        /* webpackChunkName: "accessAccount" */
+        /* webpackChunkName: "interface" */
         "./views/AccessMyAccount.vue"
     );
 }

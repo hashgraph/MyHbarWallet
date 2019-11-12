@@ -13,13 +13,13 @@
 </template>
 
 <script lang="ts">
+import ModalCustomerService from "../components/ModalCustomerService.vue";
 import serviceBell from "../assets/help-center.svg";
 import { createComponent, reactive } from "@vue/composition-api";
 
 export default createComponent({
     components: {
-        ModalCustomerService: () =>
-            import("../components/ModalCustomerService.vue")
+        ModalCustomerService
     },
     setup() {
         const state = reactive({
