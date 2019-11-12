@@ -30,7 +30,7 @@ function TermsConditions(): Promise<
 
 function PrivacyPolicy(): Promise<typeof import("./views/PrivacyPolicy.vue")> {
     return import(
-        /* webpackChunkName: "PrivacyPolicy" */ "./views/PrivacyPolicy.vue"
+        /* webpackChunkName: "privacy" */ "./views/PrivacyPolicy.vue"
     );
 }
 
