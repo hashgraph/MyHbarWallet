@@ -139,3 +139,5 @@ export default class LedgerNanoS implements Wallet {
         }
     }
 }
+
+export { LedgerNanoS }
