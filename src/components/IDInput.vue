@@ -105,9 +105,9 @@ export default createComponent({
                 state.account = null;
             }
             if (props.file) {
-                context.emit("input", input.value, state.file);
+                context.emit("input", state.input, state.file);
             } else {
-                context.emit("input", input.value, state.account);
+                context.emit("input", state.input, state.account);
             }
             context.emit("valid", valid.value || partialValid.value);
         }
