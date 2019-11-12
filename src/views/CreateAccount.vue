@@ -90,6 +90,13 @@ import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import settings from "../settings";
 import { HederaErrorTuple, LedgerErrorTuple } from "../store/modules/errors";
 import { LoginMethod } from "../wallets/Wallet";
+import {
+    Client,
+    Ed25519PrivateKey,
+    Ed25519PublicKey,
+    Operator,
+    Signer
+} from "@hashgraph/sdk";
 
 interface State {
     loginMethod: LoginMethod | null;
@@ -164,9 +171,7 @@ export default createComponent({
 
         const keyStoreLink = ref<HTMLAnchorElement | null>(null);
 
-        function setPrivateKey(
-            newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey
-        ): void {
+        function setPrivateKey(newPrivateKey: Ed25519PrivateKey): void {
             state.privateKey = newPrivateKey;
             state.publicKey = newPrivateKey.publicKey;
             state.modalEnterAccountIdState.publicKey = newPrivateKey.publicKey;
@@ -176,38 +181,34 @@ export default createComponent({
             context.root.$router.push({ name: "interface" });
         }
 
-        async function constructOperator(
-            account: Id
-        ): Promise<import("@hashgraph/sdk").Operator> {
+        async function constructOperator(account: Id): Promise<Operator> {
             if (state.wallet !== null) {
                 if (state.wallet.hasPrivateKey()) {
                     return {
                         account,
                         privateKey: await state.wallet!.getPrivateKey()
-                    } as import("@hashgraph/sdk").Operator;
+                    } as Operator;
                 } else {
                     return {
                         account,
-                        publicKey: (await state.wallet!.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey,
+                        publicKey: (await state.wallet!.getPublicKey()) as Ed25519PublicKey,
                         signer: state.wallet!.signTransaction.bind(
                             state.wallet!
-                        ) as import("@hashgraph/sdk").Signer
+                        ) as Signer
                     };
                 }
             }
 
             return {
                 account: null as Id | null,
-                privateKey: null as
-                    | import("@hashgraph/sdk").Ed25519PrivateKey
-                    | null
-            } as import("@hashgraph/sdk").Operator;
+                privateKey: null as Ed25519PrivateKey | null
+            } as Operator;
         }
 
         async function constructClient(
             account: Id
-        ): Promise<import("@hashgraph/sdk").Client | undefined> {
-            let client: import("@hashgraph/sdk").Client | undefined = undefined;
+        ): Promise<Client | undefined> {
+            let client: Client | undefined = undefined;
 
             const {
                 Client,
@@ -219,9 +220,7 @@ export default createComponent({
             >);
 
             try {
-                const operator: import("@hashgraph/sdk").Operator = await constructOperator(
-                    account
-                );
+                const operator: Operator = await constructOperator(account);
 
                 client = new Client({
                     nodes: {
@@ -255,9 +254,7 @@ export default createComponent({
         }
 
         async function login(account: Id): Promise<void> {
-            const client:
-                | import("@hashgraph/sdk").Client
-                | undefined = await constructClient(account);
+            const client: Client | undefined = await constructClient(account);
 
             if (state.wallet !== null && client !== undefined) {
                 await store.dispatch(LOG_IN, {
@@ -301,7 +298,7 @@ export default createComponent({
                     try {
                         state.modalCreateByHardwareState.isBusy = true;
                         state.wallet = new LedgerNanoS();
-                        state.publicKey = (await state.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+                        state.publicKey = (await state.wallet.getPublicKey()) as Ed25519PublicKey;
                         state.modalEnterAccountIdState.publicKey =
                             state.publicKey;
                         state.modalCreateByHardwareState.isOpen = false;
@@ -393,7 +390,7 @@ export default createComponent({
         }
 
         function handleCreateByPhraseSubmit(
-            newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey
+            newPrivateKey: Ed25519PrivateKey
         ): void {
             state.modalCreateByPhraseState.isOpen = false;
 
@@ -418,8 +415,8 @@ export default createComponent({
                 if (state.privateKey !== null) {
                     state.wallet = new SoftwareWallet(
                         state.loginMethod,
-                        state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
-                        state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
+                        state.privateKey as Ed25519PrivateKey,
+                        state.publicKey as Ed25519PublicKey
                     );
                 }
             }

@@ -1,6 +1,7 @@
 import Wallet, { LoginMethod } from "../Wallet";
 import "regenerator-runtime"; // https://github.com/LedgerHQ/ledgerjs/issues/332
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
+import {Ed25519PrivateKey, Ed25519PublicKey, PublicKey} from "@hashgraph/sdk";
 
 // Preserving, in case we need this later
 // export const LEDGER_HEDERA_PATH = "44'/3030'/0'/0'/0'";
@@ -19,7 +20,7 @@ const P1_LAST = 0x08;
 
 export type LedgerDeviceStatus = {
     deviceStatus: number;
-    publicKey?: import("@hashgraph/sdk").PublicKey | null;
+    publicKey?: PublicKey | null;
     deviceId?: string;
 };
 
@@ -32,20 +33,20 @@ interface APDU {
 }
 
 export default class LedgerNanoS implements Wallet {
-    private publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null = null;
+    private publicKey: Ed25519PublicKey | null = null;
 
     public hasPrivateKey(): boolean {
         return false;
     }
 
     public async getPrivateKey(): Promise<
-        import("@hashgraph/sdk").Ed25519PrivateKey
+        Ed25519PrivateKey
     > {
         throw new Error("Cannot get private key from ledger wallet");
     }
 
     public async getPublicKey(): Promise<
-        import("@hashgraph/sdk").PublicKey | null
+        PublicKey | null
     > {
         if (this.publicKey === null) {
             const buffer = Buffer.alloc(4);

@@ -70,10 +70,11 @@ import { writeToClipboard } from "../clipboard";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import { ALERT } from "../store/actions";
 import store from "../store";
+import { Ed25519PublicKey } from "@hashgraph/sdk";
 
 interface Props {
     isOpen: boolean;
-    publicKey: import("@hashgraph/sdk").Ed25519PublicKey;
+    publicKey: Ed25519PublicKey;
     event: string;
 }
 
@@ -91,9 +92,7 @@ export default createComponent({
     },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
-        publicKey: (Object as unknown) as PropType<
-            import("@hashgraph/sdk").Ed25519PublicKey
-        >,
+        publicKey: (Object as unknown) as PropType<Ed25519PublicKey>,
         event: (String as unknown) as PropType<string>
     },
     setup(props: Props, context: SetupContext) {
