@@ -101,7 +101,7 @@
         "stylelint-use-logical": "^1.1.0",
         "stylelint-value-no-unknown-custom-properties": "^2.0.0",
         "ts-jest": "^24.1.0",
-        "typescript": "^3.7.2",
+        "typescript": "3.6.x",
         "vue-cli-plugin-electron-builder": "^1.4.1",
         "vue-template-compiler": "^2.6.10"
     },
