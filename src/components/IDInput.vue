@@ -1,18 +1,18 @@
 <template>
-  <TextInput
-    ref="input"
-    :value="state.input"
-    show-validation
-    :can-copy="canCopy"
-    :label="label"
-    :valid="valid || partialValid"
-    :error="state.errorMessage"
-    :placeholder="
-      file ? 'shard.realm.file or file' : $t('common.accountSyntax')
-    "
-    @input="handleInput"
-    @click.native.stop
-  />
+    <TextInput
+        ref="input"
+        :value="state.input"
+        show-validation
+        :can-copy="canCopy"
+        :label="label"
+        :valid="valid || partialValid"
+        :error="state.errorMessage"
+        :placeholder="
+            file ? 'shard.realm.file or file' : $t('common.accountSyntax')
+        "
+        @input="handleInput"
+        @click.native.stop
+    />
 </template>
 
 <script lang="ts">
@@ -74,15 +74,15 @@ export default createComponent({
                 const parts = state.input.split(".");
                 if (props.file) {
                     state.file = {
-                        shard: parseInt(parts[ 0 ]),
-                        realm: parseInt(parts[ 1 ]),
-                        file: parseInt(parts[ 2 ])
+                        shard: parseInt(parts[0]),
+                        realm: parseInt(parts[1]),
+                        file: parseInt(parts[2])
                     };
                 } else {
                     state.account = {
-                        shard: parseInt(parts[ 0 ]),
-                        realm: parseInt(parts[ 1 ]),
-                        account: parseInt(parts[ 2 ])
+                        shard: parseInt(parts[0]),
+                        realm: parseInt(parts[1]),
+                        account: parseInt(parts[2])
                     };
                 }
             } else if (partialValid.value) {
@@ -103,23 +103,23 @@ export default createComponent({
                 state.account = null;
             }
             if (props.file) {
-                context.emit("input", input.value, state.file);
+                context.emit("input", state.input, state.file);
             } else {
-                context.emit("input", input.value, state.account);
+                context.emit("input", state.input, state.account);
             }
             context.emit("valid", valid.value || partialValid.value);
         }
 
         watch(
             () => props.error,
-            (newVal) => {
+            newVal => {
                 if (newVal && props.error) state.errorMessage = props.error;
             }
         );
 
         watch(
             () => props.isOpen,
-            (newVal) => {
+            newVal => {
                 // input.value is not set until after modal is open
                 Vue.nextTick(() => {
                     if (newVal && input.value) {
