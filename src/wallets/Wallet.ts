@@ -1,7 +1,9 @@
+import {Ed25519PrivateKey, PublicKey} from "@hashgraph/sdk";
+
 export default interface Wallet {
     hasPrivateKey(): boolean;
-    getPrivateKey(): Promise<import("@hashgraph/sdk").Ed25519PrivateKey>;
-    getPublicKey(): Promise<import("@hashgraph/sdk").PublicKey | null>;
+    getPrivateKey(): Promise<Ed25519PrivateKey>;
+    getPublicKey(): Promise<PublicKey | null>;
     getLoginMethod(): LoginMethod;
     signTransaction(arg0: Buffer | Uint8Array): Promise<Uint8Array | null>;
 }

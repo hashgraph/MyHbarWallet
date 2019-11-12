@@ -73,6 +73,7 @@ import store from "../store";
 import { ALERT } from "../store/actions";
 import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import { writeToClipboard } from "../clipboard";
+import { Ed25519PublicKey } from "@hashgraph/sdk";
 
 type AccountId = {
     shard: number;
@@ -280,7 +281,7 @@ export default createComponent({
             state.isBusy = true;
 
             const receipt = ref<TransactionReceipt | null>(null);
-            const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+            const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as Ed25519PublicKey;
 
             if (!publicKey) {
                 throw new Error(
@@ -290,7 +291,7 @@ export default createComponent({
                 );
             }
 
-            let fileId: import("@hashgraph/sdk").FileId | undefined = undefined;
+            let fileId: FileId | undefined = undefined;
 
             state.uploadProgress.inProgress = true;
             try {

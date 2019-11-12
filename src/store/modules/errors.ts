@@ -5,6 +5,7 @@ import { StatusCodes } from "@ledgerhq/hw-transport";
 import i18n from "../../../src/i18n";
 import { ActionContext } from "vuex";
 import { RootState } from "..";
+import {HederaError} from "@hashgraph/sdk";
 
 export interface State {
     errors: (Error | string)[];
@@ -25,13 +26,13 @@ export interface LedgerErrorTuple {
 }
 
 export interface HederaErrorPayload {
-    error: import("@hashgraph/sdk").HederaError;
+    error: HederaError;
     showAlert: boolean;
 }
 
 export interface HederaErrorTuple {
     message: string;
-    error: import("@hashgraph/sdk").HederaError;
+    error: HederaError;
 }
 
 export default {
