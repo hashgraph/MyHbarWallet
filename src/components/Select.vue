@@ -1,24 +1,32 @@
 <template>
+  <div
+    class="select"
+    :class="{ 'is-open': state.dropdownIsOpen }"
+    @click.stop=""
+  >
     <div
-        class="select"
-        :class="{ 'is-open': state.dropdownIsOpen }"
-        @click.stop=""
+      class="select-value-container"
+      @click="toggleDropdown"
     >
-        <div class="select-value-container" @click="toggleDropdown">
-            <div class="select-value">{{ selected }}</div>
-            <MaterialDesignIcon class="icon" :icon="dropdownIcon" />
-        </div>
-        <div class="select-menu">
-            <div
-                v-for="(opt, idx) in options"
-                :key="opt + idx"
-                class="select-option"
-                @click="handleOptionClick(opt)"
-            >
-                {{ opt }}
-            </div>
-        </div>
+      <div class="select-value">
+        {{ selected }}
+      </div>
+      <MaterialDesignIcon
+        class="icon"
+        :icon="dropdownIcon"
+      />
     </div>
+    <div class="select-menu">
+      <div
+        v-for="(opt, idx) in options"
+        :key="opt + idx"
+        class="select-option"
+        @click="handleOptionClick(opt)"
+      >
+        {{ opt }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -43,9 +51,7 @@ interface State {
 }
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     model: {
         prop: "selected",
         event: "change"
@@ -55,9 +61,7 @@ export default createComponent({
         options: (Array as unknown) as PropType<string[]>
     },
     setup(props: Props, context: SetupContext) {
-        const state = reactive<State>({
-            dropdownIsOpen: false
-        });
+        const state = reactive<State>({ dropdownIsOpen: false });
 
         const dropdownIcon = computed(() => {
             if (state.dropdownIsOpen) {

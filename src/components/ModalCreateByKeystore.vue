@@ -1,43 +1,43 @@
 <template>
-    <div class="create-with-keystore-file">
-        <Modal
-            :title="$t('modalCreateByKeystore.title')"
-            :is-open="state.isOpen"
-            @change="handleModalChangeIsOpen"
-        >
-            <div class="password-info-header-wrapper">
-                <div class="password-info-header">
-                    {{ $t("modalCreateByKeystore.yourPassword") }}
-                    <InfoButton
-                        :message="
-                            $t(
-                                'common.password.thisPasswordEncryptsYourPrivateKey'
-                            )
-                        "
-                    />
-                </div>
-            </div>
+  <div class="create-with-keystore-file">
+    <Modal
+      :title="$t('modalCreateByKeystore.title')"
+      :is-open="state.isOpen"
+      @change="handleModalChangeIsOpen"
+    >
+      <div class="password-info-header-wrapper">
+        <div class="password-info-header">
+          {{ $t("modalCreateByKeystore.yourPassword") }}
+          <InfoButton
+            :message="
+              $t(
+                'common.password.thisPasswordEncryptsYourPrivateKey'
+              )
+            "
+          />
+        </div>
+      </div>
 
-            <PasswordGenerator
-                ref="passwordGenerator"
-                v-model="state.passwordGeneratorState"
-                :is-open="state.isOpen"
-                @submit="handleSubmitPassword"
-            />
+      <PasswordGenerator
+        ref="passwordGenerator"
+        v-model="state.passwordGeneratorState"
+        :is-open="state.isOpen"
+        @submit="handleSubmitPassword"
+      />
 
-            <p
-                class="footer"
-                v-html="
-                    formatRich(
-                        $t(
-                            'modalCreateByKeystore.doNotForgetToSaveYourPassword'
-                        ).toString(),
-                        { strongClass: 'important' }
-                    )
-                "
-            />
-        </Modal>
-    </div>
+      <p
+        class="footer"
+        v-html="
+          formatRich(
+            $t(
+              'modalCreateByKeystore.doNotForgetToSaveYourPassword'
+            ).toString(),
+            { strongClass: 'important' }
+          )
+        "
+      />
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -45,9 +45,7 @@ import { createComponent, PropType } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
-import PasswordGenerator, {
-    State as PasswordGeneratorState
-} from "../components/PasswordGenerator.vue";
+import PasswordGenerator, { State as PasswordGeneratorState } from "../components/PasswordGenerator.vue";
 import { mdiArrowRight } from "@mdi/js";
 import { formatRich } from "../formatter";
 
@@ -72,9 +70,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: (Object as unknown) as PropType<State> },
     setup(props: Props, context) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });

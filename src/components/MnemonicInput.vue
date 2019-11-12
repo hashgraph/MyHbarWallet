@@ -1,29 +1,29 @@
 <template>
-    <div class="list-container">
-        <label
-            v-for="index in words"
-            :key="index"
-            class="list-item"
-            :class="{ 'is-focused': state.focused === index }"
-        >
-            <span class="number">{{ index }}.</span>
+  <div class="list-container">
+    <label
+      v-for="index in words"
+      :key="index"
+      class="list-item"
+      :class="{ 'is-focused': state.focused === index }"
+    >
+      <span class="number">{{ index }}.</span>
 
-            <input
-                ref="input"
-                type="text"
-                class="word"
-                :value="value.length < index ? '' : value[index - 1]"
-                :readonly="!editable"
-                :data-index="index"
-                :tabindex="editable ? null : -1"
-                autocomplete="off"
-                autocapitalize="off"
-                spellcheck="false"
-                @input="handleInput"
-                @focus="handleFocus"
-            />
-        </label>
-    </div>
+      <input
+        ref="input"
+        type="text"
+        class="word"
+        :value="value.length < index ? '' : value[index - 1]"
+        :readonly="!editable"
+        :data-index="index"
+        :tabindex="editable ? null : -1"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        @input="handleInput"
+        @focus="handleFocus"
+      >
+    </label>
+  </div>
 </template>
 
 <script lang="ts">
@@ -56,9 +56,7 @@ export default createComponent({
         isOpen: Boolean
     },
     setup(props: Props, context: SetupContext) {
-        const state = reactive<State>({
-            focused: null as number | null
-        });
+        const state = reactive<State>({ focused: null as number | null });
 
         const input = ref<HTMLInputElement[] | null>(null);
 
@@ -73,7 +71,7 @@ export default createComponent({
 
             const splitString = target.value.trim().split(" ");
             splitString.forEach((item, i) => {
-                newValues[index + i] = item;
+                newValues[ index + i ] = item;
             });
 
             context.emit("input", newValues);
@@ -93,7 +91,7 @@ export default createComponent({
             (newVal: boolean) => {
                 Vue.nextTick(() => {
                     if (newVal && input.value && props.editable) {
-                        input.value[0].focus();
+                        input.value[ 0 ].focus();
                     }
                 });
             }

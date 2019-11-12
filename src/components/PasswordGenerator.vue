@@ -1,82 +1,85 @@
 <template>
-    <form @submit.prevent="$emit('submit', state.password)">
-        <TextInput
-            ref="input"
-            :placeholder="$t('common.password.nineCharacters')"
-            :value="state.password"
-            class="input"
-            obscure
-            @input="handleInputPassword"
-        />
+  <form @submit.prevent="$emit('submit', state.password)">
+    <TextInput
+      ref="input"
+      :placeholder="$t('common.password.nineCharacters')"
+      :value="state.password"
+      class="input"
+      obscure
+      @input="handleInputPassword"
+    />
 
-        <TextInput
-            v-model="state.confirmationPassword"
-            :placeholder="$t('common.password.confirmPassword')"
-            obscure
-        />
+    <TextInput
+      v-model="state.confirmationPassword"
+      :placeholder="$t('common.password.confirmPassword')"
+      obscure
+    />
 
-        <div v-if="state.password.length > 0" class="password-hint-container">
-            {{ $t("passwordStrength") }}
-            <span
-                v-if="state.passwordStrength === 0"
-                class="strength very-weak"
-            >
-                {{ $t("passwordStrength.veryWeak") }}
-            </span>
-            <span
-                v-else-if="state.passwordStrength === 1"
-                class="strength weak"
-            >
-                {{ $t("passwordStrength.weak") }}
-            </span>
-            <span
-                v-else-if="state.passwordStrength === 2"
-                class="strength good"
-            >
-                {{ $t("passwordStrength.good") }}
-            </span>
-            <span
-                v-else-if="state.passwordStrength === 3"
-                class="strength strong"
-            >
-                {{ $t("passwordStrength.strong") }}
-            </span>
-            <span
-                v-else-if="state.passwordStrength === 4"
-                class="strength excellent"
-            >
-                {{ $t("passwordStrength.excellent") }}
-            </span>
-        </div>
+    <div
+      v-if="state.password.length > 0"
+      class="password-hint-container"
+    >
+      {{ $t("passwordStrength") }}
+      <span
+        v-if="state.passwordStrength === 0"
+        class="strength very-weak"
+      >
+        {{ $t("passwordStrength.veryWeak") }}
+      </span>
+      <span
+        v-else-if="state.passwordStrength === 1"
+        class="strength weak"
+      >
+        {{ $t("passwordStrength.weak") }}
+      </span>
+      <span
+        v-else-if="state.passwordStrength === 2"
+        class="strength good"
+      >
+        {{ $t("passwordStrength.good") }}
+      </span>
+      <span
+        v-else-if="state.passwordStrength === 3"
+        class="strength strong"
+      >
+        {{ $t("passwordStrength.strong") }}
+      </span>
+      <span
+        v-else-if="state.passwordStrength === 4"
+        class="strength excellent"
+      >
+        {{ $t("passwordStrength.excellent") }}
+      </span>
+    </div>
 
-        <div
-            v-if="state.password.length > 0 && state.password.length < 9"
-            class="password-hint-container"
-        >
-            {{ $t("common.password.nineCharacters") }}
-        </div>
+    <div
+      v-if="state.password.length > 0 && state.password.length < 9"
+      class="password-hint-container"
+    >
+      {{ $t("common.password.nineCharacters") }}
+    </div>
 
-        <div v-if="meritsSuggestions">
-            <div
-                v-for="(suggestion, index) in state.passwordSuggestion
-                    .suggestions"
-                :key="index"
-                class="password-hint-container"
-            >
-                {{ suggestion }}
-            </div>
-        </div>
+    <div v-if="meritsSuggestions">
+      <div
+        v-for="(suggestion, index) in state.passwordSuggestion
+          .suggestions"
+        :key="index"
+        class="password-hint-container"
+      >
+        {{ suggestion }}
+      </div>
+    </div>
 
-        <div class="btn-container">
-            <Button
-                :busy="state.isBusy"
-                :disabled="isDisabled"
-                :label="$t('common.next')"
-                :trailing-icon="mdiArrowRight"
-                class="btn"
-            />
-        </div>
-    </form>
+    <div class="btn-container">
+      <Button
+        :busy="state.isBusy"
+        :disabled="isDisabled"
+        :label="$t('common.next')"
+        :trailing-icon="mdiArrowRight"
+        class="btn"
+      />
+    </div>
+  </form>
 </template>
 
 <script lang="ts">
@@ -134,14 +137,12 @@ export default createComponent({
     setup(props: Props, context) {
         const input = ref<HTMLInputElement | null>(null);
 
-        const confirmPassword = computed(
-            () => props.state.confirmationPassword === props.state.password
-        );
+        const confirmPassword = computed(() => props.state.confirmationPassword === props.state.password);
 
         async function handleInputPassword(value: string): Promise<void> {
             const zxcvbn = await import("zxcvbn");
 
-            const passwordMetrics = zxcvbn.default(value, wordlist);
+            const passwordMetrics = zxcvbn[ "default" ](value, wordlist);
 
             context.emit("change", {
                 ...props.state,
@@ -151,24 +152,16 @@ export default createComponent({
             });
         }
 
-        const meritsSuggestions = computed(() => {
-            return (
-                props.state.password.length >= 9 &&
-                props.state.passwordStrength <= 3
-            );
-        });
+        const meritsSuggestions = computed(() => props.state.password.length >= 9 &&
+                props.state.passwordStrength <= 3);
 
-        const isDisabled = computed(() => {
-            return (
-                props.state.password.length < 9 ||
+        const isDisabled = computed(() => props.state.password.length < 9 ||
                 props.state.passwordStrength < 2 ||
-                !confirmPassword.value
-            );
-        });
+                !confirmPassword.value);
 
         watch(
             () => props.isOpen,
-            newVal => {
+            (newVal) => {
                 // input.value is not set until after modal is open
                 Vue.nextTick(() => {
                     if (newVal && input.value) {

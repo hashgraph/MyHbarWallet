@@ -47,12 +47,10 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
                 isOpen: false,
                 words: []
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 
     it("renders closed, words", (): void => {
@@ -66,12 +64,10 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
                 isOpen: false,
                 words: WORDS
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 
     it("renders open, no words", (): void => {
@@ -85,9 +81,7 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
                 isOpen: true,
                 words: []
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -138,11 +132,9 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
                 isOpen: false,
                 words: WORDS
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 });

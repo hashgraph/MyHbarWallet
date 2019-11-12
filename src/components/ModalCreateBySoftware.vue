@@ -1,29 +1,29 @@
 <template>
-    <Modal
-        :is-open="isOpen"
-        :title="$t('modalCreateBySoftware.title')"
-        @change="this.$listeners.change"
-    >
-        <template>
-            <form
-                class="modal-access-by-software"
-                @submit.prevent="$emit('submit', state.optionSelected)"
-            >
-                <RadioButtonGroup
-                    v-model="state.optionSelected"
-                    name="software-access-option"
-                    :options="options"
-                />
-                <!--'Support coming soon!' note? -->
-                <PurchaseWalletLink></PurchaseWalletLink>
-                <Button
-                    :disabled="state.optionSelected == null"
-                    :label="$t('common.continue')"
-                />
-                <CustomerSupportLink class="support-link" />
-            </form>
-        </template>
-    </Modal>
+  <Modal
+    :is-open="isOpen"
+    :title="$t('modalCreateBySoftware.title')"
+    @change="this.$listeners.change"
+  >
+    <template>
+      <form
+        class="modal-access-by-software"
+        @submit.prevent="$emit('submit', state.optionSelected)"
+      >
+        <RadioButtonGroup
+          v-model="state.optionSelected"
+          name="software-access-option"
+          :options="options"
+        />
+        <!--'Support coming soon!' note? -->
+        <PurchaseWalletLink />
+        <Button
+          :disabled="state.optionSelected == null"
+          :label="$t('common.continue')"
+        />
+        <CustomerSupportLink class="support-link" />
+      </form>
+    </template>
+  </Modal>
 </template>
 
 <script lang="ts">
@@ -59,13 +59,9 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: { type: Boolean }
-    },
+    props: { isOpen: { type: Boolean }},
     setup(props: { isOpen: boolean }) {
-        const state = reactive<State>({
-            optionSelected: null
-        });
+        const state = reactive<State>({ optionSelected: null });
 
         const options = [
             {

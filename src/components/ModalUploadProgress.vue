@@ -1,92 +1,92 @@
 <template>
-    <Modal
-        :is-open="state.isOpen"
-        :title="$t('modalUploadProgress.title')"
-        hide-decoration
-        not-closeable
-    >
-        <template v-slot:banner>
-            <Warning
-                :title="$t('modalUploadProgress.warning.title')"
-                :message="
-                    isElectron
-                        ? $t('modalUploadProgress.warning.messageElectron')
-                        : $t('modalUploadProgress.warning.message')
-                "
-            />
-        </template>
-        <template>
-            <div class="modal-upload-progress">
-                <div class="upload-text">
-                    {{
-                        state.inProgress
-                            ? $t("modalUploadProgress.inProgress.text")
-                            : state.wasSuccess
-                            ? $t("modalUploadProgress.success.text")
-                            : $t("modalUploadProgress.failure.text")
-                    }}
-                </div>
-                <div class="upload-subtext">
-                    {{
-                        state.inProgress
-                            ? $t("modalUploadProgress.inProgress.subText")
-                            : state.wasSuccess
-                            ? $t("modalUploadProgress.success.subText")
-                            : $t("modalUploadProgress.failure.subText")
-                    }}
-                </div>
-                <div class="visual-container">
-                    <MaterialDesignIcon
-                        v-if="state.inProgress"
-                        class="icon"
-                        :icon="mdiLoading"
-                        height="120"
-                        width="120"
-                        slow-spin
-                    />
-                    <MaterialDesignIcon
-                        v-else-if="!state.inProgress && state.wasSuccess"
-                        class="icon"
-                        :icon="mdiFileCheckOutline"
-                        height="120"
-                        width="120"
-                    />
-                    <MaterialDesignIcon
-                        v-else
-                        class="icon"
-                        :icon="mdiFileRemoveOutline"
-                        height="120"
-                        width="120"
-                    />
-                </div>
+  <Modal
+    :is-open="state.isOpen"
+    :title="$t('modalUploadProgress.title')"
+    hide-decoration
+    not-closeable
+  >
+    <template v-slot:banner>
+      <Warning
+        :title="$t('modalUploadProgress.warning.title')"
+        :message="
+          isElectron
+            ? $t('modalUploadProgress.warning.messageElectron')
+            : $t('modalUploadProgress.warning.message')
+        "
+      />
+    </template>
+    <template>
+      <div class="modal-upload-progress">
+        <div class="upload-text">
+          {{
+            state.inProgress
+              ? $t("modalUploadProgress.inProgress.text")
+              : state.wasSuccess
+                ? $t("modalUploadProgress.success.text")
+                : $t("modalUploadProgress.failure.text")
+          }}
+        </div>
+        <div class="upload-subtext">
+          {{
+            state.inProgress
+              ? $t("modalUploadProgress.inProgress.subText")
+              : state.wasSuccess
+                ? $t("modalUploadProgress.success.subText")
+                : $t("modalUploadProgress.failure.subText")
+          }}
+        </div>
+        <div class="visual-container">
+          <MaterialDesignIcon
+            v-if="state.inProgress"
+            class="icon"
+            :icon="mdiLoading"
+            height="120"
+            width="120"
+            slow-spin
+          />
+          <MaterialDesignIcon
+            v-else-if="!state.inProgress && state.wasSuccess"
+            class="icon"
+            :icon="mdiFileCheckOutline"
+            height="120"
+            width="120"
+          />
+          <MaterialDesignIcon
+            v-else
+            class="icon"
+            :icon="mdiFileRemoveOutline"
+            height="120"
+            width="120"
+          />
+        </div>
 
-                <div class="progress-text">
-                    {{ progressString }}
-                </div>
+        <div class="progress-text">
+          {{ progressString }}
+        </div>
 
-                <div
-                    v-if="!state.inProgress && !state.wasSuccess"
-                    class="button-container"
-                >
-                    <Button
-                        :label="$t('modalUploadProgress.failure.buttonLabel2')"
-                        :disabled="state.inProgress"
-                        class="cancel-button"
-                        outline
-                        danger
-                        @click="onClickCancel"
-                    />
+        <div
+          v-if="!state.inProgress && !state.wasSuccess"
+          class="button-container"
+        >
+          <Button
+            :label="$t('modalUploadProgress.failure.buttonLabel2')"
+            :disabled="state.inProgress"
+            class="cancel-button"
+            outline
+            danger
+            @click="onClickCancel"
+          />
 
-                    <Button
-                        :label="$t('modalUploadProgress.failure.buttonLabel')"
-                        :disabled="state.inProgress"
-                        class="retry-button"
-                        @click="onClickRetry"
-                    />
-                </div>
-            </div>
-        </template>
-    </Modal>
+          <Button
+            :label="$t('modalUploadProgress.failure.buttonLabel')"
+            :disabled="state.inProgress"
+            class="retry-button"
+            @click="onClickRetry"
+          />
+        </div>
+      </div>
+    </template>
+  </Modal>
 </template>
 
 <script lang="ts">
@@ -116,29 +116,24 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: { type: Object, required: true }
-    },
+    props: { state: { type: Object, required: true }},
     setup(props: { state: State }, context: SetupContext) {
-        const buttonLabel = computed<string>(() => {
-            return context.root
-                .$t("modalUploadProgress.failure.buttonLabel")
-                .toString();
-        });
+        const buttonLabel = computed<string>(() => context.root
+            .$t("modalUploadProgress.failure.buttonLabel")
+            .toString());
 
         const progressString = computed<string>(() => {
             const completionPercentage =
-                props.state.currentChunk <= props.state.totalChunks
-                    ? (props.state.currentChunk / props.state.totalChunks) * 100
-                    : 0;
+                props.state.currentChunk <= props.state.totalChunks ?
+                    props.state.currentChunk / props.state.totalChunks * 100 :
+                    0;
 
-            return completionPercentage.toFixed(2) + "%";
+            return `${completionPercentage.toFixed(2)}%`;
         });
 
-        const isElectron = computed(() => {
+        const isElectron = computed(() =>
             // todo [2019-15-11]: actually detect if this is electron.
-            return false;
-        });
+            false);
 
         function close(): void {
             context.emit("change", false);

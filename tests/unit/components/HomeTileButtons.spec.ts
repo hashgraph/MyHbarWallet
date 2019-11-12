@@ -17,9 +17,7 @@ describe("HomeTileButtons.vue", (): void => {
             localVue,
             i18n,
             router,
-            stubs: {
-                MaterialDesignIcon: true
-            }
+            stubs: { MaterialDesignIcon: true }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

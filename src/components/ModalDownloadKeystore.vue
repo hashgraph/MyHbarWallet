@@ -1,32 +1,32 @@
 <template>
-    <div class="modal-create-by-mnemonic-phrase">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalDownloadKeystore.title')"
-            not-closable
-            @change="handleModalChangeIsOpen"
-        >
-            <KeystoreWarningCards />
-            <div class="button-container">
-                <Button
-                    :label="$t('modalDownloadKeystore.downloadKeystoreFile')"
-                    :busy="state.isBusy"
-                    :disabled="state.isBusy"
-                    :outline="state.downloadClicked"
-                    compact
-                    class="download-button"
-                    @click="handleDownloadClick"
-                />
-                <Button
-                    :label="$t('common.continue')"
-                    :disabled="!state.downloadClicked"
-                    compact
-                    class="continue-button"
-                    @click="$emit('continue')"
-                />
-            </div>
-        </Modal>
-    </div>
+  <div class="modal-create-by-mnemonic-phrase">
+    <Modal
+      :is-open="state.isOpen"
+      :title="$t('modalDownloadKeystore.title')"
+      not-closable
+      @change="handleModalChangeIsOpen"
+    >
+      <KeystoreWarningCards />
+      <div class="button-container">
+        <Button
+          :label="$t('modalDownloadKeystore.downloadKeystoreFile')"
+          :busy="state.isBusy"
+          :disabled="state.isBusy"
+          :outline="state.downloadClicked"
+          compact
+          class="download-button"
+          @click="handleDownloadClick"
+        />
+        <Button
+          :label="$t('common.continue')"
+          :disabled="!state.downloadClicked"
+          compact
+          class="continue-button"
+          @click="$emit('continue')"
+        />
+      </div>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -55,9 +55,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: { type: Object, required: true }
-    },
+    props: { state: { type: Object, required: true }},
     setup(props: Props, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });

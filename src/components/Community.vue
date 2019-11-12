@@ -1,43 +1,43 @@
 <template>
-    <div class="community">
-        <div class="wrap">
-            <div class="head">
-                <div class="title">
-                    {{ $t("community.joinMHWCommunity") }}
-                </div>
-                <div class="subtitle">
-                    {{ $t("community.getInTheKnow") }}
-                </div>
-            </div>
-            <div class="icons">
-                <CommunitySocialIcon
-                    name="Facebook"
-                    :image="facebookSocial"
-                    href="https://www.facebook.com"
-                />
-                <CommunitySocialIcon
-                    name="Twitter"
-                    :image="twitterSocial"
-                    href="https://www.twitter.com"
-                />
-                <CommunitySocialIcon
-                    name="Medium"
-                    href="https://medium.com"
-                    :image="mediumSocial"
-                />
-                <CommunitySocialIcon
-                    name="Reddit"
-                    href="https://www.reddit.com/"
-                    :image="redditSocial"
-                />
-                <CommunitySocialIcon
-                    name="Github"
-                    href="https://github.com"
-                    :image="githubSocial"
-                />
-            </div>
+  <div class="community">
+    <div class="wrap">
+      <div class="head">
+        <div class="title">
+          {{ $t("community.joinMHWCommunity") }}
         </div>
+        <div class="subtitle">
+          {{ $t("community.getInTheKnow") }}
+        </div>
+      </div>
+      <div class="icons">
+        <CommunitySocialIcon
+          name="Facebook"
+          :image="facebookSocial"
+          href="https://www.facebook.com"
+        />
+        <CommunitySocialIcon
+          name="Twitter"
+          :image="twitterSocial"
+          href="https://www.twitter.com"
+        />
+        <CommunitySocialIcon
+          name="Medium"
+          href="https://medium.com"
+          :image="mediumSocial"
+        />
+        <CommunitySocialIcon
+          name="Reddit"
+          href="https://www.reddit.com/"
+          :image="redditSocial"
+        />
+        <CommunitySocialIcon
+          name="Github"
+          href="https://github.com"
+          :image="githubSocial"
+        />
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -50,9 +50,7 @@ import redditSocial from "../assets/reddit.svg";
 import githubSocial from "../assets/github.png";
 
 export default createComponent({
-    components: {
-        CommunitySocialIcon
-    },
+    components: { CommunitySocialIcon },
     setup() {
         return {
             facebookSocial,

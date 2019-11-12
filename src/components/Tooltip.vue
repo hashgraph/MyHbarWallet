@@ -1,22 +1,22 @@
 <template>
+  <div
+    ref="ttEl"
+    class="tooltip-container"
+    :class="{ active }"
+    @click.stop=""
+  >
     <div
-        ref="ttEl"
-        class="tooltip-container"
-        :class="{ active }"
-        @click.stop=""
+      class="slot-container"
+      @click="handleTogglePinned"
+      @mouseenter="handleMouseOver"
+      @mouseleave="handleMouseOut"
     >
-        <div
-            class="slot-container"
-            @click="handleTogglePinned"
-            @mouseenter="handleMouseOver"
-            @mouseleave="handleMouseOut"
-        >
-            <slot></slot>
-        </div>
-        <div class="message">
-            {{ message }}
-        </div>
+      <slot />
     </div>
+    <div class="message">
+      {{ message }}
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -54,9 +54,8 @@ export default createComponent({
         const active = computed((): boolean => {
             if (!props.pinnable) {
                 return state.hovered;
-            } else {
-                return state.hovered || state.pinned;
             }
+            return state.hovered || state.pinned;
         });
 
         // methods
@@ -81,8 +80,7 @@ export default createComponent({
             const tt = (context as Context).refs.ttEl;
             if (tt) {
                 const curleft = tt.getBoundingClientRect().left;
-                if (curleft > 2 * (window.innerWidth / 3))
-                    tt.classList.add("on-right");
+                if (curleft > 2 * (window.innerWidth / 3)) tt.classList.add("on-right");
             }
         }
 

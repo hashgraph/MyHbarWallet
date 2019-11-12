@@ -1,22 +1,22 @@
 <template>
-    <div class="features">
-        <div class="wrap">
-            <div class="feature-grid">
-                <Feature
-                    :image="wallet"
-                    :title="$t('features.joinMyHbarWallet')"
-                >
-                    {{ $t("features.accessHederaTm") }}
-                </Feature>
-                <Feature
-                    :image="hardware"
-                    :title="$t('features.hardwareWalletSupport')"
-                >
-                    {{ $t("features.mhwCurrentlyOffersSupportFor") }}
-                </Feature>
-            </div>
-        </div>
+  <div class="features">
+    <div class="wrap">
+      <div class="feature-grid">
+        <Feature
+          :image="wallet"
+          :title="$t('features.joinMyHbarWallet')"
+        >
+          {{ $t("features.accessHederaTm") }}
+        </Feature>
+        <Feature
+          :image="hardware"
+          :title="$t('features.hardwareWalletSupport')"
+        >
+          {{ $t("features.mhwCurrentlyOffersSupportFor") }}
+        </Feature>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -26,9 +26,7 @@ import hardware from "../assets/icon-hardware.svg";
 import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
-    components: {
-        Feature
-    },
+    components: { Feature },
     setup() {
         return {
             wallet,

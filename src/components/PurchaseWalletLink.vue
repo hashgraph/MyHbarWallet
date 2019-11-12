@@ -1,14 +1,14 @@
 <template>
-    <div class="hardware-link">
-        <router-link :to="{ name: 'hardware-wallet-affiliates' }">
-            {{ $t("purchaseWalletLink.purchaseAHardwareWallet") }}
-        </router-link>
-        {{
-            $t(
-                "purchaseWalletLink.purchaseAHardwareWalletForTheHighestSecurity"
-            )
-        }}
-    </div>
+  <div class="hardware-link">
+    <router-link :to="{ name: 'hardware-wallet-affiliates' }">
+      {{ $t("purchaseWalletLink.purchaseAHardwareWallet") }}
+    </router-link>
+    {{
+      $t(
+        "purchaseWalletLink.purchaseAHardwareWalletForTheHighestSecurity"
+      )
+    }}
+  </div>
 </template>
 
 <script lang="ts">

@@ -12,9 +12,7 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    const PUBLIC_KEY = Ed25519PublicKey.fromString(
-        "302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29"
-    );
+    const PUBLIC_KEY = Ed25519PublicKey.fromString("302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29");
 
     it("renders closed", (): void => {
         expect.assertions(1);

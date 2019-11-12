@@ -1,55 +1,58 @@
 <template>
-    <div class="unit-input">
-        <div class="wrap">
-            <div class="block-left">
-                <div class="input-block">
-                    <TextInput
-                        :value="state.valueLeft"
-                        compact
-                        white
-                        step="any"
-                        :placeholder="$t('common.amount')"
-                        @input="handleInputValueLeft"
-                    />
-                </div>
-                <div class="select-block">
-                    <Select
-                        v-model="state.selectedLeft"
-                        :options="options"
-                        :left="true"
-                        @change="handleSelect"
-                    />
-                </div>
-            </div>
-
-            <div class="block-center">
-                <div class="convert-icon">
-                    <img src="../assets/swap.svg" alt="" />
-                </div>
-            </div>
-
-            <div class="block-right">
-                <div class="input-block">
-                    <TextInput
-                        :value="state.valueRight"
-                        compact
-                        white
-                        step="any"
-                        :placeholder="$t('common.amount')"
-                        @input="handleInputValueRight"
-                    />
-                </div>
-                <div class="select-block">
-                    <Select
-                        v-model="state.selectedRight"
-                        :options="options"
-                        :left="false"
-                        @change="handleSelect"
-                    />
-                </div>
-            </div>
+  <div class="unit-input">
+    <div class="wrap">
+      <div class="block-left">
+        <div class="input-block">
+          <TextInput
+            :value="state.valueLeft"
+            compact
+            white
+            step="any"
+            :placeholder="$t('common.amount')"
+            @input="handleInputValueLeft"
+          />
         </div>
+        <div class="select-block">
+          <Select
+            v-model="state.selectedLeft"
+            :options="options"
+            :left="true"
+            @change="handleSelect"
+          />
+        </div>
+      </div>
+
+      <div class="block-center">
+        <div class="convert-icon">
+          <img
+            src="../assets/swap.svg"
+            alt=""
+          >
+        </div>
+      </div>
+
+      <div class="block-right">
+        <div class="input-block">
+          <TextInput
+            :value="state.valueRight"
+            compact
+            white
+            step="any"
+            :placeholder="$t('common.amount')"
+            @input="handleInputValueRight"
+          />
+        </div>
+        <div class="select-block">
+          <Select
+            v-model="state.selectedRight"
+            :options="options"
+            :left="false"
+            @change="handleSelect"
+          />
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">

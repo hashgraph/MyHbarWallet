@@ -50,9 +50,7 @@ describe("RadioButton.vue", (): void => {
                 image: imageKey,
                 checked: value
             },
-            listeners: {
-                change: fn
-            }
+            listeners: { change: fn }
         });
 
         wrapper.find("input").setChecked(true);

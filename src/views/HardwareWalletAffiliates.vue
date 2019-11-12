@@ -1,24 +1,26 @@
 <template>
-    <div class="hardware-wallet-affiliates">
-        <PageTitle large :title="$t('hardwareWalletAffiliates.title')">
-            {{ $t("hardwareWalletAffiliates.purchase") }}
-        </PageTitle>
-        <!-- enable and add offers/affiliates in src/affiliates.ts -->
-        <div class="offers">
-            <template v-for="offer of affiliates">
-                <HardwareWalletOffer
-                    v-if="offer.supported"
-                    :key="offer.address"
-                    :currency="offer.currency"
-                    :cost="offer.cost"
-                    :image="offer.image"
-                    :more-info="offer.address"
-                    :description="offer.description"
-                >
-                </HardwareWalletOffer>
-            </template>
-        </div>
+  <div class="hardware-wallet-affiliates">
+    <PageTitle
+      large
+      :title="$t('hardwareWalletAffiliates.title')"
+    >
+      {{ $t("hardwareWalletAffiliates.purchase") }}
+    </PageTitle>
+    <!-- enable and add offers/affiliates in src/affiliates.ts -->
+    <div class="offers">
+      <template v-for="offer of affiliates">
+        <HardwareWalletOffer
+          v-if="offer.supported"
+          :key="offer.address"
+          :currency="offer.currency"
+          :cost="offer.cost"
+          :image="offer.image"
+          :more-info="offer.address"
+          :description="offer.description"
+        />
+      </template>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -33,9 +35,7 @@ export default createComponent({
         PageTitle
     },
     setup() {
-        return {
-            affiliates
-        };
+        return { affiliates };
     }
 });
 </script>

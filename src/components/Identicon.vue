@@ -1,6 +1,9 @@
 <template>
-    <!-- eslint-disable vue/no-v-html -->
-    <svg v-bind="svg.attributes" v-html="svg.content"></svg>
+  <!-- eslint-disable vue/no-v-html -->
+  <svg
+    v-bind="svg.attributes"
+    v-html="svg.content"
+  />
 </template>
 
 <script lang="ts">
@@ -39,8 +42,8 @@ export default createComponent({
             const attributes: { [key: string]: string | null } = {};
 
             for (let i = 0; i < svgEl.attributes.length; i++) {
-                const attr = svgEl.attributes[i];
-                attributes[attr.nodeName] = attr.nodeValue;
+                const attr = svgEl.attributes[ i ];
+                attributes[ attr.nodeName ] = attr.nodeValue;
             }
 
             const content = svgEl.innerHTML;
@@ -51,9 +54,7 @@ export default createComponent({
             };
         });
 
-        return {
-            svg
-        };
+        return { svg };
     }
 });
 </script>

@@ -24,9 +24,7 @@ describe("ModalAccessByHardware.vue", (): void => {
                     disableButton: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -82,12 +80,10 @@ describe("ModalAccessByHardware.vue", (): void => {
                     disableButton: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 
     it("renders open, busy", (): void => {
@@ -105,9 +101,7 @@ describe("ModalAccessByHardware.vue", (): void => {
                     disableButton: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -165,11 +159,9 @@ describe("ModalAccessByHardware.vue", (): void => {
                     disableButton: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 });

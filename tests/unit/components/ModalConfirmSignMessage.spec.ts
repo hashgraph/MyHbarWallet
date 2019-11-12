@@ -24,12 +24,10 @@ describe("ModalConfirmSignMessage.vue", (): void => {
                 message: "message",
                 publicKey: PUBLIC_KEY
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 
     it("renders open", (): void => {
@@ -44,9 +42,7 @@ describe("ModalConfirmSignMessage.vue", (): void => {
                 message: "message",
                 publicKey: PUBLIC_KEY
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

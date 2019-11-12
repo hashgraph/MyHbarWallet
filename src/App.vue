@@ -1,15 +1,18 @@
 <template>
-    <div id="app">
-        <Header />
-        <div class="main">
-            <router-view />
-        </div>
-        <Footer />
-        <Alerts />
-        <ZoomTopButton />
-        <ModalLogOut v-model="isOpen" forgot />
-        <ModalReportError v-model="errorIsOpen" />
+  <div id="app">
+    <Header />
+    <div class="main">
+      <router-view />
     </div>
+    <Footer />
+    <Alerts />
+    <ZoomTopButton />
+    <ModalLogOut
+      v-model="isOpen"
+      forgot
+    />
+    <ModalReportError v-model="errorIsOpen" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -36,9 +39,7 @@ export default createComponent({
         ModalLogOut: () => import("./components/ModalLogOut.vue"),
         ModalReportError: () => import("./components/ModalReportError.vue")
     },
-    model: {
-        event: "error"
-    },
+    model: { event: "error" },
     setup(props: {}, context: SetupContext) {
         const isInterface = computed(() => {
             if (context.root != null) {
@@ -50,17 +51,13 @@ export default createComponent({
             return false;
         });
 
-        const isOpen = computed(() => {
-            return (
-                !isInterface.value &&
+        const isOpen = computed(() => !isInterface.value &&
                 store.getters.IS_LOGGED_IN &&
-                store.state.interfaceMenu.hasBeenToInterface
-            );
-        });
+                store.state.interfaceMenu.hasBeenToInterface);
 
         const errorIsOpen = ref(false);
         watch(
-            () => store.getters[HAS_ERROR],
+            () => store.getters[ HAS_ERROR ],
             (newValue: boolean) => {
                 errorIsOpen.value = newValue;
             }

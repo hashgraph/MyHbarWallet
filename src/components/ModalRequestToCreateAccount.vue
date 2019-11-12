@@ -1,63 +1,63 @@
 <template>
-    <div class="modal-request-to-create-account">
-        <Modal
-            :is-open="isOpen"
-            :large="false"
-            not-closable
-            :title="$t('modalRequestToCreateAccount.title')"
-            @change="this.$listeners.change"
-        >
-            <div class="instructions">
-                <div>
-                    {{ $t("modalRequestToCreateAccount.provideYourPublicKey") }}
-                </div>
-                <div>
-                    {{
-                        $t(
-                            "modalRequestToCreateAccount.theyMustCreateAndFundYourAccount"
-                        )
-                    }}
-                </div>
-            </div>
+  <div class="modal-request-to-create-account">
+    <Modal
+      :is-open="isOpen"
+      :large="false"
+      not-closable
+      :title="$t('modalRequestToCreateAccount.title')"
+      @change="this.$listeners.change"
+    >
+      <div class="instructions">
+        <div>
+          {{ $t("modalRequestToCreateAccount.provideYourPublicKey") }}
+        </div>
+        <div>
+          {{
+            $t(
+              "modalRequestToCreateAccount.theyMustCreateAndFundYourAccount"
+            )
+          }}
+        </div>
+      </div>
 
-            <form
-                class="request-to-create-account"
-                @submit.prevent="$emit('submit')"
-            >
-                <qrcode-vue
-                    v-if="publicKey"
-                    :value="publicKey.toString(true)"
-                    size="180"
-                    level="L"
-                    class="pub-qr"
-                />
+      <form
+        class="request-to-create-account"
+        @submit.prevent="$emit('submit')"
+      >
+        <qrcode-vue
+          v-if="publicKey"
+          :value="publicKey.toString(true)"
+          size="180"
+          level="L"
+          class="pub-qr"
+        />
 
-                <ReadOnlyInput
-                    v-if="publicKey"
-                    multiline
-                    :value="publicKey.toString(true)"
-                />
+        <ReadOnlyInput
+          v-if="publicKey"
+          multiline
+          :value="publicKey.toString(true)"
+        />
 
-                <div class="buttons">
-                    <Button
-                        compact
-                        outline
-                        :label="$t('modalRequestToCreateAccount.copyPublicKey')"
-                        class="button"
-                        @click="handleClickCopy"
-                    />
-                    <Button
-                        compact
-                        :label="
-                            $t('modalRequestToCreateAccount.iHaveAnAccountId')
-                        "
-                        class="button"
-                        @click="handleHasAccount"
-                    />
-                </div>
-            </form>
-        </Modal>
-    </div>
+        <div class="buttons">
+          <Button
+            compact
+            outline
+            :label="$t('modalRequestToCreateAccount.copyPublicKey')"
+            class="button"
+            @click="handleClickCopy"
+          />
+          <Button
+            compact
+            :label="
+              $t('modalRequestToCreateAccount.iHaveAnAccountId')
+            "
+            class="button"
+            @click="handleHasAccount"
+          />
+        </div>
+      </form>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -92,7 +92,7 @@ export default createComponent({
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
         publicKey: (Object as unknown) as PropType<
-            import("@hashgraph/sdk").Ed25519PublicKey
+        import("@hashgraph/sdk").Ed25519PublicKey
         >,
         event: (String as unknown) as PropType<string>
     },

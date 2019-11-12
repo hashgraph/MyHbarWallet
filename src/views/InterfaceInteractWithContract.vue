@@ -1,32 +1,32 @@
 <template>
-    <div class="interact-with-contract">
-        <InterfaceForm :title="$t('interfaceInteractWithContract.title')">
-            <TextInput
-                v-model.trim="contractId"
-                :label="$t('common.contract')"
-                :placeholder="$t('common.accountSyntax')"
-                show-validation
-                :valid="isIdValid"
-            />
-            <TextInput
-                v-model.trim="abi"
-                :label="'ABI/JSON' + $t('common.interface')"
-                can-copy
-                can-clear
-                multiline
-                show-validation
-                :valid="isJsonValid"
-            />
+  <div class="interact-with-contract">
+    <InterfaceForm :title="$t('interfaceInteractWithContract.title')">
+      <TextInput
+        v-model.trim="contractId"
+        :label="$t('common.contract')"
+        :placeholder="$t('common.accountSyntax')"
+        show-validation
+        :valid="isIdValid"
+      />
+      <TextInput
+        v-model.trim="abi"
+        :label="'ABI/JSON' + $t('common.interface')"
+        can-copy
+        can-clear
+        multiline
+        show-validation
+        :valid="isJsonValid"
+      />
 
-            <template v-slot:footer>
-                <Button
-                    :label="$t('common.continue')"
-                    :trailing-icon="arrowRight"
-                    :disabled="!isFormValid"
-                />
-            </template>
-        </InterfaceForm>
-    </div>
+      <template v-slot:footer>
+        <Button
+          :label="$t('common.continue')"
+          :trailing-icon="arrowRight"
+          :disabled="!isFormValid"
+        />
+      </template>
+    </InterfaceForm>
+  </div>
 </template>
 
 <script lang="ts">
@@ -61,9 +61,7 @@ export default createComponent({
                 return false;
             }
         });
-        const isFormValid = computed(
-            () => isIdValid.value && isJsonValid.value
-        );
+        const isFormValid = computed(() => isIdValid.value && isJsonValid.value);
 
         return {
             arrowRight,

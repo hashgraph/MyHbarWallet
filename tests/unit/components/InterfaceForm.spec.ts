@@ -9,13 +9,9 @@ describe("InterfaceForm.vue", (): void => {
         const title = "ABC123";
 
         const wrapper = mount(InterfaceForm, {
-            propsData: {
-                title
-            },
+            propsData: { title },
             i18n,
-            stubs: {
-                InterfaceFormTitle: true
-            }
+            stubs: { InterfaceFormTitle: true }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

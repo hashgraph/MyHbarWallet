@@ -1,35 +1,41 @@
 <template>
-    <div class="password-container">
-        <div class="header">
-            <div class="text">
-                {{ $t("common.password.password") }}
-            </div>
-            <div class="password-switch">
-                <div class="text">
-                    {{ $t("common.optional") }}
-                </div>
-                <SwitchButton
-                    v-model="showPassword"
-                    class="btn"
-                    @change="handleChangeShowPassword"
-                />
-            </div>
+  <div class="password-container">
+    <div class="header">
+      <div class="text">
+        {{ $t("common.password.password") }}
+      </div>
+      <div class="password-switch">
+        <div class="text">
+          {{ $t("common.optional") }}
         </div>
-        <div class="password-input" :class="{ expanded: showPassword }">
-            <TextInput
-                ref="input"
-                :value="value"
-                :placeholder="$t('optionalPasswordInput.pleaseEnterPassword')"
-                obscure
-                compact
-                :tabindex="showPassword ? null : '-1'"
-                @input="handleInput"
-            />
-            <div class="password-warning" :v-if="passwordWarning !== null">
-                <p>{{ passwordWarning }}</p>
-            </div>
-        </div>
+        <SwitchButton
+          v-model="showPassword"
+          class="btn"
+          @change="handleChangeShowPassword"
+        />
+      </div>
     </div>
+    <div
+      class="password-input"
+      :class="{ expanded: showPassword }"
+    >
+      <TextInput
+        ref="input"
+        :value="value"
+        :placeholder="$t('optionalPasswordInput.pleaseEnterPassword')"
+        obscure
+        compact
+        :tabindex="showPassword ? null : '-1'"
+        @input="handleInput"
+      />
+      <div
+        class="password-warning"
+        :v-if="passwordWarning !== null"
+      >
+        <p>{{ passwordWarning }}</p>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

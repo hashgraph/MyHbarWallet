@@ -22,9 +22,7 @@ describe("ModalFeeSummaryItems.vue", (): void => {
         const wrapper = mount(ModalFeeSummaryItems, {
             localVue,
             i18n,
-            propsData: {
-                items: []
-            }
+            propsData: { items: []}
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -48,9 +46,7 @@ describe("ModalFeeSummaryItems.vue", (): void => {
         const wrapper = mount(ModalFeeSummaryItems, {
             localVue,
             i18n,
-            propsData: {
-                items
-            }
+            propsData: { items }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

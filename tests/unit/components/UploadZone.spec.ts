@@ -11,12 +11,8 @@ describe("UploadZone.vue", (): void => {
     it("renders, no file name", (): void => {
         const wrapper = mount(UploadZone, {
             localVue,
-            propsData: {
-                fileName: null
-            },
-            listeners: {
-                fileSelect: onFileSelect
-            }
+            propsData: { fileName: null },
+            listeners: { fileSelect: onFileSelect }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -33,12 +29,8 @@ describe("UploadZone.vue", (): void => {
     it("renders, with file name", (): void => {
         const wrapper = mount(UploadZone, {
             localVue,
-            propsData: {
-                fileName: "hello.zip"
-            },
-            listeners: {
-                fileSelect: onFileSelect
-            }
+            propsData: { fileName: "hello.zip" },
+            listeners: { fileSelect: onFileSelect }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

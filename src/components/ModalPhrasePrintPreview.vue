@@ -1,62 +1,62 @@
 <template>
-    <Modal
-        :is-open="props.isOpen"
-        :large="true"
-        :title="$t('modalPhrasePrintPreview.title')"
-        @change="onChange"
-    >
-        <div ref="mnemonic">
-            <div class="logo-contents">
-                <div class="header-container">
-                    <span class="header">
-                        My<strong>Hbar</strong>Wallet
-                    </span>
-                    <span class="sub-header">{{
-                        $t("modalPhrasePrintPreview.mnemonicPhrase")
-                    }}</span>
-                </div>
-                <div class="support-email">
-                    <img
-                        alt=""
-                        class="icon"
-                        src="../assets/icon-bell.svg"
-                    />support@myhbarwallet.app
-                </div>
-            </div>
-            <div class="password-disclaimer">
-                <h3>
-                    {{ $t("modalPhrasePrintPreview.saveThisSheet") }}
-                </h3>
-                <p
-                    v-html="
-                        formatRich(
-                            $t(
-                                'modalPhrasePrintPreview.weCanNotChagneYourPassword'
-                            ).toString(),
-                            { strongClass: 'important' }
-                        )
-                    "
-                />
-            </div>
-
-            <div class="contents">
-                <Mnemonic
-                    :editable="false"
-                    :words="props.words.length"
-                    :value="props.words"
-                />
-            </div>
+  <Modal
+    :is-open="props.isOpen"
+    :large="true"
+    :title="$t('modalPhrasePrintPreview.title')"
+    @change="onChange"
+  >
+    <div ref="mnemonic">
+      <div class="logo-contents">
+        <div class="header-container">
+          <span class="header">
+            My<strong>Hbar</strong>Wallet
+          </span>
+          <span class="sub-header">{{
+            $t("modalPhrasePrintPreview.mnemonicPhrase")
+          }}</span>
         </div>
-
-        <div class="button-container">
-            <Button
-                class="button-save"
-                :label="$t('common.save')"
-                outline
-                @click="handleClickSave"
-            />
+        <div class="support-email">
+          <img
+            alt=""
+            class="icon"
+            src="../assets/icon-bell.svg"
+          >support@myhbarwallet.app
         </div>
-    </Modal>
+      </div>
+      <div class="password-disclaimer">
+        <h3>
+          {{ $t("modalPhrasePrintPreview.saveThisSheet") }}
+        </h3>
+        <p
+          v-html="
+            formatRich(
+              $t(
+                'modalPhrasePrintPreview.weCanNotChagneYourPassword'
+              ).toString(),
+              { strongClass: 'important' }
+            )
+          "
+        />
+      </div>
+
+      <div class="contents">
+        <Mnemonic
+          :editable="false"
+          :words="props.words.length"
+          :value="props.words"
+        />
+      </div>
+    </div>
+
+    <div class="button-container">
+      <Button
+        class="button-save"
+        :label="$t('common.save')"
+        outline
+        @click="handleClickSave"
+      />
+    </div>
+  </Modal>
 </template>
 
 <script lang="ts">
@@ -101,16 +101,14 @@ export default createComponent({
 
             const options = {
                 filename: "MHW_Mnemonic_Phrase.pdf",
-                margin: [10, 10, 10, 10],
+                margin: [ 10, 10, 10, 10 ],
                 pageSize: "a4",
                 image: { type: "png", quality: 1 },
-                jsPDF: {
-                    unit: "mm"
-                }
+                jsPDF: { unit: "mm" }
             };
 
             const HTML2PDF = await import("html2pdf.js");
-            HTML2PDF.default()
+            HTML2PDF[ "default" ]()
                 .set(options)
                 .from(element)
                 .save();

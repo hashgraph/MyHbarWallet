@@ -22,9 +22,7 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -48,9 +46,7 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -110,9 +106,7 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -136,9 +130,7 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);

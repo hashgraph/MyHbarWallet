@@ -15,9 +15,7 @@ describe("HeaderHamburgerButton.vue", (): void => {
         const wrapper = mount(HeaderHamburgerButton, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: false
-            }
+            propsData: { isOpen: false }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

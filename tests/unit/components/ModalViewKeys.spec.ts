@@ -26,9 +26,7 @@ describe("ModalViewKeys.vue", (): void => {
                 privateKey: fakePrivateKey,
                 publicKey: fakePublicKey
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -85,9 +83,7 @@ describe("ModalViewKeys.vue", (): void => {
                 privateKey: fakePrivateKey,
                 publicKey: fakePublicKey
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);

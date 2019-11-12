@@ -18,9 +18,7 @@ describe("HeaderHamburgerMenu.vue", (): void => {
             localVue,
             router,
             i18n,
-            propsData: {
-                isOpen: true
-            }
+            propsData: { isOpen: true }
         });
         expect(wrapper).toMatchInlineSnapshot(`
             <nav class="nav-open">

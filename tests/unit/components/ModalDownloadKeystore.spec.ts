@@ -22,9 +22,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -47,9 +45,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -111,9 +107,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -136,9 +130,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

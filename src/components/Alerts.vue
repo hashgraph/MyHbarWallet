@@ -1,13 +1,17 @@
 <template>
-    <transition-group name="list" tag="div" class="alerts">
-        <Alert
-            v-for="alert in alerts"
-            :id="alert.id"
-            :key="alert.id"
-            :message="alert.message"
-            :level="alert.level"
-        />
-    </transition-group>
+  <transition-group
+    name="list"
+    tag="div"
+    class="alerts"
+  >
+    <Alert
+      v-for="alert in alerts"
+      :id="alert.id"
+      :key="alert.id"
+      :message="alert.message"
+      :level="alert.level"
+    />
+  </transition-group>
 </template>
 
 <script lang="ts">
@@ -16,17 +20,11 @@ import Alert from "../components/Alert.vue";
 import { createComponent, computed } from "@vue/composition-api";
 
 export default createComponent({
-    components: {
-        Alert
-    },
+    components: { Alert },
     setup() {
-        const alerts = computed(() => {
-            return store.state.alerts.queue;
-        });
+        const alerts = computed(() => store.state.alerts.queue);
 
-        return {
-            alerts
-        };
+        return { alerts };
     }
 });
 </script>

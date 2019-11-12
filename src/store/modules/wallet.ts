@@ -133,27 +133,27 @@ export default {
         exchangeRate: null
     },
     getters: {
-        [IS_LOGGED_IN]: (state: State): boolean => {
+        [ IS_LOGGED_IN ](state: State): boolean {
             return state.session != null;
         }
     },
     mutations: {
-        [LOG_IN](state: State, session: Session): void {
+        [ LOG_IN ](state: State, session: Session): void {
             state.session = session;
         },
-        [LOG_OUT](state: State): void {
+        [ LOG_OUT ](state: State): void {
             state.session = null;
             state.balance = null;
         },
-        [SET_BALANCE](state: State, balance: BigNumber): void {
+        [ SET_BALANCE ](state: State, balance: BigNumber): void {
             state.balance = balance;
         },
-        [SET_EXCHANGE_RATE](state: State, rate: BigNumber): void {
+        [ SET_EXCHANGE_RATE ](state: State, rate: BigNumber): void {
             state.exchangeRate = rate;
         }
     },
     actions: {
-        async [REFRESH_BALANCE]({
+        async [ REFRESH_BALANCE ]({
             commit,
             state
         }: ActionContext<State, RootState>) {
@@ -161,72 +161,54 @@ export default {
                 console.warn("attempt to refresh balance with a null session");
                 return;
             }
-            const { Client } = await (import("@hashgraph/sdk") as Promise<
-                typeof import("@hashgraph/sdk")
-            >);
+            const { Client } = await import("@hashgraph/sdk");
+
             if (!(state.session.client instanceof Client)) {
-                throw new TypeError(
-                    "state.session.client not instance of Client: Programmer Error"
-                );
+                throw new TypeError("state.session.client not instance of Client: Programmer Error");
             }
 
-            const balance = await (state.session.client as InstanceType<
-                typeof Client
-            >).getAccountBalance();
+            const balance = await state.session.client.getAccountBalance();
 
             commit(SET_BALANCE, balance);
         },
-        async [REFRESH_EXCHANGE_RATE]({
+        async [ REFRESH_EXCHANGE_RATE ]({
             commit,
             state
         }: ActionContext<State, RootState>) {
             if (state.session == null) {
-                console.warn(
-                    "attempt to refresh exchange rate with a null session"
-                );
+                console.warn("attempt to refresh exchange rate with a null session");
                 return;
             }
 
             // Get response, clone, get text, parse to JSON
             const response: Response = await fetch(coingeckoEndpoint);
-            const responseJson: TickersJSON = JSON.parse(
-                await response.clone().text()
-            );
+            const responseJson: TickersJSON = JSON.parse(await response.clone().text());
 
             // filter reduce to average of last rate from relevant exchanges
-            const meanLast = new BigNumber(
-                responseJson.tickers
-                    .filter((ticker: TickerJSON) => {
-                        return (
-                            ticker.target === "USD" &&
+            const meanLast = new BigNumber(responseJson.tickers
+                .filter((ticker: TickerJSON) => ticker.target === "USD" &&
                             !ticker.is_stale &&
-                            !ticker.is_anomaly
-                        );
-                    })
-                    .reduce<number>((accumulator, ticker, _, { length }) => {
-                        return (
-                            (accumulator + ticker.converted_last.usd) / length
-                        );
-                    }, 0)
-            );
+                            !ticker.is_anomaly)
+                .reduce<number>(
+                (accumulator, ticker, _, { length }) => (accumulator + ticker.converted_last.usd) / length
+                , 0
+            ));
 
             // Set exchange rate
             commit(SET_EXCHANGE_RATE, meanLast);
         },
-        async [REFRESH_BALANCE_AND_RATE]({
-            dispatch
-        }: ActionContext<State, RootState>) {
+        async [ REFRESH_BALANCE_AND_RATE ]({ dispatch }: ActionContext<State, RootState>) {
             await dispatch(REFRESH_BALANCE);
             await dispatch(REFRESH_EXCHANGE_RATE);
         },
-        async [LOG_IN_ACTION](
+        async [ LOG_IN_ACTION ](
             { dispatch, commit }: ActionContext<State, RootState>,
             session: Session
         ) {
             commit(LOG_IN, session);
             await dispatch(REFRESH_BALANCE_AND_RATE);
         },
-        async [LOG_OUT_ACTION]({ commit }: ActionContext<State, RootState>) {
+        async [ LOG_OUT_ACTION ]({ commit }: ActionContext<State, RootState>) {
             commit(SET_HAS_BEEN_TO_INTERFACE, false);
             commit(LOG_OUT);
         }

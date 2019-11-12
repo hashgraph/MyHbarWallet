@@ -1,43 +1,53 @@
 <template>
-    <div class="modal-view-keys">
-        <Modal
-            :is-open="isOpen"
-            :title="title"
-            @change="this.$listeners.change"
-        >
-            <div v-if="hasPublicKey" class="key-container public">
-                <div
-                    class="subtitle"
-                    v-text="$t('modalViewKeys.publicKey')"
-                ></div>
-                <ReadOnlyInput class="input" :value="publicKey" multiline />
-                <Button
-                    :label="$t('modalViewKeys.copyPublic')"
-                    class="button"
-                    compact
-                    @click="handleCopyPublicKey"
-                />
-            </div>
-            <div v-if="hasPrivateKey" class="key-container private">
-                <div
-                    class="subtitle"
-                    v-text="$t('modalViewKeys.privateKey')"
-                ></div>
-                <ReadOnlyInput
-                    class="input"
-                    :value="privateKey"
-                    multiline
-                    obscure
-                />
-                <Button
-                    :label="$t('modalViewKeys.copyPrivate')"
-                    class="button"
-                    compact
-                    @click="handleCopyPrivateKey"
-                />
-            </div>
-        </Modal>
-    </div>
+  <div class="modal-view-keys">
+    <Modal
+      :is-open="isOpen"
+      :title="title"
+      @change="this.$listeners.change"
+    >
+      <div
+        v-if="hasPublicKey"
+        class="key-container public"
+      >
+        <div
+          class="subtitle"
+          v-text="$t('modalViewKeys.publicKey')"
+        />
+        <ReadOnlyInput
+          class="input"
+          :value="publicKey"
+          multiline
+        />
+        <Button
+          :label="$t('modalViewKeys.copyPublic')"
+          class="button"
+          compact
+          @click="handleCopyPublicKey"
+        />
+      </div>
+      <div
+        v-if="hasPrivateKey"
+        class="key-container private"
+      >
+        <div
+          class="subtitle"
+          v-text="$t('modalViewKeys.privateKey')"
+        />
+        <ReadOnlyInput
+          class="input"
+          :value="privateKey"
+          multiline
+          obscure
+        />
+        <Button
+          :label="$t('modalViewKeys.copyPrivate')"
+          class="button"
+          compact
+          @click="handleCopyPrivateKey"
+        />
+      </div>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -71,13 +81,9 @@ export default createComponent({
         publicKey: String
     },
     setup(props: Props, context: SetupContext) {
-        const hasPrivateKey = computed(() => {
-            return props.privateKey !== "" && props.privateKey !== undefined;
-        });
+        const hasPrivateKey = computed(() => props.privateKey !== "" && props.privateKey !== undefined);
 
-        const hasPublicKey = computed(() => {
-            return props.publicKey !== "" && props.publicKey !== undefined;
-        });
+        const hasPublicKey = computed(() => props.publicKey !== "" && props.publicKey !== undefined);
 
         const title = computed(() => {
             if (hasPrivateKey.value && hasPublicKey.value) {
@@ -86,15 +92,12 @@ export default createComponent({
                 return context.root.$t("modalViewKeys.publicKey");
             } else if (hasPrivateKey.value) {
                 return context.root.$t("modalViewKeys.privateKey");
-            } else {
-                return "";
             }
+            return "";
         });
 
         async function handleCopyPublicKey(): Promise<void> {
-            await writeToClipboard(
-                props.publicKey == null ? "" : props.publicKey
-            );
+            await writeToClipboard(props.publicKey == null ? "" : props.publicKey);
 
             store.dispatch(ALERT, {
                 level: "info",
@@ -105,9 +108,7 @@ export default createComponent({
         }
 
         async function handleCopyPrivateKey(): Promise<void> {
-            await writeToClipboard(
-                props.privateKey == null ? "" : props.privateKey
-            );
+            await writeToClipboard(props.privateKey == null ? "" : props.privateKey);
 
             store.dispatch(ALERT, {
                 level: "info",

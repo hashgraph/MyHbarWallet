@@ -19,16 +19,14 @@ export interface State {
 }
 
 export default {
-    state: {
-        queue: []
-    } as State,
+    state: { queue: []} as State,
     mutations: {
-        [ADD_ALERT](state: State, alert: Alert): void {
+        [ ADD_ALERT ](state: State, alert: Alert): void {
             state.queue.push(alert);
         },
-        [REMOVE_ALERT](state: State, id: number): void {
+        [ REMOVE_ALERT ](state: State, id: number): void {
             for (let i = 0; i < state.queue.length; i++) {
-                if (state.queue[i].id === id) {
+                if (state.queue[ i ].id === id) {
                     state.queue.splice(i, 1);
                     break;
                 }
@@ -36,7 +34,7 @@ export default {
         }
     },
     actions: {
-        [ALERT](
+        [ ALERT ](
             { commit }: ActionContext<State, RootState>,
             payload: NewAlert
         ): void {

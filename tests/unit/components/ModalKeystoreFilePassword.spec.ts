@@ -21,12 +21,8 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         const wrapper = mount(ModalPassword, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -48,12 +44,8 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         const wrapper = mount(ModalPassword, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -96,12 +88,8 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         const wrapper = mount(ModalPassword, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -123,12 +111,8 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         const wrapper = mount(ModalPassword, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -171,12 +155,8 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         const wrapper = mount(ModalPassword, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -198,12 +178,8 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         const wrapper = mount(ModalPassword, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -248,12 +224,8 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         const wrapper = mount(ModalPassword, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -275,12 +247,8 @@ describe("ModalKeystoreFilePassword.vue", (): void => {
         const wrapper = mount(ModalPassword, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

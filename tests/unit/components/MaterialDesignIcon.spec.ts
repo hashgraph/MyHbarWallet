@@ -16,9 +16,7 @@ describe("MaterialDesignIcon.vue", (): void => {
         const wrapper = mount(MaterialDesignIcon, {
             localVue,
             i18n,
-            propsData: {
-                icon: mdiChevronUp
-            }
+            propsData: { icon: mdiChevronUp }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

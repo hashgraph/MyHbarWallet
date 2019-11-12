@@ -16,9 +16,7 @@ describe("TextInput.vue", (): void => {
         const wrapper = mount(TextInput, {
             localVue,
             i18n,
-            propsData: {
-                value
-            }
+            propsData: { value }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

@@ -1,15 +1,27 @@
 <template>
-    <div :class="wrapperStyle" @click="handleToggle">
-        <div :class="style('1')">
-            <MaterialDesignIcon class="icon" :icon="icon" />
-        </div>
-        <div :class="style('2')">
-            <MaterialDesignIcon class="icon" :icon="icon" />
-        </div>
-        <div :class="style('3')">
-            <MaterialDesignIcon class="icon" :icon="icon" />
-        </div>
+  <div
+    :class="wrapperStyle"
+    @click="handleToggle"
+  >
+    <div :class="style('1')">
+      <MaterialDesignIcon
+        class="icon"
+        :icon="icon"
+      />
     </div>
+    <div :class="style('2')">
+      <MaterialDesignIcon
+        class="icon"
+        :icon="icon"
+      />
+    </div>
+    <div :class="style('3')">
+      <MaterialDesignIcon
+        class="icon"
+        :icon="icon"
+      />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -28,9 +40,7 @@ interface Props {
 }
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
         isInterface: (Boolean as unknown) as PropType<boolean>
@@ -42,9 +52,7 @@ export default createComponent({
             return props.isOpen ? `bar-${ind}-anim` : `bar-${ind}`;
         }
 
-        const wrapperStyle = computed(() =>
-            props.isInterface ? "interface-button-wrapper" : "button-wrapper"
-        );
+        const wrapperStyle = computed(() => props.isInterface ? "interface-button-wrapper" : "button-wrapper");
 
         function handleToggle(): void {
             context.emit("toggle", !props.isOpen);

@@ -80,7 +80,7 @@ describe("Modal.vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 
     it("renders closed as notClosable", (): void => {
@@ -96,6 +96,6 @@ describe("Modal.vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 });

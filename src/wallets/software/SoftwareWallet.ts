@@ -26,20 +26,18 @@ export default class SoftwareWallet implements Wallet {
     }
 
     public async getPrivateKey(): Promise<
-        import("@hashgraph/sdk").Ed25519PrivateKey
+    import("@hashgraph/sdk").Ed25519PrivateKey
     > {
         return this.privateKey;
     }
 
     public async getPublicKey(): Promise<
-        import("@hashgraph/sdk").PublicKey | null
+    import("@hashgraph/sdk").PublicKey | null
     > {
         return this.publicKey;
     }
 
-    public async signTransaction(
-        txnData: Buffer | Uint8Array
-    ): Promise<Uint8Array | null> {
+    public async signTransaction(txnData: Buffer | Uint8Array): Promise<Uint8Array | null> {
         console.log(txnData);
         throw new Error("Not Implemented");
     }

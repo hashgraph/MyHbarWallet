@@ -5,33 +5,29 @@ import { PositionResult } from "vue-router/types/router";
 import store from "./store";
 
 function HardwareWalletAffiliates(): Promise<
-    typeof import("./views/HardwareWalletAffiliates.vue")
+typeof import("./views/HardwareWalletAffiliates.vue")
 > {
     return import(
-        /* webpackChunkName: "affiliates" */ "./views/HardwareWalletAffiliates.vue"
-    );
+        /* webpackChunkName: "affiliates" */ "./views/HardwareWalletAffiliates.vue");
 }
 
 function InterfaceCreateAccount(): Promise<
-    typeof import("./views/InterfaceCreateAccount.vue")
+typeof import("./views/InterfaceCreateAccount.vue")
 > {
     return import(
-        /* webpackChunkName: "interface" */ "./views/InterfaceCreateAccount.vue"
-    );
+        /* webpackChunkName: "interface" */ "./views/InterfaceCreateAccount.vue");
 }
 
 function TermsConditions(): Promise<
-    typeof import("./views/TermsConditions.vue")
+typeof import("./views/TermsConditions.vue")
 > {
     return import(
-        /* webpackChunkName: "terms" */ "./views/TermsConditions.vue"
-    );
+        /* webpackChunkName: "terms" */ "./views/TermsConditions.vue");
 }
 
 function PrivacyPolicy(): Promise<typeof import("./views/PrivacyPolicy.vue")> {
     return import(
-        /* webpackChunkName: "PrivacyPolicy" */ "./views/PrivacyPolicy.vue"
-    );
+        /* webpackChunkName: "privacy" */ "./views/PrivacyPolicy.vue");
 }
 
 function ConvertUnits(): Promise<typeof import("./views/ConvertUnits.vue")> {
@@ -43,82 +39,73 @@ function Interface(): Promise<typeof import("./views/Interface.vue")> {
 }
 
 function InterfaceSendTransfer(): Promise<
-    typeof import("./views/InterfaceSendTransfer.vue")
+typeof import("./views/InterfaceSendTransfer.vue")
 > {
     return import(
         /* webpackChunkName: "interface" */
-        "./views/InterfaceSendTransfer.vue"
-    );
+        "./views/InterfaceSendTransfer.vue");
 }
 
 function InterfaceDeployContract(): Promise<
-    typeof import("./views/InterfaceDeployContract.vue")
+typeof import("./views/InterfaceDeployContract.vue")
 > {
     return import(
         /* webpackChunkName: "interface" */
-        "./views/InterfaceDeployContract.vue"
-    );
+        "./views/InterfaceDeployContract.vue");
 }
 
 function InterfaceInteractWithContract(): Promise<
-    typeof import("./views/InterfaceInteractWithContract.vue")
+typeof import("./views/InterfaceInteractWithContract.vue")
 > {
     return import(
         /* webpackChunkName: "interface" */
-        "./views/InterfaceInteractWithContract.vue"
-    );
+        "./views/InterfaceInteractWithContract.vue");
 }
 
 function InterfaceSignMessage(): Promise<
-    typeof import("./views/InterfaceSignMessage.vue")
+typeof import("./views/InterfaceSignMessage.vue")
 > {
     return import(
         /* webpackChunkName: "interface" */
-        "./views/InterfaceSignMessage.vue"
-    );
+        "./views/InterfaceSignMessage.vue");
 }
 
 function InterfaceVerifyMessage(): Promise<
-    typeof import("./views/InterfaceVerifyMessage.vue")
+typeof import("./views/InterfaceVerifyMessage.vue")
 > {
     return import(
         /* webpackChunkName: "interface" */
-        "./views/InterfaceVerifyMessage.vue"
-    );
+        "./views/InterfaceVerifyMessage.vue");
 }
 
 function InterfaceUploadFile(): Promise<
-    typeof import("./views/InterfaceUploadFile.vue")
+typeof import("./views/InterfaceUploadFile.vue")
 > {
     return import(
         /* webpackChunkName: "interface" */
-        "./views/InterfaceUploadFile.vue"
-    );
+        "./views/InterfaceUploadFile.vue");
 }
 
 function InterfaceDownloadFile(): Promise<
-    typeof import("./views/InterfaceDownloadFile.vue")
+typeof import("./views/InterfaceDownloadFile.vue")
 > {
     return import(
         /* webpackChunkName: "interface" */
-        "./views/InterfaceDownloadFile.vue"
-    );
+        "./views/InterfaceDownloadFile.vue");
 }
 
 function CreateAccount(): Promise<typeof import("./views/CreateAccount.vue")> {
     return import(
-        /* webpackChunkName: "createAccount" */
-        "./views/CreateAccount.vue"
-    );
+        /* webpackChunkName: "interface" */
+        "./views/CreateAccount.vue");
 }
 
 function AccessMyAccount(): Promise<
-    typeof import("./views/AccessMyAccount.vue")
+typeof import("./views/AccessMyAccount.vue")
 > {
     return import(
-        /* webpackChunkName: "accessAccount" */
-        "./views/AccessMyAccount.vue"
-    );
+        /* webpackChunkName: "interface" */
+        "./views/AccessMyAccount.vue");
 }
 
 // auth function that redirects visitors who have not logged in back to the home route
@@ -181,9 +168,7 @@ export default new Router({
             beforeEnter: RequireWallet,
             component: Interface,
             name: "interface",
-            redirect: {
-                name: "send-transfer"
-            },
+            redirect: { name: "send-transfer" },
             children: [
                 {
                     path: "send-transfer",

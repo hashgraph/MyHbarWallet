@@ -41,7 +41,7 @@ describe("Select.vue", (): void => {
             i18n,
             propsData: {
                 selected: "current selected",
-                options: ["1", "2", "3"]
+                options: [ "1", "2", "3" ]
             }
         });
 
@@ -75,7 +75,7 @@ describe("Select.vue", (): void => {
             i18n,
             propsData: {
                 selected: "current selected",
-                options: ["1", "2", "3"]
+                options: [ "1", "2", "3" ]
             }
         });
 

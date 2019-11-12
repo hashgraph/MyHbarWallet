@@ -17,11 +17,11 @@ const P2_UNUSED_APDU = 0x00;
 const P1_FIRST = 0x01;
 const P1_LAST = 0x08;
 
-export type LedgerDeviceStatus = {
+export interface LedgerDeviceStatus {
     deviceStatus: number;
     publicKey?: import("@hashgraph/sdk").PublicKey | null;
     deviceId?: string;
-};
+}
 
 interface APDU {
     CLA: number;
@@ -39,13 +39,13 @@ export default class LedgerNanoS implements Wallet {
     }
 
     public async getPrivateKey(): Promise<
-        import("@hashgraph/sdk").Ed25519PrivateKey
+    import("@hashgraph/sdk").Ed25519PrivateKey
     > {
         throw new Error("Cannot get private key from ledger wallet");
     }
 
     public async getPublicKey(): Promise<
-        import("@hashgraph/sdk").PublicKey | null
+    import("@hashgraph/sdk").PublicKey | null
     > {
         if (this.publicKey === null) {
             const buffer = Buffer.alloc(4);
@@ -66,9 +66,7 @@ export default class LedgerNanoS implements Wallet {
                     .slice(0, response.length - 2)
                     .toString("hex");
 
-                const publicKey = (await import(
-                    "@hashgraph/sdk"
-                )).Ed25519PublicKey.fromString(publicKeyStr);
+                const publicKey = (await import("@hashgraph/sdk")).Ed25519PublicKey.fromString(publicKeyStr);
 
                 this.publicKey = publicKey;
             } else {
@@ -83,9 +81,7 @@ export default class LedgerNanoS implements Wallet {
         return LoginMethod.LedgerNanoS;
     }
 
-    public async signTransaction(
-        txnData: Buffer | Uint8Array
-    ): Promise<Uint8Array | null> {
+    public async signTransaction(txnData: Buffer | Uint8Array): Promise<Uint8Array | null> {
         const dataBuffer = Buffer.from(txnData);
         const buffer = Buffer.alloc(4 + dataBuffer.length);
 
@@ -116,17 +112,15 @@ export default class LedgerNanoS implements Wallet {
         try {
             // DO NOT SEPARATE CREATE THEN.
             // TransportWebUSB REQUIRES a context managed async callback
-            transport = await TransportWebUSB.create().then(
-                async (transport: TransportWebUSB) => {
-                    response = await transport.send(
-                        message.CLA,
-                        message.INS,
-                        message.P1,
-                        message.P2,
-                        message.buffer
-                    );
-                }
-            );
+            transport = await TransportWebUSB.create().then(async(transport: TransportWebUSB) => {
+                response = await transport.send(
+                    message.CLA,
+                    message.INS,
+                    message.P1,
+                    message.P2,
+                    message.buffer
+                );
+            });
 
             return response;
         } finally {

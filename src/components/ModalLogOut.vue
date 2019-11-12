@@ -1,37 +1,37 @@
 <template>
-    <Modal
-        :is-open="isOpen"
-        hide-decoration
-        :not-closable="forgot"
-        @change="this.$listeners.change"
-    >
-        <div class="modal-forgot-to-logout">
-            <span v-if="forgot">{{ $t("modalForgotToLogout.oops") }}</span>
-            <span v-else>{{ $t("modalForgotToLogout.logOut") }}</span>
-            <p v-if="forgot">
-                {{ $t("modalForgotToLogout.looksLikeYouForgotToLogOut") }}
-            </p>
-            <p v-else>
-                {{ $t("modalForgotToLogout.areYouSure") }}
-            </p>
-            <div class="button-group">
-                <Button
-                    v-if="forgot"
-                    class="button-go-back"
-                    :label="$t('common.goBack')"
-                    :outline="true"
-                    @click="handleGoBack"
-                />
-                <Button
-                    class="button-logout"
-                    :label="$t('modalForgotToLogout.logOut')"
-                    :class="logoutBtnCenter"
-                    :danger="true"
-                    @click="handleClickLogOut"
-                />
-            </div>
-        </div>
-    </Modal>
+  <Modal
+    :is-open="isOpen"
+    hide-decoration
+    :not-closable="forgot"
+    @change="this.$listeners.change"
+  >
+    <div class="modal-forgot-to-logout">
+      <span v-if="forgot">{{ $t("modalForgotToLogout.oops") }}</span>
+      <span v-else>{{ $t("modalForgotToLogout.logOut") }}</span>
+      <p v-if="forgot">
+        {{ $t("modalForgotToLogout.looksLikeYouForgotToLogOut") }}
+      </p>
+      <p v-else>
+        {{ $t("modalForgotToLogout.areYouSure") }}
+      </p>
+      <div class="button-group">
+        <Button
+          v-if="forgot"
+          class="button-go-back"
+          :label="$t('common.goBack')"
+          :outline="true"
+          @click="handleGoBack"
+        />
+        <Button
+          class="button-logout"
+          :label="$t('modalForgotToLogout.logOut')"
+          :class="logoutBtnCenter"
+          :danger="true"
+          @click="handleClickLogOut"
+        />
+      </div>
+    </div>
+  </Modal>
 </template>
 
 <script lang="ts">

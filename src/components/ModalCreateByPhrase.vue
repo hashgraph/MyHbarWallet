@@ -1,94 +1,100 @@
 <template>
-    <div class="modal-create-by-mnemonic-phrase">
-        <Modal
-            :is-open="isOpen"
-            :title="$t('modalCreateByPhrase.title')"
-            @change="this.$listeners.change"
+  <div class="modal-create-by-mnemonic-phrase">
+    <Modal
+      :is-open="isOpen"
+      :title="$t('modalCreateByPhrase.title')"
+      @change="this.$listeners.change"
+    >
+      <template v-slot:banner>
+        <Warning
+          :title="$t('warning.title')"
+          :message="
+            $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+          "
+        />
+      </template>
+      <div class="password-info-header-wrapper">
+        <div class="password-info-header">
+          {{ $t("common.password.yourPassword") }}
+          <InfoButton
+            :message="
+              $t(
+                'common.password.thisPasswordEncryptsYourPrivateKey'
+              )
+            "
+          />
+        </div>
+      </div>
+      <div class="value-switch">
+        <div class="spacer" />
+        <div
+          class="random-button"
+          @click="randomizeMnemonic"
         >
-            <template v-slot:banner>
-                <Warning
-                    :title="$t('warning.title')"
-                    :message="
-                        $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
-                    "
-                />
-            </template>
-            <div class="password-info-header-wrapper">
-                <div class="password-info-header">
-                    {{ $t("common.password.yourPassword") }}
-                    <InfoButton
-                        :message="
-                            $t(
-                                'common.password.thisPasswordEncryptsYourPrivateKey'
-                            )
-                        "
-                    />
-                </div>
-            </div>
-            <div class="value-switch">
-                <div class="spacer" />
-                <div class="random-button" @click="randomizeMnemonic">
-                    <MaterialDesignIcon :size="16" :icon="cachedIcon" />
-                    {{ $t("modalCreateByPhrase.random") }}
-                </div>
-            </div>
+          <MaterialDesignIcon
+            :size="16"
+            :icon="cachedIcon"
+          />
+          {{ $t("modalCreateByPhrase.random") }}
+        </div>
+      </div>
 
-            <MnemonicInput
-                class="phrase-input"
-                :words="24"
-                :value="words"
-                :editable="false"
-                :is-open="isOpen"
-            />
+      <MnemonicInput
+        class="phrase-input"
+        :words="24"
+        :value="words"
+        :editable="false"
+        :is-open="isOpen"
+      />
 
-            <HiddenPasswordInput
-                v-if="false"
-                :value="state.passwordValue"
-                :password-warning="$t('modalCreateByPhrase.passwordWarning')"
-                @input="handlePasswordChange"
-            />
+      <HiddenPasswordInput
+        v-if="false"
+        :value="state.passwordValue"
+        :password-warning="$t('modalCreateByPhrase.passwordWarning')"
+        @input="handlePasswordChange"
+      />
 
-            <div class="continue-btn-container">
-                <Button
-                    :busy="state.isBusy"
-                    class="continue-btn"
-                    :label="
-                        $t('modalCreateByPhrase.iWroteDownMyMnemonicPhrase')
-                    "
-                    @click="handleClick"
-                />
-                <ModalVerifyPhrase
-                    v-model="state.verifyPhraseIsOpen"
-                    :words="words"
-                    @success="handleVerifySuccess"
-                />
-                <img
-                    :src="printerIcon"
-                    class="printer-button"
-                    @click="handlePrintModal"
-                />
+      <div class="continue-btn-container">
+        <Button
+          :busy="state.isBusy"
+          class="continue-btn"
+          :label="
+            $t('modalCreateByPhrase.iWroteDownMyMnemonicPhrase')
+          "
+          @click="handleClick"
+        />
+        <ModalVerifyPhrase
+          v-model="state.verifyPhraseIsOpen"
+          :words="words"
+          @success="handleVerifySuccess"
+        />
+        <img
+          :src="printerIcon"
+          class="printer-button"
+          @click="handlePrintModal"
+        >
 
-                <ModalPhrasePrintPreview
-                    v-model="state.printModalIsOpen"
-                    :words="words"
-                />
-            </div>
+        <ModalPhrasePrintPreview
+          v-model="state.printModalIsOpen"
+          :words="words"
+        />
+      </div>
 
-            <div class="warning-container">
-                <div
-                    class="do-not-forget"
-                    v-html="
-                        formatRich(
-                            $t(
-                                'modalCreateByPhrase.doNotForgetToSaveYourPassword'
-                            ).toString(),
-                            { strongClass: 'important' }
-                        )
-                    "
-                />
-            </div>
-        </Modal>
-    </div>
+      <div class="warning-container">
+        <div
+          class="do-not-forget"
+          v-html="
+            formatRich(
+              $t(
+                'modalCreateByPhrase.doNotForgetToSaveYourPassword'
+              ).toString(),
+              { strongClass: 'important' }
+            )
+          "
+        />
+      </div>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -137,7 +143,7 @@ export default createComponent({
     },
     props: {
         isOpen: ({ type: Boolean, required: true } as unknown) as PropType<
-            boolean
+        boolean
         >
     },
     setup(props: Props, context: SetupContext) {
@@ -150,16 +156,10 @@ export default createComponent({
             verifyPhraseIsOpen: false
         });
 
-        const words = computed(() => {
-            return state.result ? state.result.mnemonic.split(" ") : [];
-        });
+        const words = computed(() => state.result ? state.result.mnemonic.split(" ") : []);
 
-        const cachedIcon = computed(() => {
-            return mdiCached;
-        });
-        const printerIcon = computed(() => {
-            return printIcon;
-        });
+        const cachedIcon = computed(() => mdiCached);
+        const printerIcon = computed(() => printIcon);
 
         function handlePasswordChange(password: string): void {
             state.passwordValue = password;
@@ -174,9 +174,7 @@ export default createComponent({
         }
 
         async function randomizeMnemonic(): Promise<void> {
-            const { generateMnemonic } = await (import(
-                "@hashgraph/sdk"
-            ) as Promise<typeof import("@hashgraph/sdk")>);
+            const { generateMnemonic } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
             state.result = generateMnemonic();
         }
 
@@ -187,9 +185,7 @@ export default createComponent({
             state.verifyPhraseIsOpen = false;
 
             // `.derive(0)` to generate the same key as the default account of the mobile wallet
-            const key: import("@hashgraph/sdk").Ed25519PrivateKey = (await state.result.generateKey()).derive(
-                0
-            );
+            const key: import("@hashgraph/sdk").Ed25519PrivateKey = (await state.result.generateKey()).derive(0);
 
             // eslint-disable-next-line require-atomic-updates
             state.isBusy = false;

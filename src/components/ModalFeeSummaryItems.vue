@@ -1,21 +1,23 @@
 <template>
-    <div class="modal-fee-summary-items">
-        <template v-for="(item, index) in splitItems">
-            <div
-                :key="item.key"
-                class="row"
-                :class="{ total: index === splitItems.length - 1 }"
-            >
-                <div class="description">
-                    {{ item.description }}
-                </div>
-                <div class="value">{{ item.value }}</div>
-                <div class="symbol value">
-                    ℏ
-                </div>
-            </div>
-        </template>
-    </div>
+  <div class="modal-fee-summary-items">
+    <template v-for="(item, index) in splitItems">
+      <div
+        :key="item.key"
+        class="row"
+        :class="{ total: index === splitItems.length - 1 }"
+      >
+        <div class="description">
+          {{ item.description }}
+        </div>
+        <div class="value">
+          {{ item.value }}
+        </div>
+        <div class="symbol value">
+          ℏ
+        </div>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">
@@ -26,7 +28,7 @@ import { formatSplit, formatRightPad } from "../formatter";
 
 let KEY = 0;
 function nextItemKey(): number {
-    return (KEY += 1);
+    return KEY += 1;
 }
 
 interface SplitItem {
@@ -43,9 +45,7 @@ interface SplitItem {
 }
 
 export default createComponent({
-    props: {
-        items: Array as PropType<Item[]>
-    },
+    props: { items: Array as PropType<Item[]> },
     setup(props: { items: Item[] }) {
         // Compute the total
         const total: Ref<{
@@ -74,7 +74,7 @@ export default createComponent({
             }
 
             return {
-                int: parts.int,
+                int: parts[ "int" ],
                 fraction: parts.fraction
             };
         });
@@ -85,45 +85,43 @@ export default createComponent({
             let lengthLongestString = 0;
 
             // Loop through all the items and conver them to `SplitItem` type
-            const items = props.items.map(
-                (item): SplitItem => {
-                    // Break item's value int int and fraction
-                    const parts = formatSplit(item.value.toString());
+            const items = props.items.map((item): SplitItem => {
+                // Break item's value int int and fraction
+                const parts = formatSplit(item.value.toString());
 
-                    // Get a key
-                    const itemKey = nextItemKey();
+                // Get a key
+                const itemKey = nextItemKey();
 
-                    // The item value isn't required to be a number so we'll get back a null here
-                    // int that case we simply use the item value as the preformatted text
-                    if (parts == null) {
-                        return {
-                            key: itemKey,
-                            description: item.description,
-                            int: null,
-                            fraction: null,
-                            value: item.value.toString()
-                        };
-                    }
-
-                    // If the item was a number take the fraction part length and determine if this is the longest
-                    // fraction seen yet
-                    if (
-                        parts.fraction != null &&
-                        lengthLongestString < parts.fraction.length
-                    ) {
-                        lengthLongestString = parts.fraction.length;
-                    }
-
-                    // Return the item
+                // The item value isn't required to be a number so we'll get back a null here
+                // int that case we simply use the item value as the preformatted text
+                if (parts == null) {
                     return {
                         key: itemKey,
                         description: item.description,
-                        int: parts.int,
-                        fraction: parts.fraction,
-                        value: ""
+                        int: null,
+                        fraction: null,
+                        value: item.value.toString()
                     };
                 }
-            );
+
+                // If the item was a number take the fraction part length and determine if this is the longest
+                // fraction seen yet
+                if (
+                    parts.fraction != null &&
+                        lengthLongestString < parts.fraction.length
+                ) {
+                    lengthLongestString = parts.fraction.length;
+                }
+
+                // Return the item
+                return {
+                    key: itemKey,
+                    description: item.description,
+                    int: parts[ "int" ],
+                    fraction: parts.fraction,
+                    value: ""
+                };
+            });
 
             // Hold the total so it's not recomputed in the middle
             const computedTotal = total;
@@ -133,7 +131,7 @@ export default createComponent({
             items.push({
                 key: nextItemKey(),
                 description: "Total",
-                int: computedTotal.value.int,
+                int: computedTotal.value[ "int" ],
                 fraction: computedTotal.value.fraction,
                 value: ""
             });
@@ -153,11 +151,11 @@ export default createComponent({
 
                 // Determine if the item is a nubmer and period is necessary
                 // and set the result int item.value -- the preformatted string
-                if (item.int != null) {
+                if (item[ "int" ] != null) {
                     if (hasFraction) {
-                        item.value = item.int + "." + item.fraction;
+                        item.value = `${item[ "int" ]}.${item.fraction}`;
                     } else {
-                        item.value = item.int + " " + item.fraction;
+                        item.value = `${item[ "int" ]} ${item.fraction}`;
                     }
                 }
             }

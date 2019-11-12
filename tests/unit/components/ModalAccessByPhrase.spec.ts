@@ -49,9 +49,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                     isValid: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -101,9 +99,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                     isValid: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -153,9 +149,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                     isValid: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -205,9 +199,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
                     isValid: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

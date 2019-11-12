@@ -1,40 +1,40 @@
 <template>
-    <InterfaceForm :title="$t('interfaceContractDeploy.title')">
-        <TextInput
-            compact
-            can-copy
-            can-clear
-            multiline
-            :label="$t('interfaceContractDeploy.byteCode')"
-            class="deploy-contract-form-item"
-            show-validation
-            :valid="state.byteCodeIsValid"
-        />
+  <InterfaceForm :title="$t('interfaceContractDeploy.title')">
+    <TextInput
+      compact
+      can-copy
+      can-clear
+      multiline
+      :label="$t('interfaceContractDeploy.byteCode')"
+      class="deploy-contract-form-item"
+      show-validation
+      :valid="state.byteCodeIsValid"
+    />
 
-        <TextInput
-            can-copy
-            can-clear
-            multiline
-            :label="'ABI/JSON' + $t('interfaceContractDeploy.interface')"
-            class="deploy-contract-form-item"
-            show-validation
-            :valid="state.interfaceIsValid"
-        />
+    <TextInput
+      can-copy
+      can-clear
+      multiline
+      :label="'ABI/JSON' + $t('interfaceContractDeploy.interface')"
+      class="deploy-contract-form-item"
+      show-validation
+      :valid="state.interfaceIsValid"
+    />
 
-        <TextInput
-            :label="$t('interfaceContractDeploy.maximumTransactionFee')"
-            class="deploy-contract-form-item"
-            show-validation
-            :valid="state.maxFeeIsValid"
-        />
+    <TextInput
+      :label="$t('interfaceContractDeploy.maximumTransactionFee')"
+      class="deploy-contract-form-item"
+      show-validation
+      :valid="state.maxFeeIsValid"
+    />
 
-        <template v-slot:footer>
-            <Button
-                :disabled="!signable"
-                :label="$t('interfaceContractDeploy.signTransaction')"
-            />
-        </template>
-    </InterfaceForm>
+    <template v-slot:footer>
+      <Button
+        :disabled="!signable"
+        :label="$t('interfaceContractDeploy.signTransaction')"
+      />
+    </template>
+  </InterfaceForm>
 </template>
 
 <script lang="ts">
@@ -63,12 +63,9 @@ export default createComponent({
             maxFeeIsValid: false
         });
 
-        const signable = computed(
-            (): boolean =>
-                state.byteCodeIsValid &&
+        const signable = computed((): boolean => state.byteCodeIsValid &&
                 state.interfaceIsValid &&
-                state.maxFeeIsValid
-        );
+                state.maxFeeIsValid);
 
         return { state, signable };
     }

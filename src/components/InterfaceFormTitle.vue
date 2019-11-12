@@ -1,8 +1,13 @@
 <template>
-    <div class="interface-form-title-container">
-        <div class="interface-form-title">{{ title }}</div>
-        <Button :label="$t('common.menu')" @click="emitMenuOpen" />
+  <div class="interface-form-title-container">
+    <div class="interface-form-title">
+      {{ title }}
     </div>
+    <Button
+      :label="$t('common.menu')"
+      @click="emitMenuOpen"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -18,12 +23,8 @@ function emitMenuOpen(): void {
 }
 
 export default createComponent({
-    props: {
-        title: { type: String, required: true }
-    },
-    components: {
-        Button
-    },
+    props: { title: { type: String, required: true }},
+    components: { Button },
     setup() {
         return { emitMenuOpen };
     }

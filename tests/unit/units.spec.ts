@@ -15,27 +15,21 @@ describe("units", (): void => {
 
     it("converts hbar with pathological decimals to tinybar with no decimals", (): void => {
         // truncation (intended for user input)
-        expect(
-            convert(
-                "1.99999999999999999999999999999",
-                Unit.Hbar,
-                Unit.Tinybar,
-                false
-            )
-        ).toBe("199999999");
-        expect(convert("199999999", Unit.Tinybar, Unit.Hbar, false)).toBe(
-            "1.99999999"
-        );
+        expect(convert(
+            "1.99999999999999999999999999999",
+            Unit.Hbar,
+            Unit.Tinybar,
+            false
+        )).toBe("199999999");
+        expect(convert("199999999", Unit.Tinybar, Unit.Hbar, false)).toBe("1.99999999");
 
         // rounding (intended for conversions)
-        expect(
-            convert(
-                "1.99999999999999999999999999999",
-                Unit.Hbar,
-                Unit.Tinybar,
-                true
-            )
-        ).toBe("200000000");
+        expect(convert(
+            "1.99999999999999999999999999999",
+            Unit.Hbar,
+            Unit.Tinybar,
+            true
+        )).toBe("200000000");
         expect(convert("200000000", Unit.Tinybar, Unit.Hbar, true)).toBe("2");
     });
 });

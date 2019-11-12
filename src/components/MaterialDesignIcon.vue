@@ -1,13 +1,13 @@
 <template>
-    <svg
-        :width="size"
-        :height="size"
-        viewBox="0 0 24 24"
-        :class="{ 'mdi-spin': spin, 'mdi-slow-spin': slowSpin }"
-        v-on="this.$listeners"
-    >
-        <path :d="icon"></path>
-    </svg>
+  <svg
+    :width="size"
+    :height="size"
+    viewBox="0 0 24 24"
+    :class="{ 'mdi-spin': spin, 'mdi-slow-spin': slowSpin }"
+    v-on="this.$listeners"
+  >
+    <path :d="icon" />
+  </svg>
 </template>
 
 <script lang="ts">

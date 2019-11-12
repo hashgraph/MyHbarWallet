@@ -1,20 +1,20 @@
 declare module "html2pdf.js" {
-    type Html2PdfImageOptions = {
+    interface Html2PdfImageOptions {
         type: string;
         quality: number;
-    };
+    }
 
-    type jsPDFOptions = {
+    interface jsPDFOptions {
         unit: string;
-    };
+    }
 
-    type Html2PdfOptions = {
+    interface Html2PdfOptions {
         filename: string;
         margin?: number | number[];
         pageSize: string;
         image: Html2PdfImageOptions;
         jsPDF: jsPDFOptions;
-    };
+    }
 
     interface Html2Pdf {
         set(options: Html2PdfOptions): this;

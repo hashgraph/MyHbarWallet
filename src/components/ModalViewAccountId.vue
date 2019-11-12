@@ -1,28 +1,31 @@
 <template>
-    <Modal
-        :large="false"
-        :is-open="isOpen"
-        :title="$t('modalViewAccountId.title')"
-        @change="this.$listeners.change"
-    >
-        <div class="modal-contents">
-            <qrcode-vue
-                :value="accountId"
-                size="200"
-                level="L"
-                class="pub-qr"
-            />
+  <Modal
+    :large="false"
+    :is-open="isOpen"
+    :title="$t('modalViewAccountId.title')"
+    @change="this.$listeners.change"
+  >
+    <div class="modal-contents">
+      <qrcode-vue
+        :value="accountId"
+        size="200"
+        level="L"
+        class="pub-qr"
+      />
 
-            <ReadOnlyInput class="account-id" :value="accountId" />
+      <ReadOnlyInput
+        class="account-id"
+        :value="accountId"
+      />
 
-            <Button
-                compact
-                :label="$t('modalViewAccountId.copyAccountId')"
-                class="button"
-                @click="handleClickCopy"
-            />
-        </div>
-    </Modal>
+      <Button
+        compact
+        :label="$t('modalViewAccountId.copyAccountId')"
+        class="button"
+        @click="handleClickCopy"
+      />
+    </div>
+  </Modal>
 </template>
 
 <script lang="ts">
@@ -59,11 +62,9 @@ export default createComponent({
         event: (String as unknown) as PropType<string>
     },
     setup(props: Props, context) {
-        const accountId = computed(() => {
-            return props.value
-                ? `${props.value.shard}.${props.value.realm}.${props.value.account}`
-                : "";
-        });
+        const accountId = computed(() => props.value ?
+            `${props.value.shard}.${props.value.realm}.${props.value.account}` :
+            "");
 
         async function handleClickCopy(): Promise<void> {
             const id = accountId.value;

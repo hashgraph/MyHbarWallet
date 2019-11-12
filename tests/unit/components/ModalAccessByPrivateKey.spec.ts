@@ -26,12 +26,10 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 
     it("renders open, not busy", (): void => {
@@ -48,9 +46,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -114,9 +110,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -182,11 +176,9 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 });

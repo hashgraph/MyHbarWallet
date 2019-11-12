@@ -1,85 +1,118 @@
 <template>
-    <div class="text-input" :class="classObject">
-        <label class="label-container">
-            <span v-if="label" class="label">{{ label }}</span>
+  <div
+    class="text-input"
+    :class="classObject"
+  >
+    <label class="label-container">
+      <span
+        v-if="label"
+        class="label"
+      >{{ label }}</span>
 
-            <span class="input-container">
-                <span v-if="prefix" class="prefix">{{ prefix }}</span>
-                <span class="input-wrapper">
-                    <div class="flex-container">
-                        <div class="text-flex-item">
-                            <textarea
-                                v-if="multiline"
-                                ref="input"
-                                class="text-area"
-                                :placeholder="placeholder"
-                                :tabindex="tabindex"
-                                :value="value"
-                                :rows="rows"
-                                :class="{ resize: resizable }"
-                                @focusin="handleFocusIn"
-                                @focusout="handleFocusOut"
-                                @input="handleInput"
-                            />
-                            <input
-                                v-else
-                                ref="input"
-                                :value="value"
-                                :placeholder="placeholder"
-                                :type="keyboardType"
-                                :tabindex="tabindex"
-                                :step="step"
-                                :min="min"
-                                :autocomplete="
-                                    autocompleteDisabled ? 'off' : 'on'
-                                "
-                                :spellcheck="!spellcheckDisabled"
-                                @focusin="handleFocusIn"
-                                @focusout="handleFocusOut"
-                                @input="handleInput"
-                            />
-                        </div>
-
-                        <div class="deco-flex-item">
-                            <span v-if="hasDecorations" class="decorations">
-                                <MaterialDesignIcon
-                                    v-if="obscure"
-                                    class="eye"
-                                    :class="{ 'is-open': state.isEyeOpen }"
-                                    :icon="eye"
-                                    @click="handleClickEye"
-                                />
-
-                                <MaterialDesignIcon
-                                    v-else-if="showValidation"
-                                    class="checkmark"
-                                    :class="{ 'is-valid': valid }"
-                                    :icon="mdiCheckCircle"
-                                />
-                            </span>
-                        </div>
-                    </div>
-                </span>
-                <span v-if="suffix" class="suffix">{{ suffix }}</span>
-            </span>
-        </label>
-
-        <div v-if="label != null" class="actions">
-            <div v-if="action" class="action" @click="$emit('action')">
-                {{ action }}
+      <span class="input-container">
+        <span
+          v-if="prefix"
+          class="prefix"
+        >{{ prefix }}</span>
+        <span class="input-wrapper">
+          <div class="flex-container">
+            <div class="text-flex-item">
+              <textarea
+                v-if="multiline"
+                ref="input"
+                class="text-area"
+                :placeholder="placeholder"
+                :tabindex="tabindex"
+                :value="value"
+                :rows="rows"
+                :class="{ resize: resizable }"
+                @focusin="handleFocusIn"
+                @focusout="handleFocusOut"
+                @input="handleInput"
+              />
+              <input
+                v-else
+                ref="input"
+                :value="value"
+                :placeholder="placeholder"
+                :type="keyboardType"
+                :tabindex="tabindex"
+                :step="step"
+                :min="min"
+                :autocomplete="
+                  autocompleteDisabled ? 'off' : 'on'
+                "
+                :spellcheck="!spellcheckDisabled"
+                @focusin="handleFocusIn"
+                @focusout="handleFocusOut"
+                @input="handleInput"
+              >
             </div>
-            <div v-if="canClear" class="action" @click="handleClickClear">
-                {{ $t("common.clear") }}
-            </div>
-            <div v-if="canCopy" class="action" @click="handleClickCopy">
-                {{ $t("common.copy") }}
-            </div>
-        </div>
 
-        <div v-if="error" class="error">
-            {{ error }}
-        </div>
+            <div class="deco-flex-item">
+              <span
+                v-if="hasDecorations"
+                class="decorations"
+              >
+                <MaterialDesignIcon
+                  v-if="obscure"
+                  class="eye"
+                  :class="{ 'is-open': state.isEyeOpen }"
+                  :icon="eye"
+                  @click="handleClickEye"
+                />
+
+                <MaterialDesignIcon
+                  v-else-if="showValidation"
+                  class="checkmark"
+                  :class="{ 'is-valid': valid }"
+                  :icon="mdiCheckCircle"
+                />
+              </span>
+            </div>
+          </div>
+        </span>
+        <span
+          v-if="suffix"
+          class="suffix"
+        >{{ suffix }}</span>
+      </span>
+    </label>
+
+    <div
+      v-if="label != null"
+      class="actions"
+    >
+      <div
+        v-if="action"
+        class="action"
+        @click="$emit('action')"
+      >
+        {{ action }}
+      </div>
+      <div
+        v-if="canClear"
+        class="action"
+        @click="handleClickClear"
+      >
+        {{ $t("common.clear") }}
+      </div>
+      <div
+        v-if="canCopy"
+        class="action"
+        @click="handleClickCopy"
+      >
+        {{ $t("common.copy") }}
+      </div>
     </div>
+
+    <div
+      v-if="error"
+      class="error"
+    >
+      {{ error }}
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -141,9 +174,7 @@ export interface Component {
 }
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     props: {
         placeholder: (String as unknown) as PropType<string>,
         value: (String as unknown) as PropType<string>,
@@ -192,28 +223,22 @@ export default createComponent({
             return "text";
         });
 
-        const rows = computed(() => (props.compact ? 2 : 8));
+        const rows = computed(() => props.compact ? 2 : 8);
 
-        const eye = computed(() => {
-            return state.isEyeOpen ? mdiEye : mdiEyeOutline;
-        });
+        const eye = computed(() => state.isEyeOpen ? mdiEye : mdiEyeOutline);
 
-        const hasDecorations = computed(
-            () => props.showValidation || props.obscure
-        );
+        const hasDecorations = computed(() => props.showValidation || props.obscure);
 
-        const classObject = computed(() => {
-            return {
-                "is-compact": props.compact,
-                "is-white": props.white,
-                "is-multiline": props.multiline,
-                "has-focus": state.hasFocus,
-                "has-label": props.label != null,
-                "has-error": props.error != null && props.error != "",
-                "has-prefix": props.prefix != null,
-                "has-suffix": props.suffix != null
-            };
-        });
+        const classObject = computed(() => ({
+            "is-compact": props.compact,
+            "is-white": props.white,
+            "is-multiline": props.multiline,
+            "has-focus": state.hasFocus,
+            "has-label": props.label != null,
+            "has-error": props.error != null && props.error != "",
+            "has-prefix": props.prefix != null,
+            "has-suffix": props.suffix != null
+        }));
 
         function focus(): void {
             if (input.value != null) {

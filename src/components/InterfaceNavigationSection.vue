@@ -1,32 +1,42 @@
 <template>
-    <div class="nav-section">
-        <div class="nav-section-header" @click="handleHeaderClick">
-            <material-design-icon
-                alt
-                class="icon"
-                :class="isSectionActive"
-                :icon="icon"
-            />
-            <span class="nav-title" :class="isSectionActive">{{ title }}</span>
-            <transition name="fade" mode="out-in">
-                <MaterialDesignIcon
-                    :key="isSectionActive"
-                    :icon="isSectionActive ? mdiChevronUp : mdiChevronDown"
-                    class="indicator"
-                />
-            </transition>
-        </div>
-        <template v-if="isSectionActive">
-            <router-link
-                v-for="item in routes"
-                :key="item.route"
-                class="nav-item"
-                :to="{ name: item.name }"
-                @click.native="handleClick"
-                >{{ item.label }}</router-link
-            >
-        </template>
+  <div class="nav-section">
+    <div
+      class="nav-section-header"
+      @click="handleHeaderClick"
+    >
+      <material-design-icon
+        alt
+        class="icon"
+        :class="isSectionActive"
+        :icon="icon"
+      />
+      <span
+        class="nav-title"
+        :class="isSectionActive"
+      >{{ title }}</span>
+      <transition
+        name="fade"
+        mode="out-in"
+      >
+        <MaterialDesignIcon
+          :key="isSectionActive"
+          :icon="isSectionActive ? mdiChevronUp : mdiChevronDown"
+          class="indicator"
+        />
+      </transition>
     </div>
+    <template v-if="isSectionActive">
+      <router-link
+        v-for="item in routes"
+        :key="item.route"
+        class="nav-item"
+        :to="{ name: item.name }"
+        @click.native="handleClick"
+      >
+        {{ item.label }}
+      </router-link>
+    </template>
+  </div>
 </template>
 
 <script lang="ts">
@@ -59,9 +69,7 @@ function handleClick(): void {
 }
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     props: {
         icon: (String as unknown) as PropType<string>,
         title: (String as unknown) as PropType<string>,
@@ -71,27 +79,24 @@ export default createComponent({
     setup(props: Props, context: SetupContext) {
         const isSectionActive = computed(() => {
             if (
-                props.routes.some(
-                    route =>
-                        route.name ===
-                        (context.root.$route == undefined
-                            ? null
-                            : context.root.$route.name)
-                )
+                props.routes.some((route) => route.name ===
+                        (context.root.$route == undefined ?
+                            null :
+                            context.root.$route.name))
             ) {
                 return "active";
             }
         });
 
         function handleHeaderClick(): void {
-            const firstRoute = props.routes[0];
+            const firstRoute = props.routes[ 0 ];
 
             // If the first route is active, do nothing
             if (
                 firstRoute.name ===
-                (context.root.$route == undefined
-                    ? null
-                    : context.root.$route.name)
+                (context.root.$route == undefined ?
+                    null :
+                    context.root.$route.name)
             ) {
                 return;
             }

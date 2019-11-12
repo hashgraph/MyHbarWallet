@@ -44,7 +44,7 @@ const truncatePrivate = require("../../assets/common/constants")
     .truncatePrivate;
 
 module.exports = {
-    "It Can Access Account With Keystore": browser => {
+    "It Can Access Account With Keystore"(browser) {
         browser
             .url(`${process.env.VUE_DEV_SERVER_URL}`)
             .waitForElementVisible(".home-tile-button", 5000)
@@ -53,9 +53,7 @@ module.exports = {
             .click(softwareAccessSelector)
             .waitForElementVisible("label[for=file]", 5000)
             .click("label[for=file]")
-            .click(
-                ".modal-access-by-software > .modal-background > .modal button[type=submit]"
-            )
+            .click(".modal-access-by-software > .modal-background > .modal button[type=submit]")
             .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
@@ -63,30 +61,28 @@ module.exports = {
                 5000
             )
             .waitForElementVisible(passwordSelector, 5000)
-            .setValue(passwordSelector, keystorePassword + "\n")
+            .setValue(passwordSelector, `${keystorePassword}\n`)
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(accountInputSelector, 5000)
             .setValue(accountInputSelector, keystoreAccountId)
-            .click(
-                ".modal-enter-account-id > .modal-background > .modal button[type=submit]"
-            )
+            .click(".modal-enter-account-id > .modal-background > .modal button[type=submit]")
             .waitForElementVisible(".interface-form", 10000)
             .waitForElementVisible(".interface .balance .hbar-balance", 10000)
             .assert.urlContains("interface/send-transfer")
             .assert.containsText(".account .subtitle", keystoreAccountId);
     },
 
-    "It Can View Balance": browser => {
+    "It Can View Balance"(browser) {
         browser.waitForElementVisible(hbarBalanceSelector, 10000);
         browser.expect.element(hbarBalanceSelector).text.to.match(regexHBar);
         browser.waitForElementVisible(usdBalanceSelector, 10000);
         browser.expect.element(usdBalanceSelector).text.to.match(regexUSD);
     },
 
-    "It Can View Account ID": browser => {
+    "It Can View Account ID"(browser) {
         browser
             .click(".qr-icon > path:nth-child(1)")
             .waitForElementVisible(".pub-qr > canvas:nth-child(1)", 5000)
@@ -96,7 +92,7 @@ module.exports = {
             .mouseButtonUp();
     },
 
-    "It Can View Public Key": browser => {
+    "It Can View Public Key"(browser) {
         browser
             .pause(500)
             .click(".key-icon > path:nth-child(1)")
@@ -110,7 +106,7 @@ module.exports = {
             .mouseButtonUp();
     },
 
-    "It Can View Private Key": browser => {
+    "It Can View Private Key"(browser) {
         browser
             .pause(500)
             .click(".key-icon > path:nth-child(1)")
@@ -133,7 +129,7 @@ module.exports = {
             .mouseButtonUp();
     },
 
-    "It Can Download Keystore": browser => {
+    "It Can Download Keystore"(browser) {
         browser
             .pause(500)
             .click(".export-keystore-icon > path:nth-child(1)")
@@ -148,7 +144,7 @@ module.exports = {
             .waitForElementNotPresent("modal-export-keystore", 5000);
     },
 
-    "It Can See Log Out": browser => {
+    "It Can See Log Out"(browser) {
         browser
             .pause(500)
             .click("div.links:nth-child(3) a.router-link-active")
@@ -158,7 +154,7 @@ module.exports = {
         browser.end();
     },
 
-    "It Cannot Access with Incorrect Password": browser => {
+    "It Cannot Access with Incorrect Password"(browser) {
         browser
             .url(`${process.env.VUE_DEV_SERVER_URL}`)
             .waitForElementVisible(".home-tile-button", 5000)
@@ -167,9 +163,7 @@ module.exports = {
             .click(".account-tile-button:not(.disabled):nth-child(2)")
             .waitForElementVisible("label[for=file]", 5000)
             .click("label[for=file]")
-            .click(
-                ".modal-access-by-software > .modal-background > .modal button[type=submit]"
-            )
+            .click(".modal-access-by-software > .modal-background > .modal button[type=submit]")
             .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
@@ -182,7 +176,7 @@ module.exports = {
             )
             .setValue(
                 ".modal-password > .modal-background > .modal input[type=password]",
-                keystoreIncorrectPassword + "\n"
+                `${keystoreIncorrectPassword}\n`
             )
             .waitForElementVisible(
                 "div.modal-password > div > div > div > div.content-container > form > div > div",
@@ -191,7 +185,7 @@ module.exports = {
             .end();
     },
 
-    "It Cannot Access with Incorrect Account ID": browser => {
+    "It Cannot Access with Incorrect Account ID"(browser) {
         browser
             .url(`${process.env.VUE_DEV_SERVER_URL}`)
             .waitForElementVisible(".home-tile-button", 5000)
@@ -200,9 +194,7 @@ module.exports = {
             .click(".account-tile-button:not(.disabled):nth-child(2)")
             .waitForElementVisible("label[for=file]", 5000)
             .click("label[for=file]")
-            .click(
-                ".modal-access-by-software > .modal-background > .modal button[type=submit]"
-            )
+            .click(".modal-access-by-software > .modal-background > .modal button[type=submit]")
             .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
@@ -215,14 +207,14 @@ module.exports = {
             )
             .setValue(
                 ".modal-password > .modal-background > .modal input[type=password]",
-                keystorePassword + "\n"
+                `${keystorePassword}\n`
             )
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(accountInputSelector, 5000)
-            .setValue(accountInputSelector, keystoreIncorrectAccountId + "\n")
+            .setValue(accountInputSelector, `${keystoreIncorrectAccountId}\n`)
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background > .modal .error",
                 5000
@@ -234,7 +226,7 @@ module.exports = {
             .end();
     },
 
-    "It Can Request Account": browser => {
+    "It Can Request Account"(browser) {
         browser
             .url(`${process.env.VUE_DEV_SERVER_URL}`)
             .waitForElementVisible(".home-tile-button", 5000)
@@ -243,9 +235,7 @@ module.exports = {
             .click(".account-tile-button:not(.disabled):nth-child(2)")
             .waitForElementVisible("label[for=file]", 5000)
             .click("label[for=file]")
-            .click(
-                ".modal-access-by-software > .modal-background > .modal button[type=submit]"
-            )
+            .click(".modal-access-by-software > .modal-background > .modal button[type=submit]")
             .setValue("#file-upload", require("path").resolve(keystorePath))
             .pause(1000)
             .waitForElementVisible(
@@ -258,16 +248,14 @@ module.exports = {
             )
             .setValue(
                 ".modal-password > .modal-background > .modal input[type=password]",
-                keystorePassword + "\n"
+                `${keystorePassword}\n`
             )
             .waitForElementVisible(
                 ".modal-enter-account-id > .modal-background > .modal",
                 5000
             )
             .waitForElementVisible(accountInputSelector, 5000)
-            .click(
-                ".modal-enter-account-id > .modal-background > .modal button[type=button]"
-            )
+            .click(".modal-enter-account-id > .modal-background > .modal button[type=button]")
             .waitForElementVisible(
                 ".modal-request-to-create-account > .modal-background > .modal",
                 5000

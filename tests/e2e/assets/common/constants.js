@@ -1,10 +1,10 @@
 module.exports = Object.freeze({
     // Common
-    truncatePrivate: key => {
+    truncatePrivate(key) {
         const privatePrefix = "302e020100300506032b657004220420";
         return key.replace(privatePrefix, "");
     },
-    truncatePublic: key => {
+    truncatePublic(key) {
         const publicPrefix = "302a300506032b6570032100";
         return key.replace(publicPrefix, "");
     },
@@ -12,7 +12,7 @@ module.exports = Object.freeze({
     // Access by Keystore
     keystoreAccountId: "0.0.60118",
     keystoreIncorrectAccountId: "0.0.666",
-    keystorePath: __dirname + "/../../assets/keystore_file",
+    keystorePath: `${__dirname}/../../assets/keystore_file`,
     keystorePassword: "ThisIsARandomPassword",
     keystoreIncorrectPassword: "$^$^$^$^$^$^$^$^",
     keystorePublicKey:

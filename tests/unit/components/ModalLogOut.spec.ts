@@ -16,15 +16,11 @@ describe("ModalLogOut.vue", (): void => {
         const wrapper = mount(ModalLogOut, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: false
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: false },
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 
     it("renders open", (): void => {
@@ -34,12 +30,8 @@ describe("ModalLogOut.vue", (): void => {
         const wrapper = mount(ModalLogOut, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: true
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: true },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

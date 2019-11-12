@@ -1,58 +1,70 @@
 <template>
-    <footer>
-        <FooterTop />
-        <div class="wrapper">
-            <div class="links">
-                <router-link :to="{ name: 'privacy-policy' }" class="link">
-                    {{ $t("footer.privacy") }}
-                </router-link>
-                <router-link
-                    :to="{ name: 'terms-and-conditions' }"
-                    class="link"
-                >
-                    {{ $t("footer.terms") }}
-                </router-link>
-                <a
-                    target="_blank"
-                    href="https://github.com/hashgraph/myhbarwallet"
-                    class="link"
-                >
-                    v{{ version }}+{{ hash }}
-                </a>
-            </div>
-            <div class="copyright">
-                &copy; {{ currentYear }} MyHbarWallet, All Rights reserved.
-            </div>
-            <div class="social">
-                <a
-                    v-if="false"
-                    rel="noopener"
-                    target="_blank"
-                    href="https://www.facebook.com/hashgraph/"
-                    class="social-link"
-                >
-                    <MaterialDesignIcon class="social-icon" :icon="facebook" />
-                </a>
-                <a
-                    v-if="false"
-                    rel="noopener"
-                    target="_blank"
-                    href="https://twitter.com/hashgraph"
-                    class="social-link"
-                >
-                    <MaterialDesignIcon class="social-icon" :icon="twitter" />
-                </a>
-                <a
-                    rel="noopener"
-                    target="_blank"
-                    href="https://www.github.com/hashgraph/MyHbarWallet"
-                    class="social-link"
-                >
-                    <MaterialDesignIcon class="social-icon" :icon="github" />
-                </a>
-            </div>
-        </div>
-    </footer>
+  <footer>
+    <FooterTop />
+    <div class="wrapper">
+      <div class="links">
+        <router-link
+          :to="{ name: 'privacy-policy' }"
+          class="link"
+        >
+          {{ $t("footer.privacy") }}
+        </router-link>
+        <router-link
+          :to="{ name: 'terms-and-conditions' }"
+          class="link"
+        >
+          {{ $t("footer.terms") }}
+        </router-link>
+        <a
+          target="_blank"
+          href="https://github.com/hashgraph/myhbarwallet"
+          class="link"
+        >
+          v{{ version }}+{{ hash }}
+        </a>
+      </div>
+      <div class="copyright">
+        &copy; {{ currentYear }} MyHbarWallet, All Rights reserved.
+      </div>
+      <div class="social">
+        <a
+          v-if="false"
+          rel="noopener"
+          target="_blank"
+          href="https://www.facebook.com/hashgraph/"
+          class="social-link"
+        >
+          <MaterialDesignIcon
+            class="social-icon"
+            :icon="facebook"
+          />
+        </a>
+        <a
+          v-if="false"
+          rel="noopener"
+          target="_blank"
+          href="https://twitter.com/hashgraph"
+          class="social-link"
+        >
+          <MaterialDesignIcon
+            class="social-icon"
+            :icon="twitter"
+          />
+        </a>
+        <a
+          rel="noopener"
+          target="_blank"
+          href="https://www.github.com/hashgraph/MyHbarWallet"
+          class="social-link"
+        >
+          <MaterialDesignIcon
+            class="social-icon"
+            :icon="github"
+          />
+        </a>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <script lang="ts">
@@ -78,9 +90,7 @@ export default createComponent({
 
         const github = mdiGithubCircle;
 
-        const currentYear = computed(() => {
-            return new Date().getFullYear();
-        });
+        const currentYear = computed(() => new Date().getFullYear());
 
         return {
             facebook,

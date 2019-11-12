@@ -18,26 +18,16 @@ export default {
         maxFeeHbar: new BigNumber(1)
     } as State,
     getters: {
-        [ESTIMATED_FEE_HBAR]: (state: State): BigNumber => {
+        [ ESTIMATED_FEE_HBAR ](state: State): BigNumber {
             return state.estimatedFeeHbar;
         },
-        [ESTIMATED_FEE_TINYBAR]: (state: State): BigNumber => {
-            return state.estimatedFeeHbar.multipliedBy(
-                getValueOfUnit(Unit.Hbar)
-            );
+        [ ESTIMATED_FEE_TINYBAR ](state: State): BigNumber {
+            return state.estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
         },
-        [MAX_FEE_HBAR]: (state: State) => (
-            remainingBalanceHBar: BigNumber
-        ): BigNumber => {
-            return BigNumber.min(state.maxFeeHbar, remainingBalanceHBar);
-        },
-        [MAX_FEE_TINYBAR]: (state: State) => (
-            remainingBalanceTinybar: BigNumber
-        ): BigNumber => {
-            return BigNumber.min(
-                state.maxFeeHbar,
-                remainingBalanceTinybar.dividedBy(getValueOfUnit(Unit.Hbar))
-            ).multipliedBy(getValueOfUnit(Unit.Hbar));
-        }
+        [ MAX_FEE_HBAR ]: (state: State) => (remainingBalanceHBar: BigNumber): BigNumber => BigNumber.min(state.maxFeeHbar, remainingBalanceHBar),
+        [ MAX_FEE_TINYBAR ]: (state: State) => (remainingBalanceTinybar: BigNumber): BigNumber => BigNumber.min(
+            state.maxFeeHbar,
+            remainingBalanceTinybar.dividedBy(getValueOfUnit(Unit.Hbar))
+        ).multipliedBy(getValueOfUnit(Unit.Hbar))
     }
 };

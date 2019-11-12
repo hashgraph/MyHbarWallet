@@ -1,48 +1,55 @@
 import {LoginMethod} from "../wallets/Wallet";
 <template>
-    <div>
-        <div :class="classObject" class="side-nav-top">
-            <img alt="" class="logo" src="../assets/myhbarwallet-logo.svg" />
-            <MaterialDesignIcon
-                class="close"
-                :icon="mdiClose"
-                @click="handleClick"
-            />
-        </div>
-        <nav :class="classObject">
-            <InterfaceNavigationSection
-                :icon="mdiCoinOutline"
-                :title="$t('interfaceNavigation.crypto')"
-                :routes="cryptoRoutes"
-            />
-
-            <InterfaceNavigationSection
-                v-if="notLedger"
-                :icon="mdiFileDocumentBoxMultipleOutline"
-                :title="$t('interfaceNavigation.files')"
-                :routes="filesRoutes"
-            />
-
-            <InterfaceNavigationSection
-                v-if="false"
-                :icon="contractImage"
-                :title="$t('interfaceNavigation.contract')"
-                :routes="contractRoutes"
-            />
-
-            <InterfaceNavigationSection
-                v-if="false"
-                :icon="messageImage"
-                :title="$t('common.message')"
-                :routes="messageRoutes"
-            />
-        </nav>
-        <div
-            :class="classObject"
-            class="side-nav-background"
-            @click="handleClick"
-        />
+  <div>
+    <div
+      :class="classObject"
+      class="side-nav-top"
+    >
+      <img
+        alt=""
+        class="logo"
+        src="../assets/myhbarwallet-logo.svg"
+      >
+      <MaterialDesignIcon
+        class="close"
+        :icon="mdiClose"
+        @click="handleClick"
+      />
     </div>
+    <nav :class="classObject">
+      <InterfaceNavigationSection
+        :icon="mdiCoinOutline"
+        :title="$t('interfaceNavigation.crypto')"
+        :routes="cryptoRoutes"
+      />
+
+      <InterfaceNavigationSection
+        v-if="notLedger"
+        :icon="mdiFileDocumentBoxMultipleOutline"
+        :title="$t('interfaceNavigation.files')"
+        :routes="filesRoutes"
+      />
+
+      <InterfaceNavigationSection
+        v-if="false"
+        :icon="contractImage"
+        :title="$t('interfaceNavigation.contract')"
+        :routes="contractRoutes"
+      />
+
+      <InterfaceNavigationSection
+        v-if="false"
+        :icon="messageImage"
+        :title="$t('common.message')"
+        :routes="messageRoutes"
+      />
+    </nav>
+    <div
+      :class="classObject"
+      class="side-nav-background"
+      @click="handleClick"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -94,7 +101,7 @@ export default createComponent({
 
         const classObject = computed(() => {
             if (menuOpen.value) return "menu-open";
-            else return "menu-closed";
+            return "menu-closed";
         });
 
         const notLedger = computed(() => {

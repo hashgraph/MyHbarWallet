@@ -1,9 +1,16 @@
 <template>
-    <div class="title-container">
-        <!-- todo: move this to a computed, it's being difficult with the  -->
-        <div class="title" :class="{ large }">{{ title }}</div>
-        <div class="subtitle"><slot></slot></div>
+  <div class="title-container">
+    <!-- todo: move this to a computed, it's being difficult with the  -->
+    <div
+      class="title"
+      :class="{ large }"
+    >
+      {{ title }}
     </div>
+    <div class="subtitle">
+      <slot />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
