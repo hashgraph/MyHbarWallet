@@ -43,6 +43,7 @@ import { State as ModalAccessByPrivateKeyState } from "../components/ModalAccess
 import { State as ModalEnterAccountIdState } from "../components/ModalEnterAccountId";
 import BigNumber from "bignumber.js";
 import Wallet from "../../wallets/Wallet";
+import {Client, Ed25519PrivateKey, Ed25519PublicKey} from "@hashgraph/sdk";
 
 const SET_BALANCE = "wallet#set_balance";
 const SET_EXCHANGE_RATE = "wallet#set_exchange_rate";
@@ -78,7 +79,7 @@ export interface Id {
 export interface Session {
     account: Id;
     wallet: Wallet;
-    client: import("@hashgraph/sdk").Client;
+    client: Client;
 }
 
 export interface State {
@@ -97,8 +98,8 @@ type ModalRequestToCreateAccountState = ModalIsOpen;
 
 export interface AccountDTO {
     wallet: Wallet | null;
-    privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null;
-    publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
+    privateKey: Ed25519PrivateKey | null;
+    publicKey: Ed25519PublicKey | null;
     keyFile: Uint8Array | null;
 }
 

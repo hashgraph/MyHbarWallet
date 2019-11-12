@@ -14,16 +14,6 @@ module.exports = {
         "vue/no-v-html": "off",
 
         // This rule has many false positives in this codebase
-        "require-atomic-updates": "off",
-
-        // this lint only works on static imports
-        // it is used to enforce dynamically importing the Hedera sdk
-        "no-restricted-imports": [
-            "error",
-            {
-                name: "@hashgraph/sdk",
-                message: "The hashgraph sdk must be imported dynamically"
-            }
-        ]
+        "require-atomic-updates": "off"
     }
 };

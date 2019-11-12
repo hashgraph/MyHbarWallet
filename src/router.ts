@@ -27,7 +27,8 @@ typeof import("./views/TermsConditions.vue")
 
 function PrivacyPolicy(): Promise<typeof import("./views/PrivacyPolicy.vue")> {
     return import(
-        /* webpackChunkName: "privacy" */ "./views/PrivacyPolicy.vue");
+        /* webpackChunkName: "privacy" */ "./views/PrivacyPolicy.vue"
+    );
 }
 
 function ConvertUnits(): Promise<typeof import("./views/ConvertUnits.vue")> {
@@ -97,7 +98,8 @@ typeof import("./views/InterfaceDownloadFile.vue")
 function CreateAccount(): Promise<typeof import("./views/CreateAccount.vue")> {
     return import(
         /* webpackChunkName: "interface" */
-        "./views/CreateAccount.vue");
+        "./views/CreateAccount.vue"
+    );
 }
 
 function AccessMyAccount(): Promise<
@@ -105,7 +107,8 @@ typeof import("./views/AccessMyAccount.vue")
 > {
     return import(
         /* webpackChunkName: "interface" */
-        "./views/AccessMyAccount.vue");
+        "./views/AccessMyAccount.vue"
+    );
 }
 
 // auth function that redirects visitors who have not logged in back to the home route

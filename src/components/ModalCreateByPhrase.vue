@@ -119,6 +119,7 @@ import {
     SetupContext
 } from "@vue/composition-api";
 import { formatRich } from "../formatter";
+import { Ed25519PrivateKey, MnemonicResult } from "@hashgraph/sdk";
 
 interface Props {
     isOpen: boolean;
@@ -151,7 +152,7 @@ export default createComponent({
         const state = reactive({
             isBusy: false,
             passwordValue: "",
-            result: null as import("@hashgraph/sdk").MnemonicResult | null,
+            result: null as MnemonicResult | null,
             printModalIsOpen: false,
             verifyPhraseIsOpen: false
         });
@@ -185,7 +186,9 @@ export default createComponent({
             state.verifyPhraseIsOpen = false;
 
             // `.derive(0)` to generate the same key as the default account of the mobile wallet
-            const key: import("@hashgraph/sdk").Ed25519PrivateKey = (await state.result.generateKey()).derive(0);
+            const key: Ed25519PrivateKey = (await state.result.generateKey()).derive(
+                0
+            );
 
             // eslint-disable-next-line require-atomic-updates
             state.isBusy = false;

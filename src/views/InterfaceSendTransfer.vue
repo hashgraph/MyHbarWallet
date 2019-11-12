@@ -92,6 +92,7 @@ import OptionalMemoField from "../components/OptionalMemoField.vue";
 import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuccess.vue";
 import { Vue } from "vue/types/vue";
 import { LoginMethod } from "../wallets/Wallet";
+import { AccountId } from "@hashgraph/sdk";
 
 // Shim for IDInput ref
 type IdInput = Vue & {
@@ -254,8 +255,7 @@ export default createComponent({
                         .toString());
                 }
 
-                const recipient: import("@hashgraph/sdk").AccountId | null =
-                    state.account;
+                const recipient: AccountId | null = state.account;
 
                 const sendAmountTinybar = new BigNumber(state.amount).multipliedBy(getValueOfUnit(Unit.Hbar));
 

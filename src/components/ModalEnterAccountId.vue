@@ -79,6 +79,7 @@ import { Id } from "../store/modules/wallet";
 import Notice from "../components/Notice.vue";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import ReadOnlyInput from "./ReadOnlyInput.vue";
+import { Ed25519PublicKey } from "@hashgraph/sdk";
 
 export interface State {
     failed: string | null;
@@ -87,7 +88,7 @@ export interface State {
     isBusy: boolean;
     account: Id | null;
     valid: boolean;
-    publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
+    publicKey: Ed25519PublicKey | null;
 }
 
 export interface Props {

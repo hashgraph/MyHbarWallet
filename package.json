@@ -14,8 +14,9 @@
         "electron:build": "cross-env SHELL=bash vue-cli-service electron:build",
         "electron:serve": "vue-cli-service electron:serve",
         "electron:generate-icons": "electron-icon-builder --input=./public/android-chrome-512x512.png --output=build --flatten",
+        "tsc": "tsc --noEmit",
         "lint:css": "stylelint --fix 'src/**/*.vue' 'src/**/*.css'",
-        "lint:js": "vue-cli-service lint 'src/**/*.vue' 'src/**/*.ts'",
+        "lint:js": "vue-cli-service lint --no-fix 'src/**/*.vue' 'src/**/*.ts'",
         "test:e2e": "vue-cli-service test:e2e",
         "test:unit": "vue-cli-service test:unit"
     },
@@ -102,7 +103,7 @@
         "stylelint-value-no-unknown-custom-properties": "^2.0.0",
         "ts-jest": "^24.1.0",
         "typescript": "^3.7.2",
-        "vue-cli-plugin-electron-builder": "^1.4.0",
+        "vue-cli-plugin-electron-builder": "^1.4.1",
         "vue-template-compiler": "^2.6.10"
     },
     "gitHooks": {
