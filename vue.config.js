@@ -12,6 +12,11 @@ module.exports = {
     },
     configureWebpack: {
         target: "web",
+        performance: {
+            hints: "error",
+            maxEntrypointSize: 512000,
+            maxAssetSize: 1280000
+        },
         plugins: [
             new webpack.DefinePlugin({
                 VERSION: `"${package.version.toString()}"`,
