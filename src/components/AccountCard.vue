@@ -68,7 +68,6 @@ import ModalViewAccountId from "../components/ModalViewAccountId.vue";
 import ExportKeystoreButton from "./ExportKeystoreButton.vue";
 import ModalViewKeys from "./ModalViewKeys.vue";
 import store from "../store";
-import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
 
 async function getPrivateKey(): Promise<Ed25519PrivateKey | null> {
     if (store.state.wallet.session !== null) {
