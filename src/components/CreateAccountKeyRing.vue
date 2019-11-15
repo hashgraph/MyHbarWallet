@@ -57,34 +57,41 @@
                     :key="subKey.listKey"
                     class="single-key"
                 >
+                    <div class="text-block">
+                        <TextInput
+                            v-model="subKey.key[0]"
+                            :error="subKey.keyError"
+                            :valid="subKey.isPublicKeyValid"
+                            :spellcheck-disabled="true"
+                            :autocomplete-disabled="true"
+                            show-validation
+                        />
+                        <FlatButton
+                            :icon="mdiMinus"
+                            @click="handleRemoveSubField(index, subIndex)"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div v-else class="single-key key">
+                <div class="head">
+                    <span class="title">Public Key</span>
+                    <div class="spacer" />
+                </div>
+                <div class="text-block">
                     <TextInput
-                        v-model="subKey.key[0]"
-                        :error="subKey.keyError"
-                        :valid="subKey.isPublicKeyValid"
+                        v-model="key.key[0]"
+                        :error="key.keyError"
+                        :valid="key.isPublicKeyValid"
                         :spellcheck-disabled="true"
                         :autocomplete-disabled="true"
                         show-validation
                     />
                     <FlatButton
                         :icon="mdiMinus"
-                        @click="handleRemoveSubField(index, subIndex)"
+                        @click="handleRemoveField(index)"
                     />
                 </div>
-            </div>
-            <div v-else class="single-key key">
-                <TextInput
-                    v-model="key.key[0]"
-                    :label="'Public Key'"
-                    :error="key.keyError"
-                    :valid="key.isPublicKeyValid"
-                    :spellcheck-disabled="true"
-                    :autocomplete-disabled="true"
-                    show-validation
-                />
-                <FlatButton
-                    :icon="mdiMinus"
-                    @click="handleRemoveField(index)"
-                />
             </div>
             <hr />
         </div>
@@ -288,6 +295,7 @@ export default createComponent({
                 state.numOfInputs--;
             }
         }
+
         function handleRemoveSubField(pIdx: number, idx: number): void {
             if (state.keyRing[pIdx].key.length > 1) {
                 state.keyRing[pIdx].key.splice(idx, 1);
@@ -312,6 +320,7 @@ export default createComponent({
 
 <style lang="postcss" scoped>
 .title {
+    align-self: center;
     display: block;
     font-size: 16px;
     font-weight: 600;
@@ -320,9 +329,15 @@ export default createComponent({
     padding: 0 8px;
 }
 
+.text-block {
+    display: flex;
+    flex-direction: row;
+}
+
 .head {
     display: flex;
     flex-direction: row;
+    min-height: 66px;
 }
 
 .number-input {
@@ -335,7 +350,8 @@ export default createComponent({
 
 .single-key {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-block-end: 10px;
+    padding-block-end: 24px;
 }
 </style>
