@@ -13,7 +13,8 @@ module.exports = {
     configureWebpack: {
         target: "web",
         performance: {
-            hints: "error",
+            // only report this as an error when building for production
+            hints: process.env.NODE_ENV === "production" ? "error" : false,
             maxEntrypointSize: 512000,
             maxAssetSize: 1280000
         },
