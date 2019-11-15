@@ -59,7 +59,7 @@ describe("FAQs.vue", (): void => {
                       </div>
                       <div class="content">
                         <div class="content-text">
-                          MHW supports many different wallet types with plans to include support for hardware wallets in the near future. We are also open for anyone to use their H wallets with the appropriate information.
+                          MHW supports many different wallet types with plans to include additional support for hardware wallets in the near future. We are also open for anyone to use their hbar wallets with the appropriate information.
                         </div>
                       </div>
                     </div>

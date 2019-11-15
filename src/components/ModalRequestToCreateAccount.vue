@@ -96,9 +96,9 @@ export default createComponent({
     },
     setup(props: Props, context: SetupContext) {
         async function handleClickCopy(): Promise<void> {
-            await writeToClipboard(props.publicKey.toString());
-            await actions.alert({
-                message: context.root.$t("common.copied").toString(),
+            await writeToClipboard(props.publicKey.toString(true));
+            await store.dispatch(ALERT, {
+                message: context.root.$t("common.copied"),
                 level: "info"
             });
         }

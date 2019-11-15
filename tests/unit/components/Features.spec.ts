@@ -30,7 +30,7 @@ describe("Features.vue", (): void => {
                         Hardware Wallet Support
                       </div>
                       <div class="content">
-                        MHW does not currently support hardware wallets, but all major hardware wallets are on the roadmap or in development.
+                        MHW currently supports the Ledger Nano S, with planned support for additional hardware wallets.
                       </div>
                     </div>
                   </div>

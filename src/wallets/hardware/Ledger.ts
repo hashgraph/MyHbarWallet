@@ -15,9 +15,6 @@ const INS_SIGN_TX = 0x04;
 const P1_UNUSED_APDU = 0x00;
 const P2_UNUSED_APDU = 0x00;
 
-const P1_FIRST = 0x01;
-const P1_LAST = 0x08;
-
 export type LedgerDeviceStatus = {
     deviceStatus: number;
     publicKey?: PublicKey | null;
@@ -32,7 +29,7 @@ interface APDU {
     buffer: Buffer;
 }
 
-export default class LedgerNanoS implements Wallet {
+export default class Ledger implements Wallet {
     private publicKey: Ed25519PublicKey | null = null;
 
     public hasPrivateKey(): boolean {
@@ -73,11 +70,15 @@ export default class LedgerNanoS implements Wallet {
             }
         }
 
+        if (process.env.NODE_ENV !== "production") {
+            console.log(this.publicKey);
+        }
+
         return this.publicKey;
     }
 
     public getLoginMethod(): LoginMethod {
-        return LoginMethod.LedgerNanoS;
+        return LoginMethod.Ledger;
     }
 
     public async signTransaction(
@@ -98,6 +99,9 @@ export default class LedgerNanoS implements Wallet {
         });
 
         if (response !== null) {
+            if (process.env.NODE_ENV !== "production") {
+                console.log(new Uint8Array(response.slice(0, response.length - 2)));
+            }
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore1
             return new Uint8Array(response.slice(0, response.length - 2));
@@ -109,6 +113,10 @@ export default class LedgerNanoS implements Wallet {
     private async sendAPDU(message: APDU): Promise<Buffer | null> {
         let transport: TransportWebUSB | null | void = null;
         let response: Buffer | null = null;
+
+        if (process.env.NODE_ENV !== "production") {
+            console.log(message);
+        }
 
         try {
             // DO NOT SEPARATE CREATE THEN.
@@ -136,4 +144,4 @@ export default class LedgerNanoS implements Wallet {
     }
 }
 
-export { LedgerNanoS };
+export { Ledger }
