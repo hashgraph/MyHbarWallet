@@ -78,7 +78,6 @@ import { CreateAccountDTO, Id } from "../store/modules/wallet";
 import ModalCreateBySoftware, {
     CreateSoftwareOption
 } from "../components/ModalCreateBySoftware.vue";
-import LedgerNanoS from "../wallets/hardware/LedgerNanoS";
 import store from "../store";
 import {
     ALERT,
@@ -296,6 +295,12 @@ export default createComponent({
                 case AccessHardwareOption.Ledger:
                     state.loginMethod = LoginMethod.LedgerNanoS;
                     try {
+                        const { LedgerNanoS } = await (import(
+                            "../wallets/hardware/LedgerNanoS" /* webpackChunkName: "hardware" */
+                        ) as Promise<
+                            typeof import("../wallets/hardware/LedgerNanoS")
+                        >);
+
                         state.modalCreateByHardwareState.isBusy = true;
                         state.wallet = new LedgerNanoS();
                         state.publicKey = (await state.wallet.getPublicKey()) as Ed25519PublicKey;

@@ -84,7 +84,7 @@ import {
     ref,
     SetupContext
 } from "@vue/composition-api";
-import LedgerNanoS from "../wallets/hardware/LedgerNanoS";
+
 import store from "../store";
 import {
     ALERT,
@@ -340,6 +340,12 @@ export default createComponent({
                     state.loginMethod = LoginMethod.LedgerNanoS;
                     state.modalAccessByHardwareState.isBusy = true;
                     try {
+                        const { LedgerNanoS } = await (import(
+                            "../wallets/hardware/LedgerNanoS" /* webpackChunkName: "hardware" */
+                        ) as Promise<
+                            typeof import("../wallets/hardware/LedgerNanoS")
+                        >);
+
                         state.wallet = new LedgerNanoS();
                         state.publicKey = (await state.wallet.getPublicKey()) as Ed25519PublicKey;
                         state.modalEnterAccountIdState.publicKey =
