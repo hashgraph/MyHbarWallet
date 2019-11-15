@@ -28,7 +28,7 @@ import { State as ModalAccessByPrivateKeyState } from "../components/ModalAccess
 import { State as ModalEnterAccountIdState } from "../components/ModalEnterAccountId";
 import BigNumber from "bignumber.js";
 import Wallet from "../../wallets/Wallet";
-import { Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
+import {Client, Ed25519PrivateKey, Ed25519PublicKey, AccountId} from "@hashgraph/sdk";
 
 export const coingeckoEndpoint =
     "https://api.coingecko.com/api/v3/coins/hedera-hashgraph/tickers";
@@ -52,14 +52,8 @@ export interface TickersJSON {
     tickers: TickerJSON[];
 }
 
-export interface Id {
-    shard: number;
-    realm: number;
-    account: number;
-}
-
 export interface Session {
-    account: Id;
+    account: AccountId;
     wallet: Wallet;
     client: Client;
 }

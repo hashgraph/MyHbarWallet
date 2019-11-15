@@ -72,9 +72,9 @@ import {
     reactive,
     ref
 } from "@vue/composition-api";
-import { Id } from "../store/modules/wallet";
-import { build, createLink } from "../support";
 import { store } from "../store";
+import { build, createLink } from "../support";
+import { AccountId } from "@hashgraph/sdk";
 
 // Both of these are defined in vue.config.js.
 // VERSION reads from package.json and COMMIT_HASH is git rev-parse --short HEAD output
@@ -106,7 +106,7 @@ export default createComponent({
 
         const accountId = computed(() => {
             if (account.value !== null) {
-                const accountId: Id = account.value;
+                const accountId: AccountId = account.value;
                 return (
                     accountId.shard +
                     "." +

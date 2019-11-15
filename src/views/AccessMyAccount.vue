@@ -1,6 +1,3 @@
-import {LoginMethod} from "../wallets/Wallet"; import {LoginMethod} from
-"../wallets/Wallet"; import {LoginMethod} from "../wallets/Wallet"; import
-{LoginMethod} from "../wallets/Wallet";
 <template>
     <div class="access-my-account">
         <div class="wrap">
@@ -41,7 +38,9 @@ import {LoginMethod} from "../wallets/Wallet"; import {LoginMethod} from
         />
 
         <ModalEnterAccountId
+            ref="modalEnterAccountId"
             v-model="state.modalEnterAccountIdState"
+            @network="handleNetworkChange"
             @noAccount="handleDoesntHaveAccount"
             @submit="handleAccountIdSubmit"
         />
@@ -75,19 +74,21 @@ import ModalAccessByPhrase from "../components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "../components/ModalAccessByPrivateKey.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
-import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
+import ModalEnterAccountId, {
+    ModalEnterAccountIdElement
+} from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
-import { AccessAccountDTO, Id } from "../store/modules/wallet";
+import { AccessAccountDTO } from "../store/modules/wallet";
 import {
     createComponent,
     reactive,
     ref,
-    SetupContext
+    SetupContext,
+    Ref
 } from "@vue/composition-api";
 
-import { actions } from "../store";
+import { getters, mutations, actions } from "../store";
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
-import settings from "../settings";
 import { HederaErrorTuple, LedgerErrorTuple } from "src/store/modules/errors";
 import { LoginMethod } from "../wallets/Wallet";
 import {
@@ -95,8 +96,15 @@ import {
     Ed25519PublicKey,
     Operator,
     Signer,
-    Client
+    Client,
+    AccountId
 } from "@hashgraph/sdk";
+import { NetworkSettings, NetworkName } from "../settings";
+import { NetworkSelectorElement } from "../components/NetworkSelector.vue";
+
+function getNetwork(): NetworkSettings {
+    return getters.GET_NETWORK();
+}
 
 interface State {
     loginMethod: LoginMethod | null;
@@ -154,6 +162,7 @@ export default createComponent({
                 isBusy: false,
                 account: null,
                 valid: false,
+                networkValid: false,
                 publicKey: null
             },
             modalRequestToCreateAccountState: {
@@ -163,6 +172,9 @@ export default createComponent({
         });
 
         const file = ref<HTMLInputElement | null>(null);
+        const modalEnterAccountId: Ref<ModalEnterAccountIdElement | null> = ref(
+            null
+        );
 
         function setPrivateKey(newPrivateKey: Ed25519PrivateKey): void {
             state.privateKey = newPrivateKey;
@@ -202,7 +214,9 @@ export default createComponent({
             context.root.$router.push({ name: "interface" });
         }
 
-        async function constructOperator(account: Id): Promise<Operator> {
+        async function constructOperator(
+            account: AccountId
+        ): Promise<Operator> {
             if (state.wallet !== null) {
                 if (state.wallet.hasPrivateKey()) {
                     return {
@@ -221,13 +235,22 @@ export default createComponent({
             }
 
             return {
-                account: null as Id | null,
+                account: null as AccountId | null,
                 privateKey: null as Ed25519PrivateKey | null
             } as Operator;
         }
 
+        function handleNetworkChange(settings: NetworkSettings): void {
+            if (
+                getNetwork().name !== settings.name ||
+                settings.name === NetworkName.CUSTOM
+            ) {
+                mutations.CHANGE_NETWORK(settings);
+            }
+        }
+
         async function constructClient(
-            account: Id
+            account: AccountId
         ): Promise<Client | undefined> {
             let client: Client | undefined = undefined;
 
@@ -241,20 +264,21 @@ export default createComponent({
             >);
 
             try {
+                const network: NetworkSettings = await getNetwork();
                 const operator: Operator = await constructOperator(account);
 
                 client = new Client({
                     nodes: {
-                        [settings.network.proxy]: {
-                            shard: 0,
-                            realm: 0,
-                            account: 3
+                        [network.proxy || network.address]: {
+                            shard: network.node.shard,
+                            realm: network.node.realm,
+                            account: network.node.node
                         }
                     },
                     operator
                 });
 
-                const recipient = {
+                const recipient: AccountId = {
                     realm: 0,
                     shard: 0,
                     // If the account requested is 3, use a different account as the recipient to avoid an
@@ -282,7 +306,7 @@ export default createComponent({
             }
         }
 
-        async function login(account: Id): Promise<void> {
+        async function login(account: AccountId): Promise<void> {
             const client: Client | undefined = await constructClient(account);
 
             if (state.wallet !== null && client !== undefined) {
@@ -450,7 +474,9 @@ export default createComponent({
             }, 125);
         }
 
-        async function handleAccountIdSubmit(account: Id): Promise<void> {
+        async function handleAccountIdSubmit(
+            account: AccountId
+        ): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
 
             if (state.loginMethod === null) {
@@ -506,6 +532,18 @@ export default createComponent({
                         result.message;
 
                     // But don't throw device errors
+                } else if (
+                    error.message === "Response closed without headers" ||
+                    error.message === "Response closed without grpc-status" ||
+                    error.message === "404 (Not Found)" ||
+                    error.stack.includes("grpc")
+                ) {
+                    const message = context.root
+                        .$t("network.connectionFailed")
+                        .toString();
+                    (modalEnterAccountId.value as ModalEnterAccountIdElement).setAddressError(
+                        message
+                    );
                 }
             } finally {
                 state.modalEnterAccountIdState.isBusy = false;
@@ -525,6 +563,7 @@ export default createComponent({
         return {
             state,
             file,
+            modalEnterAccountId,
             handleClickTiles,
             handleAccessBySoftwareSubmit,
             loadTextFromFile,
@@ -534,7 +573,8 @@ export default createComponent({
             handleAccountIdSubmit,
             handleAccessByHardwareSubmit,
             handleDoesntHaveAccount,
-            handleHasAccount
+            handleHasAccount,
+            handleNetworkChange
         };
     }
 });

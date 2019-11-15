@@ -25,10 +25,10 @@ describe("NetworkCard.vue", (): void => {
                     Network
                   </div>
                   <div class="subtitle">
-                    testnet
+
                   </div>
                   <div class="subtitle">
-                    0.testnet.hedera.com:50211
+
                   </div>
                 </div>
                 <div class="actions">

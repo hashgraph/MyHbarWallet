@@ -14,7 +14,7 @@ Vue.use(VueCompositionApi);
 Vue.use(Router);
 
 // Globally catch uncaught exceptions and store it
-Vue.config.errorHandler = (error: Error | string) => {
+Vue.config.errorHandler = (error: Error) => {
     mutations.ERROR_OCCURRED({ error });
 };
 

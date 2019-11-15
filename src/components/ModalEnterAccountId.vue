@@ -21,6 +21,19 @@
                 <div class="container">
                     <div
                         class="subtitle"
+                        v-text="$t('modalEnterAccountId.network')"
+                    ></div>
+                    <NetworkSelector
+                        ref="networkSelector"
+                        :node-error="state.nodeError"
+                        :address-error="state.addressError"
+                        @network="reEmitNetwork"
+                        @valid="handleNetworkValid"
+                    />
+                </div>
+                <div class="container">
+                    <div
+                        class="subtitle"
                         v-text="$t('modalEnterAccountId.accountId')"
                     ></div>
                     <IDInput
@@ -46,7 +59,7 @@
                         :label="$t('common.continue')"
                         class="button"
                         type="submit"
-                        :disabled="!state.valid"
+                        :disabled="!allValid"
                         :busy="state.isBusy"
                     />
                 </div>
@@ -60,24 +73,36 @@ import {
     computed,
     createComponent,
     PropType,
-    SetupContext
+    SetupContext,
+    ref,
+    Ref
 } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
-import IDInput from "../components/IDInput.vue";
-import { Id } from "../store/modules/wallet";
+import IDInput, { IdInputElement } from "../components/IDInput.vue";
+import NetworkSelector, {
+    NetworkSelectorElement
+} from "../components/NetworkSelector.vue";
 import Notice from "../components/Notice.vue";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import ReadOnlyInput from "./ReadOnlyInput.vue";
-import { Ed25519PublicKey } from "@hashgraph/sdk";
+import { Ed25519PublicKey, AccountId } from "@hashgraph/sdk";
+import { NetworkSettings } from "../settings";
+import { Vue } from "vue/types/vue";
+
+export type ModalEnterAccountIdElement = Vue & {
+    setNodeError(message: string): void;
+    setAddressError(message: string): void;
+};
 
 export interface State {
     failed: string | null;
     errorMessage: string | null;
     isOpen: boolean;
     isBusy: boolean;
-    account: Id | null;
+    account: AccountId | null;
     valid: boolean;
+    networkValid: boolean;
     publicKey: Ed25519PublicKey | null;
 }
 
@@ -91,22 +116,23 @@ export default createComponent({
         Button,
         Notice,
         IDInput,
-        ReadOnlyInput
+        ReadOnlyInput,
+        NetworkSelector
     },
     model: {
         prop: "state",
         event: "change"
     },
-    props: {
-        state: Object as PropType<State>
-    },
+    props: { state: Object as PropType<State> },
     setup(props: Props, context: SetupContext) {
-        const hasPublicKey = computed(() => {
-            return (
+        const networkSelector: Ref<NetworkSelectorElement | null> = ref(null);
+        const input: Ref<IdInputElement | null> = ref(null);
+
+        const hasPublicKey = computed(
+            () =>
                 props.state.publicKey !== null &&
                 props.state.publicKey !== undefined
-            );
-        });
+        );
 
         const publicKey = computed(() => {
             if (hasPublicKey.value) {
@@ -116,7 +142,7 @@ export default createComponent({
             return null;
         });
 
-        function handleAccount(value: string, account: Id | null): void {
+        function handleAccount(value: string, account: AccountId | null): void {
             props.state.errorMessage = null;
             props.state.account = account;
         }
@@ -124,6 +150,14 @@ export default createComponent({
         function handleValid(valid: boolean): void {
             props.state.valid = valid;
         }
+
+        function handleNetworkValid(valid: boolean): void {
+            props.state.networkValid = valid;
+        }
+
+        const allValid = computed(() => {
+            return props.state.valid && props.state.networkValid;
+        });
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
             if (!isOpen) props.state.errorMessage = null;
@@ -135,10 +169,33 @@ export default createComponent({
             context.emit("noAccount");
         }
 
+        // Pass Child Network Events up to Parent
+        function reEmitNetwork(settings: NetworkSettings): void {
+            context.emit("network", settings);
+        }
+
+        function setNodeError(message: string): void {
+            (networkSelector.value as NetworkSelectorElement).setNodeError(
+                message
+            );
+        }
+
+        function setAddressError(message: string): void {
+            (networkSelector.value as NetworkSelectorElement).setAddressError(
+                message
+            );
+        }
+
         async function handleSubmit(): Promise<void> {
             props.state.errorMessage = null;
             props.state.isBusy = true;
 
+            // We're ready, prompt the child NetworkSelector to emit
+            // the network event, which will be forwarded to parent context.
+            // In the Parent context, we handle it with the store
+            (networkSelector.value as NetworkSelectorElement).emitNetwork();
+
+            // Then, continue the business of logging in
             if (props.state.account == null) {
                 throw new Error(
                     context.root.$t("common.error.illegalState").toString()
@@ -149,6 +206,8 @@ export default createComponent({
         }
 
         return {
+            input,
+            networkSelector,
             hasPublicKey,
             publicKey,
             handleAccount,
@@ -156,7 +215,12 @@ export default createComponent({
             handleDontHaveAccount,
             handleSubmit,
             handleValid,
-            mdiHelpCircleOutline
+            mdiHelpCircleOutline,
+            reEmitNetwork,
+            handleNetworkValid,
+            allValid,
+            setNodeError,
+            setAddressError
         };
     }
 });

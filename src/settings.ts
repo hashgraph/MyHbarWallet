@@ -1,30 +1,33 @@
-interface NetworkSettings {
-    proxy: string;
-    address: string;
-    node: string;
-    name: string;
+import { NodeId } from './store/modules/network';
+
+// Cannot use computed members in string enum
+// So cannot translate these with i18n here
+// Instead, use their keys, then translate for display later
+export enum NetworkName {
+    MAINNET = "network.mainnet",
+    TESTNET = "network.testnet",
+    CUSTOM = "network.custom"
 }
 
-const availableNetworks: { [key: string]: NetworkSettings } = {
-    testnet: {
+export interface NetworkSettings {
+    proxy: string | null;
+    address: string;
+    node: NodeId;
+    name: NetworkName;
+}
+
+// Likewise, cannot use computed keys, so duplicate them here
+export const availableNetworks: { [key: string]: NetworkSettings } = {
+    "network.testnet": {
         proxy: "https://grpc-web.testnet.myhbarwallet.com",
         address: "0.testnet.hedera.com:50211",
-        node: "0.0.3",
-        name: "testnet"
+        node: {shard: 0, realm: 0, node: 3},
+        name: NetworkName.TESTNET
     },
-    mainnet: {
+    "network.mainnet": {
         proxy: "https://grpc-web.myhbarwallet.com",
         address: "35.237.200.180:50211",
-        node: "0.0.3",
-        name: "mainnet"
+        node: {shard: 0, realm: 0, node: 3},
+        name: NetworkName.MAINNET
     }
-};
-
-// HEDERA_NETWORK is defined in vue.config.js
-// Populated from the HEDERA_NETWORK env variable
-// Defaults to "testnet"
-declare const HEDERA_NETWORK: string;
-
-export default {
-    network: availableNetworks[HEDERA_NETWORK]!
 };
