@@ -1,11 +1,15 @@
 <template>
     <div>
         <div class="head">
-            <span class="title">Public Key</span>
+            <span class="title">{{
+                isList
+                    ? $t("interfaceCreateAccount.keyList")
+                    : $t("interfaceCreateAccount.publicKey")
+            }}</span>
             <div class="spacer" />
-            <div class="threshold">
+            <div v-if="isList" class="threshold">
                 <p>
-                    Threshold limit
+                    {{ $t("interfaceCreateAccount.thresholdLimit") }}
                     <input
                         v-model="state.rootThreshold"
                         type="number"
@@ -31,11 +35,13 @@
         <div v-for="(key, index) in state.keyRing" :key="key.listKey">
             <div v-if="key.keyType === 'list'" class="key-list key">
                 <div class="head">
-                    <span class="title">List</span>
+                    <span class="title">{{
+                        $t("interfaceCreateAccount.keyList")
+                    }}</span>
                     <div class="spacer" />
                     <div class="threshold">
                         <p>
-                            Threshold limit
+                            {{ $t("interfaceCreateAccount.thresholdLimit") }}
                             <input
                                 v-model="key.thresholdLimit"
                                 class="number-input"
@@ -62,6 +68,9 @@
                             v-model="subKey.key[0]"
                             :error="subKey.keyError"
                             :valid="subKey.isPublicKeyValid"
+                            :placeholder="
+                                $t('interfaceCreateAccount.publicKey')
+                            "
                             :spellcheck-disabled="true"
                             :autocomplete-disabled="true"
                             show-validation
@@ -75,7 +84,9 @@
             </div>
             <div v-else class="single-key key">
                 <div class="head">
-                    <span class="title">Public Key</span>
+                    <span class="title">{{
+                        $t("interfaceCreateAccount.publicKey")
+                    }}</span>
                     <div class="spacer" />
                 </div>
                 <div class="text-block">
@@ -83,11 +94,13 @@
                         v-model="key.key[0]"
                         :error="key.keyError"
                         :valid="key.isPublicKeyValid"
+                        :placeholder="$t('interfaceCreateAccount.publicKey')"
                         :spellcheck-disabled="true"
                         :autocomplete-disabled="true"
                         show-validation
                     />
                     <FlatButton
+                        :class="isList ? '' : 'hidden'"
                         :icon="mdiMinus"
                         @click="handleRemoveField(index)"
                     />
@@ -136,7 +149,7 @@ function newKey(type: string): Key {
         isPublicKeyValid: false,
         thresholdLimit: 1,
         keyType: type,
-        key: type === "single" ? [""] : [newKey("single")]
+        key: type === "single" ? [""] : [newKey("single"), newKey("single")]
     };
 }
 
@@ -280,6 +293,8 @@ export default createComponent({
             }
         );
 
+        const isList = computed(() => state.numOfInputs > 1);
+
         function genNewKey(type: string): void {
             state.numOfInputs++;
             state.keyRing.push(newKey(type));
@@ -310,6 +325,7 @@ export default createComponent({
             handleRemoveField,
             handleRemoveSubField,
             handleAddSubKey,
+            isList,
             mdiPlus,
             mdiPlaylistPlus,
             mdiMinus
@@ -327,6 +343,10 @@ export default createComponent({
     height: 24px;
     margin-block-end: 13px;
     padding: 0 8px;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 .text-block {

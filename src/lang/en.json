@@ -140,6 +140,8 @@
     "interfaceCreateAccount.initialBalance": "Initial Balance",
     "interfaceCreateAccount.publicKey": "Public Key",
     "interfaceCreateAccount.toCreateAccount": " To create an account, you need the public key of the person requesting an account.",
+    "interfaceCreateAccount.thresholdLimit": "Threshold limit",
+    "interfaceCreateAccount.keyList": "Public Key List",
     "interfaceDownloadFile.feeSummary.cancel": "Dismiss",
     "interfaceDownloadFile.feeSummary.submit": "Continue",
     "interfaceDownloadFile.title": "Download",
