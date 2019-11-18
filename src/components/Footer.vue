@@ -21,6 +21,13 @@
                 </a>
             </div>
             <div class="copyright">
+                <a
+                    target="_blank"
+                    href="https://www.coingecko.com/"
+                    class="link"
+                >
+                    {{ $t("footer.prices") }}
+                </a>
                 &copy; {{ currentYear }} MyHbarWallet, All Rights reserved.
             </div>
             <div class="social">
@@ -127,6 +134,12 @@ footer {
     &:not(:first-child) {
         margin-inline-start: 15px;
     }
+}
+
+.copyright {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
 @media (max-width: 860px) {
