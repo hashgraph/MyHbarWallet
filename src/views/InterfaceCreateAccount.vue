@@ -1,4 +1,3 @@
-import {LoginMethod} from "../wallets/Wallet";
 <template>
     <InterfaceForm :title="$t('common.createAccount')">
         <Notice :symbol="mdiHelpCircleOutline">
@@ -153,11 +152,6 @@ export default createComponent({
             }
         });
 
-        const validBalance = computed(() => {
-            // All we should check is that this is, in fact, a number
-            return !isNaN(parseInt(state.newBalance, 10));
-        });
-
         watch(async () => {
             state.isPublicKeyValid = await isPublicKeyValid(state.publicKey);
         });
@@ -165,6 +159,11 @@ export default createComponent({
         // Just for display in modal title
         const summaryAmount = computed(() => {
             return formatHbar(new BigNumber(state.newBalance));
+        });
+
+        const validBalance = computed(() => {
+            // All we should check is that this is, in fact, a number
+            return !isNaN(parseInt(summaryAmount.value));
         });
 
         const summaryItems = computed(() => {
