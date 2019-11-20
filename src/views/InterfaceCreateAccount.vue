@@ -15,7 +15,7 @@
             show-validation
         />
         <div>
-            <CreateAccountKeyRing @keyRing="handleKeyRing" />
+            <PublicKeyRing @keyRing="handleKeyRing" />
         </div>
 
         <template v-slot:footer>
@@ -83,14 +83,18 @@ async function buildThresholdKeys(
     const { ThresholdKey, Ed25519PublicKey } = await (import(
         "@hashgraph/sdk"
     ) as Promise<typeof import("@hashgraph/sdk")>);
-    console.log("107", keys);
+    //build the initail threshold key
     const thresholdKey = new ThresholdKey(keys.threshold as number);
+    //for each key in this key we need to check what kind of key it is and add it to the threshold properly
     (keys.keyList as FormatedKey[]).forEach(async key => {
         if (key.threshold !== key.keyList.length && key.threshold !== 0) {
+            //if the user made a list and selected a threshold
             thresholdKey.addAll(await buildThresholdKeys(key));
         } else if (key.keyList.length > 1) {
+            //user built a list with max threshold
             thresholdKey.addAll(await buildKeyList(key));
         } else {
+            //single key
             thresholdKey.add(
                 await Ed25519PublicKey.fromString(key.keyList[0].toString())
             );
@@ -104,7 +108,7 @@ async function buildKeyList(
     const { Ed25519PublicKey, KeyList } = await (import(
         "@hashgraph/sdk"
     ) as Promise<typeof import("@hashgraph/sdk")>);
-    //key list
+    //key list, similar procedure as above.
     const keyList = new KeyList();
     (keys.keyList as FormatedKey[]).forEach(async key => {
         if (key.threshold !== key.keyList.length && key.threshold !== 0) {
@@ -153,7 +157,7 @@ export default createComponent({
         Button,
         ModalSuccess,
         Notice,
-        CreateAccountKeyRing,
+        PublicKeyRing,
         ModalFeeSummary
     },
     setup(_: object | null, context: SetupContext) {

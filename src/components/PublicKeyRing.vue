@@ -9,11 +9,12 @@
             <div class="spacer" />
             <div v-if="isList" class="threshold">
                 <p>
-                    {{ $t("interfaceCreateAccount.thresholdLimit") }}
+                    {{ $t("interfaceCreateAccount.thresholdLimit") }}:
                     <input
                         v-model="state.rootThreshold"
                         type="number"
                         class="number-input"
+                        :step="false"
                     />
                     /
                     <!-- this will be the threshold input -->
@@ -31,7 +32,8 @@
                 @click="genNewKey('list')"
             />
         </div>
-        <hr />
+        <hr v-if="isList" />
+        <!-- This conditionaly renders a key list based on the the state.keyRing, rendering either a list or single key based on key type. -->
         <div v-for="(key, index) in state.keyRing" :key="key.listKey">
             <div v-if="key.keyType === 'list'" class="key-list key">
                 <div class="head">
@@ -41,7 +43,7 @@
                     <div class="spacer" />
                     <div class="threshold">
                         <p>
-                            {{ $t("interfaceCreateAccount.thresholdLimit") }}
+                            {{ $t("interfaceCreateAccount.thresholdLimit") }}:
                             <input
                                 v-model="key.thresholdLimit"
                                 class="number-input"
@@ -83,7 +85,7 @@
                 </div>
             </div>
             <div v-else class="single-key key">
-                <div class="head">
+                <div v-if="isList" class="head">
                     <span class="title">{{
                         $t("interfaceCreateAccount.publicKey")
                     }}</span>
@@ -100,7 +102,7 @@
                         show-validation
                     />
                     <FlatButton
-                        :class="isList ? '' : 'hidden'"
+                        v-if="isList"
                         :icon="mdiMinus"
                         @click="handleRemoveField(index)"
                     />
@@ -345,23 +347,37 @@ export default createComponent({
     padding: 0 8px;
 }
 
-.hidden {
-    visibility: hidden;
-}
-
 .text-block {
+    align-items: center;
     display: flex;
     flex-direction: row;
 }
 
 .head {
+    align-items: center;
     display: flex;
     flex-direction: row;
     min-height: 66px;
 }
 
 .number-input {
-    width: 2.5rem;
+    -webkit-appearance: textfield;
+    background-color: var(--color-peral);
+    border: 2px solid var(--color-peral);
+    border-radius: 4px;
+    outline: none;
+    text-align: center;
+    width: 2rem;
+
+    &:focus {
+        border: 2px solid var(--color-melbourne-cup);
+    }
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .spacer {

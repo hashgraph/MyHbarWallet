@@ -20,7 +20,7 @@ export default createComponent({
         disabled: { type: Boolean },
         icon: { type: String }
     },
-    setup(props, _) {
+    setup(props) {
         return {
             props
         };
@@ -30,7 +30,11 @@ export default createComponent({
 
 <style scoped lang="postcss">
 button {
-    border: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    margin: 0 0 0 4px;
+    outline: none;
+    text-align: center;
 
     &:disabled {
         background-color: var(--color-basalt-grey);
@@ -38,8 +42,14 @@ button {
         cursor: default;
     }
 
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
+        border: 2px solid var(--color-melbourne-cup);
+        border-radius: 4px;
+    }
+
     &:active:not(:disabled) {
-        transform: scale(0.9);
+        transform: scale(0.85);
     }
 }
 </style>
