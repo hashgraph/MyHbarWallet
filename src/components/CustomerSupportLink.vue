@@ -5,10 +5,7 @@
                 $t("customerSupport.customerSupport")
             }}
         </div>
-        <ModalCustomerService
-            v-if="state.modalCustomerServiceIsOpen"
-            v-model="state.modalCustomerServiceIsOpen"
-        />
+        <ModalCustomerService v-model="state.modalCustomerServiceIsOpen" />
     </div>
 </template>
 
