@@ -58,12 +58,6 @@ export const store = Vue.observable({
 } as Store);
 
 export const getters = {
-    RAW_ERROR: (): (Error | string | null) => {
-        const error: Error | string | null =
-            store.state.errors.errors.length > 0 ? store.state.errors.errors[0] : null;
-        if (process.env.NODE_ENV !== "production") console.log(error);
-        return error;
-    },
     HAS_ERROR: (): boolean => {
         return store.state.errors.errors.length > 0;
     },
@@ -83,9 +77,6 @@ export const getters = {
     },
     ESTIMATED_FEE_TINYBAR: (): BigNumber => {
         return store.state.fees.estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
-    },
-    MAX_FEE_HBAR: (remainingBalanceHBar: BigNumber): BigNumber => {
-        return BigNumber.min(store.state.fees.maxFeeHbar, remainingBalanceHBar);
     },
     MAX_FEE_TINYBAR: (remainingBalanceTinybar: BigNumber): BigNumber => {
         return BigNumber.min(

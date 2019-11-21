@@ -85,7 +85,7 @@ import {
     SetupContext
 } from "@vue/composition-api";
 
-import { getters, mutations, actions } from "../store";
+import { actions } from "../store";
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import settings from "../settings";
 import { HederaErrorTuple, LedgerErrorTuple } from "src/store/modules/errors";
