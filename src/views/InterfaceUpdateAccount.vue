@@ -164,7 +164,7 @@ export default createComponent({
                 await new AccountUpdateTransaction(client as InstanceType<
                     typeof Client
                 >)
-                    .setAccountId()
+                    .setAccountId(state.account as Id)
                     .setKey(key)
                     .build()
                     .executeForReceipt();
