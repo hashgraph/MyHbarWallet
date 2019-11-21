@@ -84,16 +84,9 @@ import {
     ref,
     SetupContext
 } from "@vue/composition-api";
-import store from "../store";
-import {
-    ALERT,
-    HANDLE_HEDERA_ERROR,
-    HANDLE_LEDGER_ERROR,
-    LOG_IN
-} from "../store/actions";
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import settings from "../settings";
-import { HederaErrorTuple, LedgerErrorTuple } from "src/store/modules/errors";
+import { HederaErrorTuple, LedgerErrorTuple } from "../store/modules/errors";
 import { LoginMethod } from "../wallets/Wallet";
 import {
     Ed25519PrivateKey,
@@ -102,6 +95,7 @@ import {
     Signer,
     Client
 } from "@hashgraph/sdk";
+import { actions } from "../store";
 
 interface State {
     loginMethod: LoginMethod | null;
