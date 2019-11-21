@@ -71,23 +71,11 @@ import {
     SetupContext,
     watch
 } from "@vue/composition-api";
-import store from "../store";
-import {
-    ALERT,
-    HANDLE_HEDERA_ERROR,
-    HANDLE_LEDGER_ERROR,
-    REFRESH_BALANCE_AND_RATE
-} from "../store/actions";
 import { getValueOfUnit, Unit } from "../units";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { formatHbar, validateHbar } from "../formatter";
 import { Id } from "../store/modules/wallet";
-import {
-    ESTIMATED_FEE_HBAR,
-    ESTIMATED_FEE_TINYBAR,
-    MAX_FEE_TINYBAR
-} from "../store/getters";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 import ModalSuccess, {
     State as ModalSuccessState
@@ -95,6 +83,7 @@ import ModalSuccess, {
 import { Vue } from "vue/types/vue";
 import { LoginMethod } from "../wallets/Wallet";
 import { AccountId } from "@hashgraph/sdk";
+import { actions, getters, store } from "../store";
 
 // Shim for IDInput ref
 type IdInput = Vue & {
@@ -114,8 +103,8 @@ interface State {
     modalSuccessState: ModalSuccessState;
 }
 
-const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
-const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
+const estimatedFeeHbar = getters.ESTIMATED_FEE_HBAR();
+const estimatedFeeTinybar = getters.ESTIMATED_FEE_TINYBAR();
 
 export default createComponent({
     components: {
@@ -300,7 +289,7 @@ export default createComponent({
                         ? new BigNumber(0)
                         : store.state.wallet.balance;
 
-                const maxTxFeeTinybar = store.getters[MAX_FEE_TINYBAR](
+                const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(
                     safeBalance.minus(
                         sendAmountTinybar.plus(estimatedFeeTinybar)
                     )
@@ -323,7 +312,7 @@ export default createComponent({
                 await tx.build().executeForReceipt();
 
                 // Refresh Balance
-                await store.dispatch(REFRESH_BALANCE_AND_RATE);
+                await actions.refreshBalanceAndRate();
 
                 // eslint-disable-next-line require-atomic-updates
                 state.modalSuccessState.isOpen = true;
@@ -338,10 +327,10 @@ export default createComponent({
                 ) as Promise<typeof import("@hashgraph/sdk")>);
 
                 if (error instanceof HederaError) {
-                    const errorMessage = (await store.dispatch(
-                        HANDLE_HEDERA_ERROR,
-                        { error, showAlert: false }
-                    )).message;
+                    const errorMessage = (await actions.handleHederaError({
+                        error,
+                        showAlert: false
+                    })).message;
 
                     // Small duplication of effort to assign errorMessage to correct TextInput
                     switch (error.code) {
@@ -354,7 +343,7 @@ export default createComponent({
                             break;
                         default:
                             if (errorMessage !== "") {
-                                store.dispatch(ALERT, {
+                                actions.alert({
                                     message: errorMessage,
                                     level: "warn"
                                 });
@@ -367,7 +356,7 @@ export default createComponent({
                     store.state.wallet.session.wallet.getLoginMethod() ===
                         LoginMethod.LedgerNanoS
                 ) {
-                    store.dispatch(HANDLE_LEDGER_ERROR, {
+                    actions.handleLedgerError({
                         error,
                         showAlert: true
                     });

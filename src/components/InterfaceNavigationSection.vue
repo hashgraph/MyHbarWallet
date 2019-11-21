@@ -38,8 +38,7 @@ import {
 } from "@vue/composition-api";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
-import store from "../store";
-import { SET_INTERFACE_MENU_IS_OPEN } from "../store/mutations";
+import { mutations } from "../store";
 
 interface InterfaceNavigationItem {
     name: string;
@@ -55,7 +54,7 @@ interface Props {
 // Yes, it is used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleClick(): void {
-    store.commit(SET_INTERFACE_MENU_IS_OPEN, false);
+    mutations.SET_INTERFACE_MENU_IS_OPEN(false);
 }
 
 export default createComponent({

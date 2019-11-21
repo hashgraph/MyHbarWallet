@@ -23,8 +23,7 @@ import {
     mdiAlertOutline,
     mdiCheckCircleOutline
 } from "@mdi/js";
-import { REMOVE_ALERT } from "../store/mutations";
-import store from "../store";
+import { mutations } from "../store";
 
 interface Props {
     id: number;
@@ -57,7 +56,7 @@ export default createComponent({
         });
 
         function destroyMe(): void {
-            store.commit(REMOVE_ALERT, props.id);
+            mutations.REMOVE_ALERT(props.id);
         }
 
         return {

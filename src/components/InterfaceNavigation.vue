@@ -47,8 +47,6 @@ import {LoginMethod} from "../wallets/Wallet";
 
 <script lang="ts">
 import InterfaceNavigationSection from "./InterfaceNavigationSection.vue";
-import store from "../store";
-import { SET_INTERFACE_MENU_IS_OPEN } from "../store/mutations";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import {
     mdiClose,
@@ -57,11 +55,12 @@ import {
 } from "@mdi/js";
 import { computed, createComponent } from "@vue/composition-api";
 import { LoginMethod } from "../wallets/Wallet";
+import { mutations, store } from "../store";
 
 // Yes, it is used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleClick(): void {
-    store.commit(SET_INTERFACE_MENU_IS_OPEN, false);
+    mutations.SET_INTERFACE_MENU_IS_OPEN(false);
 }
 
 export default createComponent({

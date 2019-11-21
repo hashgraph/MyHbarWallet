@@ -85,13 +85,7 @@ import {
     SetupContext
 } from "@vue/composition-api";
 
-import store from "../store";
-import {
-    ALERT,
-    HANDLE_HEDERA_ERROR,
-    HANDLE_LEDGER_ERROR,
-    LOG_IN
-} from "../store/actions";
+import { actions } from "../store";
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import settings from "../settings";
 import { HederaErrorTuple, LedgerErrorTuple } from "src/store/modules/errors";
@@ -292,7 +286,7 @@ export default createComponent({
             const client: Client | undefined = await constructClient(account);
 
             if (state.wallet !== null && client !== undefined) {
-                await store.dispatch(LOG_IN, {
+                await actions.logIn({
                     account,
                     wallet: state.wallet,
                     client
@@ -357,7 +351,7 @@ export default createComponent({
                             error.name === "TransportStatusError" &&
                             state.loginMethod === LoginMethod.LedgerNanoS
                         ) {
-                            store.dispatch(HANDLE_LEDGER_ERROR, {
+                            await actions.handleLedgerError({
                                 error,
                                 showAlert: true
                             });
@@ -426,7 +420,7 @@ export default createComponent({
             } catch (error) {
                 accessByPhraseState.isBusy = false;
 
-                store.dispatch(ALERT, {
+                actions.alert({
                     level: "error",
                     message: "Invalid Mnemonic"
                 });
@@ -484,8 +478,7 @@ export default createComponent({
                 const HederaError = (await import("@hashgraph/sdk"))
                     .HederaError;
                 if (error instanceof HederaError) {
-                    const result: HederaErrorTuple = await store.dispatch(
-                        HANDLE_HEDERA_ERROR,
+                    const result: HederaErrorTuple = await actions.handleHederaError(
                         { error, showAlert: false }
                     );
 
@@ -505,8 +498,7 @@ export default createComponent({
                     error.name === "TransportStatusError" &&
                     state.loginMethod === LoginMethod.LedgerNanoS
                 ) {
-                    const result: LedgerErrorTuple = await store.dispatch(
-                        HANDLE_LEDGER_ERROR,
+                    const result: LedgerErrorTuple = await actions.handleLedgerError(
                         { error, showAlert: false }
                     );
 

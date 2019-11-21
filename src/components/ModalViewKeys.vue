@@ -45,9 +45,8 @@ import { computed, createComponent, SetupContext } from "@vue/composition-api";
 import Modal from "./Modal.vue";
 import ReadOnlyInput from "./ReadOnlyInput.vue";
 import { writeToClipboard } from "../clipboard";
-import { ALERT } from "../store/actions";
-import store from "../store";
 import Button from "./Button.vue";
+import { actions } from "../store";
 
 interface Props {
     isOpen: boolean;
@@ -96,7 +95,7 @@ export default createComponent({
                 props.publicKey == null ? "" : props.publicKey
             );
 
-            store.dispatch(ALERT, {
+            actions.alert({
                 level: "info",
                 message: context.root
                     .$t("modalViewKeys.copiedPublic")
@@ -109,7 +108,7 @@ export default createComponent({
                 props.privateKey == null ? "" : props.privateKey
             );
 
-            store.dispatch(ALERT, {
+            actions.alert({
                 level: "info",
                 message: context.root
                     .$t("modalViewKeys.copiedPrivate")

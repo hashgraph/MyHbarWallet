@@ -26,8 +26,7 @@ import {
     ref,
     watch
 } from "@vue/composition-api";
-import store from "./store";
-import { HAS_ERROR } from "./store/getters";
+import { getters, store } from "./store";
 
 export default createComponent({
     components: {
@@ -55,14 +54,14 @@ export default createComponent({
         const isOpen = computed(() => {
             return (
                 !isInterface.value &&
-                store.getters.IS_LOGGED_IN &&
+                getters.IS_LOGGED_IN() &&
                 store.state.interfaceMenu.hasBeenToInterface
             );
         });
 
         const errorIsOpen = ref(false);
         watch(
-            () => store.getters[HAS_ERROR],
+            () => getters.HAS_ERROR(),
             (newValue: boolean) => {
                 errorIsOpen.value = newValue;
             }

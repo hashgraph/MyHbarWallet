@@ -29,14 +29,13 @@ import {
 import Tooltip from "./Tooltip.vue";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiFileDownload } from "@mdi/js";
-import store from "../store";
 import ModalExportGenerateKeystore, {
     State as ModalExportGenerateKeystoreState
 } from "./ModalExportGenerateKeystore.vue";
 import ModalExportDownloadKeystore, {
     State as ModalExportDownloadKeystoreState
 } from "./ModalExportDownloadKeystore.vue";
-import { ALERT } from "../store/actions";
+import { actions } from "../store";
 
 export interface State {
     modalExportGenerateKeystoreState: ModalExportGenerateKeystoreState;
@@ -119,7 +118,7 @@ export default createComponent({
                 keystoreLink.value.download =
                     "keystore-" + new Date().toISOString();
             } catch (error) {
-                await store.dispatch(ALERT, {
+                actions.alert({
                     level: "error",
                     message: context.root
                         .$t("modalExportGenerateKeystore.couldNotGenerate")
