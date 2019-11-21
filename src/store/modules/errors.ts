@@ -1,4 +1,4 @@
-import {HederaError} from "@hashgraph/sdk";
+import { HederaError } from "@hashgraph/sdk";
 
 export interface State {
     errors: (Error | string)[];
