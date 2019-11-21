@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+// printing to console is acceptable in this file -- however most should be restricted to non-production environments
 import Vue from "vue";
 import { State as AlertsState, Alert, NewAlert } from "./store/modules/alerts";
 import { State as InterfaceMenuState } from "./store/modules/interfaceMenu";
@@ -61,9 +63,14 @@ export const getters = {
     HAS_ERROR: (): boolean => {
         return store.state.errors.errors.length > 0;
     },
-    ERROR_MESSAGE: (): (string | null) => {
-        const error = store.state.errors.errors.length > 0 ? store.state.errors.errors[0] : null;
-        if (process.env.NODE_ENV !== "production") console.log(error);
+    ERROR_MESSAGE: (): string | null => {
+        const error =
+            store.state.errors.errors.length > 0
+                ? store.state.errors.errors[0]
+                : null;
+
+        if (process.env.NODE_ENV !== "production") console.error(error);
+
         if (error == null) return null;
         if (error instanceof Error) {
             console.warn(error);
@@ -76,7 +83,9 @@ export const getters = {
         return store.state.fees.estimatedFeeHbar;
     },
     ESTIMATED_FEE_TINYBAR: (): BigNumber => {
-        return store.state.fees.estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
+        return store.state.fees.estimatedFeeHbar.multipliedBy(
+            getValueOfUnit(Unit.Hbar)
+        );
     },
     MAX_FEE_TINYBAR: (remainingBalanceTinybar: BigNumber): BigNumber => {
         return BigNumber.min(
@@ -144,8 +153,10 @@ export const actions = {
         }, 5000);
     },
 
-    async handleHederaError(payload: HederaErrorPayload): Promise<HederaErrorTuple> {
-        if (process.env.NODE_ENV !== "production") console.log(payload.error);
+    async handleHederaError(
+        payload: HederaErrorPayload
+    ): Promise<HederaErrorTuple> {
+        if (process.env.NODE_ENV !== "production") console.error(payload.error);
 
         let message = "";
         const severity = "error";
@@ -196,9 +207,11 @@ export const actions = {
 
         return { message, error: payload.error };
     },
-    async handleLedgerError(payload: LedgerErrorPayload): Promise<LedgerErrorTuple> {
-        if (process.env.NODE_ENV !== "production") console.log(payload.error);
-        // https://github.com/LedgerHQ/ledgerjs/blob/master/packages/errors/src/index.js#L196-L227
+    async handleLedgerError(
+        payload: LedgerErrorPayload
+    ): Promise<LedgerErrorTuple> {
+        if (process.env.NODE_ENV !== "production") console.error(payload.error);
+        // see: https://github.com/LedgerHQ/ledgerjs/blob/master/packages/errors/src/index.js#L196-L227
         let message = "";
         let severity = "error";
 
@@ -280,9 +293,8 @@ export const actions = {
             );
         }
 
-        const balance = await (store.state.wallet.session.client as InstanceType<
-            typeof Client
-        >).getAccountBalance();
+        const balance = await (store.state.wallet.session
+            .client as InstanceType<typeof Client>).getAccountBalance();
 
         mutations.SET_BALANCE(balance);
     },

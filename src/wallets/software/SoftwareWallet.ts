@@ -1,5 +1,5 @@
 import Wallet, { LoginMethod } from "../Wallet";
-import {Ed25519PrivateKey, PublicKey} from "@hashgraph/sdk";
+import { Ed25519PrivateKey, PublicKey } from "@hashgraph/sdk";
 
 export default class SoftwareWallet implements Wallet {
     private readonly privateKey: Ed25519PrivateKey;
@@ -26,15 +26,11 @@ export default class SoftwareWallet implements Wallet {
         return this.loginMethod;
     }
 
-    public async getPrivateKey(): Promise<
-        Ed25519PrivateKey
-    > {
+    public async getPrivateKey(): Promise<Ed25519PrivateKey> {
         return this.privateKey;
     }
 
-    public async getPublicKey(): Promise<
-        PublicKey | null
-    > {
+    public async getPublicKey(): Promise<PublicKey | null> {
         return this.publicKey;
     }
 
