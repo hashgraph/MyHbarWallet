@@ -33,8 +33,7 @@ import { createComponent, PropType, computed } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import { Id } from "../store/modules/wallet";
 import { writeToClipboard } from "../clipboard";
-import { ALERT } from "../store/actions";
-import store from "../store";
+import { actions } from "../store";
 
 interface Props {
     isOpen: boolean;
@@ -69,8 +68,8 @@ export default createComponent({
             const id = accountId.value;
             if (id != null) {
                 await writeToClipboard(id);
-                store.dispatch(ALERT, {
-                    message: context.root.$t("common.copied"),
+                actions.alert({
+                    message: context.root.$t("common.copied").toString(),
                     level: "info"
                 });
             }

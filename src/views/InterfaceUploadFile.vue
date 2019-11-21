@@ -69,11 +69,9 @@ import ModalSuccess, {
 } from "../components/ModalSuccess.vue";
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
-import store from "../store";
-import { ALERT } from "../store/actions";
-import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import { writeToClipboard } from "../clipboard";
 import { Ed25519PublicKey } from "@hashgraph/sdk";
+import { actions, store } from "../store";
 
 type AccountId = {
     shard: number;
@@ -257,7 +255,7 @@ export default createComponent({
 
             // FileAppendTransaction - rest of chunks
             await fileAppendUploads(chunks, fileId, client);
-            await store.dispatch(REFRESH_BALANCE_AND_RATE);
+            await actions.refreshBalanceAndRate();
 
             fileID.value = fileId;
             state.uploadProgress.wasSuccess = true;
@@ -319,7 +317,7 @@ export default createComponent({
                         "upstream connect error or disconnect/reset before headers. reset reason: remote reset"
                     )
                 ) {
-                    await store.dispatch(ALERT, {
+                    actions.alert({
                         level: "error",
                         message: context.root
                             .$t("common.error.noConnection")
@@ -364,7 +362,7 @@ export default createComponent({
                         "upstream connect error or disconnect/reset before headers. reset reason: remote reset"
                     )
                 ) {
-                    await store.dispatch(ALERT, {
+                    actions.alert({
                         level: "error",
                         message: context.root
                             .$t("common.error.noConnection")
@@ -425,20 +423,19 @@ export default createComponent({
         }
 
         async function handleCopyFileID(): Promise<void> {
-            if (fileID !== null) {
-                await writeToClipboard(fileIDString.value);
-                store.dispatch(ALERT, {
-                    level: "info",
-                    message: context.root
-                        .$t("modalSuccess.copiedFileID")
-                        .toString()
-                });
-            } else {
-                store.dispatch(ALERT, {
+            if (fileID === null) {
+                actions.alert({
                     level: "error",
                     message: context.root.$t("modalSuccess.noFileID").toString()
                 });
+                return;
             }
+
+            await writeToClipboard(fileIDString.value);
+            actions.alert({
+                level: "info",
+                message: context.root.$t("modalSuccess.copiedFileID").toString()
+            });
         }
 
         function handleUploadFinish(): void {
@@ -450,7 +447,7 @@ export default createComponent({
         }
 
         async function handleUploadRetry(): Promise<void> {
-            await store.dispatch(ALERT, {
+            actions.alert({
                 level: "info",
                 message: context.root.$t("common.comingSoon").toString()
             });

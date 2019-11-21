@@ -44,11 +44,10 @@ import {
     SetupContext,
     computed
 } from "@vue/composition-api";
-import store from "../store";
-import { LOG_OUT } from "../store/actions";
 import router from "../router";
 import { mdiClose } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
+import { actions } from "../store";
 
 interface Props {
     isOpen: boolean;
@@ -78,7 +77,7 @@ export default createComponent({
     },
     setup(props: Props, context: SetupContext) {
         function handleClickLogOut(): void {
-            store.dispatch(LOG_OUT);
+            actions.logOut();
             if (!props.forgot) {
                 Vue.nextTick(() => router.push({ name: "home" }));
                 context.emit("change", !props.isOpen);

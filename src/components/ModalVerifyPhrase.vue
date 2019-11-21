@@ -50,9 +50,8 @@ import {
 } from "@vue/composition-api";
 import Modal from "./Modal.vue";
 import Button from "../components/Button.vue";
-import store from "../store";
-import { ALERT } from "../store/actions";
 import TextInput from "../components/TextInput.vue";
+import { actions } from "../store";
 
 interface Props {
     isOpen: boolean;
@@ -132,7 +131,8 @@ export default createComponent({
         function handleVerify(): void {
             for (const [index, value] of state.inputMap.entries()) {
                 if (props.words[index] !== value) {
-                    store.dispatch(ALERT, {
+                    actions.alert({
+                        // todo [2019-12-01]: use i18n
                         message: "Memonic does not match",
                         level: "error"
                     });

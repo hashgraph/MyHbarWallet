@@ -88,8 +88,8 @@ import {
 } from "@vue/composition-api";
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
-import store from "../store";
 import ModalLogOut from "./ModalLogOut.vue";
+import { getters } from "../store";
 
 // Yes, it is used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -163,7 +163,7 @@ export default createComponent({
             return false;
         });
 
-        const loggedIn = computed(() => store.getters.IS_LOGGED_IN);
+        const loggedIn = computed(getters.IS_LOGGED_IN);
 
         function handleLogout(): void {
             state.isHamburgerOpen = false;

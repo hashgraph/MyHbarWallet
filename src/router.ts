@@ -2,7 +2,7 @@ import Router, { Route } from "vue-router";
 import Home from "./views/Home.vue";
 import Error404 from "./views/Error404.vue";
 import { PositionResult } from "vue-router/types/router";
-import store from "./store";
+import {store} from "./store";
 
 function HardwareWalletAffiliates(): Promise<
     typeof import("./views/HardwareWalletAffiliates.vue")

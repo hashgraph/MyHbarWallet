@@ -53,12 +53,10 @@ import {
     SetupContext,
     watch
 } from "@vue/composition-api";
-import store from "../store";
-import { ERROR_MESSAGE } from "../store/getters";
-import { ERROR_VIEWED } from "../store/mutations";
 import { UAParser } from "ua-parser-js";
 import { Id } from "../store/modules/wallet";
 import { build, createLink } from "../support";
+import { getters, mutations, store } from "../store";
 
 // Both of these are defined in vue.config.js.
 // VERSION reads from package.json and COMMIT_HASH is git rev-parse --short HEAD output
@@ -141,9 +139,7 @@ export default createComponent({
             details: ""
         });
 
-        const errorMessage = computed((): string => {
-            return store.getters[ERROR_MESSAGE]!;
-        });
+        const errorMessage = computed(getters.ERROR_MESSAGE);
 
         const sendLink = computed(() =>
             createLink(
@@ -162,9 +158,7 @@ export default createComponent({
             context.emit("change", false);
 
             // Wait until the close animation to clear the form
-            setTimeout(() => {
-                store.commit(ERROR_VIEWED);
-            }, 150);
+            setTimeout(mutations.ERROR_VIEWED, 150);
         }
 
         function handleCancel(): void {

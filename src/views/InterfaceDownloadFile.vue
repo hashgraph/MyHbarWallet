@@ -59,12 +59,10 @@ import ModalSuccess, {
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
-import store from "../store";
 import fileType from "file-type";
 import IdInput from "../components/IDInput.vue";
-import { ALERT } from "../store/actions";
-import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import { Vue } from "vue/types/vue";
+import { actions, store } from "../store";
 
 type Summary = {
     value: BigNumber | string;
@@ -189,7 +187,7 @@ export default createComponent({
                         })
                         .toString();
                 } else {
-                    await store.dispatch(ALERT, {
+                    actions.alert({
                         level: "error",
                         message: error.toString()
                     });
@@ -246,9 +244,9 @@ export default createComponent({
                 context.root.$el.removeChild(
                     fileLink.value as HTMLAnchorElement
                 );
-                await store.dispatch(REFRESH_BALANCE_AND_RATE);
+                await actions.refreshBalanceAndRate();
             } catch (error) {
-                await store.dispatch(ALERT, {
+                actions.alert({
                     level: "error",
                     message: error.toString()
                 });

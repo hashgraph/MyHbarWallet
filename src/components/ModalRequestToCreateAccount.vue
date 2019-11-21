@@ -68,9 +68,8 @@ import { createComponent, PropType, SetupContext } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "../clipboard";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
-import { ALERT } from "../store/actions";
-import store from "../store";
 import { Ed25519PublicKey } from "@hashgraph/sdk";
+import { actions } from "../store";
 
 interface Props {
     isOpen: boolean;
@@ -98,8 +97,8 @@ export default createComponent({
     setup(props: Props, context: SetupContext) {
         async function handleClickCopy(): Promise<void> {
             await writeToClipboard(props.publicKey.toString());
-            await store.dispatch(ALERT, {
-                message: context.root.$t("common.copied"),
+            await actions.alert({
+                message: context.root.$t("common.copied").toString(),
                 level: "info"
             });
         }

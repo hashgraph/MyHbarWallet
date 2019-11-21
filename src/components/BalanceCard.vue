@@ -46,10 +46,9 @@ import { mdiLoading, mdiRefresh } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
 import { computed, createComponent, reactive } from "@vue/composition-api";
 import walletHbar from "../assets/wallet-hbar.svg";
-import store from "../store";
-import { REFRESH_BALANCE_AND_RATE } from "../store/actions";
 import { formatHbar, formatUSD } from "../formatter";
 import BigNumber from "bignumber.js";
+import { actions, store } from "../store";
 
 export default createComponent({
     components: {
@@ -99,7 +98,7 @@ export default createComponent({
             state.isBusy = true;
 
             try {
-                await store.dispatch(REFRESH_BALANCE_AND_RATE);
+                await actions.refreshBalanceAndRate();
             } finally {
                 setTimeout(() => {
                     state.isBusy = false;

@@ -53,7 +53,6 @@ import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiChevronRight } from "@mdi/js";
 import BalanceCard from "./BalanceCard.vue";
 import NetworkCard from "./NetworkCard.vue";
-import store from "../store";
 import Button from "../components/Button.vue";
 
 import {
@@ -63,6 +62,7 @@ import {
     SetupContext,
     reactive
 } from "@vue/composition-api";
+import { getters } from "../store";
 
 interface Props {
     isOpen: boolean;
@@ -121,7 +121,7 @@ export default createComponent({
             context.root.$router.push({ name: "home", hash: path });
         }
 
-        const loggedIn = computed(() => store.getters.IS_LOGGED_IN);
+        const loggedIn = computed(() => getters.IS_LOGGED_IN);
 
         function handleLogout(): void {
             context.emit("toggle", !props.isOpen);

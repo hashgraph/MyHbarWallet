@@ -8,13 +8,10 @@
 <script lang="ts">
 import { createComponent } from "@vue/composition-api";
 import Button from "../components/Button.vue";
-import store from "../store";
-import { SET_INTERFACE_MENU_IS_OPEN } from "../store/mutations";
+import { mutations } from "../store";
 
-// Yes, it is used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function emitMenuOpen(): void {
-    store.commit(SET_INTERFACE_MENU_IS_OPEN, true);
+    mutations.SET_INTERFACE_MENU_IS_OPEN(true);
 }
 
 export default createComponent({
