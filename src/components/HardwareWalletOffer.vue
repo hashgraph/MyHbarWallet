@@ -1,26 +1,35 @@
 <template>
-    <div class="hardware-wallet-offer">
-        <div class="offer-description">
-            <div class="starting-from">
-                {{ $t("hardwareWalletOffer.startingFrom") }}
-            </div>
-            <div class="cost-container">
-                {{ currency }}<span class="cost">{{ cost }}</span>
-            </div>
-            <div class="description-text">{{ description }}</div>
-            <a
-                rel="noopener"
-                target="_blank"
-                class="green-link"
-                :href="moreInfo"
-            >
-                {{ $t("hardwareWalletOffer.moreInformation") }} >
-            </a>
-        </div>
-        <a :href="moreInfo" rel="noopener" target="_blank">
-            <img :src="image" class="logo-image" />
-        </a>
+  <div class="hardware-wallet-offer">
+    <div class="offer-description">
+      <div class="starting-from">
+        {{ $t("hardwareWalletOffer.startingFrom") }}
+      </div>
+      <div class="cost-container">
+        {{ currency }}<span class="cost">{{ cost }}</span>
+      </div>
+      <div class="description-text">
+        {{ description }}
+      </div>
+      <a
+        rel="noopener"
+        target="_blank"
+        class="green-link"
+        :href="moreInfo"
+      >
+        {{ $t("hardwareWalletOffer.moreInformation") }} >
+      </a>
     </div>
+    <a
+      :href="moreInfo"
+      rel="noopener"
+      target="_blank"
+    >
+      <img
+        :src="image"
+        class="logo-image"
+      >
+    </a>
+  </div>
 </template>
 
 <script lang="ts">

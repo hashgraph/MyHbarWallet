@@ -1,8 +1,13 @@
 <template>
-    <div class="interface-form-title-container">
-        <div class="interface-form-title">{{ title }}</div>
-        <Button :label="$t('common.menu')" @click="emitMenuOpen" />
+  <div class="interface-form-title-container">
+    <div class="interface-form-title">
+      {{ title }}
     </div>
+    <Button
+      :label="$t('common.menu')"
+      @click="emitMenuOpen"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -11,16 +16,12 @@ import Button from "../components/Button.vue";
 import { mutations } from "../store";
 
 function emitMenuOpen(): void {
-    mutations.SET_INTERFACE_MENU_IS_OPEN(true);
+    mutations.setInterfaceMenuIsOpen(true);
 }
 
 export default createComponent({
-    props: {
-        title: { type: String, required: true }
-    },
-    components: {
-        Button
-    },
+    props: { title: { type: String, required: true }},
+    components: { Button },
     setup() {
         return { emitMenuOpen };
     }

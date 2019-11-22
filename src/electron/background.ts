@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/strict-boolean-expressions, @typescript-eslint/no-floating-promises, no-process-env, @typescript-eslint/no-misused-promises, @typescript-eslint/require-await */
+// Most of this file is auto-generated and has external "magic" going on
+
 import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import path from "path";
@@ -10,17 +13,13 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 
 let win: BrowserWindow | null;
 
-protocol.registerSchemesAsPrivileged([
-    { scheme: "mhw", privileges: { secure: true, standard: true } }
-]);
+protocol.registerSchemesAsPrivileged([{ scheme: "mhw", privileges: { secure: true, standard: true }}]);
 
 function createWindow(): void {
     win = new BrowserWindow({
         width: 1024,
         height: 768,
-        webPreferences: {
-            nodeIntegration: true
-        },
+        webPreferences: { nodeIntegration: true },
         show: false
     });
 
@@ -58,14 +57,14 @@ app.on("activate", () => {
     }
 });
 
-app.on("ready", async () => {
+app.on("ready", async() => {
     createWindow();
 });
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
     if (process.platform === "win32") {
-        process.on("message", data => {
+        process.on("message", (data) => {
             if (data === "graceful-exit") {
                 app.quit();
             }

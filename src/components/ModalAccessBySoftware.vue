@@ -1,30 +1,30 @@
 <template>
-    <div class="modal-access-by-software">
-        <Modal
-            :is-open="isOpen"
-            :title="$t('modalAccessBySoftware.title')"
-            @change="this.$listeners.change"
+  <div class="modal-access-by-software">
+    <Modal
+      :is-open="isOpen"
+      :title="$t('modalAccessBySoftware.title')"
+      @change="this.$listeners.change"
+    >
+      <template>
+        <form
+          class="modal-access-by-software"
+          @submit.prevent="handleSubmit"
         >
-            <template>
-                <form
-                    class="modal-access-by-software"
-                    @submit.prevent="handleSubmit"
-                >
-                    <RadioButtonGroup
-                        v-model="state.optionSelected"
-                        name="software-access-option"
-                        :options="options"
-                    />
-                    <PurchaseWalletLink></PurchaseWalletLink>
-                    <Button
-                        :disabled="state.optionSelected == null"
-                        :label="$t('common.continue')"
-                    />
-                    <CustomerSupportLink class="support-link" />
-                </form>
-            </template>
-        </Modal>
-    </div>
+          <RadioButtonGroup
+            v-model="state.optionSelected"
+            name="software-access-option"
+            :options="options"
+          />
+          <PurchaseWalletLink />
+          <Button
+            :disabled="state.optionSelected == null"
+            :label="$t('common.continue')"
+          />
+          <CustomerSupportLink class="support-link" />
+        </form>
+      </template>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -63,13 +63,9 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: { type: Boolean }
-    },
+    props: { isOpen: { type: Boolean }},
     setup(props: { isOpen: boolean }, context: SetupContext) {
-        const state = reactive({
-            optionSelected: null
-        });
+        const state = reactive({ optionSelected: null });
 
         const options = [
             {

@@ -1,34 +1,41 @@
 <template>
-    <div
-        class="upload-zone"
-        :class="{ 'file-hover': state.isFileHovering }"
-        @dragenter.prevent="handleDragEnter"
-        @dragleave.prevent="handleDragLeave"
-        @dragover.prevent
-        @drop.prevent="handleDrop"
-    >
-        <div class="drop-text">{{ $t("uploadFile.drop") }}</div>
-        <div class="or-text">{{ $t("uploadFile.or") }}</div>
-        <Button
-            class="button"
-            :label="$t('uploadFile.select')"
-            @click="handleBrowseClick"
-        />
-        <div
-            v-if="fileName !== null && fileName !== ''"
-            class="file-name-container"
-        >
-            <MaterialDesignIcon class="icon" :icon="mdiFileUpload" />
-            <span class="file-name">{{ fileName }}</span>
-        </div>
-        <input
-            v-show="false"
-            id="file-upload"
-            ref="fileTarget"
-            type="file"
-            @change="prepareFile"
-        />
+  <div
+    class="upload-zone"
+    :class="{ 'file-hover': state.isFileHovering }"
+    @dragenter.prevent="handleDragEnter"
+    @dragleave.prevent="handleDragLeave"
+    @dragover.prevent
+    @drop.prevent="handleDrop"
+  >
+    <div class="drop-text">
+      {{ $t("uploadFile.drop") }}
     </div>
+    <div class="or-text">
+      {{ $t("uploadFile.or") }}
+    </div>
+    <Button
+      class="button"
+      :label="$t('uploadFile.select')"
+      @click="handleBrowseClick"
+    />
+    <div
+      v-if="fileName !== null && fileName !== ''"
+      class="file-name-container"
+    >
+      <MaterialDesignIcon
+        class="icon"
+        :icon="mdiFileUpload"
+      />
+      <span class="file-name">{{ fileName }}</span>
+    </div>
+    <input
+      v-show="false"
+      id="file-upload"
+      ref="fileTarget"
+      type="file"
+      @change="prepareFile"
+    >
+  </div>
 </template>
 
 <script lang="ts">
@@ -57,9 +64,7 @@ export default createComponent({
         Button,
         MaterialDesignIcon
     },
-    props: {
-        fileName: String
-    },
+    props: { fileName: String },
     setup(props, context) {
         const state = reactive({
             isFileHovering: false,
@@ -75,13 +80,13 @@ export default createComponent({
             }
         }
 
-        async function handleDragEnter(): Promise<void> {
-            state.dragCounter++;
+        function handleDragEnter(): void {
+            state.dragCounter += 1;
             if (state.dragCounter >= 0) state.isFileHovering = true;
         }
 
-        async function handleDragLeave(): Promise<void> {
-            state.dragCounter--;
+        function handleDragLeave(): void {
+            state.dragCounter -= 1;
             if (state.dragCounter === 0) state.isFileHovering = false;
         }
 
@@ -89,15 +94,15 @@ export default createComponent({
             state.dragCounter = 0;
             state.isFileHovering = false;
 
-            if (!event.dataTransfer || event.dataTransfer.files.length === 0) {
+            if (event.dataTransfer === null || event.dataTransfer.files.length === 0) {
                 // no file was present
                 return;
             }
 
             // only handle one file
-            const file = event.dataTransfer.items[0].getAsFile();
+            const file = event.dataTransfer.items[ 0 ].getAsFile();
 
-            if (!file) {
+            if (file === null) {
                 // file did not actually exist
                 return;
             }
@@ -112,16 +117,16 @@ export default createComponent({
 
         // prepares file for upload, resets file states if file has changed, gets total Chunks for fee estimate, gets hashed file if 'Hash file' is selected, gets fee estimate
         async function prepareFile(): Promise<void> {
-            if (!fileTarget.value) {
+            if (fileTarget.value === null) {
                 throw new Error("fileTarget should not be null");
             }
 
-            if (fileTarget.value.files == null) {
+            if (fileTarget.value.files === null) {
                 // User hit cancel
                 return;
             }
 
-            const fileData = fileTarget.value.files[0];
+            const fileData = fileTarget.value.files[ 0 ];
 
             const fileBytes = await uint8ArrayOf(fileData);
 

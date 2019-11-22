@@ -3,11 +3,11 @@ export function build(
     name: string | undefined | null,
     version: string | undefined | null
 ): string | null {
-    if (name || version) {
-        if (name && version) {
-            return name + " " + version;
-        } else if (name) {
-            return name;
+    if (name !== null || version !== null) {
+        if (name !== null && version !== null) {
+            return `${name} ${version}`;
+        } else if (name !== null) {
+            return name as string;
         }
     }
 
@@ -33,9 +33,7 @@ AccountID: ${accountId}
 URL: ${url}
 
 
-${description}
-`;
-    return `mailto:support@myhbarwallet.com?subject=${encodeURIComponent(
-        subjectTemplate
-    )}&body=${encodeURIComponent(bodyTemplate)}`;
+${description}`;
+
+    return `mailto:support@myhbarwallet.com?subject=${encodeURIComponent(subjectTemplate)}&body=${encodeURIComponent(bodyTemplate)}`;
 }

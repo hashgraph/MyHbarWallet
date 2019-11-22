@@ -1,30 +1,42 @@
 <template>
-    <Modal
-        :title="$t('modalConfirmSignMessage.title')"
-        :is-open="isOpen"
-        large
-        @change="this.$listeners.change"
-    >
-        <p class="title">{{ $t("modalConfirmSignMessage.signingKey") }}</p>
-        <div class="item account">
-            <img
-                class="account-image"
-                :src="'https://api.adorable.io/avatars/285/' + publicKey"
-            />
-            <span class="account-key"> {{ publicKey }} </span>
-        </div>
-        <p class="title">{{ $t("common.message") }}</p>
-        <ReadOnlyInput class="item" :value="message" />
-        <p class="title">{{ $t("modalConfirmSignMessage.messageInHex") }}</p>
-        <ReadOnlyInput class="item" :value="hexMessage" />
+  <Modal
+    :title="$t('modalConfirmSignMessage.title')"
+    :is-open="isOpen"
+    large
+    @change="this.$listeners.change"
+  >
+    <p class="title">
+      {{ $t("modalConfirmSignMessage.signingKey") }}
+    </p>
+    <div class="item account">
+      <img
+        class="account-image"
+        :src="'https://api.adorable.io/avatars/285/' + publicKey"
+      >
+      <span class="account-key"> {{ publicKey }} </span>
+    </div>
+    <p class="title">
+      {{ $t("common.message") }}
+    </p>
+    <ReadOnlyInput
+      class="item"
+      :value="message"
+    />
+    <p class="title">
+      {{ $t("modalConfirmSignMessage.messageInHex") }}
+    </p>
+    <ReadOnlyInput
+      class="item"
+      :value="hexMessage"
+    />
 
-        <div class="center">
-            <Button
-                :label="$t('modalConfirmSignMessage.confirmSigning')"
-                @click="handleConfirm"
-            ></Button>
-        </div>
-    </Modal>
+    <div class="center">
+      <Button
+        :label="$t('modalConfirmSignMessage.confirmSigning')"
+        @click="handleConfirm"
+      />
+    </div>
+  </Modal>
 </template>
 <script lang="ts">
 import { createComponent, computed, SetupContext } from "@vue/composition-api";
@@ -36,7 +48,7 @@ import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 function hexEncode(str: string): string {
     return unescape(encodeURIComponent(str))
         .split("")
-        .map(v => v.charCodeAt(0).toString(16))
+        .map((v) => v.charCodeAt(0).toString(16))
         .join("");
 }
 

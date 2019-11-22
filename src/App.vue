@@ -54,14 +54,14 @@ export default createComponent({
         const isOpen = computed(() => {
             return (
                 !isInterface.value &&
-                getters.IS_LOGGED_IN() &&
+                getters.isLoggedIn() &&
                 store.state.interfaceMenu.hasBeenToInterface
             );
         });
 
         const errorIsOpen = ref(false);
         watch(
-            () => getters.HAS_ERROR(),
+            () => getters.hasError(),
             (newValue: boolean) => {
                 errorIsOpen.value = newValue;
             }

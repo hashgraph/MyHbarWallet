@@ -1,16 +1,19 @@
 <template>
-    <div :class="['alert', level]">
-        <div class="message">
-            <MaterialDesignIcon class="message-icon" :icon="messageIcon" />
-            {{ message }}
-        </div>
-        <MaterialDesignIcon
-            role="button"
-            class="close"
-            :icon="mdiClose"
-            @click="destroyMe"
-        />
+  <div :class="['alert', level]">
+    <div class="message">
+      <MaterialDesignIcon
+        class="message-icon"
+        :icon="messageIcon"
+      />
+      {{ message }}
     </div>
+    <MaterialDesignIcon
+      role="button"
+      class="close"
+      :icon="mdiClose"
+      @click="destroyMe"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -32,9 +35,7 @@ interface Props {
 }
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     props: {
         id: (Number as unknown) as PropType<number>,
         message: (String as unknown) as PropType<string>,
@@ -50,13 +51,13 @@ export default createComponent({
                 return mdiCloseCircleOutline;
             } else if (props.level === "success") {
                 return mdiCheckCircleOutline;
-            } else {
-                return mdiAlertOutline;
             }
+            return mdiAlertOutline;
         });
 
         function destroyMe(): void {
-            mutations.REMOVE_ALERT(props.id);
+            // eslint-disable-next-line new-cap
+            mutations.removeAlert(props.id);
         }
 
         return {

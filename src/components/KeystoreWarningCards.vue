@@ -1,47 +1,59 @@
 <template>
-    <div class="save-my-keystore-cards">
-        <span class="body-title">{{
-            $t("keystoreWarningCards.saveMyKeystoreFile")
+  <div class="save-my-keystore-cards">
+    <span class="body-title">{{
+      $t("keystoreWarningCards.saveMyKeystoreFile")
+    }}</span>
+
+    <div class="card">
+      <img
+        :src="noLoseIcon"
+        alt=""
+        class="card-image"
+      >
+      <div class="card-body-wrapper">
+        <span class="card-header">{{
+          $t("keystoreWarningCards.dontLoseIt")
         }}</span>
-
-        <div class="card">
-            <img :src="noLoseIcon" alt="" class="card-image" />
-            <div class="card-body-wrapper">
-                <span class="card-header">{{
-                    $t("keystoreWarningCards.dontLoseIt")
-                }}</span>
-                <p class="card-body">
-                    {{
-                        $t("keystoreWarningCards.beCarefulItCanNotBeRecovered")
-                    }}
-                </p>
-            </div>
-        </div>
-
-        <div class="card">
-            <img :src="noShareIcon" alt="" class="card-image" />
-            <div class="card-body-wrapper">
-                <span class="card-header">{{
-                    $t("keystoreWarningCards.dontShareIt")
-                }}</span>
-                <p class="card-body">
-                    {{ $t("keystoreWarningCards.yourFundsWillBeStolen") }}
-                </p>
-            </div>
-        </div>
-
-        <div class="card">
-            <img :src="makeBackupIcon" alt="" class="card-image" />
-            <div class="card-body-wrapper">
-                <span class="card-header">{{
-                    $t("keystoreWarningCards.makeABackup")
-                }}</span>
-                <p class="card-body">
-                    {{ $t("keystoreWarningCards.secureIt") }}
-                </p>
-            </div>
-        </div>
+        <p class="card-body">
+          {{
+            $t("keystoreWarningCards.beCarefulItCanNotBeRecovered")
+          }}
+        </p>
+      </div>
     </div>
+
+    <div class="card">
+      <img
+        :src="noShareIcon"
+        alt=""
+        class="card-image"
+      >
+      <div class="card-body-wrapper">
+        <span class="card-header">{{
+          $t("keystoreWarningCards.dontShareIt")
+        }}</span>
+        <p class="card-body">
+          {{ $t("keystoreWarningCards.yourFundsWillBeStolen") }}
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img
+        :src="makeBackupIcon"
+        alt=""
+        class="card-image"
+      >
+      <div class="card-body-wrapper">
+        <span class="card-header">{{
+          $t("keystoreWarningCards.makeABackup")
+        }}</span>
+        <p class="card-body">
+          {{ $t("keystoreWarningCards.secureIt") }}
+        </p>
+      </div>
+    </div>
+  </div>
 </template>
 <script lang="ts">
 import noLoseIcon from "../assets/icon-no-lose.svg";

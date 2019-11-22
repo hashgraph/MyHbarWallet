@@ -1,30 +1,30 @@
 <template>
-    <div class="modal-password">
-        <Modal
-            :title="$t('modalKeystoreFilePassword.title')"
-            :not-closable="state.isBusy"
-            :is-open="state.isOpen"
-            @change="handleModalChangeIsOpen"
-        >
-            <form @submit.prevent="handleSubmit">
-                <TextInput
-                    ref="input"
-                    class="input"
-                    :value="state.password"
-                    :error="state.error"
-                    :placeholder="$t('common.password.nineCharacters')"
-                    obscure
-                    @input="handleInputChange"
-                />
-                <Button
-                    class="btn"
-                    :busy="state.isBusy"
-                    :label="$t('modalKeystoreFilePassword.accessWallet')"
-                    :disabled="disabled"
-                />
-            </form>
-        </Modal>
-    </div>
+  <div class="modal-password">
+    <Modal
+      :title="$t('modalKeystoreFilePassword.title')"
+      :not-closable="state.isBusy"
+      :is-open="state.isOpen"
+      @change="handleModalChangeIsOpen"
+    >
+      <form @submit.prevent="handleSubmit">
+        <TextInput
+          ref="input"
+          class="input"
+          :value="state.password"
+          :error="state.error"
+          :placeholder="$t('common.password.nineCharacters')"
+          obscure
+          @input="handleInputChange"
+        />
+        <Button
+          class="btn"
+          :busy="state.isBusy"
+          :label="$t('modalKeystoreFilePassword.accessWallet')"
+          :disabled="disabled"
+        />
+      </form>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -59,9 +59,7 @@ export default createComponent({
         TextInput,
         Button
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: (Object as unknown) as PropType<State> },
     model: {
         prop: "state",
         event: "change"
@@ -69,11 +67,7 @@ export default createComponent({
     setup(props: Props, context: SetupContext) {
         const input = ref<HTMLInputElement | null>(null);
 
-        const disabled = computed(() => {
-            return (
-                props.state.password === "" || props.state.password.length < 9
-            );
-        });
+        const disabled = computed(() => props.state.password === "" || props.state.password.length < 9);
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
             if (!isOpen) props.state.error = null;
@@ -95,7 +89,7 @@ export default createComponent({
                 if (newVal) {
                     context.emit("change", { ...props.state, password: "" });
                 }
-                if (newVal && input.value) {
+                if (newVal && input.value !== null) {
                     // Clear input every time we reopen this modal
                     props.state.password = "";
                     input.value.focus();

@@ -1,21 +1,21 @@
 <template>
-    <div class="tile-grid">
-        <HomeTileButton
-            :title="$t('homeTileButtons.createNewAccount')"
-            :content="$t('homeTileButtons.generateYourPrivateKey')"
-            :image="wallet"
-            route="create-account"
-            :action="$t('homeTileButtons.getStarted')"
-        />
+  <div class="tile-grid">
+    <HomeTileButton
+      :title="$t('homeTileButtons.createNewAccount')"
+      :content="$t('homeTileButtons.generateYourPrivateKey')"
+      :image="wallet"
+      route="create-account"
+      :action="$t('homeTileButtons.getStarted')"
+    />
 
-        <HomeTileButton
-            :title="$t('common.accessMyAccount')"
-            :content="$t('homeTileButtons.manageAnAccount')"
-            :image="unlock"
-            route="access-my-account"
-            :action="$t('homeTileButtons.accessNow')"
-        />
-    </div>
+    <HomeTileButton
+      :title="$t('common.accessMyAccount')"
+      :content="$t('homeTileButtons.manageAnAccount')"
+      :image="unlock"
+      route="access-my-account"
+      :action="$t('homeTileButtons.accessNow')"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,9 +25,7 @@ import walletImage from "../assets/wallet-hbar.svg";
 import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
-    components: {
-        HomeTileButton
-    },
+    components: { HomeTileButton },
     setup() {
         const wallet = walletImage;
 

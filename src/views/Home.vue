@@ -1,47 +1,61 @@
 <template>
-    <div class="home">
-        <div class="top">
-            <div class="page-container">
-                <div class="banner">
-                    <div class="banner-content">
-                        <div class="title">
-                            {{ $t("home.theNumberOneHbarWallet") }}
-                        </div>
-                        <div class="subtitle">
-                            {{
-                                $t(
-                                    "home.myHbarWalletIsAFreeClientSideInterface"
-                                )
-                            }}
-                        </div>
-                    </div>
-                    <div class="banner-image">
-                        <img :src="mountainTop" alt="banner" />
-                    </div>
-                </div>
-                <HomeTileButtons />
+  <div class="home">
+    <div class="top">
+      <div class="page-container">
+        <div class="banner">
+          <div class="banner-content">
+            <div class="title">
+              {{ $t("home.theNumberOneHbarWallet") }}
             </div>
-        </div>
-        <img class="circle" :src="circleImage" alt="circle" />
-        <div id="about" class="about">
-            <div class="page-container">
-                <div class="about-banner">
-                    <div class="banner-content">
-                        <div class="about-title">
-                            {{ $t("home.aboutMyHbarWallet") }}
-                        </div>
-                        <div class="about-subtitle">
-                            {{ $t("home.myHbarWalletIsAClone") }}
-                        </div>
-                    </div>
-                    <img class="about-image" :src="hbarOrb" alt="about" />
-                </div>
+            <div class="subtitle">
+              {{
+                $t(
+                  "home.myHbarWalletIsAFreeClientSideInterface"
+                )
+              }}
             </div>
+          </div>
+          <div class="banner-image">
+            <img
+              :src="mountainTop"
+              alt="banner"
+            >
+          </div>
         </div>
-        <Features />
-        <FAQs />
-        <Community v-if="false" />
+        <HomeTileButtons />
+      </div>
     </div>
+    <img
+      class="circle"
+      :src="circleImage"
+      alt="circle"
+    >
+    <div
+      id="about"
+      class="about"
+    >
+      <div class="page-container">
+        <div class="about-banner">
+          <div class="banner-content">
+            <div class="about-title">
+              {{ $t("home.aboutMyHbarWallet") }}
+            </div>
+            <div class="about-subtitle">
+              {{ $t("home.myHbarWalletIsAClone") }}
+            </div>
+          </div>
+          <img
+            class="about-image"
+            :src="hbarOrb"
+            alt="about"
+          >
+        </div>
+      </div>
+    </div>
+    <Features />
+    <FAQs />
+    <Community v-if="false" />
+  </div>
 </template>
 
 <script lang="ts">

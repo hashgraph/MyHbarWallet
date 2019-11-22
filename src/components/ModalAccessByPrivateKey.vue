@@ -1,40 +1,40 @@
 <template>
-    <Modal
-        :is-open="state.isOpen"
-        :not-closable="state.isBusy"
-        :title="$t('modalAccessByPrivateKey.title')"
-        @change="handleModalChangeIsOpen"
+  <Modal
+    :is-open="state.isOpen"
+    :not-closable="state.isBusy"
+    :title="$t('modalAccessByPrivateKey.title')"
+    @change="handleModalChangeIsOpen"
+  >
+    <template v-slot:banner>
+      <Warning
+        :title="$t('warning.title')"
+        :message="
+          $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+        "
+      />
+    </template>
+    <form
+      class="modal-access-by-private-key"
+      @submit.prevent="$emit('submit')"
     >
-        <template v-slot:banner>
-            <Warning
-                :title="$t('warning.title')"
-                :message="
-                    $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
-                "
-            />
-        </template>
-        <form
-            class="modal-access-by-private-key"
-            @submit.prevent="$emit('submit')"
-        >
-            <TextInput
-                ref="input"
-                :placeholder="$t('modalAccessByPrivateKey.enterPrivateKey')"
-                :value="state.rawPrivateKey"
-                :valid="valid"
-                :spellcheck-disabled="true"
-                show-validation
-                @input="handlePrivateKeyInput"
-            />
-            <Button
-                class="button-access-wallet"
-                :label="$t('modalAccessByPrivateKey.accessAccount')"
-                :busy="state.isBusy"
-                :disabled="!valid"
-            />
-            <CustomerSupportLink />
-        </form>
-    </Modal>
+      <TextInput
+        ref="input"
+        :placeholder="$t('modalAccessByPrivateKey.enterPrivateKey')"
+        :value="state.rawPrivateKey"
+        :valid="valid"
+        :spellcheck-disabled="true"
+        show-validation
+        @input="handlePrivateKeyInput"
+      />
+      <Button
+        class="button-access-wallet"
+        :label="$t('modalAccessByPrivateKey.accessAccount')"
+        :busy="state.isBusy"
+        :disabled="!valid"
+      />
+      <CustomerSupportLink />
+    </form>
+  </Modal>
 </template>
 
 <script lang="ts">
@@ -69,9 +69,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: (Object as unknown) as PropType<State> },
     setup(props: { state: State }, context: SetupContext) {
         const valid = ref<boolean>(false);
         const input = ref<HTMLInputElement | null>(null);
@@ -80,9 +78,9 @@ export default createComponent({
         // eslint-disable-next-line unicorn/consistent-function-scoping
         async function isValid(): Promise<boolean> {
             try {
-                const { Ed25519PrivateKey } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
+                // todo [2020-01-01]: consider removing this from the eslint config
+                // eslint-disable-next-line @typescript-eslint/no-extra-parens
+                const { Ed25519PrivateKey } = await (import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>);
 
                 Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;
@@ -107,7 +105,8 @@ export default createComponent({
                     valid.value = false;
                 }
 
-                isValid().then(result => {
+                // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                isValid().then((result) => {
                     valid.value = result;
                 });
             }
@@ -130,7 +129,7 @@ export default createComponent({
                         ...props.state,
                         rawPrivateKey: ""
                     });
-                    if (input.value) {
+                    if (input.value !== null) {
                         input.value.focus();
                     }
                 }

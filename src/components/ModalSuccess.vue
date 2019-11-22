@@ -1,39 +1,39 @@
 <template>
-    <div class="modal-success">
-        <Modal
-            :is-open="state.isOpen"
-            small
-            hide-decoration
-            garlands
-            :crown="mdiCheck"
-        >
-            <div class="container">
-                <div class="title">
-                    {{ $t("common.success") }}
-                </div>
-                <div class="description">
-                    <slot></slot>
-                </div>
-                <div class="button-container">
-                    <Button
-                        v-if="hasAction"
-                        :label="actionLabel"
-                        :outline="hasAction && actionClicked"
-                        compact
-                        class="copy-button"
-                        @click="handleAction"
-                    />
-                    <Button
-                        :label="dismissLabel"
-                        :disabled="hasAction && !actionClicked"
-                        compact
-                        :class="{ 'dismiss-button': true, full: !hasAction }"
-                        @click="handleDismiss"
-                    />
-                </div>
-            </div>
-        </Modal>
-    </div>
+  <div class="modal-success">
+    <Modal
+      :is-open="state.isOpen"
+      small
+      hide-decoration
+      garlands
+      :crown="mdiCheck"
+    >
+      <div class="container">
+        <div class="title">
+          {{ $t("common.success") }}
+        </div>
+        <div class="description">
+          <slot />
+        </div>
+        <div class="button-container">
+          <Button
+            v-if="hasAction"
+            :label="actionLabel"
+            :outline="hasAction && actionClicked"
+            compact
+            class="copy-button"
+            @click="handleAction"
+          />
+          <Button
+            :label="dismissLabel"
+            :disabled="hasAction && !actionClicked"
+            compact
+            :class="{ 'dismiss-button': true, full: !hasAction }"
+            @click="handleDismiss"
+          />
+        </div>
+      </div>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -62,27 +62,20 @@ export default createComponent({
         ReadOnlyInput,
         MaterialDesignIcon
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: (Object as unknown) as PropType<State> },
     model: {
         prop: "state",
         event: "change"
     },
     setup(props: Props, context): object {
-        const hasAction = computed(() =>
-            props.state.hasAction === undefined ? false : props.state.hasAction
-        );
-        const actionLabel = computed(() =>
-            props.state.actionLabel !== undefined
-                ? props.state.actionLabel
-                : "Action"
-        );
-        const dismissLabel = computed(() =>
-            props.state.dismissLabel !== undefined
-                ? props.state.dismissLabel
-                : "Dismiss"
-        );
+        const hasAction = computed(() => typeof props.state.hasAction === "undefined" ?
+            false : props.state.hasAction);
+        const actionLabel = computed(() => typeof props.state.actionLabel !== "undefined" ?
+            props.state.actionLabel :
+            "Action");
+        const dismissLabel = computed(() => typeof props.state.dismissLabel !== "undefined" ?
+            props.state.dismissLabel :
+            "Dismiss");
         const actionClicked = ref(false);
 
         function handleAction(): void {

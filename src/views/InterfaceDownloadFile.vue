@@ -1,46 +1,46 @@
 <template>
-    <InterfaceForm :title="$t('interfaceDownloadFile.title')">
-        <div class="download-container">
-            <IdInput
-                ref="idInput"
-                class="file-id"
-                file
-                :error="state.idErrorMessage"
-                :label="$t('downloadFile.fileId')"
-                show-validation
-                @valid="handleValid"
-                @input="handleFileId"
-            />
-            <Button
-                class="button"
-                :label="$t('downloadFile.download')"
-                :disabled="!state.idValid"
-                @click="handleDownloadClick"
-            ></Button>
-        </div>
-        <ModalFeeSummary
-            :is-open="state.isOpen"
-            :is-file-summary="true"
-            :items="summaryItems"
-            :amount="summaryAmount"
-            :account="formattedFileId"
-            :submit-label="$t('interfaceDownloadFile.feeSummary.submit')"
-            :cancel-label="$t('interfaceDownloadFile.feeSummary.cancel')"
-            tx-type="downloadFile"
-            @action="handleFeeModalChange"
-            @submit="handleFeeSubmit"
-        />
-        <ModalSuccess
-            v-model="state.success"
-            @change="handleDownloadFinish"
-            @dismiss="handleDownloadFinish"
-            @action="triggerDownload"
-        >
-            <i18n path="modalSuccess.downloadFile">
-                <strong>{{ formattedFileId }}</strong>
-            </i18n>
-        </ModalSuccess>
-    </InterfaceForm>
+  <InterfaceForm :title="$t('interfaceDownloadFile.title')">
+    <div class="download-container">
+      <IdInput
+        ref="idInput"
+        class="file-id"
+        file
+        :error="state.idErrorMessage"
+        :label="$t('downloadFile.fileId')"
+        show-validation
+        @valid="handleValid"
+        @input="handleFileId"
+      />
+      <Button
+        class="button"
+        :label="$t('downloadFile.download')"
+        :disabled="!state.idValid"
+        @click="handleDownloadClick"
+      ></Button>
+    </div>
+    <ModalFeeSummary
+      :is-open="state.isOpen"
+      :is-file-summary="true"
+      :items="summaryItems"
+      :amount="summaryAmount"
+      :account="formattedFileId"
+      :submit-label="$t('interfaceDownloadFile.feeSummary.submit')"
+      :cancel-label="$t('interfaceDownloadFile.feeSummary.cancel')"
+      tx-type="downloadFile"
+      @action="handleFeeModalChange"
+      @submit="handleFeeSubmit"
+    />
+    <ModalSuccess
+      v-model="state.success"
+      @change="handleDownloadFinish"
+      @dismiss="handleDownloadFinish"
+      @action="triggerDownload"
+    >
+      <i18n path="modalSuccess.downloadFile">
+        <strong>{{ formattedFileId }}</strong>
+      </i18n>
+    </ModalSuccess>
+  </InterfaceForm>
 </template>
 
 <script lang="ts">
@@ -53,9 +53,7 @@ import {
     Ref
 } from "@vue/composition-api";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
-import ModalSuccess, {
-    State as SuccessState
-} from "../components/ModalSuccess.vue";
+import ModalSuccess, {State as SuccessState} from "../components/ModalSuccess.vue";
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
@@ -64,21 +62,21 @@ import IdInput from "../components/IDInput.vue";
 import { Vue } from "vue/types/vue";
 import { actions, store } from "../store";
 
-type Summary = {
+interface Summary {
     value: BigNumber | string;
     description: string;
-};
+}
 
-type FileId = {
+interface FileId {
     shard?: number;
     realm?: number;
     file: number;
-};
+}
 
-type FileContentsResponse = {
+interface FileContentsResponse {
     contents: string | Uint8Array;
     fileId: number | string | FileId;
-};
+}
 
 // Shim for IDInput ref
 type IdInput = Vue & {
@@ -111,8 +109,7 @@ export default createComponent({
         const idInput: Ref<Vue | null> = ref(null);
 
         const formattedFileId = computed(
-            () =>
-                `${state.fileId.shard}.${state.fileId.realm}.${state.fileId.file}`
+            () => `${state.fileId.shard}.${state.fileId.realm}.${state.fileId.file}`
         );
 
         function handleValid(valid: boolean): void {
@@ -127,18 +124,14 @@ export default createComponent({
             if (fileId) state.fileId = fileId;
         }
 
-        const summaryAmount = computed(() => {
-            return formatHbar(new BigNumber(state.fee.toFixed(4, 2)));
-        });
+        const summaryAmount = computed(() => formatHbar(new BigNumber(state.fee.toFixed(4, 2))));
 
-        const summaryItems = computed(() => {
-            return [
+        const summaryItems = computed(() => [
                 {
                     description: context.root.$t("common.estimatedFee"),
                     value: new BigNumber(state.fee.toFixed(4, 2))
                 }
-            ] as Item[];
-        });
+            ] as Item[]);
 
         function handleFee(value: number): void {
             state.fee = new BigNumber(value.toPrecision(4));
@@ -156,23 +149,15 @@ export default createComponent({
 
         async function handleDownloadClick(): Promise<void> {
             if (!store.state.wallet.session) {
-                throw new Error(
-                    context.root.$t("common.error.noSession").toString()
-                );
+                throw new Error(context.root.$t("common.error.noSession").toString());
             }
 
             const client = store.state.wallet.session.client;
             client.setMaxQueryPayment(100000000);
             try {
-                const { FileContentsQuery, Client } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
+                const { FileContentsQuery, Client } = await (import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>);
 
-                const getEstimate = await new FileContentsQuery(
-                    client as InstanceType<typeof Client>
-                )
-                    .setFileId(state.fileId)
-                    .requestCost();
+                const getEstimate = await new FileContentsQuery(client as InstanceType<typeof Client>)
 
                 state.fee = new BigNumber(await getEstimate.value());
                 state.isOpen = true;
@@ -182,15 +167,13 @@ export default createComponent({
                     "Error: invalid file ID: [object Object]"
                 ) {
                     state.idErrorMessage = context.root
-                        .$t("downloadFile.invalidFileId", {
-                            "0": formattedFileId.value
-                        })
+                        .$t("downloadFile.invalidFileId", {"0": formattedFileId.value})
                         .toString();
                 } else {
                     actions.alert({
                         level: "error",
                         message: error.toString()
-                    });
+);
                 }
             }
         }
@@ -199,16 +182,12 @@ export default createComponent({
 
         async function triggerDownload(): Promise<void> {
             if (!store.state.wallet.session) {
-                throw new Error(
-                    context.root.$t("common.error.noSession").toString()
-                );
+                throw new Error(context.root.$t("common.error.noSession").toString());
             }
             const client = store.state.wallet.session.client;
-            client.setMaxQueryPayment(100000000);
+      eryPayment(100000000);
             try {
-                const { FileContentsQuery, Client } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
+                const { FileContentsQuery, Client } = await (import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>);
 
                 const file = ref<FileContentsResponse | null>(null);
 
@@ -219,21 +198,17 @@ export default createComponent({
                     .execute();
 
                 if (file.value.contents == null) {
-                    throw new Error(
-                        context.root
+                    throw new Error(context.root
                             .$t("common.error.nullTransaction")
-                            .toString()
-                    );
+                            .toString());
                 }
 
                 const type = fileType(file.value.contents as Uint8Array);
 
-                const fileBlob = new Blob([file.value.contents as Uint8Array]);
+                const fileBlob = new Blob([ file.value.contents as Uint8Array ]);
                 const fileUrl = URL.createObjectURL(fileBlob);
 
-                fileLink.value = document.createElement(
-                    "a"
-                ) as HTMLAnchorElement;
+                fileLink.value = document.createElement("a") as HTMLAnchorElement;
                 fileLink.value.href = fileUrl;
                 fileLink.value.download = `MHW_File_${state.fileId.shard}_${
                     state.fileId.realm
@@ -241,9 +216,7 @@ export default createComponent({
 
                 context.root.$el.append(fileLink.value as Node);
                 fileLink.value.click();
-                context.root.$el.removeChild(
-                    fileLink.value as HTMLAnchorElement
-                );
+                context.root.$el.removeChild(fileLink.value as HTMLAnchorElement);
                 await actions.refreshBalanceAndRate();
             } catch (error) {
                 actions.alert({

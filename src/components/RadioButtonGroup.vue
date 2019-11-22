@@ -1,16 +1,19 @@
 <template>
-    <div class="radio-button-group">
-        <div v-for="option in options" :key="option.value">
-            <RadioButton
-                :checked="selected || ''"
-                :name="name"
-                :label="option.label"
-                :value="option.value"
-                :image="option.image"
-                @change="$emit('change', option.value)"
-            />
-        </div>
+  <div class="radio-button-group">
+    <div
+      v-for="option in options"
+      :key="option.value"
+    >
+      <RadioButton
+        :checked="selected || ''"
+        :name="name"
+        :label="option.label"
+        :value="option.value"
+        :image="option.image"
+        @change="$emit('change', option.value)"
+      />
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,9 +28,7 @@ interface Option {
 }
 
 export default createComponent({
-    components: {
-        RadioButton
-    },
+    components: { RadioButton },
     model: {
         prop: "selected",
         event: "change"

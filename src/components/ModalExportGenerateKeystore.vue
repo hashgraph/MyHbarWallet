@@ -1,35 +1,35 @@
 <template>
-    <div class="modal-export-generate-keystore">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalExportGenerateKeystore.title')"
-            @change="handleModalChangeIsOpen"
-        >
-            <div class="password-info-header-wrapper">
-                <div class="password-info-header">
-                    {{ $t("modalExportGenerateKeystore.yourPassword") }}
-                    <InfoButton :message="$t('common.password.thisPassword')" />
-                </div>
-            </div>
-            <PasswordGenerator
-                ref="passwordGenerator"
-                v-model="state.passwordGeneratorState"
-                :is-open="state.isOpen"
-                @submit="handleSubmitPassword"
-            />
-            <p
-                class="footer"
-                v-html="
-                    formatRich(
-                        $t(
-                            'modalCreateByKeystore.doNotForgetToSaveYourPassword'
-                        ).toString(),
-                        { strongClass: 'important' }
-                    )
-                "
-            />
-        </Modal>
-    </div>
+  <div class="modal-export-generate-keystore">
+    <Modal
+      :is-open="state.isOpen"
+      :title="$t('modalExportGenerateKeystore.title')"
+      @change="handleModalChangeIsOpen"
+    >
+      <div class="password-info-header-wrapper">
+        <div class="password-info-header">
+          {{ $t("modalExportGenerateKeystore.yourPassword") }}
+          <InfoButton :message="$t('common.password.thisPassword')" />
+        </div>
+      </div>
+      <PasswordGenerator
+        ref="passwordGenerator"
+        v-model="state.passwordGeneratorState"
+        :is-open="state.isOpen"
+        @submit="handleSubmitPassword"
+      />
+      <p
+        class="footer"
+        v-html="
+          formatRich(
+            $t(
+              'modalCreateByKeystore.doNotForgetToSaveYourPassword'
+            ).toString(),
+            { strongClass: 'important' }
+          )
+        "
+      />
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -38,9 +38,7 @@ import Modal from "../components/Modal.vue";
 import InfoButton from "../components/InfoButton.vue";
 import { mdiArrowRight } from "@mdi/js";
 import { formatRich } from "../formatter";
-import PasswordGenerator, {
-    State as PasswordGeneratorState
-} from "../components/PasswordGenerator.vue";
+import PasswordGenerator, { State as PasswordGeneratorState } from "../components/PasswordGenerator.vue";
 
 export interface State {
     isOpen: boolean;
@@ -62,9 +60,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: (Object as unknown) as PropType<State> },
     setup(props: Props, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });

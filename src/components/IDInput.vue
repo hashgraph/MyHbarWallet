@@ -1,18 +1,18 @@
 <template>
-    <TextInput
-        ref="input"
-        :value="state.input"
-        show-validation
-        :can-copy="canCopy"
-        :label="label"
-        :valid="valid || partialValid"
-        :error="state.errorMessage"
-        :placeholder="
-            file ? 'shard.realm.file or file' : $t('common.accountSyntax')
-        "
-        @input="handleInput"
-        @click.native.stop
-    />
+  <TextInput
+    ref="input"
+    :value="state.input"
+    show-validation
+    :can-copy="canCopy"
+    :label="label"
+    :valid="valid || partialValid"
+    :error="state.errorMessage"
+    :placeholder="
+      file ? 'shard.realm.file or file' : $t('common.accountSyntax')
+    "
+    @input="handleInput"
+    @click.native.stop
+  />
 </template>
 
 <script lang="ts">
@@ -44,9 +44,7 @@ export interface Props {
 }
 
 export default createComponent({
-    components: {
-        TextInput
-    },
+    components: { TextInput },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,
         error: (String as unknown) as PropType<string>,
@@ -61,8 +59,8 @@ export default createComponent({
             account: null,
             file: null
         });
-        const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
-        const partialRegex = /^[1-9]{1}\d{0,}$/;
+        const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/u;
+        const partialRegex = /^[1-9]{1}\d{0,}$/u;
 
         const valid = computed(() => shardRealmAccountRegex.test(state.input));
         const partialValid = computed(() => partialRegex.test(state.input));
@@ -74,37 +72,37 @@ export default createComponent({
             state.input = accountText;
             if (valid.value) {
                 const parts = state.input.split(".");
-                if (props.file) {
+                if (props.file !== null) {
                     state.file = {
-                        shard: parseInt(parts[0]),
-                        realm: parseInt(parts[1]),
-                        file: parseInt(parts[2])
+                        shard: parseInt(parts[ 0 ], 10),
+                        realm: parseInt(parts[ 1 ], 10),
+                        file: parseInt(parts[ 2 ], 10)
                     };
                 } else {
                     state.account = {
-                        shard: parseInt(parts[0]),
-                        realm: parseInt(parts[1]),
-                        account: parseInt(parts[2])
+                        shard: parseInt(parts[ 0 ], 10),
+                        realm: parseInt(parts[ 1 ], 10),
+                        account: parseInt(parts[ 2 ], 10)
                     };
                 }
             } else if (partialValid.value) {
-                if (props.file) {
+                if (props.file !== null) {
                     state.file = {
-                        shard: parseInt("0"),
-                        realm: parseInt("0"),
-                        file: parseInt(state.input)
+                        shard: parseInt("0", 10),
+                        realm: parseInt("0", 10),
+                        file: parseInt(state.input, 10)
                     };
                 } else {
                     state.account = {
-                        shard: parseInt("0"),
-                        realm: parseInt("0"),
-                        account: parseInt(state.input)
+                        shard: parseInt("0", 10),
+                        realm: parseInt("0", 10),
+                        account: parseInt(state.input, 10)
                     };
                 }
             } else {
                 state.account = null;
             }
-            if (props.file) {
+            if (props.file !== null) {
                 context.emit("input", state.input, state.file);
             } else {
                 context.emit("input", state.input, state.account);
@@ -114,17 +112,17 @@ export default createComponent({
 
         watch(
             () => props.error,
-            newVal => {
-                if (newVal && props.error) state.errorMessage = props.error;
+            (newVal) => {
+                if (typeof newVal !== "undefined" && props.error !== null) state.errorMessage = props.error as string;
             }
         );
 
         watch(
             () => props.isOpen,
-            newVal => {
+            (newVal) => {
                 // input.value is not set until after modal is open
                 Vue.nextTick(() => {
-                    if (newVal && input.value) {
+                    if (newVal === true && input.value !== null) {
                         // Clear input every time we reopen this modal
                         clear();
                         input.value.focus();

@@ -1,23 +1,23 @@
 <template>
-    <div class="verify-message">
-        <InterfaceForm :title="$t('interfaceVerifyMessage.title')">
-            <TextInput
-                v-model.trim="signature"
-                :label="$t('interfaceVerifyMessage.signature')"
-                can-copy
-                can-clear
-                multiline
-            />
+  <div class="verify-message">
+    <InterfaceForm :title="$t('interfaceVerifyMessage.title')">
+      <TextInput
+        v-model.trim="signature"
+        :label="$t('interfaceVerifyMessage.signature')"
+        can-copy
+        can-clear
+        multiline
+      />
 
-            <template v-slot:footer>
-                <Button
-                    :label="$t('interfaceVerifyMessage.verifyMessage')"
-                    :disabled="!isValid"
-                    :busy="busy"
-                />
-            </template>
-        </InterfaceForm>
-    </div>
+      <template v-slot:footer>
+        <Button
+          :label="$t('interfaceVerifyMessage.verifyMessage')"
+          :disabled="!isValid"
+          :busy="busy"
+        />
+      </template>
+    </InterfaceForm>
+  </div>
 </template>
 
 <script lang="ts">

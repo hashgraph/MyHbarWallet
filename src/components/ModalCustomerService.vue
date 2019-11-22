@@ -1,62 +1,62 @@
 <template>
-    <Modal
-        :is-open="isOpen"
-        :title="$t('modalCustomerService.title')"
-        @change="this.$listeners.change"
-    >
-        <template>
-            <form
-                class="modal-issue-information"
-                @submit.prevent="handleSubmit"
-            >
-                <TextInput
-                    v-if="!hasBrowser"
-                    v-model="state.browser"
-                    class="issue-item"
-                    :placeholder="$t('modalCustomerService.browser')"
-                />
-                <TextInput
-                    v-if="!hasPlatform"
-                    v-model="state.platform"
-                    class="issue-item"
-                    :placeholder="$t('modalCustomerService.operatingSystem')"
-                />
-                <TextInput
-                    v-if="!hasDevice"
-                    v-model="state.device"
-                    class="issue-item"
-                    :placeholder="
-                        $t('modalCustomerService.deviceOrWalletIfAny')
-                    "
-                />
-                <TextInput
-                    v-if="!hasAccountId"
-                    v-model="state.accountId"
-                    class="issue-item"
-                    :placeholder="$t('modalCustomerService.accountIdIfAny')"
-                />
-                <TextInput
-                    v-if="!hasUrl"
-                    v-model="state.url"
-                    class="issue-item"
-                    :placeholder="$t('modalCustomerService.url')"
-                />
-                <TextInput
-                    ref="input"
-                    v-model="state.description"
-                    multiline
-                    class="issue-item"
-                    :placeholder="$t('modalCustomerService.describeTheIssue')"
-                    resizable
-                />
-                <Button
-                    :label="$t('common.send')"
-                    class="send-button"
-                    :compact="true"
-                />
-            </form>
-        </template>
-    </Modal>
+  <Modal
+    :is-open="isOpen"
+    :title="$t('modalCustomerService.title')"
+    @change="this.$listeners.change"
+  >
+    <template>
+      <form
+        class="modal-issue-information"
+        @submit.prevent="handleSubmit"
+      >
+        <TextInput
+          v-if="!hasBrowser"
+          v-model="state.browser"
+          class="issue-item"
+          :placeholder="$t('modalCustomerService.browser')"
+        />
+        <TextInput
+          v-if="!hasPlatform"
+          v-model="state.platform"
+          class="issue-item"
+          :placeholder="$t('modalCustomerService.operatingSystem')"
+        />
+        <TextInput
+          v-if="!hasDevice"
+          v-model="state.device"
+          class="issue-item"
+          :placeholder="
+            $t('modalCustomerService.deviceOrWalletIfAny')
+          "
+        />
+        <TextInput
+          v-if="!hasAccountId"
+          v-model="state.accountId"
+          class="issue-item"
+          :placeholder="$t('modalCustomerService.accountIdIfAny')"
+        />
+        <TextInput
+          v-if="!hasUrl"
+          v-model="state.url"
+          class="issue-item"
+          :placeholder="$t('modalCustomerService.url')"
+        />
+        <TextInput
+          ref="input"
+          v-model="state.description"
+          multiline
+          class="issue-item"
+          :placeholder="$t('modalCustomerService.describeTheIssue')"
+          resizable
+        />
+        <Button
+          :label="$t('common.send')"
+          class="send-button"
+          :compact="true"
+        />
+      </form>
+    </template>
+  </Modal>
 </template>
 
 <script lang="ts">
@@ -91,28 +91,24 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>
-    },
+    props: { isOpen: (Boolean as unknown) as PropType<boolean> },
     setup(props, context) {
         const input = ref<HTMLInputElement | null>(null);
         const ua = new UAParser(navigator.userAgent);
 
-        const account = computed(() => {
-            return store.state.wallet.session != null
-                ? store.state.wallet.session.account
-                : null;
-        });
+        const account = computed(() => store.state.wallet.session != null ?
+            store.state.wallet.session.account :
+            null);
 
         const accountId = computed(() => {
             if (account.value !== null) {
                 const accountId: Id = account.value;
                 return (
-                    accountId.shard +
-                    "." +
-                    accountId.realm +
-                    "." +
-                    accountId.account
+                    `${accountId.shard
+                    }.${
+                        accountId.realm
+                    }.${
+                        accountId.account}`
                 );
             }
 
@@ -137,11 +133,9 @@ export default createComponent({
             return build(name, version);
         });
 
-        const url = computed(() => {
-            return context.root.$route != undefined
-                ? context.root.$route.fullPath
-                : null;
-        });
+        const url = computed(() => typeof context.root.$route !== "undefined" ?
+            context.root.$route.fullPath :
+            null);
 
         const device = computed(() => {
             const type = ua.getDevice().type;
@@ -149,27 +143,28 @@ export default createComponent({
             return build(type, model);
         });
 
+        // todo [2020-01-01]: Consider removing or revising this lint rule
+        /* eslint-disable @typescript-eslint/strict-boolean-expressions */
         const state = reactive({
             platform: platform.value || "",
             browser: browser.value || "",
             url: url.value,
             description: "",
             device: device.value || "",
-            version: "v" + VERSION + "+" + COMMIT_HASH,
+            version: `v${VERSION}+${COMMIT_HASH}`,
             accountId: accountId.value || ""
         });
+        /* eslint-enable @typescript-eslint/strict-boolean-expressions */
 
-        const sendLink = computed(() =>
-            createLink(
-                state.url,
-                state.platform,
-                state.browser,
-                state.device,
-                state.version,
-                state.accountId,
-                state.description
-            )
-        );
+        const sendLink = computed(() => createLink(
+            state.url,
+            state.platform,
+            state.browser,
+            state.device,
+            state.version,
+            state.accountId,
+            state.description
+        ));
 
         function handleSubmit(): void {
             window.open(sendLink.value);
@@ -185,19 +180,20 @@ export default createComponent({
         watch(
             () => context.root.$route,
             () => {
-                if (context.root.$route == undefined) return null;
+                if (typeof context.root.$route === "undefined") return null;
 
                 state.url = context.root.$route.fullPath;
+                return state.url;
             }
         );
 
         watch(
             () => props.isOpen,
-            newVal => {
-                if (newVal && input.value) {
+            (newVal) => {
+                if (newVal === true && input.value !== null) {
                     input.value.focus();
                 }
-                if (!newVal) {
+                if (newVal !== true) {
                     clearForms();
                 }
             }

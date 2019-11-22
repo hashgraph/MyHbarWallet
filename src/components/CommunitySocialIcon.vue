@@ -1,10 +1,18 @@
 <template>
-    <a class="social-icon" :href="href" target="_blank" rel="noopener">
-        <div class="link-content">
-            <img :src="image" alt="" />
-            {{ name }}
-        </div>
-    </a>
+  <a
+    class="social-icon"
+    :href="href"
+    target="_blank"
+    rel="noopener"
+  >
+    <div class="link-content">
+      <img
+        :src="image"
+        alt=""
+      >
+      {{ name }}
+    </div>
+  </a>
 </template>
 
 <script lang="ts">

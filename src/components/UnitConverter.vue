@@ -1,55 +1,58 @@
 <template>
-    <div class="unit-input">
-        <div class="wrap">
-            <div class="block-left">
-                <div class="input-block">
-                    <TextInput
-                        :value="state.valueLeft"
-                        compact
-                        white
-                        step="any"
-                        :placeholder="$t('common.amount')"
-                        @input="handleInputValueLeft"
-                    />
-                </div>
-                <div class="select-block">
-                    <Select
-                        v-model="state.selectedLeft"
-                        :options="options"
-                        :left="true"
-                        @change="handleSelect"
-                    />
-                </div>
-            </div>
-
-            <div class="block-center">
-                <div class="convert-icon">
-                    <img src="../assets/swap.svg" alt="" />
-                </div>
-            </div>
-
-            <div class="block-right">
-                <div class="input-block">
-                    <TextInput
-                        :value="state.valueRight"
-                        compact
-                        white
-                        step="any"
-                        :placeholder="$t('common.amount')"
-                        @input="handleInputValueRight"
-                    />
-                </div>
-                <div class="select-block">
-                    <Select
-                        v-model="state.selectedRight"
-                        :options="options"
-                        :left="false"
-                        @change="handleSelect"
-                    />
-                </div>
-            </div>
+  <div class="unit-input">
+    <div class="wrap">
+      <div class="block-left">
+        <div class="input-block">
+          <TextInput
+            :value="state.valueLeft"
+            compact
+            white
+            step="any"
+            :placeholder="$t('common.amount')"
+            @input="handleInputValueLeft"
+          />
         </div>
+        <div class="select-block">
+          <Select
+            v-model="state.selectedLeft"
+            :options="options"
+            :left="true"
+            @change="handleSelect"
+          />
+        </div>
+      </div>
+
+      <div class="block-center">
+        <div class="convert-icon">
+          <img
+            src="../assets/swap.svg"
+            alt=""
+          >
+        </div>
+      </div>
+
+      <div class="block-right">
+        <div class="input-block">
+          <TextInput
+            :value="state.valueRight"
+            compact
+            white
+            step="any"
+            :placeholder="$t('common.amount')"
+            @input="handleInputValueRight"
+          />
+        </div>
+        <div class="select-block">
+          <Select
+            v-model="state.selectedRight"
+            :options="options"
+            :left="false"
+            @change="handleSelect"
+          />
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -74,7 +77,7 @@ export default createComponent({
     setup() {
         const options = Object.values(Unit);
 
-        const numericRegex = /^\d*\.?\d*$/;
+        const numericRegex = /^\d*\.?\d*$/u;
 
         const state = reactive<State>({
             selectedLeft: Unit.Tinybar,
@@ -110,7 +113,7 @@ export default createComponent({
             } else {
                 // Strip non-digit chars from input
                 (event.target as HTMLInputElement).value = inputValue.replace(
-                    /[^\d.]/,
+                    /[^\d.]/u,
                     ""
                 );
             }
@@ -135,6 +138,7 @@ export default createComponent({
         }
 
         function handleInputValueLeft(value: string, event: Event): void {
+            // eslint-disable-next-line no-param-reassign
             if (!numericRegex.test(value)) value = state.valueLeft;
 
             state.valueLeft = value;
@@ -146,6 +150,7 @@ export default createComponent({
         }
 
         function handleInputValueRight(value: string, event: Event): void {
+            // eslint-disable-next-line no-param-reassign
             if (!numericRegex.test(value)) value = state.valueRight;
 
             state.valueRight = value;

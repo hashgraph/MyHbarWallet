@@ -1,44 +1,49 @@
 <template>
-    <CirclePage>
-        <div class="wrap">
-            <div class="title-wrap">
-                <div class="page-title">{{ $t("convertUnits.title") }}</div>
-                <div class="page-subtitle">
-                    {{ $t("convertUnits.ourHelpfulConversionTool") }}
-                </div>
-            </div>
-
-            <div>
-                <UnitConverter />
-            </div>
-
-            <div class="hbar-unit-reference-guide">
-                <div class="block-title">
-                    {{ $t("convertUnits.hbarUnitReferenceGuide") }}
-                </div>
-
-                <div class="unit-table">
-                    <table>
-                        <tbody>
-                            <tr v-for="hu in hbarUnitRef" :key="hu.key">
-                                <td>{{ hu.name }}</td>
-                                <template>
-                                    <div class="sub-row-container">
-                                        <td class="amount">
-                                            {{ hu.amount }} {{ hu.symbol }}
-                                        </td>
-                                        <td class="amount-hbar">
-                                            {{ hu.amountInHbar }} ℏ
-                                        </td>
-                                    </div>
-                                </template>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+  <CirclePage>
+    <div class="wrap">
+      <div class="title-wrap">
+        <div class="page-title">
+          {{ $t("convertUnits.title") }}
         </div>
-    </CirclePage>
+        <div class="page-subtitle">
+          {{ $t("convertUnits.ourHelpfulConversionTool") }}
+        </div>
+      </div>
+
+      <div>
+        <UnitConverter />
+      </div>
+
+      <div class="hbar-unit-reference-guide">
+        <div class="block-title">
+          {{ $t("convertUnits.hbarUnitReferenceGuide") }}
+        </div>
+
+        <div class="unit-table">
+          <table>
+            <tbody>
+              <tr
+                v-for="hu in hbarUnitRef"
+                :key="hu.key"
+              >
+                <td>{{ hu.name }}</td>
+                <template>
+                  <div class="sub-row-container">
+                    <td class="amount">
+                      {{ hu.amount }} {{ hu.symbol }}
+                    </td>
+                    <td class="amount-hbar">
+                      {{ hu.amountInHbar }} ℏ
+                    </td>
+                  </div>
+                </template>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </CirclePage>
 </template>
 
 <script lang="ts">

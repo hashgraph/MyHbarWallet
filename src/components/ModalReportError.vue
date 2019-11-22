@@ -1,45 +1,51 @@
 <template>
-    <Modal :is-open="isOpen" hide-decoration @change="this.$listeners.change">
-        <template>
-            <div class="modal-container">
-                <div class="header">{{ $t("modalReportError.title") }}</div>
-                <div class="sub-header">
-                    {{ $t("modalReportError.informMHW") }}
-                </div>
+  <Modal
+    :is-open="isOpen"
+    hide-decoration
+    @change="this.$listeners.change"
+  >
+    <template>
+      <div class="modal-container">
+        <div class="header">
+          {{ $t("modalReportError.title") }}
+        </div>
+        <div class="sub-header">
+          {{ $t("modalReportError.informMHW") }}
+        </div>
 
-                <div class="stack-trace">
-                    {{ errorMessage }}
-                </div>
+        <div class="stack-trace">
+          {{ errorMessage }}
+        </div>
 
-                <div class="sub-header">
-                    {{ $t("modalReportError.description") }}
-                </div>
+        <div class="sub-header">
+          {{ $t("modalReportError.description") }}
+        </div>
 
-                <TextInput
-                    class="user-details"
-                    resizable
-                    multiline
-                    @input="handleInput"
-                />
+        <TextInput
+          class="user-details"
+          resizable
+          multiline
+          @input="handleInput"
+        />
 
-                <div class="button-group">
-                    <Button
-                        class="button-cancel"
-                        :label="$t('common.cancel')"
-                        :outline="true"
-                        :compact="true"
-                        @click="handleCancel"
-                    />
-                    <Button
-                        class="button-send"
-                        :label="$t('common.send')"
-                        :compact="true"
-                        @click="handleSend"
-                    />
-                </div>
-            </div>
-        </template>
-    </Modal>
+        <div class="button-group">
+          <Button
+            class="button-cancel"
+            :label="$t('common.cancel')"
+            :outline="true"
+            :compact="true"
+            @click="handleCancel"
+          />
+          <Button
+            class="button-send"
+            :label="$t('common.send')"
+            :compact="true"
+            @click="handleSend"
+          />
+        </div>
+      </div>
+    </template>
+  </Modal>
 </template>
 
 <script lang="ts">
@@ -77,27 +83,23 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: Boolean
-    },
+    props: { isOpen: Boolean },
     setup(props: Props, context: SetupContext) {
         const ua = new UAParser(navigator.userAgent);
 
-        const account = computed(() => {
-            return store.state.wallet.session != null
-                ? store.state.wallet.session.account
-                : null;
-        });
+        const account = computed(() => store.state.wallet.session != null ?
+            store.state.wallet.session.account :
+            null);
 
         const accountId = computed(() => {
             if (account.value !== null) {
                 const accountId: Id = account.value;
                 return (
-                    accountId.shard +
-                    "." +
-                    accountId.realm +
-                    "." +
-                    accountId.account
+                    `${accountId.shard
+                    }.${
+                        accountId.realm
+                    }.${
+                        accountId.account}`
                 );
             }
 
@@ -116,11 +118,9 @@ export default createComponent({
             return build(name, version);
         });
 
-        const url = computed(() => {
-            return context.root.$route != undefined
-                ? context.root.$route.fullPath
-                : null;
-        });
+        const url = computed(() => typeof context.root.$route !== "undefined" ?
+            context.root.$route.fullPath :
+            null);
 
         const device = computed(() => {
             const type = ua.getDevice().type;
@@ -128,37 +128,42 @@ export default createComponent({
             return build(type, model);
         });
 
+        // todo [2020-01-01]: Consider removing or revising this lint rule
+        /* eslint-disable @typescript-eslint/strict-boolean-expressions */
         const state = reactive({
             platform: platform.value || "",
             browser: browser.value || "",
             url: url.value,
             description: "",
             device: device.value || "",
-            version: "v" + VERSION + "+" + COMMIT_HASH,
+            version: `v${VERSION}+${COMMIT_HASH}`,
             accountId: accountId.value || "",
             details: ""
         });
+        /* eslint-enable @typescript-eslint/strict-boolean-expressions */
 
-        const errorMessage = computed(getters.ERROR_MESSAGE);
+        // todo [2020-01-01]: Consider how to handle this better
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        const errorMessage = computed(getters.errorMessage);
 
-        const sendLink = computed(() =>
-            createLink(
-                state.url,
-                state.platform,
-                state.browser,
-                state.device,
-                state.version,
-                state.accountId,
-                `${errorMessage.value}
+        const sendLink = computed(() => createLink(
+            state.url,
+            state.platform,
+            state.browser,
+            state.device,
+            state.version,
+            state.accountId,
+            `${errorMessage.value}
                 ${state.details}`
-            )
-        );
+        ));
 
         function close(): void {
             context.emit("change", false);
 
             // Wait until the close animation to clear the form
-            setTimeout(mutations.ERROR_VIEWED, 150);
+            // todo [2020-01-01]: Consider how to handle this better
+            // eslint-disable-next-line @typescript-eslint/unbound-method
+            setTimeout(mutations.errorViewed, 150);
         }
 
         function handleCancel(): void {
@@ -178,9 +183,10 @@ export default createComponent({
         watch(
             () => context.root.$route,
             () => {
-                if (context.root.$route == undefined) return null;
+                if (typeof context.root.$route === "undefined") return null;
 
                 state.url = context.root.$route.fullPath;
+                return state.url;
             }
         );
 

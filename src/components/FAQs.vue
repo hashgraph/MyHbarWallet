@@ -1,61 +1,66 @@
 <template>
-    <div id="faqs" class="faqs">
-        <div class="wrap">
-            <div class="page-container">
-                <div class="head">
-                    <div class="title">
-                        <div class="title-text">{{ $t("common.faqs") }}</div>
-                        <div class="subtitle-text">
-                            {{ $t("faqs.answersToMostFAQs") }}
-                        </div>
-                    </div>
-                    <CustomerSupportLink class="customer-support-link" />
-                </div>
-                <div class="cards">
-                    <Accordion>
-                        <template v-slot:title>
-                            {{ $t("faqs.howDoICreateANewAccountQuestion") }}
-                        </template>
-                        <template v-slot:content>
-                            {{ $t("faqs.howDoICreateANewAccountAnswer") }}
-                        </template>
-                    </Accordion>
-                    <Accordion>
-                        <template v-slot:title>
-                            {{ $t("faqs.canMHWWorkWithOtherWalletsQuestion") }}
-                        </template>
-                        <template v-slot:content>
-                            {{ $t("faqs.canMHWWorkWithOtherWalletsAnswer") }}
-                        </template>
-                    </Accordion>
-                    <Accordion>
-                        <template v-slot:title>
-                            {{ $t("faqs.howMuchDoesItCostQuestion") }}
-                        </template>
-                        <template v-slot:content>
-                            {{ $t("faqs.howMuchDoesItCostAnswer") }}
-                        </template>
-                    </Accordion>
-                    <Accordion>
-                        <template v-slot:title>
-                            {{
-                                $t(
-                                    "faqs.iForgotMyPassphrase/PrivateKeyWhatCanIDoQuestion"
-                                )
-                            }}
-                        </template>
-                        <template v-slot:content>
-                            {{
-                                $t(
-                                    "faqs.iForgotMyPassphrase/PrivateKeyWhatCanIDoAnswer"
-                                )
-                            }}
-                        </template>
-                    </Accordion>
-                </div>
+  <div
+    id="faqs"
+    class="faqs"
+  >
+    <div class="wrap">
+      <div class="page-container">
+        <div class="head">
+          <div class="title">
+            <div class="title-text">
+              {{ $t("common.faqs") }}
             </div>
+            <div class="subtitle-text">
+              {{ $t("faqs.answersToMostFAQs") }}
+            </div>
+          </div>
+          <CustomerSupportLink class="customer-support-link" />
         </div>
+        <div class="cards">
+          <Accordion>
+            <template v-slot:title>
+              {{ $t("faqs.howDoICreateANewAccountQuestion") }}
+            </template>
+            <template v-slot:content>
+              {{ $t("faqs.howDoICreateANewAccountAnswer") }}
+            </template>
+          </Accordion>
+          <Accordion>
+            <template v-slot:title>
+              {{ $t("faqs.canMHWWorkWithOtherWalletsQuestion") }}
+            </template>
+            <template v-slot:content>
+              {{ $t("faqs.canMHWWorkWithOtherWalletsAnswer") }}
+            </template>
+          </Accordion>
+          <Accordion>
+            <template v-slot:title>
+              {{ $t("faqs.howMuchDoesItCostQuestion") }}
+            </template>
+            <template v-slot:content>
+              {{ $t("faqs.howMuchDoesItCostAnswer") }}
+            </template>
+          </Accordion>
+          <Accordion>
+            <template v-slot:title>
+              {{
+                $t(
+                  "faqs.iForgotMyPassphrase/PrivateKeyWhatCanIDoQuestion"
+                )
+              }}
+            </template>
+            <template v-slot:content>
+              {{
+                $t(
+                  "faqs.iForgotMyPassphrase/PrivateKeyWhatCanIDoAnswer"
+                )
+              }}
+            </template>
+          </Accordion>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">

@@ -1,58 +1,68 @@
 <template>
-    <div class="modal-enter-account-id">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalEnterAccountId.title')"
-            @change="handleModalChangeIsOpen"
+  <div class="modal-enter-account-id">
+    <Modal
+      :is-open="state.isOpen"
+      :title="$t('modalEnterAccountId.title')"
+      @change="handleModalChangeIsOpen"
+    >
+      <template v-slot:banner>
+        <Notice
+          class="notice"
+          :symbol="mdiHelpCircleOutline"
         >
-            <template v-slot:banner>
-                <Notice class="notice" :symbol="mdiHelpCircleOutline">
-                    {{ $t("modalEnterAccountId.hederaAccountIdsAre") }}
-                </Notice>
-            </template>
-            <form @submit.stop.prevent="handleSubmit">
-                <div v-if="hasPublicKey" class="container">
-                    <div
-                        class="subtitle"
-                        v-text="$t('modalEnterAccountId.verifyKey')"
-                    ></div>
-                    <ReadOnlyInput class="input" :value="publicKey" multiline />
-                </div>
-                <div class="container">
-                    <div
-                        class="subtitle"
-                        v-text="$t('modalEnterAccountId.accountId')"
-                    ></div>
-                    <IDInput
-                        ref="input"
-                        :is-open="state.isOpen"
-                        :error="state.errorMessage"
-                        :disabled="state.isBusy"
-                        @valid="handleValid"
-                        @input="handleAccount"
-                    />
-                </div>
-                <div class="buttons">
-                    <Button
-                        compact
-                        outline
-                        :label="$t('modalEnterAccountId.noAccountId')"
-                        class="button"
-                        type="button"
-                        @click="handleDontHaveAccount"
-                    />
-                    <Button
-                        compact
-                        :label="$t('common.continue')"
-                        class="button"
-                        type="submit"
-                        :disabled="!state.valid"
-                        :busy="state.isBusy"
-                    />
-                </div>
-            </form>
-        </Modal>
-    </div>
+          {{ $t("modalEnterAccountId.hederaAccountIdsAre") }}
+        </Notice>
+      </template>
+      <form @submit.stop.prevent="handleSubmit">
+        <div
+          v-if="hasPublicKey"
+          class="container"
+        >
+          <div
+            class="subtitle"
+            v-text="$t('modalEnterAccountId.verifyKey')"
+          />
+          <ReadOnlyInput
+            class="input"
+            :value="publicKey"
+            multiline
+          />
+        </div>
+        <div class="container">
+          <div
+            class="subtitle"
+            v-text="$t('modalEnterAccountId.accountId')"
+          />
+          <IDInput
+            ref="input"
+            :is-open="state.isOpen"
+            :error="state.errorMessage"
+            :disabled="state.isBusy"
+            @valid="handleValid"
+            @input="handleAccount"
+          />
+        </div>
+        <div class="buttons">
+          <Button
+            compact
+            outline
+            :label="$t('modalEnterAccountId.noAccountId')"
+            class="button"
+            type="button"
+            @click="handleDontHaveAccount"
+          />
+          <Button
+            compact
+            :label="$t('common.continue')"
+            class="button"
+            type="submit"
+            :disabled="!state.valid"
+            :busy="state.isBusy"
+          />
+        </div>
+      </form>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -97,16 +107,10 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: Object as PropType<State>
-    },
+    props: { state: Object as PropType<State> },
     setup(props: Props, context: SetupContext) {
-        const hasPublicKey = computed(() => {
-            return (
-                props.state.publicKey !== null &&
-                props.state.publicKey !== undefined
-            );
-        });
+        const hasPublicKey = computed(() => props.state.publicKey !== null &&
+                typeof props.state.publicKey !== "undefined");
 
         const publicKey = computed(() => {
             if (hasPublicKey.value) {
@@ -135,14 +139,12 @@ export default createComponent({
             context.emit("noAccount");
         }
 
-        async function handleSubmit(): Promise<void> {
+        function handleSubmit(): void {
             props.state.errorMessage = null;
             props.state.isBusy = true;
 
             if (props.state.account == null) {
-                throw new Error(
-                    context.root.$t("common.error.illegalState").toString()
-                );
+                throw new Error(context.root.$t("common.error.illegalState").toString());
             }
 
             context.emit("submit", props.state.account);

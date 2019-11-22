@@ -1,16 +1,25 @@
 <template>
-    <div
-        class="account-tile-button"
-        :class="{ disabled }"
-        v-on="this.$listeners"
+  <div
+    class="account-tile-button"
+    :class="{ disabled }"
+    v-on="this.$listeners"
+  >
+    <img
+      class="tile-image"
+      :src="image"
     >
-        <img class="tile-image" :src="image" />
-        <div class="text">
-            <div class="title">{{ title }}</div>
-            <div class="content">{{ content }}</div>
-            <div class="note">{{ note }}</div>
-        </div>
+    <div class="text">
+      <div class="title">
+        {{ title }}
+      </div>
+      <div class="content">
+        {{ content }}
+      </div>
+      <div class="note">
+        {{ note }}
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">

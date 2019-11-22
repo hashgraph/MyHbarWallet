@@ -1,30 +1,30 @@
 <template>
-    <button
-        :class="{
-            busy,
-            outline,
-            compact,
-            danger
-        }"
-        type="submit"
-        :disabled="disabled"
-        v-on="disabled ? null : $listeners"
-    >
-        <MaterialDesignIcon
-            v-if="busy"
-            class="spinner"
-            :icon="mdiLoading"
-            spin
-        />
+  <button
+    :class="{
+      busy,
+      outline,
+      compact,
+      danger
+    }"
+    type="submit"
+    :disabled="disabled"
+    v-on="disabled ? null : $listeners"
+  >
+    <MaterialDesignIcon
+      v-if="busy"
+      class="spinner"
+      :icon="mdiLoading"
+      spin
+    />
 
-        <span v-if="state.showProgress">{{ label }}</span>
+    <span v-if="state.showProgress">{{ label }}</span>
 
-        <MaterialDesignIcon
-            v-if="trailingIcon"
-            class="icon"
-            :icon="trailingIcon"
-        />
-    </button>
+    <MaterialDesignIcon
+      v-if="trailingIcon"
+      class="icon"
+      :icon="trailingIcon"
+    />
+  </button>
 </template>
 
 <script lang="ts">
@@ -33,9 +33,7 @@ import { mdiLoading } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     props: {
         outline: { type: Boolean },
         compact: { type: Boolean },
@@ -50,19 +48,17 @@ export default createComponent({
         }
     },
     setup(props) {
-        const state = reactive({
-            showProgress: true
-        });
+        const state = reactive({ showProgress: true });
 
         watch(
             () => props.busy,
             () => {
-                if (props.busy && props.busyProgress) {
+                if (props.busy === true && props.busyProgress === true) {
                     state.showProgress = true;
                     return;
                 }
 
-                if (props.busy) {
+                if (props.busy === true) {
                     state.showProgress = false;
                     return;
                 }

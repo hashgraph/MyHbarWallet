@@ -1,56 +1,59 @@
 <template>
-    <div class="account">
-        <Identicon :size="60" :value="publicKeyString" class="account-image" />
-        <div class="content">
-            <div class="top">
-                <div class="title">
-                    {{ $t("accountCard.account") }}
-                </div>
-                <div class="subtitle">
-                    <span>{{ shard }}.{{ realm }}.</span
-                    ><strong>{{ account }}</strong>
-                </div>
-            </div>
-            <div class="actions">
-                <Tooltip
-                    :message="$t('accountCard.accountQrCode')"
-                    class="action"
-                >
-                    <MaterialDesignIcon
-                        :icon="mdiQrcode"
-                        class="qr-icon"
-                        @click="showQrCode"
-                    />
-                </Tooltip>
-                <Tooltip
-                    v-if="hasKeys"
-                    :message="$t('accountCard.keys')"
-                    class="action"
-                >
-                    <MaterialDesignIcon
-                        :icon="mdiKey"
-                        class="key-icon"
-                        @click="showKeys"
-                    />
-                </Tooltip>
-                <ExportKeystoreButton
-                    v-if="hasPrivateKey"
-                    :private-key="privateKeyString"
-                    class="action"
-                />
-            </div>
+  <div class="account">
+    <Identicon
+      class="account-image"
+      :size="60"
+      :value="publicKeyString"
+    />
+    <div class="content">
+      <div class="top">
+        <div class="title">
+          {{ $t("accountCard.account") }}
         </div>
-        <ModalViewAccountId
-            v-model="state.viewAccountQrCodeIsOpen"
-            :value="{ shard, realm, account }"
+        <div class="subtitle">
+          <span>{{ shard }}.{{ realm }}.</span><strong>{{ account }}</strong>
+        </div>
+      </div>
+      <div class="actions">
+        <Tooltip
+          :message="$t('accountCard.accountQrCode')"
+          class="action"
+        >
+          <MaterialDesignIcon
+            :icon="mdiQrcode"
+            class="qr-icon"
+            @click="showQrCode"
+          />
+        </Tooltip>
+        <Tooltip
+          v-if="hasKeys"
+          :message="$t('accountCard.keys')"
+          class="action"
+        >
+          <MaterialDesignIcon
+            :icon="mdiKey"
+            class="key-icon"
+            @click="showKeys"
+          />
+        </Tooltip>
+        <ExportKeystoreButton
+          v-if="hasPrivateKey"
+          :private-key="privateKeyString"
+          class="action"
         />
-        <ModalViewKeys
-            v-if="hasKeys"
-            v-model="state.viewKeysIsOpen"
-            :public-key="publicKeyString"
-            :private-key="privateKeyString"
-        />
+      </div>
     </div>
+    <ModalViewAccountId
+      v-model="state.viewAccountQrCodeIsOpen"
+      :value="{ shard, realm, account }"
+    />
+    <ModalViewKeys
+      v-if="hasKeys"
+      v-model="state.viewKeysIsOpen"
+      :public-key="publicKeyString"
+      :private-key="privateKeyString"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -71,22 +74,20 @@ import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
 import { store } from "../store";
 
 async function getPrivateKey(): Promise<Ed25519PrivateKey | null> {
-    if (store.state.wallet.session !== null) {
-        if (store.state.wallet.session.wallet.hasPrivateKey()) {
-            return store.state.wallet.session.wallet.getPrivateKey();
-        }
+    if (store.state.wallet.session === null || !store.state.wallet.session.wallet.hasPrivateKey()) {
+        return null;
     }
 
-    return null;
+    return store.state.wallet.session.wallet.getPrivateKey();
 }
 
-async function getPublicKey(): Promise<PublicKey | null> {
-    if (store.state.wallet.session !== null) {
-        return store.state.wallet.session.wallet.getPublicKey();
+const getPublicKey: () => Promise<PublicKey | null> = async(): Promise<PublicKey | null> => {
+    if (store.state.wallet.session === null) {
+        return null;
     }
 
-    return null;
-}
+    return store.state.wallet.session.wallet.getPublicKey();
+};
 
 interface Props {
     shard: number;
@@ -116,26 +117,21 @@ export default createComponent({
             privateKey: null as Ed25519PrivateKey | null
         });
 
-        watch(getPublicKey, async (result: Promise<PublicKey | null>) => {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        watch(getPublicKey, async(result: Promise<PublicKey | null>) => {
             state.publicKey = await result;
         });
 
-        watch(
-            getPrivateKey,
-            async (result: Promise<Ed25519PrivateKey | null>) => {
-                state.privateKey = await result;
-            }
-        );
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        watch(getPrivateKey, async(result: Promise<Ed25519PrivateKey | null>) => {
+            state.privateKey = await result;
+        });
 
-        const hasPrivateKey = computed(() =>
-            store.state.wallet.session !== null
-                ? store.state.wallet.session.wallet.hasPrivateKey()
-                : false
-        );
+        const hasPrivateKey = computed(() => store.state.wallet.session !== null ?
+            store.state.wallet.session.wallet.hasPrivateKey() :
+            false);
         const hasPublicKey = computed(() => state.publicKey !== null);
-        const hasKeys = computed(
-            () => hasPrivateKey.value || hasPublicKey.value
-        );
+        const hasKeys = computed(() => hasPrivateKey.value || hasPublicKey.value);
 
         const privateKeyString = computed(() => {
             if (state.privateKey !== null) {

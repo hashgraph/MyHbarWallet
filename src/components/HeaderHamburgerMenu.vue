@@ -1,51 +1,91 @@
 <template>
-    <nav :class="{ 'nav-open': isOpen }">
-        <div v-if="inInterface" class="card-container">
-            <BalanceCard class="info-balance" />
-            <NetworkCard class="info-network" />
-        </div>
-        <router-link to="/" class="link-block" @click.native="toggle">
-            <div class="link">{{ $t("common.home") }}</div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-        </router-link>
-        <router-link
-            v-if="!isAbout"
-            :to="{ name: 'home', hash: '#about' }"
-            class="link-block"
-            @click.native="toggle"
-        >
-            <div class="link">{{ $t("common.about") }}</div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-        </router-link>
-        <div v-else class="link-block" @click="handleSameHash('#about')">
-            <div class="link">{{ $t("common.about") }}</div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-        </div>
-        <router-link
-            v-if="!isFaqs"
-            :to="{ name: 'home', hash: '#faqs' }"
-            class="link-block"
-            @click.native="toggle"
-        >
-            <div class="link">{{ $t("common.faqs") }}</div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-        </router-link>
-        <div v-else class="link-block" @click="handleSameHash('#faqs')">
-            <div class="link">{{ $t("common.faqs") }}</div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
-        </div>
+  <nav :class="{ 'nav-open': isOpen }">
+    <div
+      v-if="inInterface"
+      class="card-container"
+    >
+      <BalanceCard class="info-balance" />
+      <NetworkCard class="info-network" />
+    </div>
+    <router-link
+      to="/"
+      class="link-block"
+      @click.native="toggle"
+    >
+      <div class="link">
+        {{ $t("common.home") }}
+      </div>
+      <MaterialDesignIcon
+        class="icon"
+        :icon="mdiChevronRight"
+      />
+    </router-link>
+    <router-link
+      v-if="!isAbout"
+      :to="{ name: 'home', hash: '#about' }"
+      class="link-block"
+      @click.native="toggle"
+    >
+      <div class="link">
+        {{ $t("common.about") }}
+      </div>
+      <MaterialDesignIcon
+        class="icon"
+        :icon="mdiChevronRight"
+      />
+    </router-link>
+    <div
+      v-else
+      class="link-block"
+      @click="handleSameHash('#about')"
+    >
+      <div class="link">
+        {{ $t("common.about") }}
+      </div>
+      <MaterialDesignIcon
+        class="icon"
+        :icon="mdiChevronRight"
+      />
+    </div>
+    <router-link
+      v-if="!isFaqs"
+      :to="{ name: 'home', hash: '#faqs' }"
+      class="link-block"
+      @click.native="toggle"
+    >
+      <div class="link">
+        {{ $t("common.faqs") }}
+      </div>
+      <MaterialDesignIcon
+        class="icon"
+        :icon="mdiChevronRight"
+      />
+    </router-link>
+    <div
+      v-else
+      class="link-block"
+      @click="handleSameHash('#faqs')"
+    >
+      <div class="link">
+        {{ $t("common.faqs") }}
+      </div>
+      <MaterialDesignIcon
+        class="icon"
+        :icon="mdiChevronRight"
+      />
+    </div>
 
-        <div class="logout-container">
-            <Button
-                v-if="loggedIn"
-                class="logout"
-                outline
-                danger
-                :label="$t('common.logout')"
-                @click="handleLogout"
-            />
-        </div>
-    </nav>
+    <div class="logout-container">
+      <Button
+        v-if="loggedIn"
+        class="logout"
+        outline
+        danger
+        :label="$t('common.logout')"
+        @click="handleLogout"
+      />
+    </div>
+  </nav>
 </template>
 
 <script lang="ts">
@@ -75,9 +115,7 @@ export default createComponent({
         NetworkCard,
         Button
     },
-    props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>
-    },
+    props: { isOpen: (Boolean as unknown) as PropType<boolean> },
     setup(props: Props, context: SetupContext) {
         const state = reactive({
             scrolled: false,
@@ -91,7 +129,7 @@ export default createComponent({
                 return false;
             }
 
-            return route.matched[0].name === "interface";
+            return route.matched[ 0 ].name === "interface";
         });
 
         function toggle(): void {
@@ -115,13 +153,13 @@ export default createComponent({
 
         // vue-router doesn't allow same path routing (from #faqs to #faqs)
         // this is a workaround
-        function handleSameHash(path: string): void {
+        async function handleSameHash(path: string): Promise<void> {
             toggle();
-            context.root.$router.push({ name: "home" });
-            context.root.$router.push({ name: "home", hash: path });
+            await context.root.$router.push({ name: "home" });
+            await context.root.$router.push({ name: "home", hash: path });
         }
 
-        const loggedIn = computed(() => getters.IS_LOGGED_IN);
+        const loggedIn = computed(() => getters.isLoggedIn);
 
         function handleLogout(): void {
             context.emit("toggle", !props.isOpen);

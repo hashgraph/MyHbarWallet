@@ -25,6 +25,4 @@ const availableNetworks: { [key: string]: NetworkSettings } = {
 // Defaults to "testnet"
 declare const HEDERA_NETWORK: string;
 
-export default {
-    network: availableNetworks[HEDERA_NETWORK]!
-};
+export default { network: availableNetworks[ HEDERA_NETWORK ]! };

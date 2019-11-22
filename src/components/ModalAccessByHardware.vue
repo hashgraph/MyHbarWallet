@@ -1,51 +1,53 @@
 <template>
-    <Modal
-        :is-open="state.isOpen"
-        :title="$t('modalAccessByHardware.title')"
-        @change="handleModalChangeIsOpen"
+  <Modal
+    :is-open="state.isOpen"
+    :title="$t('modalAccessByHardware.title')"
+    @change="handleModalChangeIsOpen"
+  >
+    <form
+      class="modal-access-by-hardware"
+      @submit.prevent="handleSubmit"
     >
-        <form class="modal-access-by-hardware" @submit.prevent="handleSubmit">
-            <RadioButtonGroup
-                v-model="state.optionSelected"
-                name="hardware-access-option"
-                :options="options.filter(option => option.supported)"
-            />
-            <div :class="{ instructions: true, open: selected }">
-                <div>{{ instructions }}</div>
-            </div>
-            <div
-                :class="{
-                    instructions: true,
-                    bold: true,
-                    open: requiresChrome && !isChrome
-                }"
-            >
-                <div>{{ $t("modalAccessByHardware.useChromeContinue") }}</div>
-            </div>
-            <div
-                :class="{
-                    instructions: true,
-                    bold: true,
-                    open: !state.disableButton
-                }"
-            >
-                <div>{{ $t("modalAccessByHardware.watchForPrompts") }}</div>
-            </div>
-            <Button
-                :busy="state.isBusy"
-                :disabled="state.disableButton"
-                class="button-choose-a-hardware"
-                :label="$t('modalAccessByHardware.chooseAHardware')"
-            />
-            <CustomerSupportLink />
-        </form>
-    </Modal>
+      <RadioButtonGroup
+        v-model="state.optionSelected"
+        name="hardware-access-option"
+        :options="options.filter(option => option.supported)"
+      />
+      <div :class="{ instructions: true, open: selected }">
+        <div>{{ instructions }}</div>
+      </div>
+      <div
+        :class="{
+          instructions: true,
+          bold: true,
+          open: requiresChrome && !isChrome
+        }"
+      >
+        <div>{{ $t("modalAccessByHardware.useChromeContinue") }}</div>
+      </div>
+      <div
+        :class="{
+          instructions: true,
+          bold: true,
+          open: !state.disableButton
+        }"
+      >
+        <div>{{ $t("modalAccessByHardware.watchForPrompts") }}</div>
+      </div>
+      <Button
+        :busy="state.isBusy"
+        :disabled="state.disableButton"
+        class="button-choose-a-hardware"
+        :label="$t('modalAccessByHardware.chooseAHardware')"
+      />
+      <CustomerSupportLink />
+    </form>
+  </Modal>
 </template>
 
 <script lang="ts">
 import {
     createComponent,
-    reactive,
     watch,
     SetupContext,
     computed,
@@ -81,8 +83,8 @@ interface HardwareAttributes {
 }
 
 export const HardwareOptions: Map<
-    AccessHardwareOption,
-    HardwareAttributes
+AccessHardwareOption,
+HardwareAttributes
 > = new Map([
     [
         AccessHardwareOption.Ledger,
@@ -163,25 +165,17 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: (Object as unknown) as PropType<State> },
     setup(props: Props, context: SetupContext) {
-        const chromeWarning = computed(
-            () =>
-                context.root.$t("warning.browserWarningBody1").toString() +
-                "\n" +
-                context.root.$t("warning.browserWarningBody2").toString()
-        );
+        const chromeWarning = computed(() => `${context.root.$t("warning.browserWarningBody1").toString()
+        }\n${
+            context.root.$t("warning.browserWarningBody2").toString()}`);
 
-        const isChrome = computed(
-            () =>
-                new UAParser(navigator.userAgent).getBrowser().name === "Chrome"
-        );
+        const isChrome = computed(() => new UAParser(navigator.userAgent).getBrowser().name === "Chrome");
 
-        const requiresChrome = computed(() => {
-            return props.state.optionSelected === AccessHardwareOption.Ledger;
-        });
+        // todo [2020-01-01]: consider making max-len 120
+        // eslint-disable-next-line max-len
+        const requiresChrome = computed(() => props.state.optionSelected === AccessHardwareOption.Ledger);
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
@@ -203,20 +197,18 @@ export default createComponent({
         watch(
             () => props.state.optionSelected.length,
             () => {
-                // if require chrome but not chrome, or if nothing selected, disable button
-                props.state.disableButton =
-                    (!isChrome.value && requiresChrome.value) ||
-                    props.state.optionSelected.length === 0;
+                if (!isChrome.value && requiresChrome.value) {
+                    props.state.disableButton = true;
+                    return;
+                }
+
+                props.state.disableButton = props.state.optionSelected.length === 0;
             }
         );
 
-        const options = computed(() => {
-            return [...HardwareOptions.values()];
-        });
+        const options = computed(() => [ ...HardwareOptions.values() ]);
 
-        const selected = computed(() => {
-            return props.state.optionSelected !== "";
-        });
+        const selected = computed(() => props.state.optionSelected !== "");
 
         const instructions = computed(() => {
             switch (props.state.optionSelected) {
@@ -225,11 +217,11 @@ export default createComponent({
                         return context.root
                             .$t("modalAccessByHardware.ledgerInstructions")
                             .toString();
-                    } else {
-                        return context.root
-                            .$t("modalAccessByHardware.ledgerChromeOnly")
-                            .toString();
                     }
+                    return context.root
+                        .$t("modalAccessByHardware.ledgerChromeOnly")
+                        .toString();
+
                 case AccessHardwareOption.Trezor:
                     return context.root
                         .$t("modalAccessByHardware.trezorInstructions")

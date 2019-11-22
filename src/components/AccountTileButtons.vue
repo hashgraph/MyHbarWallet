@@ -1,26 +1,28 @@
 <template>
-    <div class="tile-grid">
-        <!-- TODO: Remove div below when hardware option is ready -->
-        <div class="ribbon-container">
-            <div class="coming-soon">{{ $t("common.comingSoon") }}</div>
-            <AccountTileButton
-                :disabled="true"
-                :title="$t('accountTileButtons.hardware')"
-                :content="$t('accountTileButtons.supportForHardwareWallets')"
-                :image="hardwareImage"
-                @click="$emit('click', 'hardware')"
-            />
-        </div>
-        <AccountTileButton
-            :title="$t('accountTileButtons.software')"
-            :content="
-                $t('accountTileButtons.keystoreFilePrivateKeyMnemonicPhrase')
-            "
-            :image="softwareImage"
-            :note="$t('accountTileButtons.notRecommended')"
-            @click="$emit('click', 'software')"
-        />
+  <div class="tile-grid">
+    <!-- TODO: Remove div below when hardware option is ready -->
+    <div class="ribbon-container">
+      <div class="coming-soon">
+        {{ $t("common.comingSoon") }}
+      </div>
+      <AccountTileButton
+        :disabled="true"
+        :title="$t('accountTileButtons.hardware')"
+        :content="$t('accountTileButtons.supportForHardwareWallets')"
+        :image="hardwareImage"
+        @click="$emit('click', 'hardware')"
+      />
     </div>
+    <AccountTileButton
+      :title="$t('accountTileButtons.software')"
+      :content="
+        $t('accountTileButtons.keystoreFilePrivateKeyMnemonicPhrase')
+      "
+      :image="softwareImage"
+      :note="$t('accountTileButtons.notRecommended')"
+      @click="$emit('click', 'software')"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -30,9 +32,7 @@ import softwareImage from "../assets/button-software.svg";
 import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
-    components: {
-        AccountTileButton
-    },
+    components: { AccountTileButton },
 
     setup() {
         return { hardwareImage, softwareImage };

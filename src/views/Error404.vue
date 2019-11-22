@@ -1,20 +1,20 @@
 <template>
-    <div class="error-404">
-        <div class="error-container">
-            <div class="error-code">{{ $t("error404.404") }}</div>
-            <div class="error-description">
-                {{ $t("error404.oops") }}
-            </div>
-        </div>
+  <div class="error-404">
+    <div class="error-container">
+      <div class="error-code">
+        {{ $t("error404.404") }}
+      </div>
+      <div class="error-description">
+        {{ $t("error404.oops") }}
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { createComponent } from "@vue/composition-api";
 
-export default createComponent({
-    components: {}
-});
+export default createComponent({ components: {}});
 </script>
 
 <style scoped lang="postcss">

@@ -1,30 +1,33 @@
 <template>
-    <div class="memo-container">
-        <div class="header">
-            <div class="text">
-                {{ $t("common.memo") }}
-            </div>
-            <div class="memo-switch">
-                <div class="text">
-                    {{ $t("common.optional") }}
-                </div>
-                <SwitchButton
-                    v-model="state.showMemo"
-                    class="btn"
-                    @change="handleChangeShowMemo"
-                />
-            </div>
+  <div class="memo-container">
+    <div class="header">
+      <div class="text">
+        {{ $t("common.memo") }}
+      </div>
+      <div class="memo-switch">
+        <div class="text">
+          {{ $t("common.optional") }}
         </div>
-        <div class="memo-input" :class="{ expanded: state.showMemo }">
-            <TextInput
-                ref="input"
-                :value="value"
-                :placeholder="$t('common.memo')"
-                :tabindex="state.showMemo ? null : '-1'"
-                @input="handleInput"
-            />
-        </div>
+        <SwitchButton
+          v-model="state.showMemo"
+          class="btn"
+          @change="handleChangeShowMemo"
+        />
+      </div>
     </div>
+    <div
+      class="memo-input"
+      :class="{ expanded: state.showMemo }"
+    >
+      <TextInput
+        ref="input"
+        :value="value"
+        :placeholder="$t('common.memo')"
+        :tabindex="state.showMemo ? null : '-1'"
+        @input="handleInput"
+      />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -48,13 +51,9 @@ export default createComponent({
         prop: "value",
         event: "input"
     },
-    props: {
-        value: { type: String, default: "" }
-    },
+    props: { value: { type: String, default: "" }},
     setup(props, context) {
-        const state = reactive({
-            showMemo: false
-        });
+        const state = reactive({ showMemo: false });
 
         function handleInput(memo: string): void {
             context.emit("input", memo);
@@ -64,7 +63,7 @@ export default createComponent({
             if (showMemo) {
                 // If we are now showing the memo,
                 // focus the memo input
-                if (((context as unknown) as Context).refs.input != undefined) {
+                if (typeof ((context as unknown) as Context).refs.input !== "undefined") {
                     ((context as unknown) as Context).refs.input.focus();
                 }
             }

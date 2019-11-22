@@ -1,42 +1,42 @@
 <template>
-    <InterfaceForm :title="$t('interfaceSignMessage.title')">
-        <div class="description">
-            {{ $t("interfaceSignMessage.includeYourNickname") }}
-        </div>
+  <InterfaceForm :title="$t('interfaceSignMessage.title')">
+    <div class="description">
+      {{ $t("interfaceSignMessage.includeYourNickname") }}
+    </div>
 
-        <div class="text-input-container">
-            <TextInput
-                v-model="state.message"
-                :label="$t('common.message')"
-                type="text"
-                :error="
-                    state.enableErr ? 'The message field is required' : null
-                "
-                multiline
-            />
-        </div>
+    <div class="text-input-container">
+      <TextInput
+        v-model="state.message"
+        :label="$t('common.message')"
+        type="text"
+        :error="
+          state.enableErr ? 'The message field is required' : null
+        "
+        multiline
+      />
+    </div>
 
-        <template v-slot:footer>
-            <Button
-                :disabled="!state.signable"
-                :label="$t('interfaceSignMessage.sign')"
-                @click="onSignClicked"
-            />
-        </template>
-        <ModalConfirmSignMessage
-            :message="state.message"
-            public-key="302a300506032b65700321002cc9e2d0c16c717476d4bbbfa3307a98cf0c41d7afc77c851e476b5921f3fb65"
-            :is-open="state.confirmSignIsOpen"
-            @change="handleConfirmModalChanged"
-            @confirm="handleConfirmModalConfirm"
-        />
-        <!-- value should be a json thing, not `message` -->
-        <ModalMessageSigned
-            :is-open="state.signedModalIsOpen"
-            :value="state.message"
-            @change="handleSignedModalChanged"
-        />
-    </InterfaceForm>
+    <template v-slot:footer>
+      <Button
+        :disabled="!state.signable"
+        :label="$t('interfaceSignMessage.sign')"
+        @click="onSignClicked"
+      />
+    </template>
+    <ModalConfirmSignMessage
+      :message="state.message"
+      public-key="302a300506032b65700321002cc9e2d0c16c717476d4bbbfa3307a98cf0c41d7afc77c851e476b5921f3fb65"
+      :is-open="state.confirmSignIsOpen"
+      @change="handleConfirmModalChanged"
+      @confirm="handleConfirmModalConfirm"
+    />
+    <!-- value should be a json thing, not `message` -->
+    <ModalMessageSigned
+      :is-open="state.signedModalIsOpen"
+      :value="state.message"
+      @change="handleSignedModalChanged"
+    />
+  </InterfaceForm>
 </template>
 
 <script lang="ts">
@@ -92,7 +92,7 @@ export default createComponent({
 
         watch(
             () => state.message,
-            val => {
+            (val) => {
                 state.signable = val != null;
                 state.enableErr = val === "";
             }

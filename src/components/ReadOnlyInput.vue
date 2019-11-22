@@ -1,18 +1,18 @@
 <template>
-    <div class="read-only-input">
-        <div
-            :class="{ value, multiline, obscure: obscure && !state.isEyeOpen }"
-        >
-            {{ value }}
-        </div>
-        <MaterialDesignIcon
-            v-if="obscure"
-            :class="{ eye, 'is-open': state.isEyeOpen }"
-            :icon="eye"
-            :size="40"
-            @click="handleClickEye"
-        />
+  <div class="read-only-input">
+    <div
+      :class="{ value, multiline, obscure: obscure && !state.isEyeOpen }"
+    >
+      {{ value }}
     </div>
+    <MaterialDesignIcon
+      v-if="obscure"
+      :class="{ eye, 'is-open': state.isEyeOpen }"
+      :icon="eye"
+      :size="40"
+      @click="handleClickEye"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -31,18 +31,14 @@ export default createComponent({
         multiline: Boolean,
         obscure: Boolean
     },
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     setup(props: { value: string; multiline: boolean; obscure: boolean }) {
         const state = reactive({
             isEyeOpen: false,
             hasFocus: false
         });
 
-        const eye = computed(() => {
-            return state.isEyeOpen ? mdiEye : mdiEyeOutline;
-        });
+        const eye = computed(() => state.isEyeOpen ? mdiEye : mdiEyeOutline);
 
         function handleClickEye(): void {
             state.isEyeOpen = !state.isEyeOpen;

@@ -1,37 +1,31 @@
 import Router, { Route } from "vue-router";
 import Home from "./views/Home.vue";
 import Error404 from "./views/Error404.vue";
+// false positive
+// eslint-disable-next-line import/named
 import { PositionResult } from "vue-router/types/router";
 import { store } from "./store";
 
 function HardwareWalletAffiliates(): Promise<
-    typeof import("./views/HardwareWalletAffiliates.vue")
+typeof import("./views/HardwareWalletAffiliates.vue")
 > {
-    return import(
-        /* webpackChunkName: "affiliates" */ "./views/HardwareWalletAffiliates.vue"
-    );
+    return import(/* webpackChunkName: "affiliates" */ "./views/HardwareWalletAffiliates.vue");
 }
 
 function InterfaceCreateAccount(): Promise<
-    typeof import("./views/InterfaceCreateAccount.vue")
+typeof import("./views/InterfaceCreateAccount.vue")
 > {
-    return import(
-        /* webpackChunkName: "interface" */ "./views/InterfaceCreateAccount.vue"
-    );
+    return import(/* webpackChunkName: "interface" */ "./views/InterfaceCreateAccount.vue");
 }
 
 function TermsConditions(): Promise<
-    typeof import("./views/TermsConditions.vue")
+typeof import("./views/TermsConditions.vue")
 > {
-    return import(
-        /* webpackChunkName: "terms" */ "./views/TermsConditions.vue"
-    );
+    return import(/* webpackChunkName: "terms" */ "./views/TermsConditions.vue");
 }
 
 function PrivacyPolicy(): Promise<typeof import("./views/PrivacyPolicy.vue")> {
-    return import(
-        /* webpackChunkName: "privacy" */ "./views/PrivacyPolicy.vue"
-    );
+    return import(/* webpackChunkName: "privacy" */ "./views/PrivacyPolicy.vue");
 }
 
 function ConvertUnits(): Promise<typeof import("./views/ConvertUnits.vue")> {
@@ -43,82 +37,55 @@ function Interface(): Promise<typeof import("./views/Interface.vue")> {
 }
 
 function InterfaceSendTransfer(): Promise<
-    typeof import("./views/InterfaceSendTransfer.vue")
+typeof import("./views/InterfaceSendTransfer.vue")
 > {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/InterfaceSendTransfer.vue"
-    );
+    return import(/* webpackChunkName: "interface" */ "./views/InterfaceSendTransfer.vue");
 }
 
 function InterfaceDeployContract(): Promise<
-    typeof import("./views/InterfaceDeployContract.vue")
+typeof import("./views/InterfaceDeployContract.vue")
 > {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/InterfaceDeployContract.vue"
-    );
+    return import(/* webpackChunkName: "interface" */ "./views/InterfaceDeployContract.vue");
 }
 
 function InterfaceInteractWithContract(): Promise<
-    typeof import("./views/InterfaceInteractWithContract.vue")
+typeof import("./views/InterfaceInteractWithContract.vue")
 > {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/InterfaceInteractWithContract.vue"
-    );
+    return import(/* webpackChunkName: "interface" */ "./views/InterfaceInteractWithContract.vue");
 }
 
 function InterfaceSignMessage(): Promise<
-    typeof import("./views/InterfaceSignMessage.vue")
+typeof import("./views/InterfaceSignMessage.vue")
 > {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/InterfaceSignMessage.vue"
-    );
+    return import(/* webpackChunkName: "interface" */ "./views/InterfaceSignMessage.vue");
 }
 
 function InterfaceVerifyMessage(): Promise<
-    typeof import("./views/InterfaceVerifyMessage.vue")
+typeof import("./views/InterfaceVerifyMessage.vue")
 > {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/InterfaceVerifyMessage.vue"
-    );
+    return import(/* webpackChunkName: "interface" */ "./views/InterfaceVerifyMessage.vue");
 }
 
 function InterfaceUploadFile(): Promise<
-    typeof import("./views/InterfaceUploadFile.vue")
+typeof import("./views/InterfaceUploadFile.vue")
 > {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/InterfaceUploadFile.vue"
-    );
+    return import(/* webpackChunkName: "interface" */ "./views/InterfaceUploadFile.vue");
 }
 
 function InterfaceDownloadFile(): Promise<
-    typeof import("./views/InterfaceDownloadFile.vue")
+typeof import("./views/InterfaceDownloadFile.vue")
 > {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/InterfaceDownloadFile.vue"
-    );
+    return import(/* webpackChunkName: "interface" */ "./views/InterfaceDownloadFile.vue");
 }
 
 function CreateAccount(): Promise<typeof import("./views/CreateAccount.vue")> {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/CreateAccount.vue"
-    );
+    return import(/* webpackChunkName: "interface" */ "./views/CreateAccount.vue");
 }
 
 function AccessMyAccount(): Promise<
-    typeof import("./views/AccessMyAccount.vue")
+typeof import("./views/AccessMyAccount.vue")
 > {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/AccessMyAccount.vue"
-    );
+    return import(/* webpackChunkName: "interface" */ "./views/AccessMyAccount.vue");
 }
 
 // auth function that redirects visitors who have not logged in back to the home route
@@ -126,6 +93,8 @@ function RequireWallet(
     _to: Route,
     _from: Route,
     next: {
+        // todo [2020-01-01]: look into properly fixing this?
+        // eslint-disable-next-line @typescript-eslint/unified-signatures
         (arg0: string): void;
         (): void;
     }
@@ -138,6 +107,8 @@ function RequireWallet(
 }
 
 export default new Router({
+    // false positive
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     mode: process.env.IS_ELECTRON ? "hash" : "history",
     base: process.env.BASE_URL,
     routes: [
@@ -181,9 +152,7 @@ export default new Router({
             beforeEnter: RequireWallet,
             component: Interface,
             name: "interface",
-            redirect: {
-                name: "send-transfer"
-            },
+            redirect: { name: "send-transfer" },
             children: [
                 {
                     path: "send-transfer",
@@ -235,11 +204,11 @@ export default new Router({
     ],
 
     scrollBehavior(to, from, savedPosition): PositionResult {
-        if (savedPosition) {
+        if (savedPosition !== null) {
             return savedPosition;
         }
 
-        if (to.hash) {
+        if (to.hash !== null) {
             // hash results were not quite right for mobile, this gives
             // a 25 pixel buffer
             return {
@@ -248,9 +217,6 @@ export default new Router({
             };
         }
 
-        return {
-            x: 0,
-            y: 0
-        };
+        return { x: 0, y: 0 };
     }
 });

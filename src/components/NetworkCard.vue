@@ -1,30 +1,33 @@
 <template>
-    <div class="network">
-        <img :src="hedera" />
-        <div class="content">
-            <div class="top">
-                <div class="title">
-                    {{ $t("networkCard.network") }}
-                </div>
-                <div class="subtitle">
-                    {{ networkName }}
-                </div>
-                <div class="subtitle">
-                    {{ networkAddress }}
-                </div>
-            </div>
-            <div class="actions">
-                <Tooltip
-                    :pinnable="false"
-                    :message="$t('networkCard.changeNetwork')"
-                >
-                    <button v-if="false" class="change">
-                        {{ $t("common.change") }}
-                    </button>
-                </Tooltip>
-            </div>
+  <div class="network">
+    <img :src="hedera">
+    <div class="content">
+      <div class="top">
+        <div class="title">
+          {{ $t("networkCard.network") }}
         </div>
+        <div class="subtitle">
+          {{ networkName }}
+        </div>
+        <div class="subtitle">
+          {{ networkAddress }}
+        </div>
+      </div>
+      <div class="actions">
+        <Tooltip
+          :pinnable="false"
+          :message="$t('networkCard.changeNetwork')"
+        >
+          <button
+            v-if="false"
+            class="change"
+          >
+            {{ $t("common.change") }}
+          </button>
+        </Tooltip>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -34,9 +37,7 @@ import hedera from "../assets/icon-hedera-outline.svg";
 import settings from "../settings";
 
 export default createComponent({
-    components: {
-        Tooltip
-    },
+    components: { Tooltip },
     setup() {
         return {
             hedera,

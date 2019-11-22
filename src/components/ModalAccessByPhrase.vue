@@ -1,45 +1,45 @@
 <template>
-    <div class="modal-mnemonic-phrase">
-        <Modal
-            :title="$t('modalAccessByPhrase.title')"
-            :not-closable="state.isBusy"
-            :is-open="state.isOpen"
-            @change="handleModalChangeIsOpen"
-        >
-            <template v-slot:banner>
-                <Warning
-                    :title="$t('warning.title')"
-                    :message="
-                        $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
-                    "
-                />
-            </template>
+  <div class="modal-mnemonic-phrase">
+    <Modal
+      :title="$t('modalAccessByPhrase.title')"
+      :not-closable="state.isBusy"
+      :is-open="state.isOpen"
+      @change="handleModalChangeIsOpen"
+    >
+      <template v-slot:banner>
+        <Warning
+          :title="$t('warning.title')"
+          :message="
+            $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+          "
+        />
+      </template>
 
-            <div class="instruction">
-                {{ $t("modalAccessByPhrase.pleaseTypeInYourMnemonicPhrase") }}
-            </div>
-            <form @submit.prevent="$emit('submit')">
-                <MnemonicInput
-                    class="phrase-input"
-                    :words="24"
-                    :value="state.words"
-                    :editable="true"
-                    :is-open="state.isOpen"
-                    @input="handleMnemonicInput"
-                />
+      <div class="instruction">
+        {{ $t("modalAccessByPhrase.pleaseTypeInYourMnemonicPhrase") }}
+      </div>
+      <form @submit.prevent="$emit('submit')">
+        <MnemonicInput
+          class="phrase-input"
+          :words="24"
+          :value="state.words"
+          :editable="true"
+          :is-open="state.isOpen"
+          @input="handleMnemonicInput"
+        />
 
-                <Button
-                    class="continue-btn"
-                    :label="$t('common.continue')"
-                    :busy="state.isBusy"
-                    :disabled="!areFieldsFilled"
-                />
-            </form>
-            <div class="support">
-                <CustomerSupportLink />
-            </div>
-        </Modal>
-    </div>
+        <Button
+          class="continue-btn"
+          :label="$t('common.continue')"
+          :busy="state.isBusy"
+          :disabled="!areFieldsFilled"
+        />
+      </form>
+      <div class="support">
+        <CustomerSupportLink />
+      </div>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -77,9 +77,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: { type: Object, required: true } as PropOptions<State>
-    },
+    props: { state: { type: Object, required: true } as PropOptions<State> },
     setup(props: { state: State }, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
@@ -89,14 +87,17 @@ export default createComponent({
         }
 
         const areFieldsFilled = computed(() => {
-            if (props.state.words.length == 24) {
-                for (const word of props.state.words) {
-                    if (!word || word.length === 0) {
-                        return false;
-                    }
-                }
-                return true;
+            if (props.state.words.length !== 24) {
+                return false;
             }
+
+            for (const word of props.state.words) {
+                if (word.length === 0) {
+                    return false;
+                }
+            }
+
+            return true;
         });
 
         // Watch for the modal state to change, and clear input when the modal is reopened
@@ -104,7 +105,7 @@ export default createComponent({
             () => props.state.isOpen,
             (newVal: boolean) => {
                 if (newVal) {
-                    context.emit("change", { ...props.state, words: [] });
+                    context.emit("change", { ...props.state, words: []});
                 }
             }
         );

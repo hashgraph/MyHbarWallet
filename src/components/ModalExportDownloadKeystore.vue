@@ -1,21 +1,21 @@
 <template>
-    <div class="modal-export-download-keystore">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalExportDownloadKeystore.title')"
-            @change="handleModalChangeIsOpen"
-        >
-            <KeystoreWarningCards />
-            <Button
-                :label="$t('modalExportDownloadKeystore.downloadKeystoreFile')"
-                :busy="state.isBusy"
-                :disabled="state.isBusy"
-                compact
-                class="download"
-                @click="handleDownloadClick"
-            />
-        </Modal>
-    </div>
+  <div class="modal-export-download-keystore">
+    <Modal
+      :is-open="state.isOpen"
+      :title="$t('modalExportDownloadKeystore.title')"
+      @change="handleModalChangeIsOpen"
+    >
+      <KeystoreWarningCards />
+      <Button
+        :label="$t('modalExportDownloadKeystore.downloadKeystoreFile')"
+        :busy="state.isBusy"
+        :disabled="state.isBusy"
+        compact
+        class="download"
+        @click="handleDownloadClick"
+      />
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -43,9 +43,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: { type: Object, required: true }
-    },
+    props: { state: { type: Object, required: true }},
     setup(props: Props, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });

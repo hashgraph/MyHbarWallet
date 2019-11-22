@@ -1,6 +1,9 @@
 <template>
-    <!-- eslint-disable vue/no-v-html -->
-    <svg v-bind="svg.attributes" v-html="svg.content"></svg>
+  <!-- eslint-disable vue/no-v-html -->
+  <svg
+    v-bind="svg.attributes"
+    v-html="svg.content"
+  />
 </template>
 
 <script lang="ts">
@@ -10,7 +13,9 @@ import { createComponent, computed, PropType } from "@vue/composition-api";
 ((window as unknown) as { jdenticon_config: { replaceMode: string } })[
     "jdenticon_config"
 ] = { replaceMode: "never" };
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
+// using require is needed for this "hack" to work
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports, no-undef
 const jdenticon = require("jdenticon");
 
 interface Props {
@@ -38,9 +43,11 @@ export default createComponent({
 
             const attributes: { [key: string]: string | null } = {};
 
-            for (let i = 0; i < svgEl.attributes.length; i++) {
-                const attr = svgEl.attributes[i];
-                attributes[attr.nodeName] = attr.nodeValue;
+            // in this case the for loop is actually the best option
+            // eslint-disable-next-line @typescript-eslint/prefer-for-of
+            for (let i = 0; i < svgEl.attributes.length; i += 1) {
+                const attr = svgEl.attributes[ i ];
+                attributes[ attr.nodeName ] = attr.nodeValue;
             }
 
             const content = svgEl.innerHTML;
@@ -51,9 +58,7 @@ export default createComponent({
             };
         });
 
-        return {
-            svg
-        };
+        return { svg };
     }
 });
 </script>

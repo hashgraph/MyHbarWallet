@@ -1,59 +1,59 @@
 <template>
-    <InterfaceForm :title="$t('common.createAccount')">
-        <Notice :symbol="mdiHelpCircleOutline">
-            {{ $t("interfaceCreateAccount.toCreateAccount") }}
-        </Notice>
+  <InterfaceForm :title="$t('common.createAccount')">
+    <Notice :symbol="mdiHelpCircleOutline">
+      {{ $t("interfaceCreateAccount.toCreateAccount") }}
+    </Notice>
 
-        <TextInput
-            v-model="state.newBalance"
-            :error="state.newBalanceError"
-            :min="1"
-            :suffix="Unit.Hbar"
-            :valid="validBalance"
-            has-input
-            :label="$t('interfaceCreateAccount.initialBalance')"
-            show-validation
-        />
+    <TextInput
+      v-model="state.newBalance"
+      :error="state.newBalanceError"
+      :min="1"
+      :suffix="Unit.Hbar"
+      :valid="validBalance"
+      has-input
+      :label="$t('interfaceCreateAccount.initialBalance')"
+      show-validation
+    />
 
-        <TextInput
-            v-model="state.publicKey"
-            :error="state.keyError"
-            :valid="state.isPublicKeyValid"
-            :spellcheck-disabled="true"
-            :autocomplete-disabled="true"
-            :label="$t('interfaceCreateAccount.publicKey')"
-            show-validation
-        />
+    <TextInput
+      v-model="state.publicKey"
+      :error="state.keyError"
+      :valid="state.isPublicKeyValid"
+      :spellcheck-disabled="true"
+      :autocomplete-disabled="true"
+      :label="$t('interfaceCreateAccount.publicKey')"
+      show-validation
+    />
 
-        <template v-slot:footer>
-            <Button
-                :busy="state.isBusy"
-                :disabled="!state.isPublicKeyValid || !validBalance"
-                :label="$t('common.createAccount')"
-                @click="handleShowSummary"
-            />
-        </template>
+    <template v-slot:footer>
+      <Button
+        :busy="state.isBusy"
+        :disabled="!state.isPublicKeyValid || !validBalance"
+        :label="$t('common.createAccount')"
+        @click="handleShowSummary"
+      />
+    </template>
 
-        <ModalSuccess
-            v-model="state.modalSuccessState"
-            @action="handleModalSuccessAction"
-            @dismiss="handleModalSuccessDismiss"
-        >
-            <i18n path="modalSuccess.createdAccount">
-                <strong>{{ state.account }}</strong>
-                <strong>{{ state.newBalance }}</strong>
-            </i18n>
-        </ModalSuccess>
+    <ModalSuccess
+      v-model="state.modalSuccessState"
+      @action="handleModalSuccessAction"
+      @dismiss="handleModalSuccessDismiss"
+    >
+      <i18n path="modalSuccess.createdAccount">
+        <strong>{{ state.account }}</strong>
+        <strong>{{ state.newBalance }}</strong>
+      </i18n>
+    </ModalSuccess>
 
-        <ModalFeeSummary
-            v-model="state.summaryModalIsOpen"
-            :amount="summaryAmount"
-            :items="summaryItems"
-            account=""
-            tx-type="createAccount"
-            @submit="handleCreateAccount"
-        />
-    </InterfaceForm>
+    <ModalFeeSummary
+      v-model="state.summaryModalIsOpen"
+      :amount="summaryAmount"
+      :items="summaryItems"
+      account=""
+      tx-type="createAccount"
+      @submit="handleCreateAccount"
+    />
+  </InterfaceForm>
 </template>
 
 <script lang="ts">
@@ -74,14 +74,9 @@ import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
 import { formatHbar } from "../formatter";
-import ModalSuccess, {
-    State as ModalSuccessState
-} from "../components/ModalSuccess.vue";
+import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuccess.vue";
 import { writeToClipboard } from "../clipboard";
 import { LoginMethod } from "../wallets/Wallet";
-
-// const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
-// const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
 
 interface State {
     newBalance: string;
@@ -97,16 +92,15 @@ interface State {
 
 async function isPublicKeyValid(key: string): Promise<boolean> {
     try {
-        const { Ed25519PublicKey } = await (import("@hashgraph/sdk") as Promise<
-            typeof import("@hashgraph/sdk")
-        >);
+        // eslint-disable-next-line @typescript-eslint/no-extra-parens
+        const { Ed25519PublicKey } = await (import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>);
 
         Ed25519PublicKey.fromString(key);
         return true;
     } catch (error) {
         if (error instanceof Error) {
             // The exception message changes depending on the input
-            if (error.message === "invalid public key: " + key) {
+            if (error.message === `invalid public key: ${key}`) {
                 return false;
             }
         }
@@ -141,86 +135,73 @@ export default createComponent({
             }
         });
 
-        watch(async () => {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        watch(async() => {
             state.isPublicKeyValid = await isPublicKeyValid(state.publicKey);
         });
 
         // Just for display in modal title
-        const summaryAmount = computed(() => {
-            return formatHbar(new BigNumber(state.newBalance));
-        });
+        const summaryAmount = computed(() => formatHbar(new BigNumber(state.newBalance)));
 
-        const validBalance = computed(() => {
-            // All we should check is that this is, in fact, a number
-            return !isNaN(parseInt(summaryAmount.value));
-        });
+        // All we should check is that this is, in fact, a number
+        const validBalance = computed(() => !isNaN(parseInt(summaryAmount.value, 10)));
 
-        const summaryItems = computed(() => {
-            return [
-                {
-                    description: context.root
-                        .$t("interfaceCreateAccount.initialBalance")
-                        .toString(),
-                    value: validBalance.value
-                        ? new BigNumber(state.newBalance)
-                        : new BigNumber(0)
-                },
-                {
-                    description: context.root
-                        .$t("common.estimatedFee")
-                        .toString(),
-                    value: getters.ESTIMATED_FEE_HBAR()
-                }
-            ] as Item[];
-        });
+        const summaryItems = computed(() => [
+            {
+                description: context.root
+                    .$t("interfaceCreateAccount.initialBalance")
+                    .toString(),
+                value: validBalance.value ?
+                    new BigNumber(state.newBalance) :
+                    new BigNumber(0)
+            },
+            {
+                description: context.root
+                    .$t("common.estimatedFee")
+                    .toString(),
+                value: getters.estimatedFeeHBar()
+            }
+        ] as Item[]);
 
         async function handleCreateAccount(): Promise<void> {
             state.isBusy = true;
 
             if (store.state.wallet.session == null) {
-                throw new Error(
-                    context.root
-                        .$t("common.error.nullAccountOnInterface")
-                        .toString()
-                );
+                throw new Error(context.root
+                    .$t("common.error.nullAccountOnInterface")
+                    .toString());
             }
 
             const client = store.state.wallet.session.client;
 
-            const { HederaError, ResponseCodeEnum } = await (import(
-                "@hashgraph/sdk"
-            ) as Promise<typeof import("@hashgraph/sdk")>);
+            const { HederaError, ResponseCodeEnum } =
+                // eslint-disable-next-line @typescript-eslint/no-extra-parens
+                await (import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>);
 
             try {
                 // The new wallet's initial balance
-                const newBalanceTinybar = new BigNumber(
-                    state.newBalance
-                ).multipliedBy(getValueOfUnit(Unit.Hbar));
+                const newBalanceTinybar =
+                    new BigNumber(state.newBalance).multipliedBy(getValueOfUnit(Unit.Hbar));
 
                 // The current user's balance
                 const balanceTinybar =
-                    store.state.wallet.balance == null
-                        ? new BigNumber(0)
-                        : store.state.wallet.balance;
+                    store.state.wallet.balance == null ?
+                        new BigNumber(0) :
+                        store.state.wallet.balance;
 
                 const {
                     AccountCreateTransaction,
                     Client,
                     Ed25519PublicKey
-                } = await (import("@hashgraph/sdk") as Promise<
-                    typeof import("@hashgraph/sdk")
-                >);
+                    // eslint-disable-next-line @typescript-eslint/no-extra-parens
+                } = await (import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>);
 
                 const key = Ed25519PublicKey.fromString(state.publicKey);
-                const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(
-                    balanceTinybar.minus(
-                        newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())
-                    )
-                );
+                const maxTxFeeTinybar = getters
+                    .maxFeeTinyBar(balanceTinybar
+                        .minus(newBalanceTinybar.plus(getters.estimatedFeeTinyBar())));
 
-                const accountIdIntermediate = (await new AccountCreateTransaction(
-                    client as InstanceType<typeof Client>
-                )
+                const accountIdIntermediate = (await new AccountCreateTransaction(client)
                     .setInitialBalance(newBalanceTinybar)
                     .setTransactionFee(maxTxFeeTinybar)
                     .setKey(key)
@@ -229,21 +210,19 @@ export default createComponent({
 
                 // Handle undefined
                 if (accountIdIntermediate == null) {
-                    throw new Error(
-                        context.root
-                            .$t("common.error.invalidAccount")
-                            .toString()
-                    );
+                    throw new Error(context.root
+                        .$t("common.error.invalidAccount")
+                        .toString());
                 }
 
                 // state.accountIdIntermediate must be AccountID
                 // get shard, realm, state.account separately and construct a new object
                 state.account =
-                    accountIdIntermediate.shard +
-                    "." +
-                    accountIdIntermediate.realm +
-                    "." +
-                    accountIdIntermediate.account;
+                    `${accountIdIntermediate.shard
+                    }.${
+                        accountIdIntermediate.realm
+                    }.${
+                        accountIdIntermediate.account}`;
 
                 // If creating state.account succeeds then remove all the error
                 state.newBalanceError = "";

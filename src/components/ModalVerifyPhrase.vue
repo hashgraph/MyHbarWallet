@@ -1,42 +1,42 @@
 <template>
-    <div class="verify-phrase">
-        <Modal
-            :title="$t('modalVerifyPhrase.title')"
-            :is-open="isOpen"
-            @change="this.$listeners.change"
-        >
-            <div class="prompt">
-                {{ $t("modalVerifyPhrase.pleaseEnterAndFillOut") }}
-            </div>
-            <form @submit.prevent="handleVerify">
-                <div class="mnemonic">
-                    <label
-                        v-for="index in words.length"
-                        :key="index"
-                        :class="{
-                            readonly: isDisabled(index - 1),
-                            'is-focused': state.focused === index - 1
-                        }"
-                    >
-                        <span class="number">{{ index }}.</span>
-                        <input
-                            ref="input"
-                            class="word"
-                            :readonly="isDisabled(index - 1)"
-                            :value="valueForIndex(index - 1)"
-                            :data-index="index - 1"
-                            :tabindex="isDisabled(index - 1) ? -1 : null"
-                            @focus="handleFocus"
-                            @input="handleInput"
-                        />
-                    </label>
-                </div>
-                <div class="btn-container">
-                    <Button :label="$t('modalVerifyPhrase.verify')" />
-                </div>
-            </form>
-        </Modal>
-    </div>
+  <div class="verify-phrase">
+    <Modal
+      :title="$t('modalVerifyPhrase.title')"
+      :is-open="isOpen"
+      @change="this.$listeners.change"
+    >
+      <div class="prompt">
+        {{ $t("modalVerifyPhrase.pleaseEnterAndFillOut") }}
+      </div>
+      <form @submit.prevent="handleVerify">
+        <div class="mnemonic">
+          <label
+            v-for="index in words.length"
+            :key="index"
+            :class="{
+              readonly: isDisabled(index - 1),
+              'is-focused': state.focused === index - 1
+            }"
+          >
+            <span class="number">{{ index }}.</span>
+            <input
+              ref="input"
+              class="word"
+              :readonly="isDisabled(index - 1)"
+              :value="valueForIndex(index - 1)"
+              :data-index="index - 1"
+              :tabindex="isDisabled(index - 1) ? -1 : null"
+              @focus="handleFocus"
+              @input="handleInput"
+            >
+          </label>
+        </div>
+        <div class="btn-container">
+          <Button :label="$t('modalVerifyPhrase.verify')" />
+        </div>
+      </form>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
@@ -93,9 +93,7 @@ export default createComponent({
 
             // i gets index of first text input for focus
             while (newMap.size < maxSize) {
-                const num = Math.floor(
-                    Math.random() * (props.words.length - 1)
-                );
+                const num = Math.floor(Math.random() * (props.words.length - 1));
                 if (!newMap.has(num)) {
                     newMap.set(num, "");
                     if (num < firstIndex) firstIndex = num;
@@ -123,14 +121,22 @@ export default createComponent({
         }
 
         function valueForIndex(index: number): string {
-            return isDisabled(index)
-                ? props.words[index]
-                : state.inputMap.get(index) || "";
+            if (isDisabled(index)) {
+                return props.words[ index ];
+            }
+
+            const word: string | undefined = state.inputMap.get(index);
+
+            if (typeof word === "undefined") {
+                return "";
+            }
+
+            return word;
         }
 
         function handleVerify(): void {
-            for (const [index, value] of state.inputMap.entries()) {
-                if (props.words[index] !== value) {
+            for (const [ index, value ] of state.inputMap.entries()) {
+                if (props.words[ index ] !== value) {
                     actions.alert({
                         // todo [2019-12-01]: use i18n
                         message: "Memonic does not match",
@@ -146,7 +152,8 @@ export default createComponent({
 
         function handleFocus(event: Event): void {
             const target = event.target as HTMLInputElement;
-            const index = Number.parseInt(target.dataset.index || "0", 10);
+            const index = typeof target.dataset.index === "undefined" ? 0 :
+                Number.parseInt(target.dataset.index, 10);
 
             if (!isDisabled(index)) {
                 state.focused = index;
@@ -155,7 +162,8 @@ export default createComponent({
 
         function handleInput(event: Event): void {
             const target = event.target as HTMLInputElement;
-            const index = Number.parseInt(target.dataset.index || "0", 10);
+            const index = typeof target.dataset.index === "undefined" ? 0 :
+                Number.parseInt(target.dataset.index, 10);
 
             state.inputMap.set(index, target.value);
         }
@@ -163,8 +171,8 @@ export default createComponent({
         watch(
             () => props.isOpen,
             (newVal: boolean) => {
-                if (newVal && input.value) {
-                    input.value[firstIndex].focus();
+                if (newVal && input.value !== null) {
+                    input.value[ firstIndex ].focus();
                 }
             }
         );
