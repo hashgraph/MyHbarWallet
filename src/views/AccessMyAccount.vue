@@ -100,7 +100,6 @@ import {
     AccountId
 } from "@hashgraph/sdk";
 import { NetworkSettings, NetworkName } from "../settings";
-import { NetworkSelectorElement } from "../components/NetworkSelector.vue";
 
 function getNetwork(): NetworkSettings {
     return getters.GET_NETWORK();
