@@ -7,9 +7,8 @@
         :label="label"
         :valid="valid || partialValid"
         :error="state.errorMessage"
-        :placeholder="
-            file ? 'shard.realm.file or file' : $t('common.accountSyntax')
-        "
+        :placeholder="placeholderText"
+        :compact="compact"
         @input="handleInput"
         @click.native.stop
     />
@@ -25,14 +24,19 @@ import {
     watch
 } from "@vue/composition-api";
 import TextInput from "../components/TextInput.vue";
-import { Id } from "../store/modules/wallet";
 import Vue from "vue";
+import { AccountId, FileId } from "@hashgraph/sdk";
+
+// Shim for using this component programmatically
+export type IdInputElement = Vue & {
+    clear(): void;
+};
 
 interface State {
     input: string;
     errorMessage: string | null;
-    account: Id | null;
-    file: { shard: number; realm: number; file: number } | null;
+    account: AccountId | null;
+    file: FileId | null;
 }
 
 export interface Props {
@@ -41,18 +45,19 @@ export interface Props {
     canCopy: boolean;
     label: string;
     file: boolean;
+    compact: boolean | null;
 }
 
 export default createComponent({
-    components: {
-        TextInput
-    },
+    components: { TextInput },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        error: (String as unknown) as PropType<string>,
-        canCopy: (Boolean as unknown) as PropType<boolean>,
-        label: (String as unknown) as PropType<string>,
-        file: (Boolean as unknown) as PropType<boolean>
+        isOpen: Boolean,
+        error: String,
+        canCopy: Boolean,
+        label: String,
+        file: Boolean,
+        compact: Boolean,
+        placeholder: (String as unknown) as PropType<string | null | undefined>
     },
     setup(props, context) {
         const state = reactive<State>({
@@ -68,6 +73,16 @@ export default createComponent({
         const partialValid = computed(() => partialRegex.test(state.input));
 
         const input = ref<HTMLInputElement | null>(null);
+
+        const placeholderText = computed(() => {
+            if (props.placeholder !== null && props.placeholder !== undefined) {
+                return props.placeholder;
+            } else {
+                return props.file
+                    ? context.root.$t("common.fileSyntax")
+                    : context.root.$t("common.accountSyntax");
+            }
+        });
 
         function handleInput(accountText: string): void {
             state.errorMessage = null;
@@ -143,7 +158,8 @@ export default createComponent({
             valid,
             partialValid,
             handleInput,
-            input
+            input,
+            placeholderText
         };
     }
 });

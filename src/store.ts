@@ -18,10 +18,14 @@ import {
     LedgerErrorTuple,
     State as ErrorsState
 } from "./store/modules/errors";
+import {
+    State as NetworkState
+} from "./store/modules/network";
 import BigNumber from "bignumber.js";
 import i18n from "./i18n";
 import { StatusCodes } from "@ledgerhq/hw-transport";
 import { getValueOfUnit, Unit } from "./units";
+import { NetworkName, availableNetworks, NetworkSettings } from './settings';
 
 export interface RootState {
     alerts: AlertsState;
@@ -29,6 +33,7 @@ export interface RootState {
     wallet: WalletState;
     fees: FeesState;
     errors: ErrorsState;
+    network: NetworkState;
 }
 
 export interface Store {
@@ -55,7 +60,10 @@ export const store = Vue.observable({
             session: null,
             balance: null,
             exchangeRate: null
-        } as WalletState
+        } as WalletState,
+        network: {
+            network: availableNetworks[NetworkName.TESTNET]
+        }
     } as RootState
 } as Store);
 
@@ -95,6 +103,9 @@ export const getters = {
     },
     IS_LOGGED_IN: (): boolean => {
         return store.state.wallet.session != null;
+    },
+    GET_NETWORK: (): NetworkSettings => {
+        return store.state.network.network;
     }
 };
 
@@ -108,7 +119,7 @@ export const mutations = {
             }
         }
     },
-    ERROR_OCCURRED: (e: { error: Error | string }): void => {
+    ERROR_OCCURRED: (e: { error: Error }): void => {
         store.state.errors.errors.push(e.error);
     },
     ERROR_VIEWED: (): void => {
@@ -134,6 +145,22 @@ export const mutations = {
     },
     SET_EXCHANGE_RATE: (rate: BigNumber): void => {
         store.state.wallet.exchangeRate = rate;
+    },
+    CHANGE_NETWORK: (settings: NetworkSettings): void => {
+        const name = settings.name;
+        switch (name) {
+            case NetworkName.MAINNET:
+            case NetworkName.TESTNET:
+                store.state.network.network = availableNetworks[name];
+                break;
+            case NetworkName.CUSTOM:
+                if (settings !== undefined && settings !== null) {
+                    store.state.network.network = settings;
+                }
+                break;
+            default:
+                break;
+        }
     }
 };
 

@@ -61,7 +61,7 @@ import {LoginMethod} from "../wallets/Wallet";
 import TextInput from "../components/TextInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
-import IDInput from "../components/IDInput.vue";
+import IDInput, { IdInputElement } from "../components/IDInput.vue";
 import {
     computed,
     createComponent,
@@ -75,7 +75,6 @@ import { getValueOfUnit, Unit } from "../units";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { formatHbar, validateHbar } from "../formatter";
-import { Id } from "../store/modules/wallet";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 import ModalSuccess, {
     State as ModalSuccessState
@@ -85,14 +84,9 @@ import { LoginMethod } from "../wallets/Wallet";
 import { AccountId } from "@hashgraph/sdk";
 import { actions, getters, store } from "../store";
 
-// Shim for IDInput ref
-type IdInput = Vue & {
-    clear(): void;
-};
-
 interface State {
     amount: string | null;
-    account: Id | null;
+    account: AccountId | null;
     accountString: string | null;
     memo: string | null;
     isBusy: boolean;
@@ -133,16 +127,16 @@ export default createComponent({
             }
         });
 
-        const idInput: Ref<Vue | null> = ref(null);
+        const idInput: Ref<IdInputElement | null> = ref(null);
 
-        function handleAccount(value: string, account: Id | null): void {
+        function handleAccount(value: string, account: AccountId | null): void {
             state.idErrorMessage = "";
             state.account = account;
         }
 
         watch(
             () => state.account,
-            (newValue: Id | null) => {
+            (newValue: AccountId | null) => {
                 if (newValue) {
                     state.accountString =
                         newValue.shard +
@@ -375,7 +369,7 @@ export default createComponent({
             state.amount = "";
             state.account = null;
             state.accountString = "";
-            (idInput.value! as IdInput).clear();
+            (idInput.value! as IdInputElement).clear();
             state.memo = "";
             state.accountString = "";
         }

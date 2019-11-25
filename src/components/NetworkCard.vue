@@ -7,7 +7,7 @@
                     {{ $t("networkCard.network") }}
                 </div>
                 <div class="subtitle">
-                    {{ networkName }}
+                    {{ $t(networkName) }}
                 </div>
                 <div class="subtitle">
                     {{ networkAddress }}
@@ -29,19 +29,50 @@
 
 <script lang="ts">
 import Tooltip from "./Tooltip.vue";
-import { createComponent } from "@vue/composition-api";
+import {
+    createComponent,
+    computed,
+    reactive,
+    watch
+} from "@vue/composition-api";
 import hedera from "../assets/icon-hedera-outline.svg";
-import settings from "../settings";
+import { store, getters } from "../store";
+import { NetworkSettings } from "../settings";
+
+async function getNetwork(): Promise<NetworkSettings> {
+    return getters.GET_NETWORK();
+}
 
 export default createComponent({
-    components: {
-        Tooltip
-    },
+    components: { Tooltip },
     setup() {
+        const state = reactive({
+            network: null as NetworkSettings | null
+        });
+
+        // implements async computed
+        watch(
+            () => getNetwork(),
+            async (newValue: Promise<NetworkSettings>) =>
+                (state.network = await newValue)
+        );
+
+        const networkName = computed(() => {
+            if (state.network !== null) {
+                return state.network.name;
+            }
+        });
+
+        const networkAddress = computed(() => {
+            if (state.network !== null) {
+                return state.network.address;
+            }
+        });
+
         return {
             hedera,
-            networkName: settings.network.name,
-            networkAddress: settings.network.address
+            networkName,
+            networkAddress
         };
     }
 });

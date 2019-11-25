@@ -31,14 +31,14 @@ import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import Button from "../components/Button.vue";
 import { createComponent, PropType, computed } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
-import { Id } from "../store/modules/wallet";
 import { writeToClipboard } from "../clipboard";
 import { actions } from "../store";
+import { AccountId } from '@hashgraph/sdk';
 
 interface Props {
     isOpen: boolean;
     event: "change";
-    value: Id | null;
+    value: AccountId | null;
 }
 
 export default createComponent({
@@ -53,7 +53,7 @@ export default createComponent({
         event: "change"
     },
     props: {
-        value: (Object as unknown) as PropType<Id | null>,
+        value: (Object as unknown) as PropType<AccountId | null>,
         isOpen: (Boolean as unknown) as PropType<boolean>,
         event: (String as unknown) as PropType<string>
     },
