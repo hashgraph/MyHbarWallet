@@ -26,6 +26,7 @@
                 </a>
                 &copy; {{ currentYear }} MyHbarWallet, All Rights reserved.
             </div>
+            <div />
             <div class="social">
                 <a
                     v-if="false"
@@ -37,10 +38,9 @@
                     <MaterialDesignIcon class="social-icon" :icon="facebook" />
                 </a>
                 <a
-                    v-if="false"
                     rel="noopener"
                     target="_blank"
-                    href="https://twitter.com/hashgraph"
+                    href="https://twitter.com/myhbarwallet?lang=en"
                     class="social-link"
                 >
                     <MaterialDesignIcon class="social-icon" :icon="twitter" />
@@ -53,13 +53,21 @@
                 >
                     <MaterialDesignIcon class="social-icon" :icon="github" />
                 </a>
+                <a
+                    rel="noopener"
+                    target="_blank"
+                    href=" https://medium.com/myhbarwallet"
+                    class="social-link"
+                >
+                    <MaterialDesignIcon class="social-icon" :icon="medium" />
+                </a>
             </div>
         </div>
     </footer>
 </template>
 
 <script lang="ts">
-import { mdiFacebook, mdiGithubCircle, mdiTwitter } from "@mdi/js";
+import { mdiFacebook, mdiGithubCircle, mdiTwitter, mdiMedium } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import FooterTop from "../components/FooterTop.vue";
 import { createComponent, computed } from "@vue/composition-api";
@@ -81,6 +89,8 @@ export default createComponent({
 
         const github = mdiGithubCircle;
 
+        const medium = mdiMedium;
+
         const currentYear = computed(() => {
             return new Date().getFullYear();
         });
@@ -96,6 +106,7 @@ export default createComponent({
             facebook,
             twitter,
             github,
+            medium,
             currentYear,
             version: VERSION,
             hash: COMMIT_HASH,
@@ -123,12 +134,21 @@ footer {
 
 .link {
     color: var(--color-white);
-    padding: 0 15px;
+    padding: 0 15px 0 0;
     text-decoration: none;
 
     &:not(:last-child) {
         border-right: 1px solid var(--color-white);
     }
+
+    &:not(:first-child) {
+        padding: 0 15px;
+    }
+}
+
+.links,
+.social {
+    margin-block-start: 8px;
 }
 
 .social-link {
