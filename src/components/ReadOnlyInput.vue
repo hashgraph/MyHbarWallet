@@ -66,7 +66,7 @@ export default createComponent({
     color: var(--color-washed-black);
     display: flex;
     flex-wrap: nowrap;
-    font-family: monospace;
+    font-family: "Inconsolata", monospace;
     font-size: 14px;
     padding: 13px 15px;
     width: 100%;
