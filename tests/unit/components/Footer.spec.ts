@@ -81,7 +81,9 @@ describe("Footer.vue", (): void => {
                   </a> <a target="_blank" href="https://github.com/hashgraph/myhbarwallet" class="link">
                     v1.1.1+placeholderhash
                   </a></div>
-                <div class="copyright">
+                <div class="copyright"><a target="_blank" href="https://www.coingecko.com/" class="link">
+                    Pricing taken from CoinGekco
+                  </a>
                   © 2019 MyHbarWallet, All Rights reserved.
                 </div>
                 <div class="social">
