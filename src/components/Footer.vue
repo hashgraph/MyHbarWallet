@@ -12,11 +12,7 @@
                 >
                     {{ $t("footer.terms") }}
                 </router-link>
-                <a
-                    target="_blank"
-                    href="https://github.com/hashgraph/myhbarwallet"
-                    class="link"
-                >
+                <a target="_blank" :href="githubLink" class="link">
                     v{{ version }}+{{ hash }}
                 </a>
             </div>
@@ -89,13 +85,21 @@ export default createComponent({
             return new Date().getFullYear();
         });
 
+        const githubLink = computed(() => {
+            return (
+                "https://github.com/hashgraph/MyHbarWallet/commit/" +
+                COMMIT_HASH
+            );
+        });
+
         return {
             facebook,
             twitter,
             github,
             currentYear,
             version: VERSION,
-            hash: COMMIT_HASH
+            hash: COMMIT_HASH,
+            githubLink
         };
     }
 });
