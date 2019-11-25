@@ -235,7 +235,6 @@ export default createComponent({
 
 .password-hint-container {
     color: var(--color-basalt-grey);
-    font-family: Montserrat, sans-serif;
     font-size: 14px;
     margin-block-start: 10px;
 }

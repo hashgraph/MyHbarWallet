@@ -177,6 +177,7 @@ export default createComponent({
 
 <style lang="postcss" scoped>
 .modal-fee-summary-items {
+    font-family: "Inconsolata", monospace;
     width: 100%;
 }
 
@@ -196,14 +197,12 @@ export default createComponent({
 
 .text {
     color: var(--color-china-blue);
-    font-family: monospace;
     font-size: 16px;
     white-space: nowrap;
 }
 
 .value {
     color: var(--color-china-blue);
-    font-family: monospace;
     font-size: 16px;
     font-weight: 600;
     height: 14px;

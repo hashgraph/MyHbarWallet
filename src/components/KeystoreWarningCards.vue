@@ -97,7 +97,6 @@ export default createComponent({
 }
 
 .card-header {
-    font-family: Montserrat, sans-serif;
     font-size: 16px;
     font-weight: 500;
     margin-block-end: 5px;
@@ -105,7 +104,6 @@ export default createComponent({
 
 .card-body {
     color: var(--color-china-blue);
-    font-family: Montserrat, sans-serif;
     font-size: 14px;
     margin: 0;
     padding: 0;

@@ -145,7 +145,6 @@ export default createComponent({
 
 .banner-content {
     flex-grow: 1;
-    font-family: Montserrat, sans-serif;
     font-size: 14px;
     text-align: start;
 

@@ -214,7 +214,7 @@ export default createComponent({
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.1);
     color: var(--color-christmas-pink);
-    font-family: monospace;
+    font-family: "Inconsolata", monospace;
     font-size: 13px;
     margin-block: 40px;
     max-height: 300px;

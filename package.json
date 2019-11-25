@@ -38,6 +38,7 @@
         "qrcode.vue": "^1.7.0",
         "regenerator-runtime": "^0.13.3",
         "trezor-connect": "^7.0.5",
+        "typeface-inconsolata": "^0.0.72",
         "typeface-montserrat": "^0.0.75",
         "ua-parser-js": "^0.7.20",
         "vue": "^2.6.10",
