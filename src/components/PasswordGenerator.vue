@@ -182,7 +182,9 @@ export default createComponent({
                 ) {
                     setTimeout(
                         () =>
-                            (passwordMismatch.error = "passwords do not match"),
+                            (passwordMismatch.error = context.root
+                                .$t("password.noMatch")
+                                .toString()),
                         1000
                     );
                 } else {
