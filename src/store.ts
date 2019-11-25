@@ -62,7 +62,7 @@ export const store = Vue.observable({
             exchangeRate: null
         } as WalletState,
         network: {
-            network: availableNetworks[NetworkName.TESTNET]
+            network: availableNetworks[NetworkName.MAINNET]
         }
     } as RootState
 } as Store);

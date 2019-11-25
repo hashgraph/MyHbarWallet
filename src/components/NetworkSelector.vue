@@ -101,7 +101,7 @@ export default createComponent({
     },
     setup(props: {}, context: SetupContext) {
         const state = reactive({
-            networkSelected: translate(NetworkName.TESTNET),
+            networkSelected: translate(NetworkName.MAINNET),
             address: "",
             idInput: "",
             id: null as NodeId | null,
