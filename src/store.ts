@@ -18,14 +18,12 @@ import {
     LedgerErrorTuple,
     State as ErrorsState
 } from "./store/modules/errors";
-import {
-    State as NetworkState
-} from "./store/modules/network";
+import { State as NetworkState } from "./store/modules/network";
 import BigNumber from "bignumber.js";
 import i18n from "./i18n";
 import { StatusCodes } from "@ledgerhq/hw-transport";
 import { getValueOfUnit, Unit } from "./units";
-import { NetworkName, availableNetworks, NetworkSettings } from './settings';
+import { NetworkName, availableNetworks, NetworkSettings } from "./settings";
 
 export interface RootState {
     alerts: AlertsState;

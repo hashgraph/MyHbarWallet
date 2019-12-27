@@ -1,4 +1,3 @@
-import {LoginMethod} from "../wallets/Wallet";
 <template>
     <InterfaceForm :title="$t('interfaceSendTransfer.title')">
         <TextInput
@@ -79,7 +78,6 @@ import OptionalMemoField from "../components/OptionalMemoField.vue";
 import ModalSuccess, {
     State as ModalSuccessState
 } from "../components/ModalSuccess.vue";
-import { Vue } from "vue/types/vue";
 import { LoginMethod } from "../wallets/Wallet";
 import { AccountId } from "@hashgraph/sdk";
 import { actions, getters, store } from "../store";

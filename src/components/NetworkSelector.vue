@@ -100,8 +100,14 @@ export default createComponent({
         Notice
     },
     setup(props: {}, context: SetupContext) {
+        const defaultNetwork = computed(() =>
+            process.env.NODE_ENV !== "production"
+                ? translate(NetworkName.TESTNET)
+                : translate(NetworkName.MAINNET)
+        );
+
         const state = reactive({
-            networkSelected: translate(NetworkName.MAINNET),
+            networkSelected: defaultNetwork.value,
             address: "",
             idInput: "",
             id: null as NodeId | null,
@@ -144,7 +150,7 @@ export default createComponent({
             }
         }
 
-        function handleAddressInput(input: string): void {
+        function handleAddressInput(): void {
             state.addressError = "";
         }
 
