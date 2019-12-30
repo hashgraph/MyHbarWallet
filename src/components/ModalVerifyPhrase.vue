@@ -132,7 +132,6 @@ export default createComponent({
             for (const [index, value] of state.inputMap.entries()) {
                 if (props.words[index] !== value) {
                     actions.alert({
-                        // todo [2019-12-01]: use i18n
                         message: "Memonic does not match",
                         level: "error"
                     });
