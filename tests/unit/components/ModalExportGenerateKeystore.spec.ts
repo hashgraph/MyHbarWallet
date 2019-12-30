@@ -24,6 +24,7 @@ describe("ModalExportGenerateKeystore.vue", (): void => {
                     isBusy: false,
                     passwordGeneratorState: {
                         password: PASSWORD,
+                        confirmationPassword: PASSWORD,
                         passwordStrength: 0,
                         passwordSuggestion: ""
                     }
@@ -55,6 +56,7 @@ describe("ModalExportGenerateKeystore.vue", (): void => {
                     isBusy: false,
                     passwordGeneratorState: {
                         password: PASSWORD,
+                        confirmationPassword: PASSWORD,
                         passwordStrength: 0,
                         passwordSuggestion: ""
                     }
@@ -132,6 +134,7 @@ describe("ModalExportGenerateKeystore.vue", (): void => {
                     isBusy: true,
                     passwordGeneratorState: {
                         password: PASSWORD,
+                        confirmationPassword: PASSWORD,
                         passwordStrength: 0,
                         passwordSuggestion: ""
                     }
@@ -163,6 +166,7 @@ describe("ModalExportGenerateKeystore.vue", (): void => {
                     isBusy: true,
                     passwordGeneratorState: {
                         password: PASSWORD,
+                        confirmationPassword: PASSWORD,
                         passwordStrength: 0,
                         passwordSuggestion: ""
                     }

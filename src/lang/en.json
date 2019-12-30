@@ -281,6 +281,7 @@
     "networkSelector.proxy": "Proxy Address",
     "networkSelector.customRestrictions": "Your custom network must support gRPC web",
     "optionalPasswordInput.pleaseEnterPassword": "Please Enter Password",
+    "password.noMatch": "Passwords do not match",
     "passwordStrength": "Password strength:",
     "passwordStrength.excellent": "Excellent",
     "passwordStrength.good": "Good",

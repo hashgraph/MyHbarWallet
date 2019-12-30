@@ -24,6 +24,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     isBusy: false,
                     passwordGeneratorState: {
                         password: PASSWORD,
+                        confirmationPassword: PASSWORD,
                         passwordStrength: 0,
                         passwordSuggestion: ""
                     }
@@ -54,6 +55,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     isBusy: true,
                     passwordGeneratorState: {
                         password: PASSWORD,
+                        confirmationPassword: PASSWORD,
                         passwordStrength: 0,
                         passwordSuggestion: ""
                     }
@@ -84,6 +86,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     isBusy: false,
                     passwordGeneratorState: {
                         password: PASSWORD,
+                        confirmationPassword: PASSWORD,
                         passwordStrength: 0,
                         passwordSuggestion: ""
                     }
@@ -162,6 +165,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     isBusy: true,
                     passwordGeneratorState: {
                         password: PASSWORD,
+                        confirmationPassword: PASSWORD,
                         passwordStrength: 0,
                         passwordSuggestion: ""
                     }
