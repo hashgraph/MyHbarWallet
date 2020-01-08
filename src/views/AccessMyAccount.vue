@@ -277,24 +277,16 @@ export default createComponent({
                     operator
                 });
 
-                const recipient: AccountId = {
-                    realm: 0,
-                    shard: 0,
-                    // If the account requested is 3, use a different account as the recipient to avoid an
-                    // ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS error
-                    account: account.account === 3 ? 4 : 3
-                };
-
                 await new CryptoTransferTransaction(client)
                     .addSender(account, 0)
-                    .addRecipient(recipient, 0)
                     .setTransactionFee(1)
                     .build()
                     .executeForReceipt();
             } catch (error) {
                 if (error instanceof HederaError) {
-                    // Transaction was valid except for deliberately insufficient fee,
-                    // meaning that the account matches the key and that nothing went wrong
+                    // Transaction passes check for account ownership, but
+                    // will otherwise fail. This transaction is used to verify
+                    // account ownership.
                     if (error.code === ResponseCodeEnum.INSUFFICIENT_TX_FEE) {
                         return client;
                     }
