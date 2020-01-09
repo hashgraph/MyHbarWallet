@@ -25,7 +25,7 @@ describe("AccountTileButtons.vue", (): void => {
                   <div class="content">Support for hardware wallets in development</div>
                   <div class="note">New!</div>
                 </div>
-              </div>:
+              </div>
               <div class="account-tile-button"><img src="" class="tile-image">
                 <div class="text">
                   <div class="title">Software</div>
