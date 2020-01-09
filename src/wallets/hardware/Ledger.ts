@@ -32,7 +32,7 @@ interface APDU {
     buffer: Buffer;
 }
 
-export default class LedgerNanoS implements Wallet {
+export default class Ledger implements Wallet {
     private publicKey: Ed25519PublicKey | null = null;
 
     public hasPrivateKey(): boolean {
@@ -77,7 +77,7 @@ export default class LedgerNanoS implements Wallet {
     }
 
     public getLoginMethod(): LoginMethod {
-        return LoginMethod.LedgerNanoS;
+        return LoginMethod.Ledger;
     }
 
     public async signTransaction(
@@ -136,4 +136,4 @@ export default class LedgerNanoS implements Wallet {
     }
 }
 
-export { LedgerNanoS };
+export { Ledger };

@@ -88,7 +88,7 @@ export const HardwareOptions: Map<
         AccessHardwareOption.Ledger,
         {
             supported: true,
-            label: "Ledger (Nano S)",
+            label: "Ledger",
             value: AccessHardwareOption.Ledger,
             image: imageLedger
         }

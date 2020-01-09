@@ -13,6 +13,6 @@ export enum LoginMethod {
     PrivateKey,
     Mnemonic,
     PasswordMnemonic,
-    LedgerNanoS,
+    Ledger,
     Trezor
 }
