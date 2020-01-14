@@ -8,15 +8,13 @@ import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
 
 export const INDEX = 0x00; // Key Index on Ledger
 
+// eslint-disable-next-line prettier/prettier
 export const CLA = 0xE0;
 const INS_GET_PK = 0x02;
 const INS_SIGN_TX = 0x04;
 
 const P1_UNUSED_APDU = 0x00;
 const P2_UNUSED_APDU = 0x00;
-
-const P1_FIRST = 0x01;
-const P1_LAST = 0x08;
 
 export type LedgerDeviceStatus = {
     deviceStatus: number;
@@ -115,6 +113,7 @@ export default class Ledger implements Wallet {
             // TransportWebHID REQUIRES a context managed async callback
             transport = await TransportWebHID.create().then(
                 async (transport: TransportWebHID) => {
+                    debugger;
                     response = await transport.send(
                         message.CLA,
                         message.INS,
