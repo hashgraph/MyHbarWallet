@@ -26,7 +26,7 @@
         "@ledgerhq/hw-transport": "^4.73.5",
         "@ledgerhq/hw-transport-u2f": "^4.73.5",
         "@ledgerhq/hw-transport-webauthn": "^4.73.5",
-        "@ledgerhq/hw-transport-webhid": "^4.73.5",
+        "@ledgerhq/hw-transport-webhid": "^5.5.0",
         "@ledgerhq/hw-transport-webusb": "^4.73.5",
         "@mdi/js": "^4.4.95",
         "@vue/composition-api": "^0.3.2",

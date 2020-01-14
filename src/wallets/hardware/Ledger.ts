@@ -1,6 +1,6 @@
 import Wallet, { LoginMethod } from "../Wallet";
 import "regenerator-runtime"; // https://github.com/LedgerHQ/ledgerjs/issues/332
-import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
+import TransportWebHID from "@ledgerhq/hw-transport-webhid";
 import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
 
 // Preserving, in case we need this later
@@ -107,14 +107,14 @@ export default class Ledger implements Wallet {
     }
 
     private async sendAPDU(message: APDU): Promise<Buffer | null> {
-        let transport: TransportWebUSB | null | void = null;
+        let transport: TransportWebHID | null | void = null;
         let response: Buffer | null = null;
 
         try {
             // DO NOT SEPARATE CREATE THEN.
-            // TransportWebUSB REQUIRES a context managed async callback
-            transport = await TransportWebUSB.create().then(
-                async (transport: TransportWebUSB) => {
+            // TransportWebHID REQUIRES a context managed async callback
+            transport = await TransportWebHID.create().then(
+                async (transport: TransportWebHID) => {
                     response = await transport.send(
                         message.CLA,
                         message.INS,
