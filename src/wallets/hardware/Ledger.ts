@@ -1,6 +1,6 @@
 import Wallet, { LoginMethod } from "../Wallet";
 import "regenerator-runtime"; // https://github.com/LedgerHQ/ledgerjs/issues/332
-import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
+import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
 
 // Preserving, in case we need this later
@@ -8,15 +8,13 @@ import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
 
 export const INDEX = 0x00; // Key Index on Ledger
 
+// eslint-disable-next-line prettier/prettier
 export const CLA = 0xE0;
 const INS_GET_PK = 0x02;
 const INS_SIGN_TX = 0x04;
 
 const P1_UNUSED_APDU = 0x00;
 const P2_UNUSED_APDU = 0x00;
-
-const P1_FIRST = 0x01;
-const P1_LAST = 0x08;
 
 export type LedgerDeviceStatus = {
     deviceStatus: number;
@@ -107,14 +105,14 @@ export default class Ledger implements Wallet {
     }
 
     private async sendAPDU(message: APDU): Promise<Buffer | null> {
-        let transport: TransportWebUSB | null | void = null;
+        let transport: TransportU2F | null | void = null;
         let response: Buffer | null = null;
 
         try {
             // DO NOT SEPARATE CREATE THEN.
-            // TransportWebUSB REQUIRES a context managed async callback
-            transport = await TransportWebUSB.create().then(
-                async (transport: TransportWebUSB) => {
+            // TransportU2F REQUIRES a context managed async callback
+            transport = await TransportU2F.create().then(
+                async (transport: TransportU2F) => {
                     response = await transport.send(
                         message.CLA,
                         message.INS,
