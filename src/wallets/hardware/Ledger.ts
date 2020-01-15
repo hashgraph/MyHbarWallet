@@ -1,7 +1,10 @@
 import Wallet, { LoginMethod } from "../Wallet";
 import "regenerator-runtime"; // https://github.com/LedgerHQ/ledgerjs/issues/332
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
+import TransportU2F from "@ledgerhq/hw-transport-u2f";
 import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
+import Transport from "@ledgerhq/hw-transport";
+import platform from "platform";
 
 // Preserving, in case we need this later
 // export const LEDGER_HEDERA_PATH = "44'/3030'/0'/0'/0'";
@@ -15,6 +18,9 @@ const INS_SIGN_TX = 0x04;
 
 const P1_UNUSED_APDU = 0x00;
 const P2_UNUSED_APDU = 0x00;
+
+const OPEN_TIMEOUT = 10000;
+const LISTENER_TIMEOUT = 30000;
 
 export type LedgerDeviceStatus = {
     deviceStatus: number;
@@ -61,9 +67,9 @@ export default class Ledger implements Wallet {
                     .slice(0, response.length - 2)
                     .toString("hex");
 
-                const publicKey = (
-                    await import("@hashgraph/sdk")
-                ).Ed25519PublicKey.fromString(publicKeyStr);
+                const publicKey = (await import(
+                    "@hashgraph/sdk"
+                )).Ed25519PublicKey.fromString(publicKeyStr);
 
                 this.publicKey = publicKey;
             } else {
@@ -104,33 +110,32 @@ export default class Ledger implements Wallet {
         throw new Error("Unexpected Empty Response From Ledger Device");
     }
 
+    private async getTransport(): Promise<Transport> {
+        // WebUSB is *supposed* to work on Windows (and Opera?), but alas
+        const supported =
+            (await TransportWebUSB.isSupported()) &&
+            platform.os!.family !== "Windows" &&
+            platform.name !== "Opera";
+        if (supported) return TransportWebUSB.create();
+        return TransportU2F.create(OPEN_TIMEOUT, LISTENER_TIMEOUT);
+    }
+
     private async sendAPDU(message: APDU): Promise<Buffer | null> {
-        let transport: TransportWebUSB | null | void = null;
         let response: Buffer | null = null;
 
-        try {
-            // DO NOT SEPARATE CREATE THEN.
-            // TransportWebUSB REQUIRES a context managed async callback
-            transport = await TransportWebUSB.create().then(
-                async (transport: TransportWebUSB) => {
-                    response = await transport.send(
-                        message.CLA,
-                        message.INS,
-                        message.P1,
-                        message.P2,
-                        message.buffer
-                    );
-                }
+        // DO NOT SEPARATE CREATE THEN.
+        // Transports REQUIRE a context managed async callback
+        await this.getTransport().then(async transport => {
+            response = await transport.send(
+                message.CLA,
+                message.INS,
+                message.P1,
+                message.P2,
+                message.buffer
             );
+        });
 
-            return response;
-        } finally {
-            if (transport !== null && transport !== undefined) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                await transport.close();
-            }
-        }
+        return response;
     }
 }
 
