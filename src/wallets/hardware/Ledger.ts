@@ -8,15 +8,13 @@ import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
 
 export const INDEX = 0x00; // Key Index on Ledger
 
+// eslint-disable-next-line prettier/prettier
 export const CLA = 0xE0;
 const INS_GET_PK = 0x02;
 const INS_SIGN_TX = 0x04;
 
 const P1_UNUSED_APDU = 0x00;
 const P2_UNUSED_APDU = 0x00;
-
-const P1_FIRST = 0x01;
-const P1_LAST = 0x08;
 
 export type LedgerDeviceStatus = {
     deviceStatus: number;
@@ -32,7 +30,7 @@ interface APDU {
     buffer: Buffer;
 }
 
-export default class LedgerNanoS implements Wallet {
+export default class Ledger implements Wallet {
     private publicKey: Ed25519PublicKey | null = null;
 
     public hasPrivateKey(): boolean {
@@ -63,9 +61,9 @@ export default class LedgerNanoS implements Wallet {
                     .slice(0, response.length - 2)
                     .toString("hex");
 
-                const publicKey = (await import(
-                    "@hashgraph/sdk"
-                )).Ed25519PublicKey.fromString(publicKeyStr);
+                const publicKey = (
+                    await import("@hashgraph/sdk")
+                ).Ed25519PublicKey.fromString(publicKeyStr);
 
                 this.publicKey = publicKey;
             } else {
@@ -77,7 +75,7 @@ export default class LedgerNanoS implements Wallet {
     }
 
     public getLoginMethod(): LoginMethod {
-        return LoginMethod.LedgerNanoS;
+        return LoginMethod.Ledger;
     }
 
     public async signTransaction(
@@ -136,4 +134,4 @@ export default class LedgerNanoS implements Wallet {
     }
 }
 
-export { LedgerNanoS };
+export { Ledger };

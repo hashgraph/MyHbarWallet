@@ -19,14 +19,11 @@ describe("AccountTileButtons.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="tile-grid">
-              <div class="ribbon-container">
-                <div class="coming-soon">Coming Soon!</div>
-                <div class="account-tile-button disabled"><img src="" class="tile-image">
-                  <div class="text">
-                    <div class="title">Hardware</div>
-                    <div class="content">Support for hardware wallets in development</div>
-                    <div class="note"></div>
-                  </div>
+              <div class="account-tile-button"><img src="" class="tile-image">
+                <div class="text">
+                  <div class="title">Hardware</div>
+                  <div class="content">Support for hardware wallets in development</div>
+                  <div class="note">New!</div>
                 </div>
               </div>
               <div class="account-tile-button"><img src="" class="tile-image">

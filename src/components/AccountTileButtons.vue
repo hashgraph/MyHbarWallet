@@ -1,16 +1,16 @@
 <template>
     <div class="tile-grid">
         <!-- TODO: Remove div below when hardware option is ready -->
-        <div class="ribbon-container">
-            <div class="coming-soon">{{ $t("common.comingSoon") }}</div>
-            <AccountTileButton
-                :disabled="true"
-                :title="$t('accountTileButtons.hardware')"
-                :content="$t('accountTileButtons.supportForHardwareWallets')"
-                :image="hardwareImage"
-                @click="$emit('click', 'hardware')"
-            />
-        </div>
+        <!-- <div class="ribbon-container"> -->
+        <!-- <div class="coming-soon">{{ $t("common.comingSoon") }}</div> -->
+        <AccountTileButton
+            :title="$t('accountTileButtons.hardware')"
+            :content="$t('accountTileButtons.supportForHardwareWallets')"
+            :image="hardwareImage"
+            :note="$t('accountTileButtons.new')"
+            @click="$emit('click', 'hardware')"
+        />
+        <!-- </div> -->
         <AccountTileButton
             :title="$t('accountTileButtons.software')"
             :content="
