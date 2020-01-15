@@ -47,6 +47,7 @@ describe("FooterTop.vue", (): void => {
                 <!---->
                 <!---->
                 <!---->
+                <!---->
               </div>
               <div class="section">
                 <div class="title">MyHbarWallet</div>
