@@ -2,6 +2,7 @@ import Wallet, { LoginMethod } from "../Wallet";
 import "regenerator-runtime"; // https://github.com/LedgerHQ/ledgerjs/issues/332
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
+import TransportNodeHID from "@ledgerhq/hw-transport-node-hid";
 import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
 import Transport from "@ledgerhq/hw-transport";
 import platform from "platform";
@@ -111,12 +112,15 @@ export default class Ledger implements Wallet {
     }
 
     private async getTransport(): Promise<Transport> {
+        // If electron, use the node-hid transport
+        if (process.env != null) return TransportNodeHID.create();
+
         // WebUSB is *supposed* to work on Windows (and Opera?), but alas
-        const supported =
+        const webusbSupported =
             (await TransportWebUSB.isSupported()) &&
             platform.os!.family !== "Windows" &&
             platform.name !== "Opera";
-        if (supported) return TransportWebUSB.create();
+        if (webusbSupported) return TransportWebUSB.create();
         return TransportU2F.create(OPEN_TIMEOUT, LISTENER_TIMEOUT);
     }
 
