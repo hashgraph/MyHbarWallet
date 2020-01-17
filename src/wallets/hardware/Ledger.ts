@@ -125,7 +125,7 @@ export default class Ledger implements Wallet {
             return TransportWebUSB.create();
 
         const u2fTransport = await TransportU2F.create(OPEN_TIMEOUT, LISTENER_TIMEOUT);
-        u2fTransport.setScrambleKey("MOON");
+        u2fTransport.setScrambleKey("BOIL");
 
         return u2fTransport;
     }
