@@ -124,7 +124,10 @@ export default class Ledger implements Wallet {
         if (webusbSupported)
             return TransportWebUSB.create();
 
-        return TransportU2F.create(OPEN_TIMEOUT, LISTENER_TIMEOUT);
+        const u2fTransport = await TransportU2F.create(OPEN_TIMEOUT, LISTENER_TIMEOUT);
+        u2fTransport.setScrambleKey("MOON");
+
+        return u2fTransport;
     }
 
     private async sendAPDU(message: APDU): Promise<Buffer | null> {
