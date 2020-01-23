@@ -68,6 +68,7 @@ export default createComponent({
     setup() {
         const ua = new UAParser(navigator.userAgent);
         const state = reactive({ welcomeIsOpen: false });
+
         const platform = computed(() => {
             if (navigator.userAgent.indexOf("(darwin)") > 0) {
                 // This is running in Node on macOS
@@ -76,7 +77,17 @@ export default createComponent({
 
             return ua.getOS().name;
         });
-        if (platform.value === "Android" || platform.value === "iOS") {
+
+        const isElectron = computed(() => {
+            // todo [2019-15-11]: actually detect if this is electron.
+            return false;
+        });
+
+        if (
+            platform.value === "Android" ||
+            platform.value === "iOS" ||
+            isElectron.value === true
+        ) {
             state.welcomeIsOpen = false;
         } else if (!store.state.home.hasBeenToHome) {
             state.welcomeIsOpen = true;

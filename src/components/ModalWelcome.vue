@@ -2,7 +2,7 @@
     <Modal :is-open="isOpen" hide-decoration @change="this.$listeners.change">
         <div class="modal-welcome">
             <div class="title">{{ $t("modalWelcome.title") }}</div>
-            <div v-if="!isElectron" class="content">
+            <div class="content">
                 {{ $t("modalWelcome.getDesktop") }}
             </div>
             <div class="button-group">
@@ -65,14 +65,8 @@ export default createComponent({
             return "https://github.com/hashgraph/MyHbarWallet/releases/tag/v0.3.3";
         });
 
-        const isElectron = computed(() => {
-            // todo [2019-15-11]: actually detect if this is electron.
-            return false;
-        });
-
         return {
             link,
-            isElectron,
             handleDismiss
         };
     }
@@ -129,6 +123,6 @@ export default createComponent({
     font-size: 25px;
     font-weight: 700;
     margin-block-end: 15px;
-    margin-block-start: 10px;
+    margin-block-start: 0;
 }
 </style>
