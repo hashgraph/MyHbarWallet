@@ -121,10 +121,12 @@ export default class Ledger implements Wallet {
             platform.os!.family !== "Windows" &&
             platform.name !== "Opera";
 
-        if (webusbSupported)
-            return TransportWebUSB.create();
+        if (webusbSupported) return TransportWebUSB.create();
 
-        const u2fTransport = await TransportU2F.create(OPEN_TIMEOUT, LISTENER_TIMEOUT);
+        const u2fTransport = await TransportU2F.create(
+            OPEN_TIMEOUT,
+            LISTENER_TIMEOUT
+        );
         u2fTransport.setScrambleKey("BOIL");
 
         return u2fTransport;
