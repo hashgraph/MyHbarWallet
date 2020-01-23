@@ -78,15 +78,10 @@ export default createComponent({
             return ua.getOS().name;
         });
 
-        const isElectron = computed(() => {
-            // todo [2019-15-11]: actually detect if this is electron.
-            return false;
-        });
-
         if (
             platform.value === "Android" ||
             platform.value === "iOS" ||
-            isElectron.value === true
+            process.env.IS_ELECTRON
         ) {
             state.welcomeIsOpen = false;
         } else if (!store.state.home.hasBeenToHome) {
