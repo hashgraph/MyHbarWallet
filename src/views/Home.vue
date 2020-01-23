@@ -41,7 +41,7 @@
         <Features />
         <FAQs />
         <Community v-if="false" />
-        <ModalWelcome v-model="state.welcomeIsOpen" />
+        <ModalWelcome v-model="state.welcomeIsOpen" :platform="platform" />
     </div>
 </template>
 
@@ -51,11 +51,12 @@ import FAQs from "../components/FAQs.vue";
 import Community from "../components/Community.vue";
 import HomeTileButtons from "../components/HomeTileButtons.vue";
 import circleImage from "../assets/circle.png";
-import { createComponent, reactive } from "@vue/composition-api";
+import { createComponent, reactive, computed } from "@vue/composition-api";
 import hbarOrb from "../assets/hbar_orb.svg";
 import mountainTop from "../assets/mountain_top.svg";
 import ModalWelcome from "../components/ModalWelcome.vue";
 import { store } from "../store";
+import { UAParser } from "ua-parser-js";
 export default createComponent({
     components: {
         FAQs,
@@ -65,8 +66,19 @@ export default createComponent({
         ModalWelcome
     },
     setup() {
+        const ua = new UAParser(navigator.userAgent);
         const state = reactive({ welcomeIsOpen: false });
-        if (!store.state.home.hasBeenToHome) {
+        const platform = computed(() => {
+            if (navigator.userAgent.indexOf("(darwin)") > 0) {
+                // This is running in Node on macOS
+                return "Mac OS";
+            }
+
+            return ua.getOS().name;
+        });
+        if (platform.value === "Android" || platform.value === "iOS") {
+            state.welcomeIsOpen = false;
+        } else if (!store.state.home.hasBeenToHome) {
             state.welcomeIsOpen = true;
         }
 
@@ -76,6 +88,7 @@ export default createComponent({
 
         return {
             state,
+            platform,
             circleImage,
             hbarOrb,
             mountainTop

@@ -25,7 +25,6 @@
 <script lang="ts">
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
-import { UAParser } from "ua-parser-js";
 import {
     createComponent,
     PropType,
@@ -35,6 +34,7 @@ import {
 
 interface Props {
     isOpen: boolean;
+    platform: string;
 }
 
 export default createComponent({
@@ -47,31 +47,19 @@ export default createComponent({
         event: "change"
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>
+        isOpen: (Boolean as unknown) as PropType<boolean>,
+        platform: String
     },
     setup(props: Props, context: SetupContext) {
-        const ua = new UAParser(navigator.userAgent);
-
         function handleDismiss(): void {
             context.emit("change", !props.isOpen);
         }
 
-        const platform = computed(() => {
-            if (navigator.userAgent.indexOf("(darwin)") > 0) {
-                // This is running in Node on macOS
-                return "Mac OS";
-            }
-
-            const name = ua.getOS().name;
-
-            return name;
-        });
-
         const link = computed(() => {
-            if (platform.value === "Mac OS") {
+            if (props.platform === "Mac OS") {
                 return "https://github.com/hashgraph/MyHbarWallet/releases/download/v0.3.3/MyHbarWallet-0.3.3.dmg";
             }
-            if (platform.value === "Windows") {
+            if (props.platform === "Windows") {
                 return "https://github.com/hashgraph/MyHbarWallet/releases/download/v0.3.3/MyHbarWallet.Setup.0.3.3.exe";
             }
             return "https://github.com/hashgraph/MyHbarWallet/releases/tag/v0.3.3";
