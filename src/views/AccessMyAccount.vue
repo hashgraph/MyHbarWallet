@@ -87,7 +87,7 @@ import {
     Ref
 } from "@vue/composition-api";
 
-import { getters, mutations, actions } from "../store";
+import { getters, mutations, actions, store } from "../store";
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import { HederaErrorTuple, LedgerErrorTuple } from "src/store/modules/errors";
 import { LoginMethod } from "../wallets/Wallet";
@@ -123,6 +123,7 @@ export default createComponent({
         ModalRequestToCreateAccount
     },
     setup(props: object, context: SetupContext) {
+        console.log(store.state.home.hasBeenToHome);
         const state: AccessAccountDTO & State = reactive({
             wallet: null,
             privateKey: null,

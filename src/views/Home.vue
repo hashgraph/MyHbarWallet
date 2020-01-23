@@ -65,7 +65,10 @@ export default createComponent({
         ModalWelcome
     },
     setup() {
-        const state = reactive({ welcomeIsOpen: true });
+        const state = reactive({ welcomeIsOpen: false });
+        if (!store.state.home.hasBeenToHome) {
+            state.welcomeIsOpen = true;
+        }
 
         // Boolean used to determine if the user has been to home
         // Otherwise don't show the Welcome modal
