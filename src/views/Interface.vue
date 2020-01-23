@@ -29,8 +29,7 @@ export default createComponent({
     components: {
         InterfaceNavigation,
         NetworkCard,
-        BalanceCard,
-        AccountCard
+        BalanceCard
     },
     setup(props: object, context: SetupContext) {
         if (store.state.wallet.session === null) {
