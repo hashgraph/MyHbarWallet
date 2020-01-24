@@ -14,12 +14,20 @@
             </div>
             <a class="button-download-link" :href="link">
                 <Button
+                    v-if="platform != null"
                     class="button-download"
                     :label="label"
                     :trailing-icon="icon"
                 />
+                <Button
+                    v-else
+                    class="button-download"
+                    :label="noPlatLabel"
+                    :trailing-icon="icon"
+                />
             </a>
             <a
+                v-if="link !== defaultLink"
                 class="other-platforms"
                 href="https://github.com/hashgraph/MyHbarWallet/releases/tag/v0.3.3"
             >
@@ -33,7 +41,16 @@
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
-import { mdiWindows, mdiLinux, mdiApple, mdiClose } from "@mdi/js";
+import {
+    mdiWindows,
+    mdiLinux,
+    mdiApple,
+    mdiClose,
+    mdiUbuntu,
+    mdiDebian,
+    mdiFedora,
+    mdiRedhat
+} from "@mdi/js";
 import {
     createComponent,
     PropType,
@@ -65,6 +82,9 @@ export default createComponent({
             context.emit("change", !props.isOpen);
         }
 
+        const defaultLink =
+            "https://github.com/hashgraph/MyHbarWallet/releases/tag/v0.3.3";
+
         const link = computed(() => {
             if (props.platform === "Mac OS") {
                 return "https://github.com/hashgraph/MyHbarWallet/releases/download/v0.3.3/MyHbarWallet-0.3.3.dmg";
@@ -72,10 +92,17 @@ export default createComponent({
             if (props.platform === "Windows") {
                 return "https://github.com/hashgraph/MyHbarWallet/releases/download/v0.3.3/MyHbarWallet.Setup.0.3.3.exe";
             }
-            if (props.platform === "Linux") {
+            if (props.platform === "Ubuntu" || props.platform === "Debian") {
                 return "https://github.com/hashgraph/MyHbarWallet/releases/download/v0.3.3/myhbarwallet_0.3.3_amd64.deb";
             }
-            return "https://github.com/hashgraph/MyHbarWallet/releases/tag/v0.3.3";
+            if (
+                props.platform === "Fedora" ||
+                props.platform === "Red Hat" ||
+                props.platform === "SuSE"
+            ) {
+                return "https://github.com/hashgraph/MyHbarWallet/releases/download/v0.3.3/myhbarwallet-0.3.3.x86_64.rpm";
+            }
+            return defaultLink;
         });
 
         const icon = computed(() => {
@@ -85,21 +112,34 @@ export default createComponent({
             if (props.platform === "Windows") {
                 return mdiWindows;
             }
-            if (props.platform === "Linux") {
+            if (props.platform === "Ubuntu") {
+                return mdiUbuntu;
+            } else if (props.platform === "Debian") {
+                return mdiDebian;
+            } else if (props.platform === "Fedora") {
+                return mdiFedora;
+            } else if (props.platform === "Red Hat") {
+                return mdiRedhat;
+            } else if (props.platform === "Linux") {
                 return mdiLinux;
             }
+            return;
         });
 
         const label = `${context.root.$t("modalWelcome.download")} ${
             props.platform
         }`;
 
+        const noPlatLabel = context.root.$t("modalWelcome.noPlatDownload");
+
         return {
             link,
             mdiClose,
             icon,
             label,
-            handleDismiss
+            handleDismiss,
+            noPlatLabel,
+            defaultLink
         };
     }
 });
@@ -112,7 +152,6 @@ export default createComponent({
 }
 
 .button-download-link {
-    margin-block-end: 15px;
     min-width: initial;
 
     @media (max-width: 600px) {
@@ -149,6 +188,7 @@ export default createComponent({
 .other-platforms {
     color: var(--color-melbourne-cup);
     cursor: pointer;
+    margin-block-start: 15px;
     text-align: center;
     text-decoration: none;
 
@@ -159,6 +199,7 @@ export default createComponent({
 }
 
 .close-container {
+    cursor: pointer;
     display: flex;
     justify-content: flex-end;
     margin-block-start: -23px;
