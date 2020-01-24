@@ -6,7 +6,6 @@
                     <div class="banner-content">
                         <div class="title">
                             {{ $t("home.theNumberOneHbarWallet") }}
-                            {{ pf.os.family }}
                         </div>
                         <div class="subtitle">
                             {{
@@ -71,9 +70,10 @@ export default createComponent({
 
         const pf = platform;
         if (
-            platform.os === "Android" ||
-            platform.os === "iOS" ||
-            process.env.IS_ELECTRON
+            pf.os != null &&
+            (pf.os.family === "Android" ||
+                pf.os.family === "iOS" ||
+                process.env.IS_ELECTRON)
         ) {
             state.welcomeIsOpen = false;
         } else if (!store.state.home.hasBeenToHome) {
