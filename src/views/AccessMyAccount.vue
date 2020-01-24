@@ -123,7 +123,6 @@ export default createComponent({
         ModalRequestToCreateAccount
     },
     setup(props: object, context: SetupContext) {
-        console.log(store.state.home.hasBeenToHome);
         const state: AccessAccountDTO & State = reactive({
             wallet: null,
             privateKey: null,

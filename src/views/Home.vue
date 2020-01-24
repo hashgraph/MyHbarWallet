@@ -74,7 +74,6 @@ export default createComponent({
                 // This is running in Node on macOS
                 return "Mac OS";
             }
-
             return ua.getOS().name;
         });
 
