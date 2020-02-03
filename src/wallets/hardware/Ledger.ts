@@ -22,8 +22,8 @@ const INS_SIGN_TX = 0x04;
 const P1_UNUSED_APDU = 0x00;
 const P2_UNUSED_APDU = 0x00;
 
-const OPEN_TIMEOUT = 10000;
-const LISTENER_TIMEOUT = 30000;
+const OPEN_TIMEOUT = 100000;
+const LISTENER_TIMEOUT = 300000;
 
 export type LedgerDeviceStatus = {
     deviceStatus: number;
