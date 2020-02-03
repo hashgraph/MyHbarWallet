@@ -41,6 +41,7 @@ interface APDU {
 
 export default class Ledger implements Wallet {
     private publicKey: Ed25519PublicKey | null = null;
+    private transport: Transport | null = null;
 
     public hasPrivateKey(): boolean {
         return false;
@@ -114,8 +115,14 @@ export default class Ledger implements Wallet {
     }
 
     private async getTransport(): Promise<Transport> {
-        // If electron, use the node-hid transport
-        // if (process.env != null) return TransportNodeHID.create();
+        // Support NodeHID for Electron
+
+        if (this.transport != null) {
+            return this.transport;
+        }
+
+        // WebHID should be what we're doing but it's still unstable on Chrome
+        const shouldUseWebHid = false;
 
         // WebUSB is *supposed* to work on Windows (and Opera?), but alas
         const webusbSupported =
@@ -123,21 +130,28 @@ export default class Ledger implements Wallet {
             platform.os!.family !== "Windows" &&
             platform.name !== "Opera";
 
-        if (webusbSupported) return TransportWebUSB.create();
+        if (shouldUseWebHid) {
+            this.transport = await TransportWebHID.create(
+                OPEN_TIMEOUT,
+                LISTENER_TIMEOUT
+            );
+        } else if (webusbSupported) {
+            this.transport = await TransportWebUSB.create(
+                OPEN_TIMEOUT,
+                LISTENER_TIMEOUT
+            );
+        } else {
+            this.transport = await TransportU2F.create(
+                OPEN_TIMEOUT,
+                LISTENER_TIMEOUT
+            );
 
-        // const u2fTransport = await TransportU2F.create(
-        //     OPEN_TIMEOUT,
-        //     LISTENER_TIMEOUT
-        // );
-        // u2fTransport.setScrambleKey("BOIL");
+            // U2F requires a pre-negotiated scramble key
+            // Don't steal this
+            this.transport.setScrambleKey("BOIL");
+        }
 
-        // return u2fTransport;
-
-        const transportWebHID = TransportWebHID.create(
-            OPEN_TIMEOUT,
-            LISTENER_TIMEOUT
-        );
-        return transportWebHID;
+        return this.transport!;
     }
 
     private async sendAPDU(message: APDU): Promise<Buffer | null> {
