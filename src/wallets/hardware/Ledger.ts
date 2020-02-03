@@ -133,7 +133,12 @@ export default class Ledger implements Wallet {
 
         // return u2fTransport;
 
-        return TransportWebHID.create(OPEN_TIMEOUT, LISTENER_TIMEOUT);
+        const transportWebHID = TransportWebHID.create(
+            OPEN_TIMEOUT,
+            LISTENER_TIMEOUT
+        );
+        transportWebHID.setScrambleKey("BOIL");
+        return transportWebHID;
     }
 
     private async sendAPDU(message: APDU): Promise<Buffer | null> {
