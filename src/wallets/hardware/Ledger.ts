@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import Wallet, { LoginMethod } from "../Wallet";
 import "regenerator-runtime"; // https://github.com/LedgerHQ/ledgerjs/issues/332
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
-// import TransportNodeHID from "@ledgerhq/hw-transport-node-hid";
+// @ts-ignore
+import TransportWebHID from "@ledgerhq/hw-transport-webhid";
 import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
 import Transport from "@ledgerhq/hw-transport";
 import platform from "platform";
@@ -123,13 +125,15 @@ export default class Ledger implements Wallet {
 
         if (webusbSupported) return TransportWebUSB.create();
 
-        const u2fTransport = await TransportU2F.create(
-            OPEN_TIMEOUT,
-            LISTENER_TIMEOUT
-        );
-        u2fTransport.setScrambleKey("BOIL");
+        // const u2fTransport = await TransportU2F.create(
+        //     OPEN_TIMEOUT,
+        //     LISTENER_TIMEOUT
+        // );
+        // u2fTransport.setScrambleKey("BOIL");
 
-        return u2fTransport;
+        // return u2fTransport;
+
+        return TransportWebHID.create(OPEN_TIMEOUT, LISTENER_TIMEOUT);
     }
 
     private async sendAPDU(message: APDU): Promise<Buffer | null> {

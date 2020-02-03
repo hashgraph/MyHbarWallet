@@ -1346,6 +1346,16 @@
     "@ledgerhq/logs" "^5.6.0"
     u2f-api "0.2.7"
 
+"@ledgerhq/hw-transport-webhid@^5.7.0":
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-webhid/-/hw-transport-webhid-5.7.0.tgz#61cc8f9057fb93ec5971ee25537a1166706f0430"
+  integrity sha512-Q2aQv4v4rxhSsCGiCUU5dPH38z2K+tPDx/ETJrMwVlhIKkVIZFsmS2xaZTgrryidG8h/ATHG42UdXTJ6krZj8Q==
+  dependencies:
+    "@ledgerhq/devices" "^5.7.0"
+    "@ledgerhq/errors" "^5.7.0"
+    "@ledgerhq/hw-transport" "^5.7.0"
+    "@ledgerhq/logs" "^5.6.0"
+
 "@ledgerhq/hw-transport-webusb@^5.5.0":
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-webusb/-/hw-transport-webusb-5.7.0.tgz#a0fd2cfeee130199cd6763fcf851c06897e7b6e1"
