@@ -137,7 +137,6 @@ export default class Ledger implements Wallet {
             OPEN_TIMEOUT,
             LISTENER_TIMEOUT
         );
-        transportWebHID.setScrambleKey("BOIL");
         return transportWebHID;
     }
 
