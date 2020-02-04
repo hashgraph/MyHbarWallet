@@ -172,17 +172,23 @@ export default createComponent({
                 : amount.value
         );
 
-        const buttonLabel = computed(() =>
-            context.root
-                .$tc(
-                    "interfaceSendTransfer.sendHbar",
-                    state.amount == null ? 0 : Number(state.amount.toString()),
-                    {
-                        count: truncate.value
-                    }
-                )
-                .toString()
-        );
+        const buttonLabel = computed(() => {
+            let testAmount = 0;
+
+            if (state.amount != null) {
+                const amount = new BigNumber(state.amount);
+
+                if (amount.gt(1)) testAmount = 2;
+                else if (amount.lt(1)) testAmount = 0;
+                else testAmount = 1;
+            }
+
+            return context.root
+                .$tc("interfaceSendTransfer.sendHbar", testAmount, {
+                    count: truncate.value
+                })
+                .toString();
+        });
 
         const summaryAmount = computed(() => {
             return amount.value;
@@ -257,7 +263,7 @@ export default createComponent({
         // Taken from [UnitConverter]
         function handleInput(value: string, event: Event): void {
             if (!/^\d*\.?\d*$/.test(value)) {
-                value = (state.amount || "");
+                value = state.amount || "";
             }
 
             state.amount = value;
@@ -317,7 +323,10 @@ export default createComponent({
                 ).multipliedBy(getValueOfUnit(Unit.Hbar));
 
                 console.log("sendAmountTinybar =", sendAmountTinybar);
-                console.log("sendAmountTinybar =", sendAmountTinybar.toString());
+                console.log(
+                    "sendAmountTinybar =",
+                    sendAmountTinybar.toString()
+                );
 
                 const { CryptoTransferTransaction, Client } = await import(
                     "@hashgraph/sdk"

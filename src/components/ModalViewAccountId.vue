@@ -33,7 +33,7 @@ import { createComponent, PropType, computed } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "../clipboard";
 import { actions } from "../store";
-import { AccountId } from '@hashgraph/sdk';
+import { AccountId } from "@hashgraph/sdk";
 
 interface Props {
     isOpen: boolean;
