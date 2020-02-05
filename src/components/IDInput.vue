@@ -67,7 +67,7 @@ export default createComponent({
             file: null
         });
         const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
-        const partialRegex = /^[1-9]{1}\d{0,}$/;
+        const partialRegex = /^[1-9]\d*$/;
 
         const valid = computed(() => shardRealmAccountRegex.test(state.input));
         const partialValid = computed(() => partialRegex.test(state.input));
@@ -89,6 +89,20 @@ export default createComponent({
             state.input = accountText;
             if (valid.value) {
                 const parts = state.input.split(".");
+
+                // Check that each ID part is a safe integer
+                // TO DO: Use BigInts
+                if (
+                    parts[0].length > 8 ||
+                    parts[1].length > 8 ||
+                    parts[2].length > 8
+                ) {
+                    state.errorMessage = context.root
+                        .$t("common.idTooBig")
+                        .toString();
+                    return;
+                }
+
                 if (props.file) {
                     state.file = {
                         shard: parseInt(parts[0]),
@@ -103,6 +117,14 @@ export default createComponent({
                     };
                 }
             } else if (partialValid.value) {
+                // Check that each ID part is a safe integer
+                // TO DO: Use BigInts
+                if (state.input.length > 8) {
+                    state.errorMessage = context.root
+                        .$t("common.idTooBig")
+                        .toString();
+                    return;
+                }
                 if (props.file) {
                     state.file = {
                         shard: parseInt("0"),
