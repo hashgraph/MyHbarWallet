@@ -142,7 +142,7 @@
     "interfaceNavigation.files": "Files",
     "interfaceSendTransfer.amountError.amountPlusFee": "Amount plus fee is greater than current balance",
     "interfaceSendTransfer.entireBalance": "Entire Balance",
-    "interfaceSendTransfer.sendHbar": "Send Hbar | Send {count} Hbar | Send {count} Hbars",
+    "interfaceSendTransfer.sendHbar": "Send Hbar | Send {count} Hbar | Send {count} Hbars",
     "interfaceSendTransfer.title": "Send",
     "interfaceSendTransfer.transferAmount": "Transfer Amount",
     "interfaceSignMessage.includeYourNickname": "Include your nickname and where you use the nickname so someone else cannot use it. Include a specific reason for the message so it cannot be reused for a different purpose.",
