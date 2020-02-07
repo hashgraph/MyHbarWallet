@@ -3,6 +3,7 @@
 import Vue from "vue";
 import { State as AlertsState, Alert, NewAlert } from "./store/modules/alerts";
 import { State as InterfaceMenuState } from "./store/modules/interfaceMenu";
+import { State as HomeState } from "./store/modules/home";
 import {
     coingeckoEndpoint,
     Session,
@@ -32,6 +33,7 @@ export interface RootState {
     fees: FeesState;
     errors: ErrorsState;
     network: NetworkState;
+    home: HomeState;
 }
 
 export interface Store {
@@ -54,6 +56,9 @@ export const store = Vue.observable({
             isOpen: false,
             hasBeenToInterface: false
         } as InterfaceMenuState,
+        home: {
+            hasBeenToHome: false
+        } as HomeState,
         wallet: {
             session: null,
             balance: null,
