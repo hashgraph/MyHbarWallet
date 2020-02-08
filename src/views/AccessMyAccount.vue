@@ -87,7 +87,7 @@ import {
     Ref
 } from "@vue/composition-api";
 
-import { getters, mutations, actions, store } from "../store";
+import { getters, mutations, actions } from "../store";
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import { HederaErrorTuple, LedgerErrorTuple } from "src/store/modules/errors";
 import { LoginMethod } from "../wallets/Wallet";
