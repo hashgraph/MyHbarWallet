@@ -1,9 +1,10 @@
 /* eslint-env node */
 /* eslint-disable @typescript-eslint/no-var-requires */
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require("path");
 
 module.exports = {
-    extends: ["stylelint-config-standard", "stylelint-a11y/recommended"],
+    extends: [ "stylelint-config-standard", "stylelint-a11y/recommended" ],
     plugins: [
         "stylelint-csstree-validator",
         "stylelint-a11y",
@@ -17,14 +18,12 @@ module.exports = {
         "stylelint-declaration-strict-value"
     ],
     rules: {
-        indentation: [4],
+        "indentation": [ 4 ],
 
         // https://stylelint.io/user-guide/rules/selector-class-pattern
         "selector-class-pattern": [
             "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
-            {
-                resolveNestedSelectors: true
-            }
+            { resolveNestedSelectors: true }
         ],
 
         // Autoprefixer does this for us
@@ -38,7 +37,7 @@ module.exports = {
         // Limit the specificity of selectors (and prevents IDs).
         "selector-max-specificity": [
             "0,4,2",
-            { severity: "warning", ignoreSelectors: ["/#app/"] }
+            { severity: "warning", ignoreSelectors: [ "/#app/" ]}
         ],
 
         // https://github.com/prettier/stylelint-prettier
@@ -56,7 +55,7 @@ module.exports = {
         "plugin/stylelint-no-indistinguishable-colors": [
             true,
             {
-                ignore: ["#ffffff"],
+                ignore: [ "#ffffff" ],
                 allowEquivalentNotation: true
             }
         ],
@@ -67,9 +66,7 @@ module.exports = {
         // https://github.com/csstools/stylelint-value-no-unknown-custom-properties
         "csstools/value-no-unknown-custom-properties": [
             true,
-            {
-                importFrom: [path.join(__dirname, "src/main.css")]
-            }
+            { importFrom: [ path.join(__dirname, "src/main.css") ]}
         ],
 
         // https://github.com/ismay/stylelint-no-unsupported-browser-features
@@ -110,11 +107,9 @@ module.exports = {
 
         // https://github.com/AndyOGo/stylelint-declaration-strict-value
         "scale-unlimited/declaration-strict-value": [
-            ["/color/"],
+            [ "/color/" ],
             {
-                ignoreKeywords: {
-                    "/color/": ["inherit", "transparent"]
-                },
+                ignoreKeywords: { "/color/": [ "inherit", "transparent" ]},
                 severity: "warning",
                 disableFix: true
             }

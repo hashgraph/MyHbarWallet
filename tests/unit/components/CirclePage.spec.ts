@@ -1,7 +1,8 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import CirclePage from "../../../src/components/CirclePage.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
+
+import CirclePage from "../../../src/components/CirclePage.vue";
 import i18n from "../../../src/i18n";
 
 describe("CirclePage.vue", (): void => {
@@ -16,8 +17,6 @@ describe("CirclePage.vue", (): void => {
             localVue,
             i18n
         });
-        expect(wrapper).toMatchInlineSnapshot(
-            `<div class="circle-page"></div>`
-        );
+        expect(wrapper).toMatchInlineSnapshot("<div class=\"circle-page\"></div>");
     });
 });

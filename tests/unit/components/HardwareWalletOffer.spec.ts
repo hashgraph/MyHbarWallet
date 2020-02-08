@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import HardwareWalletOffer from "../../../src/components/HardwareWalletOffer.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import HardwareWalletOffer from "../../../src/components/HardwareWalletOffer.vue";
+import i18n from "../../../src/i18n";
 
 describe("HardwareWalletOffer.vue", (): void => {
     const localVue = createLocalVue();
@@ -32,7 +33,9 @@ describe("HardwareWalletOffer.vue", (): void => {
                 </div>
                 <div class="cost-container">
                   gil<span class="cost">999</span></div>
-                <div class="description-text">description</div> <a rel="noopener" target="_blank" href="more Info" class="green-link">
+                <div class="description-text">
+                  description
+                </div> <a href="more Info" rel="noopener" target="_blank" class="green-link">
                   More information &gt;
                 </a>
               </div> <a href="more Info" rel="noopener" target="_blank"><img src="https://via.placeholder.com/150" class="logo-image"></a>

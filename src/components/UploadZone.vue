@@ -1,41 +1,49 @@
 <template>
-    <div
-        class="upload-zone"
-        :class="{ 'file-hover': state.isFileHovering }"
-        @dragenter.prevent="handleDragEnter"
-        @dragleave.prevent="handleDragLeave"
-        @dragover.prevent
-        @drop.prevent="handleDrop"
-    >
-        <div class="drop-text">{{ $t("uploadFile.drop") }}</div>
-        <div class="or-text">{{ $t("uploadFile.or") }}</div>
-        <Button
-            class="button"
-            :label="$t('uploadFile.select')"
-            @click="handleBrowseClick"
-        />
-        <div
-            v-if="fileName !== null && fileName !== ''"
-            class="file-name-container"
-        >
-            <MaterialDesignIcon class="icon" :icon="mdiFileUpload" />
-            <span class="file-name">{{ fileName }}</span>
-        </div>
-        <input
-            v-show="false"
-            id="file-upload"
-            ref="fileTarget"
-            type="file"
-            @change="prepareFile"
-        />
+  <div
+    :class="{ 'file-hover': state.isFileHovering }"
+    class="upload-zone"
+    @dragenter.prevent="handleDragEnter"
+    @dragleave.prevent="handleDragLeave"
+    @dragover.prevent
+    @drop.prevent="handleDrop"
+  >
+    <div class="drop-text">
+      {{ $t("uploadFile.drop") }}
     </div>
+    <div class="or-text">
+      {{ $t("uploadFile.or") }}
+    </div>
+    <Button
+      :label="$t('uploadFile.select')"
+      class="button"
+      @click="handleBrowseClick"
+    />
+    <div
+      v-if="fileName != null && fileName !== ''"
+      class="file-name-container"
+    >
+      <MaterialDesignIcon
+        :icon="mdiFileUpload"
+        class="icon"
+      />
+      <span class="file-name">{{ fileName }}</span>
+    </div>
+    <input
+      v-show="false"
+      id="file-upload"
+      ref="fileTarget"
+      type="file"
+      @change="prepareFile"
+    >
+  </div>
 </template>
 
 <script lang="ts">
-import { createComponent, ref, reactive, Ref } from "@vue/composition-api";
-import Button from "../components/Button.vue";
-import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
+import { createComponent, reactive, ref, Ref } from "@vue/composition-api";
 import { mdiFileUpload } from "@mdi/js";
+
+import Button from "./Button.vue";
+import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
 async function uint8ArrayOf(file: File): Promise<Uint8Array> {
     const fileBuff = await new Promise<ArrayBuffer>((resolve, reject) => {
@@ -53,13 +61,12 @@ async function uint8ArrayOf(file: File): Promise<Uint8Array> {
 }
 
 export default createComponent({
+    name: "UploadZone",
     components: {
         Button,
         MaterialDesignIcon
     },
-    props: {
-        fileName: String
-    },
+    props: { fileName: String },
     setup(props, context) {
         const state = reactive({
             isFileHovering: false,
@@ -75,12 +82,14 @@ export default createComponent({
             }
         }
 
-        async function handleDragEnter(): Promise<void> {
+        function handleDragEnter(): void {
+            // eslint-disable-next-line no-plusplus
             state.dragCounter++;
             if (state.dragCounter >= 0) state.isFileHovering = true;
         }
 
-        async function handleDragLeave(): Promise<void> {
+        function handleDragLeave(): void {
+            // eslint-disable-next-line no-plusplus
             state.dragCounter--;
             if (state.dragCounter === 0) state.isFileHovering = false;
         }
@@ -95,7 +104,7 @@ export default createComponent({
             }
 
             // only handle one file
-            const file = event.dataTransfer.items[0].getAsFile();
+            const file = event.dataTransfer.items[ 0 ].getAsFile();
 
             if (!file) {
                 // file did not actually exist
@@ -121,7 +130,7 @@ export default createComponent({
                 return;
             }
 
-            const fileData = fileTarget.value.files[0];
+            const fileData = fileTarget.value.files[ 0 ];
 
             const fileBytes = await uint8ArrayOf(fileData);
 
@@ -146,59 +155,59 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-input {
-    margin-inline-end: 10px;
-}
+    input {
+        margin-inline-end: 10px;
+    }
 
-.upload-zone {
-    align-items: center;
-    background-color: var(--color-boysenberry-shadow);
-    border: 4px dashed var(--color-ashen-wind);
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 200px;
-    padding-block-end: 100px;
-    width: 100%;
-}
+    .upload-zone {
+        align-items: center;
+        background-color: var(--color-boysenberry-shadow);
+        border: 4px dashed var(--color-ashen-wind);
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 200px;
+        padding-block-end: 100px;
+        width: 100%;
+    }
 
-.file-hover {
-    background-color: var(--color-boysenberry-shadow-transparent);
-    border: 4px dashed var(--color-washed-black);
-    border-radius: 5px;
-    cursor: copy;
-}
+    .file-hover {
+        background-color: var(--color-boysenberry-shadow-transparent);
+        border: 4px dashed var(--color-washed-black);
+        border-radius: 5px;
+        cursor: copy;
+    }
 
-.button {
-    margin-block-start: 8px;
-}
+    .button {
+        margin-block-start: 8px;
+    }
 
-.file-name-container {
-    display: flex;
-    margin-block-start: 20px;
-}
+    .file-name-container {
+        display: flex;
+        margin-block-start: 20px;
+    }
 
-.icon {
-    color: var(--color-melbourne-cup);
-    height: 30px;
-    width: 30px;
-}
+    .icon {
+        color: var(--color-melbourne-cup);
+        height: 30px;
+        width: 30px;
+    }
 
-.file-name {
-    align-self: center;
-    display: inline;
-    margin-inline-start: 5px;
-}
+    .file-name {
+        align-self: center;
+        display: inline;
+        margin-inline-start: 5px;
+    }
 
-.drop-text {
-    color: var(--color-washed-black);
-    margin-block-start: 100px;
-}
+    .drop-text {
+        color: var(--color-washed-black);
+        margin-block-start: 100px;
+    }
 
-.or-text {
-    color: var(--color-washed-black);
-    margin-block-start: 5px;
-    opacity: 0.5;
-}
+    .or-text {
+        color: var(--color-washed-black);
+        margin-block-start: 5px;
+        opacity: 0.5;
+    }
 </style>

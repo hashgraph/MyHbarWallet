@@ -1,9 +1,10 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import ModalFeeSummaryItems from "../../../src/components/ModalFeeSummaryItems.vue";
 import VueCompositionApi from "@vue/composition-api";
 import BigNumber from "bignumber.js";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import i18n from "../../../src/i18n";
+import ModalFeeSummaryItems from "../../../src/components/ModalFeeSummaryItems.vue";
 
 describe("ModalFeeSummaryItems.vue", (): void => {
     const localVue = createLocalVue();
@@ -22,9 +23,7 @@ describe("ModalFeeSummaryItems.vue", (): void => {
         const wrapper = mount(ModalFeeSummaryItems, {
             localVue,
             i18n,
-            propsData: {
-                items: []
-            }
+            propsData: { items: [] }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -33,7 +32,9 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   Total
                 </div>
-                <div class="value">0 </div>
+                <div class="value">
+                  0
+                </div>
                 <div class="symbol value">
                   ℏ
                 </div>
@@ -48,9 +49,7 @@ describe("ModalFeeSummaryItems.vue", (): void => {
         const wrapper = mount(ModalFeeSummaryItems, {
             localVue,
             i18n,
-            propsData: {
-                items
-            }
+            propsData: { items }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -59,7 +58,9 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   description
                 </div>
-                <div class="value">1.23</div>
+                <div class="value">
+                  1.23
+                </div>
                 <div class="symbol value">
                   ℏ
                 </div>
@@ -68,7 +69,9 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   description
                 </div>
-                <div class="value">public key</div>
+                <div class="value">
+                  public key
+                </div>
                 <div class="symbol value">
                   ℏ
                 </div>
@@ -77,7 +80,9 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   description
                 </div>
-                <div class="value">3.45</div>
+                <div class="value">
+                  3.45
+                </div>
                 <div class="symbol value">
                   ℏ
                 </div>
@@ -86,7 +91,9 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   Total
                 </div>
-                <div class="value">4.68</div>
+                <div class="value">
+                  4.68
+                </div>
                 <div class="symbol value">
                   ℏ
                 </div>

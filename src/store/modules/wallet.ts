@@ -1,6 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
+import BigNumber from "bignumber.js";
+import { AccountId, Client, Ed25519PrivateKey, Ed25519PublicKey } from "@hashgraph/sdk";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
 import { State as ModalByHardwareState } from "../../components/ModalAccessByHardware";
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
@@ -26,14 +32,7 @@ import { State as ModalAccessByPrivateKeyState } from "../components/ModalAccess
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
 import { State as ModalEnterAccountIdState } from "../components/ModalEnterAccountId";
-import BigNumber from "bignumber.js";
 import Wallet from "../../wallets/Wallet";
-import {
-    Client,
-    Ed25519PrivateKey,
-    Ed25519PublicKey,
-    AccountId
-} from "@hashgraph/sdk";
 
 export const coingeckoEndpoint =
     "https://api.coingecko.com/api/v3/coins/hedera-hashgraph/tickers";

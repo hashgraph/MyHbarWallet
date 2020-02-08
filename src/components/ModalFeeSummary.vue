@@ -1,42 +1,43 @@
 <template>
-    <div class="modal-fee-summary">
-        <Modal
-            :is-open="props.isOpen"
-            :title="$t('modalFeeSummary.title')"
-            not-closable
-        >
-            <ModalFeeSummaryTitle
-                :amount="props.amount"
-                :account="props.account"
-                :type="props.txType"
-            />
-            <div class="separator" />
-            <ModalFeeSummaryItems :items="props.items" />
-            <div class="buttons">
-                <Button
-                    compact
-                    outline
-                    :label="cancelLabel ? cancelLabel : $t('common.cancel')"
-                    class="button"
-                    type="button"
-                    @click="handleCancel"
-                />
-                <Button
-                    compact
-                    :label="submitLabel ? submitLabel : $t('common.continue')"
-                    class="button"
-                    type="submit"
-                    @submit="handleSubmit"
-                    @click="handleSubmit"
-                />
-            </div>
-        </Modal>
-    </div>
+  <div class="modal-fee-summary">
+    <Modal
+      :is-open="props.isOpen"
+      :title="$t('modalFeeSummary.title')"
+      not-closable
+    >
+      <ModalFeeSummaryTitle
+        :account="props.account"
+        :amount="props.amount"
+        :type="props.txType"
+      />
+      <div class="separator" />
+      <ModalFeeSummaryItems :items="props.items" />
+      <div class="buttons">
+        <Button
+          :label="cancelLabel ? cancelLabel : $t('common.cancel')"
+          class="button"
+          compact
+          outline
+          type="button"
+          @click="handleCancel"
+        />
+        <Button
+          :label="submitLabel ? submitLabel : $t('common.continue')"
+          class="button"
+          compact
+          type="submit"
+          @click="handleSubmit"
+          @submit="handleSubmit"
+        />
+      </div>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
 import { createComponent, PropType, SetupContext } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
+
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import ModalFeeSummaryTitle from "../components/ModalFeeSummaryTitle.vue";
@@ -47,7 +48,19 @@ export interface Item {
     value: BigNumber | string;
 }
 
+interface Props {
+    isFileSummary: boolean;
+    isOpen: boolean;
+    items: Item[];
+    amount: string;
+    account: string;
+    txType: string;
+    submitLabel: string | null;
+    cancelLabel: string | null;
+}
+
 export default createComponent({
+    name: "ModalFeeSummary",
     props: {
         isFileSummary: Boolean,
         isOpen: Boolean,
@@ -74,19 +87,7 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    setup(
-        props: {
-            isFileSummary: boolean;
-            isOpen: boolean;
-            items: Item[];
-            amount: string;
-            account: string;
-            txType: string;
-            submitLabel: string | null;
-            cancelLabel: string | null;
-        },
-        context: SetupContext
-    ): object {
+    setup(props: Props, context: SetupContext): object {
         function handleCancel(): void {
             context.emit("change", false);
         }
@@ -111,34 +112,34 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-block-start: 40px;
-    width: 100%;
-
-    @media (max-width: 600px) {
-        align-items: center;
-        flex-direction: column-reverse;
-    }
-}
-
-.button {
-    width: 200px;
-
-    @media (max-width: 600px) {
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-block-start: 40px;
         width: 100%;
 
-        &:last-child {
-            margin-block-end: 15px;
+        @media (max-width: 600px) {
+            align-items: center;
+            flex-direction: column-reverse;
         }
     }
-}
 
-.separator {
-    border-bottom: 1px solid var(--color-jupiter);
-    height: 1px;
-    margin-block: 15px;
-    width: 100%;
-}
+    .button {
+        width: 200px;
+
+        @media (max-width: 600px) {
+            width: 100%;
+
+            &:last-child {
+                margin-block-end: 15px;
+            }
+        }
+    }
+
+    .separator {
+        border-bottom: 1px solid var(--color-jupiter);
+        height: 1px;
+        margin-block: 15px;
+        width: 100%;
+    }
 </style>

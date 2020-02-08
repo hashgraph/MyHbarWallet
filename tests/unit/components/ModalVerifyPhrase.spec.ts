@@ -1,7 +1,8 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalVerifyPhrase from "../../../src/components/ModalVerifyPhrase.vue";
 import VueI18n from "vue-i18n";
+
+import ModalVerifyPhrase from "../../../src/components/ModalVerifyPhrase.vue";
 import i18n from "../../../src/i18n";
 
 describe("ModalVerifyPhrase.vue", (): void => {
@@ -46,7 +47,8 @@ describe("ModalVerifyPhrase.vue", (): void => {
             i18n,
             propsData: {
                 isOpen: false,
-                words: []
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                words: [] as Record<string, any>
             },
             listeners: {
                 change: onChange,
@@ -71,7 +73,8 @@ describe("ModalVerifyPhrase.vue", (): void => {
             i18n,
             propsData: {
                 isOpen: false,
-                words: WORDS
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                words: WORDS as Record<string, any>
             },
             listeners: {
                 change: onChange,
@@ -106,9 +109,9 @@ describe("ModalVerifyPhrase.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="verify-phrase">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+              <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
                 <div class="modal">
-                  <header><span class="title">Verification</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                  <header><span class="title">Verification</span> <svg height="24" width="24" viewBox="0 0 24 24" class="close">
                       <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                     </svg></header>
                   <!---->

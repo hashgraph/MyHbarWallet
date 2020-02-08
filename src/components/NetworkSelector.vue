@@ -1,62 +1,59 @@
 <template>
-    <div class="network-selector">
-        <Select
-            v-model="state.networkSelected"
-            class="select"
-            :options="networkOptions"
-            @change="handleSelectChange"
+  <div class="network-selector">
+    <Select
+      v-model="state.networkSelected"
+      :options="networkOptions"
+      class="select"
+      @change="handleSelectChange"
+    />
+    <div :class="{ details: true, expand: isCustom }">
+      <Notice
+        :symbol="mdiInformationOutline"
+        class="notice"
+      >
+        {{ $t("networkSelector.customRestrictions") }}
+      </Notice>
+      <div class="notice-box">
+        <IDInput
+          ref="idInput"
+          v-model="state.idInput"
+          :error="state.nodeError"
+          :placeholder="$t('networkSelector.id')"
+          class="input"
+          show-validation
+          @click.native.stop
+          @input="handleIdInput"
+          @valid="handleIdValid"
         />
-        <div :class="{ details: true, expand: isCustom }">
-            <Notice :symbol="mdiInformationOutline" class="notice">
-                {{ $t("networkSelector.customRestrictions") }}
-            </Notice>
-            <div class="notice-box">
-                <IDInput
-                    ref="idInput"
-                    v-model="state.idInput"
-                    :error="state.nodeError"
-                    :placeholder="$t('networkSelector.id')"
-                    show-validation
-                    class="input"
-                    @valid="handleIdValid"
-                    @input="handleIdInput"
-                    @click.native.stop
-                />
-                <TextInput
-                    v-model="state.address"
-                    :valid="addressIsValid"
-                    :error="state.addressError"
-                    :placeholder="$t('networkSelector.address')"
-                    show-validation
-                    class="input"
-                    @input="handleAddressInput"
-                    @click.native.stop
-                />
-            </div>
-        </div>
+        <TextInput
+          v-model="state.address"
+          :error="state.addressError"
+          :placeholder="$t('networkSelector.address')"
+          :valid="addressIsValid"
+          class="input"
+          show-validation
+          @click.native.stop
+          @input="handleAddressInput"
+        />
+      </div>
     </div>
+  </div>
 </template>
 <script lang="ts">
-import {
-    computed,
-    createComponent,
-    reactive,
-    SetupContext,
-    watch,
-    Ref,
-    ref
-} from "@vue/composition-api";
+import { computed, createComponent, reactive, Ref, ref, SetupContext, watch } from "@vue/composition-api";
+import { Vue } from "vue/types/vue";
+import { mdiInformationOutline } from "@mdi/js";
+import { AccountId } from "@hashgraph/sdk";
+
+import { NetworkName, NetworkSettings } from "../settings";
+import i18n from "../i18n";
+import { NodeId } from "../store/modules/network";
+
 import Select from "./Select.vue";
 import Notice from "./Notice.vue";
 import IDInput, { IdInputElement } from "./IDInput.vue";
 import Button from "./Button.vue";
 import TextInput from "./TextInput.vue";
-import { mdiInformationOutline } from "@mdi/js";
-import { NetworkName, NetworkSettings } from "../settings";
-import { Vue } from "vue/types/vue";
-import { AccountId } from "@hashgraph/sdk";
-import i18n from "../i18n";
-import { NodeId } from "src/store/modules/network";
 
 // Can't believe I've done this
 // Shim for using this element programmatically
@@ -66,8 +63,9 @@ export type NetworkSelectorElement = Vue & {
     setAddressError(message: string): void;
 };
 
-const IP_AND_PORT_REGEX = /^(?:(?:25[0-5]|2[0-4][\d]|[01]?[\d][\d]?)\.){3}(?:25[0-5]|2[0-4][\d]|[01]?[\d][\d]?)(:[\d]{1,5})?$/;
-const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/;
+// eslint-disable-next-line unicorn/no-unsafe-regex, max-len
+const IP_AND_PORT_REGEX = /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d{1,2})\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d{1,2})(:\d{1,5})?$/u;
+const URL_REGEX = /https?:\/\/(www\.)?[\w#%+-.:=@~]{2,256}\.[a-z]{2,4}\b([\w#%&+-./:=?@~]*)/u;
 
 function isValidAddress(address: string): boolean {
     return IP_AND_PORT_REGEX.test(address) || URL_REGEX.test(address);
@@ -86,9 +84,9 @@ function untranslate(value: string): NetworkName {
             return NetworkName.TESTNET;
         case translate(NetworkName.CUSTOM):
             return NetworkName.CUSTOM;
+        default:
+            return NetworkName.CUSTOM;
     }
-
-    return NetworkName.TESTNET;
 }
 
 export default createComponent({
@@ -100,11 +98,10 @@ export default createComponent({
         Notice
     },
     setup(props: {}, context: SetupContext) {
-        const defaultNetwork = computed(() =>
-            process.env.NODE_ENV !== "production"
-                ? translate(NetworkName.TESTNET)
-                : translate(NetworkName.MAINNET)
-        );
+        // eslint-disable-next-line no-undef,no-process-env
+        const defaultNetwork = computed(() => process.env.NODE_ENV !== "production" ?
+            translate(NetworkName.TESTNET) :
+            translate(NetworkName.MAINNET));
 
         const state = reactive({
             networkSelected: defaultNetwork.value,
@@ -125,13 +122,9 @@ export default createComponent({
             state.id = null;
         }
 
-        const networkOptions = computed(() =>
-            Object.values(NetworkName).map(translate)
-        );
+        const networkOptions = computed(() => Object.values(NetworkName).map(translate));
         const addressIsValid = computed(() => isValidAddress(state.address));
-        const isCustom = computed(
-            () => state.networkSelected === translate(NetworkName.CUSTOM)
-        );
+        const isCustom = computed(() => state.networkSelected === translate(NetworkName.CUSTOM));
 
         function handleSelectChange(): void {
             clearState();
@@ -139,7 +132,7 @@ export default createComponent({
 
         function handleIdInput(input: string, id: AccountId): void {
             state.nodeError = "";
-            if (id !== null) {
+            if (id != null) {
                 // Mismatch between "node" and "address"
                 // Consider reimplementing IDInput to handle a general Id
                 state.id = {
@@ -211,43 +204,43 @@ export default createComponent({
 </script>
 
 <style lang="postcss">
-.network-selector {
-    width: 100%;
-}
-
-.select {
-    margin-block-end: 10px;
-    width: 100%;
-}
-
-.details {
-    align-items: center;
-    display: flex;
-    flex-flow: column nowrap;
-    height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: opacity 0.5s, height 0.3s;
-    width: 100%;
-
-    &.expand {
-        height: 100%;
-        opacity: 1;
+    .network-selector {
+        width: 100%;
     }
 
-    @media (prefers-reduced-motion) {
-        transition: none;
+    .select {
+        margin-block-end: 10px;
+        width: 100%;
     }
-}
 
-.notice-box {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
+    .details {
+        align-items: center;
+        display: flex;
+        flex-flow: column nowrap;
+        height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: opacity 0.5s, height 0.3s;
+        width: 100%;
 
-.input {
-    padding-block-start: 10px;
-}
+        &.expand {
+            height: 100%;
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion) {
+            transition: none;
+        }
+    }
+
+    .notice-box {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .input {
+        padding-block-start: 10px;
+    }
 </style>

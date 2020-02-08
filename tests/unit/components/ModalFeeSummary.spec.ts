@@ -1,8 +1,10 @@
+/* eslint-disable sonarjs/no-identical-functions */
 import { createLocalVue, mount } from "@vue/test-utils";
-import ModalFeeSummary from "../../../src/components/ModalFeeSummary.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import ModalFeeSummary from "../../../src/components/ModalFeeSummary.vue";
+import i18n from "../../../src/i18n";
 
 describe("ModalFeeSummary.vue", (): void => {
     const localVue = createLocalVue();
@@ -129,7 +131,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-fee-summary" title="Title">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+              <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
                     <!---->
@@ -144,7 +146,9 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Total
                           </div>
-                          <div class="value">0 </div>
+                          <div class="value">
+                            0
+                          </div>
                           <div class="symbol value">
                             ℏ
                           </div>
@@ -227,7 +231,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-fee-summary" title="Title">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+              <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
                     <!---->
@@ -242,7 +246,9 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Description
                           </div>
-                          <div class="value">Value</div>
+                          <div class="value">
+                            Value
+                          </div>
                           <div class="symbol value">
                             ℏ
                           </div>
@@ -251,7 +257,9 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Description
                           </div>
-                          <div class="value">Value</div>
+                          <div class="value">
+                            Value
+                          </div>
                           <div class="symbol value">
                             ℏ
                           </div>
@@ -260,7 +268,9 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Description
                           </div>
-                          <div class="value">Value</div>
+                          <div class="value">
+                            Value
+                          </div>
                           <div class="symbol value">
                             ℏ
                           </div>
@@ -269,7 +279,9 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Total
                           </div>
-                          <div class="value">0 </div>
+                          <div class="value">
+                            0
+                          </div>
                           <div class="symbol value">
                             ℏ
                           </div>
@@ -308,7 +320,7 @@ describe("ModalFeeSummary.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-fee-summary" title="Title">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+              <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Transaction Summary</span>
                     <!---->
@@ -323,7 +335,9 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Description
                           </div>
-                          <div class="value">Balue</div>
+                          <div class="value">
+                            Balue
+                          </div>
                           <div class="symbol value">
                             ℏ
                           </div>
@@ -332,7 +346,9 @@ describe("ModalFeeSummary.vue", (): void => {
                           <div class="description">
                             Total
                           </div>
-                          <div class="value">0 </div>
+                          <div class="value">
+                            0
+                          </div>
                           <div class="symbol value">
                             ℏ
                           </div>

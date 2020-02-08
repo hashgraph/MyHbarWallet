@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+
 import ModalViewAccountId from "../../../src/components/ModalViewAccountId.vue";
 import i18n from "../../../src/i18n";
-import VueI18n from "vue-i18n";
 
 describe("ModalViewAccountId.vue", (): void => {
     it("renders open", (): void => {
@@ -21,15 +22,13 @@ describe("ModalViewAccountId.vue", (): void => {
                 isOpen: true,
                 event: "change"
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+            <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
               <div class="modal">
-                <header><span class="title">Account ID</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                <header><span class="title">Account ID</span> <svg height="24" width="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
                 <!---->
@@ -69,11 +68,9 @@ describe("ModalViewAccountId.vue", (): void => {
                 isOpen: false,
                 event: "change"
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot();
     });
 });

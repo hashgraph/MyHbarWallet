@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+
 import ModalLogOut from "../../../src/components/ModalLogOut.vue";
 import i18n from "../../../src/i18n";
-import VueI18n from "vue-i18n";
 
 describe("ModalLogOut.vue", (): void => {
     const localVue = createLocalVue();
@@ -16,15 +17,11 @@ describe("ModalLogOut.vue", (): void => {
         const wrapper = mount(ModalLogOut, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: false
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: false },
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot();
     });
 
     it("renders open", (): void => {
@@ -34,16 +31,12 @@ describe("ModalLogOut.vue", (): void => {
         const wrapper = mount(ModalLogOut, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: true
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: true },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+            <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
               <div class="modal">
                 <!---->
                 <!---->

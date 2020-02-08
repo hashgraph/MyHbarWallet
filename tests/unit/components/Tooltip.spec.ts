@@ -1,7 +1,8 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import Tooltip from "../../../src/components/Tooltip.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
+
+import Tooltip from "../../../src/components/Tooltip.vue";
 import i18n from "../../../src/i18n";
 
 describe("Tooltip.vue", (): void => {
@@ -20,9 +21,7 @@ describe("Tooltip.vue", (): void => {
                 message,
                 pinnable: true
             },
-            slots: {
-                default: "<div class='component'>Hover Me</div>"
-            }
+            slots: { default: "<div class='component'>Hover Me</div>" }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -48,9 +47,7 @@ describe("Tooltip.vue", (): void => {
                 message,
                 pinnable: false
             },
-            slots: {
-                default: "<div class='component'>Hover Me</div>"
-            }
+            slots: { default: "<div class='component'>Hover Me</div>" }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

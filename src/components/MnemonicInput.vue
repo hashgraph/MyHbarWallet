@@ -1,40 +1,33 @@
 <template>
-    <div class="list-container">
-        <label
-            v-for="index in words"
-            :key="index"
-            class="list-item"
-            :class="{ 'is-focused': state.focused === index }"
-        >
-            <span class="number">{{ index }}.</span>
+  <div class="list-container">
+    <label
+      v-for="index in words"
+      :key="index"
+      :class="{ 'is-focused': state.focused === index }"
+      class="list-item"
+    >
+      <span class="number">{{ index }}.</span>
 
-            <input
-                ref="input"
-                type="text"
-                class="word"
-                :value="value.length < index ? '' : value[index - 1]"
-                :readonly="!editable"
-                :data-index="index"
-                :tabindex="editable ? null : -1"
-                autocomplete="off"
-                autocapitalize="off"
-                spellcheck="false"
-                @input="handleInput"
-                @focus="handleFocus"
-            />
-        </label>
-    </div>
+      <input
+        ref="input"
+        :data-index="index"
+        :readonly="!editable"
+        :tabindex="editable ? null : -1"
+        :value="value.length < index ? '' : value[index - 1]"
+        autocapitalize="off"
+        autocomplete="off"
+        class="word"
+        spellcheck="false"
+        type="text"
+        @focus="handleFocus"
+        @input="handleInput"
+      >
+    </label>
+  </div>
 </template>
 
 <script lang="ts">
-import {
-    createComponent,
-    PropType,
-    reactive,
-    SetupContext,
-    ref,
-    watch
-} from "@vue/composition-api";
+import { createComponent, reactive, ref, SetupContext, watch } from "@vue/composition-api";
 import Vue from "vue";
 
 interface State {
@@ -49,16 +42,15 @@ interface Props {
 }
 
 export default createComponent({
+    name: "MnemonicInput",
     props: {
         editable: Boolean,
         words: Number,
-        value: (Array as unknown) as PropType<string[]>,
+        value: Array,
         isOpen: Boolean
     },
     setup(props: Props, context: SetupContext) {
-        const state = reactive<State>({
-            focused: null as number | null
-        });
+        const state = reactive<State>({ focused: null as number | null });
 
         const input = ref<HTMLInputElement[] | null>(null);
 
@@ -73,7 +65,7 @@ export default createComponent({
 
             const splitString = target.value.trim().split(" ");
             splitString.forEach((item, i) => {
-                newValues[index + i] = item;
+                newValues[ index + i ] = item;
             });
 
             context.emit("input", newValues);
@@ -93,7 +85,7 @@ export default createComponent({
             (newVal: boolean) => {
                 Vue.nextTick(() => {
                     if (newVal && input.value && props.editable) {
-                        input.value[0].focus();
+                        input.value[ 0 ].focus();
                     }
                 });
             }
@@ -109,55 +101,55 @@ export default createComponent({
 });
 </script>
 
-<style scoped lang="postcss">
-.list-container {
-    align-items: center;
-    display: grid;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    grid-template-columns: 1fr 1fr 1fr;
+<style lang="postcss" scoped>
+    .list-container {
+        align-items: center;
+        display: grid;
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+        grid-template-columns: 1fr 1fr 1fr;
 
-    @media (max-width: 414px) {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-.list-item {
-    align-items: center;
-    border-bottom: 1px solid var(--color-jupiter);
-    color: var(--color-basalt-grey);
-    display: flex;
-    font-size: 14px;
-    padding: 10px 0;
-
-    &.is-focused {
-        border-color: var(--color-melbourne-cup);
+        @media (max-width: 414px) {
+            grid-template-columns: 1fr 1fr;
+        }
     }
 
-    @media print {
+    .list-item {
+        align-items: center;
+        border-bottom: 1px solid var(--color-jupiter);
+        color: var(--color-basalt-grey);
+        display: flex;
+        font-size: 14px;
+        padding: 10px 0;
+
+        &.is-focused {
+            border-color: var(--color-melbourne-cup);
+        }
+
+        @media print {
+            border: none;
+        }
+    }
+
+    .number {
+        flex-shrink: 0;
+        font-size: 14px;
+    }
+
+    .list-item.is-focused .number {
+        color: var(--color-melbourne-cup);
+    }
+
+    .word {
         border: none;
+        color: var(--color-ghostlands-coal);
+        margin-inline-start: 10px;
+        outline: none;
+        padding: 0;
+        width: 100%;
+
+        &:read-only {
+            cursor: default;
+        }
     }
-}
-
-.number {
-    flex-shrink: 0;
-    font-size: 14px;
-}
-
-.list-item.is-focused .number {
-    color: var(--color-melbourne-cup);
-}
-
-.word {
-    border: none;
-    color: var(--color-ghostlands-coal);
-    margin-inline-start: 10px;
-    outline: none;
-    padding: 0;
-    width: 100%;
-
-    &:read-only {
-        cursor: default;
-    }
-}
 </style>

@@ -1,16 +1,19 @@
 <template>
-    <!-- eslint-disable vue/no-v-html -->
-    <svg v-bind="svg.attributes" v-html="svg.content"></svg>
+  <!-- eslint-disable vue/no-v-html -->
+  <svg
+    v-bind="svg.attributes"
+    v-html="svg.content"
+  />
 </template>
 
 <script lang="ts">
-import { createComponent, computed, PropType } from "@vue/composition-api";
+import { computed, createComponent } from "@vue/composition-api";
 
 // Must turn off observe setting BEFORE importing this module.. someone shoot me
 ((window as unknown) as { jdenticon_config: { replaceMode: string } })[
     "jdenticon_config"
 ] = { replaceMode: "never" };
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports,no-undef
 const jdenticon = require("jdenticon");
 
 interface Props {
@@ -19,9 +22,10 @@ interface Props {
 }
 
 export default createComponent({
+    name: "Identicon",
     props: {
-        size: (Number as unknown) as PropType<number>,
-        value: (String as unknown) as PropType<string>
+        size: Number,
+        value: String
     },
     setup(props: Props) {
         // HACK: Vue does not allow us to return _unwrapped_ raw HTML so we have to manually decompose the generated SVG
@@ -38,9 +42,10 @@ export default createComponent({
 
             const attributes: { [key: string]: string | null } = {};
 
+            // eslint-disable-next-line @typescript-eslint/prefer-for-of,no-plusplus
             for (let i = 0; i < svgEl.attributes.length; i++) {
-                const attr = svgEl.attributes[i];
-                attributes[attr.nodeName] = attr.nodeValue;
+                const attr = svgEl.attributes[ i ];
+                attributes[ attr.nodeName ] = attr.nodeValue;
             }
 
             const content = svgEl.innerHTML;
@@ -51,16 +56,14 @@ export default createComponent({
             };
         });
 
-        return {
-            svg
-        };
+        return { svg };
     }
 });
 </script>
 
 <style lang="postcss" scoped>
-svg {
-    background: var(--color-white);
-    box-shadow: 0 0 6px 3px rgba(0, 0, 0, 0.4) inset;
-}
+    svg {
+        background: var(--color-white);
+        box-shadow: 0 0 6px 3px rgba(0, 0, 0, 0.4) inset;
+    }
 </style>

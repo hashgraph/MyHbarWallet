@@ -1,7 +1,11 @@
 /* sanitize.css is a CSS library that provides consistent, cross-browser
    default styling of HTML elements alongside useful defaults.
    https://github.com/csstools/sanitize.css */
+
+/* noinspection CssUnknownTarget */
 @import "sanitize";
+
+/* noinspection CssUnknownTarget */
 @import "sanitize/forms";
 
 :root {
@@ -56,6 +60,7 @@ body {
     min-height: inherit;
 
     /* For the Modal component */
+
     &.modal-is-open {
         overflow: hidden;
 

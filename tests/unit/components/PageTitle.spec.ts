@@ -1,7 +1,8 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import PageTitle from "../../../src/components/PageTitle.vue";
 import VueI18n from "vue-i18n";
+
+import PageTitle from "../../../src/components/PageTitle.vue";
 import i18n from "../../../src/i18n";
 
 describe("PageTitle.vue", (): void => {
@@ -23,7 +24,9 @@ describe("PageTitle.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="title-container">
-              <div class="title">title</div>
+              <div class="title">
+                title
+              </div>
               <div class="subtitle"></div>
             </div>
         `);
@@ -43,7 +46,9 @@ describe("PageTitle.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="title-container">
-              <div class="title large">title</div>
+              <div class="title large">
+                title
+              </div>
               <div class="subtitle"></div>
             </div>
         `);

@@ -1,22 +1,25 @@
 <template>
-    <div class="radio-button-group">
-        <div v-for="option in options" :key="option.value">
-            <RadioButton
-                :checked="selected || ''"
-                :name="name"
-                :label="option.label"
-                :value="option.value"
-                :image="option.image"
-                @change="$emit('change', option.value)"
-            />
-        </div>
+  <div class="radio-button-group">
+    <div
+      v-for="option in options"
+      :key="option.value"
+    >
+      <RadioButton
+        :checked="selected || ''"
+        :image="option.image"
+        :label="option.label"
+        :name="name"
+        :value="option.value"
+        @change="$emit('change', option.value)"
+      />
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
-import { PropOptions } from "vue";
-import RadioButton from "../components/RadioButton.vue";
+import { createComponent, PropOptions } from "@vue/composition-api";
+
+import RadioButton from "./RadioButton.vue";
 
 interface Option {
     label: string;
@@ -25,27 +28,26 @@ interface Option {
 }
 
 export default createComponent({
-    components: {
-        RadioButton
-    },
+    name: "RadioButtonGroup",
+    components: { RadioButton },
     model: {
         prop: "selected",
         event: "change"
     },
     props: {
-        selected: { type: String, default: null },
-        name: { required: true, type: String },
+        selected: String,
+        name: { type: String, required: true },
         options: {
             type: Array,
-            required: true
+            required: true as boolean
         } as PropOptions<Option[]>
     }
 });
 </script>
 
 <style lang="postcss" scoped>
-.radio-button-group {
-    display: grid;
-    grid-row-gap: 9px;
-}
+    .radio-button-group {
+        display: grid;
+        grid-row-gap: 9px;
+    }
 </style>

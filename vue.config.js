@@ -1,8 +1,12 @@
 /* eslint-env node */
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports,no-process-env */
 const path = require("path");
-const package = require("./package.json");
+
 const webpack = require("webpack");
+
+const package = require("./package.json");
+
+// eslint-disable-next-line import/order
 const hash = require("child_process").execSync("git rev-parse --short HEAD");
 
 module.exports = {
@@ -30,9 +34,10 @@ module.exports = {
         electronBuilder: {
             mainProcessFile: "src/electron/background.ts",
             customFileProtocol: "mhw://./",
-            chainWebpackRendererProcess: config => {
-                config.plugin("define").tap(args => {
-                    args[0]["IS_ELECTRON"] = true;
+            // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+            chainWebpackRendererProcess(config) {
+                config.plugin("define").tap((args) => {
+                    args[ 0 ].IS_ELECTRON = true;
                     return args;
                 });
             },
@@ -40,9 +45,9 @@ module.exports = {
                 appId: "com.myhbarwallet.app",
                 productName: "MyHbarWallet",
                 copyright: "Copyright © 2019 MyHbarWallet",
-                files: ["**", "build/icon.*"],
+                files: [ "**", "build/icon.*" ],
                 win: {
-                    target: ["nsis"],
+                    target: [ "nsis" ],
                     icon: "./build/icons/icon.ico"
                 },
                 mac: {
@@ -51,7 +56,7 @@ module.exports = {
                     icon: "./build/icons/icon.icns"
                 },
                 linux: {
-                    target: ["pacman", "deb", "rpm"],
+                    target: [ "pacman", "deb", "rpm" ],
                     executableName: "MyHbarWallet",
                     category: "Utility",
                     desktop: {
@@ -62,19 +67,20 @@ module.exports = {
             }
         }
     },
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     chainWebpack(config) {
         // Use a standard HTML template instead of rolling our own (which is default)
         // https://github.com/jaketrent/html-webpack-template#basic-usage
-        config.plugin("html").tap(args => [
+        config.plugin("html").tap((args) => [
             {
-                ...args[0],
+                ...args[ 0 ],
                 template: path.resolve(__dirname, "src/index.html")
             }
         ]);
 
-        config.plugin("fork-ts-checker").tap(args => [
+        config.plugin("fork-ts-checker").tap((args) => [
             {
-                ...args[0],
+                ...args[ 0 ],
                 // Only report errors
                 silent: true,
                 // Use as much threads as we have physical CPUs
@@ -85,14 +91,12 @@ module.exports = {
         if (process.env.NODE_ENV === "production") {
             // Use the advanced preset for cssnano instead of the default.
             // https://cssnano.co/guides/optimisations
-            config.plugin("optimize-css").tap(args => [
+            config.plugin("optimize-css").tap((args) => [
                 {
-                    ...args[0],
+                    ...args[ 0 ],
                     preset: [
                         "advanced",
-                        {
-                            discardComments: { removeAll: true }
-                        }
+                        { discardComments: { removeAll: true }}
                     ]
                 }
             ]);
@@ -100,7 +104,7 @@ module.exports = {
             // Pass images through an optimization pipeline
             config.module
                 .rule("optimize-images")
-                .test(/\.(jpg|png|gif|svg)$/)
+                .test(/\.(jpg|png|gif|svg)$/u)
                 .pre()
                 .use()
                 .loader("image-webpack-loader");

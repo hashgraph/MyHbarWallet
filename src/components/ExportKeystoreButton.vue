@@ -1,41 +1,33 @@
 <template>
-    <span class="download-button">
-        <Tooltip :message="$t('exportKeystoreButton.message')">
-            <MaterialDesignIcon
-                :icon="mdiFileDownload"
-                class="export-keystore-icon"
-                @click="handleClick"
-            />
-        </Tooltip>
-        <ModalExportGenerateKeystore
-            v-model="state.modalExportGenerateKeystoreState"
-            @submit="handleExportByKeystoreSubmit"
-        />
-        <ModalExportDownloadKeystore
-            v-model="state.modalExportDownloadKeystoreState"
-            @submit="handleExportKeystoreSubmit"
-        />
-    </span>
+  <span class="download-button">
+    <Tooltip :message="$t('exportKeystoreButton.message')">
+      <MaterialDesignIcon
+        :icon="mdiFileDownload"
+        class="export-keystore-icon"
+        @click="handleClick"
+      />
+    </Tooltip>
+    <ModalExportGenerateKeystore
+      v-model="state.modalExportGenerateKeystoreState"
+      @submit="handleExportByKeystoreSubmit"
+    />
+    <ModalExportDownloadKeystore
+      v-model="state.modalExportDownloadKeystoreState"
+      @submit="handleExportKeystoreSubmit"
+    />
+  </span>
 </template>
 
 <script lang="ts">
-import {
-    createComponent,
-    reactive,
-    Ref,
-    ref,
-    SetupContext
-} from "@vue/composition-api";
-import Tooltip from "./Tooltip.vue";
-import MaterialDesignIcon from "./MaterialDesignIcon.vue";
+import { createComponent, reactive, Ref, ref, SetupContext } from "@vue/composition-api";
 import { mdiFileDownload } from "@mdi/js";
-import ModalExportGenerateKeystore, {
-    State as ModalExportGenerateKeystoreState
-} from "./ModalExportGenerateKeystore.vue";
-import ModalExportDownloadKeystore, {
-    State as ModalExportDownloadKeystoreState
-} from "./ModalExportDownloadKeystore.vue";
+
 import { actions } from "../store";
+
+import ModalExportGenerateKeystore, { State as ModalExportGenerateKeystoreState } from "./ModalExportGenerateKeystore.vue";
+import ModalExportDownloadKeystore, { State as ModalExportDownloadKeystoreState } from "./ModalExportDownloadKeystore.vue";
+import MaterialDesignIcon from "./MaterialDesignIcon.vue";
+import Tooltip from "./Tooltip.vue";
 
 export interface State {
     modalExportGenerateKeystoreState: ModalExportGenerateKeystoreState;
@@ -43,15 +35,14 @@ export interface State {
 }
 
 export default createComponent({
+    name: "ExportKeystoreButton",
     components: {
-        Tooltip,
         MaterialDesignIcon,
+        ModalExportDownloadKeystore,
         ModalExportGenerateKeystore,
-        ModalExportDownloadKeystore
+        Tooltip
     },
-    props: {
-        privateKey: String
-    },
+    props: { privateKey: String },
     setup(props: { privateKey: string }, context: SetupContext) {
         const state = reactive<State>({
             modalExportGenerateKeystoreState: {
@@ -80,43 +71,32 @@ export default createComponent({
             }, 125);
 
             try {
-                const { Ed25519PrivateKey } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
 
                 if (props.privateKey == null) {
                     throw new Error("Private Key is null");
                 }
 
-                keyFile.value = await Ed25519PrivateKey.fromString(
-                    props.privateKey
-                ).createKeystore(
-                    state.modalExportGenerateKeystoreState
-                        .passwordGeneratorState.password
-                );
+                // eslint-disable-next-line max-len
+                keyFile.value = await Ed25519PrivateKey.fromString(props.privateKey).toKeystore(state.modalExportGenerateKeystoreState
+                    .passwordGeneratorState.password);
 
-                if (keyFile.value === null) {
+                if (keyFile.value == null) {
                     throw new Error("Generated Keystore is null");
                 }
 
                 state.modalExportDownloadKeystoreState.isBusy = false;
 
-                const keystoreBlob = new Blob([
-                    keyFile.value.buffer as Uint8Array
-                ]);
+                const keystoreBlob = new Blob([ keyFile.value.buffer as Uint8Array ]);
 
                 const keystoreUrl = URL.createObjectURL(keystoreBlob);
 
-                keystoreLink.value = document.createElement(
-                    "a"
-                ) as HTMLAnchorElement;
+                keystoreLink.value = document.createElement("a") as HTMLAnchorElement;
                 keystoreLink.value.href = keystoreUrl;
-                keystoreLink.value.download =
-                    "keystore-" + new Date().toISOString();
+                keystoreLink.value.download = `keystore-${new Date().toISOString()}`;
 
                 keystoreLink.value.href = keystoreUrl;
-                keystoreLink.value.download =
-                    "keystore-" + new Date().toISOString();
+                keystoreLink.value.download = `keystore-${new Date().toISOString()}`;
             } catch (error) {
                 actions.alert({
                     level: "error",
@@ -136,9 +116,7 @@ export default createComponent({
             }
 
             keystoreLink.value.click();
-            context.root.$el.removeChild(
-                keystoreLink.value as HTMLAnchorElement
-            );
+            context.root.$el.removeChild(keystoreLink.value as HTMLAnchorElement);
 
             // close modals
             state.modalExportGenerateKeystoreState.isOpen = false;
@@ -146,13 +124,13 @@ export default createComponent({
             setTimeout(() => {
                 // reset ExportGenerateKeystore Modal
                 state.modalExportGenerateKeystoreState.passwordGeneratorState.password =
-                    "";
+                        "";
                 state.modalExportGenerateKeystoreState.passwordGeneratorState.confirmationPassword =
-                    "";
+                        "";
                 state.modalExportGenerateKeystoreState.isBusy = false;
                 state.modalExportGenerateKeystoreState.passwordGeneratorState.passwordStrength = 0;
                 state.modalExportGenerateKeystoreState.passwordGeneratorState.passwordSuggestion =
-                    "";
+                        "";
             }, 125);
         }
 

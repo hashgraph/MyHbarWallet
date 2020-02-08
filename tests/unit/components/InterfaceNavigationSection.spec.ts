@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import InterfaceNavigationSection from "../../../src/components/InterfaceNavigationSection.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueRouter from "vue-router";
 import VueI18n from "vue-i18n";
+
+import InterfaceNavigationSection from "../../../src/components/InterfaceNavigationSection.vue";
 import i18n from "../../../src/i18n";
 
 describe("InterfaceNavigationSection.vue", (): void => {
@@ -28,9 +29,9 @@ describe("InterfaceNavigationSection.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="nav-section" image="https://via.placeholder.com/150" imageactive="https://via.placeholder.com/150">
-              <div class="nav-section-header"><svg width="24" height="24" viewBox="0 0 24 24" class="icon" alt="">
+              <div class="nav-section-header"><svg height="24" width="24" viewBox="0 0 24 24" class="icon" alt="">
                   <path d=""></path>
-                </svg> <span class="nav-title">title</span> <svg width="24" height="24" viewBox="0 0 24 24" class="indicator" name="fade" mode="out-in">
+                </svg> <span class="nav-title">title</span> <svg height="24" width="24" viewBox="0 0 24 24" class="indicator">
                   <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
                 </svg></div>
               <!---->

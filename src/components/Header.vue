@@ -1,107 +1,140 @@
 <template>
-    <div
-        v-scroll="onScroll"
-        :class="{ scrolled: state.scrolled }"
-        class="header-container"
-    >
-        <header :class="headerClasses">
-            <div v-if="isHome" class="link" @click="handleReturnClick">
-                <img
-                    alt=""
-                    class="logo"
-                    src="../assets/myhbarwallet-logo.svg"
-                />
-            </div>
-            <router-link v-else to="/" class="link">
-                <img
-                    alt=""
-                    class="logo"
-                    src="../assets/myhbarwallet-logo.svg"
-                />
-            </router-link>
-            <div class="spacer"></div>
-            <div class="links">
-                <router-link to="/" class="link">{{
-                    $t("common.home")
-                }}</router-link>
-                <router-link
-                    v-if="!isAbout"
-                    :to="{ name: 'home', hash: '#about' }"
-                    class="link"
-                    >{{ $t("common.about") }}</router-link
-                >
-                <div v-else class="link" @click="handleSameHash('#about')">
-                    {{ $t("common.about") }}
-                </div>
-                <router-link
-                    v-if="!isFaqs"
-                    :to="{ name: 'home', hash: '#faqs' }"
-                    class="link"
-                >
-                    {{ $t("common.faqs") }}
-                </router-link>
-                <div v-else class="link" @click="handleSameHash('#faqs')">
-                    {{ $t("common.faqs") }}
-                </div>
-            </div>
-            <div
-                v-if="loggedIn && isInterface && !state.scrolled"
-                class="logout"
-                @click="handleLogout"
-            >
-                Logout
-            </div>
-            <HeaderHamburgerButton
-                :is-open="state.isHamburgerOpen"
-                :is-interface="isInterface"
-                @toggle="toggle"
-            />
-            <div v-if="state.scrolled" class="button-container">
-                <router-link class="btn" :to="{ name: 'create-account' }">
-                    <Button
-                        :label="$t('common.createAccount')"
-                        compact
-                        outline
-                    />
-                </router-link>
-                <router-link class="btn" :to="{ name: 'access-my-account' }">
-                    <Button :label="$t('header.access')" compact />
-                </router-link>
-            </div>
-        </header>
-        <HeaderHamburgerMenu
-            :is-open="state.isHamburgerOpen"
-            @toggle="toggle"
-            @logout="state.isLogoutOpen = true"
-        />
-        <ModalLogOut v-if="isInterface" v-model="state.isLogoutOpen" />
-    </div>
+  <div
+    v-scroll="onScroll"
+    :class="{ scrolled: state.scrolled }"
+    class="header-container"
+  >
+    <header :class="headerClasses">
+      <div
+        v-if="isHome"
+        class="link"
+        @click="handleReturnClick"
+      >
+        <img
+          alt=""
+          class="logo"
+          src="../assets/myhbarwallet-logo.svg"
+        >
+      </div>
+      <router-link
+        v-else
+        class="link"
+        to="/"
+      >
+        <img
+          alt=""
+          class="logo"
+          src="../assets/myhbarwallet-logo.svg"
+        >
+      </router-link>
+      <div class="spacer" />
+      <div class="links">
+        <router-link
+          class="link"
+          to="/"
+        >
+          {{ $t("common.home") }}
+        </router-link>
+        <router-link
+          v-if="!isAbout"
+          :to="{ name: 'home', hash: '#about' }"
+          class="link"
+        >
+          {{ $t("common.about") }}
+        </router-link>
+        <div
+          v-else
+          class="link"
+          @click="handleSameHash('#about')"
+        >
+          {{ $t("common.about") }}
+        </div>
+        <router-link
+          v-if="!isFaqs"
+          :to="{ name: 'home', hash: '#faqs' }"
+          class="link"
+        >
+          {{ $t("common.faqs") }}
+        </router-link>
+        <div
+          v-else
+          class="link"
+          @click="handleSameHash('#faqs')"
+        >
+          {{ $t("common.faqs") }}
+        </div>
+      </div>
+      <div
+        v-if="loggedIn && isInterface && !state.scrolled"
+        class="logout"
+        @click="handleLogout"
+      >
+        Logout
+      </div>
+      <HeaderHamburgerButton
+        :is-interface="isInterface"
+        :is-open="state.isHamburgerOpen"
+        @toggle="toggle"
+      />
+      <div
+        v-if="state.scrolled"
+        class="button-container"
+      >
+        <router-link
+          :to="{ name: 'create-account' }"
+          class="btn"
+        >
+          <Button
+            :label="$t('common.createAccount')"
+            compact
+            outline
+          />
+        </router-link>
+        <router-link
+          :to="{ name: 'access-my-account' }"
+          class="btn"
+        >
+          <Button
+            :label="$t('header.access')"
+            compact
+          />
+        </router-link>
+      </div>
+    </header>
+    <HeaderHamburgerMenu
+      :is-open="state.isHamburgerOpen"
+      @logout="state.isLogoutOpen = true"
+      @toggle="toggle"
+    />
+    <ModalLogOut
+      v-if="isInterface"
+      v-model="state.isLogoutOpen"
+    />
+  </div>
 </template>
 
 <script lang="ts">
-import Button from "../components/Button.vue";
-import {
-    createComponent,
-    computed,
-    reactive,
-    SetupContext
-} from "@vue/composition-api";
-import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
-import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
-import ModalLogOut from "./ModalLogOut.vue";
-import { getters } from "../store";
+import { computed, createComponent, reactive, SetupContext } from "@vue/composition-api";
 
-// Yes, it is used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { getters } from "../store";
+import { asyncComponent } from "../main";
+
+import Button from "./Button.vue";
+import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
+import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
+
+const ModalLogOut = asyncComponent("ModalLogout");
+
 function handleReturnClick(): void {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 export default createComponent({
+    name: "Header",
     components: {
         Button,
-        HeaderHamburgerMenu,
         HeaderHamburgerButton,
+        HeaderHamburgerMenu,
         ModalLogOut
     },
     // Even though props is not used, we must have `context`
@@ -154,16 +187,14 @@ export default createComponent({
 
         const isInterface = computed(() => {
             // This conditional is required for unit tests to pass
-            if (context.root != null) {
-                if (context.root.$route != null) {
-                    return context.root.$route.path.startsWith("/interface");
-                }
+            if (context.root != null && context.root.$route != null) {
+                return context.root.$route.path.startsWith("/interface");
             }
 
             return false;
         });
 
-        const loggedIn = computed(getters.IS_LOGGED_IN);
+        const loggedIn = computed(getters.isLoggedIn);
 
         function handleLogout(): void {
             state.isHamburgerOpen = false;
@@ -173,7 +204,8 @@ export default createComponent({
         const headerClasses = computed(() => {
             if (isInterface.value) {
                 return "header interface";
-            } else return "header";
+            }
+            return "header";
         });
 
         return {
@@ -195,131 +227,131 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.header-container {
-    background-color: var(--color-white);
-    inset-inline: 0;
-    position: fixed;
-    z-index: 2;
+    .header-container {
+        background-color: var(--color-white);
+        inset-inline: 0;
+        position: fixed;
+        z-index: 2;
 
-    &::after {
-        box-shadow: 0 2px 13px rgba(0, 0, 0, 0.1);
-        content: "";
-        inset: 0;
-        opacity: 0;
-        position: absolute;
-        transition: opacity 0.3s ease;
-        z-index: -1;
+        &::after {
+            box-shadow: 0 2px 13px rgba(0, 0, 0, 0.1);
+            content: "";
+            inset: 0;
+            opacity: 0;
+            position: absolute;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+
+            @media screen and (prefers-reduced-motion: reduce) {
+                transition: none;
+            }
+        }
+
+        &.scrolled::after {
+            opacity: 1;
+        }
+    }
+
+    .logout {
+        align-self: center;
+        color: var(--color-infra-red);
+        margin-inline-start: 26px;
+
+        &:hover,
+        &:focus {
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 1024px) {
+            visibility: hidden;
+        }
+    }
+
+    .header {
+        display: flex;
+        margin: 0 auto;
+        padding: 12px 45px;
+
+        /* Animating padding to match MEW */
+        /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
+        transition: padding 0.3s ease;
+
+        &:not(.interface) {
+            max-width: 1024px;
+        }
 
         @media screen and (prefers-reduced-motion: reduce) {
             transition: none;
         }
+
+        @media screen and (max-width: 1024px) {
+            padding: 12px 20px;
+        }
     }
 
-    &.scrolled::after {
-        opacity: 1;
-    }
-}
-
-.logout {
-    align-self: center;
-    color: var(--color-infra-red);
-    margin-inline-start: 26px;
-
-    &:hover,
-    &:focus {
-        cursor: pointer;
+    .scrolled header {
+        padding-block: 2.5px;
     }
 
-    @media screen and (max-width: 1024px) {
-        visibility: hidden;
-    }
-}
-
-.header {
-    display: flex;
-    margin: 0 auto;
-    padding: 12px 45px;
-
-    /* Animating padding to match MEW */
-    /* stylelint-disable-next-line plugin/no-low-performance-animation-properties */
-    transition: padding 0.3s ease;
-
-    &:not(.interface) {
-        max-width: 1024px;
+    .spacer {
+        flex-grow: 1;
     }
 
-    @media screen and (prefers-reduced-motion: reduce) {
-        transition: none;
+    .link {
+        align-items: center;
+        color: var(--color-china-blue);
+        display: flex;
+        text-decoration: none;
+        white-space: nowrap;
+
+        &:hover,
+        &:focus {
+            cursor: pointer;
+        }
     }
 
-    @media screen and (max-width: 1024px) {
-        padding: 12px 20px;
-    }
-}
-
-.scrolled header {
-    padding-block: 2.5px;
-}
-
-.spacer {
-    flex-grow: 1;
-}
-
-.link {
-    align-items: center;
-    color: var(--color-china-blue);
-    display: flex;
-    text-decoration: none;
-    white-space: nowrap;
-
-    &:hover,
-    &:focus {
-        cursor: pointer;
-    }
-}
-
-.links {
-    display: flex;
-    font-size: 14px;
-    padding: 13px 0;
-
-    & .link {
-        margin-inline-start: 26px;
-        padding: 7px 14px;
-    }
-}
-
-.button-container {
-    align-items: center;
-    display: flex;
-}
-
-.btn {
-    flex-shrink: 1;
-    margin-inline-start: 10px;
-
-    &:first-child {
-        margin-inline-start: 30px;
-    }
-}
-
-.logo {
-    font-size: 26px;
-    height: 50px;
-
-    & > strong {
-        font-weight: 600;
-    }
-}
-
-@media screen and (max-width: 1024px) {
     .links {
-        max-width: 0;
-        visibility: hidden;
+        display: flex;
+        font-size: 14px;
+        padding: 13px 0;
+
+        & .link {
+            margin-inline-start: 26px;
+            padding: 7px 14px;
+        }
     }
 
     .button-container {
-        visibility: hidden;
+        align-items: center;
+        display: flex;
     }
-}
+
+    .btn {
+        flex-shrink: 1;
+        margin-inline-start: 10px;
+
+        &:first-child {
+            margin-inline-start: 30px;
+        }
+    }
+
+    .logo {
+        font-size: 26px;
+        height: 50px;
+
+        & > strong {
+            font-weight: 600;
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        .links {
+            max-width: 0;
+            visibility: hidden;
+        }
+
+        .button-container {
+            visibility: hidden;
+        }
+    }
 </style>

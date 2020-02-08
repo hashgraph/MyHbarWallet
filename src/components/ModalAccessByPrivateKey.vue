@@ -1,55 +1,50 @@
 <template>
-    <Modal
-        :is-open="state.isOpen"
-        :not-closable="state.isBusy"
-        :title="$t('modalAccessByPrivateKey.title')"
-        @change="handleModalChangeIsOpen"
+  <Modal
+    :is-open="state.isOpen"
+    :not-closable="state.isBusy"
+    :title="$t('modalAccessByPrivateKey.title')"
+    @change="handleModalChangeIsOpen"
+  >
+    <template v-slot:banner>
+      <Warning
+        :message="
+          $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+        "
+        :title="$t('warning.title')"
+      />
+    </template>
+    <form
+      class="modal-access-by-private-key"
+      @submit.prevent="$emit('submit')"
     >
-        <template v-slot:banner>
-            <Warning
-                :title="$t('warning.title')"
-                :message="
-                    $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
-                "
-            />
-        </template>
-        <form
-            class="modal-access-by-private-key"
-            @submit.prevent="$emit('submit')"
-        >
-            <TextInput
-                ref="input"
-                :placeholder="$t('modalAccessByPrivateKey.enterPrivateKey')"
-                :value="state.rawPrivateKey"
-                :valid="valid"
-                :spellcheck-disabled="true"
-                show-validation
-                @input="handlePrivateKeyInput"
-            />
-            <Button
-                class="button-access-wallet"
-                :label="$t('modalAccessByPrivateKey.accessAccount')"
-                :busy="state.isBusy"
-                :disabled="!valid"
-            />
-            <CustomerSupportLink />
-        </form>
-    </Modal>
+      <TextInput
+        ref="input"
+        :placeholder="$t('modalAccessByPrivateKey.enterPrivateKey')"
+        :spellcheck-disabled="true"
+        :valid="valid"
+        :value="state.rawPrivateKey"
+        show-validation
+        @input="handlePrivateKeyInput"
+      />
+      <Button
+        :busy="state.isBusy"
+        :disabled="!valid"
+        :label="$t('modalAccessByPrivateKey.accessAccount')"
+        class="button-access-wallet"
+      />
+      <CustomerSupportLink />
+    </form>
+  </Modal>
 </template>
 
 <script lang="ts">
+import { createComponent, PropType, ref, SetupContext, watch } from "@vue/composition-api";
+
 import Warning from "../components/Warning.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
-import {
-    createComponent,
-    SetupContext,
-    PropType,
-    watch,
-    ref
-} from "@vue/composition-api";
 
 export interface State {
     isOpen: boolean;
@@ -58,6 +53,7 @@ export interface State {
 }
 
 export default createComponent({
+    name: "ModalAccessByPrivateKey",
     components: {
         Button,
         Modal,
@@ -69,33 +65,19 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: Object as PropType<State> },
     setup(props: { state: State }, context: SetupContext) {
         const valid = ref<boolean>(false);
         const input = ref<HTMLInputElement | null>(null);
 
-        // No, it cannot be moved to enclosing scope
         // eslint-disable-next-line unicorn/consistent-function-scoping
         async function isValid(): Promise<boolean> {
             try {
-                const { Ed25519PrivateKey } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
-
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
                 Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;
             } catch (error) {
-                // The exception message changes depending on the input
-                if (
-                    error instanceof Error &&
-                    error.message.includes("invalid private key")
-                ) {
-                    return false;
-                }
-
-                throw error;
+                return false;
             }
         }
 
@@ -107,7 +89,8 @@ export default createComponent({
                     valid.value = false;
                 }
 
-                isValid().then(result => {
+                // eslint-disable-next-line promise/catch-or-return,promise/always-return
+                isValid().then((result) => {
                     valid.value = result;
                 });
             }
@@ -148,13 +131,13 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.modal-access-by-private-key {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
-}
+    .modal-access-by-private-key {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+    }
 
-.button-access-wallet {
-    margin-block: 10px 20px;
-}
+    .button-access-wallet {
+        margin-block: 10px 20px;
+    }
 </style>

@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+
 import ModalExportDownloadKeystore from "../../../src/components/ModalExportDownloadKeystore.vue";
 import i18n from "../../../src/i18n";
-import VueI18n from "vue-i18n";
 
 describe("ModalExportDownloadKeystore.vue", (): void => {
     const localVue = createLocalVue();
@@ -22,9 +23,7 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -48,17 +47,15 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-export-download-keystore">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+              <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
                 <div class="modal">
-                  <header><span class="title">Export Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                  <header><span class="title">Export Keystore File</span> <svg height="24" width="24" viewBox="0 0 24 24" class="close">
                       <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                     </svg></header>
                   <!---->
@@ -110,9 +107,7 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -136,17 +131,15 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-export-download-keystore">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+              <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
                 <div class="modal">
-                  <header><span class="title">Export Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                  <header><span class="title">Export Keystore File</span> <svg height="24" width="24" viewBox="0 0 24 24" class="close">
                       <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                     </svg></header>
                   <!---->
@@ -174,7 +167,7 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                             </p>
                           </div>
                         </div>
-                      </div> <button type="submit" disabled="disabled" class="download busy compact"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                      </div> <button disabled="disabled" type="submit" class="download busy compact"><svg height="24" width="24" viewBox="0 0 24 24" class="spinner mdi-spin">
                           <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
                         </svg>
                         <!---->

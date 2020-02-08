@@ -1,3 +1,4 @@
+/* eslint-disable no-secrets/no-secrets */
 import ledgerImage from "./assets/logo-ledger.png";
 import finneyImage from "./assets/logo-finney.png";
 import bitboxImage from "./assets/logo-bitbox.png";

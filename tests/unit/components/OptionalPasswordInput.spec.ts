@@ -1,4 +1,5 @@
 import { mount } from "@vue/test-utils";
+
 import OptionalPasswordInput from "../../../src/components/OptionalPasswordInput.vue";
 import i18n from "../../../src/i18n";
 
@@ -7,20 +8,18 @@ describe("OptionalPasswordInput", (): void => {
         expect.assertions(1);
 
         const wrapper = mount(OptionalPasswordInput, {
-            propsData: {
-                value: ""
-            },
+            propsData: { value: "" },
             i18n,
             methods: {
                 // This test has warnings if the values aren't defined
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                handleInput: (password: string): void => {
-                    return;
+                handleInput(password: string): void {
+                    console.log("handleInput");
                 },
                 // This test has warnings if the values aren't defined
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                handleChangeShowPassword: (showPassword: boolean): void => {
-                    return;
+                handleChangeShowPassword(showPassword: boolean): void {
+                    console.log("handleChangeShowPassword");
                 }
             },
             stubs: {

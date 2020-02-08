@@ -1,7 +1,8 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import CommunitySocialIcon from "../../../src/components/CommunitySocialIcon.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
+
+import CommunitySocialIcon from "../../../src/components/CommunitySocialIcon.vue";
 import i18n from "../../../src/i18n";
 
 describe("CommunitySocialIcon.vue", (): void => {
@@ -22,7 +23,7 @@ describe("CommunitySocialIcon.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <a href="" target="_blank" rel="noopener" class="social-icon">
+            <a rel="noopener" target="_blank" class="social-icon">
               <div class="link-content"><img src="https://via.placeholder.com/150" alt="">
                 name
               </div>

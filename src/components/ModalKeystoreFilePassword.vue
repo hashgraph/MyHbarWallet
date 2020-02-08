@@ -1,45 +1,39 @@
 <template>
-    <div class="modal-password">
-        <Modal
-            :title="$t('modalKeystoreFilePassword.title')"
-            :not-closable="state.isBusy"
-            :is-open="state.isOpen"
-            @change="handleModalChangeIsOpen"
-        >
-            <form @submit.prevent="handleSubmit">
-                <TextInput
-                    ref="input"
-                    class="input"
-                    :value="state.password"
-                    :error="state.error"
-                    :placeholder="$t('common.password.nineCharacters')"
-                    obscure
-                    @input="handleInputChange"
-                />
-                <Button
-                    class="btn"
-                    :busy="state.isBusy"
-                    :label="$t('modalKeystoreFilePassword.accessWallet')"
-                    :disabled="disabled"
-                />
-            </form>
-        </Modal>
-    </div>
+  <div class="modal-password">
+    <Modal
+      :is-open="state.isOpen"
+      :not-closable="state.isBusy"
+      :title="$t('modalKeystoreFilePassword.title')"
+      @change="handleModalChangeIsOpen"
+    >
+      <form @submit.prevent="handleSubmit">
+        <TextInput
+          ref="input"
+          :error="state.error"
+          :placeholder="$t('common.password.nineCharacters')"
+          :value="state.password"
+          class="input"
+          obscure
+          @input="handleInputChange"
+        />
+        <Button
+          :busy="state.isBusy"
+          :disabled="disabled"
+          :label="$t('modalKeystoreFilePassword.accessWallet')"
+          class="btn"
+        />
+      </form>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
-import Modal from "../components/Modal.vue";
-import Warning from "../components/Warning.vue";
-import TextInput from "../components/TextInput.vue";
+import { computed, createComponent, PropOptions, ref, SetupContext, watch } from "@vue/composition-api";
+
 import Button from "../components/Button.vue";
-import {
-    computed,
-    createComponent,
-    PropType,
-    watch,
-    SetupContext,
-    ref
-} from "@vue/composition-api";
+import Modal from "../components/Modal.vue";
+import TextInput from "../components/TextInput.vue";
+import Warning from "../components/Warning.vue";
 
 export interface State {
     isOpen: boolean;
@@ -59,9 +53,7 @@ export default createComponent({
         TextInput,
         Button
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: { type: Object, required: true as boolean } as PropOptions<State> },
     model: {
         prop: "state",
         event: "change"
@@ -69,11 +61,7 @@ export default createComponent({
     setup(props: Props, context: SetupContext) {
         const input = ref<HTMLInputElement | null>(null);
 
-        const disabled = computed(() => {
-            return (
-                props.state.password === "" || props.state.password.length < 9
-            );
-        });
+        const disabled = computed(() => props.state.password === "" || props.state.password.length < 9);
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
             if (!isOpen) props.state.error = null;
@@ -114,12 +102,12 @@ export default createComponent({
 });
 </script>
 
-<style scoped lang="postcss">
-.input {
-    margin-block-end: 20px;
-}
+<style lang="postcss" scoped>
+    .input {
+        margin-block-end: 20px;
+    }
 
-.btn {
-    width: 100%;
-}
+    .btn {
+        width: 100%;
+    }
 </style>

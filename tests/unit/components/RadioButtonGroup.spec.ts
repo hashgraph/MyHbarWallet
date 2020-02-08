@@ -1,4 +1,5 @@
 import { mount } from "@vue/test-utils";
+
 import RadioButtonGroup from "../../../src/components/RadioButtonGroup.vue";
 import imageKey from "../../../src/assets/button-key.svg";
 import imagePhrase from "../../../src/assets/button-phrase.svg";
@@ -37,7 +38,7 @@ describe("RadioButtonGroup.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(
-            `<div class="radio-button-group"></div>`
+            '<div class="radio-button-group"></div>'
         );
     });
 
@@ -54,11 +55,11 @@ describe("RadioButtonGroup.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="radio-button-group">
-              <div><label for="file" class="radio-button"><img alt="" src="" class="icon"> <input id="file" type="radio" name="RadioButtonGroup" class="input" value="file"> <span class="label">Keystore File</span>
+              <div><label for="file" class="radio-button"><img src="" alt="" class="icon"> <input id="file" name="RadioButtonGroup" type="radio" class="input" value="file"> <span class="label">Keystore File</span>
                   <!----></label></div>
-              <div><label for="phrase" class="radio-button"><img alt="" src="" class="icon"> <input id="phrase" type="radio" name="RadioButtonGroup" class="input" value="phrase"> <span class="label">Mnemonic Phrase</span>
+              <div><label for="phrase" class="radio-button"><img src="" alt="" class="icon"> <input id="phrase" name="RadioButtonGroup" type="radio" class="input" value="phrase"> <span class="label">Mnemonic Phrase</span>
                   <!----></label></div>
-              <div><label for="key" class="radio-button"><img alt="" src="" class="icon"> <input id="key" type="radio" name="RadioButtonGroup" class="input" value="key"> <span class="label">Private Key</span>
+              <div><label for="key" class="radio-button"><img src="" alt="" class="icon"> <input id="key" name="RadioButtonGroup" type="radio" class="input" value="key"> <span class="label">Private Key</span>
                   <!----></label></div>
             </div>
         `);

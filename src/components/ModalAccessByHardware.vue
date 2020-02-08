@@ -1,68 +1,66 @@
 <template>
-    <Modal
-        :is-open="state.isOpen"
-        :title="$t('modalAccessByHardware.title')"
-        @change="handleModalChangeIsOpen"
+  <Modal
+    :is-open="state.isOpen"
+    :title="$t('modalAccessByHardware.title')"
+    @change="handleModalChangeIsOpen"
+  >
+    <form
+      class="modal-access-by-hardware"
+      @submit.prevent="handleSubmit"
     >
-        <form class="modal-access-by-hardware" @submit.prevent="handleSubmit">
-            <RadioButtonGroup
-                v-model="state.optionSelected"
-                name="hardware-access-option"
-                :options="options.filter(option => option.supported)"
-            />
-            <div :class="{ instructions: true, open: selected }">
-                <div>{{ instructions }}</div>
-            </div>
-            <div
-                :class="{
-                    instructions: true,
-                    bold: true,
-                    open: requiresChrome && !isChrome
-                }"
-            >
-                <div>{{ $t("modalAccessByHardware.useChromeContinue") }}</div>
-            </div>
-            <div
-                :class="{
-                    instructions: true,
-                    bold: true,
-                    open: !state.disableButton
-                }"
-            >
-                <div>{{ $t("modalAccessByHardware.watchForPrompts") }}</div>
-            </div>
-            <Button
-                :busy="state.isBusy"
-                :disabled="state.disableButton"
-                class="button-choose-a-hardware"
-                :label="$t('modalAccessByHardware.chooseAHardware')"
-            />
-            <CustomerSupportLink />
-        </form>
-    </Modal>
+      <RadioButtonGroup
+        v-model="state.optionSelected"
+        :options="options.filter(option => option.supported)"
+        name="hardware-access-option"
+      />
+      <div :class="{ instructions: true, open: selected }">
+        <div>{{ instructions }}</div>
+      </div>
+      <div
+        :class="{
+          instructions: true,
+          bold: true,
+          open: requiresChrome && !isChrome
+        }"
+      >
+        <div>{{ $t("modalAccessByHardware.useChromeContinue") }}</div>
+      </div>
+      <div
+        :class="{
+          instructions: true,
+          bold: true,
+          open: !state.disableButton
+        }"
+      >
+        <div>{{ $t("modalAccessByHardware.watchForPrompts") }}</div>
+      </div>
+      <Button
+        :busy="state.isBusy"
+        :disabled="state.disableButton"
+        :label="$t('modalAccessByHardware.chooseAHardware')"
+        class="button-choose-a-hardware"
+      />
+      <CustomerSupportLink />
+    </form>
+  </Modal>
 </template>
 
 <script lang="ts">
-import {
-    createComponent,
-    reactive,
-    watch,
-    SetupContext,
-    computed,
-    PropType
-} from "@vue/composition-api";
-import Button from "../components/Button.vue";
-import RadioButtonGroup from "../components/RadioButtonGroup.vue";
+import { computed, createComponent, PropType, SetupContext, watch } from "@vue/composition-api";
+import { UAParser } from "ua-parser-js";
+
 import imageLedger from "../assets/button-ledger.svg";
 import imageFinney from "../assets/button-finney.png";
 import imageBitbox from "../assets/button-bitbox.svg";
 import imageTrezor from "../assets/button-trezor.svg";
 import imageSecalot from "../assets/button-secalot.svg";
 import imageKeepKey from "../assets/button-keepkey.svg";
-import Modal from "../components/Modal.vue";
-import CustomerSupportLink from "../components/CustomerSupportLink.vue";
-import Warning from "../components/Warning.vue";
-import { UAParser } from "ua-parser-js";
+
+import Button from "./Button.vue";
+import CustomerSupportLink from "./CustomerSupportLink.vue";
+import Modal from "./Modal.vue";
+import RadioButtonGroup from "./RadioButtonGroup.vue";
+import Warning from "./Warning.vue";
 
 export enum AccessHardwareOption {
     Ledger = "ledger",
@@ -80,15 +78,13 @@ interface HardwareAttributes {
     value: AccessHardwareOption;
 }
 
-export const HardwareOptions: Map<
-    AccessHardwareOption,
-    HardwareAttributes
-> = new Map([
+export const HardwareOptions: Map<AccessHardwareOption,
+HardwareAttributes> = new Map([
     [
         AccessHardwareOption.Ledger,
         {
             supported: true,
-            label: "Ledger (Nano S)",
+            label: "Ledger",
             value: AccessHardwareOption.Ledger,
             image: imageLedger
         }
@@ -152,6 +148,7 @@ export interface Props {
 }
 
 export default createComponent({
+    name: "ModalAccessByHardware",
     components: {
         RadioButtonGroup,
         Button,
@@ -163,25 +160,18 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: Object as PropType<State> },
     setup(props: Props, context: SetupContext) {
-        const chromeWarning = computed(
-            () =>
-                context.root.$t("warning.browserWarningBody1").toString() +
-                "\n" +
-                context.root.$t("warning.browserWarningBody2").toString()
-        );
+        const chromeWarning = computed(() => `${context.root
+            .$t("warning.browserWarningBody1")
+            .toString()}\n${context.root
+            .$t("warning.browserWarningBody2")
+            .toString()}`);
 
-        const isChrome = computed(
-            () =>
-                new UAParser(navigator.userAgent).getBrowser().name === "Chrome"
-        );
+        const isChrome = computed(() => new UAParser(navigator.userAgent).getBrowser().name === "Chrome");
 
-        const requiresChrome = computed(() => {
-            return props.state.optionSelected === AccessHardwareOption.Ledger;
-        });
+        // eslint-disable-next-line max-len
+        const requiresChrome = computed(() => props.state.optionSelected === AccessHardwareOption.Ledger);
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
@@ -205,33 +195,32 @@ export default createComponent({
             () => {
                 // if require chrome but not chrome, or if nothing selected, disable button
                 props.state.disableButton =
-                    (!isChrome.value && requiresChrome.value) ||
-                    props.state.optionSelected.length === 0;
+                    // eslint-disable-next-line no-mixed-operators
+                    !isChrome.value && requiresChrome.value ||
+                        props.state.optionSelected.length === 0;
             }
         );
 
-        const options = computed(() => {
-            return [...HardwareOptions.values()];
-        });
+        const options = computed(() => [ ...HardwareOptions.values() ]);
 
-        const selected = computed(() => {
-            return props.state.optionSelected !== "";
-        });
+        const selected = computed(() => props.state.optionSelected !== "");
 
         const instructions = computed(() => {
             switch (props.state.optionSelected) {
                 case AccessHardwareOption.Ledger:
                     if (isChrome.value) {
                         return context.root
+                        // eslint-disable-next-line no-secrets/no-secrets
                             .$t("modalAccessByHardware.ledgerInstructions")
                             .toString();
-                    } else {
-                        return context.root
-                            .$t("modalAccessByHardware.ledgerChromeOnly")
-                            .toString();
                     }
+                    return context.root
+                        .$t("modalAccessByHardware.ledgerChromeOnly")
+                        .toString();
+
                 case AccessHardwareOption.Trezor:
                     return context.root
+                    // eslint-disable-next-line no-secrets/no-secrets
                         .$t("modalAccessByHardware.trezorInstructions")
                         .toString();
                 case "":
@@ -255,38 +244,38 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.modal-access-by-hardware {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
-}
-
-.instructions {
-    align-items: center;
-    color: var(--color-china-blue);
-    display: flex;
-    flex-direction: column;
-    margin-block-start: 0;
-    max-height: 0;
-    overflow: hidden;
-    text-align: center;
-    transition: 0.3s;
-
-    &.bold {
-        font-weight: 500;
+    .modal-access-by-hardware {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
     }
 
-    &.open {
-        margin-block-start: 20px;
-        max-height: 100px;
+    .instructions {
+        align-items: center;
+        color: var(--color-china-blue);
+        display: flex;
+        flex-direction: column;
+        margin-block-start: 0;
+        max-height: 0;
+        overflow: hidden;
+        text-align: center;
+        transition: 0.3s;
+
+        &.bold {
+            font-weight: 500;
+        }
+
+        &.open {
+            margin-block-start: 20px;
+            max-height: 100px;
+        }
+
+        @media (prefers-reduced-motion) {
+            transition: none;
+        }
     }
 
-    @media (prefers-reduced-motion) {
-        transition: none;
+    .button-choose-a-hardware {
+        margin-block: 40px 20px;
     }
-}
-
-.button-choose-a-hardware {
-    margin-block: 40px 20px;
-}
 </style>

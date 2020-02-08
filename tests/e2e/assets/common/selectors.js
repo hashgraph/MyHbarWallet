@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = Object.freeze({
     accountInputSelector:
         ".modal-enter-account-id > .modal-background > .modal input[type=text]",

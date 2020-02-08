@@ -9,6 +9,13 @@ module.exports = {
         // v-html is used for rich text formatting for i18n
         "vue/no-v-html": "off",
         // This rule has many false positives in this codebase
-        "require-atomic-updates": "off"
+        "require-atomic-updates": "off",
+        "import/order": [
+            "error",
+            {
+                "groups": [ "builtin", "external", "parent", "sibling", "index" ],
+                "newlines-between": "always"
+            }
+        ]
     }
 };

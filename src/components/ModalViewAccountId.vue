@@ -1,47 +1,52 @@
 <template>
-    <Modal
-        :large="false"
-        :is-open="isOpen"
-        :title="$t('modalViewAccountId.title')"
-        @change="this.$listeners.change"
-    >
-        <div class="modal-contents">
-            <qrcode-vue
-                :value="accountId"
-                size="200"
-                level="L"
-                class="pub-qr"
-            />
+  <Modal
+    :is-open="isOpen"
+    :large="false"
+    :title="$t('modalViewAccountId.title')"
+    @change="this.$listeners.change"
+  >
+    <div class="modal-contents">
+      <qrcode-vue
+        :value="accountId"
+        class="pub-qr"
+        level="L"
+        size="200"
+      />
 
-            <ReadOnlyInput class="account-id" :value="accountId" />
+      <ReadOnlyInput
+        :value="accountId"
+        class="account-id"
+      />
 
-            <Button
-                compact
-                :label="$t('modalViewAccountId.copyAccountId')"
-                class="button"
-                @click="handleClickCopy"
-            />
-        </div>
-    </Modal>
+      <Button
+        :label="$t('modalViewAccountId.copyAccountId')"
+        class="button"
+        compact
+        @click="handleClickCopy"
+      />
+    </div>
+  </Modal>
 </template>
 
 <script lang="ts">
-import Modal from "../components/Modal.vue";
-import ReadOnlyInput from "../components/ReadOnlyInput.vue";
-import Button from "../components/Button.vue";
-import { createComponent, PropType, computed } from "@vue/composition-api";
+import { computed, createComponent, PropType } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
+
 import { writeToClipboard } from "../clipboard";
 import { actions } from "../store";
-import { AccountId } from '@hashgraph/sdk';
+
+import Button from "./Button.vue";
+import Modal from "./Modal.vue";
+import ReadOnlyInput from "./ReadOnlyInput.vue";
 
 interface Props {
     isOpen: boolean;
     event: "change";
-    value: AccountId | null;
+    value: import("@hashgraph/sdk").AccountId | null;
 }
 
 export default createComponent({
+    name: "ModalViewAccountId",
     components: {
         Modal,
         ReadOnlyInput,
@@ -53,16 +58,14 @@ export default createComponent({
         event: "change"
     },
     props: {
-        value: (Object as unknown) as PropType<AccountId | null>,
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        event: (String as unknown) as PropType<string>
+        value: Object as PropType<import("@hashgraph/sdk").AccountId | null>,
+        isOpen: Boolean,
+        event: String
     },
     setup(props: Props, context) {
-        const accountId = computed(() => {
-            return props.value
-                ? `${props.value.shard}.${props.value.realm}.${props.value.account}`
-                : "";
-        });
+        const accountId = computed(() => props.value ?
+            `${props.value.shard}.${props.value.realm}.${props.value.account}` :
+            "");
 
         async function handleClickCopy(): Promise<void> {
             const id = accountId.value;
@@ -84,28 +87,28 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.modal-contents {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-}
-
-.pub-qr {
-    margin-block-end: 40px;
-}
-
-.account-id {
-    color: var(--color-basalt-grey);
-    font-size: 26px;
-    margin-block-end: 40px;
-    text-align: center;
-}
-
-.button {
-    width: 200px;
-
-    @media (max-width: 600px) {
-        width: 100%;
+    .modal-contents {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
     }
-}
+
+    .pub-qr {
+        margin-block-end: 40px;
+    }
+
+    .account-id {
+        color: var(--color-basalt-grey);
+        font-size: 26px;
+        margin-block-end: 40px;
+        text-align: center;
+    }
+
+    .button {
+        width: 200px;
+
+        @media (max-width: 600px) {
+            width: 100%;
+        }
+    }
 </style>
