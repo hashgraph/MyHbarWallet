@@ -31,9 +31,9 @@
                     class="crown"
                 />
                 <div :class="{ main: true, garlands }">
-                    <slot name="banner"></slot>
+                    <slot name="banner" />
                     <div class="content-container">
-                        <slot></slot>
+                        <slot />
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@ const modalIds: number[] = [];
 let nextModalId = 0;
 
 function modalIsTop(id: number): boolean {
-    return modalIds[modalIds.length - 1] === id;
+    return modalIds[ modalIds.length - 1 ] === id;
 }
 
 // The isOpen property controls if the modal is open or not. It should be bound with
@@ -72,9 +72,7 @@ export default createComponent({
         garlands: Boolean,
         crown: String
     },
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     model: {
         prop: "isOpen",
         event: "change"
@@ -117,7 +115,7 @@ export default createComponent({
             }
 
             const elModals = context.root.$el.querySelectorAll(".modal");
-            elModals.forEach(element => {
+            elModals.forEach((element) => {
                 element.addEventListener(
                     "touchstart",
                     () => {
@@ -144,7 +142,7 @@ export default createComponent({
             unregister();
             window.removeEventListener("keydown", handleWindowKeyDown);
             const elModals = context.root.$el.querySelectorAll(".modal");
-            elModals.forEach(element => {
+            elModals.forEach((element) => {
                 element.removeEventListener("touchstart", () => {
                     if (element.scrollTop <= 0) {
                         element.scrollTo(0, 1);

@@ -57,26 +57,20 @@
             ref="file"
             type="file"
             @change="loadTextFromFile"
-        />
+        >
     </div>
 </template>
 
 <script lang="ts">
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "../components/AccountTileButtons.vue";
-import ModalAccessByHardware, {
-    AccessHardwareOption
-} from "../components/ModalAccessByHardware.vue";
-import ModalAccessBySoftware, {
-    AccessSoftwareOption
-} from "../components/ModalAccessBySoftware.vue";
+import ModalAccessByHardware, { AccessHardwareOption } from "../components/ModalAccessByHardware.vue";
+import ModalAccessBySoftware, { AccessSoftwareOption } from "../components/ModalAccessBySoftware.vue";
 import ModalAccessByPhrase from "../components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "../components/ModalAccessByPrivateKey.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
-import ModalEnterAccountId, {
-    ModalEnterAccountIdElement
-} from "../components/ModalEnterAccountId.vue";
+import ModalEnterAccountId, { ModalEnterAccountIdElement } from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { AccessAccountDTO } from "../store/modules/wallet";
 import {
@@ -134,9 +128,7 @@ export default createComponent({
                 optionSelected: "",
                 disableButton: false
             },
-            modalAccessBySoftwareState: {
-                isOpen: false
-            },
+            modalAccessBySoftwareState: { isOpen: false },
             modalAccessByPhraseState: {
                 isOpen: false,
                 isBusy: false,
@@ -164,16 +156,12 @@ export default createComponent({
                 networkValid: false,
                 publicKey: null
             },
-            modalRequestToCreateAccountState: {
-                isOpen: false
-            },
+            modalRequestToCreateAccountState: { isOpen: false },
             loginMethod: null
         });
 
         const file = ref<HTMLInputElement | null>(null);
-        const modalEnterAccountId: Ref<ModalEnterAccountIdElement | null> = ref(
-            null
-        );
+        const modalEnterAccountId: Ref<ModalEnterAccountIdElement | null> = ref(null);
 
         function setPrivateKey(newPrivateKey: Ed25519PrivateKey): void {
             state.privateKey = newPrivateKey;
@@ -189,20 +177,18 @@ export default createComponent({
                 return;
             }
 
-            const file = target.files[0];
+            const file = target.files[ 0 ];
 
-            const keyStoreArrayBuff = await new Promise<ArrayBuffer>(
-                (resolve, reject) => {
-                    const reader = new FileReader();
+            const keyStoreArrayBuff = await new Promise<ArrayBuffer>((resolve, reject) => {
+                const reader = new FileReader();
 
-                    reader.addEventListener("error", reject);
-                    reader.addEventListener("loadend", (): void => {
-                        resolve(reader.result as ArrayBuffer);
-                    });
+                reader.addEventListener("error", reject);
+                reader.addEventListener("loadend", (): void => {
+                    resolve(reader.result as ArrayBuffer);
+                });
 
-                    reader.readAsArrayBuffer(file);
-                }
-            );
+                reader.readAsArrayBuffer(file);
+            });
 
             target.value = ""; // change back to initial state to guarantee that click fires next time
             state.modalKeystoreFilePasswordState.isOpen = true;
@@ -213,24 +199,19 @@ export default createComponent({
             context.root.$router.push({ name: "interface" });
         }
 
-        async function constructOperator(
-            account: AccountId
-        ): Promise<Operator> {
+        async function constructOperator(account: AccountId): Promise<Operator> {
             if (state.wallet !== null) {
                 if (state.wallet.hasPrivateKey()) {
                     return {
                         account,
                         privateKey: await state.wallet!.getPrivateKey()
                     } as Operator;
-                } else {
-                    return {
-                        account,
-                        publicKey: (await state.wallet!.getPublicKey()) as Ed25519PublicKey,
-                        signer: state.wallet!.signTransaction.bind(
-                            state.wallet!
-                        ) as Signer
-                    };
                 }
+                return {
+                    account,
+                    publicKey: (await state.wallet!.getPublicKey()) as Ed25519PublicKey,
+                    signer: state.wallet!.signTransaction.bind(state.wallet!) as Signer
+                };
             }
 
             return {
@@ -248,19 +229,17 @@ export default createComponent({
             }
         }
 
-        async function constructClient(
-            account: AccountId
-        ): Promise<Client | undefined> {
-            let client: Client | undefined = undefined;
+        async function constructClient(account: AccountId): Promise<Client | undefined> {
+            let client: Client | undefined;
 
             const {
                 Client,
                 CryptoTransferTransaction,
                 HederaError,
                 ResponseCodeEnum
-            } = await (import("@hashgraph/sdk") as Promise<
-                typeof import("@hashgraph/sdk")
-            >);
+            } = await import("@hashgraph/sdk") as Promise<
+            typeof import("@hashgraph/sdk")
+            >;
 
             try {
                 const network: NetworkSettings = await getNetwork();
@@ -268,7 +247,7 @@ export default createComponent({
 
                 client = new Client({
                     nodes: {
-                        [network.proxy || network.address]: {
+                        [ network.proxy || network.address ]: {
                             shard: network.node.shard,
                             realm: network.node.realm,
                             account: network.node.node
@@ -317,9 +296,7 @@ export default createComponent({
             }
         }
 
-        function handleAccessBySoftwareSubmit(
-            which: AccessSoftwareOption
-        ): void {
+        function handleAccessBySoftwareSubmit(which: AccessSoftwareOption): void {
             state.modalAccessBySoftwareState.isOpen = false;
 
             if (which === "file") {
@@ -341,19 +318,16 @@ export default createComponent({
             }
         }
 
-        async function handleAccessByHardwareSubmit(
-            which: AccessHardwareOption
-        ): Promise<void> {
+        async function handleAccessByHardwareSubmit(which: AccessHardwareOption): Promise<void> {
             switch (which) {
                 case AccessHardwareOption.Ledger:
                     state.loginMethod = LoginMethod.LedgerNanoS;
                     state.modalAccessByHardwareState.isBusy = true;
                     try {
-                        const { LedgerNanoS } = await (import(
-                            "../wallets/hardware/LedgerNanoS" /* webpackChunkName: "hardware" */
+                        const { LedgerNanoS } = await import("../wallets/hardware/LedgerNanoS" /* webpackChunkName: "hardware" */
                         ) as Promise<
-                            typeof import("../wallets/hardware/LedgerNanoS")
-                        >);
+                        typeof import("../wallets/hardware/LedgerNanoS")
+                        >;
 
                         state.wallet = new LedgerNanoS();
                         state.publicKey = (await state.wallet.getPublicKey()) as Ed25519PublicKey;
@@ -388,16 +362,12 @@ export default createComponent({
             pwState.isBusy = true;
 
             try {
-                const { Ed25519PrivateKey } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
 
-                setPrivateKey(
-                    await Ed25519PrivateKey.fromKeystore(
-                        state.keyFile as Uint8Array,
-                        state.modalKeystoreFilePasswordState.password
-                    )
-                );
+                setPrivateKey(await Ed25519PrivateKey.fromKeystore(
+                    state.keyFile as Uint8Array,
+                    state.modalKeystoreFilePasswordState.password
+                ));
 
                 // Close  previous modal and open another one
                 pwState.isBusy = false;
@@ -416,16 +386,11 @@ export default createComponent({
             accessByPhraseState.isBusy = true;
 
             try {
-                const { Ed25519PrivateKey } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
 
                 setPrivateKey(
                     // `.derive(0)` to use the same key as the default account of the mobile wallet
-                    (await Ed25519PrivateKey.fromMnemonic(
-                        accessByPhraseState.words
-                    )).derive(0)
-                );
+                    (await Ed25519PrivateKey.fromMnemonic(accessByPhraseState.words)).derive(0));
 
                 // Close  previous modal and open another one
                 accessByPhraseState.isBusy = false;
@@ -446,15 +411,9 @@ export default createComponent({
 
         async function handleAccessByPrivateKeySubmit(): Promise<void> {
             state.modalAccessByPrivateKeyState.isBusy = true;
-            const { Ed25519PrivateKey } = await (import(
-                "@hashgraph/sdk"
-            ) as Promise<typeof import("@hashgraph/sdk")>);
+            const { Ed25519PrivateKey } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
 
-            setPrivateKey(
-                Ed25519PrivateKey.fromString(
-                    state.modalAccessByPrivateKeyState.rawPrivateKey
-                )
-            );
+            setPrivateKey(Ed25519PrivateKey.fromString(state.modalAccessByPrivateKeyState.rawPrivateKey));
 
             // Close previous modal and open another one
             state.modalAccessByPrivateKeyState.isOpen = false;
@@ -465,16 +424,12 @@ export default createComponent({
             }, 125);
         }
 
-        async function handleAccountIdSubmit(
-            account: AccountId
-        ): Promise<void> {
+        async function handleAccountIdSubmit(account: AccountId): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
 
             if (state.loginMethod === null) {
                 state.modalEnterAccountIdState.isBusy = false;
-                throw new Error(
-                    context.root.$t("common.error.illegalState").toString()
-                );
+                throw new Error(context.root.$t("common.error.illegalState").toString());
             }
 
             if (state.wallet === null) {
@@ -495,9 +450,7 @@ export default createComponent({
                 const HederaError = (await import("@hashgraph/sdk"))
                     .HederaError;
                 if (error instanceof HederaError) {
-                    const result: HederaErrorTuple = await actions.handleHederaError(
-                        { error, showAlert: false }
-                    );
+                    const result: HederaErrorTuple = await actions.handleHederaError({ error, showAlert: false });
 
                     // set input error to error message
                     state.modalEnterAccountIdState.errorMessage =
@@ -505,9 +458,7 @@ export default createComponent({
 
                     // In this case, the error should pop up
                     if (
-                        error.message.includes(
-                            context.root.$t("common.error.unhandled").toString()
-                        )
+                        error.message.includes(context.root.$t("common.error.unhandled").toString())
                     ) {
                         throw error;
                     }
@@ -515,9 +466,7 @@ export default createComponent({
                     error.name === "TransportStatusError" &&
                     state.loginMethod === LoginMethod.LedgerNanoS
                 ) {
-                    const result: LedgerErrorTuple = await actions.handleLedgerError(
-                        { error, showAlert: false }
-                    );
+                    const result: LedgerErrorTuple = await actions.handleLedgerError({ error, showAlert: false });
 
                     state.modalEnterAccountIdState.errorMessage =
                         result.message;
@@ -532,9 +481,7 @@ export default createComponent({
                     const message = context.root
                         .$t("network.connectionFailed")
                         .toString();
-                    (modalEnterAccountId.value as ModalEnterAccountIdElement).setAddressError(
-                        message
-                    );
+                    (modalEnterAccountId.value as ModalEnterAccountIdElement).setAddressError(message);
                 }
             } finally {
                 state.modalEnterAccountIdState.isBusy = false;

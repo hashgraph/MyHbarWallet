@@ -20,14 +20,10 @@
                 </p>
 
                 <p>
-                    <strong
-                        >Apache License<br />Version 2.0, January 2004<br
-                    /></strong>
-                    <strong
-                        ><a href="http://www.apache.org/licenses/"
-                            >http://www.apache.org/licenses/</a
-                        ></strong
-                    >
+                    <strong>Apache License<br>Version 2.0, January 2004<br></strong>
+                    <strong><a
+                        href="http://www.apache.org/licenses/"
+                    >http://www.apache.org/licenses/</a></strong>
                 </p>
 
                 <p>
@@ -35,11 +31,9 @@
                 </p>
 
                 <p>
-                    <strong
-                        ><a name="definitions">{{
-                            $t("termsAndConditions.termsAndConditionsForUse")
-                        }}</a></strong
-                    >.
+                    <strong><a name="definitions">{{
+                        $t("termsAndConditions.termsAndConditionsForUse")
+                    }}</a></strong>.
                 </p>
 
                 <div>
@@ -125,31 +119,25 @@
                 </div>
 
                 <p>
-                    <strong
-                        ><a name="copyright">{{
-                            $t("termsAndConditions.grantOfCopyrightLicense")
-                        }}</a></strong
-                    >
+                    <strong><a name="copyright">{{
+                        $t("termsAndConditions.grantOfCopyrightLicense")
+                    }}</a></strong>
                     {{
                         $t("termsAndConditions.grantOfCopyrightLicenseContent")
                     }}
                 </p>
 
                 <p>
-                    <strong
-                        ><a name="patent">{{
-                            $t("termsAndConditions.grantOfPatentLicense")
-                        }}</a></strong
-                    >
+                    <strong><a name="patent">{{
+                        $t("termsAndConditions.grantOfPatentLicense")
+                    }}</a></strong>
                     {{ $t("termsAndConditions.grantOfPatentLicenseContent") }}
                 </p>
 
                 <p>
-                    <strong
-                        ><a name="redistribution">{{
-                            $t("termsAndConditions.redistribution")
-                        }}</a></strong
-                    >
+                    <strong><a name="redistribution">{{
+                        $t("termsAndConditions.redistribution")
+                    }}</a></strong>
                     {{ $t("termsAndConditions.redistribution.header") }}
                 </p>
 
@@ -168,56 +156,46 @@
 
                     <li>
                         {{ $t("termsAndConditions.redistribution.paragraph4") }}
-                        <br />
-                        <br />
+                        <br>
+                        <br>
                         {{ $t("termsAndConditions.redistribution.paragraph5") }}
                     </li>
                 </ol>
 
                 <p>
-                    <strong
-                        ><a name="contributions">{{
-                            $t("termsAndConditions.submission")
-                        }}</a></strong
-                    >
+                    <strong><a name="contributions">{{
+                        $t("termsAndConditions.submission")
+                    }}</a></strong>
                     {{ $t("termsAndConditions.submissionContent") }}
                 </p>
 
                 <p>
-                    <strong
-                        ><a name="trademarks">{{
-                            $t("termsAndConditions.trademarks")
-                        }}</a></strong
-                    >
+                    <strong><a name="trademarks">{{
+                        $t("termsAndConditions.trademarks")
+                    }}</a></strong>
                     {{ $t("termsAndConditions.trademarksContent") }}
                 </p>
 
                 <p>
-                    <strong
-                        ><a name="no-warranty">{{
-                            $t("termsAndConditions.disclaimerOfWarranty")
-                        }}</a></strong
-                    >
+                    <strong><a name="no-warranty">{{
+                        $t("termsAndConditions.disclaimerOfWarranty")
+                    }}</a></strong>
                     {{ $t("termsAndConditions.disclaimerOfWarrantyContent") }}
                 </p>
 
                 <p>
-                    <strong
-                        ><a name="no-liability">{{
-                            $t("termsAndConditions.limitationOfLiability")
-                        }}</a></strong
-                    >
+                    <strong><a name="no-liability">{{
+                        $t("termsAndConditions.limitationOfLiability")
+                    }}</a></strong>
                     {{ $t("termsAndConditions.limitationOfLiabilityContent") }}
                 </p>
 
                 <p>
-                    <strong
-                        ><a name="additional">{{
-                            $t(
-                                "termsAndConditions.acceptingWarrantyOrAdditionalLiability"
-                            )
-                        }}</a></strong
-                    >
+                    <strong><a name="additional">{{
+                        $t(
+                            "termsAndConditions.acceptingWarrantyOrAdditionalLiability"
+                        )
+                    }}</a></strong>
                     {{
                         $t(
                             "termsAndConditions.acceptingWarrantyOrAdditionalLiabilityContent"
@@ -241,9 +219,7 @@ export default createComponent({
         PageTitle
     },
     setup() {
-        return {
-            formatRich
-        };
+        return { formatRich };
     }
 });
 </script>

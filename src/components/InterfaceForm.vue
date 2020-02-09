@@ -3,7 +3,7 @@
         <InterfaceFormTitle :title="title" />
         <div class="interface-form-container">
             <div class="form-main">
-                <slot></slot>
+                <slot />
             </div>
             <div class="form-footer">
                 <slot name="footer" />
@@ -17,12 +17,8 @@ import { createComponent } from "@vue/composition-api";
 import InterfaceFormTitle from "../components/InterfaceFormTitle.vue";
 
 export default createComponent({
-    components: {
-        InterfaceFormTitle
-    },
-    props: {
-        title: { type: String, required: true }
-    }
+    components: { InterfaceFormTitle },
+    props: { title: { type: String, required: true }}
 });
 </script>
 

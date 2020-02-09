@@ -2,7 +2,9 @@
     <div class="tile-grid">
         <!-- TODO: Remove div below when hardware option is ready -->
         <div class="ribbon-container">
-            <div class="coming-soon">{{ $t("common.comingSoon") }}</div>
+            <div class="coming-soon">
+                {{ $t("common.comingSoon") }}
+            </div>
             <AccountTileButton
                 :disabled="true"
                 :title="$t('accountTileButtons.hardware')"
@@ -30,9 +32,7 @@ import softwareImage from "../assets/button-software.svg";
 import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
-    components: {
-        AccountTileButton
-    },
+    components: { AccountTileButton },
 
     setup() {
         return { hardwareImage, softwareImage };

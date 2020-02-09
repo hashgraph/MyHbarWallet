@@ -15,7 +15,7 @@
                         name="software-access-option"
                         :options="options"
                     />
-                    <PurchaseWalletLink></PurchaseWalletLink>
+                    <PurchaseWalletLink />
                     <Button
                         :disabled="state.optionSelected == null"
                         :label="$t('common.continue')"
@@ -63,13 +63,9 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: { type: Boolean }
-    },
+    props: { isOpen: { type: Boolean }},
     setup(props: { isOpen: boolean }, context: SetupContext) {
-        const state = reactive({
-            optionSelected: null
-        });
+        const state = reactive({ optionSelected: null });
 
         const options = [
             {

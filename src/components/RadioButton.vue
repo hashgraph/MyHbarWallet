@@ -1,6 +1,14 @@
 <template>
-    <label class="radio-button" :for="value" :class="{ selected }">
-        <img alt="" class="icon" :src="image" />
+    <label
+        class="radio-button"
+        :for="value"
+        :class="{ selected }"
+    >
+        <img
+            alt=""
+            class="icon"
+            :src="image"
+        >
         <input
             :id="value"
             type="radio"
@@ -9,7 +17,7 @@
             class="input"
             :checked="selected"
             @change="$emit('change', value)"
-        />
+        >
         <span class="label">{{ label }}</span>
         <MaterialDesignIcon
             v-if="selected"
@@ -25,9 +33,7 @@ import { mdiCheckCircle } from "@mdi/js";
 import { createComponent, computed } from "@vue/composition-api";
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     model: {
         prop: "checked",
         event: "change"

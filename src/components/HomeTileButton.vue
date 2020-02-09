@@ -1,12 +1,28 @@
 <template>
-    <router-link class="home-tile-button" :to="{ name: route }">
-        <img class="tile-image" :src="image" />
+    <router-link
+        class="home-tile-button"
+        :to="{ name: route }"
+    >
+        <img
+            class="tile-image"
+            :src="image"
+        >
         <div class="content">
-            <div class="title">{{ title }}</div>
-            <div class="message">{{ content }}</div>
-            <div v-if="action" class="action-label">
+            <div class="title">
+                {{ title }}
+            </div>
+            <div class="message">
+                {{ content }}
+            </div>
+            <div
+                v-if="action"
+                class="action-label"
+            >
                 {{ action }}
-                <MaterialDesignIcon class="action-icon" :icon="rightArrow" />
+                <MaterialDesignIcon
+                    class="action-icon"
+                    :icon="rightArrow"
+                />
             </div>
         </div>
     </router-link>
@@ -18,9 +34,7 @@ import { mdiArrowRight } from "@mdi/js";
 import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     props: {
         route: { type: String, required: true },
         title: { type: String, required: true },

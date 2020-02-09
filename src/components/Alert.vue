@@ -1,7 +1,10 @@
 <template>
     <div :class="['alert', level]">
         <div class="message">
-            <MaterialDesignIcon class="message-icon" :icon="messageIcon" />
+            <MaterialDesignIcon
+                class="message-icon"
+                :icon="messageIcon"
+            />
             {{ message }}
         </div>
         <MaterialDesignIcon
@@ -32,9 +35,7 @@ interface Props {
 }
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     props: {
         id: (Number as unknown) as PropType<number>,
         message: (String as unknown) as PropType<string>,
@@ -50,9 +51,8 @@ export default createComponent({
                 return mdiCloseCircleOutline;
             } else if (props.level === "success") {
                 return mdiCheckCircleOutline;
-            } else {
-                return mdiAlertOutline;
             }
+            return mdiAlertOutline;
         });
 
         function destroyMe(): void {

@@ -15,7 +15,7 @@
                     :options="options"
                 />
                 <!--'Support coming soon!' note? -->
-                <PurchaseWalletLink></PurchaseWalletLink>
+                <PurchaseWalletLink />
                 <Button
                     :disabled="state.optionSelected == null"
                     :label="$t('common.continue')"
@@ -59,13 +59,9 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: { type: Boolean }
-    },
+    props: { isOpen: { type: Boolean }},
     setup(props: { isOpen: boolean }) {
-        const state = reactive<State>({
-            optionSelected: null
-        });
+        const state = reactive<State>({ optionSelected: null });
 
         const options = [
             {

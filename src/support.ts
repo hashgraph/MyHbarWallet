@@ -5,7 +5,7 @@ export function build(
 ): string | null {
     if (name || version) {
         if (name && version) {
-            return name + " " + version;
+            return `${name} ${version}`;
         } else if (name) {
             return name;
         }
@@ -35,7 +35,5 @@ URL: ${url}
 
 ${description}
 `;
-    return `mailto:support@myhbarwallet.com?subject=${encodeURIComponent(
-        subjectTemplate
-    )}&body=${encodeURIComponent(bodyTemplate)}`;
+    return `mailto:support@myhbarwallet.com?subject=${encodeURIComponent(subjectTemplate)}&body=${encodeURIComponent(bodyTemplate)}`;
 }

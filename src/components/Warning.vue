@@ -1,6 +1,9 @@
 <template>
     <div class="warning">
-        <Notice :title="title" :symbol="mdiAlertOutline">
+        <Notice
+            :title="title"
+            :symbol="mdiAlertOutline"
+        >
             {{ message }}
         </Notice>
     </div>
@@ -12,17 +15,13 @@ import { mdiAlertOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
 
 export default createComponent({
-    components: {
-        Notice
-    },
+    components: { Notice },
     props: {
         title: { type: String },
         message: { type: String }
     },
     setup() {
-        return {
-            mdiAlertOutline
-        };
+        return { mdiAlertOutline };
     }
 });
 </script>

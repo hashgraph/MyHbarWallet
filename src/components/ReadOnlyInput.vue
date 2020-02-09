@@ -31,18 +31,14 @@ export default createComponent({
         multiline: Boolean,
         obscure: Boolean
     },
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     setup(props: { value: string; multiline: boolean; obscure: boolean }) {
         const state = reactive({
             isEyeOpen: false,
             hasFocus: false
         });
 
-        const eye = computed(() => {
-            return state.isEyeOpen ? mdiEye : mdiEyeOutline;
-        });
+        const eye = computed(() => state.isEyeOpen ? mdiEye : mdiEyeOutline);
 
         function handleClickEye(): void {
             state.isEyeOpen = !state.isEyeOpen;

@@ -34,24 +34,18 @@ export default createComponent({
     },
     setup(props: object, context: SetupContext) {
         if (store.state.wallet.session === null) {
-            throw new Error(
-                context.root.$t("common.error.noSession").toString()
-            );
+            throw new Error(context.root.$t("common.error.noSession").toString());
         }
 
         // Boolean used to determine if the user has been to interface
         // Otherwise don't show the Logout modal
         store.state.interfaceMenu.hasBeenToInterface = true;
 
-        const account = computed(() =>
-            store.state.wallet.session != null
-                ? store.state.wallet.session.account
-                : null
-        );
+        const account = computed(() => store.state.wallet.session != null ?
+            store.state.wallet.session.account :
+            null);
 
-        return {
-            account
-        };
+        return { account };
     }
 });
 </script>

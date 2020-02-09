@@ -2,7 +2,9 @@
     <CirclePage>
         <div class="wrap">
             <div class="title-wrap">
-                <div class="page-title">{{ $t("convertUnits.title") }}</div>
+                <div class="page-title">
+                    {{ $t("convertUnits.title") }}
+                </div>
                 <div class="page-subtitle">
                     {{ $t("convertUnits.ourHelpfulConversionTool") }}
                 </div>
@@ -20,7 +22,10 @@
                 <div class="unit-table">
                     <table>
                         <tbody>
-                            <tr v-for="hu in hbarUnitRef" :key="hu.key">
+                            <tr
+                                v-for="hu in hbarUnitRef"
+                                :key="hu.key"
+                            >
                                 <td>{{ hu.name }}</td>
                                 <template>
                                     <div class="sub-row-container">

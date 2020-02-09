@@ -22,8 +22,8 @@
                         state.inProgress
                             ? $t("modalUploadProgress.inProgress.text")
                             : state.wasSuccess
-                            ? $t("modalUploadProgress.success.text")
-                            : $t("modalUploadProgress.failure.text")
+                                ? $t("modalUploadProgress.success.text")
+                                : $t("modalUploadProgress.failure.text")
                     }}
                 </div>
                 <div class="upload-subtext">
@@ -31,8 +31,8 @@
                         state.inProgress
                             ? $t("modalUploadProgress.inProgress.subText")
                             : state.wasSuccess
-                            ? $t("modalUploadProgress.success.subText")
-                            : $t("modalUploadProgress.failure.subText")
+                                ? $t("modalUploadProgress.success.subText")
+                                : $t("modalUploadProgress.failure.subText")
                     }}
                 </div>
                 <div class="visual-container">
@@ -116,29 +116,24 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: { type: Object, required: true }
-    },
+    props: { state: { type: Object, required: true }},
     setup(props: { state: State }, context: SetupContext) {
-        const buttonLabel = computed<string>(() => {
-            return context.root
-                .$t("modalUploadProgress.failure.buttonLabel")
-                .toString();
-        });
+        const buttonLabel = computed<string>(() => context.root
+            .$t("modalUploadProgress.failure.buttonLabel")
+            .toString());
 
         const progressString = computed<string>(() => {
             const completionPercentage =
-                props.state.currentChunk <= props.state.totalChunks
-                    ? (props.state.currentChunk / props.state.totalChunks) * 100
-                    : 0;
+                props.state.currentChunk <= props.state.totalChunks ?
+                    props.state.currentChunk / props.state.totalChunks * 100 :
+                    0;
 
-            return completionPercentage.toFixed(2) + "%";
+            return `${completionPercentage.toFixed(2)}%`;
         });
 
-        const isElectron = computed(() => {
+        const isElectron = computed(() =>
             // todo [2019-15-11]: actually detect if this is electron.
-            return false;
-        });
+            false);
 
         function close(): void {
             context.emit("change", false);

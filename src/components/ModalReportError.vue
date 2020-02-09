@@ -1,8 +1,14 @@
 <template>
-    <Modal :is-open="isOpen" hide-decoration @change="this.$listeners.change">
+    <Modal
+        :is-open="isOpen"
+        hide-decoration
+        @change="this.$listeners.change"
+    >
         <template>
             <div class="modal-container">
-                <div class="header">{{ $t("modalReportError.title") }}</div>
+                <div class="header">
+                    {{ $t("modalReportError.title") }}
+                </div>
                 <div class="sub-header">
                     {{ $t("modalReportError.informMHW") }}
                 </div>
@@ -77,27 +83,23 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: Boolean
-    },
+    props: { isOpen: Boolean },
     setup(props: Props, context: SetupContext) {
         const ua = new UAParser(navigator.userAgent);
 
-        const account = computed(() => {
-            return store.state.wallet.session != null
-                ? store.state.wallet.session.account
-                : null;
-        });
+        const account = computed(() => store.state.wallet.session != null ?
+            store.state.wallet.session.account :
+            null);
 
         const accountId = computed(() => {
             if (account.value !== null) {
                 const accountId: AccountId = account.value;
                 return (
-                    accountId.shard +
-                    "." +
-                    accountId.realm +
-                    "." +
-                    accountId.account
+                    `${accountId.shard
+                    }.${
+                        accountId.realm
+                    }.${
+                        accountId.account}`
                 );
             }
 
@@ -116,11 +118,9 @@ export default createComponent({
             return build(name, version);
         });
 
-        const url = computed(() => {
-            return context.root.$route != undefined
-                ? context.root.$route.fullPath
-                : null;
-        });
+        const url = computed(() => context.root.$route != undefined ?
+            context.root.$route.fullPath :
+            null);
 
         const device = computed(() => {
             const type = ua.getDevice().type;
@@ -134,25 +134,23 @@ export default createComponent({
             url: url.value,
             description: "",
             device: device.value || "",
-            version: "v" + VERSION + "+" + COMMIT_HASH,
+            version: `v${VERSION}+${COMMIT_HASH}`,
             accountId: accountId.value || "",
             details: ""
         });
 
         const errorMessage = computed(getters.ERROR_MESSAGE);
 
-        const sendLink = computed(() =>
-            createLink(
-                state.url,
-                state.platform,
-                state.browser,
-                state.device,
-                state.version,
-                state.accountId,
-                `${errorMessage.value}
+        const sendLink = computed(() => createLink(
+            state.url,
+            state.platform,
+            state.browser,
+            state.device,
+            state.version,
+            state.accountId,
+            `${errorMessage.value}
                 ${state.details}`
-            )
-        );
+        ));
 
         function close(): void {
             context.emit("change", false);

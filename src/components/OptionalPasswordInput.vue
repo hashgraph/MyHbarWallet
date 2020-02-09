@@ -15,7 +15,10 @@
                 />
             </div>
         </div>
-        <div class="password-input" :class="{ expanded: showPassword }">
+        <div
+            class="password-input"
+            :class="{ expanded: showPassword }"
+        >
             <TextInput
                 ref="input"
                 :value="value"
@@ -25,7 +28,10 @@
                 :tabindex="showPassword ? null : '-1'"
                 @input="handleInput"
             />
-            <div class="password-warning" :v-if="passwordWarning !== null">
+            <div
+                class="password-warning"
+                :v-if="passwordWarning !== null"
+            >
                 <p>{{ passwordWarning }}</p>
             </div>
         </div>

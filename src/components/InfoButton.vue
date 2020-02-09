@@ -1,7 +1,13 @@
 <template>
     <span class="info-button">
-        <Tooltip :message="message" :pinnable="true">
-            <MaterialDesignIcon class="icon" :icon="mdiAlertCircle" />
+        <Tooltip
+            :message="message"
+            :pinnable="true"
+        >
+            <MaterialDesignIcon
+                class="icon"
+                :icon="mdiAlertCircle"
+            />
         </Tooltip>
     </span>
 </template>
@@ -17,9 +23,7 @@ export default createComponent({
         MaterialDesignIcon,
         Tooltip
     },
-    props: {
-        message: { type: String, required: true }
-    },
+    props: { message: { type: String, required: true }},
     setup() {
         return { mdiAlertCircle };
     }

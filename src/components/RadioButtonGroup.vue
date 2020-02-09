@@ -1,6 +1,9 @@
 <template>
     <div class="radio-button-group">
-        <div v-for="option in options" :key="option.value">
+        <div
+            v-for="option in options"
+            :key="option.value"
+        >
             <RadioButton
                 :checked="selected || ''"
                 :name="name"
@@ -25,9 +28,7 @@ interface Option {
 }
 
 export default createComponent({
-    components: {
-        RadioButton
-    },
+    components: { RadioButton },
     model: {
         prop: "selected",
         event: "change"

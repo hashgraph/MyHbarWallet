@@ -1,18 +1,31 @@
 <template>
     <div class="balance">
-        <img :src="walletHbar" />
+        <img :src="walletHbar">
         <div class="content">
             <div class="top">
                 <div class="title">
                     {{ $t("balanceCard.balance") }}
                 </div>
-                <div v-if="hasFetchedBalance" class="subtitle" type="string">
-                    <div class="hbar-balance">{{ balanceHBarFormatted }} ℏ</div>
-                    <div v-if="hasFetchedRate" class="usd-balance">
+                <div
+                    v-if="hasFetchedBalance"
+                    class="subtitle"
+                    type="string"
+                >
+                    <div class="hbar-balance">
+                        {{ balanceHBarFormatted }} ℏ
+                    </div>
+                    <div
+                        v-if="hasFetchedRate"
+                        class="usd-balance"
+                    >
                         {{ balanceUSDFormatted }}
                     </div>
                 </div>
-                <div v-else class="subtitle-null" type="string">
+                <div
+                    v-else
+                    class="subtitle-null"
+                    type="string"
+                >
                     {{ $t("balanceCard.unknown") }}
                 </div>
             </div>
@@ -56,31 +69,20 @@ export default createComponent({
         Tooltip
     },
     setup() {
-        const state = reactive({
-            isBusy: false
-        });
+        const state = reactive({ isBusy: false });
 
-        const hasFetchedBalance = computed(
-            () => store.state.wallet.balance != null
-        );
+        const hasFetchedBalance = computed(() => store.state.wallet.balance != null);
 
-        const hasFetchedRate = computed(
-            () => store.state.wallet.exchangeRate != null
-        );
+        const hasFetchedRate = computed(() => store.state.wallet.exchangeRate != null);
 
-        const balanceHbar = computed(() =>
-            (store.state.wallet.balance || new BigNumber(0)).div(100000000)
-        );
+        const balanceHbar = computed(() => (store.state.wallet.balance || new BigNumber(0)).div(100000000));
 
-        const exchangeRate = computed(
-            () => (store.state.wallet.exchangeRate || new BigNumber(0)).div(1) // computed with null | undefined is broken
+        const exchangeRate = computed(() => (store.state.wallet.exchangeRate || new BigNumber(0)).div(1) // computed with null | undefined is broken
         );
 
         const balanceHBarFormatted = computed(() => {
             const balance = balanceHbar.value;
-            return formatHbar(
-                balance.isLessThan(0.0001) ? balance : balance.decimalPlaces(4)
-            );
+            return formatHbar(balance.isLessThan(0.0001) ? balance : balance.decimalPlaces(4));
         });
 
         const balanceUSDFormatted = computed(() => {
@@ -88,7 +90,7 @@ export default createComponent({
 
             if (rate.isGreaterThan(0)) {
                 const balanceUSD = balanceHbar.value.multipliedBy(rate);
-                return "≈ " + formatUSD(balanceUSD);
+                return `≈ ${formatUSD(balanceUSD)}`;
             }
 
             return "";

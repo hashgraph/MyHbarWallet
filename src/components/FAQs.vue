@@ -1,10 +1,15 @@
 <template>
-    <div id="faqs" class="faqs">
+    <div
+        id="faqs"
+        class="faqs"
+    >
         <div class="wrap">
             <div class="page-container">
                 <div class="head">
                     <div class="title">
-                        <div class="title-text">{{ $t("common.faqs") }}</div>
+                        <div class="title-text">
+                            {{ $t("common.faqs") }}
+                        </div>
                         <div class="subtitle-text">
                             {{ $t("faqs.answersToMostFAQs") }}
                         </div>

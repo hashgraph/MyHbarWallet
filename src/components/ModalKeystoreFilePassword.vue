@@ -59,9 +59,7 @@ export default createComponent({
         TextInput,
         Button
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: (Object as unknown) as PropType<State> },
     model: {
         prop: "state",
         event: "change"
@@ -69,11 +67,7 @@ export default createComponent({
     setup(props: Props, context: SetupContext) {
         const input = ref<HTMLInputElement | null>(null);
 
-        const disabled = computed(() => {
-            return (
-                props.state.password === "" || props.state.password.length < 9
-            );
-        });
+        const disabled = computed(() => props.state.password === "" || props.state.password.length < 9);
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
             if (!isOpen) props.state.error = null;

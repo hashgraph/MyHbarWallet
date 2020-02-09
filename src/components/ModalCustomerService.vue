@@ -91,28 +91,24 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>
-    },
+    props: { isOpen: (Boolean as unknown) as PropType<boolean> },
     setup(props, context) {
         const input = ref<HTMLInputElement | null>(null);
         const ua = new UAParser(navigator.userAgent);
 
-        const account = computed(() => {
-            return store.state.wallet.session != null
-                ? store.state.wallet.session.account
-                : null;
-        });
+        const account = computed(() => store.state.wallet.session != null ?
+            store.state.wallet.session.account :
+            null);
 
         const accountId = computed(() => {
             if (account.value !== null) {
                 const accountId: AccountId = account.value;
                 return (
-                    accountId.shard +
-                    "." +
-                    accountId.realm +
-                    "." +
-                    accountId.account
+                    `${accountId.shard
+                    }.${
+                        accountId.realm
+                    }.${
+                        accountId.account}`
                 );
             }
 
@@ -137,11 +133,9 @@ export default createComponent({
             return build(name, version);
         });
 
-        const url = computed(() => {
-            return context.root.$route != undefined
-                ? context.root.$route.fullPath
-                : null;
-        });
+        const url = computed(() => context.root.$route != undefined ?
+            context.root.$route.fullPath :
+            null);
 
         const device = computed(() => {
             const type = ua.getDevice().type;
@@ -155,21 +149,19 @@ export default createComponent({
             url: url.value,
             description: "",
             device: device.value || "",
-            version: "v" + VERSION + "+" + COMMIT_HASH,
+            version: `v${VERSION}+${COMMIT_HASH}`,
             accountId: accountId.value || ""
         });
 
-        const sendLink = computed(() =>
-            createLink(
-                state.url,
-                state.platform,
-                state.browser,
-                state.device,
-                state.version,
-                state.accountId,
-                state.description
-            )
-        );
+        const sendLink = computed(() => createLink(
+            state.url,
+            state.platform,
+            state.browser,
+            state.device,
+            state.version,
+            state.accountId,
+            state.description
+        ));
 
         function handleSubmit(): void {
             window.open(sendLink.value);
@@ -193,7 +185,7 @@ export default createComponent({
 
         watch(
             () => props.isOpen,
-            newVal => {
+            (newVal) => {
                 if (newVal && input.value) {
                     input.value.focus();
                 }

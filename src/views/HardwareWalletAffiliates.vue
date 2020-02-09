@@ -1,6 +1,9 @@
 <template>
     <div class="hardware-wallet-affiliates">
-        <PageTitle large :title="$t('hardwareWalletAffiliates.title')">
+        <PageTitle
+            large
+            :title="$t('hardwareWalletAffiliates.title')"
+        >
             {{ $t("hardwareWalletAffiliates.purchase") }}
         </PageTitle>
         <!-- enable and add offers/affiliates in src/affiliates.ts -->
@@ -14,8 +17,7 @@
                     :image="offer.image"
                     :more-info="offer.address"
                     :description="offer.description"
-                >
-                </HardwareWalletOffer>
+                />
             </template>
         </div>
     </div>
@@ -33,9 +35,7 @@ export default createComponent({
         PageTitle
     },
     setup() {
-        return {
-            affiliates
-        };
+        return { affiliates };
     }
 });
 </script>

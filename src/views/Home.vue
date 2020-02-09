@@ -16,14 +16,24 @@
                         </div>
                     </div>
                     <div class="banner-image">
-                        <img :src="mountainTop" alt="banner" />
+                        <img
+                            :src="mountainTop"
+                            alt="banner"
+                        >
                     </div>
                 </div>
                 <HomeTileButtons />
             </div>
         </div>
-        <img class="circle" :src="circleImage" alt="circle" />
-        <div id="about" class="about">
+        <img
+            class="circle"
+            :src="circleImage"
+            alt="circle"
+        >
+        <div
+            id="about"
+            class="about"
+        >
             <div class="page-container">
                 <div class="about-banner">
                     <div class="banner-content">
@@ -34,7 +44,11 @@
                             {{ $t("home.myHbarWalletIsAClone") }}
                         </div>
                     </div>
-                    <img class="about-image" :src="hbarOrb" alt="about" />
+                    <img
+                        class="about-image"
+                        :src="hbarOrb"
+                        alt="about"
+                    >
                 </div>
             </div>
         </div>

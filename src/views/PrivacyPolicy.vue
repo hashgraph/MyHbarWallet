@@ -5,7 +5,9 @@
                 {{ $t("privacyPolicy.lastUpdated") }}
             </PageTitle>
 
-            <div class="heading">{{ $t("privacyPolicy.section1.header") }}</div>
+            <div class="heading">
+                {{ $t("privacyPolicy.section1.header") }}
+            </div>
             <div class="paragraph">
                 {{ $t("privacyPolicy.section1.paragraph1") }}
             </div>
@@ -18,11 +20,15 @@
             <div class="paragraph">
                 {{ $t("privacyPolicy.section1.paragraph4") }}
             </div>
-            <div class="heading">HEDERA™ HASHGRAPH</div>
+            <div class="heading">
+                HEDERA™ HASHGRAPH
+            </div>
             <div class="paragraph">
                 {{ $t("privacyPolicy.section2.paragraph1") }}
             </div>
-            <div class="heading">{{ $t("privacyPolicy.section3.header") }}</div>
+            <div class="heading">
+                {{ $t("privacyPolicy.section3.header") }}
+            </div>
             <div class="paragraph">
                 {{ $t("privacyPolicy.section3.paragraph1") }}
             </div>
@@ -36,14 +42,18 @@
             <div class="paragraph">
                 {{ $t("privacyPolicy.section5.paragraph1") }}
             </div>
-            <div class="heading">{{ $t("privacyPolicy.section6.header") }}</div>
+            <div class="heading">
+                {{ $t("privacyPolicy.section6.header") }}
+            </div>
             <div class="paragraph">
                 {{ $t("privacyPolicy.section6.paragraph1") }}
             </div>
             <div class="paragraph">
                 {{ $t("privacyPolicy.section6.paragraph2") }}
             </div>
-            <div class="heading">{{ $t("privacyPolicy.section7.header") }}</div>
+            <div class="heading">
+                {{ $t("privacyPolicy.section7.header") }}
+            </div>
             <div class="paragraph">
                 {{ $t("privacyPolicy.section7.paragraph1") }}
             </div>
@@ -54,7 +64,9 @@
             <div class="paragraph">
                 {{ $t("privacyPolicy.section8.paragraph1") }}
             </div>
-            <div class="heading">{{ $t("privacyPolicy.section9.header") }}</div>
+            <div class="heading">
+                {{ $t("privacyPolicy.section9.header") }}
+            </div>
             <div class="paragraph">
                 {{ $t("privacyPolicy.section9.paragraph1") }}
             </div>
@@ -91,7 +103,7 @@
                 </li>
                 <li class="item">
                     <i18n path="privacyPolicy.section11.paragraph2.subsection6">
-                        <br />
+                        <br>
                         <a href="mailto:support@myhbarwallet.com">
                             support@myhbarwallet.com
                         </a>

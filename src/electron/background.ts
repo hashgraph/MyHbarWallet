@@ -10,17 +10,13 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 
 let win: BrowserWindow | null;
 
-protocol.registerSchemesAsPrivileged([
-    { scheme: "mhw", privileges: { secure: true, standard: true } }
-]);
+protocol.registerSchemesAsPrivileged([{ scheme: "mhw", privileges: { secure: true, standard: true }}]);
 
 function createWindow(): void {
     win = new BrowserWindow({
         width: 1024,
         height: 768,
-        webPreferences: {
-            nodeIntegration: true
-        },
+        webPreferences: { nodeIntegration: true },
         show: false
     });
 
@@ -58,14 +54,14 @@ app.on("activate", () => {
     }
 });
 
-app.on("ready", async () => {
+app.on("ready", async() => {
     createWindow();
 });
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
     if (process.platform === "win32") {
-        process.on("message", data => {
+        process.on("message", (data) => {
             if (data === "graceful-exit") {
                 app.quit();
             }

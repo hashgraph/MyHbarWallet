@@ -67,7 +67,7 @@ export default createComponent({
             file: null
         });
         const shardRealmAccountRegex = /^\d+\.\d+\.\d+$/;
-        const partialRegex = /^[1-9]{1}\d{0,}$/;
+        const partialRegex = /^[1-9]\d*$/;
 
         const valid = computed(() => shardRealmAccountRegex.test(state.input));
         const partialValid = computed(() => partialRegex.test(state.input));
@@ -77,11 +77,10 @@ export default createComponent({
         const placeholderText = computed(() => {
             if (props.placeholder !== null && props.placeholder !== undefined) {
                 return props.placeholder;
-            } else {
-                return props.file
-                    ? context.root.$t("common.fileSyntax")
-                    : context.root.$t("common.accountSyntax");
             }
+            return props.file ?
+                context.root.$t("common.fileSyntax") :
+                context.root.$t("common.accountSyntax");
         });
 
         function handleInput(accountText: string): void {
@@ -91,15 +90,15 @@ export default createComponent({
                 const parts = state.input.split(".");
                 if (props.file) {
                     state.file = {
-                        shard: parseInt(parts[0]),
-                        realm: parseInt(parts[1]),
-                        file: parseInt(parts[2])
+                        shard: parseInt(parts[ 0 ]),
+                        realm: parseInt(parts[ 1 ]),
+                        file: parseInt(parts[ 2 ])
                     };
                 } else {
                     state.account = {
-                        shard: parseInt(parts[0]),
-                        realm: parseInt(parts[1]),
-                        account: parseInt(parts[2])
+                        shard: parseInt(parts[ 0 ]),
+                        realm: parseInt(parts[ 1 ]),
+                        account: parseInt(parts[ 2 ])
                     };
                 }
             } else if (partialValid.value) {
@@ -129,14 +128,14 @@ export default createComponent({
 
         watch(
             () => props.error,
-            newVal => {
+            (newVal) => {
                 if (newVal && props.error) state.errorMessage = props.error;
             }
         );
 
         watch(
             () => props.isOpen,
-            newVal => {
+            (newVal) => {
                 // input.value is not set until after modal is open
                 Vue.nextTick(() => {
                     if (newVal && input.value) {

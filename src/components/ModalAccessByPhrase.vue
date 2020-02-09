@@ -77,9 +77,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: { type: Object, required: true } as PropOptions<State>
-    },
+    props: { state: { type: Object, required: true } as PropOptions<State> },
     setup(props: { state: State }, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
@@ -104,7 +102,7 @@ export default createComponent({
             () => props.state.isOpen,
             (newVal: boolean) => {
                 if (newVal) {
-                    context.emit("change", { ...props.state, words: [] });
+                    context.emit("change", { ...props.state, words: []});
                 }
             }
         );

@@ -1,14 +1,17 @@
 <template>
     <div class="account">
-        <Identicon :size="60" :value="publicKeyString" class="account-image" />
+        <Identicon
+            :size="60"
+            :value="publicKeyString"
+            class="account-image"
+        />
         <div class="content">
             <div class="top">
                 <div class="title">
                     {{ $t("accountCard.account") }}
                 </div>
                 <div class="subtitle">
-                    <span>{{ shard }}.{{ realm }}.</span
-                    ><strong>{{ account }}</strong>
+                    <span>{{ shard }}.{{ realm }}.</span><strong>{{ account }}</strong>
                 </div>
             </div>
             <div class="actions">
@@ -116,26 +119,22 @@ export default createComponent({
             privateKey: null as Ed25519PrivateKey | null
         });
 
-        watch(getPublicKey, async (result: Promise<PublicKey | null>) => {
+        watch(getPublicKey, async(result: Promise<PublicKey | null>) => {
             state.publicKey = await result;
         });
 
         watch(
             getPrivateKey,
-            async (result: Promise<Ed25519PrivateKey | null>) => {
+            async(result: Promise<Ed25519PrivateKey | null>) => {
                 state.privateKey = await result;
             }
         );
 
-        const hasPrivateKey = computed(() =>
-            store.state.wallet.session !== null
-                ? store.state.wallet.session.wallet.hasPrivateKey()
-                : false
-        );
+        const hasPrivateKey = computed(() => store.state.wallet.session !== null ?
+            store.state.wallet.session.wallet.hasPrivateKey() :
+            false);
         const hasPublicKey = computed(() => state.publicKey !== null);
-        const hasKeys = computed(
-            () => hasPrivateKey.value || hasPublicKey.value
-        );
+        const hasKeys = computed(() => hasPrivateKey.value || hasPublicKey.value);
 
         const privateKeyString = computed(() => {
             if (state.privateKey !== null) {

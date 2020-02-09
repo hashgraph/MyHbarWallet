@@ -92,7 +92,7 @@ export default createComponent({
 
         watch(
             () => state.message,
-            val => {
+            (val) => {
                 state.signable = val != null;
                 state.enableErr = val === "";
             }

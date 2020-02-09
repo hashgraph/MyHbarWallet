@@ -1,7 +1,15 @@
 <template>
-    <a class="social-icon" :href="href" target="_blank" rel="noopener">
+    <a
+        class="social-icon"
+        :href="href"
+        target="_blank"
+        rel="noopener"
+    >
         <div class="link-content">
-            <img :src="image" alt="" />
+            <img
+                :src="image"
+                alt=""
+            >
             {{ name }}
         </div>
     </a>

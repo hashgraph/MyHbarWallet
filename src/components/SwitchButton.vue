@@ -1,12 +1,15 @@
 <template>
-    <label class="switch-button" :class="{ 'has-values': values != null }">
+    <label
+        class="switch-button"
+        :class="{ 'has-values': values != null }"
+    >
         <input
             :checked="isChecked"
             class="input"
             type="checkbox"
             @change="handleChange"
-        />
-        <span class="thumb"></span>
+        >
+        <span class="thumb" />
         <template v-if="values">
             <span class="leading">{{ values[0] }}</span>
             <span class="trailing">{{ values[1] }}</span>
@@ -29,8 +32,8 @@ export default createComponent({
         event: "change"
     },
     props: {
-        checked: ([Boolean, String, Number] as unknown) as PropType<
-            boolean | string | number
+        checked: ([ Boolean, String, Number ] as unknown) as PropType<
+        boolean | string | number
         >,
         values: (Array as unknown) as PropType<string[]>
     },
@@ -40,7 +43,7 @@ export default createComponent({
                 return props.checked;
             }
 
-            return props.checked === props.values[1];
+            return props.checked === props.values[ 1 ];
         });
 
         function handleChange(event: Event): void {
@@ -51,7 +54,7 @@ export default createComponent({
             } else {
                 context.emit(
                     "change",
-                    checked ? props.values[1] : props.values[0]
+                    checked ? props.values[ 1 ] : props.values[ 0 ]
                 );
             }
         }

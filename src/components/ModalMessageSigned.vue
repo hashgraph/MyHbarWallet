@@ -17,7 +17,7 @@
             <Button
                 :label="$t('common.copy')"
                 @click="handleClickCopy"
-            ></Button>
+            />
         </div>
     </Modal>
 </template>
@@ -50,9 +50,7 @@ export default createComponent({
             context.emit("change", false);
         }
 
-        return {
-            handleClickCopy
-        };
+        return { handleClickCopy };
     }
 });
 </script>

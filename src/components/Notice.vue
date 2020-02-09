@@ -1,14 +1,23 @@
 <template>
     <div class="notice">
-        <div class="symbol-container" :class="classObject">
-            <MaterialDesignIcon class="symbol" :icon="symbol" />
+        <div
+            class="symbol-container"
+            :class="classObject"
+        >
+            <MaterialDesignIcon
+                class="symbol"
+                :icon="symbol"
+            />
         </div>
         <div class="text">
-            <div v-if="title" class="title">
+            <div
+                v-if="title"
+                class="title"
+            >
                 {{ title }}
             </div>
             <div class="message">
-                <slot></slot>
+                <slot />
             </div>
         </div>
     </div>
@@ -19,23 +28,15 @@ import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { computed, createComponent, PropType } from "@vue/composition-api";
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     props: {
         title: (String as unknown) as PropType<string>,
         symbol: { type: String, required: true }
     },
     setup(props) {
-        const classObject = computed(() => {
-            return {
-                compact: props.title == null
-            };
-        });
+        const classObject = computed(() => ({ compact: props.title == null }));
 
-        return {
-            classObject
-        };
+        return { classObject };
     }
 });
 </script>

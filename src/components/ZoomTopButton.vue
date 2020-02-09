@@ -4,7 +4,10 @@
         :class="classObject"
         @click="handleClick"
     >
-        <MaterialDesignIcon class="icon" :icon="mdiChevronUp" />
+        <MaterialDesignIcon
+            class="icon"
+            :icon="mdiChevronUp"
+        />
     </button>
 </template>
 
@@ -18,15 +21,11 @@ function handleClick(): void {
 }
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     setup() {
         const isActive = ref(false);
 
-        const classObject = computed(() => {
-            return { "is-active": isActive.value };
-        });
+        const classObject = computed(() => ({ "is-active": isActive.value }));
 
         function handleWindowScroll(): void {
             isActive.value = window.scrollY > 150;

@@ -7,7 +7,10 @@
             @change="handleSelectChange"
         />
         <div :class="{ details: true, expand: isCustom }">
-            <Notice :symbol="mdiInformationOutline" class="notice">
+            <Notice
+                :symbol="mdiInformationOutline"
+                class="notice"
+            >
                 {{ $t("networkSelector.customRestrictions") }}
             </Notice>
             <div class="notice-box">
@@ -66,8 +69,8 @@ export type NetworkSelectorElement = Vue & {
     setAddressError(message: string): void;
 };
 
-const IP_AND_PORT_REGEX = /^(?:(?:25[0-5]|2[0-4][\d]|[01]?[\d][\d]?)\.){3}(?:25[0-5]|2[0-4][\d]|[01]?[\d][\d]?)(:[\d]{1,5})?$/;
-const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/;
+const IP_AND_PORT_REGEX = /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d{1,2})\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d{1,2})(:\d{1,5})?$/;
+const URL_REGEX = /https?:\/\/(www\.)?[\w#%+-.:=@~]{2,256}\.[a-z]{2,4}\b([\w#%&+-./:=?@~]*)/;
 
 function isValidAddress(address: string): boolean {
     return IP_AND_PORT_REGEX.test(address) || URL_REGEX.test(address);
@@ -100,11 +103,9 @@ export default createComponent({
         Notice
     },
     setup(props: {}, context: SetupContext) {
-        const defaultNetwork = computed(() =>
-            process.env.NODE_ENV !== "production"
-                ? translate(NetworkName.TESTNET)
-                : translate(NetworkName.MAINNET)
-        );
+        const defaultNetwork = computed(() => process.env.NODE_ENV !== "production" ?
+            translate(NetworkName.TESTNET) :
+            translate(NetworkName.MAINNET));
 
         const state = reactive({
             networkSelected: defaultNetwork.value,
@@ -125,13 +126,9 @@ export default createComponent({
             state.id = null;
         }
 
-        const networkOptions = computed(() =>
-            Object.values(NetworkName).map(translate)
-        );
+        const networkOptions = computed(() => Object.values(NetworkName).map(translate));
         const addressIsValid = computed(() => isValidAddress(state.address));
-        const isCustom = computed(
-            () => state.networkSelected === translate(NetworkName.CUSTOM)
-        );
+        const isCustom = computed(() => state.networkSelected === translate(NetworkName.CUSTOM));
 
         function handleSelectChange(): void {
             clearState();

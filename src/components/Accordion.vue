@@ -1,14 +1,23 @@
 <template>
-    <div class="accordion" :class="{ expanded: state.expanded }">
-        <div class="title" @click="toggle">
+    <div
+        class="accordion"
+        :class="{ expanded: state.expanded }"
+    >
+        <div
+            class="title"
+            @click="toggle"
+        >
             <div class="title-text">
-                <slot name="title"></slot>
+                <slot name="title" />
             </div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronUp" />
+            <MaterialDesignIcon
+                class="icon"
+                :icon="mdiChevronUp"
+            />
         </div>
         <div class="content">
             <div class="content-text">
-                <slot name="content"></slot>
+                <slot name="content" />
             </div>
         </div>
     </div>
@@ -20,9 +29,7 @@ import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiChevronUp } from "@mdi/js";
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     setup() {
         const state = reactive({ expanded: false });
 

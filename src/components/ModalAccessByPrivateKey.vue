@@ -69,9 +69,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: (Object as unknown) as PropType<State> },
     setup(props: { state: State }, context: SetupContext) {
         const valid = ref<boolean>(false);
         const input = ref<HTMLInputElement | null>(null);
@@ -80,9 +78,7 @@ export default createComponent({
         // eslint-disable-next-line unicorn/consistent-function-scoping
         async function isValid(): Promise<boolean> {
             try {
-                const { Ed25519PrivateKey } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
 
                 Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;
@@ -107,7 +103,7 @@ export default createComponent({
                     valid.value = false;
                 }
 
-                isValid().then(result => {
+                isValid().then((result) => {
                     valid.value = result;
                 });
             }

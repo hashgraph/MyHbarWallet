@@ -1,8 +1,15 @@
 import {LoginMethod} from "../wallets/Wallet";
 <template>
     <div>
-        <div :class="classObject" class="side-nav-top">
-            <img alt="" class="logo" src="../assets/myhbarwallet-logo.svg" />
+        <div
+            :class="classObject"
+            class="side-nav-top"
+        >
+            <img
+                alt=""
+                class="logo"
+                src="../assets/myhbarwallet-logo.svg"
+            >
             <MaterialDesignIcon
                 class="close"
                 :icon="mdiClose"
@@ -93,7 +100,7 @@ export default createComponent({
 
         const classObject = computed(() => {
             if (menuOpen.value) return "menu-open";
-            else return "menu-closed";
+            return "menu-closed";
         });
 
         const notLedger = computed(() => {

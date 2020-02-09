@@ -26,9 +26,7 @@ import hardware from "../assets/icon-hardware.svg";
 import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
-    components: {
-        Feature
-    },
+    components: { Feature },
     setup() {
         return {
             wallet,

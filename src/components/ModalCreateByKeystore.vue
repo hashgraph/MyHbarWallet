@@ -45,9 +45,7 @@ import { createComponent, PropType } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
-import PasswordGenerator, {
-    State as PasswordGeneratorState
-} from "../components/PasswordGenerator.vue";
+import PasswordGenerator, { State as PasswordGeneratorState } from "../components/PasswordGenerator.vue";
 import { mdiArrowRight } from "@mdi/js";
 import { formatRich } from "../formatter";
 
@@ -72,9 +70,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: (Object as unknown) as PropType<State> },
     setup(props: Props, context) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });

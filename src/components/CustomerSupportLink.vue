@@ -1,7 +1,13 @@
 <template>
     <div class="customer-support-link">
-        <div class="customer-support-container" @click="handleButtonClick">
-            <img alt="" :src="serviceBell" />{{
+        <div
+            class="customer-support-container"
+            @click="handleButtonClick"
+        >
+            <img
+                alt=""
+                :src="serviceBell"
+            >{{
                 $t("customerSupport.customerSupport")
             }}
         </div>
@@ -15,13 +21,9 @@ import serviceBell from "../assets/help-center.svg";
 import { createComponent, reactive } from "@vue/composition-api";
 
 export default createComponent({
-    components: {
-        ModalCustomerService
-    },
+    components: { ModalCustomerService },
     setup() {
-        const state = reactive({
-            modalCustomerServiceIsOpen: false
-        });
+        const state = reactive({ modalCustomerServiceIsOpen: false });
 
         function handleButtonClick(): void {
             state.modalCustomerServiceIsOpen = !state.modalCustomerServiceIsOpen;

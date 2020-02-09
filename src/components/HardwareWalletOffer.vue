@@ -7,7 +7,9 @@
             <div class="cost-container">
                 {{ currency }}<span class="cost">{{ cost }}</span>
             </div>
-            <div class="description-text">{{ description }}</div>
+            <div class="description-text">
+                {{ description }}
+            </div>
             <a
                 rel="noopener"
                 target="_blank"
@@ -17,8 +19,15 @@
                 {{ $t("hardwareWalletOffer.moreInformation") }} >
             </a>
         </div>
-        <a :href="moreInfo" rel="noopener" target="_blank">
-            <img :src="image" class="logo-image" />
+        <a
+            :href="moreInfo"
+            rel="noopener"
+            target="_blank"
+        >
+            <img
+                :src="image"
+                class="logo-image"
+            >
         </a>
     </div>
 </template>

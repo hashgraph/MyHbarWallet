@@ -13,7 +13,10 @@
                 class="pub-qr"
             />
 
-            <ReadOnlyInput class="account-id" :value="accountId" />
+            <ReadOnlyInput
+                class="account-id"
+                :value="accountId"
+            />
 
             <Button
                 compact
@@ -33,7 +36,7 @@ import { createComponent, PropType, computed } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "../clipboard";
 import { actions } from "../store";
-import { AccountId } from '@hashgraph/sdk';
+import { AccountId } from "@hashgraph/sdk";
 
 interface Props {
     isOpen: boolean;
@@ -58,11 +61,9 @@ export default createComponent({
         event: (String as unknown) as PropType<string>
     },
     setup(props: Props, context) {
-        const accountId = computed(() => {
-            return props.value
-                ? `${props.value.shard}.${props.value.realm}.${props.value.account}`
-                : "";
-        });
+        const accountId = computed(() => props.value ?
+            `${props.value.shard}.${props.value.realm}.${props.value.account}` :
+            "");
 
         async function handleClickCopy(): Promise<void> {
             const id = accountId.value;

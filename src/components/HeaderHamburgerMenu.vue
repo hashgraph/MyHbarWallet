@@ -1,12 +1,24 @@
 <template>
     <nav :class="{ 'nav-open': isOpen }">
-        <div v-if="inInterface" class="card-container">
+        <div
+            v-if="inInterface"
+            class="card-container"
+        >
             <BalanceCard class="info-balance" />
             <NetworkCard class="info-network" />
         </div>
-        <router-link to="/" class="link-block" @click.native="toggle">
-            <div class="link">{{ $t("common.home") }}</div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+        <router-link
+            to="/"
+            class="link-block"
+            @click.native="toggle"
+        >
+            <div class="link">
+                {{ $t("common.home") }}
+            </div>
+            <MaterialDesignIcon
+                class="icon"
+                :icon="mdiChevronRight"
+            />
         </router-link>
         <router-link
             v-if="!isAbout"
@@ -14,12 +26,26 @@
             class="link-block"
             @click.native="toggle"
         >
-            <div class="link">{{ $t("common.about") }}</div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+            <div class="link">
+                {{ $t("common.about") }}
+            </div>
+            <MaterialDesignIcon
+                class="icon"
+                :icon="mdiChevronRight"
+            />
         </router-link>
-        <div v-else class="link-block" @click="handleSameHash('#about')">
-            <div class="link">{{ $t("common.about") }}</div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+        <div
+            v-else
+            class="link-block"
+            @click="handleSameHash('#about')"
+        >
+            <div class="link">
+                {{ $t("common.about") }}
+            </div>
+            <MaterialDesignIcon
+                class="icon"
+                :icon="mdiChevronRight"
+            />
         </div>
         <router-link
             v-if="!isFaqs"
@@ -27,12 +53,26 @@
             class="link-block"
             @click.native="toggle"
         >
-            <div class="link">{{ $t("common.faqs") }}</div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+            <div class="link">
+                {{ $t("common.faqs") }}
+            </div>
+            <MaterialDesignIcon
+                class="icon"
+                :icon="mdiChevronRight"
+            />
         </router-link>
-        <div v-else class="link-block" @click="handleSameHash('#faqs')">
-            <div class="link">{{ $t("common.faqs") }}</div>
-            <MaterialDesignIcon class="icon" :icon="mdiChevronRight" />
+        <div
+            v-else
+            class="link-block"
+            @click="handleSameHash('#faqs')"
+        >
+            <div class="link">
+                {{ $t("common.faqs") }}
+            </div>
+            <MaterialDesignIcon
+                class="icon"
+                :icon="mdiChevronRight"
+            />
         </div>
 
         <div class="logout-container">
@@ -75,9 +115,7 @@ export default createComponent({
         NetworkCard,
         Button
     },
-    props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>
-    },
+    props: { isOpen: (Boolean as unknown) as PropType<boolean> },
     setup(props: Props, context: SetupContext) {
         const state = reactive({
             scrolled: false,
@@ -91,7 +129,7 @@ export default createComponent({
                 return false;
             }
 
-            return route.matched[0].name === "interface";
+            return route.matched[ 0 ].name === "interface";
         });
 
         function toggle(): void {

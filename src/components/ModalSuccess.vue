@@ -12,7 +12,7 @@
                     {{ $t("common.success") }}
                 </div>
                 <div class="description">
-                    <slot></slot>
+                    <slot />
                 </div>
                 <div class="button-container">
                     <Button
@@ -62,27 +62,19 @@ export default createComponent({
         ReadOnlyInput,
         MaterialDesignIcon
     },
-    props: {
-        state: (Object as unknown) as PropType<State>
-    },
+    props: { state: (Object as unknown) as PropType<State> },
     model: {
         prop: "state",
         event: "change"
     },
     setup(props: Props, context): object {
-        const hasAction = computed(() =>
-            props.state.hasAction === undefined ? false : props.state.hasAction
-        );
-        const actionLabel = computed(() =>
-            props.state.actionLabel !== undefined
-                ? props.state.actionLabel
-                : "Action"
-        );
-        const dismissLabel = computed(() =>
-            props.state.dismissLabel !== undefined
-                ? props.state.dismissLabel
-                : "Dismiss"
-        );
+        const hasAction = computed(() => props.state.hasAction === undefined ? false : props.state.hasAction);
+        const actionLabel = computed(() => props.state.actionLabel !== undefined ?
+            props.state.actionLabel :
+            "Action");
+        const dismissLabel = computed(() => props.state.dismissLabel !== undefined ?
+            props.state.dismissLabel :
+            "Dismiss");
         const actionClicked = ref(false);
 
         function handleAction(): void {

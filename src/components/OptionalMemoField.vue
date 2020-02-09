@@ -15,7 +15,10 @@
                 />
             </div>
         </div>
-        <div class="memo-input" :class="{ expanded: state.showMemo }">
+        <div
+            class="memo-input"
+            :class="{ expanded: state.showMemo }"
+        >
             <TextInput
                 ref="input"
                 :value="value"
@@ -48,13 +51,9 @@ export default createComponent({
         prop: "value",
         event: "input"
     },
-    props: {
-        value: { type: String, default: "" }
-    },
+    props: { value: { type: String, default: "" }},
     setup(props, context) {
-        const state = reactive({
-            showMemo: false
-        });
+        const state = reactive({ showMemo: false });
 
         function handleInput(memo: string): void {
             context.emit("input", memo);

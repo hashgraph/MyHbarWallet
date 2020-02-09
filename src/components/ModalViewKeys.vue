@@ -5,12 +5,19 @@
             :title="title"
             @change="this.$listeners.change"
         >
-            <div v-if="hasPublicKey" class="key-container public">
+            <div
+                v-if="hasPublicKey"
+                class="key-container public"
+            >
                 <div
                     class="subtitle"
                     v-text="$t('modalViewKeys.publicKey')"
-                ></div>
-                <ReadOnlyInput class="input" :value="publicKey" multiline />
+                />
+                <ReadOnlyInput
+                    class="input"
+                    :value="publicKey"
+                    multiline
+                />
                 <Button
                     :label="$t('modalViewKeys.copyPublic')"
                     class="button"
@@ -18,11 +25,14 @@
                     @click="handleCopyPublicKey"
                 />
             </div>
-            <div v-if="hasPrivateKey" class="key-container private">
+            <div
+                v-if="hasPrivateKey"
+                class="key-container private"
+            >
                 <div
                     class="subtitle"
                     v-text="$t('modalViewKeys.privateKey')"
-                ></div>
+                />
                 <ReadOnlyInput
                     class="input"
                     :value="privateKey"
@@ -70,13 +80,9 @@ export default createComponent({
         publicKey: String
     },
     setup(props: Props, context: SetupContext) {
-        const hasPrivateKey = computed(() => {
-            return props.privateKey !== "" && props.privateKey !== undefined;
-        });
+        const hasPrivateKey = computed(() => props.privateKey !== "" && props.privateKey !== undefined);
 
-        const hasPublicKey = computed(() => {
-            return props.publicKey !== "" && props.publicKey !== undefined;
-        });
+        const hasPublicKey = computed(() => props.publicKey !== "" && props.publicKey !== undefined);
 
         const title = computed(() => {
             if (hasPrivateKey.value && hasPublicKey.value) {
@@ -85,15 +91,12 @@ export default createComponent({
                 return context.root.$t("modalViewKeys.publicKey");
             } else if (hasPrivateKey.value) {
                 return context.root.$t("modalViewKeys.privateKey");
-            } else {
-                return "";
             }
+            return "";
         });
 
         async function handleCopyPublicKey(): Promise<void> {
-            await writeToClipboard(
-                props.publicKey == null ? "" : props.publicKey
-            );
+            await writeToClipboard(props.publicKey == null ? "" : props.publicKey);
 
             actions.alert({
                 level: "info",
@@ -104,9 +107,7 @@ export default createComponent({
         }
 
         async function handleCopyPrivateKey(): Promise<void> {
-            await writeToClipboard(
-                props.privateKey == null ? "" : props.privateKey
-            );
+            await writeToClipboard(props.privateKey == null ? "" : props.privateKey);
 
             actions.alert({
                 level: "info",

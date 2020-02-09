@@ -50,9 +50,7 @@ import redditSocial from "../assets/reddit.svg";
 import githubSocial from "../assets/github.png";
 
 export default createComponent({
-    components: {
-        CommunitySocialIcon
-    },
+    components: { CommunitySocialIcon },
     setup() {
         return {
             facebookSocial,

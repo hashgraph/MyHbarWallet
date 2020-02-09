@@ -18,11 +18,11 @@ const P2_UNUSED_APDU = 0x00;
 const P1_FIRST = 0x01;
 const P1_LAST = 0x08;
 
-export type LedgerDeviceStatus = {
+export interface LedgerDeviceStatus {
     deviceStatus: number;
     publicKey?: PublicKey | null;
     deviceId?: string;
-};
+}
 
 interface APDU {
     CLA: number;
@@ -60,12 +60,10 @@ export default class LedgerNanoS implements Wallet {
                 const publicKeyStr = response
                     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
-                    .slice(0, response.length - 2)
+                    .slice(0, -2)
                     .toString("hex");
 
-                const publicKey = (await import(
-                    "@hashgraph/sdk"
-                )).Ed25519PublicKey.fromString(publicKeyStr);
+                const publicKey = (await import("@hashgraph/sdk")).Ed25519PublicKey.fromString(publicKeyStr);
 
                 this.publicKey = publicKey;
             } else {
@@ -80,9 +78,7 @@ export default class LedgerNanoS implements Wallet {
         return LoginMethod.LedgerNanoS;
     }
 
-    public async signTransaction(
-        txnData: Buffer | Uint8Array
-    ): Promise<Uint8Array | null> {
+    public async signTransaction(txnData: Buffer | Uint8Array): Promise<Uint8Array | null> {
         const dataBuffer = Buffer.from(txnData);
         const buffer = Buffer.alloc(4 + dataBuffer.length);
 
@@ -100,7 +96,7 @@ export default class LedgerNanoS implements Wallet {
         if (response !== null) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore1
-            return new Uint8Array(response.slice(0, response.length - 2));
+            return new Uint8Array(response.slice(0, -2));
         }
 
         throw new Error("Unexpected Empty Response From Ledger Device");
@@ -113,17 +109,15 @@ export default class LedgerNanoS implements Wallet {
         try {
             // DO NOT SEPARATE CREATE THEN.
             // TransportWebUSB REQUIRES a context managed async callback
-            transport = await TransportWebUSB.create().then(
-                async (transport: TransportWebUSB) => {
-                    response = await transport.send(
-                        message.CLA,
-                        message.INS,
-                        message.P1,
-                        message.P2,
-                        message.buffer
-                    );
-                }
-            );
+            transport = await TransportWebUSB.create().then(async(transport: TransportWebUSB) => {
+                response = await transport.send(
+                    message.CLA,
+                    message.INS,
+                    message.P1,
+                    message.P2,
+                    message.buffer
+                );
+            });
 
             return response;
         } finally {

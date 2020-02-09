@@ -61,9 +61,7 @@ export default createComponent({
                 return false;
             }
         });
-        const isFormValid = computed(
-            () => isIdValid.value && isJsonValid.value
-        );
+        const isFormValid = computed(() => isIdValid.value && isJsonValid.value);
 
         return {
             arrowRight,

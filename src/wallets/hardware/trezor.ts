@@ -50,19 +50,15 @@ export async function getPublicKey(index = 0) {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    const result = await TrezorConnect.hederaGetPublicKey({
-        path: getPath(0, index)
-    });
+    const result = await TrezorConnect.hederaGetPublicKey({ path: getPath(0, index) });
 
     return result.payload.publicKey;
 }
 
-export async function makeSigner(
-    index = 0
-): Promise<(message: Uint8Array) => Promise<Uint8Array>> {
+export async function makeSigner(index = 0): Promise<(message: Uint8Array) => Promise<Uint8Array>> {
     await initIfNeeded();
 
-    return async (message: Uint8Array) => {
+    return async(message: Uint8Array): Promise<Uint8Array> => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const result = await TrezorConnect.hederaSignMessage({

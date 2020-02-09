@@ -1,12 +1,16 @@
 <template>
     <div class="feature">
-        <img class="image" :src="image" alt="" />
+        <img
+            class="image"
+            :src="image"
+            alt=""
+        >
         <div class="text">
             <div class="header">
                 {{ title }}
             </div>
             <div class="content">
-                <slot></slot>
+                <slot />
             </div>
         </div>
     </div>

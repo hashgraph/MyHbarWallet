@@ -28,7 +28,7 @@
                             :tabindex="isDisabled(index - 1) ? -1 : null"
                             @focus="handleFocus"
                             @input="handleInput"
-                        />
+                        >
                     </label>
                 </div>
                 <div class="btn-container">
@@ -93,9 +93,7 @@ export default createComponent({
 
             // i gets index of first text input for focus
             while (newMap.size < maxSize) {
-                const num = Math.floor(
-                    Math.random() * (props.words.length - 1)
-                );
+                const num = Math.floor(Math.random() * (props.words.length - 1));
                 if (!newMap.has(num)) {
                     newMap.set(num, "");
                     if (num < firstIndex) firstIndex = num;
@@ -123,14 +121,14 @@ export default createComponent({
         }
 
         function valueForIndex(index: number): string {
-            return isDisabled(index)
-                ? props.words[index]
-                : state.inputMap.get(index) || "";
+            return isDisabled(index) ?
+                props.words[ index ] :
+                state.inputMap.get(index) || "";
         }
 
         function handleVerify(): void {
-            for (const [index, value] of state.inputMap.entries()) {
-                if (props.words[index] !== value) {
+            for (const [ index, value ] of state.inputMap.entries()) {
+                if (props.words[ index ] !== value) {
                     actions.alert({
                         message: "Memonic does not match",
                         level: "error"
@@ -163,7 +161,7 @@ export default createComponent({
             () => props.isOpen,
             (newVal: boolean) => {
                 if (newVal && input.value) {
-                    input.value[firstIndex].focus();
+                    input.value[ firstIndex ].focus();
                 }
             }
         );

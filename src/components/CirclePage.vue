@@ -1,5 +1,7 @@
 <template>
-    <div class="circle-page"><slot></slot></div>
+    <div class="circle-page">
+        <slot />
+    </div>
 </template>
 
 <style lang="postcss" scoped>

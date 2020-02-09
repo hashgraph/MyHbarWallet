@@ -50,7 +50,7 @@
     "devDependencies": {
         "@babel/core": "^7.7.2",
         "@improbable-eng/grpc-web-node-http-transport": "^0.12.0",
-        "@launchbadge/eslint-config": "^0.12.1",
+        "@launchbadge/eslint-config": "^0.17.0",
         "@types/core-js": "2.x.x",
         "@types/jest": "^25.1.2",
         "@types/jspdf": "^1.3.3",

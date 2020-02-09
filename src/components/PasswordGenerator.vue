@@ -16,7 +16,10 @@
             obscure
         />
 
-        <div v-if="state.password.length > 0" class="password-hint-container">
+        <div
+            v-if="state.password.length > 0"
+            class="password-hint-container"
+        >
             {{ $t("passwordStrength") }}
             <span
                 v-if="state.passwordStrength === 0"
@@ -136,18 +139,14 @@ export default createComponent({
     setup(props: Props, context) {
         const input = ref<HTMLInputElement | null>(null);
 
-        const passwordMismatch = reactive({
-            error: ""
-        });
+        const passwordMismatch = reactive({ error: "" });
 
-        const confirmPassword = computed(
-            () => props.state.confirmationPassword === props.state.password
-        );
+        const confirmPassword = computed(() => props.state.confirmationPassword === props.state.password);
 
         async function handleInputPassword(value: string): Promise<void> {
             const zxcvbn = await import("zxcvbn");
 
-            const passwordMetrics = zxcvbn.default(value, wordlist);
+            const passwordMetrics = zxcvbn[ "default" ](value, wordlist);
 
             context.emit("change", {
                 ...props.state,
@@ -157,23 +156,15 @@ export default createComponent({
             });
         }
 
-        const meritsSuggestions = computed(() => {
-            return (
-                props.state.password.length >= 9 &&
-                props.state.passwordStrength <= 3
-            );
-        });
+        const meritsSuggestions = computed(() => props.state.password.length >= 9 &&
+                props.state.passwordStrength <= 3);
 
-        const isDisabled = computed(() => {
-            return (
-                props.state.password.length < 9 ||
+        const isDisabled = computed(() => props.state.password.length < 9 ||
                 props.state.passwordStrength < 2 ||
-                !confirmPassword.value
-            );
-        });
+                !confirmPassword.value);
 
         watch(
-            () => [props.state.confirmationPassword, props.state.password],
+            () => [ props.state.confirmationPassword, props.state.password ],
             () => {
                 if (
                     !confirmPassword.value &&
@@ -181,10 +172,9 @@ export default createComponent({
                     props.state.password.length > 0
                 ) {
                     setTimeout(
-                        () =>
-                            (passwordMismatch.error = context.root
-                                .$t("password.noMatch")
-                                .toString()),
+                        () => passwordMismatch.error = context.root
+                            .$t("password.noMatch")
+                            .toString(),
                         1000
                     );
                 } else {
@@ -195,7 +185,7 @@ export default createComponent({
 
         watch(
             () => props.isOpen,
-            newVal => {
+            (newVal) => {
                 // input.value is not set until after modal is open
                 Vue.nextTick(() => {
                     if (newVal && input.value) {

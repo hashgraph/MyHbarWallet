@@ -5,7 +5,11 @@
         }}</span>
 
         <div class="card">
-            <img :src="noLoseIcon" alt="" class="card-image" />
+            <img
+                :src="noLoseIcon"
+                alt=""
+                class="card-image"
+            >
             <div class="card-body-wrapper">
                 <span class="card-header">{{
                     $t("keystoreWarningCards.dontLoseIt")
@@ -19,7 +23,11 @@
         </div>
 
         <div class="card">
-            <img :src="noShareIcon" alt="" class="card-image" />
+            <img
+                :src="noShareIcon"
+                alt=""
+                class="card-image"
+            >
             <div class="card-body-wrapper">
                 <span class="card-header">{{
                     $t("keystoreWarningCards.dontShareIt")
@@ -31,7 +39,11 @@
         </div>
 
         <div class="card">
-            <img :src="makeBackupIcon" alt="" class="card-image" />
+            <img
+                :src="makeBackupIcon"
+                alt=""
+                class="card-image"
+            >
             <div class="card-body-wrapper">
                 <span class="card-header">{{
                     $t("keystoreWarningCards.makeABackup")

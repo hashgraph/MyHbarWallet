@@ -20,7 +20,7 @@
                         alt=""
                         class="icon"
                         src="../assets/icon-bell.svg"
-                    />support@myhbarwallet.app
+                    >support@myhbarwallet.app
                 </div>
             </div>
             <div class="password-disclaimer">
@@ -101,16 +101,14 @@ export default createComponent({
 
             const options = {
                 filename: "MHW_Mnemonic_Phrase.pdf",
-                margin: [10, 10, 10, 10],
+                margin: [ 10, 10, 10, 10 ],
                 pageSize: "a4",
                 image: { type: "png", quality: 1 },
-                jsPDF: {
-                    unit: "mm"
-                }
+                jsPDF: { unit: "mm" }
             };
 
             const HTML2PDF = await import("html2pdf.js");
-            HTML2PDF.default()
+            HTML2PDF[ "default" ]()
                 .set(options)
                 .from(element)
                 .save();

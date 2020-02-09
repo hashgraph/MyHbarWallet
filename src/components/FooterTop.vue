@@ -1,9 +1,14 @@
 <template>
     <div class="footer-top">
         <div class="section">
-            <div class="title">{{ $t("footerTop.discover") }}</div>
+            <div class="title">
+                {{ $t("footerTop.discover") }}
+            </div>
             <div class="item">
-                <router-link :to="{ name: 'convert-units' }" class="link">
+                <router-link
+                    :to="{ name: 'convert-units' }"
+                    class="link"
+                >
                     {{ $t("footerTop.units") }}
                 </router-link>
             </div>
@@ -18,7 +23,9 @@
         </div>
         <!-- enable and add affiliates in src/affiliates.ts -->
         <div class="section">
-            <div class="title">{{ $t("footerTop.affiliates") }}</div>
+            <div class="title">
+                {{ $t("footerTop.affiliates") }}
+            </div>
             <template v-for="affiliate of affiliates">
                 <div
                     v-if="affiliate.supported"
@@ -37,7 +44,9 @@
             </template>
         </div>
         <div class="section">
-            <div class="title">MyHbarWallet</div>
+            <div class="title">
+                MyHbarWallet
+            </div>
             <div class="item">
                 <router-link
                     :to="{ name: 'home', hash: '#about' }"
@@ -47,25 +56,37 @@
                 </router-link>
             </div>
             <div class="item">
-                <router-link :to="{ name: 'home', hash: '#faqs' }" class="link">
+                <router-link
+                    :to="{ name: 'home', hash: '#faqs' }"
+                    class="link"
+                >
                     {{ $t("common.faqs") }}
                 </router-link>
             </div>
-            <div class="item customer-service" @click="handleButtonClick">
+            <div
+                class="item customer-service"
+                @click="handleButtonClick"
+            >
                 {{ $t("footerTop.customerSupport") }}
             </div>
         </div>
         <div class="section">
             <div class="title">
                 <i18n path="footerTop.donate">
-                    <img class="love" src="../assets/heart.svg" />
+                    <img
+                        class="love"
+                        src="../assets/heart.svg"
+                    >
                 </i18n>
             </div>
             <div class="item">
                 {{ $t("footerTop.MHWIsOpenSourced") }}
             </div>
             <div class="donation">
-                <img class="hbar-icon" :src="hbar" />
+                <img
+                    class="hbar-icon"
+                    :src="hbar"
+                >
                 0.0.1001
             </div>
         </div>
@@ -80,13 +101,9 @@ import hbar from "../assets/icon-hbar-outline.svg";
 import affiliates from "../affiliates";
 
 export default createComponent({
-    components: {
-        ModalCustomerService
-    },
+    components: { ModalCustomerService },
     setup() {
-        const state = reactive({
-            modalCustomerServiceIsOpen: false
-        });
+        const state = reactive({ modalCustomerServiceIsOpen: false });
 
         function handleButtonClick(): void {
             state.modalCustomerServiceIsOpen = !state.modalCustomerServiceIsOpen;

@@ -3,7 +3,10 @@
         <FooterTop />
         <div class="wrapper">
             <div class="links">
-                <router-link :to="{ name: 'privacy-policy' }" class="link">
+                <router-link
+                    :to="{ name: 'privacy-policy' }"
+                    class="link"
+                >
                     {{ $t("footer.privacy") }}
                 </router-link>
                 <router-link
@@ -12,7 +15,11 @@
                 >
                     {{ $t("footer.terms") }}
                 </router-link>
-                <a target="_blank" :href="githubLink" class="link">
+                <a
+                    target="_blank"
+                    :href="githubLink"
+                    class="link"
+                >
                     v{{ version }}+{{ hash }}
                 </a>
             </div>
@@ -35,7 +42,10 @@
                     href="https://www.facebook.com/hashgraph/"
                     class="social-link"
                 >
-                    <MaterialDesignIcon class="social-icon" :icon="facebook" />
+                    <MaterialDesignIcon
+                        class="social-icon"
+                        :icon="facebook"
+                    />
                 </a>
                 <a
                     rel="noopener"
@@ -43,7 +53,10 @@
                     href="https://twitter.com/myhbarwallet?lang=en"
                     class="social-link"
                 >
-                    <MaterialDesignIcon class="social-icon" :icon="twitter" />
+                    <MaterialDesignIcon
+                        class="social-icon"
+                        :icon="twitter"
+                    />
                 </a>
                 <a
                     rel="noopener"
@@ -51,7 +64,10 @@
                     href="https://www.github.com/hashgraph/MyHbarWallet"
                     class="social-link"
                 >
-                    <MaterialDesignIcon class="social-icon" :icon="github" />
+                    <MaterialDesignIcon
+                        class="social-icon"
+                        :icon="github"
+                    />
                 </a>
                 <a
                     rel="noopener"
@@ -59,7 +75,10 @@
                     href=" https://medium.com/myhbarwallet"
                     class="social-link"
                 >
-                    <MaterialDesignIcon class="social-icon" :icon="medium" />
+                    <MaterialDesignIcon
+                        class="social-icon"
+                        :icon="medium"
+                    />
                 </a>
             </div>
         </div>
@@ -91,16 +110,10 @@ export default createComponent({
 
         const medium = mdiMedium;
 
-        const currentYear = computed(() => {
-            return new Date().getFullYear();
-        });
+        const currentYear = computed(() => new Date().getFullYear());
 
-        const githubLink = computed(() => {
-            return (
-                "https://github.com/hashgraph/MyHbarWallet/commit/" +
-                COMMIT_HASH
-            );
-        });
+        const githubLink = computed(() => `https://github.com/hashgraph/MyHbarWallet/commit/${
+            COMMIT_HASH}`);
 
         return {
             facebook,

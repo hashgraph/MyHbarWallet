@@ -1,6 +1,6 @@
 <template>
     <div class="network">
-        <img :src="hedera" />
+        <img :src="hedera">
         <div class="content">
             <div class="top">
                 <div class="title">
@@ -18,7 +18,10 @@
                     :pinnable="false"
                     :message="$t('networkCard.changeNetwork')"
                 >
-                    <button v-if="false" class="change">
+                    <button
+                        v-if="false"
+                        class="change"
+                    >
                         {{ $t("common.change") }}
                     </button>
                 </Tooltip>
@@ -46,15 +49,12 @@ async function getNetwork(): Promise<NetworkSettings> {
 export default createComponent({
     components: { Tooltip },
     setup() {
-        const state = reactive({
-            network: null as NetworkSettings | null
-        });
+        const state = reactive({ network: null as NetworkSettings | null });
 
         // implements async computed
         watch(
             () => getNetwork(),
-            async (newValue: Promise<NetworkSettings>) =>
-                (state.network = await newValue)
+            async(newValue: Promise<NetworkSettings>) => state.network = await newValue
         );
 
         const networkName = computed(() => {

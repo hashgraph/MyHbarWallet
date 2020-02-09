@@ -63,12 +63,9 @@ export default createComponent({
             maxFeeIsValid: false
         });
 
-        const signable = computed(
-            (): boolean =>
-                state.byteCodeIsValid &&
+        const signable = computed((): boolean => state.byteCodeIsValid &&
                 state.interfaceIsValid &&
-                state.maxFeeIsValid
-        );
+                state.maxFeeIsValid);
 
         return { state, signable };
     }

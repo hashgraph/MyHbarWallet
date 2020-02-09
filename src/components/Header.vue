@@ -5,32 +5,50 @@
         class="header-container"
     >
         <header :class="headerClasses">
-            <div v-if="isHome" class="link" @click="handleReturnClick">
+            <div
+                v-if="isHome"
+                class="link"
+                @click="handleReturnClick"
+            >
                 <img
                     alt=""
                     class="logo"
                     src="../assets/myhbarwallet-logo.svg"
-                />
+                >
             </div>
-            <router-link v-else to="/" class="link">
+            <router-link
+                v-else
+                to="/"
+                class="link"
+            >
                 <img
                     alt=""
                     class="logo"
                     src="../assets/myhbarwallet-logo.svg"
-                />
+                >
             </router-link>
-            <div class="spacer"></div>
+            <div class="spacer" />
             <div class="links">
-                <router-link to="/" class="link">{{
-                    $t("common.home")
-                }}</router-link>
+                <router-link
+                    to="/"
+                    class="link"
+                >
+                    {{
+                        $t("common.home")
+                    }}
+                </router-link>
                 <router-link
                     v-if="!isAbout"
                     :to="{ name: 'home', hash: '#about' }"
                     class="link"
-                    >{{ $t("common.about") }}</router-link
                 >
-                <div v-else class="link" @click="handleSameHash('#about')">
+                    {{ $t("common.about") }}
+                </router-link>
+                <div
+                    v-else
+                    class="link"
+                    @click="handleSameHash('#about')"
+                >
                     {{ $t("common.about") }}
                 </div>
                 <router-link
@@ -40,7 +58,11 @@
                 >
                     {{ $t("common.faqs") }}
                 </router-link>
-                <div v-else class="link" @click="handleSameHash('#faqs')">
+                <div
+                    v-else
+                    class="link"
+                    @click="handleSameHash('#faqs')"
+                >
                     {{ $t("common.faqs") }}
                 </div>
             </div>
@@ -56,16 +78,28 @@
                 :is-interface="isInterface"
                 @toggle="toggle"
             />
-            <div v-if="state.scrolled" class="button-container">
-                <router-link class="btn" :to="{ name: 'create-account' }">
+            <div
+                v-if="state.scrolled"
+                class="button-container"
+            >
+                <router-link
+                    class="btn"
+                    :to="{ name: 'create-account' }"
+                >
                     <Button
                         :label="$t('common.createAccount')"
                         compact
                         outline
                     />
                 </router-link>
-                <router-link class="btn" :to="{ name: 'access-my-account' }">
-                    <Button :label="$t('header.access')" compact />
+                <router-link
+                    class="btn"
+                    :to="{ name: 'access-my-account' }"
+                >
+                    <Button
+                        :label="$t('header.access')"
+                        compact
+                    />
                 </router-link>
             </div>
         </header>
@@ -74,7 +108,10 @@
             @toggle="toggle"
             @logout="state.isLogoutOpen = true"
         />
-        <ModalLogOut v-if="isInterface" v-model="state.isLogoutOpen" />
+        <ModalLogOut
+            v-if="isInterface"
+            v-model="state.isLogoutOpen"
+        />
     </div>
 </template>
 
@@ -173,7 +210,7 @@ export default createComponent({
         const headerClasses = computed(() => {
             if (isInterface.value) {
                 return "header interface";
-            } else return "header";
+            } return "header";
         });
 
         return {

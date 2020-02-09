@@ -27,8 +27,14 @@
             </div>
             <div class="value-switch">
                 <div class="spacer" />
-                <div class="random-button" @click="randomizeMnemonic">
-                    <MaterialDesignIcon :size="16" :icon="cachedIcon" />
+                <div
+                    class="random-button"
+                    @click="randomizeMnemonic"
+                >
+                    <MaterialDesignIcon
+                        :size="16"
+                        :icon="cachedIcon"
+                    />
                     {{ $t("modalCreateByPhrase.random") }}
                 </div>
             </div>
@@ -66,7 +72,7 @@
                     :src="printerIcon"
                     class="printer-button"
                     @click="handlePrintModal"
-                />
+                >
 
                 <ModalPhrasePrintPreview
                     v-model="state.printModalIsOpen"
@@ -138,7 +144,7 @@ export default createComponent({
     },
     props: {
         isOpen: ({ type: Boolean, required: true } as unknown) as PropType<
-            boolean
+        boolean
         >
     },
     setup(props: Props, context: SetupContext) {
@@ -151,16 +157,10 @@ export default createComponent({
             verifyPhraseIsOpen: false
         });
 
-        const words = computed(() => {
-            return state.result ? state.result.mnemonic.split(" ") : [];
-        });
+        const words = computed(() => state.result ? state.result.mnemonic.split(" ") : []);
 
-        const cachedIcon = computed(() => {
-            return mdiCached;
-        });
-        const printerIcon = computed(() => {
-            return printIcon;
-        });
+        const cachedIcon = computed(() => mdiCached);
+        const printerIcon = computed(() => printIcon);
 
         function handlePasswordChange(password: string): void {
             state.passwordValue = password;
@@ -175,9 +175,7 @@ export default createComponent({
         }
 
         async function randomizeMnemonic(): Promise<void> {
-            const { generateMnemonic } = await (import(
-                "@hashgraph/sdk"
-            ) as Promise<typeof import("@hashgraph/sdk")>);
+            const { generateMnemonic } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
             state.result = generateMnemonic();
         }
 
@@ -188,9 +186,7 @@ export default createComponent({
             state.verifyPhraseIsOpen = false;
 
             // `.derive(0)` to generate the same key as the default account of the mobile wallet
-            const key: Ed25519PrivateKey = (await state.result.generateKey()).derive(
-                0
-            );
+            const key: Ed25519PrivateKey = (await state.result.generateKey()).derive(0);
 
             // eslint-disable-next-line require-atomic-updates
             state.isBusy = false;

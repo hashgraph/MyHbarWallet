@@ -33,9 +33,7 @@ import { mdiLoading } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 
 export default createComponent({
-    components: {
-        MaterialDesignIcon
-    },
+    components: { MaterialDesignIcon },
     props: {
         outline: { type: Boolean },
         compact: { type: Boolean },
@@ -50,9 +48,7 @@ export default createComponent({
         }
     },
     setup(props) {
-        const state = reactive({
-            showProgress: true
-        });
+        const state = reactive({ showProgress: true });
 
         watch(
             () => props.busy,

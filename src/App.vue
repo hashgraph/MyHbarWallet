@@ -7,7 +7,10 @@
         <Footer />
         <Alerts />
         <ZoomTopButton />
-        <ModalLogOut v-model="isOpen" forgot />
+        <ModalLogOut
+            v-model="isOpen"
+            forgot
+        />
         <ModalReportError v-model="errorIsOpen" />
     </div>
 </template>
@@ -37,9 +40,7 @@ export default createComponent({
         ModalLogOut,
         ModalReportError
     },
-    model: {
-        event: "error"
-    },
+    model: { event: "error" },
     setup(props: {}, context: SetupContext) {
         const isInterface = computed(() => {
             if (context.root != null) {
@@ -51,13 +52,9 @@ export default createComponent({
             return false;
         });
 
-        const isOpen = computed(() => {
-            return (
-                !isInterface.value &&
+        const isOpen = computed(() => !isInterface.value &&
                 getters.IS_LOGGED_IN() &&
-                store.state.interfaceMenu.hasBeenToInterface
-            );
-        });
+                store.state.interfaceMenu.hasBeenToInterface);
 
         const errorIsOpen = ref(false);
         watch(

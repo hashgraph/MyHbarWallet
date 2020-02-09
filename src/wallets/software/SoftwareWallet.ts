@@ -13,8 +13,7 @@ export default class SoftwareWallet implements Wallet {
         publicKey?: PublicKey
     ) {
         this.privateKey = privateKey;
-        this.publicKey =
-            publicKey !== undefined ? publicKey : privateKey.publicKey;
+        this.publicKey = publicKey ?? privateKey.publicKey;
         this.loginMethod = loginMethod;
     }
 
@@ -26,18 +25,15 @@ export default class SoftwareWallet implements Wallet {
         return this.loginMethod;
     }
 
-    public async getPrivateKey(): Promise<Ed25519PrivateKey> {
-        return this.privateKey;
+    public getPrivateKey(): Promise<Ed25519PrivateKey> {
+        return Promise.resolve(this.privateKey);
     }
 
-    public async getPublicKey(): Promise<PublicKey | null> {
-        return this.publicKey;
+    public getPublicKey(): Promise<PublicKey | null> {
+        return Promise.resolve(this.publicKey);
     }
 
-    public async signTransaction(
-        txnData: Buffer | Uint8Array
-    ): Promise<Uint8Array | null> {
-        console.log(txnData);
-        throw new Error("Not Implemented");
+    public signTransaction(): Promise<Uint8Array | null> {
+        throw new Error("unreachable: signTransaction should not be called if hasPrivateKey is true");
     }
 }

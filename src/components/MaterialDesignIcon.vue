@@ -6,7 +6,7 @@
         :class="{ 'mdi-spin': spin, 'mdi-slow-spin': slowSpin }"
         v-on="this.$listeners"
     >
-        <path :d="icon"></path>
+        <path :d="icon" />
     </svg>
 </template>
 
