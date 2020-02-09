@@ -180,9 +180,7 @@ export const actions = {
         let message = "";
         const severity = "error";
 
-        const { ResponseCodeEnum } = await import("@hashgraph/sdk") as Promise<
-        typeof import("@hashgraph/sdk")
-        >;
+        const { ResponseCodeEnum } = await import("@hashgraph/sdk");
 
         switch (payload.error.code) {
             case ResponseCodeEnum.PAYER_ACCOUNT_NOT_FOUND:
@@ -304,9 +302,8 @@ export const actions = {
             console.warn("attempt to refresh balance with a null session");
             return;
         }
-        const { Client } = await import("@hashgraph/sdk") as Promise<
-        typeof import("@hashgraph/sdk")
-        >;
+        const { Client } = await import("@hashgraph/sdk");
+
         if (!(store.state.wallet.session.client instanceof Client)) {
             throw new TypeError("state.session.client not instance of Client: Programmer Error");
         }
