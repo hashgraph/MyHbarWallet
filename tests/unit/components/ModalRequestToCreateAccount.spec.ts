@@ -65,7 +65,7 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-request-to-create-account">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Request to Create Account</span>
                     <!---->

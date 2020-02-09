@@ -30,7 +30,7 @@ describe("ModalUploadProgress.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease" not-closeable="" listeners="[object Object]">
+            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
               <div class="modal">
                 <!---->
                 <!---->
@@ -93,7 +93,7 @@ describe("ModalUploadProgress.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease" not-closeable="" listeners="[object Object]">
+            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
               <div class="modal">
                 <!---->
                 <!---->
@@ -156,7 +156,7 @@ describe("ModalUploadProgress.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease" not-closeable="" listeners="[object Object]">
+            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
               <div class="modal">
                 <!---->
                 <!---->
@@ -219,7 +219,7 @@ describe("ModalUploadProgress.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease" not-closeable="" listeners="[object Object]">
+            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
               <div class="modal">
                 <!---->
                 <!---->

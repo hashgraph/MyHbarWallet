@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { createComponent, reactive } from "@vue/composition-api";
-import { SetupContext } from "@vue/composition-api/dist/types/vue";
+import { SetupContext } from "@vue/composition-api";
 import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 
