@@ -30,6 +30,7 @@ import { mdiChevronUp } from "@mdi/js";
 
 export default createComponent({
     components: { MaterialDesignIcon },
+    props: {},
     setup() {
         const state = reactive({ expanded: false });
 

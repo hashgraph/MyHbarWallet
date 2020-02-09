@@ -32,6 +32,7 @@ export default createComponent({
         TextInput,
         Button
     },
+    props: {},
     setup() {
         const state = reactive({
             signature: "",

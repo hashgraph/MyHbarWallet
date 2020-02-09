@@ -67,6 +67,7 @@ import circleImage from "../assets/circle.png";
 import { createComponent } from "@vue/composition-api";
 import hbarOrb from "../assets/hbar_orb.svg";
 import mountainTop from "../assets/mountain_top.svg";
+
 export default createComponent({
     components: {
         FAQs,
@@ -74,6 +75,7 @@ export default createComponent({
         Features,
         Community
     },
+    props: {},
     setup() {
         return {
             circleImage,

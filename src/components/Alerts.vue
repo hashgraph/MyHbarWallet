@@ -21,6 +21,7 @@ import { store } from "../store";
 
 export default createComponent({
     components: { Alert },
+    props: {},
     setup() {
         const alerts = computed(() => store.state.alerts.queue);
 

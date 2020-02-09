@@ -102,6 +102,7 @@ import affiliates from "../affiliates";
 
 export default createComponent({
     components: { ModalCustomerService },
+    props: {},
     setup() {
         const state = reactive({ modalCustomerServiceIsOpen: false });
 

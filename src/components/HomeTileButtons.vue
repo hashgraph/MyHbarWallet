@@ -26,6 +26,7 @@ import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
     components: { HomeTileButton },
+    props: {},
     setup() {
         const wallet = walletImage;
 

@@ -72,7 +72,8 @@ export default createComponent({
     components: {
         Accordion,
         CustomerSupportLink
-    }
+    },
+    props: {}
 });
 </script>
 

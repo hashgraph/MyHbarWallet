@@ -124,6 +124,7 @@ export default createComponent({
         ModalFeeSummary,
         ModalSuccess
     },
+    props: {},
     setup(props: object, context: SetupContext) {
         const state = reactive({
             estimatedFee: 0,
@@ -260,7 +261,7 @@ export default createComponent({
                 throw new Error("session should not be null");
             }
 
-            const { FileCreateTransaction, Client } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+            const { FileCreateTransaction, Client } = await import("@hashgraph/sdk");
 
             state.isBusy = true;
 
@@ -317,7 +318,7 @@ export default createComponent({
             fileId: FileId,
             client: object
         ): Promise<void> {
-            const { FileAppendTransaction, Client } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+            const { FileAppendTransaction, Client } = await import("@hashgraph/sdk");
             try {
                 while (chunks.length > 0) {
                     await new FileAppendTransaction(client as InstanceType<

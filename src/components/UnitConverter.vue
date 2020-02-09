@@ -74,6 +74,7 @@ export default createComponent({
         Select,
         TextInput
     },
+    props: {},
     setup() {
         const options = Object.values(Unit);
 

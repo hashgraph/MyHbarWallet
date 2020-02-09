@@ -95,9 +95,7 @@ interface State {
 
 async function isPublicKeyValid(key: string): Promise<boolean> {
     try {
-        const { Ed25519PublicKey } = await import("@hashgraph/sdk") as Promise<
-        typeof import("@hashgraph/sdk")
-        >;
+        const { Ed25519PublicKey } = await import("@hashgraph/sdk");
 
         Ed25519PublicKey.fromString(key);
         return true;
@@ -178,7 +176,7 @@ export default createComponent({
 
             const client = store.state.wallet.session.client;
 
-            const { HederaError, ResponseCodeEnum } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+            const { HederaError, ResponseCodeEnum } = await import("@hashgraph/sdk");
 
             try {
                 // The new wallet's initial balance
@@ -194,9 +192,7 @@ export default createComponent({
                     AccountCreateTransaction,
                     Client,
                     Ed25519PublicKey
-                } = await import("@hashgraph/sdk") as Promise<
-                typeof import("@hashgraph/sdk")
-                >;
+                } = await import("@hashgraph/sdk");
 
                 const key = Ed25519PublicKey.fromString(state.publicKey);
                 const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(balanceTinybar.minus(newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())));

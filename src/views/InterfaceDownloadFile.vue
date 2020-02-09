@@ -57,7 +57,7 @@ import ModalSuccess, { State as SuccessState } from "../components/ModalSuccess.
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
-import fileType from "file-type";
+import * as fileType from "file-type";
 import IdInput from "../components/IDInput.vue";
 import { Vue } from "vue/types/vue";
 import { actions, store } from "../store";
@@ -91,6 +91,7 @@ export default createComponent({
         ModalFeeSummary,
         ModalSuccess
     },
+    props: {},
     setup(props, context) {
         const state = reactive({
             isOpen: false,
@@ -153,7 +154,7 @@ export default createComponent({
             const client = store.state.wallet.session.client;
             client.setMaxQueryPayment(100000000);
             try {
-                const { FileContentsQuery, Client } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+                const { FileContentsQuery, Client } = await import("@hashgraph/sdk");
 
                 const getEstimate = await new FileContentsQuery(client as InstanceType<typeof Client>)
                     .setFileId(state.fileId)
@@ -187,7 +188,7 @@ export default createComponent({
             const client = store.state.wallet.session.client;
             client.setMaxQueryPayment(100000000);
             try {
-                const { FileContentsQuery, Client } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+                const { FileContentsQuery, Client } = await import("@hashgraph/sdk");
 
                 const file = ref<FileContentsResponse | null>(null);
 
@@ -203,7 +204,7 @@ export default createComponent({
                         .toString());
                 }
 
-                const type = fileType(file.value.contents as Uint8Array);
+                const type = await fileType.fromBuffer(file.value.contents as Uint8Array);
 
                 const fileBlob = new Blob([ file.value.contents as Uint8Array ]);
                 const fileUrl = URL.createObjectURL(fileBlob);

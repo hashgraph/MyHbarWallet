@@ -218,6 +218,7 @@ export default createComponent({
         CirclePage,
         PageTitle
     },
+    props: {},
     setup() {
         return { formatRich };
     }

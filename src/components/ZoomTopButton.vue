@@ -22,6 +22,7 @@ function handleClick(): void {
 
 export default createComponent({
     components: { MaterialDesignIcon },
+    props: {},
     setup() {
         const isActive = ref(false);
 

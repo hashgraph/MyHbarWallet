@@ -68,6 +68,7 @@ export default createComponent({
         MaterialDesignIcon,
         Tooltip
     },
+    props: {},
     setup() {
         const state = reactive({ isBusy: false });
 

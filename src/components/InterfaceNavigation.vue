@@ -75,6 +75,7 @@ export default createComponent({
         InterfaceNavigationSection,
         MaterialDesignIcon
     },
+    props: {},
     setup() {
         const cryptoRoutes = [
             { name: "send-transfer", label: "Send" },

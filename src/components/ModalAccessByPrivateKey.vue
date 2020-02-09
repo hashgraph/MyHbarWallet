@@ -78,7 +78,7 @@ export default createComponent({
         // eslint-disable-next-line unicorn/consistent-function-scoping
         async function isValid(): Promise<boolean> {
             try {
-                const { Ed25519PrivateKey } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
 
                 Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;

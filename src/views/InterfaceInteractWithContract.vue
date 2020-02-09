@@ -42,6 +42,7 @@ export default createComponent({
         TextInput,
         Button
     },
+    props: {},
     setup() {
         const arrowRight = mdiArrowRight;
         const idRegex = /^\d+\.\d+\.\d+$/;

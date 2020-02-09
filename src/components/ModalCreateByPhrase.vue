@@ -175,7 +175,7 @@ export default createComponent({
         }
 
         async function randomizeMnemonic(): Promise<void> {
-            const { generateMnemonic } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+            const { generateMnemonic } = await import("@hashgraph/sdk");
             state.result = generateMnemonic();
         }
 

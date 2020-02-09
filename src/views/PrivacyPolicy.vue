@@ -159,7 +159,8 @@ export default createComponent({
     components: {
         CirclePage,
         PageTitle
-    }
+    },
+    props: {}
 });
 </script>
 

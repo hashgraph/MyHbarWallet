@@ -14,7 +14,7 @@
 <script lang="ts">
 import { createComponent } from "@vue/composition-api";
 
-export default createComponent({ components: {}});
+export default createComponent({ components: {}, props: {}});
 </script>
 
 <style scoped lang="postcss">

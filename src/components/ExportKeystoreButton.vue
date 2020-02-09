@@ -74,7 +74,7 @@ export default createComponent({
             }, 125);
 
             try {
-                const { Ed25519PrivateKey } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
 
                 if (props.privateKey == null) {
                     throw new Error("Private Key is null");

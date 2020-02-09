@@ -101,6 +101,7 @@ export default createComponent({
         MaterialDesignIcon,
         FooterTop
     },
+    props: {},
     setup() {
         const facebook = mdiFacebook;
 

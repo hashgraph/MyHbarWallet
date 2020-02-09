@@ -116,6 +116,7 @@ export default createComponent({
         ModalEnterAccountId,
         ModalRequestToCreateAccount
     },
+    props: {},
     setup(props: object, context: SetupContext) {
         const state: AccessAccountDTO & State = reactive({
             wallet: null,
@@ -237,9 +238,7 @@ export default createComponent({
                 CryptoTransferTransaction,
                 HederaError,
                 ResponseCodeEnum
-            } = await import("@hashgraph/sdk") as Promise<
-            typeof import("@hashgraph/sdk")
-            >;
+            } = await import("@hashgraph/sdk");
 
             try {
                 const network: NetworkSettings = await getNetwork();
@@ -325,9 +324,7 @@ export default createComponent({
                     state.modalAccessByHardwareState.isBusy = true;
                     try {
                         const { Ledger } = await import("../wallets/hardware/Ledger" /* webpackChunkName: "hardware" */
-                        ) as Promise<
-                        typeof import("../wallets/hardware/Ledger")
-                        >;
+                        );
 
                         state.wallet = new Ledger();
                         state.publicKey = (await state.wallet.getPublicKey()) as Ed25519PublicKey;
@@ -362,7 +359,7 @@ export default createComponent({
             pwState.isBusy = true;
 
             try {
-                const { Ed25519PrivateKey } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
 
                 setPrivateKey(await Ed25519PrivateKey.fromKeystore(
                     state.keyFile as Uint8Array,
@@ -385,7 +382,7 @@ export default createComponent({
             accessByPhraseState.isBusy = true;
 
             try {
-                const { Ed25519PrivateKey } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
 
                 setPrivateKey(
                     // `.derive(0)` to use the same key as the default account of the mobile wallet
@@ -410,7 +407,7 @@ export default createComponent({
 
         async function handleAccessByPrivateKeySubmit(): Promise<void> {
             state.modalAccessByPrivateKeyState.isBusy = true;
-            const { Ed25519PrivateKey } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+            const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
 
             setPrivateKey(Ed25519PrivateKey.fromString(state.modalAccessByPrivateKeyState.rawPrivateKey));
 

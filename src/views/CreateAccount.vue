@@ -107,6 +107,7 @@ export default createComponent({
         ModalEnterAccountId,
         ModalRequestToCreateAccount
     },
+    props: {},
     setup(props: object, context: SetupContext) {
         const state: CreateAccountDTO & State = reactive({
             wallet: null,

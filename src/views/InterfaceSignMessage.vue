@@ -64,6 +64,7 @@ export default createComponent({
         ModalConfirmSignMessage,
         ModalMessageSigned
     },
+    props: {},
     setup() {
         const state = reactive<State>({
             message: null,

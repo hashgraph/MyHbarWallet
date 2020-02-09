@@ -51,6 +51,7 @@ import githubSocial from "../assets/github.png";
 
 export default createComponent({
     components: { CommunitySocialIcon },
+    props: {},
     setup() {
         return {
             facebookSocial,

@@ -108,19 +108,5 @@
         "typescript": "3.7.5",
         "vue-cli-plugin-electron-builder": "^1.4.5",
         "vue-template-compiler": "^2.6.10"
-    },
-    "gitHooks": {
-        "pre-commit": "lint-staged"
-    },
-    "lint-staged": {
-        "*.{js,vue}": [
-            "vue-cli-service lint",
-            "stylelint --fix 'src/**/*.vue' 'src/**/*.css'",
-            "git add"
-        ],
-        "*.css": [
-            "stylelint --fix 'src/**/*.css'",
-            "git add"
-        ]
     }
 }

@@ -106,6 +106,7 @@ export default createComponent({
         OptionalMemoField,
         IDInput
     },
+    props: {},
     setup(_: object | null, context: SetupContext) {
         const state = reactive<State>({
             amount: "",
@@ -336,7 +337,7 @@ export default createComponent({
                 // eslint-disable-next-line require-atomic-updates
                 state.amountErrorMessage = "";
 
-                const { HederaError, ResponseCodeEnum } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+                const { HederaError, ResponseCodeEnum } = await import("@hashgraph/sdk");
 
                 if (error instanceof HederaError) {
                     const errorMessage = (await actions.handleHederaError({

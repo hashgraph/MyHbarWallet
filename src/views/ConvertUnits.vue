@@ -56,6 +56,7 @@ export default createComponent({
         UnitConverter,
         CirclePage
     },
+    props: {},
     setup() {
         const hbarUnitRef = [
             {

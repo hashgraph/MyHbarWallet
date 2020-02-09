@@ -30,7 +30,7 @@ import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
     components: { AccountTileButton },
-
+    props: {},
     setup() {
         return { hardwareImage, softwareImage };
     }

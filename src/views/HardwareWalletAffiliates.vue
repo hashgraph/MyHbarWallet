@@ -34,6 +34,7 @@ export default createComponent({
         HardwareWalletOffer,
         PageTitle
     },
+    props: {},
     setup() {
         return { affiliates };
     }

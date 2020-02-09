@@ -56,6 +56,7 @@ export default createComponent({
         TextInput,
         Button
     },
+    props: {},
     setup() {
         const state = reactive<State>({
             byteCodeIsValid: false,

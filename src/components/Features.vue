@@ -27,6 +27,7 @@ import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
     components: { Feature },
+    props: {},
     setup() {
         return {
             wallet,

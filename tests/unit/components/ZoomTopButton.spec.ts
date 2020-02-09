@@ -15,7 +15,7 @@ describe("ZoomTopButton", (): void => {
 
         const wrapper = mount(ZoomTopButton, {
             localVue,
-            i18n
+            i18n,
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

@@ -48,6 +48,7 @@ async function getNetwork(): Promise<NetworkSettings> {
 
 export default createComponent({
     components: { Tooltip },
+    props: {},
     setup() {
         const state = reactive({ network: null as NetworkSettings | null });
 

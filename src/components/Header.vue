@@ -141,6 +141,7 @@ export default createComponent({
         HeaderHamburgerButton,
         ModalLogOut
     },
+    props: {},
     // Even though props is not used, we must have `context`
     // as the second argument otherwise it will take the place of
     // props implicitly and NOT complain you're casting it to `SetupContext`
