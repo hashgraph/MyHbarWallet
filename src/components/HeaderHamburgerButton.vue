@@ -143,7 +143,8 @@ export default createComponent({
 }
 
 .bar-2-anim {
-    transform: rotate(-45deg) translate(26.5px, -13.625px) scaleX(1.75)
+    transform:
+        rotate(-45deg) translate(26.5px, -13.625px) scaleX(1.75)
         scaleY(2);
     transition: transform 0.2s linear;
 

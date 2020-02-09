@@ -95,7 +95,6 @@ export default createComponent({
                 // Note: Vue Instances need $el to get their HTML, dumb elements do not
                 element = (mnemonic.value as unknown) as HTMLElement;
             } catch (error) {
-                console.warn(error);
                 throw error;
             }
 

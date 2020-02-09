@@ -36,6 +36,8 @@ module.exports = {
         "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/no-floating-promises": "off",
         "import/default": "off",
+        "sonarjs/no-useless-catch": "off",
+        "no-useless-catch": "off",
         "implicit-arrow-linebreak": "off",
         "sonarjs/no-duplicate-string": "off",
         "sonarjs/no-collapsible-if": "off",

@@ -374,7 +374,6 @@ export default createComponent({
                 pwState.isOpen = false;
                 state.modalEnterAccountIdState.isOpen = true;
             } catch (error) {
-                console.warn(error);
                 pwState.isBusy = false;
                 pwState.error = "Invalid password";
             }
