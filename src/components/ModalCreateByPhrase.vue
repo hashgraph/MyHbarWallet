@@ -119,7 +119,7 @@ import {
     SetupContext
 } from "@vue/composition-api";
 import { formatRich } from "../formatter";
-import { Ed25519PrivateKey, MnemonicResult } from "@hashgraph/sdk";
+import { Ed25519PrivateKey, Mnemonic } from "@hashgraph/sdk";
 
 interface Props {
     isOpen: boolean;
@@ -152,12 +152,12 @@ export default createComponent({
         const state = reactive({
             isBusy: false,
             passwordValue: "",
-            result: null as MnemonicResult | null,
+            result: null as Mnemonic | null,
             printModalIsOpen: false,
             verifyPhraseIsOpen: false
         });
 
-        const words = computed(() => state.result ? state.result.mnemonic.split(" ") : []);
+        const words = computed(() => state.result ? state.result.words : []);
 
         const cachedIcon = computed(() => mdiCached);
         const printerIcon = computed(() => printIcon);
@@ -175,8 +175,8 @@ export default createComponent({
         }
 
         async function randomizeMnemonic(): Promise<void> {
-            const { generateMnemonic } = await import("@hashgraph/sdk");
-            state.result = generateMnemonic();
+            const { Mnemonic } = await import("@hashgraph/sdk");
+            state.result = Mnemonic.generate();
         }
 
         async function handleVerifySuccess(): Promise<void> {
@@ -186,7 +186,7 @@ export default createComponent({
             state.verifyPhraseIsOpen = false;
 
             // `.derive(0)` to generate the same key as the default account of the mobile wallet
-            const key: Ed25519PrivateKey = (await state.result.generateKey()).derive(0);
+            const key: Ed25519PrivateKey = (await state.result.toPrivateKey("")).derive(0);
 
             // eslint-disable-next-line require-atomic-updates
             state.isBusy = false;

@@ -103,17 +103,17 @@ export default createComponent({
                 }
 
                 if (props.file) {
-                    state.file = {
+                    state.file = new FileId({
                         shard: parseInt(parts[ 0 ]),
                         realm: parseInt(parts[ 1 ]),
                         file: parseInt(parts[ 2 ])
-                    };
+                    });
                 } else {
-                    state.account = {
+                    state.account = new AccountId({
                         shard: parseInt(parts[ 0 ]),
                         realm: parseInt(parts[ 1 ]),
                         account: parseInt(parts[ 2 ])
-                    };
+                    });
                 }
             } else if (partialValid.value) {
                 // Check that each ID part is a safe integer
@@ -125,17 +125,17 @@ export default createComponent({
                     return;
                 }
                 if (props.file) {
-                    state.file = {
+                    state.file = new FileId({
                         shard: parseInt("0"),
                         realm: parseInt("0"),
                         file: parseInt(state.input)
-                    };
+                    });
                 } else {
-                    state.account = {
+                    state.account = new AccountId({
                         shard: parseInt("0"),
                         realm: parseInt("0"),
                         account: parseInt(state.input)
-                    };
+                    });
                 }
             } else {
                 state.account = null;

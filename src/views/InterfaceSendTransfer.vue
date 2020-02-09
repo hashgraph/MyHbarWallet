@@ -298,7 +298,7 @@ export default createComponent({
 
                 const sendAmountTinybar = new BigNumber(state.amount).multipliedBy(getValueOfUnit(Unit.Hbar));
 
-                const { CryptoTransferTransaction, Client } = await import("@hashgraph/sdk");
+                const { CryptoTransferTransaction, Hbar, Client } = await import("@hashgraph/sdk");
 
                 // Max Transaction Fee, otherwise known as Transaction Fee,
                 // is the max of 1 Hbar and the user's remaining balance
@@ -310,21 +310,19 @@ export default createComponent({
 
                 const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(safeBalance.minus(sendAmountTinybar.plus(estimatedFeeTinybar)));
 
-                const tx = new CryptoTransferTransaction(client as InstanceType<
-                    typeof Client
-                >)
+                const tx = new CryptoTransferTransaction()
                     .addSender(
                         store.state.wallet.session.account,
-                        sendAmountTinybar
+                        Hbar.fromTinybar(sendAmountTinybar)
                     )
-                    .addRecipient(recipient, sendAmountTinybar)
-                    .setTransactionFee(maxTxFeeTinybar);
+                    .addRecipient(recipient, Hbar.fromTinybar(sendAmountTinybar))
+                    .setMaxTransactionFee(Hbar.fromTinybar(maxTxFeeTinybar));
 
                 if (state.memo !== "" && state.memo != null) {
-                    tx.setMemo(state.memo);
+                    tx.setTransactionMemo(state.memo);
                 }
 
-                await tx.build().executeForReceipt();
+                await (await tx.execute(client)).getReceipt(client);
 
                 // Refresh Balance
                 await actions.refreshBalanceAndRate();
@@ -337,21 +335,21 @@ export default createComponent({
                 // eslint-disable-next-line require-atomic-updates
                 state.amountErrorMessage = "";
 
-                const { HederaError, ResponseCodeEnum } = await import("@hashgraph/sdk");
+                const { HederaStatusError, Status } = await import("@hashgraph/sdk");
 
-                if (error instanceof HederaError) {
+                if (error instanceof HederaStatusError) {
                     const errorMessage = (await actions.handleHederaError({
                         error,
                         showAlert: false
                     })).message;
 
                     // Small duplication of effort to assign errorMessage to correct TextInput
-                    switch (error.code) {
-                        case ResponseCodeEnum.INVALID_ACCOUNT_ID:
-                        case ResponseCodeEnum.ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS:
+                    switch (error.status) {
+                        case Status.InvalidAccountId:
+                        case Status.AccountRepeatedInAccountAmounts:
                             state.idErrorMessage = errorMessage;
                             break;
-                        case ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE:
+                        case Status.InsufficientAccountBalance:
                             state.amountErrorMessage = errorMessage;
                             break;
                         default:

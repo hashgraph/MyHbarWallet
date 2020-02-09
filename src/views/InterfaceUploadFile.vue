@@ -66,7 +66,7 @@ import ModalSuccess, { State as SuccessState } from "../components/ModalSuccess.
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
 import { writeToClipboard } from "../clipboard";
-import { Ed25519PublicKey } from "@hashgraph/sdk";
+import { Ed25519PublicKey, Status } from "@hashgraph/sdk";
 import { actions, store } from "../store";
 
 interface AccountId {
@@ -99,7 +99,7 @@ interface ExchangeRateSet {
 }
 
 interface TransactionReceipt {
-    status: number;
+    status: Status;
     accountId?: AccountId;
     fileId?: FileId;
     contractId?: ContractId;
@@ -280,13 +280,13 @@ export default createComponent({
             try {
                 state.uploadProgress.currentChunk = 0;
                 const chunk = chunks.shift() as Uint8Array;
-                receipt.value = await new FileCreateTransaction(client as InstanceType<typeof Client>)
+                receipt.value = await (await new FileCreateTransaction()
                     .setContents(chunk)
                     .setExpirationTime(Date.now() + 7890000000)
                     .addKey(publicKey)
-                    .setTransactionFee(520000000)
-                    .build()
-                    .executeForReceipt();
+                    .setMaxTransactionFee(520000000)
+                    .execute(client as InstanceType<typeof Client>))
+                    .getReceipt(client as InstanceType<typeof Client>);
 
                 state.uploadProgress.currentChunk += 1;
 
@@ -321,14 +321,12 @@ export default createComponent({
             const { FileAppendTransaction, Client } = await import("@hashgraph/sdk");
             try {
                 while (chunks.length > 0) {
-                    await new FileAppendTransaction(client as InstanceType<
-                        typeof Client
-                    >)
+                    await (await new FileAppendTransaction()
                         .setFileId(fileId)
                         .setContents(chunks.shift() as Uint8Array)
-                        .setTransactionFee(520000000)
-                        .build()
-                        .executeForReceipt();
+                        .setMaxTransactionFee(520000000)
+                        .execute(client as InstanceType<typeof Client>))
+                        .getReceipt(client as InstanceType<typeof Client>);
 
                     state.uploadProgress.currentChunk += 1;
                 }

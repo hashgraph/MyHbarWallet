@@ -151,14 +151,14 @@ export default createComponent({
                 throw new Error(context.root.$t("common.error.noSession").toString());
             }
 
-            const client = store.state.wallet.session.client;
-            client.setMaxQueryPayment(100000000);
-            try {
-                const { FileContentsQuery, Client } = await import("@hashgraph/sdk");
+            const { FileContentsQuery, Hbar, Client } = await import("@hashgraph/sdk");
 
-                const getEstimate = await new FileContentsQuery(client as InstanceType<typeof Client>)
+            const client = store.state.wallet.session.client;
+            client.setMaxQueryPayment(Hbar.fromTinybar(100000000));
+            try {
+                const getEstimate = await new FileContentsQuery()
                     .setFileId(state.fileId)
-                    .requestCost();
+                    .getCost(client);
 
                 state.fee = new BigNumber(await getEstimate.value());
                 state.isOpen = true;
@@ -185,28 +185,28 @@ export default createComponent({
             if (!store.state.wallet.session) {
                 throw new Error(context.root.$t("common.error.noSession").toString());
             }
+
+            const { FileContentsQuery, Hbar, Client } = await import("@hashgraph/sdk");
+
             const client = store.state.wallet.session.client;
-            client.setMaxQueryPayment(100000000);
+            client.setMaxQueryPayment(Hbar.fromTinybar(100000000));
+
             try {
-                const { FileContentsQuery, Client } = await import("@hashgraph/sdk");
+                const file = ref<Uint8Array | null>(null);
 
-                const file = ref<FileContentsResponse | null>(null);
-
-                file.value = await new FileContentsQuery(client as InstanceType<
-                    typeof Client
-                >)
+                file.value = await new FileContentsQuery()
                     .setFileId(state.fileId)
-                    .execute();
+                    .execute(client);
 
-                if (file.value.contents == null) {
+                if (file.value == null) {
                     throw new Error(context.root
                         .$t("common.error.nullTransaction")
                         .toString());
                 }
 
-                const type = await fileType.fromBuffer(file.value.contents as Uint8Array);
+                const type = await fileType.fromBuffer(file.value);
 
-                const fileBlob = new Blob([ file.value.contents as Uint8Array ]);
+                const fileBlob = new Blob([ file.value ]);
                 const fileUrl = URL.createObjectURL(fileBlob);
 
                 fileLink.value = document.createElement("a") as HTMLAnchorElement;

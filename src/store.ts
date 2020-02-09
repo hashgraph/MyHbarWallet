@@ -12,8 +12,8 @@ import {
 } from "./store/modules/wallet";
 import { State as FeesState } from "./store/modules/fees";
 import {
-    HederaErrorPayload,
-    HederaErrorTuple,
+    HederaStatusErrorPayload,
+    HederaStatusErrorTuple,
     LedgerErrorPayload,
     LedgerErrorTuple,
     State as ErrorsState
@@ -24,6 +24,8 @@ import i18n from "./i18n";
 import { StatusCodes } from "@ledgerhq/hw-transport";
 import { getValueOfUnit, Unit } from "./units";
 import { NetworkName, availableNetworks, NetworkSettings } from "./settings";
+import { AccountIdLike } from "@hashgraph/sdk/lib/account/AccountId";
+import { Ed25519PrivateKey, Ed25519PublicKey, TransactionSigner } from "@hashgraph/sdk";
 
 export interface RootState {
     alerts: AlertsState;
@@ -33,6 +35,16 @@ export interface RootState {
     errors: ErrorsState;
     network: NetworkState;
 }
+
+// No longer provided publicly by the SDK
+export type Operator = {
+    account: AccountIdLike;
+    privateKey: Ed25519PrivateKey;
+} | {
+    account: AccountIdLike;
+    publicKey: Ed25519PublicKey;
+    signer: TransactionSigner;
+};
 
 export interface Store {
     state: RootState;
@@ -172,7 +184,7 @@ export const actions = {
         }, 5000);
     },
 
-    async handleHederaError(payload: HederaErrorPayload): Promise<HederaErrorTuple> {
+    async handleHederaError(payload: HederaStatusErrorPayload): Promise<HederaStatusErrorTuple> {
         if (process.env.NODE_ENV !== "production" && payload.error != null) {
             console.error(payload.error);
         }
@@ -180,42 +192,42 @@ export const actions = {
         let message = "";
         const severity = "error";
 
-        const { ResponseCodeEnum } = await import("@hashgraph/sdk");
+        const { Status } = await import("@hashgraph/sdk");
 
-        switch (payload.error.code) {
-            case ResponseCodeEnum.PAYER_ACCOUNT_NOT_FOUND:
-            case ResponseCodeEnum.INVALID_ACCOUNT_ID:
+        switch (payload.error.status) {
+            case Status.PayerAccountNotFound:
+            case Status.InvalidAccountId:
                 message = i18n.t("common.error.invalidAccount").toString();
                 break;
-            case ResponseCodeEnum.INVALID_SIGNATURE:
+            case Status.InvalidSignature:
                 message = i18n.t("common.error.invalidSignature").toString();
                 break;
-            case ResponseCodeEnum.INVALID_TRANSACTION_START:
+            case Status.InvalidTransactionStart:
                 message = i18n.t("common.error.invalidDateTime").toString();
                 break;
-            case ResponseCodeEnum.INSUFFICIENT_TX_FEE:
+            case Status.InsufficientTxFee:
                 message = i18n
                     .t("common.error.insufficientTransactionFee")
                     .toString();
                 break;
-            case ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE:
-            case ResponseCodeEnum.INSUFFICIENT_PAYER_BALANCE:
+            case Status.InsufficientAccountBalance:
+            case Status.InsufficientPayerBalance:
                 message = i18n
                     .t("common.error.insufficientPayerBalance")
                     .toString();
                 break;
-            case ResponseCodeEnum.ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS:
+            case Status.AccountRepeatedInAccountAmounts:
                 message = i18n
                     .t("common.error.cannotSendHbarToYourself")
                     .toString();
                 break;
             default:
-                console.warn(payload.error.code);
+                console.warn(payload.error.status);
                 console.warn(payload.error.message);
                 console.warn(payload.error);
                 message =
                     `${i18n.t("common.error.unhandled")
-                    }${payload.error.codeName}`;
+                    }${payload.error.status}`;
         }
 
         if (payload.showAlert) {
@@ -302,16 +314,17 @@ export const actions = {
             console.warn("attempt to refresh balance with a null session");
             return;
         }
-        const { Client } = await import("@hashgraph/sdk");
+        const { Client, AccountBalanceQuery } = await import("@hashgraph/sdk");
 
         if (!(store.state.wallet.session.client instanceof Client)) {
             throw new TypeError("state.session.client not instance of Client: Programmer Error");
         }
 
-        const balance = await store.state.wallet.session
-            .client.getAccountBalance();
+        const balance = await new AccountBalanceQuery()
+            .setAccountId(store.state.wallet.session.account)
+            .execute(store.state.wallet.session.client);
 
-        mutations.SET_BALANCE(balance);
+        mutations.SET_BALANCE(balance.asTinybar());
     },
 
     async refreshExchangeRate(): Promise<void> {

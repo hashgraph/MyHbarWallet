@@ -176,7 +176,7 @@ export default createComponent({
 
             const client = store.state.wallet.session.client;
 
-            const { HederaError, ResponseCodeEnum } = await import("@hashgraph/sdk");
+            const { HederaStatusError, Status, Hbar } = await import("@hashgraph/sdk");
 
             try {
                 // The new wallet's initial balance
@@ -197,12 +197,13 @@ export default createComponent({
                 const key = Ed25519PublicKey.fromString(state.publicKey);
                 const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(balanceTinybar.minus(newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())));
 
-                const accountIdIntermediate = (await new AccountCreateTransaction(client as InstanceType<typeof Client>)
-                    .setInitialBalance(newBalanceTinybar)
-                    .setTransactionFee(maxTxFeeTinybar)
+                const accountIdIntermediate = (await (await new AccountCreateTransaction()
+                    .setInitialBalance(Hbar.fromTinybar(newBalanceTinybar))
+                    .setMaxTransactionFee(Hbar.fromTinybar(maxTxFeeTinybar))
                     .setKey(key)
-                    .build()
-                    .executeForReceipt()).accountId;
+                    .execute(client))
+                    .getReceipt(client))
+                    .getAccountId();
 
                 // Handle undefined
                 if (accountIdIntermediate == null) {
@@ -228,16 +229,16 @@ export default createComponent({
 
                 state.modalSuccessState.isOpen = true;
             } catch (error) {
-                if (error instanceof HederaError) {
+                if (error instanceof HederaStatusError) {
                     const errorMessage = (await actions.handleHederaError({
                         error,
                         showAlert: false
                     })).message;
 
                     // Small duplication of effort to assign errorMessage to correct TextInput
-                    switch (error.code) {
-                        case ResponseCodeEnum.INSUFFICIENT_ACCOUNT_BALANCE:
-                        case ResponseCodeEnum.INSUFFICIENT_PAYER_BALANCE:
+                    switch (error.status) {
+                        case Status.InsufficientAccountBalance:
+                        case Status.InsufficientPayerBalance:
                             state.newBalanceError = errorMessage;
                             break;
                         default:

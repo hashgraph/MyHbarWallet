@@ -16,7 +16,7 @@ module.exports = {
             // only report this as an error when building for production
             hints: process.env.NODE_ENV === "production" ? "error" : false,
             maxEntrypointSize: 512000,
-            maxAssetSize: 1280000
+            maxAssetSize: 1450000
         },
         plugins: [
             new webpack.DefinePlugin({

@@ -73,17 +73,16 @@ import {
 import { CreateAccountDTO } from "../store/modules/wallet";
 import ModalCreateBySoftware, { CreateSoftwareOption } from "../components/ModalCreateBySoftware.vue";
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
-import { HederaErrorTuple, LedgerErrorTuple } from "../store/modules/errors";
+import { HederaStatusErrorTuple, LedgerErrorTuple } from "../store/modules/errors";
 import { LoginMethod } from "../wallets/Wallet";
 import {
     Client,
     Ed25519PrivateKey,
     Ed25519PublicKey,
-    Operator,
-    Signer,
+    TransactionSigner,
     AccountId
 } from "@hashgraph/sdk";
-import { getters, actions, mutations } from "../store";
+import { Operator, getters, actions, mutations } from "../store";
 import { NetworkSettings, NetworkName } from "../settings";
 
 function getNetwork(): NetworkSettings {
@@ -183,7 +182,7 @@ export default createComponent({
                 return {
                     account,
                     publicKey: (await state.wallet!.getPublicKey()) as Ed25519PublicKey,
-                    signer: state.wallet!.signTransaction.bind(state.wallet!) as Signer
+                    signer: state.wallet!.signTransaction.bind(state.wallet!) as TransactionSigner
                 };
             }
 
@@ -208,8 +207,8 @@ export default createComponent({
             const {
                 Client,
                 CryptoTransferTransaction,
-                HederaError,
-                ResponseCodeEnum
+                HederaStatusError,
+                Status
             } = await import("@hashgraph/sdk");
 
             try {
@@ -217,7 +216,7 @@ export default createComponent({
                 const operator: Operator = await constructOperator(account);
 
                 client = new Client({
-                    nodes: {
+                    network: {
                         [ network.proxy || network.address ]: {
                             shard: network.node.shard,
                             realm: network.node.realm,
@@ -227,25 +226,25 @@ export default createComponent({
                     operator
                 });
 
-                const recipient: AccountId = {
+                const recipient: AccountId = new AccountId({
                     realm: 0,
                     shard: 0,
                     // If the account requested is 3, use a different account as the recipient to avoid an
                     // ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS error
                     account: account.account === 3 ? 4 : 3
-                };
+                });
 
-                await new CryptoTransferTransaction(client)
+                await (await new CryptoTransferTransaction()
                     .addSender(account, 0)
                     .addRecipient(recipient, 0)
-                    .setTransactionFee(1)
-                    .build()
-                    .executeForReceipt();
+                    .setMaxTransactionFee(1)
+                    .execute(client))
+                    .getReceipt(client);
             } catch (error) {
-                if (error instanceof HederaError) {
+                if (error instanceof HederaStatusError) {
                     // Transaction was valid except for deliberately insufficient fee,
                     // meaning that the account matches the key and that nothing went wrong
-                    if (error.code === ResponseCodeEnum.INSUFFICIENT_TX_FEE) {
+                    if (error.status === Status.InsufficientTxFee) {
                         return client;
                     }
                 }
@@ -337,7 +336,7 @@ export default createComponent({
 
                 const privateKey = await Ed25519PrivateKey.generate();
 
-                state.keyFile = await privateKey.createKeystore(state.modalCreateByKeystoreState.passwordGeneratorState
+                state.keyFile = await privateKey.toKeystore(state.modalCreateByKeystoreState.passwordGeneratorState
                     .password);
 
                 setPrivateKey(privateKey);
@@ -413,10 +412,9 @@ export default createComponent({
                 state.modalEnterAccountIdState.isOpen = false;
                 openInterface();
             } catch (error) {
-                const HederaError = (await import("@hashgraph/sdk"))
-                    .HederaError;
-                if (error instanceof HederaError) {
-                    const result: HederaErrorTuple = await actions.handleHederaError({ error, showAlert: false });
+                const { HederaStatusError } = await import("@hashgraph/sdk");
+                if (error instanceof HederaStatusError) {
+                    const result: HederaStatusErrorTuple = await actions.handleHederaError({ error, showAlert: false });
 
                     // set input error to error message
                     state.modalEnterAccountIdState.errorMessage =

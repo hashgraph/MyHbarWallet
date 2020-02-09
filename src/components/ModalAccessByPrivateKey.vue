@@ -77,17 +77,14 @@ export default createComponent({
         // No, it cannot be moved to enclosing scope
         // eslint-disable-next-line unicorn/consistent-function-scoping
         async function isValid(): Promise<boolean> {
-            try {
-                const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
+            const { Ed25519PrivateKey, BadKeyError } = await import("@hashgraph/sdk");
 
+            try {
                 Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
                 return true;
             } catch (error) {
                 // The exception message changes depending on the input
-                if (
-                    error instanceof Error &&
-                    error.message.includes("invalid private key")
-                ) {
+                if (error instanceof BadKeyError) {
                     return false;
                 }
 

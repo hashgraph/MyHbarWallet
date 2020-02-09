@@ -1,4 +1,4 @@
-import { HederaError } from "@hashgraph/sdk";
+import { HederaStatusError } from "@hashgraph/sdk";
 
 export interface State {
     errors: Error[];
@@ -18,12 +18,12 @@ export interface LedgerErrorTuple {
     error: LedgerError;
 }
 
-export interface HederaErrorPayload {
-    error: HederaError;
+export interface HederaStatusErrorPayload {
+    error: HederaStatusError;
     showAlert: boolean;
 }
 
-export interface HederaErrorTuple {
+export interface HederaStatusErrorTuple {
     message: string;
-    error: HederaError;
+    error: HederaStatusError;
 }

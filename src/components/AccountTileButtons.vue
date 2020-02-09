@@ -2,7 +2,9 @@
     <div class="tile-grid">
         <!-- TODO: Remove div below when hardware option is ready -->
         <div class="ribbon-container">
-            <div class="coming-soon">{{ $t("common.comingSoon") }}</div>
+            <div class="coming-soon">
+                {{ $t("common.comingSoon") }}
+            </div>
             <AccountTileButton
                 :title="$t('accountTileButtons.hardware')"
                 :content="$t('accountTileButtons.supportForHardwareWallets')"
