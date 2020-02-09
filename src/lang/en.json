@@ -47,7 +47,7 @@
     "common.error.nullTransaction": "Transaction returned is null",
     "common.error.nullTransferAmount": "Null hbar. This is not allowed >:(",
     "common.error.traitorDevice": "Device attestation failed. Oh no!",
-    "common.error.unhandled": "Received unhandled HederaError: ",
+    "common.error.unhandled": "Received unhandled error from hedera: ",
     "common.error.wrongApp": "Device did not understand command. Wrong app?",
     "common.estimatedFee": "Estimated Fee",
     "common.faqs": "FAQs",

@@ -264,7 +264,7 @@ export default createComponent({
                     // Transaction passes check for account ownership, but
                     // will otherwise fail. This transaction is used to verify
                     // account ownership.
-                    if (error.status === Status.InsufficientTxFee) {
+                    if (error.status.code === Status.InsufficientTxFee.code) {
                         return client;
                     }
                 }

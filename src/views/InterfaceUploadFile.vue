@@ -66,45 +66,8 @@ import ModalSuccess, { State as SuccessState } from "../components/ModalSuccess.
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
 import { writeToClipboard } from "../clipboard";
-import { Ed25519PublicKey, Status } from "@hashgraph/sdk";
+import { Ed25519PublicKey, Status, TransactionReceipt, FileId, AccountId } from "@hashgraph/sdk";
 import { actions, store } from "../store";
-
-interface AccountId {
-    shard: number;
-    realm: number;
-    account: number;
-}
-
-interface FileId {
-    shard: number;
-    realm: number;
-    file: number;
-}
-
-interface ContractId {
-    shard: number;
-    realm: number;
-    contract: number;
-}
-
-interface ExchangeRate {
-    hbarEquiv: number;
-    centEquiv: number;
-    expirationTime: Date;
-}
-
-interface ExchangeRateSet {
-    currentRate: ExchangeRate;
-    nextRate: ExchangeRate;
-}
-
-interface TransactionReceipt {
-    status: Status;
-    accountId?: AccountId;
-    fileId?: FileId;
-    contractId?: ContractId;
-    exchangeRateSet?: ExchangeRateSet;
-}
 
 async function hashFile(file: Uint8Array): Promise<Uint8Array> {
     const digest = await crypto.subtle.digest("SHA-384", file);
@@ -290,7 +253,7 @@ export default createComponent({
 
                 state.uploadProgress.currentChunk += 1;
 
-                fileId = receipt.value.fileId;
+                fileId = receipt.value.getFileId();
             } catch (error) {
                 state.uploadProgress.wasSuccess = false;
                 state.uploadProgress.inProgress = false;

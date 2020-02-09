@@ -244,7 +244,7 @@ export default createComponent({
                 if (error instanceof HederaStatusError) {
                     // Transaction was valid except for deliberately insufficient fee,
                     // meaning that the account matches the key and that nothing went wrong
-                    if (error.status === Status.InsufficientTxFee) {
+                    if (error.status.code === Status.InsufficientTxFee.code) {
                         return client;
                     }
                 }

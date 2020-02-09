@@ -344,12 +344,12 @@ export default createComponent({
                     })).message;
 
                     // Small duplication of effort to assign errorMessage to correct TextInput
-                    switch (error.status) {
-                        case Status.InvalidAccountId:
-                        case Status.AccountRepeatedInAccountAmounts:
+                    switch (error.status.code) {
+                        case Status.InvalidAccountId.code:
+                        case Status.AccountRepeatedInAccountAmounts.code:
                             state.idErrorMessage = errorMessage;
                             break;
-                        case Status.InsufficientAccountBalance:
+                        case Status.InsufficientAccountBalance.code:
                             state.amountErrorMessage = errorMessage;
                             break;
                         default:

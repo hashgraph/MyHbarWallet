@@ -194,29 +194,31 @@ export const actions = {
 
         const { Status } = await import("@hashgraph/sdk");
 
-        switch (payload.error.status) {
-            case Status.PayerAccountNotFound:
-            case Status.InvalidAccountId:
+        debugger;
+
+        switch (payload.error.status.code) {
+            case Status.PayerAccountNotFound.code:
+            case Status.InvalidAccountId.code:
                 message = i18n.t("common.error.invalidAccount").toString();
                 break;
-            case Status.InvalidSignature:
+            case Status.InvalidSignature.code:
                 message = i18n.t("common.error.invalidSignature").toString();
                 break;
-            case Status.InvalidTransactionStart:
+            case Status.InvalidTransactionStart.code:
                 message = i18n.t("common.error.invalidDateTime").toString();
                 break;
-            case Status.InsufficientTxFee:
+            case Status.InsufficientTxFee.code:
                 message = i18n
                     .t("common.error.insufficientTransactionFee")
                     .toString();
                 break;
-            case Status.InsufficientAccountBalance:
-            case Status.InsufficientPayerBalance:
+            case Status.InsufficientAccountBalance.code:
+            case Status.InsufficientPayerBalance.code:
                 message = i18n
                     .t("common.error.insufficientPayerBalance")
                     .toString();
                 break;
-            case Status.AccountRepeatedInAccountAmounts:
+            case Status.AccountRepeatedInAccountAmounts.code:
                 message = i18n
                     .t("common.error.cannotSendHbarToYourself")
                     .toString();

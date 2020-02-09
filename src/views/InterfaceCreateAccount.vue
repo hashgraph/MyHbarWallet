@@ -77,6 +77,7 @@ import { formatHbar } from "../formatter";
 import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuccess.vue";
 import { writeToClipboard } from "../clipboard";
 import { LoginMethod } from "../wallets/Wallet";
+import { BadKeyError } from "@hashgraph/sdk";
 
 // const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 // const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
@@ -100,11 +101,9 @@ async function isPublicKeyValid(key: string): Promise<boolean> {
         Ed25519PublicKey.fromString(key);
         return true;
     } catch (error) {
-        if (error instanceof Error) {
+        if (error instanceof BadKeyError) {
             // The exception message changes depending on the input
-            if (error.message === `invalid public key: ${key}`) {
-                return false;
-            }
+            return false;
         }
 
         throw error;
@@ -236,9 +235,9 @@ export default createComponent({
                     })).message;
 
                     // Small duplication of effort to assign errorMessage to correct TextInput
-                    switch (error.status) {
-                        case Status.InsufficientAccountBalance:
-                        case Status.InsufficientPayerBalance:
+                    switch (error.status.code) {
+                        case Status.InsufficientAccountBalance.code:
+                        case Status.InsufficientPayerBalance.code:
                             state.newBalanceError = errorMessage;
                             break;
                         default:
