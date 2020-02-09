@@ -305,7 +305,7 @@ export const actions = {
         }
 
         if (payload.showAlert) {
-            alert({ message, level: severity });
+            self.alert({ message, level: severity });
         }
 
         return { message, error: payload.error };
