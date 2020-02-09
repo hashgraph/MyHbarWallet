@@ -40,7 +40,7 @@ describe("ModalAccessByHardware.vue", (): void => {
                   <div class="content-container">
                     <form class="modal-access-by-hardware">
                       <div class="radio-button-group">
-                        <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger (Nano S)</span>
+                        <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger</span>
                             <!----></label></div>
                       </div>
                       <div class="instructions">
@@ -121,7 +121,7 @@ describe("ModalAccessByHardware.vue", (): void => {
                   <div class="content-container">
                     <form class="modal-access-by-hardware">
                       <div class="radio-button-group">
-                        <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger (Nano S)</span>
+                        <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger</span>
                             <!----></label></div>
                       </div>
                       <div class="instructions">

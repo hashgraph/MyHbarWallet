@@ -321,15 +321,16 @@ export default createComponent({
         async function handleAccessByHardwareSubmit(which: AccessHardwareOption): Promise<void> {
             switch (which) {
                 case AccessHardwareOption.Ledger:
-                    state.loginMethod = LoginMethod.LedgerNanoS;
+                    state.loginMethod = LoginMethod.Ledger;
                     state.modalAccessByHardwareState.isBusy = true;
                     try {
-                        const { LedgerNanoS } = await import("../wallets/hardware/LedgerNanoS" /* webpackChunkName: "hardware" */
+                        const { Ledger } = await (import(
+                            "../wallets/hardware/Ledger" /* webpackChunkName: "hardware" */
                         ) as Promise<
-                        typeof import("../wallets/hardware/LedgerNanoS")
-                        >;
+                            typeof import("../wallets/hardware/Ledger")
+                        >);
 
-                        state.wallet = new LedgerNanoS();
+                        state.wallet = new Ledger();
                         state.publicKey = (await state.wallet.getPublicKey()) as Ed25519PublicKey;
                         state.modalEnterAccountIdState.publicKey =
                             state.publicKey;
@@ -338,7 +339,7 @@ export default createComponent({
                     } catch (error) {
                         if (
                             error.name === "TransportStatusError" &&
-                            state.loginMethod === LoginMethod.LedgerNanoS
+                            state.loginMethod === LoginMethod.Ledger
                         ) {
                             await actions.handleLedgerError({
                                 error,
@@ -464,7 +465,7 @@ export default createComponent({
                     }
                 } else if (
                     error.name === "TransportStatusError" &&
-                    state.loginMethod === LoginMethod.LedgerNanoS
+                    state.loginMethod === LoginMethod.Ledger
                 ) {
                     const result: LedgerErrorTuple = await actions.handleLedgerError({ error, showAlert: false });
 

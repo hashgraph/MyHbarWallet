@@ -1,13 +1,20 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import Wallet, { LoginMethod } from "../Wallet";
 import "regenerator-runtime"; // https://github.com/LedgerHQ/ledgerjs/issues/332
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
+import TransportU2F from "@ledgerhq/hw-transport-u2f";
+// @ts-ignore
+import TransportWebHID from "@ledgerhq/hw-transport-webhid";
 import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
+import Transport from "@ledgerhq/hw-transport";
+import platform from "platform";
 
 // Preserving, in case we need this later
 // export const LEDGER_HEDERA_PATH = "44'/3030'/0'/0'/0'";
 
 export const INDEX = 0x00; // Key Index on Ledger
 
+// eslint-disable-next-line prettier/prettier
 export const CLA = 0xE0;
 const INS_GET_PK = 0x02;
 const INS_SIGN_TX = 0x04;
@@ -15,8 +22,8 @@ const INS_SIGN_TX = 0x04;
 const P1_UNUSED_APDU = 0x00;
 const P2_UNUSED_APDU = 0x00;
 
-const P1_FIRST = 0x01;
-const P1_LAST = 0x08;
+const OPEN_TIMEOUT = 100000;
+const LISTENER_TIMEOUT = 300000;
 
 export interface LedgerDeviceStatus {
     deviceStatus: number;
@@ -32,8 +39,9 @@ interface APDU {
     buffer: Buffer;
 }
 
-export default class LedgerNanoS implements Wallet {
+export default class Ledger implements Wallet {
     private publicKey: Ed25519PublicKey | null = null;
+    private transport: Transport | null = null;
 
     public hasPrivateKey(): boolean {
         return false;
@@ -75,7 +83,7 @@ export default class LedgerNanoS implements Wallet {
     }
 
     public getLoginMethod(): LoginMethod {
-        return LoginMethod.LedgerNanoS;
+        return LoginMethod.Ledger;
     }
 
     public async signTransaction(txnData: Buffer | Uint8Array): Promise<Uint8Array | null> {
@@ -102,32 +110,63 @@ export default class LedgerNanoS implements Wallet {
         throw new Error("Unexpected Empty Response From Ledger Device");
     }
 
+    private async getTransport(): Promise<Transport> {
+        // Support NodeHID for Electron
+
+        if (this.transport != null) {
+            return this.transport;
+        }
+
+        // WebHID should be what we're doing but it's still unstable on Chrome
+        const shouldUseWebHid = false;
+
+        // WebUSB is *supposed* to work on Windows (and Opera?), but alas
+        const webusbSupported =
+            (await TransportWebUSB.isSupported()) &&
+            platform.os!.family !== "Windows" &&
+            platform.name !== "Opera";
+
+        if (shouldUseWebHid) {
+            this.transport = await TransportWebHID.create(
+                OPEN_TIMEOUT,
+                LISTENER_TIMEOUT
+            );
+        } else if (webusbSupported) {
+            this.transport = await TransportWebUSB.create(
+                OPEN_TIMEOUT,
+                LISTENER_TIMEOUT
+            );
+        } else {
+            this.transport = await TransportU2F.create(
+                OPEN_TIMEOUT,
+                LISTENER_TIMEOUT
+            );
+
+            // U2F requires a pre-negotiated scramble key
+            // Don't steal this
+            this.transport.setScrambleKey("BOIL");
+        }
+
+        return this.transport!;
+    }
+
     private async sendAPDU(message: APDU): Promise<Buffer | null> {
-        let transport: TransportWebUSB | null | void = null;
         let response: Buffer | null = null;
 
-        try {
-            // DO NOT SEPARATE CREATE THEN.
-            // TransportWebUSB REQUIRES a context managed async callback
-            transport = await TransportWebUSB.create().then(async(transport: TransportWebUSB) => {
-                response = await transport.send(
-                    message.CLA,
-                    message.INS,
-                    message.P1,
-                    message.P2,
-                    message.buffer
-                );
-            });
+        // DO NOT SEPARATE CREATE THEN.
+        // Transports REQUIRE a context managed async callback
+        await this.getTransport().then(async transport => {
+            response = await transport.send(
+                message.CLA,
+                message.INS,
+                message.P1,
+                message.P2,
+                message.buffer
+            );
+        });
 
-            return response;
-        } finally {
-            if (transport !== null && transport !== undefined) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                await transport.close();
-            }
-        }
+        return response;
     }
 }
 
-export { LedgerNanoS };
+export { Ledger };

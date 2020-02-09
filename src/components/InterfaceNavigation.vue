@@ -107,7 +107,7 @@ export default createComponent({
             if (store.state.wallet.session !== null) {
                 return (
                     store.state.wallet.session.wallet.getLoginMethod() !==
-                    LoginMethod.LedgerNanoS
+                    LoginMethod.Ledger
                 );
             }
 

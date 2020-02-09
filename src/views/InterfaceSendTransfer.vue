@@ -1,7 +1,7 @@
 <template>
     <InterfaceForm :title="$t('interfaceSendTransfer.title')">
         <TextInput
-            v-model="state.amount"
+            :value="state.amount"
             :error="state.amountErrorMessage"
             :suffix="hbarSuffix"
             :valid="isAmountValid"
@@ -70,7 +70,7 @@ import {
     SetupContext,
     watch
 } from "@vue/composition-api";
-import { getValueOfUnit, Unit } from "../units";
+import { getValueOfUnit, Unit, convert } from "../units";
 import BigNumber from "bignumber.js";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
 import { formatHbar, validateHbar } from "../formatter";
@@ -162,35 +162,56 @@ export default createComponent({
             }
         });
 
-        const truncate = computed(() => amount.value && amount.value.length > 15 ?
-            `${amount.value.slice(0, 13)}...` :
-            amount.value);
+        const truncate = computed(() =>
+            amount.value && amount.value.length > 15
+                ? amount.value.substring(0, 13) + "..."
+                : amount.value
+        );
 
-        const buttonLabel = computed(() => context.root
-            .$tc(
-                "interfaceSendTransfer.sendHbar",
-                state.amount == null ? 0 : Number(state.amount.toString()),
-                { count: truncate.value }
-            )
-            .toString());
+        const buttonLabel = computed(() => {
+            let testAmount = 0;
 
-        const summaryAmount = computed(() => amount.value);
+            if (state.amount != null) {
+                const amount = new BigNumber(state.amount);
 
-        const summaryAccount = computed(() => state.accountString);
-
-        const summaryItems = computed(() => [
-            {
-                description: context.root.$t("interfaceSendTransfer.transferAmount"),
-                value:
-                            isAmountValid && state.amount ?
-                                new BigNumber(state.amount) :
-                                new BigNumber(0)
-            },
-            {
-                description: context.root.$t("common.estimatedFee"),
-                value: estimatedFeeHbar
+                if (amount.gt(1)) testAmount = 2;
+                else if (amount.lt(1)) testAmount = 0;
+                else testAmount = 1;
             }
-        ] as Item[]);
+
+            return context.root
+                .$tc("interfaceSendTransfer.sendHbar", testAmount, {
+                    count: truncate.value
+                })
+                .toString();
+        });
+
+        const summaryAmount = computed(() => {
+            return amount.value;
+        });
+
+        const summaryAccount = computed(() => {
+            return state.accountString;
+        });
+
+        const summaryItems = computed(
+            () =>
+                [
+                    {
+                        description: context.root.$t(
+                            "interfaceSendTransfer.transferAmount"
+                        ),
+                        value:
+                            isAmountValid && state.amount
+                                ? new BigNumber(state.amount)
+                                : new BigNumber(0)
+                    },
+                    {
+                        description: context.root.$t("common.estimatedFee"),
+                        value: estimatedFeeHbar
+                    }
+                ] as Item[]
+        );
 
         async function handleClickEntireBalance(): Promise<void> {
             const balance = store.state.wallet.balance;
@@ -210,8 +231,55 @@ export default createComponent({
             state.summaryIsOpen = true;
         }
 
-        function handleInput(): void {
+        // Taken from [UnitConverter]
+        function boundInput(
+            event: Event,
+            inputValue: string,
+            stateValue: string
+        ): void {
+            // If the computed value from the round-trip from {input} -> left -> right
+            // is different than {input} then we should replace {input} so as
+            // to prevent typing more
+
+            const computedValueNum = new BigNumber(stateValue);
+            const valueNum = new BigNumber(inputValue);
+
+            if (!computedValueNum.eq(valueNum)) {
+                // Computed value is different from input value; replace
+                (event.target as HTMLInputElement).value = stateValue;
+            } else {
+                // Strip non-digit chars from input
+                (event.target as HTMLInputElement).value = inputValue.replace(
+                    /[^\d.]/,
+                    ""
+                );
+            }
+        }
+
+        // Taken from [UnitConverter]
+        function handleInput(value: string, event: Event): void {
+            if (!/^\d*\.?\d*$/.test(value)) {
+                value = state.amount || "";
+            }
+
+            state.amount = value;
             state.amountErrorMessage = "";
+
+            const roundTrippedAmount = convert(
+                state.amount,
+                Unit.Hbar,
+                Unit.Tinybar,
+                false
+            );
+
+            state.amount = convert(
+                roundTrippedAmount,
+                Unit.Tinybar,
+                Unit.Hbar,
+                false
+            );
+
+            boundInput(event, value, state.amount);
         }
 
         async function handleSendTransfer(): Promise<void> {
@@ -242,7 +310,9 @@ export default createComponent({
 
                 const sendAmountTinybar = new BigNumber(state.amount).multipliedBy(getValueOfUnit(Unit.Hbar));
 
-                const { CryptoTransferTransaction, Client } = await import("@hashgraph/sdk");
+                const { CryptoTransferTransaction, Client } = await import(
+                    "@hashgraph/sdk"
+                );
 
                 // Max Transaction Fee, otherwise known as Transaction Fee,
                 // is the max of 1 Hbar and the user's remaining balance
@@ -311,7 +381,7 @@ export default createComponent({
                 } else if (
                     error.name === "TransportStatusError" &&
                     store.state.wallet.session.wallet.getLoginMethod() ===
-                        LoginMethod.LedgerNanoS
+                        LoginMethod.Ledger
                 ) {
                     actions.handleLedgerError({
                         error,

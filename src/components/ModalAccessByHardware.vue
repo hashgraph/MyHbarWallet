@@ -91,7 +91,7 @@ HardwareAttributes
         AccessHardwareOption.Ledger,
         {
             supported: true,
-            label: "Ledger (Nano S)",
+            label: "Ledger",
             value: AccessHardwareOption.Ledger,
             image: imageLedger
         }
