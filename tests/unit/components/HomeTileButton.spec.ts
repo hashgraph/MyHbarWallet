@@ -27,8 +27,12 @@ describe("HomeTileButton.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <a href="/" class="home-tile-button router-link-exact-active router-link-active"><img class="tile-image">
               <div class="content">
-                <div class="title">title</div>
-                <div class="message"></div>
+                <div class="title">
+                  title
+                </div>
+                <div class="message">
+
+                </div>
                 <!---->
               </div>
             </a>

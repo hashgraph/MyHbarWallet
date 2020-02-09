@@ -23,7 +23,9 @@ describe("FAQs.vue", (): void => {
                 <div class="page-container">
                   <div class="head">
                     <div class="title">
-                      <div class="title-text">FAQs</div>
+                      <div class="title-text">
+                        FAQs
+                      </div>
                       <div class="subtitle-text">
                         Answers to most frequently asked questions.
                       </div>

@@ -32,7 +32,9 @@ describe("HardwareWalletOffer.vue", (): void => {
                 </div>
                 <div class="cost-container">
                   gil<span class="cost">999</span></div>
-                <div class="description-text">description</div> <a rel="noopener" target="_blank" href="more Info" class="green-link">
+                <div class="description-text">
+                  description
+                </div> <a rel="noopener" target="_blank" href="more Info" class="green-link">
                   More information &gt;
                 </a>
               </div> <a href="more Info" rel="noopener" target="_blank"><img src="https://via.placeholder.com/150" class="logo-image"></a>

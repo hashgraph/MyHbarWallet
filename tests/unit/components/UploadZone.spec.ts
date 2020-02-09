@@ -21,8 +21,12 @@ describe("UploadZone.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="upload-zone">
-              <div class="drop-text">Drop your file here</div>
-              <div class="or-text">or</div> <button type="submit" class="button">
+              <div class="drop-text">
+                Drop your file here
+              </div>
+              <div class="or-text">
+                or
+              </div> <button type="submit" class="button">
                 <!----> <span>Select a file from your computer</span>
                 <!----></button>
               <!----> <input id="file-upload" type="file" style="display: none;">
@@ -43,8 +47,12 @@ describe("UploadZone.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="upload-zone">
-              <div class="drop-text">Drop your file here</div>
-              <div class="or-text">or</div> <button type="submit" class="button">
+              <div class="drop-text">
+                Drop your file here
+              </div>
+              <div class="or-text">
+                or
+              </div> <button type="submit" class="button">
                 <!----> <span>Select a file from your computer</span>
                 <!----></button>
               <div class="file-name-container"><svg width="24" height="24" viewBox="0 0 24 24" class="icon">

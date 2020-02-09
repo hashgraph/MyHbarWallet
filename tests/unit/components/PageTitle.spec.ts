@@ -23,7 +23,9 @@ describe("PageTitle.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="title-container">
-              <div class="title">title</div>
+              <div class="title">
+                title
+              </div>
               <div class="subtitle"></div>
             </div>
         `);
@@ -43,7 +45,9 @@ describe("PageTitle.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="title-container">
-              <div class="title large">title</div>
+              <div class="title large">
+                title
+              </div>
               <div class="subtitle"></div>
             </div>
         `);

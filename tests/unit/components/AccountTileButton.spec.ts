@@ -23,9 +23,15 @@ describe("AccountTileButton.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="account-tile-button disabled"><img class="tile-image">
               <div class="text">
-                <div class="title">title</div>
-                <div class="content"></div>
-                <div class="note"></div>
+                <div class="title">
+                  title
+                </div>
+                <div class="content">
+
+                </div>
+                <div class="note">
+
+                </div>
               </div>
             </div>
         `);
@@ -45,9 +51,15 @@ describe("AccountTileButton.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="account-tile-button"><img class="tile-image">
               <div class="text">
-                <div class="title">title</div>
-                <div class="content"></div>
-                <div class="note"></div>
+                <div class="title">
+                  title
+                </div>
+                <div class="content">
+
+                </div>
+                <div class="note">
+
+                </div>
               </div>
             </div>
         `);

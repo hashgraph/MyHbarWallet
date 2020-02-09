@@ -33,7 +33,9 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   Total
                 </div>
-                <div class="value">0 </div>
+                <div class="value">
+                  0
+                </div>
                 <div class="symbol value">
                   ℏ
                 </div>
@@ -59,7 +61,9 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   description
                 </div>
-                <div class="value">1.23</div>
+                <div class="value">
+                  1.23
+                </div>
                 <div class="symbol value">
                   ℏ
                 </div>
@@ -68,7 +72,9 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   description
                 </div>
-                <div class="value">public key</div>
+                <div class="value">
+                  public key
+                </div>
                 <div class="symbol value">
                   ℏ
                 </div>
@@ -77,7 +83,9 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   description
                 </div>
-                <div class="value">3.45</div>
+                <div class="value">
+                  3.45
+                </div>
                 <div class="symbol value">
                   ℏ
                 </div>
@@ -86,7 +94,9 @@ describe("ModalFeeSummaryItems.vue", (): void => {
                 <div class="description">
                   Total
                 </div>
-                <div class="value">4.68</div>
+                <div class="value">
+                  4.68
+                </div>
                 <div class="symbol value">
                   ℏ
                 </div>

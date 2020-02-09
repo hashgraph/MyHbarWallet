@@ -26,7 +26,11 @@ describe("Header.vue", (): void => {
             <div class="header-container">
               <header class="header"><a href="/" class="link router-link-exact-active router-link-active"><img alt="" src="../assets/myhbarwallet-logo.svg" class="logo"></a>
                 <div class="spacer"></div>
-                <div class="links"><a href="/" class="link router-link-exact-active router-link-active">Home</a> <a href="/#about" class="link">About</a> <a href="/#faqs" class="link">
+                <div class="links"><a href="/" class="link router-link-exact-active router-link-active">
+                    Home
+                  </a> <a href="/#about" class="link">
+                    About
+                  </a> <a href="/#faqs" class="link">
                     FAQs
                   </a></div>
                 <!---->
@@ -45,15 +49,21 @@ describe("Header.vue", (): void => {
               </header>
               <nav class="">
                 <!----> <a href="/" class="link-block router-link-exact-active router-link-active">
-                  <div class="link">Home</div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
+                  <div class="link">
+                    Home
+                  </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                     <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
                   </svg>
                 </a> <a href="/#about" class="link-block">
-                  <div class="link">About</div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
+                  <div class="link">
+                    About
+                  </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                     <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
                   </svg>
                 </a> <a href="/#faqs" class="link-block">
-                  <div class="link">FAQs</div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
+                  <div class="link">
+                    FAQs
+                  </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                     <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
                   </svg>
                 </a>

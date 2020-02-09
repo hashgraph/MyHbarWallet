@@ -58,16 +58,22 @@ describe("ModalConfirmSignMessage.vue", (): void => {
                 <!---->
                 <div class="main">
                   <div class="content-container">
-                    <p class="title">Signing Key</p>
+                    <p class="title">
+                      Signing Key
+                    </p>
                     <div class="item account"><img src="https://api.adorable.io/avatars/285/302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29" class="account-image"> <span class="account-key"> 302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29 </span></div>
-                    <p class="title">Message</p>
+                    <p class="title">
+                      Message
+                    </p>
                     <div class="read-only-input item">
                       <div class="value">
                         message
                       </div>
                       <!---->
                     </div>
-                    <p class="title">Message in hex</p>
+                    <p class="title">
+                      Message in hex
+                    </p>
                     <div class="read-only-input item">
                       <div class="value">
                         0x6d657373616765

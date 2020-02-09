@@ -25,8 +25,12 @@ describe("HomeTileButtons.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="tile-grid"><a href="/create-account" class="home-tile-button"><img class="tile-image">
                 <div class="content">
-                  <div class="title">Create New Account</div>
-                  <div class="message">Generate your private key and obtain an account ID. Key saving and security is your responsibility.</div>
+                  <div class="title">
+                    Create New Account
+                  </div>
+                  <div class="message">
+                    Generate your private key and obtain an account ID. Key saving and security is your responsibility.
+                  </div>
                   <div class="action-label">
                     Get Started
                     <materialdesignicon-stub class="action-icon"></materialdesignicon-stub>
@@ -34,8 +38,12 @@ describe("HomeTileButtons.vue", (): void => {
                 </div>
               </a> <a href="/access-my-account" class="home-tile-button"><img class="tile-image">
                 <div class="content">
-                  <div class="title">Access My Account</div>
-                  <div class="message">Manage an account, send or receive hbars, create new accounts, and more!</div>
+                  <div class="title">
+                    Access My Account
+                  </div>
+                  <div class="message">
+                    Manage an account, send or receive hbars, create new accounts, and more!
+                  </div>
                   <div class="action-label">
                     Access Now
                     <materialdesignicon-stub class="action-icon"></materialdesignicon-stub>

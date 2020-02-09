@@ -24,7 +24,9 @@ describe("FooterTop.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="footer-top">
               <div class="section">
-                <div class="title">Discover</div>
+                <div class="title">
+                  Discover
+                </div>
                 <div class="item"><a href="/convert-units" class="link">
                     Units
                   </a></div>
@@ -33,7 +35,9 @@ describe("FooterTop.vue", (): void => {
                   </a></div>
               </div>
               <div class="section">
-                <div class="title">Affiliates</div>
+                <div class="title">
+                  Affiliates
+                </div>
                 <div class="item"><a rel="noopener" target="_blank" href="https://shop.ledger.com/pages/ledger-nano-x?r=0d2e5ed943aa" class="link">
                     Ledger
                   </a></div>
@@ -49,7 +53,9 @@ describe("FooterTop.vue", (): void => {
                 <!---->
               </div>
               <div class="section">
-                <div class="title">MyHbarWallet</div>
+                <div class="title">
+                  MyHbarWallet
+                </div>
                 <div class="item"><a href="/#about" class="link">
                     About
                   </a></div>
