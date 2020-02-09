@@ -17,8 +17,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
-import { PropOptions } from "vue";
+import { createComponent, PropType } from "@vue/composition-api";
 import RadioButton from "../components/RadioButton.vue";
 
 interface Option {
@@ -37,9 +36,9 @@ export default createComponent({
         selected: { type: String, default: null },
         name: { required: true, type: String },
         options: {
-            type: Array,
+            type: Array as PropType<Option[]>,
             required: true
-        } as PropOptions<Option[]>
+        }
     }
 });
 </script>

@@ -79,7 +79,7 @@ export default createComponent({
             };
         });
 
-        const splitItems: Ref<SplitItem[]> = computed(() => {
+        const splitItems: Ref<readonly SplitItem[]> = computed(() => {
             // Track the long fraction part of a string
             // Used later to right padd all items
             let lengthLongestString = 0;

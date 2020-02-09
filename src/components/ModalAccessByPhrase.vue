@@ -43,7 +43,6 @@
 </template>
 
 <script lang="ts">
-import { PropOptions } from "vue";
 import Modal from "../components/Modal.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 import MnemonicInput from "../components/MnemonicInput.vue";
@@ -54,7 +53,8 @@ import {
     computed,
     createComponent,
     watch,
-    SetupContext
+    SetupContext,
+    PropType
 } from "@vue/composition-api";
 
 export interface State {
@@ -77,7 +77,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: { state: { type: Object, required: true } as PropOptions<State> },
+    props: { state: { type: Object as PropType<State>, required: true }},
     setup(props: { state: State }, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });

@@ -11,7 +11,7 @@ export function validateHbar(input: string): boolean {
     return hbarAmountRegex.test(input);
 }
 
-export function formatHbar(input: BigNumber): string {
+export function formatHbar(input: Readonly<BigNumber>): string {
     // allows greater precision without exponential notation
     BigNumber.config({ EXPONENTIAL_AT: 1e9 });
     const fmt = {
