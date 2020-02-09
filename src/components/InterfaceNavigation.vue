@@ -104,7 +104,7 @@ export default createComponent({
         });
 
         const notLedger = computed(() => {
-            if (store.state.wallet.session !== null) {
+            if (store.state.wallet.session != null) {
                 return (
                     store.state.wallet.session.wallet.getLoginMethod() !==
                     LoginMethod.Ledger

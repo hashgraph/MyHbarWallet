@@ -172,7 +172,7 @@ export default createComponent({
         }
 
         async function constructOperator(account: AccountId): Promise<Operator> {
-            if (state.wallet !== null) {
+            if (state.wallet != null) {
                 if (state.wallet.hasPrivateKey()) {
                     return {
                         account,
@@ -209,9 +209,7 @@ export default createComponent({
                 CryptoTransferTransaction,
                 HederaError,
                 ResponseCodeEnum
-            } = await import("@hashgraph/sdk") as Promise<
-            typeof import("@hashgraph/sdk")
-            >;
+            } = await import("@hashgraph/sdk");
 
             try {
                 const network: NetworkSettings = await getNetwork();
@@ -259,7 +257,7 @@ export default createComponent({
         async function login(account: AccountId): Promise<void> {
             const client: Client | undefined = await constructClient(account);
 
-            if (state.wallet !== null && client !== undefined) {
+            if (state.wallet != null && client != null) {
                 await actions.logIn({
                     account,
                     wallet: state.wallet,
@@ -295,11 +293,8 @@ export default createComponent({
                 case AccessHardwareOption.Ledger:
                     state.loginMethod = LoginMethod.Ledger;
                     try {
-                        const { Ledger } = await (import(
-                            "../wallets/hardware/Ledger" /* webpackChunkName: "hardware" */
-                        ) as Promise<
-                            typeof import("../wallets/hardware/Ledger")
-                        >);
+                        const { Ledger } = await import("../wallets/hardware/Ledger" /* webpackChunkName: "hardware" */
+                        );
 
                         state.modalCreateByHardwareState.isBusy = true;
                         state.wallet = new Ledger();
@@ -337,7 +332,7 @@ export default createComponent({
                 state.modalDownloadKeystoreState.isOpen = true;
             }, 125);
             try {
-                const { Ed25519PrivateKey } = await import("@hashgraph/sdk") as Promise<typeof import("@hashgraph/sdk")>;
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
 
                 const privateKey = await Ed25519PrivateKey.generate();
 
@@ -397,13 +392,13 @@ export default createComponent({
         async function handleAccountIdSubmit(account: AccountId): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
 
-            if (state.loginMethod === null) {
+            if (state.loginMethod == null) {
                 state.modalEnterAccountIdState.isBusy = false;
                 throw new Error(context.root.$t("common.error.illegalState").toString());
             }
 
-            if (state.wallet === null) {
-                if (state.privateKey !== null) {
+            if (state.wallet == null) {
+                if (state.privateKey != null) {
                     state.wallet = new SoftwareWallet(
                         state.loginMethod,
                         state.privateKey as Ed25519PrivateKey,

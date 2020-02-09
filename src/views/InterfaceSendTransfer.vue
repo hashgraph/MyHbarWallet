@@ -162,11 +162,9 @@ export default createComponent({
             }
         });
 
-        const truncate = computed(() =>
-            amount.value && amount.value.length > 15
-                ? amount.value.substring(0, 13) + "..."
-                : amount.value
-        );
+        const truncate = computed(() => amount.value && amount.value.length > 15 ?
+            `${amount.value.slice(0, 13)}...` :
+            amount.value);
 
         const buttonLabel = computed(() => {
             let testAmount = 0;
@@ -180,38 +178,27 @@ export default createComponent({
             }
 
             return context.root
-                .$tc("interfaceSendTransfer.sendHbar", testAmount, {
-                    count: truncate.value
-                })
+                .$tc("interfaceSendTransfer.sendHbar", testAmount, { count: truncate.value })
                 .toString();
         });
 
-        const summaryAmount = computed(() => {
-            return amount.value;
-        });
+        const summaryAmount = computed(() => amount.value);
 
-        const summaryAccount = computed(() => {
-            return state.accountString;
-        });
+        const summaryAccount = computed(() => state.accountString);
 
-        const summaryItems = computed(
-            () =>
-                [
-                    {
-                        description: context.root.$t(
-                            "interfaceSendTransfer.transferAmount"
-                        ),
-                        value:
-                            isAmountValid && state.amount
-                                ? new BigNumber(state.amount)
-                                : new BigNumber(0)
-                    },
-                    {
-                        description: context.root.$t("common.estimatedFee"),
-                        value: estimatedFeeHbar
-                    }
-                ] as Item[]
-        );
+        const summaryItems = computed(() => [
+            {
+                description: context.root.$t("interfaceSendTransfer.transferAmount"),
+                value:
+                            isAmountValid && state.amount ?
+                                new BigNumber(state.amount) :
+                                new BigNumber(0)
+            },
+            {
+                description: context.root.$t("common.estimatedFee"),
+                value: estimatedFeeHbar
+            }
+        ] as Item[]);
 
         async function handleClickEntireBalance(): Promise<void> {
             const balance = store.state.wallet.balance;
@@ -310,9 +297,7 @@ export default createComponent({
 
                 const sendAmountTinybar = new BigNumber(state.amount).multipliedBy(getValueOfUnit(Unit.Hbar));
 
-                const { CryptoTransferTransaction, Client } = await import(
-                    "@hashgraph/sdk"
-                );
+                const { CryptoTransferTransaction, Client } = await import("@hashgraph/sdk");
 
                 // Max Transaction Fee, otherwise known as Transaction Fee,
                 // is the max of 1 Hbar and the user's remaining balance

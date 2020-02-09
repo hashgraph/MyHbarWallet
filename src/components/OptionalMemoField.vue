@@ -62,7 +62,7 @@ export default createComponent({
             if (showMemo) {
                 // If we are now showing the memo,
                 // focus the memo input
-                if (((context as unknown) as Context).refs.input != undefined) {
+                if (((context as unknown) as Context).refs.input !== undefined) {
                     ((context as unknown) as Context).refs.input.focus();
                 }
             }

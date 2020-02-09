@@ -146,7 +146,7 @@ export const mutations = {
                 store.state.network.network = availableNetworks[ name ];
                 break;
             case NetworkName.CUSTOM:
-                if (settings !== undefined && settings !== null) {
+                if (settings != null) {
                     store.state.network.network = settings;
                 }
                 break;
@@ -224,7 +224,7 @@ export const actions = {
 
         return { message, error: payload.error };
     },
-    async handleLedgerError(payload: LedgerErrorPayload): Promise<LedgerErrorTuple> {
+    handleLedgerError(payload: LedgerErrorPayload): Promise<LedgerErrorTuple> {
         if (process.env.NODE_ENV !== "production" && payload.error != null) {
             console.error(payload.error);
         }
@@ -294,7 +294,7 @@ export const actions = {
             self.alert({ message, level: severity });
         }
 
-        return { message, error: payload.error };
+        return Promise.resolve({ message, error: payload.error });
     },
 
     async refreshBalance(): Promise<void> {
@@ -342,7 +342,7 @@ export const actions = {
         mutations.LOG_IN(session);
         await this.refreshBalanceAndRate();
     },
-    logOut() {
+    logOut(): void {
         mutations.SET_HAS_BEEN_TO_INTERFACE(false);
         mutations.LOG_OUT();
     }

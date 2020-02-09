@@ -19,7 +19,7 @@
             @click="handleBrowseClick"
         />
         <div
-            v-if="fileName !== null && fileName !== ''"
+            v-if="fileName != null && fileName !== ''"
             class="file-name-container"
         >
             <MaterialDesignIcon

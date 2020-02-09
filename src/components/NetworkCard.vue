@@ -58,13 +58,13 @@ export default createComponent({
         );
 
         const networkName = computed(() => {
-            if (state.network !== null) {
+            if (state.network != null) {
                 return state.network.name;
             }
         });
 
         const networkAddress = computed(() => {
-            if (state.network !== null) {
+            if (state.network != null) {
                 return state.network.address;
             }
         });

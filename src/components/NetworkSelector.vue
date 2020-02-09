@@ -136,7 +136,7 @@ export default createComponent({
 
         function handleIdInput(input: string, id: AccountId): void {
             state.nodeError = "";
-            if (id !== null) {
+            if (id != null) {
                 // Mismatch between "node" and "address"
                 // Consider reimplementing IDInput to handle a general Id
                 state.id = {

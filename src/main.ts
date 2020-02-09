@@ -15,7 +15,8 @@ Vue.use(VueCompositionApi);
 Vue.use(Router);
 
 // Globally catch uncaught exceptions and store it
-Vue.config.errorHandler = (error: Error) => {
+/* eslint-disable-next-line @typescript-eslint/unbound-method */
+Vue.config.errorHandler = function(error: Error): void {
     mutations.ERROR_OCCURRED({ error });
 };
 

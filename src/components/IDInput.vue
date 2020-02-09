@@ -75,7 +75,7 @@ export default createComponent({
         const input = ref<HTMLInputElement | null>(null);
 
         const placeholderText = computed(() => {
-            if (props.placeholder !== null && props.placeholder !== undefined) {
+            if (props.placeholder != null) {
                 return props.placeholder;
             }
             return props.file ?
@@ -92,9 +92,9 @@ export default createComponent({
                 // Check that each ID part is a safe integer
                 // TO DO: Use BigInts
                 if (
-                    parts[0].length > 8 ||
-                    parts[1].length > 8 ||
-                    parts[2].length > 8
+                    parts[ 0 ].length > 8 ||
+                    parts[ 1 ].length > 8 ||
+                    parts[ 2 ].length > 8
                 ) {
                     state.errorMessage = context.root
                         .$t("common.idTooBig")

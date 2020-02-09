@@ -74,7 +74,7 @@ import { Ed25519PrivateKey, Ed25519PublicKey, PublicKey } from "@hashgraph/sdk";
 import { store } from "../store";
 
 async function getPrivateKey(): Promise<Ed25519PrivateKey | null> {
-    if (store.state.wallet.session !== null) {
+    if (store.state.wallet.session != null) {
         if (store.state.wallet.session.wallet.hasPrivateKey()) {
             return store.state.wallet.session.wallet.getPrivateKey();
         }
@@ -84,7 +84,7 @@ async function getPrivateKey(): Promise<Ed25519PrivateKey | null> {
 }
 
 async function getPublicKey(): Promise<PublicKey | null> {
-    if (store.state.wallet.session !== null) {
+    if (store.state.wallet.session != null) {
         return store.state.wallet.session.wallet.getPublicKey();
     }
 
@@ -130,14 +130,14 @@ export default createComponent({
             }
         );
 
-        const hasPrivateKey = computed(() => store.state.wallet.session !== null ?
+        const hasPrivateKey = computed(() => store.state.wallet.session != null ?
             store.state.wallet.session.wallet.hasPrivateKey() :
             false);
-        const hasPublicKey = computed(() => state.publicKey !== null);
+        const hasPublicKey = computed(() => state.publicKey != null);
         const hasKeys = computed(() => hasPrivateKey.value || hasPublicKey.value);
 
         const privateKeyString = computed(() => {
-            if (state.privateKey !== null) {
+            if (state.privateKey != null) {
                 return state.privateKey.toString(true);
             }
 
@@ -145,7 +145,7 @@ export default createComponent({
         });
 
         const publicKeyString = computed(() => {
-            if (state.publicKey !== null) {
+            if (state.publicKey != null) {
                 return (state.publicKey as Ed25519PublicKey).toString(true);
             }
 

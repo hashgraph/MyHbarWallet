@@ -97,7 +97,7 @@ export default createComponent({
 
         function handleWindowKeyDown(event: KeyboardEvent): void {
             // ESCAPE (27)
-            if (!props.notClosable && props.isOpen && event.keyCode == 27) {
+            if (!props.notClosable && props.isOpen && event.keyCode === 27) {
                 handleClose();
             }
         }

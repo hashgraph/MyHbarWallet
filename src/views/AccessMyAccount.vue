@@ -200,7 +200,7 @@ export default createComponent({
         }
 
         async function constructOperator(account: AccountId): Promise<Operator> {
-            if (state.wallet !== null) {
+            if (state.wallet != null) {
                 if (state.wallet.hasPrivateKey()) {
                     return {
                         account,
@@ -279,7 +279,7 @@ export default createComponent({
         async function login(account: AccountId): Promise<void> {
             const client: Client | undefined = await constructClient(account);
 
-            if (state.wallet !== null && client !== undefined) {
+            if (state.wallet != null && client != null) {
                 await actions.logIn({
                     account,
                     wallet: state.wallet,
@@ -324,11 +324,10 @@ export default createComponent({
                     state.loginMethod = LoginMethod.Ledger;
                     state.modalAccessByHardwareState.isBusy = true;
                     try {
-                        const { Ledger } = await (import(
-                            "../wallets/hardware/Ledger" /* webpackChunkName: "hardware" */
+                        const { Ledger } = await import("../wallets/hardware/Ledger" /* webpackChunkName: "hardware" */
                         ) as Promise<
-                            typeof import("../wallets/hardware/Ledger")
-                        >);
+                        typeof import("../wallets/hardware/Ledger")
+                        >;
 
                         state.wallet = new Ledger();
                         state.publicKey = (await state.wallet.getPublicKey()) as Ed25519PublicKey;
@@ -428,13 +427,13 @@ export default createComponent({
         async function handleAccountIdSubmit(account: AccountId): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
 
-            if (state.loginMethod === null) {
+            if (state.loginMethod == null) {
                 state.modalEnterAccountIdState.isBusy = false;
                 throw new Error(context.root.$t("common.error.illegalState").toString());
             }
 
-            if (state.wallet === null) {
-                if (state.privateKey !== null) {
+            if (state.wallet == null) {
+                if (state.privateKey != null) {
                     state.wallet = new SoftwareWallet(
                         state.loginMethod,
                         state.privateKey as Ed25519PrivateKey,

@@ -79,7 +79,7 @@ export default createComponent({
         const isSectionActive = computed(() => {
             if (
                 props.routes.some((route) => route.name ===
-                        (context.root.$route == undefined ?
+                        (context.root.$route == null ?
                             null :
                             context.root.$route.name))
             ) {
@@ -93,7 +93,7 @@ export default createComponent({
             // If the first route is active, do nothing
             if (
                 firstRoute.name ===
-                (context.root.$route == undefined ?
+                (context.root.$route === undefined ?
                     null :
                     context.root.$route.name)
             ) {

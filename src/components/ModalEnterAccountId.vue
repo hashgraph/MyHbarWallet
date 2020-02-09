@@ -136,8 +136,7 @@ export default createComponent({
         const networkSelector: Ref<NetworkSelectorElement | null> = ref(null);
         const input: Ref<IdInputElement | null> = ref(null);
 
-        const hasPublicKey = computed(() => props.state.publicKey !== null &&
-                props.state.publicKey !== undefined);
+        const hasPublicKey = computed(() => props.state.publicKey != null);
 
         const publicKey = computed(() => {
             if (hasPublicKey.value) {

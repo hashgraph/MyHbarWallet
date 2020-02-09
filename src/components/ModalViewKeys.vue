@@ -80,9 +80,9 @@ export default createComponent({
         publicKey: String
     },
     setup(props: Props, context: SetupContext) {
-        const hasPrivateKey = computed(() => props.privateKey !== "" && props.privateKey !== undefined);
+        const hasPrivateKey = computed(() => props.privateKey !== "" && props.privateKey != null);
 
-        const hasPublicKey = computed(() => props.publicKey !== "" && props.publicKey !== undefined);
+        const hasPublicKey = computed(() => props.publicKey !== "" && props.publicKey != null);
 
         const title = computed(() => {
             if (hasPrivateKey.value && hasPublicKey.value) {

@@ -235,7 +235,7 @@ export default createComponent({
             "is-multiline": props.multiline,
             "has-focus": state.hasFocus,
             "has-label": props.label != null,
-            "has-error": props.error != null && props.error != "",
+            "has-error": props.error != null && props.error !== "",
             "has-prefix": props.prefix != null,
             "has-suffix": props.suffix != null
         }));

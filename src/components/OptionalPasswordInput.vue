@@ -30,7 +30,7 @@
             />
             <div
                 class="password-warning"
-                :v-if="passwordWarning !== null"
+                :v-if="passwordWarning != null"
             >
                 <p>{{ passwordWarning }}</p>
             </div>
@@ -69,7 +69,7 @@ export default createComponent({
             if (showPassword) {
                 // If we are now showing the password,
                 // focus the password input
-                if (((context as unknown) as Context).refs.input != undefined) {
+                if (((context as unknown) as Context).refs.input !== undefined) {
                     ((context as unknown) as Context).refs.input.focus();
                 }
             }

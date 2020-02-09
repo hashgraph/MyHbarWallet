@@ -83,7 +83,7 @@ export default createComponent({
                 keyFile.value = await Ed25519PrivateKey.fromString(props.privateKey).createKeystore(state.modalExportGenerateKeystoreState
                     .passwordGeneratorState.password);
 
-                if (keyFile.value === null) {
+                if (keyFile.value == null) {
                     throw new Error("Generated Keystore is null");
                 }
 

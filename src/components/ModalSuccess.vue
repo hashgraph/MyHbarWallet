@@ -68,11 +68,11 @@ export default createComponent({
         event: "change"
     },
     setup(props: Props, context): object {
-        const hasAction = computed(() => props.state.hasAction === undefined ? false : props.state.hasAction);
-        const actionLabel = computed(() => props.state.actionLabel !== undefined ?
+        const hasAction = computed(() => props.state.hasAction == null ? false : props.state.hasAction);
+        const actionLabel = computed(() => props.state.actionLabel != null ?
             props.state.actionLabel :
             "Action");
-        const dismissLabel = computed(() => props.state.dismissLabel !== undefined ?
+        const dismissLabel = computed(() => props.state.dismissLabel != null ?
             props.state.dismissLabel :
             "Dismiss");
         const actionClicked = ref(false);

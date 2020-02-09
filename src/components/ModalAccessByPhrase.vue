@@ -87,7 +87,7 @@ export default createComponent({
         }
 
         const areFieldsFilled = computed(() => {
-            if (props.state.words.length == 24) {
+            if (props.state.words.length === 24) {
                 for (const word of props.state.words) {
                     if (!word || word.length === 0) {
                         return false;

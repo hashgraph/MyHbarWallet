@@ -92,7 +92,7 @@ export default createComponent({
             null);
 
         const accountId = computed(() => {
-            if (account.value !== null) {
+            if (account.value != null) {
                 const accountId: AccountId = account.value;
                 return (
                     `${accountId.shard
@@ -118,7 +118,7 @@ export default createComponent({
             return build(name, version);
         });
 
-        const url = computed(() => context.root.$route != undefined ?
+        const url = computed(() => context.root.$route !== undefined ?
             context.root.$route.fullPath :
             null);
 
@@ -176,7 +176,7 @@ export default createComponent({
         watch(
             () => context.root.$route,
             () => {
-                if (context.root.$route == undefined) return null;
+                if (context.root.$route === undefined) return null;
 
                 state.url = context.root.$route.fullPath;
             }

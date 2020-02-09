@@ -152,7 +152,7 @@ export default createComponent({
         const fileID: Ref<FileId | null> = ref(null);
 
         const fileIDString = computed(() => {
-            if (fileID.value !== null) {
+            if (fileID.value != null) {
                 return `${fileID.value!.shard.toString()}.${fileID.value!.realm.toString()}.${fileID.value!.file.toString()}`;
             }
 
@@ -185,7 +185,7 @@ export default createComponent({
         function handleUploadSubmit(accept: boolean): void {
             state.feeModalIsOpen = false;
 
-            if (!accept && state.uploadBytes !== null) {
+            if (!accept && state.uploadBytes != null) {
                 return;
             }
 
@@ -397,7 +397,7 @@ export default createComponent({
         }
 
         async function handleCopyFileID(): Promise<void> {
-            if (fileID === null) {
+            if (fileID == null) {
                 actions.alert({
                     level: "error",
                     message: context.root.$t("modalSuccess.noFileID").toString()

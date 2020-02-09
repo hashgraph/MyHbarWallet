@@ -1,3 +1,5 @@
+/* eslint-disable no-secrets/no-secrets */
+
 // formats a build string given the name and version
 export function build(
     name: string | undefined | null,
