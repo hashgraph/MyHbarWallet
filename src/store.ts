@@ -194,8 +194,6 @@ export const actions = {
 
         const { Status } = await import("@hashgraph/sdk");
 
-        debugger;
-
         switch (payload.error.status.code) {
             case Status.PayerAccountNotFound.code:
             case Status.InvalidAccountId.code:
