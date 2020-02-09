@@ -75,7 +75,9 @@ export const getters = {
                 ? store.state.errors.errors[0]
                 : null;
 
-        if (process.env.NODE_ENV !== "production") console.error(error);
+        if (process.env.NODE_ENV !== "production" && error != null) {
+            console.error(error);
+        }
 
         if (error == null) return null;
         if (error instanceof Error) {
@@ -181,7 +183,9 @@ export const actions = {
     async handleHederaError(
         payload: HederaErrorPayload
     ): Promise<HederaErrorTuple> {
-        if (process.env.NODE_ENV !== "production") console.error(payload.error);
+        if (process.env.NODE_ENV !== "production" && payload.error != null) {
+            console.error(payload.error);
+        }
 
         let message = "";
         const severity = "error";
@@ -235,7 +239,10 @@ export const actions = {
     async handleLedgerError(
         payload: LedgerErrorPayload
     ): Promise<LedgerErrorTuple> {
-        if (process.env.NODE_ENV !== "production") console.error(payload.error);
+        if (process.env.NODE_ENV !== "production" && payload.error != null) {
+            console.error(payload.error);
+        }
+
         // see: https://github.com/LedgerHQ/ledgerjs/blob/master/packages/errors/src/index.js#L196-L227
         let message = "";
         let severity = "error";
