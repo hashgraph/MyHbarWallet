@@ -81,22 +81,11 @@ import {
     Ref
 } from "@vue/composition-api";
 
-import { getters, mutations, actions, Operator } from "../store";
+import { getters, mutations, actions } from "../store";
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import { HederaStatusErrorTuple, LedgerErrorTuple } from "src/store/modules/errors";
 import { LoginMethod } from "../wallets/Wallet";
-import {
-    Ed25519PrivateKey,
-    Ed25519PublicKey,
-    TransactionSigner,
-    Client,
-    AccountId
-} from "@hashgraph/sdk";
 import { NetworkSettings, NetworkName } from "../settings";
-
-function getNetwork(): NetworkSettings {
-    return getters.GET_NETWORK();
-}
 
 interface State {
     loginMethod: LoginMethod | null;
@@ -118,7 +107,6 @@ export default createComponent({
     props: {},
     setup(props: object, context: SetupContext) {
         const state: AccessAccountDTO & State = reactive({
-            wallet: null,
             privateKey: null,
             publicKey: null,
             keyFile: null,
@@ -163,7 +151,7 @@ export default createComponent({
         const file = ref<HTMLInputElement | null>(null);
         const modalEnterAccountId: Ref<ModalEnterAccountIdElement | null> = ref(null);
 
-        function setPrivateKey(newPrivateKey: Ed25519PrivateKey): void {
+        function setPrivateKey(newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey): void {
             state.privateKey = newPrivateKey;
             state.publicKey = newPrivateKey.publicKey;
             state.modalEnterAccountIdState.publicKey = newPrivateKey.publicKey;
@@ -195,94 +183,12 @@ export default createComponent({
             state.keyFile = new Uint8Array(keyStoreArrayBuff);
         }
 
-        function openInterface(): void {
-            context.root.$router.push({ name: "interface" });
-        }
-
-        async function constructOperator(account: AccountId): Promise<Operator> {
-            if (state.wallet != null) {
-                if (state.wallet.hasPrivateKey()) {
-                    return {
-                        account,
-                        privateKey: await state.wallet!.getPrivateKey()
-                    } as Operator;
-                }
-                return {
-                    account,
-                    publicKey: (await state.wallet!.getPublicKey()) as Ed25519PublicKey,
-                    signer: state.wallet!.signTransaction.bind(state.wallet!) as TransactionSigner
-                };
-            }
-
-            return {
-                account: null as AccountId | null,
-                privateKey: null as Ed25519PrivateKey | null
-            } as Operator;
-        }
-
         function handleNetworkChange(settings: NetworkSettings): void {
             if (
-                getNetwork().name !== settings.name ||
+                getters.GET_NETWORK().name !== settings.name ||
                 settings.name === NetworkName.CUSTOM
             ) {
                 mutations.CHANGE_NETWORK(settings);
-            }
-        }
-
-        async function constructClient(account: AccountId): Promise<Client | undefined> {
-            let client: Client | undefined;
-
-            const {
-                Client,
-                CryptoTransferTransaction,
-                HederaStatusError,
-                Status
-            } = await import("@hashgraph/sdk");
-
-            try {
-                const network: NetworkSettings = await getNetwork();
-                const operator: Operator = await constructOperator(account);
-
-                client = new Client({
-                    network: {
-                        [ network.proxy || network.address ]: {
-                            shard: network.node.shard,
-                            realm: network.node.realm,
-                            account: network.node.node
-                        }
-                    },
-                    operator
-                });
-
-                await (await new CryptoTransferTransaction()
-                    .addSender(account, 0)
-                    .setMaxTransactionFee(1)
-                    .execute(client))
-                    .getReceipt(client);
-            } catch (error) {
-                if (error instanceof HederaStatusError) {
-                    // Transaction passes check for account ownership, but
-                    // will otherwise fail. This transaction is used to verify
-                    // account ownership.
-                    if (error.status.code === Status.InsufficientTxFee.code) {
-                        return client;
-                    }
-                }
-
-                // Else, throw the error, failed to make a client (failed to login)
-                throw error;
-            }
-        }
-
-        async function login(account: AccountId): Promise<void> {
-            const client: Client | undefined = await constructClient(account);
-
-            if (state.wallet != null && client != null) {
-                await actions.logIn({
-                    account,
-                    wallet: state.wallet,
-                    client
-                });
             }
         }
 
@@ -303,16 +209,12 @@ export default createComponent({
                 if (file.value != null) {
                     file.value.click(); // triggers loadTextFromFile via hidden input @click
                 }
-            } else {
-                setTimeout(() => {
-                    if (which === AccessSoftwareOption.Phrase) {
-                        state.loginMethod = LoginMethod.Mnemonic;
-                        state.modalAccessByPhraseState.isOpen = true;
-                    } else if (which === AccessSoftwareOption.Key) {
-                        state.loginMethod = LoginMethod.PrivateKey;
-                        state.modalAccessByPrivateKeyState.isOpen = true;
-                    }
-                }, 125);
+            } else if (which === AccessSoftwareOption.Phrase) {
+                state.loginMethod = LoginMethod.Mnemonic;
+                state.modalAccessByPhraseState.isOpen = true;
+            } else if (which === AccessSoftwareOption.Key) {
+                state.loginMethod = LoginMethod.PrivateKey;
+                state.modalAccessByPrivateKeyState.isOpen = true;
             }
         }
 
@@ -325,8 +227,10 @@ export default createComponent({
                         const { Ledger } = await import("../wallets/hardware/Ledger" /* webpackChunkName: "hardware" */
                         );
 
-                        state.wallet = new Ledger();
-                        state.publicKey = (await state.wallet.getPublicKey()) as Ed25519PublicKey;
+                        state.modalAccessByHardwareState.isBusy = true;
+                        const wallet = new Ledger();
+                        mutations.SET_WALLET(wallet);
+                        state.publicKey = (await wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
                         state.modalEnterAccountIdState.publicKey =
                             state.publicKey;
                         state.modalAccessByHardwareState.isOpen = false;
@@ -348,7 +252,7 @@ export default createComponent({
                     }
                     break;
                 default:
-                    state.wallet = null;
+                    mutations.SET_WALLET(null);
                     break;
             }
         }
@@ -375,18 +279,24 @@ export default createComponent({
             }
         }
 
-        async function handleAccessByPhraseSubmit(): Promise<void> {
-            const accessByPhraseState = state.modalAccessByPhraseState;
+        async function handleAccessByPhraseSubmit(derive: boolean): Promise<void> {
+            if (derive === undefined) derive = true;
 
+            const accessByPhraseState = state.modalAccessByPhraseState;
             accessByPhraseState.isBusy = true;
 
             try {
                 const { Ed25519PrivateKey, Mnemonic } = await import("@hashgraph/sdk");
 
-                setPrivateKey(
-                    // `.derive(0)` to use the same key as the default account of the mobile wallet
-                    (await Ed25519PrivateKey.fromMnemonic(new Mnemonic(accessByPhraseState.words), "")).derive(0));
-
+                if (derive) {
+                    setPrivateKey(
+                        // `.derive(0)` to use the same key as the default account of the mobile wallet
+                        (await Ed25519PrivateKey.fromMnemonic(new Mnemonic(accessByPhraseState.words), "")).derive(0));
+                } else {
+                    setPrivateKey(
+                        await Ed25519PrivateKey.fromMnemonic(new Mnemonic(accessByPhraseState.words), "")
+                    );
+                }
                 // Close  previous modal and open another one
                 accessByPhraseState.isBusy = false;
                 accessByPhraseState.isOpen = false;
@@ -395,10 +305,14 @@ export default createComponent({
             } catch (error) {
                 accessByPhraseState.isBusy = false;
 
-                actions.alert({
-                    level: "error",
-                    message: "Invalid Mnemonic"
-                });
+                if (derive) {
+                    handleAccessByPhraseSubmit(false);
+                } else {
+                    actions.alert({
+                        level: "error",
+                        message: "Invalid Mnemonic"
+                    });
+                }
 
                 accessByPhraseState.isValid = false;
             }
@@ -407,19 +321,13 @@ export default createComponent({
         async function handleAccessByPrivateKeySubmit(): Promise<void> {
             state.modalAccessByPrivateKeyState.isBusy = true;
             const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
-
             setPrivateKey(Ed25519PrivateKey.fromString(state.modalAccessByPrivateKeyState.rawPrivateKey));
-
-            // Close previous modal and open another one
             state.modalAccessByPrivateKeyState.isOpen = false;
-
-            setTimeout(() => {
-                state.modalAccessByPrivateKeyState.isBusy = false;
-                state.modalEnterAccountIdState.isOpen = true;
-            }, 125);
+            state.modalAccessByPrivateKeyState.isBusy = false;
+            state.modalEnterAccountIdState.isOpen = true;
         }
 
-        async function handleAccountIdSubmit(account: AccountId): Promise<void> {
+        async function handleAccountIdSubmit(account: import("@hashgraph/sdk").AccountId): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
 
             if (state.loginMethod == null) {
@@ -427,30 +335,28 @@ export default createComponent({
                 throw new Error(context.root.$t("common.error.illegalState").toString());
             }
 
-            if (state.wallet == null) {
+            if (getters.GET_WALLET() == null) {
                 if (state.privateKey != null) {
-                    state.wallet = new SoftwareWallet(
-                        state.loginMethod,
-                        state.privateKey as Ed25519PrivateKey,
-                        state.publicKey as Ed25519PublicKey
-                    );
+                    mutations.SET_WALLET(
+                        new SoftwareWallet(
+                            state.loginMethod,
+                            state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
+                            state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
+                        ));
                 }
             }
 
             try {
-                await login(account);
+                await actions.logIn(account);
                 state.modalEnterAccountIdState.isOpen = false;
-                openInterface();
+                mutations.NAVIGATE_TO_INTERFACE();
             } catch (error) {
                 const { HederaStatusError } = await import("@hashgraph/sdk");
                 if (error instanceof HederaStatusError) {
                     const result: HederaStatusErrorTuple = await actions.handleHederaError({ error, showAlert: false });
-
-                    // set input error to error message
                     state.modalEnterAccountIdState.errorMessage =
                         result.message;
 
-                    // In this case, the error should pop up
                     if (
                         error.message.includes(context.root.$t("common.error.unhandled").toString())
                     ) {
@@ -464,8 +370,6 @@ export default createComponent({
 
                     state.modalEnterAccountIdState.errorMessage =
                         result.message;
-
-                    // But don't throw device errors
                 } else if (
                     error.message === "Response closed without headers" ||
                     error.message === "Response closed without grpc-status" ||

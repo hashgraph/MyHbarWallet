@@ -29,6 +29,7 @@
     "common.copy": "Copy",
     "common.createAccount": "Create Account",
     "common.dismiss": "Dismiss",
+    "common.error.clientConstruction": "Could not construct client to login",
     "common.error.cannotSendHbarToYourself": "Cannot transfer to your own account",
     "common.error.generalDeviceError": "Irrecoverable device error. Reset device, then try again.",
     "common.error.illegalState": "An illegal state has been reached",
