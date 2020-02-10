@@ -165,23 +165,21 @@ export const mutations = {
             privateKey: null as Ed25519PrivateKey | null
         } as Operator;
     },
-    async CONSTRUCT_CLIENT(account: import("@hashgraph/sdk").AccountId): Promise<import("@hashgraph/sdk").Client | null> {
-        let client: import("@hashgraph/sdk").Client | null = null;
+    async CONSTRUCT_CLIENT(account: import("@hashgraph/sdk").AccountId): Promise<import("@hashgraph/sdk").Client> {
+        const network: NetworkSettings = getters.GET_NETWORK();
+        const operator: import("@hashgraph/sdk/lib/BaseClient").Operator = await this.CONSTRUCT_OPERATOR(account);
+        const client: import("@hashgraph/sdk").Client = new (await import("@hashgraph/sdk")).Client({
+            network: {
+                [ network.proxy || network.address ]: {
+                    shard: network.node.shard,
+                    realm: network.node.realm,
+                    account: network.node.node
+                }
+            },
+            operator
+        });
+
         try {
-            const network: NetworkSettings = getters.GET_NETWORK();
-            const operator: import("@hashgraph/sdk/lib/BaseClient").Operator = await this.CONSTRUCT_OPERATOR(account);
-
-            client = new (await import("@hashgraph/sdk")).Client({
-                network: {
-                    [ network.proxy || network.address ]: {
-                        shard: network.node.shard,
-                        realm: network.node.realm,
-                        account: network.node.node
-                    }
-                },
-                operator
-            });
-
             await (await new (await import("@hashgraph/sdk")).CryptoTransferTransaction()
                 .addSender(account, 0)
                 .setMaxTransactionFee(1)
@@ -195,12 +193,11 @@ export const mutations = {
                 if (error.status.code === (await import("@hashgraph/sdk")).Status.InsufficientTxFee.code) {
                     return client;
                 }
-
-                throw error;
             }
+            throw error;
         }
 
-        return null;
+        throw new Error(i18n.t("common.error.clientConstruction").toString());
     },
     SET_WALLET(wallet: Wallet | null): void {
         store.state.wallet.wallet = wallet;
@@ -428,13 +425,6 @@ export const actions = {
             };
             mutations.SET_SESSION(session);
             await this.refreshBalanceAndRate();
-        } else {
-            mutations.ERROR_OCCURRED({
-                error: {
-                    name: "Error",
-                    message: i18n.t("common.error.clientConstruction").toString()
-                }
-            });
         }
     },
     logOut(): void {
