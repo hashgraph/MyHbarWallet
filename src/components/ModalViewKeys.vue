@@ -1,52 +1,64 @@
 <template>
-    <div class="modal-view-keys">
-        <Modal
-            :is-open="isOpen"
-            :title="title"
-            @change="this.$listeners.change"
-        >
-            <div v-if="hasPublicKey" class="key-container public">
-                <div
-                    class="subtitle"
-                    v-text="$t('modalViewKeys.publicKey')"
-                ></div>
-                <ReadOnlyInput class="input" :value="publicKey" multiline />
-                <Button
-                    :label="$t('modalViewKeys.copyPublic')"
-                    class="button"
-                    compact
-                    @click="handleCopyPublicKey"
-                />
-            </div>
-            <div v-if="hasPrivateKey" class="key-container private">
-                <div
-                    class="subtitle"
-                    v-text="$t('modalViewKeys.privateKey')"
-                ></div>
-                <ReadOnlyInput
-                    class="input"
-                    :value="privateKey"
-                    multiline
-                    obscure
-                />
-                <Button
-                    :label="$t('modalViewKeys.copyPrivate')"
-                    class="button"
-                    compact
-                    @click="handleCopyPrivateKey"
-                />
-            </div>
-        </Modal>
-    </div>
+  <div class="modal-view-keys">
+    <Modal
+      :is-open="isOpen"
+      :title="title"
+      @change="this.$listeners.change"
+    >
+      <div
+        v-if="hasPublicKey"
+        class="key-container public"
+      >
+        <div
+          class="subtitle"
+          v-text="$t('modalViewKeys.publicKey')"
+        />
+        <ReadOnlyInput
+          :value="publicKey"
+          class="input"
+          multiline
+        />
+        <Button
+          :label="$t('modalViewKeys.copyPublic')"
+          class="button"
+          compact
+          @click="handleCopyPublicKey"
+        />
+      </div>
+      <div
+        v-if="hasPrivateKey"
+        class="key-container private"
+      >
+        <div
+          class="subtitle"
+          v-text="$t('modalViewKeys.privateKey')"
+        />
+        <ReadOnlyInput
+          :value="privateKey"
+          class="input"
+          multiline
+          obscure
+        />
+        <Button
+          :label="$t('modalViewKeys.copyPrivate')"
+          class="button"
+          compact
+          @click="handleCopyPrivateKey"
+        />
+      </div>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
 import { computed, createComponent, SetupContext } from "@vue/composition-api";
+
+import { actions } from "../store";
+import { writeToClipboard } from "../clipboard";
+
+import Button from "./Button.vue";
 import Modal from "./Modal.vue";
 import ReadOnlyInput from "./ReadOnlyInput.vue";
-import { writeToClipboard } from "../clipboard";
-import Button from "./Button.vue";
-import { actions } from "../store";
 
 interface Props {
     isOpen: boolean;
@@ -55,6 +67,7 @@ interface Props {
 }
 
 export default createComponent({
+    name: "ModalViewKeys",
     components: {
         Modal,
         ReadOnlyInput,
@@ -70,13 +83,9 @@ export default createComponent({
         publicKey: String
     },
     setup(props: Props, context: SetupContext) {
-        const hasPrivateKey = computed(() => {
-            return props.privateKey !== "" && props.privateKey !== undefined;
-        });
+        const hasPrivateKey = computed(() => props.privateKey !== "" && props.privateKey != null);
 
-        const hasPublicKey = computed(() => {
-            return props.publicKey !== "" && props.publicKey !== undefined;
-        });
+        const hasPublicKey = computed(() => props.publicKey !== "" && props.publicKey != null);
 
         const title = computed(() => {
             if (hasPrivateKey.value && hasPublicKey.value) {
@@ -85,15 +94,12 @@ export default createComponent({
                 return context.root.$t("modalViewKeys.publicKey");
             } else if (hasPrivateKey.value) {
                 return context.root.$t("modalViewKeys.privateKey");
-            } else {
-                return "";
             }
+            return "";
         });
 
         async function handleCopyPublicKey(): Promise<void> {
-            await writeToClipboard(
-                props.publicKey == null ? "" : props.publicKey
-            );
+            await writeToClipboard(props.publicKey == null ? "" : props.publicKey);
 
             actions.alert({
                 level: "info",
@@ -104,9 +110,7 @@ export default createComponent({
         }
 
         async function handleCopyPrivateKey(): Promise<void> {
-            await writeToClipboard(
-                props.privateKey == null ? "" : props.privateKey
-            );
+            await writeToClipboard(props.privateKey == null ? "" : props.privateKey);
 
             actions.alert({
                 level: "info",
@@ -128,29 +132,29 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.key-container {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    .key-container {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
 
-    &.private {
-        padding-block-start: 40px;
+        &.private {
+            padding-block-start: 40px;
+        }
     }
-}
 
-.subtitle {
-    color: var(--color-china-blue);
-    font-size: 24px;
-    text-align: center;
-}
+    .subtitle {
+        color: var(--color-china-blue);
+        font-size: 24px;
+        text-align: center;
+    }
 
-.input {
-    margin-block-start: 30px;
-}
+    .input {
+        margin-block-start: 30px;
+    }
 
-.button {
-    margin-block-start: 30px;
-    width: 100%;
-}
+    .button {
+        margin-block-start: 30px;
+        width: 100%;
+    }
 </style>

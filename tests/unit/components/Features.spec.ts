@@ -1,4 +1,5 @@
 import { mount } from "@vue/test-utils";
+
 import Features from "../../../src/components/Features.vue";
 import i18n from "../../../src/i18n";
 
@@ -6,9 +7,7 @@ describe("Features.vue", (): void => {
     it("renders", (): void => {
         expect.assertions(1);
 
-        const wrapper = mount(Features, {
-            i18n
-        });
+        const wrapper = mount(Features, { i18n });
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="features">

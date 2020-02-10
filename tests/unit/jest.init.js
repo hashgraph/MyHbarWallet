@@ -1,4 +1,6 @@
 import { config } from "@vue/test-utils";
+
 import en from "../../src/lang/en";
 
-config.mocks["$t"] = msg => en[msg];
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+config.mocks.$t = (msg) => en[ msg ];

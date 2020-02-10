@@ -1,61 +1,56 @@
 <template>
-    <div class="modal-mnemonic-phrase">
-        <Modal
-            :title="$t('modalAccessByPhrase.title')"
-            :not-closable="state.isBusy"
-            :is-open="state.isOpen"
-            @change="handleModalChangeIsOpen"
-        >
-            <template v-slot:banner>
-                <Warning
-                    :title="$t('warning.title')"
-                    :message="
-                        $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
-                    "
-                />
-            </template>
+  <div class="modal-mnemonic-phrase">
+    <Modal
+      :is-open="state.isOpen"
+      :not-closable="state.isBusy"
+      :title="$t('modalAccessByPhrase.title')"
+      @change="handleModalChangeIsOpen"
+    >
+      <template v-slot:banner>
+        <Warning
+          :message="
+            $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+          "
+          :title="$t('warning.title')"
+        />
+      </template>
 
-            <div class="instruction">
-                {{ $t("modalAccessByPhrase.pleaseTypeInYourMnemonicPhrase") }}
-            </div>
-            <form @submit.prevent="$emit('submit')">
-                <MnemonicInput
-                    class="phrase-input"
-                    :words="24"
-                    :value="state.words"
-                    :editable="true"
-                    :is-open="state.isOpen"
-                    @input="handleMnemonicInput"
-                />
+      <div class="instruction">
+        {{ $t("modalAccessByPhrase.pleaseTypeInYourMnemonicPhrase") }}
+      </div>
+      <form @submit.prevent="$emit('submit')">
+        <MnemonicInput
+          :editable="true"
+          :is-open="state.isOpen"
+          :value="state.words"
+          :words="24"
+          class="phrase-input"
+          @input="handleMnemonicInput"
+        />
 
-                <Button
-                    class="continue-btn"
-                    :label="$t('common.continue')"
-                    :busy="state.isBusy"
-                    :disabled="!areFieldsFilled"
-                />
-            </form>
-            <div class="support">
-                <CustomerSupportLink />
-            </div>
-        </Modal>
-    </div>
+        <Button
+          :busy="state.isBusy"
+          :disabled="!areFieldsFilled"
+          :label="$t('common.continue')"
+          class="continue-btn"
+        />
+      </form>
+      <div class="support">
+        <CustomerSupportLink />
+      </div>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
-import { PropOptions } from "vue";
+import { computed, createComponent, PropType, SetupContext, watch } from "@vue/composition-api";
+
 import Modal from "../components/Modal.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 import MnemonicInput from "../components/MnemonicInput.vue";
 import Button from "../components/Button.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import Warning from "../components/Warning.vue";
-import {
-    computed,
-    createComponent,
-    watch,
-    SetupContext
-} from "@vue/composition-api";
 
 export interface State {
     isOpen: boolean;
@@ -65,6 +60,7 @@ export interface State {
 }
 
 export default createComponent({
+    name: "ModalAccessByPhrase",
     components: {
         Modal,
         MnemonicInput,
@@ -77,19 +73,18 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: { type: Object, required: true } as PropOptions<State>
-    },
+    props: { state: Object as PropType<State> },
     setup(props: { state: State }, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
         }
+
         function handleMnemonicInput(words: string[]): void {
             context.emit("change", { ...props.state, words });
         }
 
-        const areFieldsFilled = computed(() => {
-            if (props.state.words.length == 24) {
+        const areFieldsFilled = computed((): boolean => {
+            if (props.state.words.length === 24) {
                 for (const word of props.state.words) {
                     if (!word || word.length === 0) {
                         return false;
@@ -97,6 +92,7 @@ export default createComponent({
                 }
                 return true;
             }
+            return false;
         });
 
         // Watch for the modal state to change, and clear input when the modal is reopened
@@ -104,7 +100,7 @@ export default createComponent({
             () => props.state.isOpen,
             (newVal: boolean) => {
                 if (newVal) {
-                    context.emit("change", { ...props.state, words: [] });
+                    context.emit("change", { ...props.state, words: []});
                 }
             }
         );
@@ -118,41 +114,41 @@ export default createComponent({
 });
 </script>
 
-<style scoped lang="postcss">
-.instruction {
-    color: var(--color-china-blue);
-    font-size: 14px;
-    margin-block-end: 20px;
-}
-
-.value-switch {
-    align-items: center;
-    display: flex;
-    margin-block-end: 10px;
-
-    & > .btn {
-        margin-inline-end: 10px;
-    }
-
-    & > .text {
-        color: var(--color-boathouse);
+<style lang="postcss" scoped>
+    .instruction {
+        color: var(--color-china-blue);
         font-size: 14px;
+        margin-block-end: 20px;
     }
-}
 
-.phrase-input {
-    margin-block-end: 40px;
-}
+    .value-switch {
+        align-items: center;
+        display: flex;
+        margin-block-end: 10px;
 
-.continue-btn {
-    margin-block-end: 20px;
-    width: 100%;
-}
+        & > .btn {
+            margin-inline-end: 10px;
+        }
 
-.support {
-    align-items: center;
-    display: flex;
-    font-size: 14px;
-    justify-content: space-around;
-}
+        & > .text {
+            color: var(--color-boathouse);
+            font-size: 14px;
+        }
+    }
+
+    .phrase-input {
+        margin-block-end: 40px;
+    }
+
+    .continue-btn {
+        margin-block-end: 20px;
+        width: 100%;
+    }
+
+    .support {
+        align-items: center;
+        display: flex;
+        font-size: 14px;
+        justify-content: space-around;
+    }
 </style>

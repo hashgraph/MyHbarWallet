@@ -1,10 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalRequestToCreateAccount from "../../../src/components/ModalRequestToCreateAccount.vue";
-// dynamic importing does not matter during unit tests
-// eslint-disable-next-line no-restricted-imports
 import { Ed25519PublicKey } from "@hashgraph/sdk";
 import VueI18n from "vue-i18n";
+
+import ModalRequestToCreateAccount from "../../../src/components/ModalRequestToCreateAccount.vue";
 import i18n from "../../../src/i18n";
 
 describe("ModalRequestToCreateAccount.vue", (): void => {
@@ -12,9 +11,7 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    const PUBLIC_KEY = Ed25519PublicKey.fromString(
-        "302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29"
-    );
+    const PUBLIC_KEY = Ed25519PublicKey.fromString("302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29");
 
     it("renders closed", (): void => {
         expect.assertions(1);
@@ -65,7 +62,7 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-request-to-create-account">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+              <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
                 <div class="modal">
                   <header><span class="title">Request to Create Account</span>
                     <!---->

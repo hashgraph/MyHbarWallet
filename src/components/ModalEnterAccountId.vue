@@ -1,94 +1,96 @@
 <template>
-    <div class="modal-enter-account-id">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalEnterAccountId.title')"
-            @change="handleModalChangeIsOpen"
+  <div class="modal-enter-account-id">
+    <Modal
+      :is-open="state.isOpen"
+      :title="$t('modalEnterAccountId.title')"
+      @change="handleModalChangeIsOpen"
+    >
+      <template v-slot:banner>
+        <Notice
+          :symbol="mdiHelpCircleOutline"
+          class="notice"
         >
-            <template v-slot:banner>
-                <Notice class="notice" :symbol="mdiHelpCircleOutline">
-                    {{ $t("modalEnterAccountId.hederaAccountIdsAre") }}
-                </Notice>
-            </template>
-            <form @submit.stop.prevent="handleSubmit">
-                <div v-if="hasPublicKey" class="container">
-                    <div
-                        class="subtitle"
-                        v-text="$t('modalEnterAccountId.verifyKey')"
-                    ></div>
-                    <ReadOnlyInput class="input" :value="publicKey" multiline />
-                </div>
-                <div class="container">
-                    <div
-                        class="subtitle"
-                        v-text="$t('modalEnterAccountId.network')"
-                    ></div>
-                    <NetworkSelector
-                        ref="networkSelector"
-                        :node-error="state.nodeError"
-                        :address-error="state.addressError"
-                        @network="reEmitNetwork"
-                        @valid="handleNetworkValid"
-                    />
-                </div>
-                <div class="container">
-                    <div
-                        class="subtitle"
-                        v-text="$t('modalEnterAccountId.accountId')"
-                    ></div>
-                    <IDInput
-                        ref="input"
-                        :is-open="state.isOpen"
-                        :error="state.errorMessage"
-                        :disabled="state.isBusy"
-                        @valid="handleValid"
-                        @input="handleAccount"
-                    />
-                </div>
-                <div class="buttons">
-                    <Button
-                        compact
-                        outline
-                        :label="$t('modalEnterAccountId.noAccountId')"
-                        class="button"
-                        type="button"
-                        @click="handleDontHaveAccount"
-                    />
-                    <Button
-                        compact
-                        :label="$t('common.continue')"
-                        class="button"
-                        type="submit"
-                        :disabled="!allValid"
-                        :busy="state.isBusy"
-                    />
-                </div>
-            </form>
-        </Modal>
-    </div>
+          {{ $t("modalEnterAccountId.hederaAccountIdsAre") }}
+        </Notice>
+      </template>
+      <form @submit.stop.prevent="handleSubmit">
+        <div
+          v-if="hasPublicKey"
+          class="container"
+        >
+          <div
+            class="subtitle"
+            v-text="$t('modalEnterAccountId.verifyKey')"
+          />
+          <ReadOnlyInput
+            :value="publicKey"
+            class="input"
+            multiline
+          />
+        </div>
+        <div class="container">
+          <div
+            class="subtitle"
+            v-text="$t('modalEnterAccountId.network')"
+          />
+          <NetworkSelector
+            ref="networkSelector"
+            :address-error="state.addressError"
+            :node-error="state.nodeError"
+            @network="reEmitNetwork"
+            @valid="handleNetworkValid"
+          />
+        </div>
+        <div class="container">
+          <div
+            class="subtitle"
+            v-text="$t('modalEnterAccountId.accountId')"
+          />
+          <IDInput
+            ref="input"
+            :disabled="state.isBusy"
+            :error="state.errorMessage"
+            :is-open="state.isOpen"
+            @input="handleAccount"
+            @valid="handleValid"
+          />
+        </div>
+        <div class="buttons">
+          <Button
+            :label="$t('modalEnterAccountId.noAccountId')"
+            class="button"
+            compact
+            outline
+            type="button"
+            @click="handleDontHaveAccount"
+          />
+          <Button
+            :busy="state.isBusy"
+            :disabled="!allValid"
+            :label="$t('common.continue')"
+            class="button"
+            compact
+            type="submit"
+          />
+        </div>
+      </form>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
-import {
-    computed,
-    createComponent,
-    PropType,
-    SetupContext,
-    ref,
-    Ref
-} from "@vue/composition-api";
-import Modal from "../components/Modal.vue";
-import Button from "../components/Button.vue";
-import IDInput, { IdInputElement } from "../components/IDInput.vue";
-import NetworkSelector, {
-    NetworkSelectorElement
-} from "../components/NetworkSelector.vue";
-import Notice from "../components/Notice.vue";
-import { mdiHelpCircleOutline } from "@mdi/js";
-import ReadOnlyInput from "./ReadOnlyInput.vue";
-import { Ed25519PublicKey, AccountId } from "@hashgraph/sdk";
-import { NetworkSettings } from "../settings";
+import { computed, createComponent, PropType, Ref, ref, SetupContext } from "@vue/composition-api";
 import { Vue } from "vue/types/vue";
+import { mdiHelpCircleOutline } from "@mdi/js";
+
+import { NetworkSettings } from "../settings";
+
+import Button from "./Button.vue";
+import IDInput, { IdInputElement } from "./IDInput.vue";
+import Modal from "./Modal.vue";
+import NetworkSelector, { NetworkSelectorElement } from "./NetworkSelector.vue";
+import Notice from "./Notice.vue";
+import ReadOnlyInput from "./ReadOnlyInput.vue";
 
 export type ModalEnterAccountIdElement = Vue & {
     setNodeError(message: string): void;
@@ -100,10 +102,11 @@ export interface State {
     errorMessage: string | null;
     isOpen: boolean;
     isBusy: boolean;
-    account: AccountId | null;
+    // eslint-disable-next-line sonarjs/no-duplicate-string
+    account: import("@hashgraph/sdk").AccountId | null;
     valid: boolean;
     networkValid: boolean;
-    publicKey: Ed25519PublicKey | null;
+    publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
 }
 
 export interface Props {
@@ -111,6 +114,7 @@ export interface Props {
 }
 
 export default createComponent({
+    name: "ModalEnterAccountId",
     components: {
         Modal,
         Button,
@@ -128,11 +132,7 @@ export default createComponent({
         const networkSelector: Ref<NetworkSelectorElement | null> = ref(null);
         const input: Ref<IdInputElement | null> = ref(null);
 
-        const hasPublicKey = computed(
-            () =>
-                props.state.publicKey !== null &&
-                props.state.publicKey !== undefined
-        );
+        const hasPublicKey = computed(() => props.state.publicKey != null);
 
         const publicKey = computed(() => {
             if (hasPublicKey.value) {
@@ -142,7 +142,10 @@ export default createComponent({
             return null;
         });
 
-        function handleAccount(value: string, account: AccountId | null): void {
+        function handleAccount(
+            value: string,
+            account: import("@hashgraph/sdk").AccountId | null
+        ): void {
             props.state.errorMessage = null;
             props.state.account = account;
         }
@@ -155,9 +158,7 @@ export default createComponent({
             props.state.networkValid = valid;
         }
 
-        const allValid = computed(() => {
-            return props.state.valid && props.state.networkValid;
-        });
+        const allValid = computed(() => props.state.valid && props.state.networkValid);
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
             if (!isOpen) props.state.errorMessage = null;
@@ -175,18 +176,14 @@ export default createComponent({
         }
 
         function setNodeError(message: string): void {
-            (networkSelector.value as NetworkSelectorElement).setNodeError(
-                message
-            );
+            (networkSelector.value as NetworkSelectorElement).setNodeError(message);
         }
 
         function setAddressError(message: string): void {
-            (networkSelector.value as NetworkSelectorElement).setAddressError(
-                message
-            );
+            (networkSelector.value as NetworkSelectorElement).setAddressError(message);
         }
 
-        async function handleSubmit(): Promise<void> {
+        function handleSubmit(): void {
             props.state.errorMessage = null;
             props.state.isBusy = true;
 
@@ -197,9 +194,7 @@ export default createComponent({
 
             // Then, continue the business of logging in
             if (props.state.account == null) {
-                throw new Error(
-                    context.root.$t("common.error.illegalState").toString()
-                );
+                throw new Error(context.root.$t("common.error.illegalState").toString());
             }
 
             context.emit("submit", props.state.account);
@@ -226,40 +221,40 @@ export default createComponent({
 });
 </script>
 
-<style scoped lang="postcss">
-.container {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    margin-block-end: 40px;
-}
+<style lang="postcss" scoped>
+    .container {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-block-end: 40px;
+    }
 
-.subtitle {
-    color: var(--color-china-blue);
-    font-size: 24px;
-    margin-block-end: 10px;
-}
+    .subtitle {
+        color: var(--color-china-blue);
+        font-size: 24px;
+        margin-block-end: 10px;
+    }
 
-.button {
-    width: 213px;
+    .button {
+        width: 213px;
 
-    @media (max-width: 600px) {
-        width: 100%;
+        @media (max-width: 600px) {
+            width: 100%;
 
-        &:first-child {
-            margin-block-end: 15px;
+            &:first-child {
+                margin-block-end: 15px;
+            }
         }
     }
-}
 
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
 
-    @media (max-width: 600px) {
-        align-items: center;
-        flex-direction: column;
+        @media (max-width: 600px) {
+            align-items: center;
+            flex-direction: column;
+        }
     }
-}
 </style>

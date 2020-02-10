@@ -1,28 +1,29 @@
 <template>
-    <div class="modal-export-download-keystore">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalExportDownloadKeystore.title')"
-            @change="handleModalChangeIsOpen"
-        >
-            <KeystoreWarningCards />
-            <Button
-                :label="$t('modalExportDownloadKeystore.downloadKeystoreFile')"
-                :busy="state.isBusy"
-                :disabled="state.isBusy"
-                compact
-                class="download"
-                @click="handleDownloadClick"
-            />
-        </Modal>
-    </div>
+  <div class="modal-export-download-keystore">
+    <Modal
+      :is-open="state.isOpen"
+      :title="$t('modalExportDownloadKeystore.title')"
+      @change="handleModalChangeIsOpen"
+    >
+      <KeystoreWarningCards />
+      <Button
+        :busy="state.isBusy"
+        :disabled="state.isBusy"
+        :label="$t('modalExportDownloadKeystore.downloadKeystoreFile')"
+        class="download"
+        compact
+        @click="handleDownloadClick"
+      />
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
-import Modal from "../components/Modal.vue";
-import Button from "../components/Button.vue";
 import { createComponent, SetupContext } from "@vue/composition-api";
+
+import Button from "./Button.vue";
 import KeystoreWarningCards from "./KeystoreWarningCards.vue";
+import Modal from "./Modal.vue";
 
 export interface State {
     isOpen: boolean;
@@ -34,6 +35,7 @@ interface Props {
 }
 
 export default createComponent({
+    name: "ModalExportDownloadKeystore",
     components: {
         Modal,
         Button,
@@ -43,9 +45,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: { type: Object, required: true }
-    },
+    props: { state: { type: Object, required: true }},
     setup(props: Props, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
@@ -64,7 +64,7 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.download {
-    width: 100%;
-}
+    .download {
+        width: 100%;
+    }
 </style>

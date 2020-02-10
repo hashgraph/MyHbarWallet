@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import FAQs from "../../../src/components/FAQs.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import FAQs from "../../../src/components/FAQs.vue";
+import i18n from "../../../src/i18n";
 
 describe("FAQs.vue", (): void => {
     const localVue = createLocalVue();
@@ -23,13 +24,15 @@ describe("FAQs.vue", (): void => {
                 <div class="page-container">
                   <div class="head">
                     <div class="title">
-                      <div class="title-text">FAQs</div>
+                      <div class="title-text">
+                        FAQs
+                      </div>
                       <div class="subtitle-text">
                         Answers to most frequently asked questions.
                       </div>
                     </div>
                     <div class="customer-support-link customer-support-link">
-                      <div class="customer-support-container"><img alt="" src="">Customer Support
+                      <div class="customer-support-container"><img src="" alt="">Customer Support
                       </div>
                       <!---->
                     </div>
@@ -39,7 +42,7 @@ describe("FAQs.vue", (): void => {
                       <div class="title">
                         <div class="title-text">
                           How do I create a new account?
-                        </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
+                        </div> <svg height="24" width="24" viewBox="0 0 24 24" class="icon">
                           <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"></path>
                         </svg>
                       </div>
@@ -53,7 +56,7 @@ describe("FAQs.vue", (): void => {
                       <div class="title">
                         <div class="title-text">
                           Can MHW work with other wallets?
-                        </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
+                        </div> <svg height="24" width="24" viewBox="0 0 24 24" class="icon">
                           <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"></path>
                         </svg>
                       </div>
@@ -67,7 +70,7 @@ describe("FAQs.vue", (): void => {
                       <div class="title">
                         <div class="title-text">
                           How much does it cost to use MHW?
-                        </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
+                        </div> <svg height="24" width="24" viewBox="0 0 24 24" class="icon">
                           <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"></path>
                         </svg>
                       </div>
@@ -81,7 +84,7 @@ describe("FAQs.vue", (): void => {
                       <div class="title">
                         <div class="title-text">
                           I forgot my passphrase / private key! What can I do?
-                        </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
+                        </div> <svg height="24" width="24" viewBox="0 0 24 24" class="icon">
                           <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"></path>
                         </svg>
                       </div>

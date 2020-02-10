@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+
 import ModalAccessByHardware from "../../../src/components/ModalAccessByHardware.vue";
 import i18n from "../../../src/i18n";
-import VueI18n from "vue-i18n";
 
 describe("ModalAccessByHardware.vue", (): void => {
     const localVue = createLocalVue();
@@ -24,15 +25,13 @@ describe("ModalAccessByHardware.vue", (): void => {
                     disableButton: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+            <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
               <div class="modal">
-                <header><span class="title">Access by Hardware</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                <header><span class="title">Access by Hardware</span> <svg height="24" width="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
                 <!---->
@@ -40,7 +39,7 @@ describe("ModalAccessByHardware.vue", (): void => {
                   <div class="content-container">
                     <form class="modal-access-by-hardware">
                       <div class="radio-button-group">
-                        <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger (Nano S)</span>
+                        <div><label for="ledger" class="radio-button"><img src="" alt="" class="icon"> <input id="ledger" name="hardware-access-option" type="radio" class="input" value="ledger"> <span class="label">Ledger</span>
                             <!----></label></div>
                       </div>
                       <div class="instructions">
@@ -51,11 +50,11 @@ describe("ModalAccessByHardware.vue", (): void => {
                       </div>
                       <div class="instructions bold">
                         <div>Watch for prompts on your hardware wallet.</div>
-                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware">
+                      </div> <button disabled="disabled" type="submit" class="button-choose-a-hardware">
                         <!----> <span>Continue</span>
                         <!----></button>
                       <div class="customer-support-link">
-                        <div class="customer-support-container"><img alt="" src="">Customer Support
+                        <div class="customer-support-container"><img src="" alt="">Customer Support
                         </div>
                         <!---->
                       </div>
@@ -82,12 +81,10 @@ describe("ModalAccessByHardware.vue", (): void => {
                     disableButton: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot();
     });
 
     it("renders open, busy", (): void => {
@@ -105,15 +102,13 @@ describe("ModalAccessByHardware.vue", (): void => {
                     disableButton: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+            <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
               <div class="modal">
-                <header><span class="title">Access by Hardware</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                <header><span class="title">Access by Hardware</span> <svg height="24" width="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
                 <!---->
@@ -121,7 +116,7 @@ describe("ModalAccessByHardware.vue", (): void => {
                   <div class="content-container">
                     <form class="modal-access-by-hardware">
                       <div class="radio-button-group">
-                        <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger (Nano S)</span>
+                        <div><label for="ledger" class="radio-button"><img src="" alt="" class="icon"> <input id="ledger" name="hardware-access-option" type="radio" class="input" value="ledger"> <span class="label">Ledger</span>
                             <!----></label></div>
                       </div>
                       <div class="instructions">
@@ -132,13 +127,13 @@ describe("ModalAccessByHardware.vue", (): void => {
                       </div>
                       <div class="instructions bold">
                         <div>Watch for prompts on your hardware wallet.</div>
-                      </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware busy"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                      </div> <button disabled="disabled" type="submit" class="button-choose-a-hardware busy"><svg height="24" width="24" viewBox="0 0 24 24" class="spinner mdi-spin">
                           <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
                         </svg>
                         <!---->
                         <!----></button>
                       <div class="customer-support-link">
-                        <div class="customer-support-container"><img alt="" src="">Customer Support
+                        <div class="customer-support-container"><img src="" alt="">Customer Support
                         </div>
                         <!---->
                       </div>
@@ -165,11 +160,9 @@ describe("ModalAccessByHardware.vue", (): void => {
                     disableButton: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot();
     });
 });

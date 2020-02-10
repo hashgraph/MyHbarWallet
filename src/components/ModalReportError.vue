@@ -1,62 +1,64 @@
 <template>
-    <Modal :is-open="isOpen" hide-decoration @change="this.$listeners.change">
-        <template>
-            <div class="modal-container">
-                <div class="header">{{ $t("modalReportError.title") }}</div>
-                <div class="sub-header">
-                    {{ $t("modalReportError.informMHW") }}
-                </div>
+  <Modal
+    :is-open="isOpen"
+    hide-decoration
+    @change="this.$listeners.change"
+  >
+    <template>
+      <div class="modal-container">
+        <div class="header">
+          {{ $t("modalReportError.title") }}
+        </div>
+        <div class="sub-header">
+          {{ $t("modalReportError.informMHW") }}
+        </div>
 
-                <div class="stack-trace">
-                    {{ errorMessage }}
-                </div>
+        <div class="stack-trace">
+          {{ errorMessage }}
+        </div>
 
-                <div class="sub-header">
-                    {{ $t("modalReportError.description") }}
-                </div>
+        <div class="sub-header">
+          {{ $t("modalReportError.description") }}
+        </div>
 
-                <TextInput
-                    class="user-details"
-                    resizable
-                    multiline
-                    @input="handleInput"
-                />
+        <TextInput
+          class="user-details"
+          multiline
+          resizable
+          @input="handleInput"
+        />
 
-                <div class="button-group">
-                    <Button
-                        class="button-cancel"
-                        :label="$t('common.cancel')"
-                        :outline="true"
-                        :compact="true"
-                        @click="handleCancel"
-                    />
-                    <Button
-                        class="button-send"
-                        :label="$t('common.send')"
-                        :compact="true"
-                        @click="handleSend"
-                    />
-                </div>
-            </div>
-        </template>
-    </Modal>
+        <div class="button-group">
+          <Button
+            :compact="true"
+            :label="$t('common.cancel')"
+            :outline="true"
+            class="button-cancel"
+            @click="handleCancel"
+          />
+          <Button
+            :compact="true"
+            :label="$t('common.send')"
+            class="button-send"
+            @click="handleSend"
+          />
+        </div>
+      </div>
+    </template>
+  </Modal>
 </template>
 
 <script lang="ts">
-import Modal from "../components/Modal.vue";
-import Button from "../components/Button.vue";
-import TextInput from "../components/TextInput.vue";
-import {
-    computed,
-    createComponent,
-    reactive,
-    SetupContext,
-    watch
-} from "@vue/composition-api";
+import { computed, createComponent, reactive, SetupContext, watch } from "@vue/composition-api";
 import { UAParser } from "ua-parser-js";
+import { AccountId } from "@hashgraph/sdk";
+
 import { build, createLink } from "../support";
 import { getters, mutations, store } from "../store";
-import { AccountId } from "@hashgraph/sdk";
+
+import Button from "./Button.vue";
+import Modal from "./Modal.vue";
+import TextInput from "./TextInput.vue";
 
 // Both of these are defined in vue.config.js.
 // VERSION reads from package.json and COMMIT_HASH is git rev-parse --short HEAD output
@@ -68,6 +70,7 @@ interface Props {
 }
 
 export default createComponent({
+    name: "ModalReportError",
     components: {
         Button,
         Modal,
@@ -77,28 +80,18 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: Boolean
-    },
+    props: { isOpen: Boolean },
     setup(props: Props, context: SetupContext) {
         const ua = new UAParser(navigator.userAgent);
 
-        const account = computed(() => {
-            return store.state.wallet.session != null
-                ? store.state.wallet.session.account
-                : null;
-        });
+        const account = computed(() => store.state.wallet.session != null ?
+            store.state.wallet.session.account :
+            null);
 
         const accountId = computed(() => {
-            if (account.value !== null) {
+            if (account.value != null) {
                 const accountId: AccountId = account.value;
-                return (
-                    accountId.shard +
-                    "." +
-                    accountId.realm +
-                    "." +
-                    accountId.account
-                );
+                return `${accountId.shard}.${accountId.realm}.${accountId.account}`;
             }
 
             return null;
@@ -116,11 +109,9 @@ export default createComponent({
             return build(name, version);
         });
 
-        const url = computed(() => {
-            return context.root.$route != undefined
-                ? context.root.$route.fullPath
-                : null;
-        });
+        const url = computed(() => context.root.$route != null ?
+            context.root.$route.fullPath :
+            null);
 
         const device = computed(() => {
             const type = ua.getDevice().type;
@@ -134,31 +125,29 @@ export default createComponent({
             url: url.value,
             description: "",
             device: device.value || "",
-            version: "v" + VERSION + "+" + COMMIT_HASH,
+            version: `v${VERSION}+${COMMIT_HASH}`,
             accountId: accountId.value || "",
             details: ""
         });
 
-        const errorMessage = computed(getters.ERROR_MESSAGE);
+        const errorMessage = computed(getters.errorMessage);
 
-        const sendLink = computed(() =>
-            createLink(
-                state.url,
-                state.platform,
-                state.browser,
-                state.device,
-                state.version,
-                state.accountId,
-                `${errorMessage.value}
+        const sendLink = computed(() => createLink(
+            state.url,
+            state.platform,
+            state.browser,
+            state.device,
+            state.version,
+            state.accountId,
+            `${errorMessage.value}
                 ${state.details}`
-            )
-        );
+        ));
 
         function close(): void {
             context.emit("change", false);
 
             // Wait until the close animation to clear the form
-            setTimeout(mutations.ERROR_VIEWED, 150);
+            setTimeout(mutations.errorViewed, 150);
         }
 
         function handleCancel(): void {
@@ -177,9 +166,8 @@ export default createComponent({
         // When the route is updated, reset the path value
         watch(
             () => context.root.$route,
-            () => {
-                if (context.root.$route == undefined) return null;
-
+            (): void => {
+                if (context.root.$route == null) return;
                 state.url = context.root.$route.fullPath;
             }
         );
@@ -195,59 +183,59 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.button-group {
-    display: flex;
-    justify-content: space-between;
-    justify-self: center;
-}
-
-.button-cancel,
-.button-send {
-    width: 120px;
-
-    &:first-child {
-        margin-inline-end: 20px;
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        justify-self: center;
     }
-}
 
-.stack-trace {
-    background: rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: var(--color-christmas-pink);
-    font-family: "Inconsolata", monospace;
-    font-size: 13px;
-    margin-block: 40px;
-    max-height: 300px;
-    min-width: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding: 20px;
-}
+    .button-cancel,
+    .button-send {
+        width: 120px;
 
-.user-details {
-    margin-block-end: 40px;
-    margin-block-start: 20px;
-}
+        &:first-child {
+            margin-inline-end: 20px;
+        }
+    }
 
-.header {
-    color: var(--color-ghostlands-coal);
-    display: flex;
-    font-size: 32px;
-    font-weight: 700;
-    justify-content: center;
-    margin-block-end: 20px;
-    text-align: center;
-}
+    .stack-trace {
+        background: rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        color: var(--color-christmas-pink);
+        font-family: "Inconsolata", monospace;
+        font-size: 13px;
+        margin-block: 40px;
+        max-height: 300px;
+        min-width: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        padding: 20px;
+    }
 
-.sub-header {
-    color: var(--color-china-blue);
-    font-size: 14px;
-}
+    .user-details {
+        margin-block-end: 40px;
+        margin-block-start: 20px;
+    }
 
-.modal-container {
-    align-items: center;
-    display: flex;
-    flex-flow: column;
-    padding: 20px;
-}
+    .header {
+        color: var(--color-ghostlands-coal);
+        display: flex;
+        font-size: 32px;
+        font-weight: 700;
+        justify-content: center;
+        margin-block-end: 20px;
+        text-align: center;
+    }
+
+    .sub-header {
+        color: var(--color-china-blue);
+        font-size: 14px;
+    }
+
+    .modal-container {
+        align-items: center;
+        display: flex;
+        flex-flow: column;
+        padding: 20px;
+    }
 </style>

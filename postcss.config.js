@@ -1,5 +1,5 @@
 /* eslint-env node */
-/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports */
 const path = require("path");
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
         require("postcss-normalize")(),
         require("postcss-preset-env")({
             stage: 0,
-            importFrom: [path.join(__dirname, "src/main.css")]
+            importFrom: [ path.join(__dirname, "src/main.css") ]
         })
     ]
 };

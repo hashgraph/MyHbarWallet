@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+
 import ModalDownloadKeystore from "../../../src/components/ModalDownloadKeystore.vue";
 import i18n from "../../../src/i18n";
-import VueI18n from "vue-i18n";
 
 describe("ModalDownloadKeystore.vue", (): void => {
     const localVue = createLocalVue();
@@ -22,9 +23,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -47,14 +46,12 @@ describe("ModalDownloadKeystore.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-create-by-mnemonic-phrase">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+              <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
                 <div class="modal">
                   <header><span class="title">By Keystore File</span>
                     <!---->
@@ -87,7 +84,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
                       </div>
                       <div class="button-container"><button type="submit" class="download-button compact">
                           <!----> <span>Download Keystore File</span>
-                          <!----></button> <button type="submit" disabled="disabled" class="continue-button compact">
+                          <!----></button> <button disabled="disabled" type="submit" class="continue-button compact">
                           <!----> <span>Continue</span>
                           <!----></button></div>
                     </div>
@@ -111,9 +108,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -136,14 +131,12 @@ describe("ModalDownloadKeystore.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="modal-create-by-mnemonic-phrase">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" name="ease">
+              <div aria-modal="true" role="dialog" transition="modal-fade" class="modal-background">
                 <div class="modal">
                   <header><span class="title">By Keystore File</span>
                     <!---->
@@ -174,11 +167,11 @@ describe("ModalDownloadKeystore.vue", (): void => {
                           </div>
                         </div>
                       </div>
-                      <div class="button-container"><button type="submit" disabled="disabled" class="download-button busy compact"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                      <div class="button-container"><button disabled="disabled" type="submit" class="download-button busy compact"><svg height="24" width="24" viewBox="0 0 24 24" class="spinner mdi-spin">
                             <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
                           </svg>
                           <!---->
-                          <!----></button> <button type="submit" disabled="disabled" class="continue-button compact">
+                          <!----></button> <button disabled="disabled" type="submit" class="continue-button compact">
                           <!----> <span>Continue</span>
                           <!----></button></div>
                     </div>

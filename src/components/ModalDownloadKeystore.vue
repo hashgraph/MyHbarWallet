@@ -1,39 +1,40 @@
 <template>
-    <div class="modal-create-by-mnemonic-phrase">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalDownloadKeystore.title')"
-            not-closable
-            @change="handleModalChangeIsOpen"
-        >
-            <KeystoreWarningCards />
-            <div class="button-container">
-                <Button
-                    :label="$t('modalDownloadKeystore.downloadKeystoreFile')"
-                    :busy="state.isBusy"
-                    :disabled="state.isBusy"
-                    :outline="state.downloadClicked"
-                    compact
-                    class="download-button"
-                    @click="handleDownloadClick"
-                />
-                <Button
-                    :label="$t('common.continue')"
-                    :disabled="!state.downloadClicked"
-                    compact
-                    class="continue-button"
-                    @click="$emit('continue')"
-                />
-            </div>
-        </Modal>
-    </div>
+  <div class="modal-create-by-mnemonic-phrase">
+    <Modal
+      :is-open="state.isOpen"
+      :title="$t('modalDownloadKeystore.title')"
+      not-closable
+      @change="handleModalChangeIsOpen"
+    >
+      <KeystoreWarningCards />
+      <div class="button-container">
+        <Button
+          :busy="state.isBusy"
+          :disabled="state.isBusy"
+          :label="$t('modalDownloadKeystore.downloadKeystoreFile')"
+          :outline="state.downloadClicked"
+          class="download-button"
+          compact
+          @click="handleDownloadClick"
+        />
+        <Button
+          :disabled="!state.downloadClicked"
+          :label="$t('common.continue')"
+          class="continue-button"
+          compact
+          @click="$emit('continue')"
+        />
+      </div>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
-import Modal from "../components/Modal.vue";
-import Button from "../components/Button.vue";
-import { createComponent, SetupContext } from "@vue/composition-api";
+import { createComponent, PropType, SetupContext } from "@vue/composition-api";
+
+import Button from "./Button.vue";
 import KeystoreWarningCards from "./KeystoreWarningCards.vue";
+import Modal from "./Modal.vue";
 
 export interface State {
     isOpen: boolean;
@@ -46,6 +47,7 @@ interface Props {
 }
 
 export default createComponent({
+    name: "ModalDownloadKeystore",
     components: {
         Modal,
         Button,
@@ -55,9 +57,7 @@ export default createComponent({
         prop: "state",
         event: "change"
     },
-    props: {
-        state: { type: Object, required: true }
-    },
+    props: { state: Object as PropType<State> },
     setup(props: Props, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
@@ -77,29 +77,29 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.button-container {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
+    .button-container {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
 
-    @media (max-width: 600px) {
-        align-items: center;
-        flex-direction: column;
+        @media (max-width: 600px) {
+            align-items: center;
+            flex-direction: column;
+        }
     }
-}
 
-.download-button {
-    @media (max-width: 600px) {
-        margin-block-end: 15px;
-        width: 100%;
+    .download-button {
+        @media (max-width: 600px) {
+            margin-block-end: 15px;
+            width: 100%;
+        }
     }
-}
 
-.continue-button {
-    width: 213px;
+    .continue-button {
+        width: 213px;
 
-    @media (max-width: 600px) {
-        width: 100%;
+        @media (max-width: 600px) {
+            width: 100%;
+        }
     }
-}
 </style>

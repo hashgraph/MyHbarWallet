@@ -1,4 +1,13 @@
 /* eslint-env node */
 module.exports = {
-    presets: ["@vue/app", {}]
+    presets: [
+        [
+            "@babel/preset-env",
+            {
+                useBuiltIns: "entry",
+                corejs: "3",
+                targets: { node: "current" }
+            }
+        ]
+    ]
 };

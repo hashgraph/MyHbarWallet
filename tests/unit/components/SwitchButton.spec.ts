@@ -1,7 +1,8 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import SwitchButton from "../../../src/components/SwitchButton.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
+
+import SwitchButton from "../../../src/components/SwitchButton.vue";
 import i18n from "../../../src/i18n";
 
 describe("SwitchButton.vue", (): void => {
@@ -16,12 +17,8 @@ describe("SwitchButton.vue", (): void => {
         const wrapper = mount(SwitchButton, {
             localVue,
             i18n,
-            propsData: {
-                checked: false
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { checked: false },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -37,12 +34,8 @@ describe("SwitchButton.vue", (): void => {
         const wrapper = mount(SwitchButton, {
             localVue,
             i18n,
-            propsData: {
-                checked: true
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { checked: true },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

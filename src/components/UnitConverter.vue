@@ -1,63 +1,68 @@
 <template>
-    <div class="unit-input">
-        <div class="wrap">
-            <div class="block-left">
-                <div class="input-block">
-                    <TextInput
-                        :value="state.valueLeft"
-                        compact
-                        white
-                        step="any"
-                        :placeholder="$t('common.amount')"
-                        @input="handleInputValueLeft"
-                    />
-                </div>
-                <div class="select-block">
-                    <Select
-                        v-model="state.selectedLeft"
-                        :options="options"
-                        :left="true"
-                        @change="handleSelect"
-                    />
-                </div>
-            </div>
-
-            <div class="block-center">
-                <div class="convert-icon">
-                    <img src="../assets/swap.svg" alt="" />
-                </div>
-            </div>
-
-            <div class="block-right">
-                <div class="input-block">
-                    <TextInput
-                        :value="state.valueRight"
-                        compact
-                        white
-                        step="any"
-                        :placeholder="$t('common.amount')"
-                        @input="handleInputValueRight"
-                    />
-                </div>
-                <div class="select-block">
-                    <Select
-                        v-model="state.selectedRight"
-                        :options="options"
-                        :left="false"
-                        @change="handleSelect"
-                    />
-                </div>
-            </div>
+  <div class="unit-input">
+    <div class="wrap">
+      <div class="block-left">
+        <div class="input-block">
+          <TextInput
+            :placeholder="$t('common.amount')"
+            :value="state.valueLeft"
+            compact
+            step="any"
+            white
+            @input="handleInputValueLeft"
+          />
         </div>
+        <div class="select-block">
+          <Select
+            v-model="state.selectedLeft"
+            :left="true"
+            :options="options"
+            @change="handleInputValueLeft"
+          />
+        </div>
+      </div>
+
+      <div class="block-center">
+        <div class="convert-icon">
+          <img
+            alt=""
+            src="../assets/swap.svg"
+          >
+        </div>
+      </div>
+
+      <div class="block-right">
+        <div class="input-block">
+          <TextInput
+            :placeholder="$t('common.amount')"
+            :value="state.valueRight"
+            compact
+            step="any"
+            white
+            @input="handleInputValueRight"
+          />
+        </div>
+        <div class="select-block">
+          <Select
+            v-model="state.selectedRight"
+            :left="false"
+            :options="options"
+            @change="handleInputValueRight"
+          />
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import Select from "./Select.vue";
-import TextInput from "./TextInput.vue";
-import { Unit, convert } from "../units";
 import { createComponent, reactive } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
+
+import { convert, Unit } from "../units";
+
+import Select from "./Select.vue";
+import TextInput from "./TextInput.vue";
 
 interface State {
     selectedLeft: Unit;
@@ -67,6 +72,8 @@ interface State {
 }
 
 export default createComponent({
+    name: "UnitConverter",
+    props: {}, // ts hack
     components: {
         Select,
         TextInput
@@ -74,7 +81,7 @@ export default createComponent({
     setup() {
         const options = Object.values(Unit);
 
-        const numericRegex = /^\d*\.?\d*$/;
+        const numericRegex = /^\d*\.?\d*$/u;
 
         const state = reactive<State>({
             selectedLeft: Unit.Tinybar,
@@ -82,15 +89,6 @@ export default createComponent({
             valueLeft: "100000000",
             valueRight: "1"
         });
-
-        function handleSelect(): void {
-            state.valueRight = convert(
-                state.valueLeft,
-                state.selectedLeft,
-                state.selectedRight,
-                false
-            );
-        }
 
         function boundInput(
             event: Event,
@@ -110,7 +108,7 @@ export default createComponent({
             } else {
                 // Strip non-digit chars from input
                 (event.target as HTMLInputElement).value = inputValue.replace(
-                    /[^\d.]/,
+                    /[^\d.]/u,
                     ""
                 );
             }
@@ -135,86 +133,87 @@ export default createComponent({
         }
 
         function handleInputValueLeft(value: string, event: Event): void {
-            if (!numericRegex.test(value)) value = state.valueLeft;
+            let _value = value;
+            if (!numericRegex.test(_value)) _value = state.valueLeft;
 
-            state.valueLeft = value;
+            state.valueLeft = _value;
 
             computeValueRight();
             computeValueLeft();
 
-            boundInput(event, value, state.valueLeft);
+            boundInput(event, _value, state.valueLeft);
         }
 
         function handleInputValueRight(value: string, event: Event): void {
-            if (!numericRegex.test(value)) value = state.valueRight;
+            let _value = value;
+            if (!numericRegex.test(_value)) _value = state.valueRight;
 
-            state.valueRight = value;
+            state.valueRight = _value;
 
             computeValueLeft();
             computeValueRight();
 
-            boundInput(event, value, state.valueRight);
+            boundInput(event, _value, state.valueRight);
         }
 
         return {
             state,
             options,
             handleInputValueRight,
-            handleInputValueLeft,
-            handleSelect
+            handleInputValueLeft
         };
     }
 });
 </script>
 
 <style lang="postcss" scoped>
-.wrap {
-    align-items: center;
-    display: grid;
-    grid-template-columns: 4fr 1fr 4fr;
+    .wrap {
+        align-items: center;
+        display: grid;
+        grid-template-columns: 4fr 1fr 4fr;
 
-    @media (max-width: 800px) {
-        display: block;
+        @media (max-width: 800px) {
+            display: block;
+        }
     }
-}
 
-.select-block {
-    position: relative;
-}
-
-.input-block {
-    margin-block-end: 5px;
-
-    @media (max-width: 800px) {
-        margin-inline-end: 0;
+    .select-block {
+        position: relative;
     }
-}
 
-.block-left {
-    @media (max-width: 800px) {
-        display: flex;
-        flex-direction: column;
+    .input-block {
+        margin-block-end: 5px;
+
+        @media (max-width: 800px) {
+            margin-inline-end: 0;
+        }
     }
-}
 
-.block-center {
-    text-align: center;
-}
-
-.block-right {
-    @media (max-width: 800px) {
-        display: flex;
-        flex-direction: column;
+    .block-left {
+        @media (max-width: 800px) {
+            display: flex;
+            flex-direction: column;
+        }
     }
-}
 
-@media screen and (max-width: 800px) {
     .block-center {
-        margin: 20px 0;
+        text-align: center;
     }
 
-    .convert-icon > img {
-        transform: rotate(90deg);
+    .block-right {
+        @media (max-width: 800px) {
+            display: flex;
+            flex-direction: column;
+        }
     }
-}
+
+    @media screen and (max-width: 800px) {
+        .block-center {
+            margin: 20px 0;
+        }
+
+        .convert-icon > img {
+            transform: rotate(90deg);
+        }
+    }
 </style>

@@ -1,7 +1,8 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import Accordion from "../../../src/components/Accordion.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
+
+import Accordion from "../../../src/components/Accordion.vue";
 import i18n from "../../../src/i18n";
 
 describe("Accordion.vue", (): void => {
@@ -23,7 +24,7 @@ describe("Accordion.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="accordion">
               <div class="title">
-                <div class="title-text">Title</div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
+                <div class="title-text">Title</div> <svg height="24" width="24" viewBox="0 0 24 24" class="icon">
                   <path d="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"></path>
                 </svg>
               </div>

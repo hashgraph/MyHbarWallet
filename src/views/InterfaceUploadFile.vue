@@ -1,114 +1,96 @@
 <template>
-    <InterfaceForm :title="$t('interfaceUploadFile.title')">
-        <div class="upload-file">
-            <UploadZone
-                class="upload"
-                :is-uploading="state.isUploading"
-                :file-name="state.fileName"
-                @fileSelect="handleFileSelect"
-            />
+  <InterfaceForm :title="$t('interfaceUploadFile.title')">
+    <div class="upload-file">
+      <UploadZone
+        :file-name="state.fileName"
+        :is-uploading="state.isUploading"
+        class="upload"
+        @fileSelect="handleFileSelect"
+      />
 
-            <div class="buttons">
-                <Button
-                    :disabled="state.isBusy || state.buttonsDisabled"
-                    class="upload-button"
-                    :label="$t('uploadFile.upload')"
-                    @click="handleUploadClick"
-                />
-                <Button
-                    :disabled="state.isBusy || state.buttonsDisabled"
-                    :label="$t('uploadFile.uploadHash')"
-                    @click="handleHashUploadClick"
-                />
-            </div>
-        </div>
-        <ModalFeeSummary
-            v-model="state.feeModalIsOpen"
-            :items="summaryItems"
-            :amount="summaryAmount"
-            :is-file-summary="true"
-            :tx-type="state.uploadHash ? 'uploadFileHash' : 'uploadFile'"
-            @change="handleFeeModalChange"
-            @submit="handleUploadSubmit"
+      <div class="buttons">
+        <Button
+          :disabled="state.isBusy || state.buttonsDisabled"
+          :label="$t('uploadFile.upload')"
+          class="upload-button"
+          @click="handleUploadClick"
         />
-        <ModalUploadProgress
-            v-model="state.uploadProgress"
-            @change="handleUploadCancel"
-            @retry="handleUploadRetry"
+        <Button
+          :disabled="state.isBusy || state.buttonsDisabled"
+          :label="$t('uploadFile.uploadHash')"
+          @click="handleHashUploadClick"
         />
-        <ModalSuccess
-            v-model="state.success"
-            @action="handleCopyFileID"
-            @dismiss="handleUploadFinish"
-        >
-            <i18n path="modalSuccess.uploadedFile">
-                <strong>{{ fileIDString }}</strong>
-            </i18n>
-        </ModalSuccess>
-    </InterfaceForm>
+      </div>
+    </div>
+    <ModalFeeSummary
+      v-model="state.feeModalIsOpen"
+      :amount="summaryAmount"
+      :is-file-summary="true"
+      :items="summaryItems"
+      :tx-type="state.uploadHash ? 'uploadFileHash' : 'uploadFile'"
+      @change="handleFeeModalChange"
+      @submit="handleUploadSubmit"
+    />
+    <ModalUploadProgress
+      v-model="state.uploadProgress"
+      @change="handleUploadCancel"
+      @retry="handleUploadRetry"
+    />
+    <ModalSuccess
+      v-model="state.success"
+      @action="handleCopyFileID"
+      @dismiss="handleUploadFinish"
+    >
+      <i18n path="modalSuccess.uploadedFile">
+        <strong>{{ fileIDString }}</strong>
+      </i18n>
+    </ModalSuccess>
+  </InterfaceForm>
 </template>
 
 <script lang="ts">
+/* eslint-disable sonarjs/no-duplicate-string */
+import { computed, createComponent, reactive, Ref, ref, SetupContext } from "@vue/composition-api";
+import BigNumber from "bignumber.js";
+
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
-import {
-    createComponent,
-    computed,
-    reactive,
-    Ref,
-    ref,
-    SetupContext
-} from "@vue/composition-api";
 import UploadZone from "../components/UploadZone.vue";
-import ModalUploadProgress, {
-    State as UploadProgressState
-} from "../components/ModalUploadProgress.vue";
+import ModalUploadProgress, { State as UploadProgressState } from "../components/ModalUploadProgress.vue";
 import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
-import ModalSuccess, {
-    State as SuccessState
-} from "../components/ModalSuccess.vue";
+import ModalSuccess, { State as SuccessState } from "../components/ModalSuccess.vue";
 import { formatHbar } from "../formatter";
-import BigNumber from "bignumber.js";
 import { writeToClipboard } from "../clipboard";
-import { Ed25519PublicKey } from "@hashgraph/sdk";
 import { actions, store } from "../store";
 
-type AccountId = {
+interface AccountId {
     shard: number;
     realm: number;
     account: number;
-};
+}
 
-type FileId = {
+interface FileId {
     shard: number;
     realm: number;
     file: number;
-};
+}
 
-type ContractId = {
+interface ContractId {
     shard: number;
     realm: number;
     contract: number;
-};
+}
 
-type ExchangeRate = {
+interface ExchangeRate {
     hbarEquiv: number;
     centEquiv: number;
     expirationTime: Date;
-};
+}
 
-type ExchangeRateSet = {
+interface ExchangeRateSet {
     currentRate: ExchangeRate;
     nextRate: ExchangeRate;
-};
-
-type TransactionReceipt = {
-    status: number;
-    accountId?: AccountId;
-    fileId?: FileId;
-    contractId?: ContractId;
-    exchangeRateSet?: ExchangeRateSet;
-};
+}
 
 async function hashFile(file: Uint8Array): Promise<Uint8Array> {
     const digest = await crypto.subtle.digest("SHA-384", file);
@@ -120,6 +102,7 @@ async function hashFile(file: Uint8Array): Promise<Uint8Array> {
 const MAX_CHUNK_LENGTH = 2923;
 
 export default createComponent({
+    props: {}, // ts hack
     components: {
         InterfaceForm,
         UploadZone,
@@ -156,7 +139,7 @@ export default createComponent({
         const fileID: Ref<FileId | null> = ref(null);
 
         const fileIDString = computed(() => {
-            if (fileID.value !== null) {
+            if (fileID.value != null) {
                 return `${fileID.value!.shard.toString()}.${fileID.value!.realm.toString()}.${fileID.value!.file.toString()}`;
             }
 
@@ -168,18 +151,15 @@ export default createComponent({
             description: ""
         });
 
-        const summaryAmount = computed(() => {
-            return formatHbar(new BigNumber(state.estimatedFee.toFixed(4)));
-        });
+        // eslint-disable-next-line max-len
+        const summaryAmount = computed(() => formatHbar(new BigNumber(state.estimatedFee.toFixed(4))));
 
-        const summaryItems = computed(() => {
-            return [
-                {
-                    description: context.root.$t("common.estimatedFee"),
-                    value: new BigNumber(state.estimatedFee.toFixed(4))
-                }
-            ] as Item[];
-        });
+        const summaryItems = computed(() => [
+            {
+                description: context.root.$t("common.estimatedFee"),
+                value: new BigNumber(state.estimatedFee.toFixed(4))
+            }
+        ] as Item[]);
 
         function handleFileSelect(event: {
             fileName: string;
@@ -193,7 +173,7 @@ export default createComponent({
         function handleUploadSubmit(accept: boolean): void {
             state.feeModalIsOpen = false;
 
-            if (!accept && state.uploadBytes !== null) {
+            if (!accept && state.uploadBytes != null) {
                 return;
             }
 
@@ -208,36 +188,37 @@ export default createComponent({
             if (state.isUploading) state.isUploading = false;
         }
 
+        // TO DO: The below code is unreadable pls fix
         // 2.6 Hbar is current (10-21-19) full chunk estimate - (~1 hbar for empty tx plus .55 hbar per kB, then rounded up a bit)
         // second part of expression finds estimate for the last chunk which will (most likely) not be a full chunk
-        //Estimate gives a bit of room on top - actual average is ~2.57 Hbar; deviations and ranges on file tx's seem very low (10-21-19)
+        // Estimate gives a bit of room on top - actual average is ~2.57 Hbar; deviations and ranges on file tx's seem very low (10-21-19)
         function estimateFee(): void {
             state.estimatedFee =
-                2.6 * (state.uploadProgress.totalChunks - 1) +
-                ((((state.uploadBytes as Uint8Array).byteLength %
-                    MAX_CHUNK_LENGTH) /
-                    1000) *
-                    0.55 +
-                    1.05);
+                    // eslint-disable-next-line no-mixed-operators
+                    2.6 * (state.uploadProgress.totalChunks - 1) +
+                    ((state.uploadBytes as Uint8Array).byteLength %
+                        MAX_CHUNK_LENGTH /
+                        // eslint-disable-next-line no-mixed-operators
+                        1000 *
+                        // eslint-disable-next-line no-mixed-operators
+                        0.55 +
+                        1.05);
         }
 
         async function handleUpload(file: Uint8Array): Promise<void> {
             if (!store.state.wallet.session) {
-                throw new Error(
-                    context.root.$t("common.error.noSession").toString()
-                );
+                throw new Error(context.root.$t("common.error.noSession").toString());
             }
 
             const client = store.state.wallet.session.client;
             if (file == null) {
-                throw new Error(
-                    context.root.$t("uploadFile.errors.earlyUpload").toString()
-                );
+                throw new Error(context.root.$t("uploadFile.errors.earlyUpload").toString());
             }
 
             // prepare chunks
             const chunks: Uint8Array[] = [];
 
+            // eslint-disable-next-line no-plusplus
             for (let i = 0; i < state.uploadProgress.totalChunks; i++) {
                 const start = i * MAX_CHUNK_LENGTH;
                 chunks.push(file.subarray(start, start + MAX_CHUNK_LENGTH));
@@ -272,50 +253,46 @@ export default createComponent({
                 throw new Error("session should not be null");
             }
 
-            const { FileCreateTransaction, Client } = await (import(
-                "@hashgraph/sdk"
-            ) as Promise<typeof import("@hashgraph/sdk")>);
+            // eslint-disable-next-line max-len
+            const { FileCreateTransaction, Client } = await import("@hashgraph/sdk");
 
             state.isBusy = true;
 
-            const receipt = ref<TransactionReceipt | null>(null);
-            const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as Ed25519PublicKey;
+            const receipt: Ref<import("@hashgraph/sdk").TransactionReceipt | null> = ref(null);
+            // eslint-disable-next-line max-len
+            const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
 
             if (!publicKey) {
-                throw new Error(
-                    context.root
-                        .$t("uploadFile.errors.nullPublicKey")
-                        .toString()
-                );
+                throw new Error(context.root
+                    .$t("uploadFile.errors.nullPublicKey")
+                    .toString());
             }
 
-            let fileId: FileId | undefined = undefined;
+            let fileId: FileId | undefined;
 
             state.uploadProgress.inProgress = true;
             try {
                 state.uploadProgress.currentChunk = 0;
                 const chunk = chunks.shift() as Uint8Array;
-                receipt.value = await new FileCreateTransaction(
-                    client as InstanceType<typeof Client>
-                )
-                    .setContents(chunk)
-                    .setExpirationTime(Date.now() + 7890000000)
-                    .addKey(publicKey)
-                    .setTransactionFee(520000000)
-                    .build()
-                    .executeForReceipt();
+                receipt.value = await (
+                    await new FileCreateTransaction()
+                        .setContents(chunk)
+                        .setExpirationTime(Date.now() + 7890000000)
+                        .addKey(publicKey)
+                        .setMaxTransactionFee(520000000)
+                        .build()
+                        .execute(client as InstanceType<typeof Client>)
+                ).getReceipt(client as InstanceType<typeof Client>);
 
                 state.uploadProgress.currentChunk += 1;
 
-                fileId = receipt.value.fileId;
+                fileId = receipt.value.getFileId();
             } catch (error) {
                 state.uploadProgress.wasSuccess = false;
                 state.uploadProgress.inProgress = false;
 
                 if (
-                    error.message.includes(
-                        "upstream connect error or disconnect/reset before headers. reset reason: remote reset"
-                    )
+                    error.message.includes("upstream connect error or disconnect/reset before headers. reset reason: remote reset")
                 ) {
                     actions.alert({
                         level: "error",
@@ -337,19 +314,19 @@ export default createComponent({
             fileId: FileId,
             client: object
         ): Promise<void> {
-            const { FileAppendTransaction, Client } = await (import(
-                "@hashgraph/sdk"
-            ) as Promise<typeof import("@hashgraph/sdk")>);
+            // eslint-disable-next-line max-len
+            const { FileAppendTransaction, Client } = await import("@hashgraph/sdk");
             try {
                 while (chunks.length > 0) {
-                    await new FileAppendTransaction(client as InstanceType<
-                        typeof Client
-                    >)
-                        .setFileId(fileId)
-                        .setContents(chunks.shift() as Uint8Array)
-                        .setTransactionFee(520000000)
-                        .build()
-                        .executeForReceipt();
+                    (
+                        // eslint-disable-next-line no-await-in-loop
+                        await new FileAppendTransaction()
+                            .setFileId(fileId)
+                            .setContents(chunks.shift() as Uint8Array)
+                            .setMaxTransactionFee(520000000)
+                            .build()
+                            .execute(client as InstanceType<typeof Client>)
+                    ).getReceipt(client as InstanceType<typeof Client>);
 
                     state.uploadProgress.currentChunk += 1;
                 }
@@ -358,9 +335,7 @@ export default createComponent({
                 state.uploadProgress.inProgress = false;
                 state.isBusy = false;
                 if (
-                    error.message.includes(
-                        "upstream connect error or disconnect/reset before headers. reset reason: remote reset"
-                    )
+                    error.message.includes("upstream connect error or disconnect/reset before headers. reset reason: remote reset")
                 ) {
                     actions.alert({
                         level: "error",
@@ -386,10 +361,9 @@ export default createComponent({
             state.feeModalIsOpen = true;
         }
 
-        async function handleUploadClick(): Promise<void> {
-            state.uploadProgress.totalChunks = Math.ceil(
-                (state.fileBytes as Uint8Array).byteLength / MAX_CHUNK_LENGTH
-            );
+        function handleUploadClick(): void {
+            // eslint-disable-next-line max-len
+            state.uploadProgress.totalChunks = Math.ceil((state.fileBytes as Uint8Array).byteLength / MAX_CHUNK_LENGTH);
 
             state.uploadHash = false;
             state.uploadBytes = state.fileBytes;
@@ -423,7 +397,7 @@ export default createComponent({
         }
 
         async function handleCopyFileID(): Promise<void> {
-            if (fileID === null) {
+            if (fileID == null) {
                 actions.alert({
                     level: "error",
                     message: context.root.$t("modalSuccess.noFileID").toString()
@@ -446,7 +420,7 @@ export default createComponent({
             reset();
         }
 
-        async function handleUploadRetry(): Promise<void> {
+        function handleUploadRetry(): void {
             actions.alert({
                 level: "info",
                 message: context.root.$t("common.comingSoon").toString()
@@ -474,18 +448,18 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.upload-file {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-}
+    .upload-file {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
 
-.buttons {
-    display: flex;
-    margin-block-start: 50px;
-}
+    .buttons {
+        display: flex;
+        margin-block-start: 50px;
+    }
 
-.upload-button {
-    margin-inline-end: 20px;
-}
+    .upload-button {
+        margin-inline-end: 20px;
+    }
 </style>

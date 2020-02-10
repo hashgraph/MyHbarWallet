@@ -1,6 +1,6 @@
-import { app, protocol, BrowserWindow } from "electron";
+/* eslint-disable no-process-env */
+import { app, BrowserWindow, protocol } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import path from "path";
 
 // hack to get __static working
 // see: https://github.com/electron-userland/electron-webpack/issues/172
@@ -10,17 +10,13 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 
 let win: BrowserWindow | null;
 
-protocol.registerSchemesAsPrivileged([
-    { scheme: "mhw", privileges: { secure: true, standard: true } }
-]);
+protocol.registerSchemesAsPrivileged([{ scheme: "mhw", privileges: { secure: true, standard: true }}]);
 
 function createWindow(): void {
     win = new BrowserWindow({
         width: 1024,
         height: 768,
-        webPreferences: {
-            nodeIntegration: true
-        },
+        webPreferences: { nodeIntegration: true },
         show: false
     });
 
@@ -31,13 +27,13 @@ function createWindow(): void {
         }
     });
 
-    if (process.env.WEBPACK_DEV_SERVER_URL) {
-        win.loadURL(process.env.WEBPACK_DEV_SERVER_URL!);
-        if (!process.env.IS_TEST) win.webContents.openDevTools();
+    if (process.env.WEBPACK_DEV_SERVER_URL != null) {
+        void win.loadURL(process.env.WEBPACK_DEV_SERVER_URL!);
+        if (process.env.IS_TEST != null) win.webContents.openDevTools();
     } else {
         createProtocol("mhw");
         // Load the index.html when not in development
-        win.loadURL("mhw://./index.html");
+        void win.loadURL("mhw://./index.html");
     }
 
     // Remove the default menu
@@ -53,19 +49,20 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
-    if (win === null) {
+    if (win == null) {
         createWindow();
     }
 });
 
-app.on("ready", async () => {
+// eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/require-await
+app.on("ready", async() => {
     createWindow();
 });
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
     if (process.platform === "win32") {
-        process.on("message", data => {
+        process.on("message", (data) => {
             if (data === "graceful-exit") {
                 app.quit();
             }

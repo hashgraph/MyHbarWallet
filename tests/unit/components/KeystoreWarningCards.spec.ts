@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import KeystoreWarningCards from "../../../src/components/KeystoreWarningCards.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import KeystoreWarningCards from "../../../src/components/KeystoreWarningCards.vue";
+import i18n from "../../../src/i18n";
 
 describe("KeystoreWarningCards.vue", (): void => {
     const localVue = createLocalVue();

@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
+import VueI18n from "vue-i18n";
+
 import ModalReportError from "../../../src/components/ModalReportError.vue";
 import i18n from "../../../src/i18n";
-import VueI18n from "vue-i18n";
 
 describe("ModalReportError.Vue", (): void => {
     const localVue = createLocalVue();
@@ -22,17 +23,14 @@ describe("ModalReportError.Vue", (): void => {
         const wrapper = mount(ModalReportError, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: false
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: false },
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot();
     });
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
     it("renders open", (): void => {
         expect.assertions(1);
 
@@ -40,14 +38,10 @@ describe("ModalReportError.Vue", (): void => {
         const wrapper = mount(ModalReportError, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: false
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: false },
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot();
     });
 });

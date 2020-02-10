@@ -1,57 +1,52 @@
 <template>
-    <div class="verify-phrase">
-        <Modal
-            :title="$t('modalVerifyPhrase.title')"
-            :is-open="isOpen"
-            @change="this.$listeners.change"
-        >
-            <div class="prompt">
-                {{ $t("modalVerifyPhrase.pleaseEnterAndFillOut") }}
-            </div>
-            <form @submit.prevent="handleVerify">
-                <div class="mnemonic">
-                    <label
-                        v-for="index in words.length"
-                        :key="index"
-                        :class="{
-                            readonly: isDisabled(index - 1),
-                            'is-focused': state.focused === index - 1
-                        }"
-                    >
-                        <span class="number">{{ index }}.</span>
-                        <input
-                            ref="input"
-                            class="word"
-                            :readonly="isDisabled(index - 1)"
-                            :value="valueForIndex(index - 1)"
-                            :data-index="index - 1"
-                            :tabindex="isDisabled(index - 1) ? -1 : null"
-                            @focus="handleFocus"
-                            @input="handleInput"
-                        />
-                    </label>
-                </div>
-                <div class="btn-container">
-                    <Button :label="$t('modalVerifyPhrase.verify')" />
-                </div>
-            </form>
-        </Modal>
-    </div>
+  <div class="verify-phrase">
+    <Modal
+      :is-open="isOpen"
+      :title="$t('modalVerifyPhrase.title')"
+      @change="this.$listeners.change"
+    >
+      <div class="prompt">
+        {{ $t("modalVerifyPhrase.pleaseEnterAndFillOut") }}
+      </div>
+      <form @submit.prevent="handleVerify">
+        <div class="mnemonic">
+          <label
+            v-for="index in words.length"
+            :key="index"
+            :class="{
+              readonly: isDisabled(index - 1),
+              'is-focused': state.focused === index - 1
+            }"
+          >
+            <span class="number">{{ index }}.</span>
+            <input
+              ref="input"
+              :data-index="index - 1"
+              :readonly="isDisabled(index - 1)"
+              :tabindex="isDisabled(index - 1) ? -1 : null"
+              :value="valueForIndex(index - 1)"
+              class="word"
+              @focus="handleFocus"
+              @input="handleInput"
+            >
+          </label>
+        </div>
+        <div class="btn-container">
+          <Button :label="$t('modalVerifyPhrase.verify')" />
+        </div>
+      </form>
+    </Modal>
+  </div>
 </template>
 
 <script lang="ts">
-import {
-    createComponent,
-    PropType,
-    reactive,
-    watch,
-    SetupContext,
-    ref
-} from "@vue/composition-api";
-import Modal from "./Modal.vue";
-import Button from "../components/Button.vue";
-import TextInput from "../components/TextInput.vue";
+import { createComponent, PropType, reactive, ref, SetupContext, watch } from "@vue/composition-api";
+
 import { actions } from "../store";
+
+import Button from "./Button.vue";
+import Modal from "./Modal.vue";
+import TextInput from "./TextInput.vue";
 
 interface Props {
     isOpen: boolean;
@@ -59,6 +54,7 @@ interface Props {
 }
 
 export default createComponent({
+    name: "ModalVerifyPhrase",
     components: {
         Modal,
         Button,
@@ -69,12 +65,10 @@ export default createComponent({
         event: "change"
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        words: (Array as unknown) as PropType<string[]>
+        isOpen: Boolean,
+        words: Object as PropType<string[]>
     },
     setup(props: Props, context: SetupContext) {
-        // let inputMap: Map<number, string> = ;
-
         const input = ref<HTMLInputElement[] | null>(null);
 
         const state = reactive({
@@ -93,9 +87,7 @@ export default createComponent({
 
             // i gets index of first text input for focus
             while (newMap.size < maxSize) {
-                const num = Math.floor(
-                    Math.random() * (props.words.length - 1)
-                );
+                const num = Math.floor(Math.random() * (props.words.length - 1));
                 if (!newMap.has(num)) {
                     newMap.set(num, "");
                     if (num < firstIndex) firstIndex = num;
@@ -123,14 +115,14 @@ export default createComponent({
         }
 
         function valueForIndex(index: number): string {
-            return isDisabled(index)
-                ? props.words[index]
-                : state.inputMap.get(index) || "";
+            return isDisabled(index) ?
+                props.words[ index ] :
+                state.inputMap.get(index) || "";
         }
 
         function handleVerify(): void {
-            for (const [index, value] of state.inputMap.entries()) {
-                if (props.words[index] !== value) {
+            for (const [ index, value ] of state.inputMap.entries()) {
+                if (props.words[ index ] !== value) {
                     actions.alert({
                         message: "Memonic does not match",
                         level: "error"
@@ -163,7 +155,7 @@ export default createComponent({
             () => props.isOpen,
             (newVal: boolean) => {
                 if (newVal && input.value) {
-                    input.value[firstIndex].focus();
+                    input.value[ firstIndex ].focus();
                 }
             }
         );
@@ -182,69 +174,69 @@ export default createComponent({
 });
 </script>
 
-<style scoped lang="postcss">
-.mnemonic {
-    align-items: center;
-    display: grid;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin-block-end: 40px;
-    margin-block-start: 20px;
+<style lang="postcss" scoped>
+    .mnemonic {
+        align-items: center;
+        display: grid;
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin-block-end: 40px;
+        margin-block-start: 20px;
 
-    @media (max-width: 414px) {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-label {
-    align-items: center;
-    border-bottom: 1px solid var(--color-admiralty);
-    color: var(--color-admiralty);
-    display: flex;
-    font-size: 14px;
-    padding: 10px 0;
-
-    &.readonly {
-        border-color: var(--color-jupiter);
-        color: var(--color-basalt-grey);
+        @media (max-width: 414px) {
+            grid-template-columns: 1fr 1fr;
+        }
     }
 
-    &.is-focused {
-        border-color: var(--color-melbourne-cup);
+    label {
+        align-items: center;
+        border-bottom: 1px solid var(--color-admiralty);
+        color: var(--color-admiralty);
+        display: flex;
+        font-size: 14px;
+        padding: 10px 0;
+
+        &.readonly {
+            border-color: var(--color-jupiter);
+            color: var(--color-basalt-grey);
+        }
+
+        &.is-focused {
+            border-color: var(--color-melbourne-cup);
+        }
     }
-}
 
-.number {
-    flex-shrink: 0;
-    font-size: 14px;
-}
-
-label.is-focused .number {
-    color: var(--color-melbourne-cup);
-}
-
-.word {
-    border: none;
-    color: var(--color-ghostlands-coal);
-    margin-inline-start: 10px;
-    outline: none;
-    padding: 0;
-    width: 100%;
-
-    &:read-only {
-        cursor: default;
+    .number {
+        flex-shrink: 0;
+        font-size: 14px;
     }
-}
 
-.btn-container {
-    display: flex;
-    justify-content: center;
-}
+    label.is-focused .number {
+        color: var(--color-melbourne-cup);
+    }
 
-.prompt {
-    color: var(--color-china-blue);
-    font-size: 14px;
-    margin-block-end: 30px;
-}
+    .word {
+        border: none;
+        color: var(--color-ghostlands-coal);
+        margin-inline-start: 10px;
+        outline: none;
+        padding: 0;
+        width: 100%;
+
+        &:read-only {
+            cursor: default;
+        }
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .prompt {
+        color: var(--color-china-blue);
+        font-size: 14px;
+        margin-block-end: 30px;
+    }
 </style>

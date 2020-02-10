@@ -1,99 +1,80 @@
 <template>
-    <div class="access-my-account">
-        <div class="wrap">
-            <PageTitle title="Create A New Account">
-                {{ $t("createAccount.alreadyHaveOne") }}
-                <router-link :to="{ name: 'access-my-account' }">
-                    {{ $t("common.accessMyAccount") }}
-                </router-link>
-            </PageTitle>
-            <AccountTileButtons @click="handleClickTiles" />
-        </div>
-
-        <FAQs />
-
-        <ModalAccessByHardware
-            v-model="state.modalCreateByHardwareState"
-            @submit="handleCreateByHardwareSubmit"
-        />
-
-        <ModalCreateBySoftware
-            v-model="state.modalCreateBySoftwareState.isOpen"
-            @submit="handleCreateBySoftwareSubmit"
-        />
-
-        <ModalCreateByPhrase
-            v-model="state.modalCreateByPhraseState.isOpen"
-            @submit="handleCreateByPhraseSubmit"
-        />
-
-        <ModalCreateByKeystore
-            v-model="state.modalCreateByKeystoreState"
-            @submit="handleCreateByKeystoreSubmit"
-        />
-
-        <ModalDownloadKeystore
-            v-model="state.modalDownloadKeystoreState"
-            @continue="handleDownloadKeystoreContinue"
-            @submit="handleDownloadKeystoreSubmit"
-        />
-
-        <ModalEnterAccountId
-            v-model="state.modalEnterAccountIdState"
-            @network="handleNetworkChange"
-            @noAccount="handleDoesntHaveAccount"
-            @submit="handleAccountIdSubmit"
-        />
-
-        <ModalRequestToCreateAccount
-            v-model="state.modalRequestToCreateAccountState.isOpen"
-            :public-key="state.publicKey"
-            @hasAccount="handleHasAccount"
-        />
+  <div class="access-my-account">
+    <div class="wrap">
+      <PageTitle title="Create A New Account">
+        {{ $t("createAccount.alreadyHaveOne") }}
+        <router-link :to="{ name: 'access-my-account' }">
+          {{ $t("common.accessMyAccount") }}
+        </router-link>
+      </PageTitle>
+      <AccountTileButtons @click="handleClickTiles" />
     </div>
+
+    <FAQs />
+
+    <ModalAccessByHardware
+      v-model="state.modalCreateByHardwareState"
+      @submit="handleCreateByHardwareSubmit"
+    />
+
+    <ModalCreateBySoftware
+      v-model="state.modalCreateBySoftwareState.isOpen"
+      @submit="handleCreateBySoftwareSubmit"
+    />
+
+    <ModalCreateByPhrase
+      v-model="state.modalCreateByPhraseState.isOpen"
+      @submit="handleCreateByPhraseSubmit"
+    />
+
+    <ModalCreateByKeystore
+      v-model="state.modalCreateByKeystoreState"
+      @submit="handleCreateByKeystoreSubmit"
+    />
+
+    <ModalDownloadKeystore
+      v-model="state.modalDownloadKeystoreState"
+      @continue="handleDownloadKeystoreContinue"
+      @submit="handleDownloadKeystoreSubmit"
+    />
+
+    <ModalEnterAccountId
+      v-model="state.modalEnterAccountIdState"
+      @network="handleNetworkChange"
+      @noAccount="handleDoesntHaveAccount"
+      @submit="handleAccountIdSubmit"
+    />
+
+    <ModalRequestToCreateAccount
+      v-model="state.modalRequestToCreateAccountState.isOpen"
+      :public-key="state.publicKey"
+      @hasAccount="handleHasAccount"
+    />
+  </div>
 </template>
 
 <script lang="ts">
+import { createComponent, reactive, ref, Ref, SetupContext } from "@vue/composition-api";
+
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "../components/AccountTileButtons.vue";
-import ModalAccessByHardware, {
-    AccessHardwareOption
-} from "../components/ModalAccessByHardware.vue";
+import ModalAccessByHardware, { AccessHardwareOption } from "../components/ModalAccessByHardware.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
 import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
 import ModalDownloadKeystore from "../components/ModalDownloadKeystore.vue";
-import ModalEnterAccountId, {
-    ModalEnterAccountIdElement
-} from "../components/ModalEnterAccountId.vue";
+import ModalEnterAccountId, { ModalEnterAccountIdElement } from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
-import {
-    createComponent,
-    reactive,
-    ref,
-    SetupContext,
-    Ref
-} from "@vue/composition-api";
 import { CreateAccountDTO } from "../store/modules/wallet";
-import ModalCreateBySoftware, {
-    CreateSoftwareOption
-} from "../components/ModalCreateBySoftware.vue";
+import ModalCreateBySoftware, { CreateSoftwareOption } from "../components/ModalCreateBySoftware.vue";
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import { HederaErrorTuple, LedgerErrorTuple } from "../store/modules/errors";
 import { LoginMethod } from "../wallets/Wallet";
-import {
-    Client,
-    Ed25519PrivateKey,
-    Ed25519PublicKey,
-    Operator,
-    Signer,
-    AccountId
-} from "@hashgraph/sdk";
-import { getters, actions, mutations } from "../store";
-import { NetworkSettings, NetworkName } from "../settings";
+import { actions, getters, mutations } from "../store";
+import { NetworkName, NetworkSettings } from "../settings";
 
 function getNetwork(): NetworkSettings {
-    return getters.GET_NETWORK();
+    return getters.getNetwork();
 }
 
 interface State {
@@ -101,6 +82,7 @@ interface State {
 }
 
 export default createComponent({
+    props: {}, // ts hack
     components: {
         FAQs,
         AccountTileButtons,
@@ -113,7 +95,7 @@ export default createComponent({
         ModalEnterAccountId,
         ModalRequestToCreateAccount
     },
-    setup(props: object, context: SetupContext) {
+    setup(props, context: SetupContext) {
         const state: CreateAccountDTO & State = reactive({
             wallet: null,
             privateKey: null,
@@ -125,9 +107,7 @@ export default createComponent({
                 optionSelected: "",
                 disableButton: false
             },
-            modalCreateBySoftwareState: {
-                isOpen: false
-            },
+            modalCreateBySoftwareState: { isOpen: false },
             modalCreateByKeystoreState: {
                 isOpen: false,
                 isBusy: false,
@@ -138,9 +118,7 @@ export default createComponent({
                     passwordSuggestion: ""
                 }
             },
-            modalCreateByPhraseState: {
-                isOpen: false
-            },
+            modalCreateByPhraseState: { isOpen: false },
             modalKeystoreFilePasswordState: {
                 isOpen: false,
                 password: "",
@@ -164,18 +142,15 @@ export default createComponent({
                 nodeError: null,
                 addressError: null
             },
-            modalRequestToCreateAccountState: {
-                isOpen: false
-            },
+            modalRequestToCreateAccountState: { isOpen: false },
             loginMethod: null
         });
 
         const keyStoreLink = ref<HTMLAnchorElement | null>(null);
-        const modalEnterAccountId: Ref<ModalEnterAccountIdElement | null> = ref(
-            null
-        );
+        const modalEnterAccountId: Ref<ModalEnterAccountIdElement | null> = ref(null);
 
-        function setPrivateKey(newPrivateKey: Ed25519PrivateKey): void {
+        // eslint-disable-next-line sonarjs/no-duplicate-string
+        function setPrivateKey(newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey): void {
             state.privateKey = newPrivateKey;
             state.publicKey = newPrivateKey.publicKey;
             state.modalEnterAccountIdState.publicKey = newPrivateKey.publicKey;
@@ -185,62 +160,56 @@ export default createComponent({
             context.root.$router.push({ name: "interface" });
         }
 
-        async function constructOperator(
-            account: AccountId
-        ): Promise<Operator> {
-            if (state.wallet !== null) {
+        // eslint-disable-next-line sonarjs/no-duplicate-string
+        async function constructOperator(account: import("@hashgraph/sdk").AccountId): Promise<import("@hashgraph/sdk/lib/BaseClient").Operator> {
+            if (state.wallet != null) {
                 if (state.wallet.hasPrivateKey()) {
                     return {
                         account,
                         privateKey: await state.wallet!.getPrivateKey()
-                    } as Operator;
-                } else {
-                    return {
-                        account,
-                        publicKey: (await state.wallet!.getPublicKey()) as Ed25519PublicKey,
-                        signer: state.wallet!.signTransaction.bind(
-                            state.wallet!
-                        ) as Signer
-                    };
+                    } as import("@hashgraph/sdk/lib/BaseClient").Operator;
                 }
+                return {
+                    account,
+                    publicKey: (await state.wallet!.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey,
+                    signer: state.wallet!.signTransaction.bind(state.wallet!) as import("@hashgraph/sdk").TransactionSigner
+                };
             }
 
             return {
-                account: null as AccountId | null,
-                privateKey: null as Ed25519PrivateKey | null
-            } as Operator;
+                account: null as import("@hashgraph/sdk").AccountId | null,
+                privateKey: null as
+                        | import("@hashgraph/sdk").Ed25519PrivateKey
+                        | null
+            } as import("@hashgraph/sdk/lib/BaseClient").Operator;
         }
 
         function handleNetworkChange(settings: NetworkSettings): void {
             if (
                 getNetwork().name !== settings.name ||
-                settings.name === NetworkName.CUSTOM
+                    settings.name === NetworkName.CUSTOM
             ) {
-                mutations.CHANGE_NETWORK(settings);
+                mutations.changeNetwork(settings);
             }
         }
 
-        async function constructClient(
-            account: AccountId
-        ): Promise<Client | undefined> {
-            let client: Client | undefined = undefined;
+        async function constructClient(account: import("@hashgraph/sdk").AccountId): Promise<import("@hashgraph/sdk").Client | undefined | null> {
+            let client: import("@hashgraph/sdk").Client | undefined;
 
             const {
                 Client,
                 CryptoTransferTransaction,
                 HederaError,
-                ResponseCodeEnum
-            } = await (import("@hashgraph/sdk") as Promise<
-                typeof import("@hashgraph/sdk")
-            >);
+                Status
+            } = await import("@hashgraph/sdk");
 
             try {
                 const network: NetworkSettings = await getNetwork();
-                const operator: Operator = await constructOperator(account);
+                const operator: import("@hashgraph/sdk/lib/BaseClient").Operator = await constructOperator(account);
 
                 client = new Client({
-                    nodes: {
-                        [network.proxy || network.address]: {
+                    network: {
+                        [ network.proxy || network.address ]: {
                             shard: network.node.shard,
                             realm: network.node.realm,
                             account: network.node.node
@@ -249,38 +218,33 @@ export default createComponent({
                     operator
                 });
 
-                const recipient: AccountId = {
-                    realm: 0,
-                    shard: 0,
-                    // If the account requested is 3, use a different account as the recipient to avoid an
-                    // ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS error
-                    account: account.account === 3 ? 4 : 3
-                };
-
-                await new CryptoTransferTransaction(client)
-                    .addSender(account, 0)
-                    .addRecipient(recipient, 0)
-                    .setTransactionFee(1)
-                    .build()
-                    .executeForReceipt();
+                (
+                    await new CryptoTransferTransaction()
+                        .addSender(account, 0)
+                        .setMaxTransactionFee(1)
+                        .build(client)
+                        .execute(client)
+                ).getReceipt(client);
             } catch (error) {
-                if (error instanceof HederaError) {
-                    // Transaction was valid except for deliberately insufficient fee,
-                    // meaning that the account matches the key and that nothing went wrong
-                    if (error.code === ResponseCodeEnum.INSUFFICIENT_TX_FEE) {
-                        return client;
-                    }
+                // Constructed a Transfer Transaction with
+                // one account (sender), 1 tinybar fee, 0 tinybar value
+                // which will fail with an account error if the key is
+                // not associated with the account, and with insufficient
+                // transaction fee otherwise
+                if (error instanceof HederaError && error.code === Status.InsufficientTxFee.code) {
+                    return client;
                 }
 
-                // Else, throw the error, failed to make a client (failed to login)
                 throw error;
             }
+
+            return null;
         }
 
-        async function login(account: AccountId): Promise<void> {
-            const client: Client | undefined = await constructClient(account);
+        async function login(account: import("@hashgraph/sdk").AccountId): Promise<void> {
+            const client: import("@hashgraph/sdk").Client | undefined | null = await constructClient(account);
 
-            if (state.wallet !== null && client !== undefined) {
+            if (state.wallet != null && client != null) {
                 await actions.logIn({
                     account,
                     wallet: state.wallet,
@@ -297,9 +261,7 @@ export default createComponent({
             }
         }
 
-        function handleCreateBySoftwareSubmit(
-            which: CreateSoftwareOption
-        ): void {
+        function handleCreateBySoftwareSubmit(which: CreateSoftwareOption): void {
             state.modalCreateBySoftwareState.isOpen = false;
 
             setTimeout(() => {
@@ -313,30 +275,25 @@ export default createComponent({
             }, 125);
         }
 
-        async function handleCreateByHardwareSubmit(
-            which: AccessHardwareOption
-        ): Promise<void> {
+        async function handleCreateByHardwareSubmit(which: AccessHardwareOption): Promise<void> {
+            // eslint-disable-next-line sonarjs/no-small-switch
             switch (which) {
                 case AccessHardwareOption.Ledger:
-                    state.loginMethod = LoginMethod.LedgerNanoS;
+                    state.loginMethod = LoginMethod.Ledger;
                     try {
-                        const { LedgerNanoS } = await (import(
-                            "../wallets/hardware/LedgerNanoS" /* webpackChunkName: "hardware" */
-                        ) as Promise<
-                            typeof import("../wallets/hardware/LedgerNanoS")
-                        >);
+                        const { Ledger } = await import("../wallets/hardware/Ledger" /* webpackChunkName: "hardware" */);
 
                         state.modalCreateByHardwareState.isBusy = true;
-                        state.wallet = new LedgerNanoS();
-                        state.publicKey = (await state.wallet.getPublicKey()) as Ed25519PublicKey;
+                        state.wallet = new Ledger();
+                        state.publicKey = (await state.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
                         state.modalEnterAccountIdState.publicKey =
-                            state.publicKey;
+                                state.publicKey;
                         state.modalCreateByHardwareState.isOpen = false;
                         state.modalRequestToCreateAccountState.isOpen = true;
                     } catch (error) {
                         if (
                             error.name === "TransportStatusError" &&
-                            state.loginMethod === LoginMethod.LedgerNanoS
+                            state.loginMethod === LoginMethod.Ledger
                         ) {
                             await actions.handleLedgerError({
                                 error,
@@ -362,33 +319,29 @@ export default createComponent({
                 state.modalDownloadKeystoreState.isOpen = true;
             }, 125);
             try {
-                const { Ed25519PrivateKey } = await (import(
-                    "@hashgraph/sdk"
-                ) as Promise<typeof import("@hashgraph/sdk")>);
+                const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
 
                 const privateKey = await Ed25519PrivateKey.generate();
 
-                state.keyFile = await privateKey.createKeystore(
-                    state.modalCreateByKeystoreState.passwordGeneratorState
-                        .password
-                );
+                // eslint-disable-next-line max-len
+                state.keyFile = await privateKey.toKeystore(state.modalCreateByKeystoreState.passwordGeneratorState
+                    .password);
 
                 setPrivateKey(privateKey);
 
                 state.modalDownloadKeystoreState.isBusy = false;
 
-                const keyStoreBlob = new Blob([
-                    state.keyFile.buffer as Uint8Array
-                ]);
+                if (state.keyFile != null) {
+                    const keyStoreBlob = new Blob([ state.keyFile.buffer as Uint8Array ]);
 
-                const keyStoreUrl = URL.createObjectURL(keyStoreBlob);
+                    const keyStoreUrl = URL.createObjectURL(keyStoreBlob);
 
-                keyStoreLink.value = document.createElement(
-                    "a"
-                ) as HTMLAnchorElement;
-                keyStoreLink.value.href = keyStoreUrl;
-                keyStoreLink.value.download =
-                    "keystore-" + new Date().toISOString();
+                    keyStoreLink.value = document.createElement("a") as HTMLAnchorElement;
+                    keyStoreLink.value.href = keyStoreUrl;
+                    keyStoreLink.value.download = `keystore-${new Date().toISOString()}`;
+                } else {
+                    throw new Error(context.root.$t("common.error.noKeystore").toString());
+                }
             } catch (error) {
                 await actions.alert({
                     level: "error",
@@ -406,22 +359,20 @@ export default createComponent({
             }
 
             keyStoreLink.value.click();
-            context.root.$el.removeChild(
-                keyStoreLink.value as HTMLAnchorElement
-            );
+            context.root.$el.removeChild(keyStoreLink.value as HTMLAnchorElement);
         }
 
         function handleDownloadKeystoreContinue(): void {
             state.modalRequestToCreateAccountState.isOpen = true;
             setTimeout(
-                () => (state.modalDownloadKeystoreState.isOpen = false),
+                (): void => {
+                    state.modalDownloadKeystoreState.isOpen = false;
+                },
                 125
             );
         }
 
-        function handleCreateByPhraseSubmit(
-            newPrivateKey: Ed25519PrivateKey
-        ): void {
+        function handleCreateByPhraseSubmit(newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey): void {
             state.modalCreateByPhraseState.isOpen = false;
 
             setPrivateKey(newPrivateKey);
@@ -431,26 +382,20 @@ export default createComponent({
             }, 125);
         }
 
-        async function handleAccountIdSubmit(
-            account: AccountId
-        ): Promise<void> {
+        async function handleAccountIdSubmit(account: import("@hashgraph/sdk").AccountId): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
 
-            if (state.loginMethod === null) {
+            if (state.loginMethod == null) {
                 state.modalEnterAccountIdState.isBusy = false;
-                throw new Error(
-                    context.root.$t("common.error.illegalState").toString()
-                );
+                throw new Error(context.root.$t("common.error.illegalState").toString());
             }
 
-            if (state.wallet === null) {
-                if (state.privateKey !== null) {
-                    state.wallet = new SoftwareWallet(
-                        state.loginMethod,
-                        state.privateKey as Ed25519PrivateKey,
-                        state.publicKey as Ed25519PublicKey
-                    );
-                }
+            if (state.wallet == null && state.privateKey != null) {
+                state.wallet = new SoftwareWallet(
+                    state.loginMethod,
+                    state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
+                    state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
+                );
             }
 
             try {
@@ -461,46 +406,41 @@ export default createComponent({
                 const HederaError = (await import("@hashgraph/sdk"))
                     .HederaError;
                 if (error instanceof HederaError) {
-                    const result: HederaErrorTuple = await actions.handleHederaError(
-                        { error, showAlert: false }
-                    );
+                    // eslint-disable-next-line max-len
+                    const result: HederaErrorTuple = await actions.handleHederaError({ error, showAlert: false });
 
                     // set input error to error message
                     state.modalEnterAccountIdState.errorMessage =
-                        result.message;
+                            result.message;
 
                     // In this case, the error should pop up
                     if (
-                        error.message.includes(
-                            context.root.$t("common.error.unhandled").toString()
-                        )
+                        error.message.includes(context.root.$t("common.error.unhandled").toString())
                     ) {
                         throw error;
                     }
                 } else if (
                     error.name === "TransportStatusError" &&
-                    state.loginMethod === LoginMethod.LedgerNanoS
+                    state.loginMethod === LoginMethod.Ledger
                 ) {
-                    const result: LedgerErrorTuple = await actions.handleLedgerError(
-                        { error, showAlert: false }
-                    );
+                    // eslint-disable-next-line max-len
+                    const result: LedgerErrorTuple = await actions.handleLedgerError({ error, showAlert: false });
 
                     state.modalEnterAccountIdState.errorMessage =
-                        result.message;
+                            result.message;
 
                     // But don't throw device errors
                 } else if (
                     error.message === "Response closed without headers" ||
-                    error.message === "Response closed without grpc-status" ||
-                    error.message === "404 (Not Found)" ||
-                    error.stack.includes("grpc")
+                        error.message === "Response closed without grpc-status" ||
+                        error.message === "404 (Not Found)" ||
+                        error.stack.includes("grpc")
                 ) {
                     const message = context.root
                         .$t("network.connectionFailed")
                         .toString();
-                    (modalEnterAccountId.value as ModalEnterAccountIdElement).setAddressError(
-                        message
-                    );
+                    // eslint-disable-next-line max-len
+                    (modalEnterAccountId.value as ModalEnterAccountIdElement).setAddressError(message);
                 }
             } finally {
                 state.modalEnterAccountIdState.isBusy = false;
@@ -536,30 +476,30 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-a {
-    color: var(--color-melbourne-cup);
-    cursor: pointer;
-    text-decoration: none;
-}
-
-a:hover,
-a:focus {
-    text-decoration: underline;
-}
-
-.access-my-account {
-    display: flex;
-    flex-direction: column;
-}
-
-.wrap {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    padding: 80px 0;
-
-    @media (max-width: 600px) {
-        padding: 20px 0;
+    a {
+        color: var(--color-melbourne-cup);
+        cursor: pointer;
+        text-decoration: none;
     }
-}
+
+    a:hover,
+    a:focus {
+        text-decoration: underline;
+    }
+
+    .access-my-account {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wrap {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        padding: 80px 0;
+
+        @media (max-width: 600px) {
+            padding: 20px 0;
+        }
+    }
 </style>

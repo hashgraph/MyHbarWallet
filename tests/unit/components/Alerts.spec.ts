@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import Alerts from "../../../src/components/Alerts.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import Alerts from "../../../src/components/Alerts.vue";
+import i18n from "../../../src/i18n";
 
 describe("Alerts.vue", (): void => {
     const localVue = createLocalVue();
@@ -17,8 +18,6 @@ describe("Alerts.vue", (): void => {
             i18n
         });
 
-        expect(wrapper).toMatchInlineSnapshot(
-            `<span name="list" tag="div" class="alerts"></span>`
-        );
+        expect(wrapper).toMatchInlineSnapshot("<div class=\"alerts\"></div>");
     });
 });

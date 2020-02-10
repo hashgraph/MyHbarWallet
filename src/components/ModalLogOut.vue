@@ -1,53 +1,50 @@
 <template>
-    <Modal
-        :is-open="isOpen"
-        hide-decoration
-        :not-closable="forgot"
-        @change="this.$listeners.change"
-    >
-        <div class="modal-forgot-to-logout">
-            <span v-if="forgot">{{ $t("modalForgotToLogout.oops") }}</span>
-            <span v-else>{{ $t("modalForgotToLogout.logOut") }}</span>
-            <p v-if="forgot">
-                {{ $t("modalForgotToLogout.looksLikeYouForgotToLogOut") }}
-            </p>
-            <p v-else>
-                {{ $t("modalForgotToLogout.areYouSure") }}
-            </p>
-            <div class="button-group">
-                <Button
-                    v-if="forgot"
-                    class="button-go-back"
-                    :label="$t('common.goBack')"
-                    :outline="true"
-                    @click="handleGoBack"
-                />
-                <Button
-                    class="button-logout"
-                    :label="$t('modalForgotToLogout.logOut')"
-                    :class="logoutBtnCenter"
-                    :danger="true"
-                    @click="handleClickLogOut"
-                />
-            </div>
-        </div>
-    </Modal>
+  <Modal
+    :is-open="isOpen"
+    :not-closable="forgot"
+    hide-decoration
+    @change="this.$listeners.change"
+  >
+    <div class="modal-forgot-to-logout">
+      <span v-if="forgot">{{ $t("modalForgotToLogout.oops") }}</span>
+      <span v-else>{{ $t("modalForgotToLogout.logOut") }}</span>
+      <p v-if="forgot">
+        {{ $t("modalForgotToLogout.looksLikeYouForgotToLogOut") }}
+      </p>
+      <p v-else>
+        {{ $t("modalForgotToLogout.areYouSure") }}
+      </p>
+      <div class="button-group">
+        <Button
+          v-if="forgot"
+          :label="$t('common.goBack')"
+          :outline="true"
+          class="button-go-back"
+          @click="handleGoBack"
+        />
+        <Button
+          :class="logoutBtnCenter"
+          :danger="true"
+          :label="$t('modalForgotToLogout.logOut')"
+          class="button-logout"
+          @click="handleClickLogOut"
+        />
+      </div>
+    </div>
+  </Modal>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Button from "../components/Button.vue";
-import Modal from "../components/Modal.vue";
-import {
-    createComponent,
-    PropType,
-    SetupContext,
-    computed
-} from "@vue/composition-api";
-import router from "../router";
+import { computed, createComponent, SetupContext } from "@vue/composition-api";
 import { mdiClose } from "@mdi/js";
-import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
+
 import { actions } from "../store";
+import router from "../router";
+
+import Button from "./Button.vue";
+import MaterialDesignIcon from "./MaterialDesignIcon.vue";
+import Modal from "./Modal.vue";
 
 interface Props {
     isOpen: boolean;
@@ -62,18 +59,19 @@ function handleGoBack(): void {
 }
 
 export default createComponent({
+    name: "ModalLogOut",
     components: {
         Button,
-        Modal,
-        MaterialDesignIcon
+        MaterialDesignIcon,
+        Modal
     },
     model: {
         prop: "isOpen",
         event: "change"
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        forgot: (Boolean as unknown) as PropType<boolean>
+        isOpen: Boolean,
+        forgot: Boolean
     },
     setup(props: Props, context: SetupContext) {
         function handleClickLogOut(): void {
@@ -90,6 +88,7 @@ export default createComponent({
 
         const logoutBtnCenter = computed(() => {
             if (!props.forgot) return "center-button";
+            return "";
         });
 
         return {
@@ -104,54 +103,54 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-.button-group {
-    display: flex;
-    justify-content: space-between;
-    justify-self: center;
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        justify-self: center;
 
-    @media (max-width: 600px) {
-        align-items: center;
-        flex-direction: column-reverse;
-    }
-}
-
-.button-go-back,
-.button-logout {
-    min-width: initial;
-    width: 48.2%;
-
-    @media (max-width: 600px) {
-        width: 100%;
-
-        &:last-child {
-            margin-block-end: 15px;
+        @media (max-width: 600px) {
+            align-items: center;
+            flex-direction: column-reverse;
         }
     }
-}
 
-.modal-forgot-to-logout {
-    display: flex;
-    flex-direction: column;
-}
+    .button-go-back,
+    .button-logout {
+        min-width: initial;
+        width: 48.2%;
 
-span {
-    color: var(--color-washed-black);
-    font-size: 35px;
-    font-weight: 700;
-    margin-block-end: 15px;
-    text-align: center;
-}
+        @media (max-width: 600px) {
+            width: 100%;
 
-p {
-    color: var(--color-china-blue);
-    font-size: 14px;
-    margin: 0;
-    padding-block-end: 30px;
-    text-align: center;
-}
+            &:last-child {
+                margin-block-end: 15px;
+            }
+        }
+    }
 
-.center-button {
-    margin-inline: auto;
-    width: 85%;
-}
+    .modal-forgot-to-logout {
+        display: flex;
+        flex-direction: column;
+    }
+
+    span {
+        color: var(--color-washed-black);
+        font-size: 35px;
+        font-weight: 700;
+        margin-block-end: 15px;
+        text-align: center;
+    }
+
+    p {
+        color: var(--color-china-blue);
+        font-size: 14px;
+        margin: 0;
+        padding-block-end: 30px;
+        text-align: center;
+    }
+
+    .center-button {
+        margin-inline: auto;
+        width: 85%;
+    }
 </style>
