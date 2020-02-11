@@ -24,7 +24,8 @@ describe("Header.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="header-container">
-              <header class="header"><a href="/" class="link router-link-exact-active router-link-active"><img alt="" src="../assets/myhbarwallet-logo.svg" class="logo"></a>
+              <header class="header">
+                <div class="link"><img alt="" src="../assets/myhbarwallet-logo.svg" class="logo"></div>
                 <div class="spacer"></div>
                 <div class="links"><a href="/" class="link router-link-exact-active router-link-active">
                     Home
