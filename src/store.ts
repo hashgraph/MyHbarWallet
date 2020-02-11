@@ -26,6 +26,8 @@ import { getValueOfUnit, Unit } from "./units";
 import { NetworkName, availableNetworks, NetworkSettings } from "./settings";
 import { AccountIdLike } from "@hashgraph/sdk/lib/account/AccountId";
 import { Ed25519PrivateKey, Ed25519PublicKey, TransactionSigner } from "@hashgraph/sdk";
+import Wallet from "./wallets/Wallet";
+import router from "./router";
 
 export interface RootState {
     alerts: AlertsState;
@@ -63,6 +65,7 @@ export const store = Vue.observable({
             hasBeenToInterface: false
         } as InterfaceMenuState,
         wallet: {
+            wallet: null,
             session: null,
             balance: null,
             exchangeRate: null
@@ -81,6 +84,7 @@ export const getters = {
                 store.state.errors.errors[ 0 ] :
                 null;
 
+        // eslint-disable-next-line no-process-env
         if (process.env.NODE_ENV !== "production" && error != null) {
             console.error(error);
         }
@@ -110,6 +114,9 @@ export const getters = {
     },
     GET_NETWORK(): NetworkSettings {
         return store.state.network.network;
+    },
+    GET_WALLET(): Wallet | null {
+        return store.state.wallet.wallet;
     }
 };
 
@@ -129,22 +136,76 @@ export const mutations = {
     ERROR_VIEWED(): void {
         store.state.errors.errors.pop();
     },
-
-    SET_INTERFACE_MENU_IS_OPEN(isOpen: boolean): void {
-        store.state.interfaceMenu.isOpen = isOpen;
+    NAVIGATE_TO_INTERFACE(): void {
+        router.push({ name: "interface" });
+    },
+    SET_INTERFACE_MENU_IS_OPEN(open: boolean): void {
+        store.state.interfaceMenu.isOpen = open;
     },
     SET_HAS_BEEN_TO_INTERFACE(visited: boolean): void {
         store.state.interfaceMenu.hasBeenToInterface = visited;
     },
+    async CONSTRUCT_OPERATOR(account: import("@hashgraph/sdk").AccountId): Promise<import("@hashgraph/sdk/lib/BaseClient").Operator> {
+        if (getters.GET_WALLET() != null) {
+            if (getters.GET_WALLET()!.hasPrivateKey()) {
+                return {
+                    account,
+                    privateKey: await getters.GET_WALLET()!.getPrivateKey()
+                } as Operator;
+            }
+            return {
+                account,
+                publicKey: (await getters.GET_WALLET()!.getPublicKey()) as Ed25519PublicKey,
+                signer: getters.GET_WALLET()!.signTransaction.bind(getters.GET_WALLET()) as TransactionSigner
+            };
+        }
 
-    LOG_IN(session: Session): void {
+        return {
+            account: null as import("@hashgraph/sdk").AccountId | null,
+            privateKey: null as Ed25519PrivateKey | null
+        } as Operator;
+    },
+    async CONSTRUCT_CLIENT(account: import("@hashgraph/sdk").AccountId): Promise<import("@hashgraph/sdk").Client> {
+        const network: NetworkSettings = getters.GET_NETWORK();
+        const operator: import("@hashgraph/sdk/lib/BaseClient").Operator = await this.CONSTRUCT_OPERATOR(account);
+        const client: import("@hashgraph/sdk").Client = new (await import("@hashgraph/sdk")).Client({
+            network: {
+                [ network.proxy || network.address ]: {
+                    shard: network.node.shard,
+                    realm: network.node.realm,
+                    account: network.node.node
+                }
+            },
+            operator
+        });
+
+        try {
+            await (await new (await import("@hashgraph/sdk")).CryptoTransferTransaction()
+                .addSender(account, 0)
+                .setMaxTransactionFee(1)
+                .execute(client))
+                .getReceipt(client);
+        } catch (error) {
+            if (error instanceof (await import("@hashgraph/sdk")).HederaStatusError) {
+                // Transaction passes check for account ownership, but
+                // will otherwise fail. This transaction is used to verify
+                // account ownership.
+                if (error.status.code === (await import("@hashgraph/sdk")).Status.InsufficientTxFee.code) {
+                    return client;
+                }
+            }
+            throw error;
+        }
+
+        throw new Error(i18n.t("common.error.clientConstruction").toString());
+    },
+    SET_WALLET(wallet: Wallet | null): void {
+        store.state.wallet.wallet = wallet;
+    },
+    SET_SESSION(session: Session | null): void {
         store.state.wallet.session = session;
     },
-    LOG_OUT(): void {
-        store.state.wallet.session = null;
-        store.state.wallet.balance = null;
-    },
-    SET_BALANCE(balance: BigNumber): void {
+    SET_BALANCE(balance: BigNumber | null): void {
         store.state.wallet.balance = balance;
     },
     SET_EXCHANGE_RATE(rate: BigNumber): void {
@@ -185,6 +246,7 @@ export const actions = {
     },
 
     async handleHederaError(payload: HederaStatusErrorPayload): Promise<HederaStatusErrorTuple> {
+        // eslint-disable-next-line no-process-env, no-undef
         if (process.env.NODE_ENV !== "production" && payload.error != null) {
             console.error(payload.error);
         }
@@ -237,6 +299,7 @@ export const actions = {
         return { message, error: payload.error };
     },
     handleLedgerError(payload: LedgerErrorPayload): Promise<LedgerErrorTuple> {
+        // eslint-disable-next-line no-process-env, no-undef
         if (process.env.NODE_ENV !== "production" && payload.error != null) {
             console.error(payload.error);
         }
@@ -351,12 +414,23 @@ export const actions = {
         await this.refreshBalance();
         await this.refreshExchangeRate();
     },
-    async logIn(session: Session): Promise<void> {
-        mutations.LOG_IN(session);
-        await this.refreshBalanceAndRate();
+    async logIn(account: import("@hashgraph/sdk").AccountId): Promise<void> {
+        const wallet: Wallet | null = getters.GET_WALLET();
+        const client: import("@hashgraph/sdk").Client | null = await mutations.CONSTRUCT_CLIENT(account);
+        if (wallet != null && client != null) {
+            const session: Session = {
+                account,
+                wallet,
+                client
+            };
+            mutations.SET_SESSION(session);
+            await this.refreshBalanceAndRate();
+        }
     },
     logOut(): void {
+        mutations.SET_SESSION(null);
+        mutations.SET_WALLET(null);
+        mutations.SET_BALANCE(null);
         mutations.SET_HAS_BEEN_TO_INTERFACE(false);
-        mutations.LOG_OUT();
     }
 };

@@ -63,10 +63,12 @@ export async function makeSigner(index = 0): Promise<(message: Uint8Array) => Pr
         // @ts-ignore
         const result = await TrezorConnect.hederaSignMessage({
             path: getPath(0, index),
+            // eslint-disable-next-line no-undef
             message: Buffer.from(message).toString("hex")
         });
 
         const hexSignature = result.payload.signature;
+        // eslint-disable-next-line no-undef
         return new Uint8Array(Buffer.from(hexSignature, "hex"));
     };
 }

@@ -30,6 +30,7 @@
     "common.createAccount": "Create Account",
     "common.dismiss": "Dismiss",
     "common.error.cannotSendHbarToYourself": "Cannot transfer to your own account",
+    "common.error.clientConstruction": "Invalid Application State: Client Construction Failure",
     "common.error.generalDeviceError": "Irrecoverable device error. Reset device, then try again.",
     "common.error.illegalState": "An illegal state has been reached",
     "common.error.insufficientBalance": "Insufficient balance",

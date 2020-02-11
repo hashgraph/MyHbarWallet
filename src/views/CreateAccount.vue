@@ -75,19 +75,8 @@ import ModalCreateBySoftware, { CreateSoftwareOption } from "../components/Modal
 import SoftwareWallet from "../wallets/software/SoftwareWallet";
 import { HederaStatusErrorTuple, LedgerErrorTuple } from "../store/modules/errors";
 import { LoginMethod } from "../wallets/Wallet";
-import {
-    Client,
-    Ed25519PrivateKey,
-    Ed25519PublicKey,
-    TransactionSigner,
-    AccountId
-} from "@hashgraph/sdk";
-import { Operator, getters, actions, mutations } from "../store";
+import { getters, actions, mutations } from "../store";
 import { NetworkSettings, NetworkName } from "../settings";
-
-function getNetwork(): NetworkSettings {
-    return getters.GET_NETWORK();
-}
 
 interface State {
     loginMethod: LoginMethod | null;
@@ -109,7 +98,6 @@ export default createComponent({
     props: {},
     setup(props: object, context: SetupContext) {
         const state: CreateAccountDTO & State = reactive({
-            wallet: null,
             privateKey: null,
             publicKey: null,
             keyFile: null,
@@ -161,7 +149,7 @@ export default createComponent({
         const keyStoreLink = ref<HTMLAnchorElement | null>(null);
         const modalEnterAccountId: Ref<ModalEnterAccountIdElement | null> = ref(null);
 
-        function setPrivateKey(newPrivateKey: Ed25519PrivateKey): void {
+        function setPrivateKey(newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey): void {
             state.privateKey = newPrivateKey;
             state.publicKey = newPrivateKey.publicKey;
             state.modalEnterAccountIdState.publicKey = newPrivateKey.publicKey;
@@ -171,98 +159,12 @@ export default createComponent({
             context.root.$router.push({ name: "interface" });
         }
 
-        async function constructOperator(account: AccountId): Promise<Operator> {
-            if (state.wallet != null) {
-                if (state.wallet.hasPrivateKey()) {
-                    return {
-                        account,
-                        privateKey: await state.wallet!.getPrivateKey()
-                    } as Operator;
-                }
-                return {
-                    account,
-                    publicKey: (await state.wallet!.getPublicKey()) as Ed25519PublicKey,
-                    signer: state.wallet!.signTransaction.bind(state.wallet!) as TransactionSigner
-                };
-            }
-
-            return {
-                account: null as AccountId | null,
-                privateKey: null as Ed25519PrivateKey | null
-            } as Operator;
-        }
-
         function handleNetworkChange(settings: NetworkSettings): void {
             if (
-                getNetwork().name !== settings.name ||
+                getters.GET_NETWORK().name !== settings.name ||
                 settings.name === NetworkName.CUSTOM
             ) {
                 mutations.CHANGE_NETWORK(settings);
-            }
-        }
-
-        async function constructClient(account: AccountId): Promise<Client | undefined> {
-            let client: Client | undefined;
-
-            const {
-                Client,
-                CryptoTransferTransaction,
-                HederaStatusError,
-                Status
-            } = await import("@hashgraph/sdk");
-
-            try {
-                const network: NetworkSettings = await getNetwork();
-                const operator: Operator = await constructOperator(account);
-
-                client = new Client({
-                    network: {
-                        [ network.proxy || network.address ]: {
-                            shard: network.node.shard,
-                            realm: network.node.realm,
-                            account: network.node.node
-                        }
-                    },
-                    operator
-                });
-
-                const recipient: AccountId = new AccountId({
-                    realm: 0,
-                    shard: 0,
-                    // If the account requested is 3, use a different account as the recipient to avoid an
-                    // ACCOUNT_REPEATED_IN_ACCOUNT_AMOUNTS error
-                    account: account.account === 3 ? 4 : 3
-                });
-
-                await (await new CryptoTransferTransaction()
-                    .addSender(account, 0)
-                    .addRecipient(recipient, 0)
-                    .setMaxTransactionFee(1)
-                    .execute(client))
-                    .getReceipt(client);
-            } catch (error) {
-                if (error instanceof HederaStatusError) {
-                    // Transaction was valid except for deliberately insufficient fee,
-                    // meaning that the account matches the key and that nothing went wrong
-                    if (error.status.code === Status.InsufficientTxFee.code) {
-                        return client;
-                    }
-                }
-
-                // Else, throw the error, failed to make a client (failed to login)
-                throw error;
-            }
-        }
-
-        async function login(account: AccountId): Promise<void> {
-            const client: Client | undefined = await constructClient(account);
-
-            if (state.wallet != null && client != null) {
-                await actions.logIn({
-                    account,
-                    wallet: state.wallet,
-                    client
-                });
             }
         }
 
@@ -277,15 +179,13 @@ export default createComponent({
         function handleCreateBySoftwareSubmit(which: CreateSoftwareOption): void {
             state.modalCreateBySoftwareState.isOpen = false;
 
-            setTimeout(() => {
-                if (which === CreateSoftwareOption.File) {
-                    state.loginMethod = LoginMethod.KeyStore;
-                    state.modalCreateByKeystoreState.isOpen = true;
-                } else if (which === CreateSoftwareOption.Phrase) {
-                    state.loginMethod = LoginMethod.Mnemonic;
-                    state.modalCreateByPhraseState.isOpen = true;
-                }
-            }, 125);
+            if (which === CreateSoftwareOption.File) {
+                state.loginMethod = LoginMethod.KeyStore;
+                state.modalCreateByKeystoreState.isOpen = true;
+            } else if (which === CreateSoftwareOption.Phrase) {
+                state.loginMethod = LoginMethod.Mnemonic;
+                state.modalCreateByPhraseState.isOpen = true;
+            }
         }
 
         async function handleCreateByHardwareSubmit(which: AccessHardwareOption): Promise<void> {
@@ -297,8 +197,8 @@ export default createComponent({
                         );
 
                         state.modalCreateByHardwareState.isBusy = true;
-                        state.wallet = new Ledger();
-                        state.publicKey = (await state.wallet.getPublicKey()) as Ed25519PublicKey;
+                        const wallet = new Ledger();
+                        state.publicKey = (await wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
                         state.modalEnterAccountIdState.publicKey =
                             state.publicKey;
                         state.modalCreateByHardwareState.isOpen = false;
@@ -320,7 +220,7 @@ export default createComponent({
                     }
                     break;
                 default:
-                    state.wallet = null;
+                    mutations.SET_WALLET(null);
                     break;
             }
         }
@@ -328,9 +228,7 @@ export default createComponent({
         async function handleCreateByKeystoreSubmit(): Promise<void> {
             state.modalCreateByKeystoreState.isOpen = false;
 
-            setTimeout(() => {
-                state.modalDownloadKeystoreState.isOpen = true;
-            }, 125);
+            state.modalDownloadKeystoreState.isOpen = true;
             try {
                 const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
 
@@ -373,23 +271,18 @@ export default createComponent({
 
         function handleDownloadKeystoreContinue(): void {
             state.modalRequestToCreateAccountState.isOpen = true;
-            setTimeout(
-                () => state.modalDownloadKeystoreState.isOpen = false,
-                125
-            );
+            state.modalDownloadKeystoreState.isOpen = false;
         }
 
-        function handleCreateByPhraseSubmit(newPrivateKey: Ed25519PrivateKey): void {
+        function handleCreateByPhraseSubmit(newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey): void {
             state.modalCreateByPhraseState.isOpen = false;
 
             setPrivateKey(newPrivateKey);
 
-            setTimeout(() => {
-                state.modalRequestToCreateAccountState.isOpen = true;
-            }, 125);
+            state.modalRequestToCreateAccountState.isOpen = true;
         }
 
-        async function handleAccountIdSubmit(account: AccountId): Promise<void> {
+        async function handleAccountIdSubmit(account: import("@hashgraph/sdk").AccountId): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
 
             if (state.loginMethod == null) {
@@ -397,18 +290,18 @@ export default createComponent({
                 throw new Error(context.root.$t("common.error.illegalState").toString());
             }
 
-            if (state.wallet == null) {
+            if (getters.GET_WALLET() == null) {
                 if (state.privateKey != null) {
-                    state.wallet = new SoftwareWallet(
+                    mutations.SET_WALLET(new SoftwareWallet(
                         state.loginMethod,
-                        state.privateKey as Ed25519PrivateKey,
-                        state.publicKey as Ed25519PublicKey
-                    );
+                        state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
+                        state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
+                    ));
                 }
             }
 
             try {
-                await login(account);
+                await actions.logIn(account);
                 state.modalEnterAccountIdState.isOpen = false;
                 openInterface();
             } catch (error) {
@@ -416,11 +309,9 @@ export default createComponent({
                 if (error instanceof HederaStatusError) {
                     const result: HederaStatusErrorTuple = await actions.handleHederaError({ error, showAlert: false });
 
-                    // set input error to error message
                     state.modalEnterAccountIdState.errorMessage =
                         result.message;
 
-                    // In this case, the error should pop up
                     if (
                         error.message.includes(context.root.$t("common.error.unhandled").toString())
                     ) {
@@ -434,8 +325,6 @@ export default createComponent({
 
                     state.modalEnterAccountIdState.errorMessage =
                         result.message;
-
-                    // But don't throw device errors
                 } else if (
                     error.message === "Response closed without headers" ||
                     error.message === "Response closed without grpc-status" ||

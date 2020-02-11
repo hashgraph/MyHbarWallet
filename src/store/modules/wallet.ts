@@ -64,6 +64,7 @@ export interface Session {
 }
 
 export interface State {
+    wallet: Wallet | null;
     session: Session | null;
     balance: BigNumber | null;
     exchangeRate: BigNumber | null;
@@ -78,7 +79,6 @@ type ModalCreateByPhraseState = ModalIsOpen;
 type ModalRequestToCreateAccountState = ModalIsOpen;
 
 export interface AccountDTO {
-    wallet: Wallet | null;
     privateKey: Ed25519PrivateKey | null;
     publicKey: Ed25519PublicKey | null;
     keyFile: Uint8Array | null;
