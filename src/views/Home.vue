@@ -55,6 +55,10 @@
         <Features />
         <FAQs />
         <Community v-if="false" />
+        <ModalWelcome
+            v-model="state.welcomeIsOpen"
+            :platform="pf.os.family"
+        />
     </div>
 </template>
 
@@ -64,20 +68,44 @@ import FAQs from "../components/FAQs.vue";
 import Community from "../components/Community.vue";
 import HomeTileButtons from "../components/HomeTileButtons.vue";
 import circleImage from "../assets/circle.png";
-import { createComponent } from "@vue/composition-api";
+import { createComponent, reactive } from "@vue/composition-api";
 import hbarOrb from "../assets/hbar_orb.svg";
 import mountainTop from "../assets/mountain_top.svg";
+import ModalWelcome from "../components/ModalWelcome.vue";
+import { mutations, getters } from "../store";
+import platform from "platform";
 
 export default createComponent({
     components: {
         FAQs,
         HomeTileButtons,
         Features,
-        Community
+        Community,
+        ModalWelcome
     },
     props: {},
     setup() {
+        const state = reactive({ welcomeIsOpen: false });
+
+        const pf = platform;
+        if (
+            pf.os != null &&
+            (pf.os.family === "Android" ||
+                pf.os.family === "iOS" ||
+                process.env.IS_ELECTRON)
+        ) {
+            state.welcomeIsOpen = false;
+        } else if (!getters.HAS_BEEN_HOME()) {
+            state.welcomeIsOpen = true;
+        }
+
+        // Boolean used to determine if the user has been to home
+        // Otherwise don't show the Welcome modal
+        mutations.SET_HAS_BEEN_HOME();
+
         return {
+            state,
+            pf,
             circleImage,
             hbarOrb,
             mountainTop
