@@ -22,15 +22,11 @@ describe("ModalReportError.Vue", (): void => {
         const wrapper = mount(ModalReportError, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: false
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: false },
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 
     it("renders open", (): void => {
@@ -40,14 +36,10 @@ describe("ModalReportError.Vue", (): void => {
         const wrapper = mount(ModalReportError, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: false
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: false },
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 });

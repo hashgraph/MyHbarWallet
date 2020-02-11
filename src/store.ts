@@ -21,11 +21,8 @@ import {
 import { State as NetworkState } from "./store/modules/network";
 import BigNumber from "bignumber.js";
 import i18n from "./i18n";
-import { StatusCodes } from "@ledgerhq/hw-transport";
 import { getValueOfUnit, Unit } from "./units";
 import { NetworkName, availableNetworks, NetworkSettings } from "./settings";
-import { AccountIdLike } from "@hashgraph/sdk/lib/account/AccountId";
-import { Ed25519PrivateKey, Ed25519PublicKey, TransactionSigner } from "@hashgraph/sdk";
 import Wallet from "./wallets/Wallet";
 import router from "./router";
 
@@ -37,16 +34,6 @@ export interface RootState {
     errors: ErrorsState;
     network: NetworkState;
 }
-
-// No longer provided publicly by the SDK
-export type Operator = {
-    account: AccountIdLike;
-    privateKey: Ed25519PrivateKey;
-} | {
-    account: AccountIdLike;
-    publicKey: Ed25519PublicKey;
-    signer: TransactionSigner;
-};
 
 export interface Store {
     state: RootState;
@@ -145,40 +132,10 @@ export const mutations = {
     SET_HAS_BEEN_TO_INTERFACE(visited: boolean): void {
         store.state.interfaceMenu.hasBeenToInterface = visited;
     },
-    async CONSTRUCT_OPERATOR(account: import("@hashgraph/sdk").AccountId): Promise<import("@hashgraph/sdk/lib/BaseClient").Operator> {
-        if (getters.GET_WALLET() != null) {
-            if (getters.GET_WALLET()!.hasPrivateKey()) {
-                return {
-                    account,
-                    privateKey: await getters.GET_WALLET()!.getPrivateKey()
-                } as Operator;
-            }
-            return {
-                account,
-                publicKey: (await getters.GET_WALLET()!.getPublicKey()) as Ed25519PublicKey,
-                signer: getters.GET_WALLET()!.signTransaction.bind(getters.GET_WALLET()) as TransactionSigner
-            };
-        }
-
-        return {
-            account: null as import("@hashgraph/sdk").AccountId | null,
-            privateKey: null as Ed25519PrivateKey | null
-        } as Operator;
-    },
-    async CONSTRUCT_CLIENT(account: import("@hashgraph/sdk").AccountId): Promise<import("@hashgraph/sdk").Client> {
-        const network: NetworkSettings = getters.GET_NETWORK();
-        const operator: import("@hashgraph/sdk/lib/BaseClient").Operator = await this.CONSTRUCT_OPERATOR(account);
-        const client: import("@hashgraph/sdk").Client = new (await import("@hashgraph/sdk")).Client({
-            network: {
-                [ network.proxy || network.address ]: {
-                    shard: network.node.shard,
-                    realm: network.node.realm,
-                    account: network.node.node
-                }
-            },
-            operator
-        });
-
+    async TEST_CLIENT(
+        account: import("@hashgraph/sdk").AccountId,
+        client: import("@hashgraph/sdk").Client
+    ): Promise<import("@hashgraph/sdk").Client> {
         try {
             await (await new (await import("@hashgraph/sdk")).CryptoTransferTransaction()
                 .addSender(account, 0)
@@ -195,6 +152,54 @@ export const mutations = {
                 }
             }
             throw error;
+        }
+        throw new Error(i18n.t("common.error.clientConstruction").toString());
+    },
+    // eslint-disable-next-line sonarjs/cognitive-complexity
+    async CONSTRUCT_CLIENT(account: import("@hashgraph/sdk").AccountId): Promise<import("@hashgraph/sdk").Client> {
+        const network: NetworkSettings = getters.GET_NETWORK();
+        const wallet: Wallet | null = getters.GET_WALLET();
+
+        let publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null = null;
+        let privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null = null;
+        let signer: import("@hashgraph/sdk").TransactionSigner | null = null;
+
+        if (wallet != null) {
+            if (wallet.hasPrivateKey()) {
+                privateKey = await wallet.getPrivateKey();
+            }
+
+            publicKey = await wallet.getPublicKey() as import("@hashgraph/sdk").Ed25519PublicKey;
+            signer = wallet.signTransaction.bind(wallet) as import("@hashgraph/sdk").TransactionSigner;
+            let client: import("@hashgraph/sdk").Client | null = null;
+
+            if (network.name !== NetworkName.CUSTOM) {
+                if (network.name === NetworkName.MAINNET) {
+                    client = (await import("@hashgraph/sdk")).Client.forMainnet();
+                } else if (network.name === NetworkName.TESTNET) {
+                    client = (await import("@hashgraph/sdk")).Client.forTestnet();
+                }
+            } else {
+                client = new (await import("@hashgraph/sdk")).Client({
+                    network: {
+                        [ network.proxy || network.address ]: {
+                            shard: network.node.shard,
+                            realm: network.node.realm,
+                            account: network.node.node
+                        }
+                    }
+                });
+            }
+
+            if (client != null) {
+                if (wallet.hasPrivateKey()) {
+                    client.setOperator(account, privateKey!);
+                } else {
+                    client.setOperatorWith(account, publicKey, signer);
+                }
+
+                return this.TEST_CLIENT(account, client);
+            }
         }
 
         throw new Error(i18n.t("common.error.clientConstruction").toString());
@@ -298,7 +303,7 @@ export const actions = {
 
         return { message, error: payload.error };
     },
-    handleLedgerError(payload: LedgerErrorPayload): Promise<LedgerErrorTuple> {
+    async handleLedgerError(payload: LedgerErrorPayload): Promise<LedgerErrorTuple> {
         // eslint-disable-next-line no-process-env, no-undef
         if (process.env.NODE_ENV !== "production" && payload.error != null) {
             console.error(payload.error);
@@ -307,6 +312,8 @@ export const actions = {
         // see: https://github.com/LedgerHQ/ledgerjs/blob/master/packages/errors/src/index.js#L196-L227
         let message = "";
         let severity = "error";
+
+        const { StatusCodes } = await import("@ledgerhq/hw-transport");
 
         switch (payload.error.statusCode) {
             // Security Exceptions (not allowed)

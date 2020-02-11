@@ -1,8 +1,4 @@
-import {
-    NetworkSettings,
-    NetworkName,
-    availableNetworks
-} from "../../settings";
+import { NetworkSettings } from "../../settings";
 
 export interface State {
     network: NetworkSettings;

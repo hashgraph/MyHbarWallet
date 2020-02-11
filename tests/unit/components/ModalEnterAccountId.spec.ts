@@ -22,12 +22,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -51,12 +47,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -174,12 +166,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -202,12 +190,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -230,12 +214,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -354,12 +334,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -382,12 +358,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -506,12 +478,8 @@ describe("ModalEnterAccountId.vue", (): void => {
         const wrapper = mount(ModalEnterAccountId, {
             localVue,
             i18n,
-            propsData: {
-                state
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { state },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

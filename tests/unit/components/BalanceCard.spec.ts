@@ -15,9 +15,7 @@ describe("BalanceCard.vue", (): void => {
         const wrapper = mount(BalanceCard, {
             localVue,
             i18n,
-            propsData: {
-                balance: null
-            }
+            propsData: { balance: null }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

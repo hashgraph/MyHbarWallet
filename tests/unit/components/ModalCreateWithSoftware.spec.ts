@@ -20,15 +20,11 @@ describe("ModalCreateWithSoftware.vue", (): void => {
             localVue,
             router,
             i18n,
-            propsData: {
-                isOpen: false
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: false },
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 
     it("renders open", (): void => {
@@ -39,12 +35,8 @@ describe("ModalCreateWithSoftware.vue", (): void => {
             localVue,
             i18n,
             router,
-            propsData: {
-                isOpen: true
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: true },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

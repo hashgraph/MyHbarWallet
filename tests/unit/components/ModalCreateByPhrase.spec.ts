@@ -16,12 +16,8 @@ describe("ModalCreateByPhrase.vue", (): void => {
         const wrapper = mount(ModalCreateByPhrase, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: false
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: false },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -38,12 +34,8 @@ describe("ModalCreateByPhrase.vue", (): void => {
         const wrapper = mount(ModalCreateByPhrase, {
             localVue,
             i18n,
-            propsData: {
-                isOpen: true
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { isOpen: true },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

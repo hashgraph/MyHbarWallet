@@ -7,7 +7,7 @@ module.exports = {
         require("postcss-normalize")(),
         require("postcss-preset-env")({
             stage: 0,
-            importFrom: [path.join(__dirname, "src/main.css")]
+            importFrom: [ path.join(__dirname, "src/main.css") ]
         })
     ]
 };
