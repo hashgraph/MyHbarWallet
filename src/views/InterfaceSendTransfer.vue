@@ -5,11 +5,9 @@
             :error="state.amountErrorMessage"
             :suffix="hbarSuffix"
             :valid="isAmountValid"
-            action="Entire Balance"
             has-input
             :label="$t('common.amount')"
             show-validation
-            @action="handleClickEntireBalance"
             @input="handleInput"
         />
 
@@ -201,20 +199,6 @@ export default createComponent({
             }
         ] as Item[]);
 
-        async function handleClickEntireBalance(): Promise<void> {
-            const balance = store.state.wallet.balance;
-
-            if (balance == null) {
-                return;
-            }
-
-            const hbar = new BigNumber(balance)
-                .dividedBy(getValueOfUnit(Unit.Hbar))
-                .minus(estimatedFeeHbar);
-
-            state.amount = hbar.toString();
-        }
-
         function handleShowSummary(): void {
             state.summaryIsOpen = true;
         }
@@ -403,7 +387,6 @@ export default createComponent({
             tinybarSuffix: Unit.Tinybar,
             idInput,
             handleShowSummary,
-            handleClickEntireBalance,
             handleSendTransfer,
             handleModalSuccessDismiss,
             truncate,
