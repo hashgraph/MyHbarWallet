@@ -30,9 +30,7 @@ describe("ModalExportGenerateKeystore.vue", (): void => {
                     }
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -62,9 +60,7 @@ describe("ModalExportGenerateKeystore.vue", (): void => {
                     }
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -140,9 +136,7 @@ describe("ModalExportGenerateKeystore.vue", (): void => {
                     }
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);
@@ -172,9 +166,7 @@ describe("ModalExportGenerateKeystore.vue", (): void => {
                     }
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(onChange).toHaveBeenCalledTimes(0);

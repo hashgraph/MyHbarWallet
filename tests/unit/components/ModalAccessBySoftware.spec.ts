@@ -20,15 +20,9 @@ describe("ModalAccessBySoftware.vue", (): void => {
             localVue,
             i18n,
             router,
-            propsData: {
-                isOpen: false
-            },
-            listeners: {
-                change: onChange
-            },
-            stubs: {
-                MaterialDesignIcon: true
-            }
+            propsData: { isOpen: false },
+            listeners: { change: onChange },
+            stubs: { MaterialDesignIcon: true }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -46,15 +40,9 @@ describe("ModalAccessBySoftware.vue", (): void => {
             localVue,
             i18n,
             router,
-            propsData: {
-                isOpen: true
-            },
-            listeners: {
-                change: onChange
-            },
-            stubs: {
-                MaterialDesignIcon: true
-            }
+            propsData: { isOpen: true },
+            listeners: { change: onChange },
+            stubs: { MaterialDesignIcon: true }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

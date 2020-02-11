@@ -16,12 +16,8 @@ describe("SwitchButton.vue", (): void => {
         const wrapper = mount(SwitchButton, {
             localVue,
             i18n,
-            propsData: {
-                checked: false
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { checked: false },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -37,12 +33,8 @@ describe("SwitchButton.vue", (): void => {
         const wrapper = mount(SwitchButton, {
             localVue,
             i18n,
-            propsData: {
-                checked: true
-            },
-            listeners: {
-                change: onChange
-            }
+            propsData: { checked: true },
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

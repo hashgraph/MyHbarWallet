@@ -21,9 +21,7 @@ describe("ModalViewAccountId.vue", (): void => {
                 isOpen: true,
                 event: "change"
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -69,11 +67,9 @@ describe("ModalViewAccountId.vue", (): void => {
                 isOpen: false,
                 event: "change"
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(``);
+        expect(wrapper).toMatchInlineSnapshot("");
     });
 });

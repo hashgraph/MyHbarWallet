@@ -18,9 +18,7 @@ describe("InterfaceForm.vue", (): void => {
         const wrapper = mount(InterfaceFormTitle, {
             localVue,
             i18n,
-            propsData: {
-                title
-            }
+            propsData: { title }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

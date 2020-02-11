@@ -20,9 +20,7 @@ describe("Tooltip.vue", (): void => {
                 message,
                 pinnable: true
             },
-            slots: {
-                default: "<div class='component'>Hover Me</div>"
-            }
+            slots: { default: "<div class='component'>Hover Me</div>" }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -48,9 +46,7 @@ describe("Tooltip.vue", (): void => {
                 message,
                 pinnable: false
             },
-            slots: {
-                default: "<div class='component'>Hover Me</div>"
-            }
+            slots: { default: "<div class='component'>Hover Me</div>" }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

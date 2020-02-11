@@ -30,9 +30,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     }
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -61,9 +59,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     }
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -92,9 +88,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     }
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -171,9 +165,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                     }
                 }
             },
-            listeners: {
-                change: onChange
-            }
+            listeners: { change: onChange }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

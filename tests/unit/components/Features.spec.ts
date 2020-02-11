@@ -6,9 +6,7 @@ describe("Features.vue", (): void => {
     it("renders", (): void => {
         expect.assertions(1);
 
-        const wrapper = mount(Features, {
-            i18n
-        });
+        const wrapper = mount(Features, { i18n });
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="features">

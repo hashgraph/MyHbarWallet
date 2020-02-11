@@ -15,9 +15,7 @@ describe("Notice.vue", (): void => {
         const wrapper = mount(Notice, {
             localVue,
             i18n,
-            propsData: {
-                symbol: mdiPartyPopper
-            }
+            propsData: { symbol: mdiPartyPopper }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

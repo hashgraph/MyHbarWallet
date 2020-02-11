@@ -15,9 +15,7 @@ describe("Button.vue", (): void => {
         const wrapper = mount(Button, {
             localVue,
             i18n,
-            propsData: {
-                label: "Choose a Hardware"
-            }
+            propsData: { label: "Choose a Hardware" }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`

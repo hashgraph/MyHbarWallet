@@ -37,7 +37,7 @@ describe("RadioButtonGroup.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(
-            `<div class="radio-button-group"></div>`
+            "<div class=\"radio-button-group\"></div>"
         );
     });
 

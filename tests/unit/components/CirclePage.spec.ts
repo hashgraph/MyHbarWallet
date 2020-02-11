@@ -17,7 +17,7 @@ describe("CirclePage.vue", (): void => {
             i18n
         });
         expect(wrapper).toMatchInlineSnapshot(
-            `<div class="circle-page"></div>`
+            "<div class=\"circle-page\"></div>"
         );
     });
 });

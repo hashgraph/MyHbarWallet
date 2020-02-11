@@ -17,6 +17,6 @@ describe("Alerts.vue", (): void => {
             i18n
         });
 
-        expect(wrapper).toMatchInlineSnapshot(`<div class="alerts"></div>`);
+        expect(wrapper).toMatchInlineSnapshot("<div class=\"alerts\"></div>");
     });
 });
