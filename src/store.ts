@@ -25,7 +25,7 @@ import { StatusCodes } from "@ledgerhq/hw-transport";
 import { getValueOfUnit, Unit } from "./units";
 import { NetworkName, availableNetworks, NetworkSettings } from "./settings";
 import { AccountIdLike } from "@hashgraph/sdk/lib/account/AccountId";
-import { Ed25519PrivateKey, Ed25519PublicKey, TransactionSigner } from "@hashgraph/sdk";
+import { Ed25519PrivateKey, Ed25519PublicKey, TransactionSigner, AccountId } from "@hashgraph/sdk";
 
 export interface RootState {
     alerts: AlertsState;
@@ -110,6 +110,9 @@ export const getters = {
     },
     GET_NETWORK(): NetworkSettings {
         return store.state.network.network;
+    },
+    CURRENT_USER(): AccountId {
+        return store.state.wallet.session!.account;
     }
 };
 

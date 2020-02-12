@@ -30,11 +30,17 @@
                 </div>
             </div>
             <div class="actions">
-                <MaterialDesignIcon
-                    :icon="mdiBankPlus"
+                <Tooltip
+                    :message="$t('balanceCard.purchaseHbar')"
+                    :pinnable="false"
                     class="action"
-                    @click="handleOpenModal"
-                />
+                >
+                    <MaterialDesignIcon
+                        :icon="mdiBankPlus"
+                        class="purchase-icon"
+                        @click="handleOpenModal"
+                    />
+                </Tooltip>
                 <MaterialDesignIcon
                     v-if="state.isBusy"
                     :icon="mdiLoading"
@@ -195,6 +201,10 @@ img {
     cursor: pointer;
     height: 28px;
     width: 28px;
+}
+
+.purchase-icon {
+    cursor: pointer;
 }
 
 .content {

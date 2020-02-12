@@ -22,7 +22,7 @@ import {
     PropType,
     computed
 } from "@vue/composition-api";
-import { store } from "../store";
+import { getters } from "../store";
 
 export default createComponent({
     components: { Modal },
@@ -30,9 +30,9 @@ export default createComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: { isOpen: (Boolean as unknown) as PropType<boolean> },
+    props: { isOpen: Boolean },
     setup() {
-        const accId = store.state.wallet.session!.account;
+        const accId = getters.CURRENT_USER();
         const accIdString = accId.toString();
         const environment = process.env.NODE_ENV !== "production" ? "sandbox" : "production";
         const key = process.env.NODE_ENV !== "production" ? "89fa28dd-b26e-4af4-8313-1536054767d5" : "production";
