@@ -15,7 +15,7 @@
     ],
     "theme_color": "#39ba8b",
     "background_color": "#39ba8b",
-    "start_url": "https://myhbarwallet.com",
+    "start_url": "index.html",
     "display": "standalone",
     "orientation": "portrait"
 }
