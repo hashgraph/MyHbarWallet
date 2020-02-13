@@ -20,7 +20,7 @@ describe("ModalLogOut.vue", (): void => {
             listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot("");
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 
     it("renders open", (): void => {

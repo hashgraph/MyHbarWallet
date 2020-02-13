@@ -1,25 +1,24 @@
-import { mount } from "@vue/test-utils";
 import OptionalPasswordInput from "../../../src/components/OptionalPasswordInput.vue";
+import VueCompositionApi from "@vue/composition-api";
+import { createLocalVue, mount } from "@vue/test-utils";
 import i18n from "../../../src/i18n";
 
 describe("OptionalPasswordInput", (): void => {
-    it("renders", (): void => {
-        expect.assertions(1);
+    const localVue = createLocalVue();
+    localVue.use(VueCompositionApi);
 
+    it("renders", (): void => {
         const wrapper = mount(OptionalPasswordInput, {
-            propsData: { value: "" },
+            propsData: { value: "", passwordWarning: null },
+            localVue,
             i18n,
             methods: {
                 // This test has warnings if the values aren't defined
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                handleInput(password: string): void {
-
-                },
+                handleInput(password: string): void {},
                 // This test has warnings if the values aren't defined
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                handleChangeShowPassword(showPassword: boolean): void {
-
-                }
+                handleChangeShowPassword(showPassword: boolean): void {}
             },
             stubs: {
                 TextInput: true,

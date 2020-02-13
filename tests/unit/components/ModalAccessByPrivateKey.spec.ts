@@ -29,7 +29,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
             listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot("");
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 
     it("renders open, not busy", (): void => {
@@ -179,6 +179,6 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
             listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot("");
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 });

@@ -70,6 +70,6 @@ describe("ModalViewAccountId.vue", (): void => {
             listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot("");
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 });

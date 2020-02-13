@@ -26,7 +26,7 @@ describe("ModalReportError.Vue", (): void => {
             listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot("");
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 
     it("renders open", (): void => {
@@ -40,6 +40,6 @@ describe("ModalReportError.Vue", (): void => {
             listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot("");
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 });

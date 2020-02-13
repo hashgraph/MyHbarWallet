@@ -120,6 +120,7 @@ export default createComponent({
             modalAccessByPhraseState: {
                 isOpen: false,
                 isBusy: false,
+                password: "",
                 words: [],
                 isValid: true
             },
@@ -288,16 +289,16 @@ export default createComponent({
             try {
                 const { Ed25519PrivateKey, Mnemonic } = await import("@hashgraph/sdk");
 
+                const rootPrivateKey = await Ed25519PrivateKey.fromMnemonic(
+                    new Mnemonic(accessByPhraseState.words), accessByPhraseState.password);
+
                 if (derive) {
-                    setPrivateKey(
-                        // `.derive(0)` to use the same key as the default account of the mobile wallet
-                        (await Ed25519PrivateKey.fromMnemonic(new Mnemonic(accessByPhraseState.words), "")).derive(0));
+                    setPrivateKey(rootPrivateKey.derive(0));
                 } else {
-                    setPrivateKey(
-                        await Ed25519PrivateKey.fromMnemonic(new Mnemonic(accessByPhraseState.words), "")
-                    );
+                    setPrivateKey(rootPrivateKey);
                 }
-                // Close  previous modal and open another one
+
+                // Close previous modal and open another one
                 accessByPhraseState.isBusy = false;
                 accessByPhraseState.isOpen = false;
                 state.modalEnterAccountIdState.isOpen = true;

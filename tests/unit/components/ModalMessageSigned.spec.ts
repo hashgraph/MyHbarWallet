@@ -32,7 +32,7 @@ describe("ModalMessageSigned.vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot("");
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 
     it("renders open", (): void => {
