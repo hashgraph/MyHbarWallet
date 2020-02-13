@@ -32,11 +32,13 @@ export default createComponent({
     },
     props: { isOpen: Boolean },
     setup() {
-        const accId = getters.CURRENT_USER();
+        const accId = getters.CURRENT_USER()!;
         const accIdString = accId.toString();
         const environment = process.env.NODE_ENV !== "production" ? "sandbox" : "production";
         const key = process.env.NODE_ENV !== "production" ? "89fa28dd-b26e-4af4-8313-1536054767d5" : "production";
+
         const url = `https://buy.carbon.money/?tokens=hbar&receiveAddressHbar=${accIdString}&environment=${environment}&apiKey=${key}`;
+
         console.log(url);
         return { url };
     }
