@@ -13,6 +13,7 @@
     "accountTileButtons.supportForHardwareWallets": "Support for hardware wallets in development",
     "accountTileButtons.walletsSupported": "Ledger Nano S, Ledger Nano X",
     "balanceCard.balance": "Balance",
+    "balanceCard.purchaseHbar": "Purchase Hbar",
     "balanceCard.refreshBalance": "Refresh Balance",
     "balanceCard.unknown": "Unknown",
     "common.about": "About",

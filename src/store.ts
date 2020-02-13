@@ -104,6 +104,9 @@ export const getters = {
     },
     GET_WALLET(): Wallet | null {
         return store.state.wallet.wallet;
+    },
+    CURRENT_USER(): import("@hashgraph/sdk").AccountId {
+        return store.state.wallet.session!.account;
     }
 };
 

@@ -30,10 +30,21 @@
                 </div>
             </div>
             <div class="actions">
+                <Tooltip
+                    :message="$t('balanceCard.purchaseHbar')"
+                    :pinnable="false"
+                    class="action"
+                >
+                    <MaterialDesignIcon
+                        :icon="mdiBankPlus"
+                        class="purchase-icon"
+                        @click="handleOpenModal"
+                    />
+                </Tooltip>
                 <MaterialDesignIcon
                     v-if="state.isBusy"
                     :icon="mdiLoading"
-                    class="spinner"
+                    class="spinner action"
                     spin
                 />
                 <Tooltip
@@ -50,27 +61,30 @@
                 </Tooltip>
             </div>
         </div>
+        <ModalPurchaseHbar v-model="state.isOpen" />
     </div>
 </template>
 
 <script lang="ts">
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
-import { mdiLoading, mdiRefresh } from "@mdi/js";
+import { mdiLoading, mdiRefresh, mdiBankPlus } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
 import { computed, createComponent, reactive } from "@vue/composition-api";
 import walletHbar from "../assets/wallet-hbar.svg";
 import { formatHbar, formatUSD } from "../formatter";
 import BigNumber from "bignumber.js";
 import { actions, store } from "../store";
+import ModalPurchaseHbar from "../components/ModalPurchaseHbar.vue";
 
 export default createComponent({
     components: {
         MaterialDesignIcon,
-        Tooltip
+        Tooltip,
+        ModalPurchaseHbar
     },
     props: {},
     setup() {
-        const state = reactive({ isBusy: false });
+        const state = reactive({ isBusy: false, isOpen: false });
 
         const hasFetchedBalance = computed(() => store.state.wallet.balance != null);
 
@@ -97,6 +111,10 @@ export default createComponent({
             return "";
         });
 
+        function handleOpenModal(): void {
+            state.isOpen = true;
+        }
+
         async function handleRefreshBalance(): Promise<void> {
             state.isBusy = true;
 
@@ -112,6 +130,7 @@ export default createComponent({
         return {
             mdiRefresh,
             mdiLoading,
+            mdiBankPlus,
             walletHbar,
             state,
             hasFetchedBalance,
@@ -119,7 +138,9 @@ export default createComponent({
             handleRefreshBalance,
             balanceHbar,
             balanceHBarFormatted,
-            balanceUSDFormatted
+            balanceUSDFormatted,
+            ModalPurchaseHbar,
+            handleOpenModal
         };
     }
 });
@@ -182,6 +203,10 @@ img {
     width: 28px;
 }
 
+.purchase-icon {
+    cursor: pointer;
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -196,6 +221,10 @@ img {
 .actions {
     align-items: center;
     display: flex;
+}
+
+.action + .action {
+    margin-inline-start: 15px;
 }
 
 .usd-balance {
