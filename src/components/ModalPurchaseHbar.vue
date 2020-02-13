@@ -39,7 +39,7 @@ export default createComponent({
         const accId = getters.CURRENT_USER()!;
         const accIdString = accId.toString();
 
-        const environment = MHW_ENV === "production" ? "sandbox" : "production";
+        const environment = MHW_ENV !== "production" ? "sandbox" : "production";
 
         const url = `https://buy.carbon.money/?tokens=hbar&receiveAddressHbar=${accIdString}&environment=${environment}&apiKey=${CARBON_API_KEY}`;
 
