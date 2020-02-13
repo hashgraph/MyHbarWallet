@@ -14,9 +14,9 @@ protocol.registerSchemesAsPrivileged([{ scheme: "mhw", privileges: { secure: tru
 
 function createWindow(): void {
     win = new BrowserWindow({
-        width: 1024,
+        width: 1025,
         height: 768,
-        webPreferences: { nodeIntegration: true },
+        webPreferences: { nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION as unknown as boolean },
         show: false
     });
 
@@ -48,11 +48,11 @@ app.on("window-all-closed", () => {
     app.quit();
 });
 
-app.on("activate", () => {
-    if (win == null) {
-        createWindow();
-    }
-});
+// app.on("activate", () => {
+//     if (win == null) {
+//         createWindow();
+//     }
+// });
 
 app.on("ready", async() => {
     createWindow();
