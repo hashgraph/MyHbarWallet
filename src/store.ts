@@ -107,6 +107,9 @@ export const getters = {
     },
     CURRENT_USER(): import("@hashgraph/sdk").AccountId | null {
         return store.state.wallet.session?.account ?? null;
+    },
+    HAS_BEEN_HOME(): boolean {
+        return JSON.parse(localStorage.getItem("home") ?? "false");
     }
 };
 
@@ -218,6 +221,9 @@ export const mutations = {
     },
     SET_EXCHANGE_RATE(rate: BigNumber): void {
         store.state.wallet.exchangeRate = rate;
+    },
+    SET_HAS_BEEN_HOME(): void {
+        localStorage.setItem("home", "true");
     },
     CHANGE_NETWORK(settings: NetworkSettings): void {
         const name = settings.name;

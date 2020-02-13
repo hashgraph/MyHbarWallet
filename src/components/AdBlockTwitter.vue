@@ -1,7 +1,10 @@
 <template>
-    <a class="AdBlockTwitter" href="https://twitter.com/myhbarwallet?lang=en"
-                    rel="noopener"
-                    target="_blank">
+    <a
+        class="AdBlockTwitter"
+        href="https://twitter.com/myhbarwallet?lang=en"
+        rel="noopener"
+        target="_blank"
+    >
         <div class="AdBlockTwitter-follow">
             {{ $t("ads.twitterFollowUs") }}
             <MaterialDesignIcon
