@@ -24,7 +24,7 @@ module.exports = {
                 VERSION: `"${package.version.toString()}"`,
                 COMMIT_HASH: `"${hash.toString().trim()}"`,
                 HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
-                CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`,
+                CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`
             })
         ]
     },
@@ -38,6 +38,7 @@ module.exports = {
                     return args;
                 });
             },
+            nodeIntegration: true,
             builderOptions: {
                 appId: "com.myhbarwallet.app",
                 productName: "MyHbarWallet",

@@ -1,6 +1,7 @@
 {
     "name": "myhbarwallet",
-    "version": "0.4.0",
+    "version": "0.5.0",
+    "description": "MyHbarWallet is a free, client-side interface helping you interact with Hedera™ Hashgraph.",
     "private": true,
     "author": "MyHbarWallet <support@myhbarwallet.com>",
     "scripts": {
@@ -106,7 +107,7 @@
         "stylelint-value-no-unknown-custom-properties": "^2.0.0",
         "ts-jest": "^25.2.0",
         "typescript": "3.7.5",
-        "vue-cli-plugin-electron-builder": "^1.4.5",
+        "vue-cli-plugin-electron-builder": "^2.0.0-beta.3",
         "vue-template-compiler": "^2.6.10"
     }
 }
