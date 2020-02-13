@@ -133,7 +133,7 @@
     "interfaceContractDeploy.title": "Deploy Contract",
     "interfaceCreateAccount.initialBalance": "Initial Balance",
     "interfaceCreateAccount.publicKey": "Public Key",
-    "interfaceCreateAccount.toCreateAccount": " To create an account, you need the public key of the person requesting an account and you need to fund the new account with some amount of hbars.",
+    "interfaceCreateAccount.toCreateAccount": " To create an account, you need the public key of the person requesting an account.",
     "interfaceDownloadFile.feeSummary.cancel": "Dismiss",
     "interfaceDownloadFile.feeSummary.submit": "Continue",
     "interfaceDownloadFile.title": "Download",
