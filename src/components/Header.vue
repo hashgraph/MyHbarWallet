@@ -16,17 +16,17 @@
                     src="../assets/myhbarwallet-logo.svg"
                 >
             </div>
-            <router-link
+            <div
                 v-else
-                to="/"
                 class="link"
+                @click="close"
             >
                 <img
                     alt=""
                     class="logo"
                     src="../assets/myhbarwallet-logo.svg"
                 >
-            </router-link>
+            </div>
             <div class="spacer" />
             <div class="links">
                 <router-link
@@ -160,6 +160,11 @@ export default createComponent({
             state.isHamburgerOpen = !state.isHamburgerOpen;
         }
 
+        function close(): void {
+            state.isHamburgerOpen = false;
+            context.root.$router.push({ name: "home" });
+        }
+
         const isHome = computed(() => {
             // This conditional is required for unit tests to pass
             if (context.root != null && context.root.$route != null) {
@@ -219,6 +224,7 @@ export default createComponent({
             state,
             onScroll,
             toggle,
+            close,
             isHome,
             headerClasses,
             loggedIn,
