@@ -20,9 +20,11 @@ module.exports = {
         },
         plugins: [
             new webpack.DefinePlugin({
+                MHW_ENV: `"${process.env.NODE_ENV}"`,
                 VERSION: `"${package.version.toString()}"`,
                 COMMIT_HASH: `"${hash.toString().trim()}"`,
-                HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`
+                HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
+                CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`,
             })
         ]
     },

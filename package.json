@@ -5,7 +5,7 @@
     "author": "MyHbarWallet <support@myhbarwallet.com>",
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build",
+        "build": "cross-env NODE_ENV=production vue-cli-service build",
         "test": "npm-run-all test:unit",
         "lint": "npm-run-all tsc lint:js lint:css",
         "ci": "npm-run-all lint test:unit build",

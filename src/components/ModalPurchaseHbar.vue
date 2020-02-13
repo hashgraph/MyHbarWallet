@@ -24,7 +24,9 @@ import {
 } from "@vue/composition-api";
 import { getters } from "../store";
 
-const isProd = process.env.NODE_ENV === "production";
+// Both of these are defined in vue.config.js.
+declare const MHW_ENV: string;
+declare const CARBON_API_KEY: string;
 
 export default createComponent({
     components: { Modal },
@@ -37,10 +39,9 @@ export default createComponent({
         const accId = getters.CURRENT_USER()!;
         const accIdString = accId.toString();
 
-        const environment = isProd ? "sandbox" : "production";
-        const apiKey = isProd ? "89fa28dd-b26e-4af4-8313-1536054767d5" : process.env.CARBON_API_KEY;
+        const environment = MHW_ENV === "production" ? "sandbox" : "production";
 
-        const url = `https://buy.carbon.money/?tokens=hbar&receiveAddressHbar=${accIdString}&environment=${environment}&apiKey=${apiKey}`;
+        const url = `https://buy.carbon.money/?tokens=hbar&receiveAddressHbar=${accIdString}&environment=${environment}&apiKey=${CARBON_API_KEY}`;
 
         return { url };
     }
