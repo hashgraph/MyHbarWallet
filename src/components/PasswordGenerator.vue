@@ -12,7 +12,7 @@
         <TextInput
             v-model="state.confirmationPassword"
             :placeholder="$t('common.password.confirmPassword')"
-            :error="passwordMismatch.error"
+            :error="passwordMismatch"
             obscure
         />
 
@@ -89,8 +89,7 @@ import {
     createComponent,
     PropType,
     ref,
-    watch,
-    reactive
+    watch
 } from "@vue/composition-api";
 import Button from "./Button.vue";
 import TextInput from "./TextInput.vue";
@@ -139,7 +138,7 @@ export default createComponent({
     setup(props: Props, context) {
         const input = ref<HTMLInputElement | null>(null);
 
-        const passwordMismatch = reactive({ error: "" });
+        const passwordMismatch = ref("");
 
         const confirmPassword = computed(() => props.state.confirmationPassword === props.state.password);
 
@@ -164,21 +163,21 @@ export default createComponent({
                 !confirmPassword.value);
 
         watch(
-            () => [ props.state.confirmationPassword, props.state.password ],
-            () => {
-                if (
-                    !confirmPassword.value &&
-                    props.state.confirmationPassword.length > 0 &&
-                    props.state.password.length > 0
-                ) {
-                    setTimeout(
-                        () => passwordMismatch.error = context.root
-                            .$t("password.noMatch")
-                            .toString(),
-                        1000
+            () => confirmPassword.value,
+            (newVal) => {
+                if (newVal) {
+                    Vue.nextTick(
+                        () => {
+                            passwordMismatch.value = "";
+                        }
                     );
                 } else {
-                    passwordMismatch.error = "";
+                    Vue.nextTick(
+                        () => {
+                            passwordMismatch.value = context.root
+                                .$t("password.noMatch")
+                                .toString();
+                        });
                 }
             }
         );
