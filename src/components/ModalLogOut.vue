@@ -40,7 +40,6 @@ import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import {
     createComponent,
-    PropType,
     SetupContext,
     computed
 } from "@vue/composition-api";
@@ -72,8 +71,8 @@ export default createComponent({
         event: "change"
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        forgot: (Boolean as unknown) as PropType<boolean>
+        isOpen: Boolean,
+        forgot: Boolean
     },
     setup(props: Props, context: SetupContext) {
         function handleClickLogOut(): void {
@@ -121,8 +120,6 @@ export default createComponent({
     width: 48.2%;
 
     @media (max-width: 600px) {
-        width: 100%;
-
         &:last-child {
             margin-block-end: 15px;
         }
@@ -132,6 +129,11 @@ export default createComponent({
 .modal-forgot-to-logout {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+
+    @media (max-width: 600px) {
+        margin-block-start: 50%;
+    }
 }
 
 span {
