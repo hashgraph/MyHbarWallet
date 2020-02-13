@@ -30,17 +30,6 @@
                 </div>
             </div>
             <div class="actions">
-                <Tooltip
-                    :message="$t('balanceCard.purchaseHbar')"
-                    :pinnable="false"
-                    class="action"
-                >
-                    <MaterialDesignIcon
-                        :icon="mdiBankPlus"
-                        class="purchase-icon"
-                        @click="handleOpenModal"
-                    />
-                </Tooltip>
                 <MaterialDesignIcon
                     v-if="state.isBusy"
                     :icon="mdiLoading"
@@ -61,7 +50,6 @@
                 </Tooltip>
             </div>
         </div>
-        <ModalPurchaseHbar v-model="state.isOpen" />
     </div>
 </template>
 
@@ -74,17 +62,15 @@ import walletHbar from "../assets/wallet-hbar.svg";
 import { formatHbar, formatUSD } from "../formatter";
 import BigNumber from "bignumber.js";
 import { actions, store } from "../store";
-import ModalPurchaseHbar from "../components/ModalPurchaseHbar.vue";
 
 export default createComponent({
     components: {
         MaterialDesignIcon,
-        Tooltip,
-        ModalPurchaseHbar
+        Tooltip
     },
     props: {},
     setup() {
-        const state = reactive({ isBusy: false, isOpen: false });
+        const state = reactive({ isBusy: false });
 
         const hasFetchedBalance = computed(() => store.state.wallet.balance != null);
 
@@ -111,10 +97,6 @@ export default createComponent({
             return "";
         });
 
-        function handleOpenModal(): void {
-            state.isOpen = true;
-        }
-
         async function handleRefreshBalance(): Promise<void> {
             state.isBusy = true;
 
@@ -138,9 +120,7 @@ export default createComponent({
             handleRefreshBalance,
             balanceHbar,
             balanceHBarFormatted,
-            balanceUSDFormatted,
-            ModalPurchaseHbar,
-            handleOpenModal
+            balanceUSDFormatted
         };
     }
 });

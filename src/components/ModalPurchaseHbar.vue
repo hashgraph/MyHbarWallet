@@ -24,6 +24,8 @@ import {
 } from "@vue/composition-api";
 import { getters } from "../store";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export default createComponent({
     components: { Modal },
     model: {
@@ -34,12 +36,12 @@ export default createComponent({
     setup() {
         const accId = getters.CURRENT_USER()!;
         const accIdString = accId.toString();
-        const environment = process.env.NODE_ENV !== "production" ? "sandbox" : "production";
-        const key = process.env.NODE_ENV !== "production" ? "89fa28dd-b26e-4af4-8313-1536054767d5" : "production";
 
-        const url = `https://buy.carbon.money/?tokens=hbar&receiveAddressHbar=${accIdString}&environment=${environment}&apiKey=${key}`;
+        const environment = isProd ? "sandbox" : "production";
+        const apiKey = isProd ? "89fa28dd-b26e-4af4-8313-1536054767d5" : process.env.CARBON_API_KEY;
 
-        console.log(url);
+        const url = `https://buy.carbon.money/?tokens=hbar&receiveAddressHbar=${accIdString}&environment=${environment}&apiKey=${apiKey}`;
+
         return { url };
     }
 });

@@ -5,6 +5,10 @@
             <div class="main">
                 <router-view />
             </div>
+            <div class="interface-ads">
+                <AdBlockBuyHbar v-if="inMainNet" />
+                <AdBlockTwitter />
+            </div>
             <AccountCard
                 v-if="account"
                 :realm="account.realm"
@@ -22,6 +26,8 @@ import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "../components/NetworkCard.vue";
 import BalanceCard from "../components/BalanceCard.vue";
 import AccountCard from "../components/AccountCard.vue";
+import AdBlockTwitter from "../components/AdBlockTwitter.vue";
+import AdBlockBuyHbar from "../components/AdBlockBuyHbar.vue";
 import { computed, createComponent, SetupContext } from "@vue/composition-api";
 import { store } from "../store";
 
@@ -30,13 +36,18 @@ export default createComponent({
         InterfaceNavigation,
         NetworkCard,
         BalanceCard,
-        AccountCard
+        AccountCard,
+        AdBlockTwitter,
+        AdBlockBuyHbar
     },
     props: {},
     setup(props: object, context: SetupContext) {
         if (store.state.wallet.session == null) {
             throw new Error(context.root.$t("common.error.noSession").toString());
         }
+
+        // Not a good idea to show the "buy" button if this isn't mainnet
+        const inMainNet = computed(() => store.state.network.network.name.includes("mainnet"));
 
         // Boolean used to determine if the user has been to interface
         // Otherwise don't show the Logout modal
@@ -46,7 +57,7 @@ export default createComponent({
             store.state.wallet.session.account :
             null);
 
-        return { account };
+        return { account, inMainNet };
     }
 });
 </script>
@@ -64,7 +75,7 @@ export default createComponent({
     grid-gap: 15px;
     grid-template-areas:
         "info-account info-balance info-network"
-        "main main main";
+        "main main ads";
     grid-template-columns: repeat(3, calc(100% * (1 / 3) - (30px / 3)));
     grid-template-rows: min-content 1fr;
     padding: 20px;
@@ -72,7 +83,8 @@ export default createComponent({
     @media (max-width: 1024px) {
         grid-template-areas:
             "info-account info-account info-account"
-            "main main main";
+            "main main main"
+            "ads ads ads";
         grid-template-columns: 1fr;
     }
 }
@@ -80,6 +92,15 @@ export default createComponent({
 .main {
     grid-area: main;
     min-height: 400px;
+}
+
+.interface-ads {
+    flex-shrink: 0;
+    grid-area: ads;
+    grid-auto-flow: row;
+    grid-auto-rows: min-content;
+    display: grid;
+    grid-row-gap: 15px;
 }
 
 .info-account {
