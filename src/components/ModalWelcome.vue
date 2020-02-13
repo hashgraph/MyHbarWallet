@@ -38,7 +38,7 @@
             <a
                 v-if="link !== defaultLink"
                 class="other-platforms"
-                href="https://github.com/hashgraph/MyHbarWallet/releases/tag/v0.3.3"
+                href="https://github.com/hashgraph/MyHbarWallet/releases/tag/v0.5.0"
             >
                 {{ $t("modalWelcome.otherPlatforms") }}
             </a>
@@ -90,32 +90,33 @@ export default createComponent({
         function handleDismiss(): void {
             context.emit("change", !props.isOpen);
         }
+        const ver = "0.5.0";
 
         const defaultLink =
-            "https://github.com/hashgraph/MyHbarWallet/releases/tag/v0.3.3";
+            `https://github.com/hashgraph/MyHbarWallet/releases/tag/v${ver}`;
 
         const link = computed(() => {
-            if (props.platform === "Mac OS") {
-                return "https://github.com/hashgraph/MyHbarWallet/releases/download/v0.3.3/MyHbarWallet-0.3.3.dmg";
+            if (props.platform === "Mac OS" || props.platform === "OS X") {
+                return `https://github.com/hashgraph/MyHbarWallet/releases/download/v${ver}/MyHbarWallet-${ver}.dmg`;
             }
             if (props.platform === "Windows") {
-                return "https://github.com/hashgraph/MyHbarWallet/releases/download/v0.3.3/MyHbarWallet.Setup.0.3.3.exe";
+                return `https://github.com/hashgraph/MyHbarWallet/releases/download/v${ver}/MyHbarWallet.Setup.${ver}.exe`;
             }
             if (props.platform === "Ubuntu" || props.platform === "Debian") {
-                return "https://github.com/hashgraph/MyHbarWallet/releases/download/v0.3.3/myhbarwallet_0.3.3_amd64.deb";
+                return `https://github.com/hashgraph/MyHbarWallet/releases/download/v${ver}/myhbarwallet_${ver}_amd64.deb`;
             }
             if (
                 props.platform === "Fedora" ||
                 props.platform === "Red Hat" ||
                 props.platform === "SuSE"
             ) {
-                return "https://github.com/hashgraph/MyHbarWallet/releases/download/v0.3.3/myhbarwallet-0.3.3.x86_64.rpm";
+                return `https://github.com/hashgraph/MyHbarWallet/releases/download/v${ver}/myhbarwallet-${ver}.x86_64.rpm`;
             }
             return defaultLink;
         });
 
         const icon = computed(() => {
-            if (props.platform === "Mac OS") {
+            if (props.platform === "Mac OS" || props.platform === "OS X") {
                 return mdiApple;
             }
             if (props.platform === "Windows") {

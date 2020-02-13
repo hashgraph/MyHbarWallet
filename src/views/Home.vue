@@ -75,6 +75,8 @@ import ModalWelcome from "../components/ModalWelcome.vue";
 import { mutations, getters } from "../store";
 import platform from "platform";
 
+declare const IS_ELECTRON: boolean;
+
 export default createComponent({
     components: {
         FAQs,
@@ -92,7 +94,7 @@ export default createComponent({
             pf.os != null &&
             (pf.os.family === "Android" ||
                 pf.os.family === "iOS" ||
-                process.env.IS_ELECTRON)
+                IS_ELECTRON)
         ) {
             state.welcomeIsOpen = false;
         } else if (!getters.HAS_BEEN_HOME()) {

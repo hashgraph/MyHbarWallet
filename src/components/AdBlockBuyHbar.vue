@@ -4,10 +4,21 @@
             {{ $t("ads.buyHbarWithCard") }}
         </div>
         <div class="AdBlockBuyHbar-action">
-            <Button :label="$t('ads.buyHbarNow')" outline compact @click="handleOpenBuyModal" />
-            <img class="AdBlockBuyHbar-icon" :src="visaMasterImage" />
+            <Button
+                :label="$t('ads.buyHbarNow')"
+                outline
+                compact
+                @click="handleOpenBuyModal"
+            />
+            <img
+                class="AdBlockBuyHbar-icon"
+                :src="visaMasterImage"
+            >
         </div>
-        <img class="AdBlockBuyHbar-backdrop" :src="iconHBarOutline" />
+        <img
+            class="AdBlockBuyHbar-backdrop"
+            :src="iconHBarOutline"
+        >
         <ModalPurchaseHbar v-model="state.isOpen" />
     </div>
 </template>
