@@ -1,8 +1,10 @@
 <template>
     <InterfaceForm :title="$t('common.createAccount')">
-        <Notice :symbol="mdiHelpCircleOutline">{{
-            $t("interfaceCreateAccount.toCreateAccount")
-        }}</Notice>
+        <Notice :symbol="mdiHelpCircleOutline">
+            {{
+                $t("interfaceCreateAccount.toCreateAccount")
+            }}
+        </Notice>
 
         <TextInput
             v-model="state.newBalance"
@@ -69,54 +71,49 @@ import { formatHbar } from "../formatter";
 import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuccess.vue";
 import { writeToClipboard } from "../clipboard";
 import { LoginMethod } from "../wallets/Wallet";
-import { BadKeyError } from "@hashgraph/sdk";
-import CreateAccountKeyRing, {
-    FormatedKey
-} from "../components/CreateAccountKeyRing.vue";
+import {
+    Ed25519PublicKey,
+    ThresholdKey,
+    KeyList
+} from "@hashgraph/sdk";
+import PublicKeyRing, { FormatedKey } from "../components/PublicKeyRing.vue";
 
-// const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
-// const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
-
-async function buildThresholdKeys(
+const estimatedFeeHbar = new BigNumber(0.3);
+const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
+function buildThresholdKeys(
     keys: FormatedKey
-): Promise<import("@hashgraph/sdk").ThresholdKey> {
-    const { ThresholdKey, Ed25519PublicKey } = await (import(
-        "@hashgraph/sdk"
-    ) as Promise<typeof import("@hashgraph/sdk")>);
-    //build the initail threshold key
+): ThresholdKey {
+    // build the initail threshold key
     const thresholdKey = new ThresholdKey(keys.threshold as number);
-    //for each key in this key we need to check what kind of key it is and add it to the threshold properly
-    (keys.keyList as FormatedKey[]).forEach(async key => {
+    // for each key in this key we need to check what kind of key it is and add it to the threshold properly
+    (keys.keyList as FormatedKey[]).forEach((key) => {
         if (key.threshold !== key.keyList.length && key.threshold !== 0) {
-            //if the user made a list and selected a threshold
-            thresholdKey.addAll(await buildThresholdKeys(key));
+            // if the user made a list and selected a threshold
+            thresholdKey.addAll(buildThresholdKeys(key));
         } else if (key.keyList.length > 1) {
-            //user built a list with max threshold
-            thresholdKey.addAll(await buildKeyList(key));
+            // user built a list with max threshold
+            thresholdKey.addAll(buildKeyList(key));
         } else {
-            //single key
+            // single key
             thresholdKey.add(
-                await Ed25519PublicKey.fromString(key.keyList[0].toString())
+                Ed25519PublicKey.fromString(key.keyList[ 0 ].toString())
             );
         }
     });
     return thresholdKey;
 }
-async function buildKeyList(
+function buildKeyList(
     keys: FormatedKey
-): Promise<import("@hashgraph/sdk").KeyList> {
-    const { Ed25519PublicKey, KeyList } = await (import(
-        "@hashgraph/sdk"
-    ) as Promise<typeof import("@hashgraph/sdk")>);
-    //key list, similar procedure as above.
+): KeyList {
+    // key list, similar procedure as above.
     const keyList = new KeyList();
-    (keys.keyList as FormatedKey[]).forEach(async key => {
+    (keys.keyList as FormatedKey[]).forEach((key) => {
         if (key.threshold !== key.keyList.length && key.threshold !== 0) {
-            keyList.addAll(await buildThresholdKeys(key));
+            keyList.addAll(buildThresholdKeys(key));
         } else if (key.keyList.length > 1) {
-            keyList.addAll(await buildKeyList(key));
+            keyList.addAll(buildKeyList(key));
         } else {
-            keyList.add(Ed25519PublicKey.fromString(key.keyList[0].toString()));
+            keyList.add(Ed25519PublicKey.fromString(key.keyList[ 0 ].toString()));
         }
     });
     return keyList;
@@ -132,22 +129,6 @@ interface State {
     account: string;
     isPublicKeyValid: boolean;
     modalSuccessState: ModalSuccessState;
-}
-
-async function isPublicKeyValid(key: string): Promise<boolean> {
-    try {
-        const { Ed25519PublicKey } = await import("@hashgraph/sdk");
-
-        Ed25519PublicKey.fromString(key);
-        return true;
-    } catch (error) {
-        if (error instanceof BadKeyError) {
-            // The exception message changes depending on the input
-            return false;
-        }
-
-        throw error;
-    }
 }
 
 export default createComponent({
@@ -201,6 +182,29 @@ export default createComponent({
             }
         ] as Item[]);
 
+        // checks for determining the type of key you will be creating and returns the generated key
+        function keyGen(keyRing: FormatedKey):
+        Ed25519PublicKey |
+        KeyList |
+        ThresholdKey {
+            if (
+                keyRing.keyList.length !== keyRing.threshold &&
+                    keyRing.threshold !== 0
+            ) {
+                return buildThresholdKeys(keyRing);
+            } else if (
+                keyRing.keyList.length > 1 &&
+                    keyRing.threshold === keyRing.keyList.length
+            ) {
+                return buildKeyList(keyRing);
+            }
+            return Ed25519PublicKey.fromString(
+                (keyRing
+                    .keyList[ 0 ] as FormatedKey).keyList[ 0 ].toString()
+            );
+        }
+
+        // eslint-disable-next-line sonarjs/cognitive-complexity
         async function handleCreateAccount(): Promise<void> {
             state.isBusy = true;
 
@@ -223,44 +227,14 @@ export default createComponent({
                     store.state.wallet.balance == null ?
                         new BigNumber(0) :
                         store.state.wallet.balance;
+                const { AccountCreateTransaction } = await import("@hashgraph/sdk");
 
-                const {
-                    AccountCreateTransaction,
-                    Client,
-                    Ed25519PublicKey
-                } = await import("@hashgraph/sdk");
+                // convert the "KeyRing" into valid keylist structure for executing transaction
+                const key = keyGen(state.keys as FormatedKey);
 
-                const keyRing = state.keys as FormatedKey;
-                let key;
-                //checks for determining the type of key you will be creating
-                if (
-                    keyRing.keyList.length != keyRing.threshold &&
-                    keyRing.threshold != 0
-                ) {
-                    key = await buildThresholdKeys(keyRing);
-                } else if (
-                    keyRing.keyList.length > 1 &&
-                    keyRing.threshold == keyRing.keyList.length
-                ) {
-                    key = await buildKeyList(keyRing);
-                } else {
-                    key = Ed25519PublicKey.fromString(
-                        (keyRing
-                            .keyList[0] as FormatedKey).keyList[0].toString()
-                    );
-                }
-
-                const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(
-                    balanceTinybar.minus(
-                        newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())
-                    )
-                );
-
-                const accountIdIntermediate = (await new AccountCreateTransaction(
-                    client as InstanceType<typeof Client>
-                )
-                    .setInitialBalance(newBalanceTinybar)
-                    .setTransactionFee(maxTxFeeTinybar)
+                const accountIdIntermediate = (await (await new AccountCreateTransaction()
+                    .setInitialBalance(Hbar.fromTinybar(newBalanceTinybar))
+                    .setMaxTransactionFee(Hbar.fromTinybar(estimatedFeeTinybar))
                     .setKey(key)
                     .execute(client))
                     .getReceipt(client))
@@ -375,11 +349,5 @@ export default createComponent({
         };
     }
 });
-
-                // const key = Ed25519PublicKey.fromString(state.publicKey);
-                // const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(balanceTinybar.minus(newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())));
-
-                // const accountIdIntermediate = (await (await new AccountCreateTransaction()
-                //     .setInitialBalance(Hbar.fromTinybar(newBalanceTinybar))
-                //     .setMaxTransactionFee(Hbar.fromTinybar(maxTxFeeTinybar))
 </script>
+

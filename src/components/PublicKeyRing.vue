@@ -7,7 +7,10 @@
                     : $t("interfaceCreateAccount.publicKey")
             }}</span>
             <div class="spacer" />
-            <div v-if="isList" class="threshold">
+            <div
+                v-if="isList"
+                class="threshold"
+            >
                 <p>
                     {{ $t("interfaceCreateAccount.thresholdLimit") }}:
                     <input
@@ -15,7 +18,7 @@
                         type="number"
                         class="number-input"
                         :step="false"
-                    />
+                    >
                     /
                     <!-- this will be the threshold input -->
                     {{ state.numOfInputs }}
@@ -32,10 +35,16 @@
                 @click="genNewKey('list')"
             />
         </div>
-        <hr v-if="isList" />
+        <hr v-if="isList">
         <!-- This conditionaly renders a key list based on the the state.keyRing, rendering either a list or single key based on key type. -->
-        <div v-for="(key, index) in state.keyRing" :key="key.listKey">
-            <div v-if="key.keyType === 'list'" class="key-list key">
+        <div
+            v-for="(key, index) in state.keyRing"
+            :key="key.listKey"
+        >
+            <div
+                v-if="key.keyType === 'list'"
+                class="key-list key"
+            >
                 <div class="head">
                     <span class="title">{{
                         $t("interfaceCreateAccount.keyList")
@@ -48,7 +57,7 @@
                                 v-model="key.thresholdLimit"
                                 class="number-input"
                                 type="number"
-                            />
+                            >
                             /
                             <!-- this will be the threshold input -->
                             {{ key.key.length }}
@@ -84,8 +93,14 @@
                     </div>
                 </div>
             </div>
-            <div v-else class="single-key key">
-                <div v-if="isList" class="head">
+            <div
+                v-else
+                class="single-key key"
+            >
+                <div
+                    v-if="isList"
+                    class="head"
+                >
                     <span class="title">{{
                         $t("interfaceCreateAccount.publicKey")
                     }}</span>
@@ -108,7 +123,7 @@
                     />
                 </div>
             </div>
-            <hr />
+            <hr>
         </div>
     </div>
 </template>
@@ -124,6 +139,7 @@ import {
 } from "@vue/composition-api";
 import FlatButton from "../components/FlatButton.vue";
 import { mdiPlus, mdiMinus, mdiPlaylistPlus } from "@mdi/js";
+import { Ed25519PublicKey, BadKeyError } from "@hashgraph/sdk";
 
 export interface Key {
     keyError: string;
@@ -151,42 +167,34 @@ function newKey(type: string): Key {
         isPublicKeyValid: false,
         thresholdLimit: 1,
         keyType: type,
-        key: type === "single" ? [""] : [newKey("single"), newKey("single")]
+        key: type === "single" ? [ "" ] : [ newKey("single"), newKey("single") ]
     };
 }
 
-async function isPublicKeyValid(key: string): Promise<boolean> {
+function isPublicKeyValid(key: string): boolean {
     try {
-        const { Ed25519PublicKey } = await (import("@hashgraph/sdk") as Promise<
-            typeof import("@hashgraph/sdk")
-        >);
-
         Ed25519PublicKey.fromString(key);
         return true;
     } catch (error) {
-        if (error instanceof Error) {
+        if (error instanceof BadKeyError) {
             // The exception message changes depending on the input
-            if (error.message === "invalid public key: " + key) {
-                return false;
-            }
+            return false;
         }
-
         throw error;
     }
 }
 
 function formatedKeys(keyRing: Key[]): FormatedKey[] {
-    const keys: unknown[] = [];
-    keyRing.forEach(key => {
+    const keys: unknown[] = keyRing.map((key) => {
         let keyList: unknown[] = [];
-        if (typeof key.key[0] === "string") {
+        if (typeof key.key[ 0 ] === "string") {
             keyList = key.key;
         } else {
-            (key.key as Key[]).forEach(subKey => {
+            (key.key as Key[]).forEach((subKey) => {
                 keyList.push({ keyList: subKey.key, threshold: 1 });
             });
         }
-        keys.push({ keyList, threshold: key.thresholdLimit });
+        return { keyList, threshold: key.thresholdLimit };
     });
 
     return keys as FormatedKey[];
@@ -207,7 +215,7 @@ export default createComponent({
                     isPublicKeyValid: false,
                     keyType: "single",
                     thresholdLimit: 0,
-                    key: [""]
+                    key: [ "" ]
                 }
             ],
             rootThreshold: 0,
@@ -215,45 +223,45 @@ export default createComponent({
             numOfInputs: 1
         });
 
-        async function validateKeys(keyRing: Key[]): Promise<void> {
-            let valid = 0;
-            for (const key of keyRing) {
-                if (typeof key.key[0] === "string") {
-                    key.isPublicKeyValid = await isPublicKeyValid(key
-                        .key[0] as string);
-                    if (key.isPublicKeyValid === false) {
-                        valid++;
-                    }
-                } else {
-                    for (const subKey of key.key as Key[]) {
-                        subKey.isPublicKeyValid = await isPublicKeyValid(subKey
-                            .key[0] as string);
-                        if (subKey.isPublicKeyValid === false) {
-                            valid++;
+        // eslint-disable-next-line sonarjs/cognitive-complexity
+        function validateKeys(keyRing: Key[], cb: Function): void {
+            let invalid = 0;
+            if (keyRing[ 0 ].key[ 0 ] != null) {
+                for (const key of keyRing) {
+                    if (typeof key.key[ 0 ] === "string") {
+                        key.isPublicKeyValid = isPublicKeyValid(key
+                            .key[ 0 ] as string);
+                        if (key.isPublicKeyValid === false) {
+                            invalid++;
+                        }
+                    } else {
+                        for (const subKey of key.key as Key[]) {
+                            subKey.isPublicKeyValid = isPublicKeyValid(subKey
+                                .key[ 0 ] as string);
+                            if (subKey.isPublicKeyValid === false) {
+                                invalid++;
+                            }
                         }
                     }
                 }
             }
-            state.areKeysValid = valid < 1;
+            state.areKeysValid = invalid < 1;
+            cb();
         }
 
         watch(
-            //watches the nested content to maintain valid threshold limits
+            // watches the nested content to maintain valid threshold limits
             () => [
-                state.keyRing.map(key => {
-                    return key.thresholdLimit;
-                }),
-                state.keyRing.map(key => {
-                    return key.key.length;
-                })
+                state.keyRing.map((key) => key.thresholdLimit),
+                state.keyRing.map((key) => key.key.length)
             ],
             () => {
-                state.keyRing.forEach(key => {
+                state.keyRing.forEach((key) => {
                     if (key.key.length < key.thresholdLimit) {
                         key.thresholdLimit = key.key.length;
                     } else if (
                         key.thresholdLimit <= 0 ||
-                        (key.key.length === 1 && key.thresholdLimit !== 1)
+                        key.key.length === 1 && key.thresholdLimit !== 1
                     ) {
                         key.thresholdLimit = 1;
                     }
@@ -262,9 +270,10 @@ export default createComponent({
         );
 
         watch(
-            //watches for changes in the root keyring and keeps the threshold valid
-            () => [state.keyRing.length, state.rootThreshold],
-            ([newLength, newThreshold]) => {
+            // watches for changes in the root keyring and keeps the threshold valid
+            () => [ state.keyRing.length, state.rootThreshold ],
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ([ newLength, newThreshold ]) => {
                 if (state.rootThreshold > state.keyRing.length) {
                     state.rootThreshold = state.keyRing.length;
                 }
@@ -275,23 +284,21 @@ export default createComponent({
         );
 
         watch(
-            ///watches for changes on the text input fields
+            // /watches for changes on the text input fields
             () =>
-                state.keyRing.map(key => {
-                    return key.keyType === "single"
-                        ? key.key[0]
-                        : (key.key as Key[]).map(subKey => subKey.key[0]);
-                }),
-            async () => {
-                await validateKeys(state.keyRing).then(() => {
+                state.keyRing.map((key) => key.keyType === "single" ?
+                    key.key[ 0 ] :
+                    (key.key as Key[]).map((subKey) => subKey.key[ 0 ])),
+            () => {
+                validateKeys(state.keyRing, () =>
                     context.emit("keyRing", {
                         key: {
                             keyList: formatedKeys(state.keyRing),
                             threshold: state.rootThreshold
                         },
                         validity: state.areKeysValid
-                    });
-                });
+                    })
+                );
             }
         );
 
@@ -303,7 +310,7 @@ export default createComponent({
         }
 
         function handleAddSubKey(idx: number): void {
-            (state.keyRing[idx].key as Key[]).push(newKey("single"));
+            (state.keyRing[ idx ].key as Key[]).push(newKey("single"));
         }
 
         function handleRemoveField(idx: number): void {
@@ -314,9 +321,9 @@ export default createComponent({
         }
 
         function handleRemoveSubField(pIdx: number, idx: number): void {
-            if (state.keyRing[pIdx].key.length > 1) {
-                state.keyRing[pIdx].key.splice(idx, 1);
-            } else if (state.keyRing[pIdx].key.length === 1) {
+            if (state.keyRing[ pIdx ].key.length > 1) {
+                state.keyRing[ pIdx ].key.splice(idx, 1);
+            } else if (state.keyRing[ pIdx ].key.length === 1) {
                 handleRemoveField(pIdx);
             }
         }
