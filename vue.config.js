@@ -4,6 +4,7 @@ const path = require("path");
 const package = require("./package.json");
 const webpack = require("webpack");
 const hash = require("child_process").execSync("git rev-parse --short HEAD");
+const WorkboxPlugin = require("workbox-webpack-plugin");
 
 module.exports = {
     css: {
@@ -25,7 +26,24 @@ module.exports = {
                 COMMIT_HASH: `"${hash.toString().trim()}"`,
                 IS_ELECTRON: "false",
                 HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
-                CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`
+                CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`,
+            }),
+            new WorkboxPlugin.GenerateSW({
+                // Do not precache images
+                exclude: [ /\.(?:png|jpg|jpeg|svg)$/ ],
+                runtimeCaching: [
+                    {
+                        urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
+                        handler: "CacheFirst",
+                        options: {
+                            cacheName: "images",
+                            expiration: {
+                                maxEntries: 10,
+                                maxAgeSeconds: 30 * 24 * 60 * 60
+                            }
+                        }
+                    }
+                ]
             })
         ]
     },
