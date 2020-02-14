@@ -314,7 +314,7 @@ header {
     }
 
     @media (max-width: 600px) {
-        height: 100vh;
+        height: 100%;
     }
 }
 
@@ -324,7 +324,7 @@ header {
 
 .content-container {
     padding: 40px;
-    height: 100vh;
+    height: 100%;
     max-width: 100%;
 
     @media (max-width: 600px) {
