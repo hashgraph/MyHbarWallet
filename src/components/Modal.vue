@@ -192,7 +192,8 @@ export default createComponent({
     align-items: center;
     background-color: rgba(0, 0, 0, 0.4);
     display: flex;
-    height: 105vh;
+    height: 100vh;
+    width: 100vw;
     inset: 0;
     opacity: 1;
     overflow: hidden;
@@ -201,11 +202,6 @@ export default createComponent({
     pointer-events: all;
     position: fixed;
     z-index: 2;
-
-    @media (max-width: 600px) {
-        height: 100vh;
-        padding: 0;
-    }
 
     @supports (-webkit-overflow-scrolling: touch) {
         background-color: var(--color-white);
@@ -221,9 +217,9 @@ export default createComponent({
     flex-direction: column;
     margin: auto;
     max-width: 530px;
+    width: 100vw;
     overflow: hidden;
     overflow-y: auto;
-    width: 100%;
     z-index: 3;
 
     & .crown {
@@ -245,8 +241,6 @@ export default createComponent({
         background-color: var(--color-white);
         border-radius: 0;
         height: 100vh;
-        max-width: 600px;
-        width: 100vw;
     }
 
     @supports (-webkit-overflow-scrolling: touch) {
@@ -310,6 +304,8 @@ header {
 
 .main {
     background-color: var(--color-white);
+    max-width: 100%;
+    width: 100%;
 
     &.garlands {
         background-image: url("../assets/garlands.png");
@@ -328,6 +324,8 @@ header {
 
 .content-container {
     padding: 40px;
+    height: 100vh;
+    max-width: 100%;
 
     @media (max-width: 600px) {
         padding: 20px;
