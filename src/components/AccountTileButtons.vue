@@ -3,7 +3,7 @@
         <!-- TODO: Remove div below when hardware option is ready -->
         <AccountTileButton
             :title="$t('accountTileButtons.hardware')"
-            :content="$t('accountTileButtons.supportForHardwareWallets')"
+            :content="$t('accountTileButtons.walletsSupported')"
             :image="hardwareImage"
             @click="$emit('click', 'hardware')"
         />
