@@ -25,7 +25,7 @@ describe("AccountTileButtons.vue", (): void => {
                     Hardware
                   </div>
                   <div class="content">
-                    Support for hardware wallets in development
+                    Ledger Nano
                   </div>
                   <div class="note">
 
