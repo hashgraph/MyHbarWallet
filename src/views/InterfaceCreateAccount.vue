@@ -79,8 +79,8 @@ import { writeToClipboard } from "../clipboard";
 import { LoginMethod } from "../wallets/Wallet";
 import { BadKeyError } from "@hashgraph/sdk";
 
-// const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
-// const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
+const estimatedFeeHbar = new BigNumber(0.3);
+const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
 
 interface State {
     newBalance: string;
@@ -160,7 +160,7 @@ export default createComponent({
                 description: context.root
                     .$t("common.estimatedFee")
                     .toString(),
-                value: getters.ESTIMATED_FEE_HBAR()
+                value: estimatedFeeHbar
             }
         ] as Item[]);
 
@@ -194,11 +194,10 @@ export default createComponent({
                 } = await import("@hashgraph/sdk");
 
                 const key = Ed25519PublicKey.fromString(state.publicKey);
-                const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(balanceTinybar.minus(newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())));
 
                 const accountIdIntermediate = (await (await new AccountCreateTransaction()
                     .setInitialBalance(Hbar.fromTinybar(newBalanceTinybar))
-                    .setMaxTransactionFee(Hbar.fromTinybar(maxTxFeeTinybar))
+                    .setMaxTransactionFee(Hbar.fromTinybar(estimatedFeeTinybar))
                     .setKey(key)
                     .execute(client))
                     .getReceipt(client))

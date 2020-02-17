@@ -92,8 +92,8 @@ interface State {
     modalSuccessState: ModalSuccessState;
 }
 
-const estimatedFeeHbar = getters.ESTIMATED_FEE_HBAR();
-const estimatedFeeTinybar = getters.ESTIMATED_FEE_TINYBAR();
+const estimatedFeeHbar = new BigNumber(0.003);
+const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
 
 export default createComponent({
     components: {
@@ -285,23 +285,13 @@ export default createComponent({
 
                 const { CryptoTransferTransaction, Hbar, Client } = await import("@hashgraph/sdk");
 
-                // Max Transaction Fee, otherwise known as Transaction Fee,
-                // is the max of 1 Hbar and the user's remaining balance
-                // Oh also, check for null balance to appease typescript
-                const safeBalance =
-                    store.state.wallet.balance == null ?
-                        new BigNumber(0) :
-                        store.state.wallet.balance;
-
-                const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(safeBalance.minus(sendAmountTinybar.plus(estimatedFeeTinybar)));
-
                 const tx = new CryptoTransferTransaction()
                     .addSender(
                         store.state.wallet.session.account,
                         Hbar.fromTinybar(sendAmountTinybar)
                     )
                     .addRecipient(recipient, Hbar.fromTinybar(sendAmountTinybar))
-                    .setMaxTransactionFee(Hbar.fromTinybar(maxTxFeeTinybar));
+                    .setMaxTransactionFee(Hbar.fromTinybar(estimatedFeeTinybar));
 
                 if (state.memo !== "" && state.memo != null) {
                     tx.setTransactionMemo(state.memo);
