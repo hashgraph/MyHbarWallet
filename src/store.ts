@@ -113,7 +113,7 @@ export const getters = {
         return store.state.wallet.session?.account ?? null;
     },
     HAS_BEEN_HOME(): boolean {
-        // TODO: Re-enable later
+        // NOTE: Re-enable later
         return true;
         // return JSON.parse(localStorage.getItem("home") ?? "false");
     }
