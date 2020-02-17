@@ -6,6 +6,39 @@ const webpack = require("webpack");
 const hash = require("child_process").execSync("git rev-parse --short HEAD");
 const WorkboxPlugin = require("workbox-webpack-plugin");
 
+const plugins = [
+    new webpack.DefinePlugin({
+        MHW_ENV: `"${process.env.NODE_ENV}"`,
+        VERSION: `"${package.version.toString()}"`,
+        COMMIT_HASH: `"${hash.toString().trim()}"`,
+        IS_ELECTRON: "false",
+        HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
+        CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`,
+    })
+];
+
+if (process.env.NODE_ENV === "production") {
+    plugins.push(
+        new WorkboxPlugin.GenerateSW({
+            // Do not precache images
+            exclude: [ /\.(?:png|jpg|jpeg|svg)$/ ],
+            runtimeCaching: [
+                {
+                    urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
+                    handler: "CacheFirst",
+                    options: {
+                        cacheName: "images",
+                        expiration: {
+                            maxEntries: 10,
+                            maxAgeSeconds: 30 * 24 * 60 * 60
+                        }
+                    }
+                }
+            ]
+        })
+    );
+}
+
 module.exports = {
     css: {
         // Turn on CSS source maps in development
@@ -19,33 +52,7 @@ module.exports = {
             maxEntrypointSize: 512000,
             maxAssetSize: 1450000
         },
-        plugins: [
-            new webpack.DefinePlugin({
-                MHW_ENV: `"${process.env.NODE_ENV}"`,
-                VERSION: `"${package.version.toString()}"`,
-                COMMIT_HASH: `"${hash.toString().trim()}"`,
-                IS_ELECTRON: "false",
-                HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
-                CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`,
-            }),
-            new WorkboxPlugin.GenerateSW({
-                // Do not precache images
-                exclude: [ /\.(?:png|jpg|jpeg|svg)$/ ],
-                runtimeCaching: [
-                    {
-                        urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
-                        handler: "CacheFirst",
-                        options: {
-                            cacheName: "images",
-                            expiration: {
-                                maxEntries: 10,
-                                maxAgeSeconds: 30 * 24 * 60 * 60
-                            }
-                        }
-                    }
-                ]
-            })
-        ]
+        plugins
     },
     pluginOptions: {
         electronBuilder: {
