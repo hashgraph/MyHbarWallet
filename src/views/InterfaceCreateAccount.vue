@@ -228,9 +228,11 @@ export default createComponent({
                 // Wait for Kabuto
                 const network = getters.GET_NETWORK();
                 const netName = network.name.replace("network.", "");
-                await trollKabuto(transactionId.toString(), netName === "testnet");
-                state.modalSuccessState.txid = transactionId.toString();
 
+                if (!netName.includes("custom")) {
+                    await trollKabuto(transactionId.toString(), netName === "testnet");
+                    state.modalSuccessState.txid = transactionId.toString();
+                }
                 // Refresh Balance
                 await actions.refreshBalanceAndRate();
 
