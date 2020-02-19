@@ -11,6 +11,8 @@
                 :type="props.txType"
             />
             <div class="separator" />
+            <ModalFeeSummaryTerms />
+            <div class="separator" />
             <ModalFeeSummaryItems :items="props.items" />
             <div class="buttons">
                 <Button
@@ -41,6 +43,7 @@ import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import ModalFeeSummaryTitle from "../components/ModalFeeSummaryTitle.vue";
 import ModalFeeSummaryItems from "../components/ModalFeeSummaryItems.vue";
+import ModalFeeSummaryTerms from "../components/ModalFeeSummaryTerms.vue";
 
 export interface Item {
     description: string;
@@ -68,7 +71,8 @@ export default createComponent({
         Button,
         Modal,
         ModalFeeSummaryTitle,
-        ModalFeeSummaryItems
+        ModalFeeSummaryItems,
+        ModalFeeSummaryTerms
     },
     model: {
         prop: "isOpen",
