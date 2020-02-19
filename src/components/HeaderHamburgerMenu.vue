@@ -1,13 +1,14 @@
 <template>
     <nav :class="{ 'nav-open': isOpen }">
         <div
-            v-if="inInterface"
+            v-if="isInterface"
             class="card-container"
         >
             <BalanceCard class="info-balance" />
             <NetworkCard class="info-network" />
         </div>
         <router-link
+            v-if="!isInterface"
             to="/"
             class="link-block"
             @click.native="toggle"
@@ -21,7 +22,7 @@
             />
         </router-link>
         <router-link
-            v-if="!isAbout"
+            v-if="!isAbout && !isInterface"
             :to="{ name: 'home', hash: '#about' }"
             class="link-block"
             @click.native="toggle"
@@ -35,7 +36,7 @@
             />
         </router-link>
         <div
-            v-else
+            v-if="isAbout"
             class="link-block"
             @click="handleSameHash('#about')"
         >
@@ -48,7 +49,7 @@
             />
         </div>
         <router-link
-            v-if="!isFaqs"
+            v-if="!isFaqs && !isInterface"
             :to="{ name: 'home', hash: '#faqs' }"
             class="link-block"
             @click.native="toggle"
@@ -62,7 +63,7 @@
             />
         </router-link>
         <div
-            v-else
+            v-if="isFaqs"
             class="link-block"
             @click="handleSameHash('#faqs')"
         >
@@ -74,6 +75,24 @@
                 :icon="mdiChevronRight"
             />
         </div>
+        <a
+            v-if="isInterface && !state.isCustomNetwork"
+            class="link-block"
+            :href="kabutoLink"
+            target="_blank"
+        >
+            <div class="link">{{ $t("header.transactionHistory") }}
+                <MaterialDesignIcon
+                    class="external-icon"
+                    :icon="mdiOpenInNew"
+                />
+            </div>
+
+            <MaterialDesignIcon
+                class="icon"
+                :icon="mdiChevronRight"
+            />
+        </a>
 
         <div class="logout-container">
             <Button
@@ -90,7 +109,7 @@
 
 <script lang="ts">
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
-import { mdiChevronRight } from "@mdi/js";
+import { mdiChevronRight, mdiOpenInNew } from "@mdi/js";
 import BalanceCard from "./BalanceCard.vue";
 import NetworkCard from "./NetworkCard.vue";
 import Button from "../components/Button.vue";
@@ -100,7 +119,9 @@ import {
     PropType,
     computed,
     SetupContext,
-    reactive
+    reactive,
+    Ref,
+    ref
 } from "@vue/composition-api";
 import { getters } from "../store";
 
@@ -117,12 +138,32 @@ export default createComponent({
     },
     props: { isOpen: (Boolean as unknown) as PropType<boolean> },
     setup(props: Props, context: SetupContext) {
-        const state = reactive({
-            scrolled: false,
-            isLogoutOpen: false
+        const accId: Ref<string | null> = ref(null);
+        const network: Ref<string | null> = ref(null);
+
+        if (getters.CURRENT_USER() != null && getters.GET_NETWORK() != null) {
+            accId.value = getters.CURRENT_USER()!.toString();
+            network.value = getters.GET_NETWORK()!.name.split(".")[ 1 ];
+        }
+
+        const kabutoLink = computed(() => {
+            if (accId != null && network != null) {
+                return `https://explorer.kabuto.sh/${network.value}/id/${accId.value}`;
+            }
+            return "";
         });
 
-        const inInterface = computed(() => {
+        const state = reactive({
+            scrolled: false,
+            isLogoutOpen: false,
+            isCustomNetwork: false
+        });
+
+        if (network.value !== "mainnet" && network.value !== "testnet") {
+            state.isCustomNetwork = true;
+        }
+
+        const isInterface = computed(() => {
             const route = context.root.$route;
 
             if (route == null || route.matched.length === 0) {
@@ -169,13 +210,15 @@ export default createComponent({
         return {
             toggle,
             mdiChevronRight,
-            inInterface,
+            isInterface,
             loggedIn,
             handleLogout,
             state,
             isFaqs,
             isAbout,
-            handleSameHash
+            handleSameHash,
+            mdiOpenInNew,
+            kabutoLink
         };
     }
 });
@@ -204,7 +247,7 @@ nav {
 
 .logout-container {
     margin-inline-end: 10px;
-    padding-block: 5px;
+    padding-block: 10px;
 
     @supports (-webkit-overflow-scrolling: touch) {
         padding-block-end: 100px;
@@ -290,5 +333,9 @@ a {
     @media (min-width: 1025px) {
         display: none;
     }
+}
+
+.external-icon {
+    margin-inline-start: 5px;
 }
 </style>

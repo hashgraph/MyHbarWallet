@@ -121,6 +121,7 @@
     "hardwareWalletOffer.moreInformation": "More information",
     "hardwareWalletOffer.startingFrom": "Starting From",
     "header.access": "Access",
+    "header.transactionHistory": "Transaction History",
     "home.aboutMyHbarWallet": "About MyHbarWallet",
     "home.myHbarWalletIsAClone": "MyHbarWallet is a clone of one of the most popular wallets on Ethereum. We took that approach because it was open source and people already are familiar with the interface and processes. We want MyHbarWallet to be the simplest and most intuitive interface to Hedera™ Hashgraph.",
     "home.myHbarWalletIsAFreeClientSideInterface": "MyHbarWallet is a free, client-side interface helping you interact with Hedera™ Hashgraph. Our easy-to-use, open-source platform allows you to generate keys, create accounts, transfer hbars, and so much more.",
