@@ -78,6 +78,7 @@ import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuc
 import { writeToClipboard } from "../clipboard";
 import { LoginMethod } from "../wallets/Wallet";
 import { BadKeyError } from "@hashgraph/sdk";
+import { trollKabuto } from "../kabuto";
 
 // const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
 // const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
@@ -132,7 +133,8 @@ export default createComponent({
             modalSuccessState: {
                 isOpen: false,
                 hasAction: true,
-                actionLabel: "Copy Account ID"
+                actionLabel: "Copy Account ID",
+                txid: ""
             }
         });
 
@@ -189,20 +191,20 @@ export default createComponent({
 
                 const {
                     AccountCreateTransaction,
-                    Client,
                     Ed25519PublicKey
                 } = await import("@hashgraph/sdk");
 
                 const key = Ed25519PublicKey.fromString(state.publicKey);
                 const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(balanceTinybar.minus(newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())));
 
-                const accountIdIntermediate = (await (await new AccountCreateTransaction()
+                const transactionId = await new AccountCreateTransaction()
                     .setInitialBalance(Hbar.fromTinybar(newBalanceTinybar))
                     .setMaxTransactionFee(Hbar.fromTinybar(maxTxFeeTinybar))
                     .setKey(key)
-                    .execute(client))
-                    .getReceipt(client))
-                    .getAccountId();
+                    .execute(client);
+
+                const transactionReceipt = transactionId.getReceipt(client);
+                const accountIdIntermediate = (await transactionReceipt).getAccountId();
 
                 // Handle undefined
                 if (accountIdIntermediate == null) {
@@ -223,6 +225,14 @@ export default createComponent({
                 // If creating state.account succeeds then remove all the error
                 state.newBalanceError = "";
 
+                // Wait for Kabuto
+                const network = getters.GET_NETWORK();
+                const netName = network.name.replace("network.", "");
+
+                if (!netName.includes("custom")) {
+                    await trollKabuto(transactionId.toString(), netName === "testnet");
+                    state.modalSuccessState.txid = transactionId.toString();
+                }
                 // Refresh Balance
                 await actions.refreshBalanceAndRate();
 

@@ -77,6 +77,7 @@ import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuc
 import { LoginMethod } from "../wallets/Wallet";
 import { AccountId } from "@hashgraph/sdk";
 import { actions, getters, store } from "../store";
+import { trollKabuto } from "../kabuto";
 
 interface State {
     amount: string | null;
@@ -118,7 +119,8 @@ export default createComponent({
             idValid: false,
             modalSuccessState: {
                 isOpen: false,
-                hasAction: false
+                hasAction: false,
+                txid: ""
             }
         });
 
@@ -278,15 +280,12 @@ export default createComponent({
                         .toString());
                 }
 
-                const recipient: AccountId | null = state.account;
+                const recipient: AccountId = state.account;
 
                 const sendAmountTinybar = new BigNumber(state.amount).multipliedBy(getValueOfUnit(Unit.Hbar));
 
-                const { CryptoTransferTransaction, Hbar, Client } = await import("@hashgraph/sdk");
+                const { CryptoTransferTransaction, Hbar } = await import("@hashgraph/sdk");
 
-                // Max Transaction Fee, otherwise known as Transaction Fee,
-                // is the max of 1 Hbar and the user's remaining balance
-                // Oh also, check for null balance to appease typescript
                 const safeBalance =
                     store.state.wallet.balance == null ?
                         new BigNumber(0) :
@@ -306,7 +305,18 @@ export default createComponent({
                     tx.setTransactionMemo(state.memo);
                 }
 
-                await (await tx.execute(client)).getReceipt(client);
+                const transactionId = await tx.execute(client);
+                state.modalSuccessState.txid = transactionId.toString();
+                await transactionId.getReceipt(client);
+
+                // Wait for Kabuto
+                const network = getters.GET_NETWORK();
+                const netName = network.name.replace("network.", "");
+
+                if (!netName.includes("custom")) {
+                    await trollKabuto(transactionId.toString(), netName === "testnet");
+                    state.modalSuccessState.txid = transactionId.toString();
+                }
 
                 // Refresh Balance
                 await actions.refreshBalanceAndRate();
