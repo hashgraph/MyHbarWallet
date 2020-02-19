@@ -12,6 +12,12 @@
             allow="fullscreen"
             :src="url"
         />
+        <div class="ModalPurchaseHbar-link-container">
+            {{ $t('modalPurchaseHbar.poweredBy') }} <a
+                class="ModalPurchaseHbar-link"
+                href="https://www.carbon.money/"
+            >{{ $t('modalPurchaseHbar.carbon') }}</a>
+        </div>
     </Modal>
 </template>
 
@@ -47,3 +53,21 @@ export default createComponent({
     }
 });
 </script>
+<style scoped lang="postcss">
+.ModalPurchaseHbar-link-container {
+    text-align: center;
+}
+
+.ModalPurchaseHbar-link {
+    color: var(--color-melbourne-cup);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &:visited {
+        color: var(--color-melbourne-cup);
+    }
+}
+</style>
