@@ -67,7 +67,7 @@
                     {{ $t("common.faqs") }}
                 </div>
                 <a
-                    v-if="isInterface && !state.isCustomNetwork"
+                    v-if="isInterface && !isCustomNetwork"
                     class="link"
                     :href="kabutoLink"
                     target="_blank"
@@ -118,6 +118,8 @@
         </header>
         <HeaderHamburgerMenu
             :is-open="state.isHamburgerOpen"
+            :kabuto-link="kabutoLink"
+            :network="network"
             @toggle="toggle"
             @logout="state.isLogoutOpen = true"
         />
@@ -133,10 +135,7 @@ import Button from "../components/Button.vue";
 import {
     createComponent,
     computed,
-    reactive,
-    SetupContext,
-    Ref,
-    ref
+    reactive
 } from "@vue/composition-api";
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
@@ -160,35 +159,50 @@ export default createComponent({
         MaterialDesignIcon
     },
     props: {},
-    // Even though props is not used, we must have `context`
-    // as the second argument otherwise it will take the place of
-    // props implicitly and NOT complain you're casting it to `SetupContext`
-    setup(props, context: SetupContext) {
-        const accId: Ref<string | null> = ref(null);
-        const network: Ref<string | null> = ref(null);
+    setup(props, context) {
+        const isInterface = computed(() => {
+            // This conditional is required for unit tests to pass
+            if (context.root != null) {
+                if (context.root.$route != null) {
+                    return context.root.$route.path.startsWith("/interface");
+                }
+            }
+            return false;
+        });
 
-        if (getters.CURRENT_USER() != null && getters.GET_NETWORK() != null) {
-            accId.value = getters.CURRENT_USER()!.toString();
-            network.value = getters.GET_NETWORK()!.name.split(".")[ 1 ];
-        }
+        const accId = computed(() => {
+            if (isInterface.value === true) {
+                return getters.CURRENT_USER()!.toString();
+            }
+            return null;
+        });
+
+        const network = computed(() => {
+            if (isInterface.value === true) {
+                return getters.GET_NETWORK()!.name.split(".")[ 1 ];
+            }
+            return null;
+        });
 
         const kabutoLink = computed(() => {
-            if (accId != null && network != null) {
+            if (isInterface.value === true) {
                 return `https://explorer.kabuto.sh/${network.value}/id/${accId.value}`;
             }
-            return "";
+            return null;
+        });
+
+        const isCustomNetwork = computed(() => {
+            if (isInterface.value === true && network.value != null && network.value.includes("custom")) {
+                return true;
+            }
+            return false;
         });
 
         const state = reactive({
             scrolled: false,
             isHamburgerOpen: false,
-            isLogoutOpen: false,
-            isCustomNetwork: false
+            isLogoutOpen: false
         });
-
-        if (network.value !== "mainnet" && network.value !== "testnet") {
-            state.isCustomNetwork = true;
-        }
 
         function onScroll(): void {
             state.scrolled = window.scrollY > 150;
@@ -233,17 +247,6 @@ export default createComponent({
             context.root.$router.push({ name: "home", hash: path });
         }
 
-        const isInterface = computed(() => {
-            // This conditional is required for unit tests to pass
-            if (context.root != null) {
-                if (context.root.$route != null) {
-                    return context.root.$route.path.startsWith("/interface");
-                }
-            }
-
-            return false;
-        });
-
         const loggedIn = computed(getters.IS_LOGGED_IN);
 
         function handleLogout(): void {
@@ -274,7 +277,8 @@ export default createComponent({
             mdiOpenInNew,
             network,
             accId,
-            kabutoLink
+            kabutoLink,
+            isCustomNetwork
         };
     }
 });
