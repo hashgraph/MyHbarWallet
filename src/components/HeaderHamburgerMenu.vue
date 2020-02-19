@@ -76,7 +76,7 @@
             />
         </div>
         <a
-            v-if="isInterface && !state.isCustomNetwork"
+            v-if="isInterface && !isCustomNetwork"
             class="link-block"
             :href="kabutoLink"
             target="_blank"
@@ -119,14 +119,14 @@ import {
     PropType,
     computed,
     SetupContext,
-    reactive,
-    Ref,
-    ref
+    reactive
 } from "@vue/composition-api";
 import { getters } from "../store";
 
 interface Props {
     isOpen: boolean;
+    kabutoLink: string | null;
+    network: string;
 }
 
 export default createComponent({
@@ -136,33 +136,12 @@ export default createComponent({
         NetworkCard,
         Button
     },
-    props: { isOpen: (Boolean as unknown) as PropType<boolean> },
+    props: {
+        isOpen: (Boolean as unknown) as PropType<boolean>,
+        kabutoLink: String,
+        network: String
+    },
     setup(props: Props, context: SetupContext) {
-        const accId: Ref<string | null> = ref(null);
-        const network: Ref<string | null> = ref(null);
-
-        if (getters.CURRENT_USER() != null && getters.GET_NETWORK() != null) {
-            accId.value = getters.CURRENT_USER()!.toString();
-            network.value = getters.GET_NETWORK()!.name.split(".")[ 1 ];
-        }
-
-        const kabutoLink = computed(() => {
-            if (accId != null && network != null) {
-                return `https://explorer.kabuto.sh/${network.value}/id/${accId.value}`;
-            }
-            return "";
-        });
-
-        const state = reactive({
-            scrolled: false,
-            isLogoutOpen: false,
-            isCustomNetwork: false
-        });
-
-        if (network.value !== "mainnet" && network.value !== "testnet") {
-            state.isCustomNetwork = true;
-        }
-
         const isInterface = computed(() => {
             const route = context.root.$route;
 
@@ -171,6 +150,18 @@ export default createComponent({
             }
 
             return route.matched[ 0 ].name === "interface";
+        });
+
+        const isCustomNetwork = computed(() => {
+            if (isInterface.value === true && props.network != null && props.network.includes("custom")) {
+                return true;
+            }
+            return false;
+        });
+
+        const state = reactive({
+            scrolled: false,
+            isLogoutOpen: false
         });
 
         function toggle(): void {
@@ -218,7 +209,7 @@ export default createComponent({
             isAbout,
             handleSameHash,
             mdiOpenInNew,
-            kabutoLink
+            isCustomNetwork
         };
     }
 });
