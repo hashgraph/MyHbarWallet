@@ -30,6 +30,7 @@
             <div class="spacer" />
             <div class="links">
                 <router-link
+                    v-if="!isInterface"
                     to="/"
                     class="link"
                 >
@@ -38,33 +39,45 @@
                     }}
                 </router-link>
                 <router-link
-                    v-if="!isAbout"
+                    v-if="!isAbout && !isInterface"
                     :to="{ name: 'home', hash: '#about' }"
                     class="link"
                 >
                     {{ $t("common.about") }}
                 </router-link>
                 <div
-                    v-else
+                    v-if="isAbout"
                     class="link"
                     @click="handleSameHash('#about')"
                 >
                     {{ $t("common.about") }}
                 </div>
                 <router-link
-                    v-if="!isFaqs"
+                    v-if="!isFaqs && !isInterface"
                     :to="{ name: 'home', hash: '#faqs' }"
                     class="link"
                 >
                     {{ $t("common.faqs") }}
                 </router-link>
                 <div
-                    v-else
+                    v-if="isFaqs"
                     class="link"
                     @click="handleSameHash('#faqs')"
                 >
                     {{ $t("common.faqs") }}
                 </div>
+                <a
+                    v-if="isInterface && !state.isCustomNetwork"
+                    class="link"
+                    :href="kabutoLink"
+                    target="_blank"
+                >
+                    {{ $t("header.transactionHistory") }}
+                    <MaterialDesignIcon
+                        class="external-icon"
+                        :icon="mdiOpenInNew"
+                    />
+                </a>
             </div>
             <div
                 v-if="loggedIn && isInterface && !state.scrolled"
@@ -121,12 +134,16 @@ import {
     createComponent,
     computed,
     reactive,
-    SetupContext
+    SetupContext,
+    Ref,
+    ref
 } from "@vue/composition-api";
 import HeaderHamburgerMenu from "./HeaderHamburgerMenu.vue";
 import HeaderHamburgerButton from "./HeaderHamburgerButton.vue";
 import ModalLogOut from "./ModalLogOut.vue";
 import { getters } from "../store";
+import { mdiOpenInNew } from "@mdi/js";
+import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 
 // Yes, it is used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -139,18 +156,39 @@ export default createComponent({
         Button,
         HeaderHamburgerMenu,
         HeaderHamburgerButton,
-        ModalLogOut
+        ModalLogOut,
+        MaterialDesignIcon
     },
     props: {},
     // Even though props is not used, we must have `context`
     // as the second argument otherwise it will take the place of
     // props implicitly and NOT complain you're casting it to `SetupContext`
-    setup(props: object, context: SetupContext) {
+    setup(props, context: SetupContext) {
+        const accId: Ref<string | null> = ref(null);
+        const network: Ref<string | null> = ref(null);
+
+        if (getters.CURRENT_USER() != null && getters.GET_NETWORK() != null) {
+            accId.value = getters.CURRENT_USER()!.toString();
+            network.value = getters.GET_NETWORK()!.name.split(".")[ 1 ];
+        }
+
+        const kabutoLink = computed(() => {
+            if (accId != null && network != null) {
+                return `https://explorer.kabuto.sh/${network.value}/id/${accId.value}`;
+            }
+            return "";
+        });
+
         const state = reactive({
             scrolled: false,
             isHamburgerOpen: false,
-            isLogoutOpen: false
+            isLogoutOpen: false,
+            isCustomNetwork: false
         });
+
+        if (network.value !== "mainnet" && network.value !== "testnet") {
+            state.isCustomNetwork = true;
+        }
 
         function onScroll(): void {
             state.scrolled = window.scrollY > 150;
@@ -232,7 +270,11 @@ export default createComponent({
             isInterface,
             isFaqs,
             isAbout,
-            handleSameHash
+            handleSameHash,
+            mdiOpenInNew,
+            network,
+            accId,
+            kabutoLink
         };
     }
 });
@@ -365,5 +407,9 @@ export default createComponent({
     .button-container {
         visibility: hidden;
     }
+}
+
+.external-icon {
+    margin-inline-start: 5px;
 }
 </style>
