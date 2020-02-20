@@ -24,7 +24,6 @@
         </div>
         <ModalFeeSummary
             v-model="state.modalFeeSummaryState"
-            @change="handleFeeModalChange"
             @submit="handleUploadSubmit"
         />
         <ModalUploadProgress
@@ -157,11 +156,6 @@ export default createComponent({
             state.uploadProgress.inProgress = true;
 
             handleUpload(state.uploadBytes as Uint8Array);
-        }
-
-        function handleFeeModalChange(isOpen: boolean): void {
-            state.modalFeeSummaryState.isOpen = isOpen;
-            if (state.isUploading) state.isUploading = false;
         }
 
         // 2.6 Hbar is current (10-21-19) full chunk estimate - (~1 hbar for empty tx plus .55 hbar per kB, then rounded up a bit)
@@ -412,7 +406,6 @@ export default createComponent({
             handleUploadCancel,
             handleUploadRetry,
             handleHashUploadClick,
-            handleFeeModalChange,
             handleCopyFileID,
             handleUploadFinish,
             fileIDString,

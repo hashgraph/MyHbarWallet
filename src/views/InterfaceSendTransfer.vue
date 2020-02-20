@@ -72,7 +72,7 @@ import OptionalMemoField from "../components/OptionalMemoField.vue";
 import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuccess.vue";
 import { LoginMethod } from "../wallets/Wallet";
 import { AccountId } from "@hashgraph/sdk";
-import { actions, getters, store } from "../store";
+import { actions, store } from "../store";
 
 interface State {
     amount: string | null;
