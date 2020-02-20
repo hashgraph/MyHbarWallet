@@ -31,7 +31,6 @@
         "@ledgerhq/hw-transport-webusb": "^5.8.0",
         "@mdi/js": "^4.9.95",
         "@vue/composition-api": "^0.3.4",
-        "axios": "^0.19.2",
         "bignumber.js": "^9.0.0",
         "file-type": "^14.1.1",
         "html2pdf.js": "^0.9.1",
