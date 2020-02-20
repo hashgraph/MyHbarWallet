@@ -31,11 +31,6 @@
                         @click="handleDismiss"
                     />
                 </div>
-                <TransactionLink
-                    v-if="state.txid !== ''"
-                    :id="state.txid"
-                    class="transaction-link"
-                />
             </div>
         </Modal>
     </div>
@@ -48,14 +43,12 @@ import Button from "../components/Button.vue";
 import { mdiCheck } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import ReadOnlyInput from "./ReadOnlyInput.vue";
-import TransactionLink from "../components/TransactionLink.vue";
 
 export interface State {
     isOpen: boolean;
     hasAction?: boolean | undefined;
     actionLabel?: string | undefined;
     dismissLabel?: string | undefined;
-    txid?: string | undefined;
 }
 
 interface Props {
@@ -67,8 +60,7 @@ export default createComponent({
         Modal,
         Button,
         ReadOnlyInput,
-        MaterialDesignIcon,
-        TransactionLink
+        MaterialDesignIcon
     },
     props: { state: (Object as unknown) as PropType<State> },
     model: {
@@ -164,9 +156,5 @@ export default createComponent({
     @media (max-width: 600px) {
         width: 100%;
     }
-}
-
-.transaction-link {
-    margin-block-start: 20px;
 }
 </style>

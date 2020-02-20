@@ -151,7 +151,7 @@ export default createComponent({
                 throw new Error(context.root.$t("common.error.noSession").toString());
             }
 
-            const { FileContentsQuery, Hbar } = await import("@hashgraph/sdk");
+            const { FileContentsQuery, Hbar, Client } = await import("@hashgraph/sdk");
 
             const client = store.state.wallet.session.client;
             client.setMaxQueryPayment(Hbar.fromTinybar(100000000));
