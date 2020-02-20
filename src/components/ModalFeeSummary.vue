@@ -1,33 +1,33 @@
 <template>
     <div class="modal-fee-summary">
         <Modal
-            :is-open="props.isOpen"
+            :is-open="state.isOpen"
             :title="$t('modalFeeSummary.title')"
             not-closable
         >
             <ModalFeeSummaryTitle
-                :amount="props.amount"
-                :account="props.account"
-                :type="props.txType"
+                :amount="state.amount"
+                :account="state.account"
+                :type="state.txType"
             />
             <div class="separator" />
             <ModalFeeSummaryTerms
                 :state="termsState"
             />
-            <div class="separator" />
-            <ModalFeeSummaryItems :items="props.items" />
+            <ModalFeeSummaryItems :items="state.items" />
             <div class="buttons">
                 <Button
                     compact
                     outline
-                    :label="cancelLabel ? cancelLabel : $t('common.cancel')"
+                    :label="state.cancelLabel ? state.cancelLabel : $t('common.cancel')"
                     class="button"
                     type="button"
                     @click="handleCancel"
                 />
                 <Button
                     compact
-                    :label="submitLabel ? submitLabel : $t('common.continue')"
+                    :busy="state.isBusy"
+                    :label="state.submitLabel ? state.submitLabel : $t('common.continue')"
                     class="button"
                     type="submit"
                     @submit="handleSubmit"
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, SetupContext, computed } from "@vue/composition-api";
+import { createComponent, PropType, SetupContext, computed, ref } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
@@ -53,27 +53,22 @@ export interface Item {
     value: BigNumber | string;
 }
 
+export interface State {
+    isOpen: boolean;
+    isBusy: boolean;
+    isFileSummary: boolean;
+    account: string;
+    amount: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    items: any;
+    txType: string;
+    submitLabel: string | null;
+    cancelLabel: string | null;
+    termsShowNonOperator: boolean;
+}
+
 export default createComponent({
-    props: {
-        isFileSummary: Boolean,
-        isOpen: Boolean,
-        items: Array as PropType<Item[]>,
-        amount: String,
-        termsShowNonOperator: {
-            type: Boolean,
-            default: false
-        },
-        account: String,
-        txType: String,
-        submitLabel: {
-            type: String,
-            default: null
-        },
-        cancelLabel: {
-            type: String,
-            default: null
-        }
-    },
+    props: { state: Object as PropType<State> },
     components: {
         Button,
         Modal,
@@ -82,21 +77,11 @@ export default createComponent({
         ModalFeeSummaryTerms
     },
     model: {
-        prop: "isOpen",
+        prop: "state",
         event: "change"
     },
     setup(
-        props: {
-            isFileSummary: boolean;
-            isOpen: boolean;
-            items: Item[];
-            amount: string;
-            account: string;
-            txType: string;
-            termsShowNonOperator: boolean;
-            submitLabel: string | null;
-            cancelLabel: string | null;
-        },
+        props,
         context: SetupContext
     ): object {
         const user = getters.CURRENT_USER();
@@ -110,17 +95,18 @@ export default createComponent({
 
         const termsState = computed(() => ({
             operator: operator.value,
-            sender: props.termsShowNonOperator ? operator.value : null,
-            receiver: props.termsShowNonOperator ? props.account : null
+            sender: props.state!.termsShowNonOperator ? operator.value : null,
+            receiver: props.state!.termsShowNonOperator ? props.state!.account : null
         }));
 
         function handleCancel(): void {
-            context.emit("change", false);
+            props.state!.isBusy = false;
+            props.state!.isOpen = false;
+            context.emit("change", { ...props.state });
         }
 
         function handleSubmit(): void {
-            if (!props.isFileSummary) {
-                context.emit("change", false);
+            if (!props.state!.isFileSummary) {
                 context.emit("submit");
             } else {
                 context.emit("submit", true);

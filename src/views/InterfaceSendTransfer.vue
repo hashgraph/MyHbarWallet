@@ -44,12 +44,7 @@
         </ModalSuccess>
 
         <ModalFeeSummary
-            v-model="state.summaryIsOpen"
-            termsShowNonOperator
-            :account="summaryAccount"
-            :amount="summaryAmount"
-            :items="summaryItems"
-            tx-type="transfer"
+            v-model="state.modalSummaryState"
             @submit="handleSendTransfer"
         />
     </InterfaceForm>
@@ -71,7 +66,7 @@ import {
 } from "@vue/composition-api";
 import { getValueOfUnit, Unit, convert } from "../units";
 import BigNumber from "bignumber.js";
-import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+import ModalFeeSummary, { State as ModalSummaryState, Item } from "../components/ModalFeeSummary.vue";
 import { formatHbar, validateHbar } from "../formatter";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuccess.vue";
@@ -87,8 +82,8 @@ interface State {
     isBusy: boolean;
     idErrorMessage: string | null;
     amountErrorMessage: string | null;
-    summaryIsOpen: boolean;
     idValid: boolean;
+    modalSummaryState: ModalSummaryState;
     modalSuccessState: ModalSuccessState;
 }
 
@@ -115,8 +110,19 @@ export default createComponent({
             isBusy: false,
             idErrorMessage: "",
             amountErrorMessage: "",
-            summaryIsOpen: false,
             idValid: false,
+            modalSummaryState: {
+                isOpen: false,
+                isBusy: false,
+                isFileSummary: false,
+                account: "",
+                amount: "",
+                items: null,
+                txType: "transfer",
+                submitLabel: "Transfer",
+                cancelLabel: "Cancel",
+                termsShowNonOperator: true
+            },
             modalSuccessState: {
                 isOpen: false,
                 hasAction: false
@@ -182,26 +188,28 @@ export default createComponent({
                 .toString();
         });
 
+        // Modal Fee Summary State
         const summaryAmount = computed(() => amount.value);
-
         const summaryAccount = computed(() => state.accountString);
-
-        const summaryItems = computed(() => [
+        const summaryItems = computed((): Item[] => [
             {
-                description: context.root.$t("interfaceSendTransfer.transferAmount"),
+                description: context.root.$t("interfaceSendTransfer.transferAmount").toString(),
                 value:
                             isAmountValid && state.amount ?
                                 new BigNumber(state.amount) :
                                 new BigNumber(0)
             },
             {
-                description: context.root.$t("common.estimatedFee"),
+                description: context.root.$t("common.estimatedFee").toString(),
                 value: estimatedFeeHbar
             }
-        ] as Item[]);
+        ]);
 
         function handleShowSummary(): void {
-            state.summaryIsOpen = true;
+            state.modalSummaryState.account = summaryAccount.value!;
+            state.modalSummaryState.amount = summaryAmount.value!;
+            state.modalSummaryState.items = summaryItems.value!;
+            state.modalSummaryState.isOpen = true;
         }
 
         // Taken from [UnitConverter]
@@ -263,6 +271,7 @@ export default createComponent({
             }
 
             state.isBusy = true;
+            state.modalSummaryState.isBusy = true;
 
             const client = store.state.wallet.session.client;
 
@@ -313,6 +322,7 @@ export default createComponent({
                 await actions.refreshBalanceAndRate();
 
                 // eslint-disable-next-line require-atomic-updates
+                state.modalSummaryState.isOpen = false;
                 state.modalSuccessState.isOpen = true;
             } catch (error) {
                 // eslint-disable-next-line require-atomic-updates
@@ -361,6 +371,8 @@ export default createComponent({
                 }
             } finally {
                 // eslint-disable-next-line require-atomic-updates
+                state.modalSummaryState.isBusy = false;
+                state.modalSummaryState.isOpen = false;
                 state.isBusy = false;
             }
         }
