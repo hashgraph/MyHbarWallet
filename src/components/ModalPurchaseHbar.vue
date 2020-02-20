@@ -17,7 +17,10 @@
                 class="ModalPurchaseHbar-link"
                 href="https://www.carbon.money/"
             >
-                <img :src="carbonLogo">
+                <img
+                    class="logo"
+                    :src="carbonLogo"
+                >
             </a>
         </div>
     </Modal>
@@ -68,5 +71,9 @@ export default createComponent({
     &:visited {
         color: var(--color-melbourne-cup);
     }
+}
+
+.logo {
+    margin-inline-start: 5px;
 }
 </style>
