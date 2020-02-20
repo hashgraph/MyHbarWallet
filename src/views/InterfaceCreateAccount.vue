@@ -130,7 +130,7 @@ export default createComponent({
                 isFileSummary: false,
                 account: "",
                 amount: "",
-                items: null,
+                items: [],
                 txType: "transfer",
                 submitLabel: "Transfer",
                 cancelLabel: "Cancel",

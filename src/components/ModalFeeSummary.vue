@@ -60,7 +60,7 @@ export interface State {
     account: string;
     amount: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    items: any[];
+    items: any[] | readonly any[];
     txType: string;
     submitLabel: string | null;
     cancelLabel: string | null;

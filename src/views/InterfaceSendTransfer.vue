@@ -117,7 +117,7 @@ export default createComponent({
                 isFileSummary: false,
                 account: "",
                 amount: "",
-                items: null,
+                items: [],
                 txType: "transfer",
                 submitLabel: "Transfer",
                 cancelLabel: "Cancel",
@@ -208,7 +208,8 @@ export default createComponent({
         function handleShowSummary(): void {
             state.modalSummaryState.account = summaryAccount.value!;
             state.modalSummaryState.amount = summaryAmount.value!;
-            state.modalSummaryState.items = summaryItems.value!;
+            const items: readonly Item[] = summaryItems.value!;
+            state.modalSummaryState.items = items;
             state.modalSummaryState.isOpen = true;
         }
 
