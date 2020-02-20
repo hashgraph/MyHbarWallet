@@ -109,6 +109,9 @@ export const getters = {
     GET_WALLET(): Wallet | null {
         return store.state.wallet.wallet;
     },
+    GET_CLIENT(): import("@hashgraph/sdk").Client | undefined {
+        return store.state.wallet.session?.client;
+    },
     CURRENT_USER(): import("@hashgraph/sdk").AccountId | null {
         return store.state.wallet.session?.account ?? null;
     },
@@ -431,12 +434,17 @@ export const actions = {
     },
     async logIn(account: import("@hashgraph/sdk").AccountId): Promise<void> {
         const wallet: Wallet | null = getters.GET_WALLET();
-        const client: import("@hashgraph/sdk").Client | null = await mutations.CONSTRUCT_CLIENT(account);
+        let client: import("@hashgraph/sdk").Client | undefined = getters.GET_CLIENT();
+        if (client == null) {
+            const newClient = await mutations.CONSTRUCT_CLIENT(account);
+            client = newClient;
+        }
         if (wallet != null && client != null) {
             const session: Session = {
                 account,
                 wallet,
                 client
+
             };
             mutations.SET_SESSION(session);
             await this.refreshBalanceAndRate();
