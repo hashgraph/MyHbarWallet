@@ -11,6 +11,9 @@
                 :type="props.txType"
             />
             <div class="separator" />
+            <ModalFeeSummaryTerms
+                :state="termsState"
+            />
             <ModalFeeSummaryItems :items="props.items" />
             <div class="buttons">
                 <Button
@@ -35,12 +38,14 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, SetupContext } from "@vue/composition-api";
+import { createComponent, PropType, SetupContext, computed } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import ModalFeeSummaryTitle from "../components/ModalFeeSummaryTitle.vue";
 import ModalFeeSummaryItems from "../components/ModalFeeSummaryItems.vue";
+import ModalFeeSummaryTerms from "../components/ModalFeeSummaryTerms.vue";
+import { getters } from "../store";
 
 export interface Item {
     description: string;
@@ -68,7 +73,8 @@ export default createComponent({
         Button,
         Modal,
         ModalFeeSummaryTitle,
-        ModalFeeSummaryItems
+        ModalFeeSummaryItems,
+        ModalFeeSummaryTerms
     },
     model: {
         prop: "isOpen",
@@ -87,6 +93,21 @@ export default createComponent({
         },
         context: SetupContext
     ): object {
+        const user = getters.CURRENT_USER();
+        const operator = computed(() => {
+            if (user != null) {
+                return `${user.shard}.${user.realm}.${user.account}`;
+            }
+
+            return null;
+        });
+
+        const termsState = computed(() => ({
+            operator: operator.value,
+            sender: operator.value,
+            receiver: props.account
+        }));
+
         function handleCancel(): void {
             context.emit("change", false);
         }
@@ -102,6 +123,7 @@ export default createComponent({
 
         return {
             props,
+            termsState,
             BigNumber,
             handleCancel,
             handleSubmit
