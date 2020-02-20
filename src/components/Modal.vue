@@ -18,10 +18,9 @@
                 <header v-if="!props.hideDecoration">
                     <span class="title">{{ props.title }}</span>
                     <MaterialDesignIcon
-                        v-if="!props.notClosable"
                         class="close"
                         :icon="mdiClose"
-                        @click="handleClose"
+                        @click="handleXClose"
                     />
                 </header>
                 <MaterialDesignIcon
@@ -93,6 +92,10 @@ export default createComponent({
             if (!props.notClosable && modalIsTop(id)) {
                 context.emit("change", false);
             }
+        }
+
+        function handleXClose(): void {
+            context.emit("change", false);
         }
 
         function handleWindowKeyDown(event: KeyboardEvent): void {
@@ -181,7 +184,8 @@ export default createComponent({
             mdiClose,
             handleClose,
             handleWindowKeyDown,
-            props
+            props,
+            handleXClose
         };
     }
 });
