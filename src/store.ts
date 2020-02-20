@@ -7,8 +7,7 @@ import {
     coingeckoEndpoint,
     Session,
     State as WalletState,
-    TickerJSON,
-    TickersJSON
+    MarketDataJSON
 } from "./store/modules/wallet";
 import { State as FeesState } from "./store/modules/fees";
 import {
@@ -25,6 +24,7 @@ import { getValueOfUnit, Unit } from "./units";
 import { NetworkName, availableNetworks, NetworkSettings } from "./settings";
 import Wallet from "./wallets/Wallet";
 import router from "./router";
+import { externalRequest } from "./request";
 
 export interface RootState {
     alerts: AlertsState;
@@ -37,6 +37,10 @@ export interface RootState {
 
 export interface Store {
     state: RootState;
+}
+
+function price(json: MarketDataJSON): number {
+    return json.market_data.current_price.usd;
 }
 
 export const store = Vue.observable({
@@ -412,19 +416,12 @@ export const actions = {
             return;
         }
 
-        // Get response, clone, get text, parse to JSON
-        const response: Response = await fetch(coingeckoEndpoint);
-        const responseJson: TickersJSON = JSON.parse(await response.clone().text());
+        const curPrice = new BigNumber(price(await externalRequest(coingeckoEndpoint)));
 
-        // filter reduce to average of last rate from relevant exchanges
-        const meanLast = new BigNumber(responseJson.tickers
-            .filter((ticker: TickerJSON) => ticker.target === "USD" &&
-                        !ticker.is_stale &&
-                        !ticker.is_anomaly)
-            .reduce<number>((accumulator, ticker, _, { length }) => (accumulator + ticker.converted_last.usd) / length, 0));
+        console.log(curPrice);
 
         // Set exchange rate
-        mutations.SET_EXCHANGE_RATE(meanLast);
+        mutations.SET_EXCHANGE_RATE(curPrice);
     },
     async refreshBalanceAndRate(): Promise<void> {
         await this.refreshBalance();

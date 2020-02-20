@@ -36,25 +36,17 @@ import {
 } from "@hashgraph/sdk";
 
 export const coingeckoEndpoint =
-    "https://api.coingecko.com/api/v3/coins/hedera-hashgraph/tickers";
+    "https://api.coingecko.com/api/v3/coins/hedera-hashgraph?market_data=true";
 
-export interface LastJSON {
-    btc: number;
-    eth: number;
-    usd: number;
-}
-
-export interface TickerJSON {
-    base: string;
-    target: string;
-    is_stale: boolean;
-    is_anomaly: boolean;
-    last: number; // Whichever rate was last used
-    converted_last: LastJSON;
-}
-
-export interface TickersJSON {
-    tickers: TickerJSON[];
+export interface MarketDataJSON {
+    market_data: {
+        current_price: {
+            usd: number;
+        };
+        market_cap: {
+            usd: number;
+        };
+    };
 }
 
 export interface Session {
