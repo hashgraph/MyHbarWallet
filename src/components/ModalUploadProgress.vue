@@ -26,7 +26,22 @@
                                 : $t("modalUploadProgress.failure.text")
                     }}
                 </div>
-                <div class="upload-subtext">
+                <div
+                    v-if="state.inProgress || state.wasSuccess"
+                    class="upload-subtext"
+                >
+                    {{
+                        state.inProgress
+                            ? $t("modalUploadProgress.inProgress.subText")
+                            : state.wasSuccess
+                                ? $t("modalUploadProgress.success.subText")
+                                : $t("modalUploadProgress.failure.subText")
+                    }}
+                </div>
+                <div
+                    v-else
+                    class="upload-subtext-try-again"
+                >
                     {{
                         state.inProgress
                             ? $t("modalUploadProgress.inProgress.subText")
@@ -60,7 +75,10 @@
                     />
                 </div>
 
-                <div class="progress-text">
+                <div
+                    v-if="state.inProgress || state.wasSuccess"
+                    class="progress-text"
+                >
                     {{ progressString }}
                 </div>
 
@@ -191,6 +209,12 @@ export default createComponent({
     margin-block-end: 60px;
 }
 
+.upload-subtext-try-again {
+    color: var(--color-china-blue);
+    font-size: 18px;
+    margin-block-end: 44px;
+}
+
 .icon {
     margin-inline-start: 10px;
 }
@@ -199,11 +223,15 @@ export default createComponent({
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    margin-block-start: 60px;
+    margin-block-start: 44px;
 
     @media (max-width: 600px) {
         align-items: center;
         flex-direction: column;
     }
+}
+
+.cancel-button {
+    margin-inline-end: 10px;
 }
 </style>
