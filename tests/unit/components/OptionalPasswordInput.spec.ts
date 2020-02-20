@@ -15,9 +15,6 @@ describe("OptionalPasswordInput", (): void => {
             methods: {
                 // This test has warnings if the values aren't defined
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                handleInput(password: string): void {},
-                // This test has warnings if the values aren't defined
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 handleChangeShowPassword(showPassword: boolean): void {}
             },
             stubs: {
