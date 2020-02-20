@@ -89,16 +89,18 @@
                     <Button
                         :label="$t('modalUploadProgress.failure.buttonLabel2')"
                         :disabled="state.inProgress"
-                        class="cancel-button"
+                        class="button"
                         outline
                         danger
+                        compact
                         @click="onClickCancel"
                     />
 
                     <Button
                         :label="$t('modalUploadProgress.failure.buttonLabel')"
                         :disabled="state.inProgress"
-                        class="retry-button"
+                        class="button"
+                        compact
                         @click="onClickRetry"
                     />
                 </div>
@@ -212,7 +214,7 @@ export default createComponent({
 .upload-subtext-try-again {
     color: var(--color-china-blue);
     font-size: 18px;
-    margin-block-end: 44px;
+    margin-block-end: 52px;
 }
 
 .icon {
@@ -221,9 +223,10 @@ export default createComponent({
 
 .button-container {
     display: flex;
-    flex-flow: row nowrap;
+    /* flex-flow: row nowrap; */
     justify-content: space-between;
-    margin-block-start: 44px;
+    margin-block-start: 52px;
+    width: 100%;
 
     @media (max-width: 600px) {
         align-items: center;
@@ -231,7 +234,15 @@ export default createComponent({
     }
 }
 
-.cancel-button {
-    margin-inline-end: 10px;
+.button {
+    width: 200px;
+
+    @media (max-width: 600px) {
+        width: 100%;
+
+        &:last-child {
+            margin-block-end: 15px;
+        }
+    }
 }
 </style>

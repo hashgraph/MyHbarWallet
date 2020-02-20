@@ -71,7 +71,7 @@ async function hashFile(file: Uint8Array): Promise<Uint8Array> {
 }
 
 // The approximate maximum size of a chunk - formerly 2923 which would sometimes cause transaction oversize error
-const MAX_CHUNK_LENGTH = 2900;
+const MAX_CHUNK_LENGTH = 2950;
 
 export default createComponent({
     components: {
