@@ -8,6 +8,11 @@
             >
                 <div class="description">
                     {{ item.description }}
+                    &nbsp;
+                    <InfoButton
+                        v-if="item.description === $t('common.estimatedFee')"
+                        :message="$t('modalFeeSummary.whatIsFee')"
+                    />
                 </div>
                 <div class="value">
                     {{ item.value }}
@@ -25,9 +30,11 @@ import { createComponent, computed, PropType, Ref } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 import { Item } from "./ModalFeeSummary.vue";
 import { formatSplit, formatRightPad } from "../formatter";
+import InfoButton from "../components/InfoButton.vue";
 
 let KEY = 0;
 function nextItemKey(): number {
+    // eslint-disable-next-line no-return-assign
     return KEY += 1;
 }
 
@@ -46,6 +53,7 @@ interface SplitItem {
 
 export default createComponent({
     props: { items: Array as PropType<Item[]> },
+    components: { InfoButton },
     setup(props: { items: Item[] }) {
         // Compute the total
         const total: Ref<{
@@ -191,12 +199,6 @@ export default createComponent({
     flex-direction: row;
     justify-content: center;
     margin-block-end: 5px;
-}
-
-.text {
-    color: var(--color-china-blue);
-    font-size: 16px;
-    white-space: nowrap;
 }
 
 .value {
