@@ -14,6 +14,7 @@
             <ModalFeeSummaryTerms
                 :state="termsState"
             />
+            <div class="separator" />
             <ModalFeeSummaryItems :items="props.items" />
             <div class="buttons">
                 <Button
