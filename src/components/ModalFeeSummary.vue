@@ -59,6 +59,10 @@ export default createComponent({
         isOpen: Boolean,
         items: Array as PropType<Item[]>,
         amount: String,
+        termsShowNonOperator: {
+            type: Boolean,
+            default: false
+        },
         account: String,
         txType: String,
         submitLabel: {
@@ -89,6 +93,7 @@ export default createComponent({
             amount: string;
             account: string;
             txType: string;
+            termsShowNonOperator: boolean;
             submitLabel: string | null;
             cancelLabel: string | null;
         },
@@ -105,8 +110,8 @@ export default createComponent({
 
         const termsState = computed(() => ({
             operator: operator.value,
-            sender: operator.value,
-            receiver: props.account
+            sender: props.termsShowNonOperator ? operator.value : null,
+            receiver: props.termsShowNonOperator ? props.account : null
         }));
 
         function handleCancel(): void {

@@ -30,22 +30,22 @@ export default createComponent({
 
 <style scoped lang="postcss">
 .AdBlockTwitter {
-    display: flex;
     align-items: center;
-    justify-content: center;
-    height: 100px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: var(--color-washed-black);
     background: white;
+    border-radius: 5px;
+    color: var(--color-washed-black);
+    display: flex;
     font-size: 18px;
     font-weight: 600;
+    height: 100px;
+    justify-content: center;
+    text-decoration: none;
 }
 
 .AdBlockTwitter-icon {
-    margin-left: 15px;
-    width: 40px;
-    height: 40px;
     color: rgb(28, 161, 241);
+    height: 40px;
+    margin-inline-start: 15px;
+    width: 40px;
 }
 </style>

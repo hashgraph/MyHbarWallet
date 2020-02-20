@@ -45,6 +45,7 @@
 
         <ModalFeeSummary
             v-model="state.summaryIsOpen"
+            termsShowNonOperator
             :account="summaryAccount"
             :amount="summaryAmount"
             :items="summaryItems"

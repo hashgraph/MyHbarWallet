@@ -197,7 +197,6 @@ export default createComponent({
     background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     height: 100vh;
-    width: 100vw;
     inset: 0;
     opacity: 1;
     overflow: hidden;
@@ -205,6 +204,7 @@ export default createComponent({
     padding: 0 0 50px 0;
     pointer-events: all;
     position: fixed;
+    width: 100vw;
     z-index: 2;
 
     @supports (-webkit-overflow-scrolling: touch) {
@@ -221,9 +221,9 @@ export default createComponent({
     flex-direction: column;
     margin: auto;
     max-width: 530px;
-    width: 100vw;
     overflow: hidden;
     overflow-y: auto;
+    width: 100vw;
     z-index: 3;
 
     & .crown {
@@ -327,9 +327,9 @@ header {
 }
 
 .content-container {
-    padding: 40px;
     height: 100%;
     max-width: 100%;
+    padding: 40px;
 
     @media (max-width: 600px) {
         padding: 20px;

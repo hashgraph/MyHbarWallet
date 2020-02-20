@@ -54,31 +54,31 @@ export default createComponent({
 
 <style scoped lang="postcss">
 .AdBlockBuyHbar {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
     align-items: flex-start;
-    justify-content: center;
+    background: white;
     border-radius: 5px;
     color: var(--color-washed-black);
-    background: white;
+    display: flex;
+    flex-direction: column;
     font-size: 18px;
     font-weight: 600;
-    position: relative;
+    justify-content: center;
     overflow: hidden;
+    padding: 20px;
+    position: relative;
 }
 
 .AdBlockBuyHbar-backdrop {
-    position: absolute;
     height: 150%;
-    right: -30px;
+    inset-inline-end: -30px;
     opacity: 0.3;
+    position: absolute;
 }
 
 .AdBlockBuyHbar-action {
-    display: flex;
-    margin-top: 15px;
     align-items: center;
+    display: flex;
+    margin-block-start: 15px;
 }
 
 .AdBlockBuyHbar-button {
@@ -87,7 +87,7 @@ export default createComponent({
 }
 
 .AdBlockBuyHbar-icon {
-    margin-left: 10px;
     height: 26px;
+    margin-inline-start: 10px;
 }
 </style>

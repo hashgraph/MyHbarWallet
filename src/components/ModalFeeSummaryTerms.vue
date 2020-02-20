@@ -47,16 +47,16 @@ export default createComponent({
 .modal-fee-summary-terms {
     align-items: center;
     display: flex;
-    font-family: "Inconsolata", monospace;
     flex-direction: column;
+    font-family: "Inconsolata", monospace;
 }
 
 .term {
     align-items: center;
     display: flex;
     justify-content: space-between;
-    width: 100%;
     margin-block-end: 5px;
+    width: 100%;
 }
 
 .description {

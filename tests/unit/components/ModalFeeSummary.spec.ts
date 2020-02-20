@@ -142,8 +142,9 @@ describe("ModalFeeSummary.vue", (): void => {
                       <div class="modal-fee-summary-terms">
                         <!---->
                         <!---->
-                        <div class="term"><span class="description">Receiver</span> <span class="value">999.999.999</span></div>
+                        <!---->
                       </div>
+                      <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row total">
                           <div class="description">
@@ -249,8 +250,9 @@ describe("ModalFeeSummary.vue", (): void => {
                       <div class="modal-fee-summary-terms">
                         <!---->
                         <!---->
-                        <div class="term"><span class="description">Receiver</span> <span class="value">999.999.999</span></div>
+                        <!---->
                       </div>
+                      <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row">
                           <div class="description">
@@ -351,8 +353,9 @@ describe("ModalFeeSummary.vue", (): void => {
                       <div class="modal-fee-summary-terms">
                         <!---->
                         <!---->
-                        <div class="term"><span class="description">Receiver</span> <span class="value">999.999.999</span></div>
+                        <!---->
                       </div>
+                      <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row">
                           <div class="description">

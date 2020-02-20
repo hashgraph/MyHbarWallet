@@ -95,11 +95,11 @@ export default createComponent({
 }
 
 .interface-ads {
+    display: grid;
     flex-shrink: 0;
     grid-area: ads;
     grid-auto-flow: row;
     grid-auto-rows: min-content;
-    display: grid;
     grid-row-gap: 15px;
 }
 
