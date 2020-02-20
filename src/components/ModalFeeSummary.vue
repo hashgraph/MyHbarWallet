@@ -4,6 +4,7 @@
             :is-open="state.isOpen"
             :title="$t('modalFeeSummary.title')"
             not-closable
+            @change="handleCancel"
         >
             <ModalFeeSummaryTitle
                 :amount="state.amount"

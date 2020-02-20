@@ -20,7 +20,6 @@
         </div>
         <ModalFeeSummary
             v-model="state.modalFeeSummaryState"
-            @action="handleFeeModalChange"
             @submit="handleFeeSubmit"
         />
         <ModalSuccess
@@ -134,10 +133,6 @@ export default createComponent({
             state.success.isOpen = true;
         }
 
-        function handleFeeModalChange(isOpen: boolean): void {
-            state.modalFeeSummaryState.isOpen = isOpen;
-        }
-
         async function handleDownloadClick(): Promise<void> {
             if (!store.state.wallet.session) {
                 throw new Error(context.root.$t("common.error.noSession").toString());
@@ -247,7 +242,6 @@ export default createComponent({
             state,
             formattedFileId,
             handleDownloadFinish,
-            handleFeeModalChange,
             handleValid,
             handleDownloadClick,
             handleFileId,
