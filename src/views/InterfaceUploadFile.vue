@@ -109,7 +109,8 @@ export default createComponent({
             success: {
                 isOpen: false,
                 hasAction: true,
-                actionLabel: "Copy File ID"
+                actionLabel: "Copy File ID",
+                txid: ""
             } as SuccessState
         });
 
@@ -214,6 +215,7 @@ export default createComponent({
             state.uploadProgress.inProgress = false;
             state.uploadProgress.isOpen = false;
             state.success.isOpen = true;
+            state.success.txid = fileIDString.value;
         }
 
         async function fileCreateUpload(

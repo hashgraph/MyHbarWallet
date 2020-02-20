@@ -103,7 +103,8 @@ export default createComponent({
                 isOpen: false,
                 hasAction: true,
                 actionLabel: "Save File",
-                copyInfo: null
+                copyInfo: null,
+                txid: ""
             } as SuccessState
         });
 
@@ -140,6 +141,7 @@ export default createComponent({
             // triggerDownload();
             state.isOpen = false;
             state.success.isOpen = true;
+            state.success.txid = formattedFileId.value;
         }
 
         function handleFeeModalChange(isOpen: boolean): void {
