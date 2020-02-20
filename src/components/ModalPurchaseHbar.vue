@@ -12,17 +12,25 @@
             allow="fullscreen"
             :src="url"
         />
+        <div class="ModalPurchaseHbar-link-container">
+            {{ $t('modalPurchaseHbar.poweredBy') }} <a
+                class="ModalPurchaseHbar-link"
+                href="https://www.carbon.money/"
+            >
+                <img
+                    class="logo"
+                    :src="carbonLogo"
+                >
+            </a>
+        </div>
     </Modal>
 </template>
 
 <script lang="ts">
 import Modal from "../components/Modal.vue";
-import {
-    createComponent,
-    PropType,
-    computed
-} from "@vue/composition-api";
+import { createComponent } from "@vue/composition-api";
 import { getters } from "../store";
+import carbonLogo from "../assets/carbon-logo.svg";
 
 // Both of these are defined in vue.config.js.
 declare const MHW_ENV: string;
@@ -43,7 +51,29 @@ export default createComponent({
 
         const url = `https://buy.carbon.money/?tokens=hbar&receiveAddressHbar=${accIdString}&environment=${environment}&apiKey=${CARBON_API_KEY}`;
 
-        return { url };
+        return { url, carbonLogo };
     }
 });
 </script>
+<style scoped lang="postcss">
+.ModalPurchaseHbar-link-container {
+    text-align: center;
+}
+
+.ModalPurchaseHbar-link {
+    color: var(--color-melbourne-cup);
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &:visited {
+        color: var(--color-melbourne-cup);
+    }
+}
+
+.logo {
+    margin-inline-start: 5px;
+}
+</style>

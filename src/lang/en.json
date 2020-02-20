@@ -240,6 +240,7 @@
     "modalPhrasePrintPreview.saveThisSheet": "Save this sheet! Print it and keep it in a safe place! This is your property!",
     "modalPhrasePrintPreview.title": "Print Preview",
     "modalPhrasePrintPreview.weCanNotChagneYourPassword": "We **CAN NOT** change your password. Please **DO NOT FORGET** to save your password. It is your private key. You will need this **Password + Mnemonic Phrase** to access your wallet.",
+    "modalPurchaseHbar.poweredBy": "Powered By",
     "modalReportError.description": "(Optional) What went wrong?",
     "modalReportError.informMHW": "Do you want to inform MHW about this error?",
     "modalReportError.title": "Something went wrong.",
