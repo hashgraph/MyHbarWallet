@@ -57,6 +57,7 @@ describe("ModalLogOut.vue", (): void => {
                         <!---->
                         <div class="term"><span class="description">Receiver</span> <span class="value">0.0.1</span></div>
                       </div>
+                      <div class="separator"></div>
                       <div class="modal-fee-summary-items">
                         <div class="row">
                           <div class="description">
