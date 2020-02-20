@@ -132,8 +132,8 @@ export default createComponent({
                 amount: "",
                 items: [],
                 txType: "transfer",
-                submitLabel: "Transfer",
-                cancelLabel: "Cancel",
+                submitLabel: context.root.$t("interfaceCreateAccount.feeSummary.continue").toString(),
+                cancelLabel: context.root.$t("interfaceCreateAccount.feeSummary.dismiss").toString(),
                 termsShowNonOperator: false
             },
             modalSuccessState: {
