@@ -19,14 +19,7 @@
             />
         </div>
         <ModalFeeSummary
-            :is-open="state.isOpen"
-            :is-file-summary="true"
-            :items="summaryItems"
-            :amount="summaryAmount"
-            :account="formattedFileId"
-            :submit-label="$t('interfaceDownloadFile.feeSummary.submit')"
-            :cancel-label="$t('interfaceDownloadFile.feeSummary.cancel')"
-            tx-type="downloadFile"
+            v-model="state.modalFeeSummaryState"
             @action="handleFeeModalChange"
             @submit="handleFeeSubmit"
         />
@@ -52,7 +45,7 @@ import {
     computed,
     Ref
 } from "@vue/composition-api";
-import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+import ModalFeeSummary, { State as ModalFeeSummaryState, Item } from "../components/ModalFeeSummary.vue";
 import ModalSuccess, { State as SuccessState } from "../components/ModalSuccess.vue";
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
@@ -94,11 +87,22 @@ export default createComponent({
     props: {},
     setup(props, context) {
         const state = reactive({
-            isOpen: false,
             fee: new BigNumber(0),
             fileId: { shard: 0, realm: 0, file: 0 } as FileId,
             idValid: false,
             idErrorMessage: "",
+            modalFeeSummaryState: {
+                isOpen: false,
+                isBusy: false,
+                isFileSummary: true,
+                account: "",
+                amount: "",
+                items: [],
+                txType: "downloadFile",
+                submitLabel: context.root.$t("interfaceDownloadFile.feeSummary.submit").toString(),
+                cancelLabel: context.root.$t("interfaceDownloadFile.feeSummary.cancel").toString(),
+                termsShowNonOperator: false
+            } as ModalFeeSummaryState,
             success: {
                 isOpen: false,
                 hasAction: true,
@@ -125,25 +129,13 @@ export default createComponent({
 
         const summaryAmount = computed(() => formatHbar(new BigNumber(state.fee.toFixed(4, 2))));
 
-        const summaryItems = computed(() => [
-            {
-                description: context.root.$t("common.estimatedFee"),
-                value: new BigNumber(state.fee.toFixed(4, 2))
-            }
-        ] as Item[]);
-
-        function handleFee(value: number): void {
-            state.fee = new BigNumber(value.toPrecision(4));
-        }
-
         function handleFeeSubmit(): void {
-            // triggerDownload();
-            state.isOpen = false;
+            state.modalFeeSummaryState.isOpen = false;
             state.success.isOpen = true;
         }
 
         function handleFeeModalChange(isOpen: boolean): void {
-            state.isOpen = isOpen;
+            state.modalFeeSummaryState.isOpen = isOpen;
         }
 
         async function handleDownloadClick(): Promise<void> {
@@ -151,17 +143,26 @@ export default createComponent({
                 throw new Error(context.root.$t("common.error.noSession").toString());
             }
 
-            const { FileContentsQuery, Hbar, Client } = await import("@hashgraph/sdk");
-
+            const { FileContentsQuery, Hbar } = await import("@hashgraph/sdk");
             const client = store.state.wallet.session.client;
             client.setMaxQueryPayment(Hbar.fromTinybar(100000000));
+
             try {
                 const getEstimate = await new FileContentsQuery()
                     .setFileId(state.fileId)
                     .getCost(client);
 
                 state.fee = new BigNumber(await getEstimate.value());
-                state.isOpen = true;
+                state.modalFeeSummaryState.amount = summaryAmount.value;
+                const items: Item[] = [
+                    {
+                        description: context.root.$t("common.estimatedFee").toString(),
+                        value: new BigNumber(state.fee.toFixed(4, 2))
+                    }
+                ];
+                state.modalFeeSummaryState.items = items;
+                state.modalFeeSummaryState.account = formattedFileId.value;
+                state.modalFeeSummaryState.isOpen = true;
             } catch (error) {
                 if (
                     error.toString() ===
@@ -186,8 +187,7 @@ export default createComponent({
                 throw new Error(context.root.$t("common.error.noSession").toString());
             }
 
-            const { FileContentsQuery, Hbar, Client } = await import("@hashgraph/sdk");
-
+            const { FileContentsQuery, Hbar } = await import("@hashgraph/sdk");
             const client = store.state.wallet.session.client;
             client.setMaxQueryPayment(Hbar.fromTinybar(100000000));
 
@@ -228,7 +228,8 @@ export default createComponent({
         }
 
         function handleDownloadFinish(): void {
-            state.isOpen = false;
+            state.modalFeeSummaryState.isBusy = false;
+            state.modalFeeSummaryState.isOpen = false;
             state.fee = new BigNumber(0);
             state.fileId = { shard: 0, realm: 0, file: 0 } as FileId;
             state.idValid = false;
@@ -244,15 +245,12 @@ export default createComponent({
 
         return {
             state,
-            summaryItems,
-            summaryAmount,
+            formattedFileId,
             handleDownloadFinish,
-            handleFee,
             handleFeeModalChange,
             handleValid,
             handleDownloadClick,
             handleFileId,
-            formattedFileId,
             handleFeeSubmit,
             triggerDownload,
             idInput

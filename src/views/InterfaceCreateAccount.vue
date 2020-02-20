@@ -46,11 +46,7 @@
         </ModalSuccess>
 
         <ModalFeeSummary
-            v-model="state.summaryModalIsOpen"
-            :amount="summaryAmount"
-            :items="summaryItems"
-            account=""
-            tx-type="createAccount"
+            v-model="state.modalSummaryState"
             @submit="handleCreateAccount"
         />
     </InterfaceForm>
@@ -68,7 +64,7 @@ import {
     watch
 } from "@vue/composition-api";
 import { actions, getters, store } from "../store";
-import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+import ModalFeeSummary, { State as ModalSummaryState, Item } from "../components/ModalFeeSummary.vue";
 import { getValueOfUnit, Unit } from "../units";
 import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
@@ -79,18 +75,18 @@ import { writeToClipboard } from "../clipboard";
 import { LoginMethod } from "../wallets/Wallet";
 import { BadKeyError } from "@hashgraph/sdk";
 
-// const estimatedFeeHbar = store.getters[ESTIMATED_FEE_HBAR];
-// const estimatedFeeTinybar = store.getters[ESTIMATED_FEE_TINYBAR];
+const estimatedFeeHbar = new BigNumber(0.3);
+const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
 
 interface State {
     newBalance: string;
     publicKey: string;
     isBusy: boolean;
-    summaryModalIsOpen: boolean;
     keyError: string;
     newBalanceError: string;
     account: string;
     isPublicKeyValid: boolean;
+    modalSummaryState: ModalSummaryState;
     modalSuccessState: ModalSuccessState;
 }
 
@@ -124,11 +120,22 @@ export default createComponent({
             newBalance: "",
             publicKey: "",
             isBusy: false,
-            summaryModalIsOpen: false,
             keyError: "",
             newBalanceError: "",
             account: "",
             isPublicKeyValid: false,
+            modalSummaryState: {
+                isOpen: false,
+                isBusy: false,
+                isFileSummary: false,
+                account: "",
+                amount: "",
+                items: [],
+                txType: "transfer",
+                submitLabel: "Transfer",
+                cancelLabel: "Cancel",
+                termsShowNonOperator: false
+            },
             modalSuccessState: {
                 isOpen: false,
                 hasAction: true,
@@ -140,32 +147,9 @@ export default createComponent({
             state.isPublicKeyValid = await isPublicKeyValid(state.publicKey);
         });
 
-        // Just for display in modal title
-        const summaryAmount = computed(() => formatHbar(new BigNumber(state.newBalance)));
-
-        const validBalance = computed(() =>
-            // All we should check is that this is, in fact, a number
-            !isNaN(parseInt(summaryAmount.value)));
-
-        const summaryItems = computed(() => [
-            {
-                description: context.root
-                    .$t("interfaceCreateAccount.initialBalance")
-                    .toString(),
-                value: validBalance.value ?
-                    new BigNumber(state.newBalance) :
-                    new BigNumber(0)
-            },
-            {
-                description: context.root
-                    .$t("common.estimatedFee")
-                    .toString(),
-                value: getters.ESTIMATED_FEE_HBAR()
-            }
-        ] as Item[]);
-
         async function handleCreateAccount(): Promise<void> {
             state.isBusy = true;
+            state.modalSummaryState.isBusy = true;
 
             if (store.state.wallet.session == null) {
                 throw new Error(context.root
@@ -189,16 +173,14 @@ export default createComponent({
 
                 const {
                     AccountCreateTransaction,
-                    Client,
                     Ed25519PublicKey
                 } = await import("@hashgraph/sdk");
 
                 const key = Ed25519PublicKey.fromString(state.publicKey);
-                const maxTxFeeTinybar = getters.MAX_FEE_TINYBAR(balanceTinybar.minus(newBalanceTinybar.plus(getters.ESTIMATED_FEE_TINYBAR())));
 
                 const accountIdIntermediate = (await (await new AccountCreateTransaction()
                     .setInitialBalance(Hbar.fromTinybar(newBalanceTinybar))
-                    .setMaxTransactionFee(Hbar.fromTinybar(maxTxFeeTinybar))
+                    .setMaxTransactionFee(Hbar.fromTinybar(estimatedFeeTinybar))
                     .setKey(key)
                     .execute(client))
                     .getReceipt(client))
@@ -226,6 +208,7 @@ export default createComponent({
                 // Refresh Balance
                 await actions.refreshBalanceAndRate();
 
+                state.modalSummaryState.isOpen = false;
                 state.modalSuccessState.isOpen = true;
             } catch (error) {
                 if (error instanceof HederaStatusError) {
@@ -263,6 +246,8 @@ export default createComponent({
                     throw error;
                 }
             } finally {
+                state.modalSummaryState.isOpen = false;
+                state.modalSummaryState.isBusy = false;
                 state.isBusy = false;
             }
         }
@@ -286,14 +271,36 @@ export default createComponent({
             state.account = "";
         }
 
+        // Modal Fee Summary State
+        const summaryAmount = computed(() => formatHbar(new BigNumber(state.newBalance)));
+        const validBalance = computed(() =>
+            // All we should check is that this is, in fact, a number
+            !isNaN(parseInt(summaryAmount.value)));
+        const summaryItems = computed((): Item[] => [
+            {
+                description: context.root
+                    .$t("interfaceCreateAccount.initialBalance")
+                    .toString(),
+                value: validBalance.value ?
+                    new BigNumber(state.newBalance) :
+                    new BigNumber(0)
+            },
+            {
+                description: context.root
+                    .$t("common.estimatedFee")
+                    .toString(),
+                value: getters.ESTIMATED_FEE_HBAR()
+            }
+        ]);
+
         function handleShowSummary(): void {
-            state.summaryModalIsOpen = true;
+            state.modalSummaryState.amount = summaryAmount.value!;
+            state.modalSummaryState.items = summaryItems.value!;
+            state.modalSummaryState.isOpen = true;
         }
 
         return {
             state,
-            summaryAmount,
-            summaryItems,
             validBalance,
             handleCreateAccount,
             handleShowSummary,
