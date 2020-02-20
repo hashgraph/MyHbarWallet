@@ -22,7 +22,7 @@ describe("ModalFeeSummaryItems.vue", (): void => {
         const wrapper = mount(ModalFeeSummaryItems, {
             localVue,
             i18n,
-            propsData: { items: []}
+            propsData: { items: [] }
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
@@ -30,6 +30,8 @@ describe("ModalFeeSummaryItems.vue", (): void => {
               <div class="row total">
                 <div class="description">
                   Total
+                  &nbsp;
+                  <!---->
                 </div>
                 <div class="value">
                   0
@@ -56,6 +58,8 @@ describe("ModalFeeSummaryItems.vue", (): void => {
               <div class="row">
                 <div class="description">
                   description
+                  &nbsp;
+                  <!---->
                 </div>
                 <div class="value">
                   1.23
@@ -67,6 +71,8 @@ describe("ModalFeeSummaryItems.vue", (): void => {
               <div class="row">
                 <div class="description">
                   description
+                  &nbsp;
+                  <!---->
                 </div>
                 <div class="value">
                   public key
@@ -78,6 +84,8 @@ describe("ModalFeeSummaryItems.vue", (): void => {
               <div class="row">
                 <div class="description">
                   description
+                  &nbsp;
+                  <!---->
                 </div>
                 <div class="value">
                   3.45
@@ -89,6 +97,8 @@ describe("ModalFeeSummaryItems.vue", (): void => {
               <div class="row total">
                 <div class="description">
                   Total
+                  &nbsp;
+                  <!---->
                 </div>
                 <div class="value">
                   4.68

@@ -139,10 +139,17 @@ describe("ModalFeeSummary.vue", (): void => {
                     <div class="content-container">
                       <div class="modal-fee-summary-title"><span class="title"><span>Sending <strong>100</strong> ℏ to account <strong>999.999.999</strong></span></span></div>
                       <div class="separator"></div>
+                      <div class="modal-fee-summary-terms">
+                        <!---->
+                        <!---->
+                        <div class="term"><span class="description">Receiver</span> <span class="value">999.999.999</span></div>
+                      </div>
                       <div class="modal-fee-summary-items">
                         <div class="row total">
                           <div class="description">
                             Total
+                            &nbsp;
+                            <!---->
                           </div>
                           <div class="value">
                             0
@@ -239,10 +246,17 @@ describe("ModalFeeSummary.vue", (): void => {
                     <div class="content-container">
                       <div class="modal-fee-summary-title"><span class="title"><span>Creating account with a balance of <strong>100</strong> ℏ</span></span></div>
                       <div class="separator"></div>
+                      <div class="modal-fee-summary-terms">
+                        <!---->
+                        <!---->
+                        <div class="term"><span class="description">Receiver</span> <span class="value">999.999.999</span></div>
+                      </div>
                       <div class="modal-fee-summary-items">
                         <div class="row">
                           <div class="description">
                             Description
+                            &nbsp;
+                            <!---->
                           </div>
                           <div class="value">
                             Value
@@ -254,6 +268,8 @@ describe("ModalFeeSummary.vue", (): void => {
                         <div class="row">
                           <div class="description">
                             Description
+                            &nbsp;
+                            <!---->
                           </div>
                           <div class="value">
                             Value
@@ -265,6 +281,8 @@ describe("ModalFeeSummary.vue", (): void => {
                         <div class="row">
                           <div class="description">
                             Description
+                            &nbsp;
+                            <!---->
                           </div>
                           <div class="value">
                             Value
@@ -276,6 +294,8 @@ describe("ModalFeeSummary.vue", (): void => {
                         <div class="row total">
                           <div class="description">
                             Total
+                            &nbsp;
+                            <!---->
                           </div>
                           <div class="value">
                             0
@@ -328,10 +348,17 @@ describe("ModalFeeSummary.vue", (): void => {
                     <div class="content-container">
                       <div class="modal-fee-summary-title"><span class="title"><span>Sending <strong>100</strong> ℏ to account <strong>999.999.999</strong></span></span></div>
                       <div class="separator"></div>
+                      <div class="modal-fee-summary-terms">
+                        <!---->
+                        <!---->
+                        <div class="term"><span class="description">Receiver</span> <span class="value">999.999.999</span></div>
+                      </div>
                       <div class="modal-fee-summary-items">
                         <div class="row">
                           <div class="description">
                             Description
+                            &nbsp;
+                            <!---->
                           </div>
                           <div class="value">
                             Balue
@@ -343,6 +370,8 @@ describe("ModalFeeSummary.vue", (): void => {
                         <div class="row total">
                           <div class="description">
                             Total
+                            &nbsp;
+                            <!---->
                           </div>
                           <div class="value">
                             0
