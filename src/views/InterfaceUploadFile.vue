@@ -70,8 +70,8 @@ async function hashFile(file: Uint8Array): Promise<Uint8Array> {
     return new Uint8Array(digest);
 }
 
-// The approximate maximum size of a chunk
-const MAX_CHUNK_LENGTH = 2923;
+// The approximate maximum size of a chunk - formerly 2923 which would sometimes cause transaction oversize error
+const MAX_CHUNK_LENGTH = 2900;
 
 export default createComponent({
     components: {
@@ -402,10 +402,7 @@ export default createComponent({
         }
 
         async function handleUploadRetry(): Promise<void> {
-            actions.alert({
-                level: "info",
-                message: context.root.$t("common.comingSoon").toString()
-            });
+            handleUpload(state.uploadBytes as Uint8Array);
         }
 
         return {

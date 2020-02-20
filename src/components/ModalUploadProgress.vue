@@ -26,7 +26,22 @@
                                 : $t("modalUploadProgress.failure.text")
                     }}
                 </div>
-                <div class="upload-subtext">
+                <div
+                    v-if="state.inProgress || state.wasSuccess"
+                    class="upload-subtext"
+                >
+                    {{
+                        state.inProgress
+                            ? $t("modalUploadProgress.inProgress.subText")
+                            : state.wasSuccess
+                                ? $t("modalUploadProgress.success.subText")
+                                : $t("modalUploadProgress.failure.subText")
+                    }}
+                </div>
+                <div
+                    v-else
+                    class="upload-subtext-try-again"
+                >
                     {{
                         state.inProgress
                             ? $t("modalUploadProgress.inProgress.subText")
@@ -60,7 +75,10 @@
                     />
                 </div>
 
-                <div class="progress-text">
+                <div
+                    v-if="state.inProgress || state.wasSuccess"
+                    class="progress-text"
+                >
                     {{ progressString }}
                 </div>
 
@@ -71,16 +89,18 @@
                     <Button
                         :label="$t('modalUploadProgress.failure.buttonLabel2')"
                         :disabled="state.inProgress"
-                        class="cancel-button"
+                        class="button"
                         outline
                         danger
+                        compact
                         @click="onClickCancel"
                     />
 
                     <Button
                         :label="$t('modalUploadProgress.failure.buttonLabel')"
                         :disabled="state.inProgress"
-                        class="retry-button"
+                        class="button"
+                        compact
                         @click="onClickRetry"
                     />
                 </div>
@@ -191,19 +211,38 @@ export default createComponent({
     margin-block-end: 60px;
 }
 
+.upload-subtext-try-again {
+    color: var(--color-china-blue);
+    font-size: 18px;
+    margin-block-end: 52px;
+}
+
 .icon {
     margin-inline-start: 10px;
 }
 
 .button-container {
     display: flex;
-    flex-flow: row nowrap;
+    /* flex-flow: row nowrap; */
     justify-content: space-between;
-    margin-block-start: 60px;
+    margin-block-start: 52px;
+    width: 100%;
 
     @media (max-width: 600px) {
         align-items: center;
         flex-direction: column;
+    }
+}
+
+.button {
+    width: 200px;
+
+    @media (max-width: 600px) {
+        width: 100%;
+
+        &:last-child {
+            margin-block-end: 15px;
+        }
     }
 }
 </style>
