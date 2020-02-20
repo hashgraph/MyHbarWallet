@@ -23,11 +23,7 @@
             </div>
         </div>
         <ModalFeeSummary
-            v-model="state.feeModalIsOpen"
-            :items="summaryItems"
-            :amount="summaryAmount"
-            :is-file-summary="true"
-            :tx-type="state.uploadHash ? 'uploadFileHash' : 'uploadFile'"
+            v-model="state.modalFeeSummaryState"
             @change="handleFeeModalChange"
             @submit="handleUploadSubmit"
         />
@@ -61,12 +57,11 @@ import {
 } from "@vue/composition-api";
 import UploadZone from "../components/UploadZone.vue";
 import ModalUploadProgress, { State as UploadProgressState } from "../components/ModalUploadProgress.vue";
-import ModalFeeSummary, { Item } from "../components/ModalFeeSummary.vue";
+import ModalFeeSummary, { State as ModalFeeSummaryState, Item } from "../components/ModalFeeSummary.vue";
 import ModalSuccess, { State as SuccessState } from "../components/ModalSuccess.vue";
 import { formatHbar } from "../formatter";
 import BigNumber from "bignumber.js";
 import { writeToClipboard } from "../clipboard";
-import { Ed25519PublicKey, Status, TransactionReceipt, FileId, AccountId } from "@hashgraph/sdk";
 import { actions, store } from "../store";
 
 async function hashFile(file: Uint8Array): Promise<Uint8Array> {
@@ -95,10 +90,21 @@ export default createComponent({
             fileBytes: null as Uint8Array | null,
             uploadBytes: null as Uint8Array | null,
             uploadHash: false,
-            feeModalIsOpen: false,
             isUploading: false,
             isBusy: false,
             buttonsDisabled: true,
+            modalFeeSummaryState: {
+                isOpen: false,
+                isBusy: false,
+                isFileSummary: true,
+                account: "",
+                amount: "",
+                items: [],
+                txType: "uploadFile",
+                submitLabel: context.root.$t("interfaceDownloadFile.feeSummary.submit").toString(),
+                cancelLabel: context.root.$t("interfaceDownloadFile.feeSummary.cancel").toString(),
+                termsShowNonOperator: false
+            } as ModalFeeSummaryState,
             uploadProgress: {
                 isOpen: false,
                 inProgress: false,
@@ -113,7 +119,7 @@ export default createComponent({
             } as SuccessState
         });
 
-        const fileID: Ref<FileId | null> = ref(null);
+        const fileID: Ref<import("@hashgraph/sdk").FileId | null> = ref(null);
 
         const fileIDString = computed(() => {
             if (fileID.value != null) {
@@ -130,13 +136,6 @@ export default createComponent({
 
         const summaryAmount = computed(() => formatHbar(new BigNumber(state.estimatedFee.toFixed(4))));
 
-        const summaryItems = computed(() => [
-            {
-                description: context.root.$t("common.estimatedFee"),
-                value: new BigNumber(state.estimatedFee.toFixed(4))
-            }
-        ] as Item[]);
-
         function handleFileSelect(event: {
             fileName: string;
             contents: Uint8Array;
@@ -147,7 +146,8 @@ export default createComponent({
         }
 
         function handleUploadSubmit(accept: boolean): void {
-            state.feeModalIsOpen = false;
+            state.modalFeeSummaryState.isBusy = false;
+            state.modalFeeSummaryState.isOpen = false;
 
             if (!accept && state.uploadBytes != null) {
                 return;
@@ -160,7 +160,7 @@ export default createComponent({
         }
 
         function handleFeeModalChange(isOpen: boolean): void {
-            state.feeModalIsOpen = isOpen;
+            state.modalFeeSummaryState.isOpen = isOpen;
             if (state.isUploading) state.isUploading = false;
         }
 
@@ -219,7 +219,7 @@ export default createComponent({
         async function fileCreateUpload(
             chunks: Uint8Array[],
             client: object
-        ): Promise<FileId> {
+        ): Promise<import("@hashgraph/sdk").FileId> {
             if (!store.state.wallet.session) {
                 throw new Error("session should not be null");
             }
@@ -227,9 +227,10 @@ export default createComponent({
             const { FileCreateTransaction, Client } = await import("@hashgraph/sdk");
 
             state.isBusy = true;
+            state.modalFeeSummaryState.isBusy = true;
 
-            const receipt = ref<TransactionReceipt | null>(null);
-            const publicKey = (await store.state.wallet.session.wallet.getPublicKey()) as Ed25519PublicKey;
+            const receipt: Ref<import("@hashgraph/sdk").TransactionReceipt | null> = ref(null);
+            const publicKey: import("@hashgraph/sdk").Ed25519PublicKey = await store.state.wallet.session.wallet.getPublicKey() as import("@hashgraph/sdk").Ed25519PublicKey;
 
             if (!publicKey) {
                 throw new Error(context.root
@@ -237,7 +238,7 @@ export default createComponent({
                     .toString());
             }
 
-            let fileId: FileId | undefined;
+            let fileId: import("@hashgraph/sdk").FileId | undefined;
 
             state.uploadProgress.inProgress = true;
             try {
@@ -273,24 +274,26 @@ export default createComponent({
                 }
             }
 
-            return fileId as FileId;
+            return fileId as import("@hashgraph/sdk").FileId;
         }
 
         async function fileAppendUploads(
             chunks: Uint8Array[],
-            fileId: FileId,
+            fileId: import("@hashgraph/sdk").FileId,
             client: object
         ): Promise<void> {
             const { FileAppendTransaction, Client } = await import("@hashgraph/sdk");
             try {
                 while (chunks.length > 0) {
-                    await (await new FileAppendTransaction()
+                    // eslint-disable-next-line no-await-in-loop
+                    const transactionId = await new FileAppendTransaction()
                         .setFileId(fileId)
                         .setContents(chunks.shift() as Uint8Array)
                         .setMaxTransactionFee(520000000)
-                        .execute(client as InstanceType<typeof Client>))
-                        .getReceipt(client as InstanceType<typeof Client>);
-
+                        .execute(client as InstanceType<typeof Client>);
+                    // eslint-disable-next-line no-await-in-loop
+                    await transactionId.getReceipt(client as InstanceType<typeof Client>);
+                    // Add Transaction IDs to modal success here
                     state.uploadProgress.currentChunk += 1;
                 }
             } catch (error) {
@@ -314,25 +317,38 @@ export default createComponent({
             }
         }
 
+        function openFeeSummary(): void {
+            state.modalFeeSummaryState.account = fileIDString.value;
+            state.modalFeeSummaryState.amount = summaryAmount.value;
+            const items: Item[] = [
+                {
+                    description: context.root.$t("common.estimatedFee").toString(),
+                    value: new BigNumber(state.estimatedFee.toFixed(4))
+                }
+            ];
+            state.modalFeeSummaryState.items = items;
+            state.modalFeeSummaryState.isOpen = true;
+        }
+
         async function handleHashUploadClick(): Promise<void> {
             state.uploadBytes = await hashFile(state.fileBytes as Uint8Array);
             state.uploadHash = true;
+            state.modalFeeSummaryState.txType = "uploadFileHash";
             state.uploadProgress.totalChunks = 1;
 
             estimateFee();
-
-            state.feeModalIsOpen = true;
+            openFeeSummary();
         }
 
         async function handleUploadClick(): Promise<void> {
             state.uploadProgress.totalChunks = Math.ceil((state.fileBytes as Uint8Array).byteLength / MAX_CHUNK_LENGTH);
 
             state.uploadHash = false;
+            state.modalFeeSummaryState.txType = "uploadFile";
             state.uploadBytes = state.fileBytes;
 
             estimateFee();
-
-            state.feeModalIsOpen = true;
+            openFeeSummary();
         }
 
         function reset(): void {
@@ -343,6 +359,9 @@ export default createComponent({
                 currentChunk: 0,
                 totalChunks: 0
             } as UploadProgressState;
+
+            state.modalFeeSummaryState.isOpen = false;
+            state.modalFeeSummaryState.isBusy = false;
 
             state.success = {
                 isOpen: false,
@@ -400,8 +419,6 @@ export default createComponent({
             handleCopyFileID,
             handleUploadFinish,
             fileIDString,
-            summaryAmount,
-            summaryItems,
             state,
             summary
         };

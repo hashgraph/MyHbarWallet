@@ -97,7 +97,7 @@ export default createComponent({
                 isFileSummary: true,
                 account: "",
                 amount: "",
-                items: null,
+                items: [],
                 txType: "downloadFile",
                 submitLabel: context.root.$t("interfaceDownloadFile.feeSummary.submit").toString(),
                 cancelLabel: context.root.$t("interfaceDownloadFile.feeSummary.cancel").toString(),
@@ -130,7 +130,6 @@ export default createComponent({
         const summaryAmount = computed(() => formatHbar(new BigNumber(state.fee.toFixed(4, 2))));
 
         function handleFeeSubmit(): void {
-            // triggerDownload();
             state.modalFeeSummaryState.isOpen = false;
             state.success.isOpen = true;
         }
@@ -161,8 +160,6 @@ export default createComponent({
                         value: new BigNumber(state.fee.toFixed(4, 2))
                     }
                 ];
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
                 state.modalFeeSummaryState.items = items;
                 state.modalFeeSummaryState.account = formattedFileId.value;
                 state.modalFeeSummaryState.isOpen = true;

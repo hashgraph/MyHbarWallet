@@ -59,7 +59,8 @@ export interface State {
     isFileSummary: boolean;
     account: string;
     amount: string;
-    items: readonly Item[] | Item[] | null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    items: any[];
     txType: string;
     submitLabel: string | null;
     cancelLabel: string | null;
