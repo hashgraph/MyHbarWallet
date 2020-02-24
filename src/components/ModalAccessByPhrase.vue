@@ -28,7 +28,9 @@
                     @input="handleMnemonicInput"
                 />
 
-                <OptionalPasswordInput @input="handlePasswordInput" />
+                <OptionalPasswordInput
+                    :value="state.password"
+                    @input="handlePasswordInput" />
 
                 <Button
                     class="continue-btn"
