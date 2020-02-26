@@ -69,7 +69,10 @@ export default createComponent({
 }
 
 .value {
+    align-items: center;
     cursor: default;
+    display: flex;
+    flex-grow: 1;
 
     &.obscure {
         color: transparent;
@@ -87,7 +90,6 @@ export default createComponent({
 .eye {
     cursor: pointer;
     flex-shrink: 0;
-    margin: auto;
     opacity: 0.3;
     padding-inline-start: 10px;
 

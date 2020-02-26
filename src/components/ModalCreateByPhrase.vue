@@ -47,15 +47,16 @@
                 :is-open="isOpen"
             />
 
-            <HiddenPasswordInput
-                :value="state.passwordValue"
-                :password-warning="$t('modalCreateByPhrase.passwordWarning')"
-                @input="handlePasswordChange"
+            <OptionalPasswordWithConfirm
+                :password-warning="state.passwordWarning"
+                @valid="handlePasswordValid"
+                @change="handlePasswordChange"
             />
 
             <div class="continue-btn-container">
                 <Button
                     :busy="state.isBusy"
+                    :disabled="state.isDisabled"
                     class="continue-btn"
                     :label="
                         $t('modalCreateByPhrase.iWroteDownMyMnemonicPhrase')
@@ -76,6 +77,7 @@
                 <ModalPhrasePrintPreview
                     v-model="state.printModalIsOpen"
                     :words="words"
+                    :password="state.password"
                 />
             </div>
 
@@ -109,13 +111,16 @@ import ModalPhrasePrintPreview from "../components/ModalPhrasePrintPreview.vue";
 import printIcon from "../assets/icon-printer.svg";
 import { mdiCached } from "@mdi/js";
 import ModalVerifyPhrase from "../components/ModalVerifyPhrase.vue";
+import OptionalPasswordWithConfirm from "../components/OptionalPasswordWithConfirm.vue";
+import { State as PasswordWithConfirmState } from "../components/PasswordWithConfirm.vue";
 import {
     computed,
     createComponent,
     onMounted,
     PropType,
     reactive,
-    SetupContext
+    SetupContext,
+    watch
 } from "@vue/composition-api";
 import { formatRich } from "../formatter";
 import { Ed25519PrivateKey, Mnemonic } from "@hashgraph/sdk";
@@ -132,6 +137,7 @@ export default createComponent({
         MnemonicInput,
         HiddenPasswordInput,
         SwitchButton,
+        OptionalPasswordWithConfirm,
         Button,
         MaterialDesignIcon,
         InfoButton,
@@ -149,21 +155,21 @@ export default createComponent({
     setup(props: Props, context: SetupContext) {
         const numberWords = 24;
         const state = reactive({
+            password: "",
+            confirmationPassword: "",
             isBusy: false,
-            passwordValue: "",
+            showPassword: false,
+            isDisabled: false,
             result: null as Mnemonic | null,
             printModalIsOpen: false,
-            verifyPhraseIsOpen: false
+            verifyPhraseIsOpen: false,
+            passwordWarning: context.root.$t("modalCreateByPhrase.passwordWarning").toString()
         });
 
         const words = computed(() => state.result ? state.result.words : []);
 
         const cachedIcon = computed(() => mdiCached);
         const printerIcon = computed(() => printIcon);
-
-        function handlePasswordChange(password: string): void {
-            state.passwordValue = password;
-        }
 
         function handlePrintModal(): void {
             state.printModalIsOpen = !state.printModalIsOpen;
@@ -172,6 +178,26 @@ export default createComponent({
         function handleClick(): void {
             state.verifyPhraseIsOpen = true;
         }
+
+        function handlePasswordValid(valid: boolean): void {
+            if (state.password === "" && state.confirmationPassword === "") return;
+            state.isDisabled = !valid;
+        }
+
+        function handlePasswordChange(emitState: PasswordWithConfirmState): void {
+            state.password = emitState.password;
+            state.confirmationPassword = emitState.confirmationPassword;
+        }
+
+        const passwordsEmpty = computed(() => state.password === "" && state.confirmationPassword === "");
+        const passwordsEqualOrEmpty = computed(() => state.password === state.confirmationPassword || passwordsEmpty.value);
+
+        watch(
+            passwordsEqualOrEmpty,
+            (newValue: boolean) => {
+                if (newValue) state.isDisabled = false;
+            }
+        );
 
         async function randomizeMnemonic(): Promise<void> {
             const { Mnemonic } = await import("@hashgraph/sdk");
@@ -184,8 +210,7 @@ export default createComponent({
             state.isBusy = true;
             state.verifyPhraseIsOpen = false;
 
-            // `.derive(0)` to generate the same key as the default account of the mobile wallet
-            const key: Ed25519PrivateKey = (await state.result.toPrivateKey(state.passwordValue)).derive(0);
+            const key: Ed25519PrivateKey = (await state.result.toPrivateKey(state.password)).derive(0);
 
             // eslint-disable-next-line require-atomic-updates
             state.isBusy = false;
@@ -198,14 +223,16 @@ export default createComponent({
         });
 
         return {
+            props,
             state,
             numberWords,
             words,
             cachedIcon,
             printerIcon,
             handlePrintModal,
-            handlePasswordChange,
             handleClick,
+            handlePasswordValid,
+            handlePasswordChange,
             randomizeMnemonic,
             handleVerifySuccess,
             formatRich
