@@ -75,7 +75,7 @@ import { writeToClipboard } from "../clipboard";
 import { LoginMethod } from "../wallets/Wallet";
 import { BadKeyError } from "@hashgraph/sdk";
 
-const estimatedFeeHbar = new BigNumber(0.3);
+const estimatedFeeHbar = new BigNumber(0.5);
 const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
 
 interface State {
