@@ -87,7 +87,7 @@ interface State {
     modalSuccessState: ModalSuccessState;
 }
 
-const estimatedFeeHbar = new BigNumber(0.003);
+const estimatedFeeHbar = new BigNumber(0.01);
 const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
 
 export default createComponent({
