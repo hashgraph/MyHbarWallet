@@ -19,9 +19,6 @@
             </div>
 
             <PasswordGenerator
-                ref="passwordGenerator"
-                v-model="state.passwordGeneratorState"
-                :is-open="state.isOpen"
                 @submit="handleSubmitPassword"
             />
 
@@ -45,14 +42,13 @@ import { createComponent, PropType } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
-import PasswordGenerator, { State as PasswordGeneratorState } from "../components/PasswordGenerator.vue";
+import PasswordGenerator from "../components/PasswordGenerator.vue";
 import { mdiArrowRight } from "@mdi/js";
 import { formatRich } from "../formatter";
 
 export interface State {
     isOpen: boolean;
     isBusy: boolean;
-    passwordGeneratorState: PasswordGeneratorState;
 }
 
 interface Props {
@@ -76,8 +72,8 @@ export default createComponent({
             context.emit("change", { ...props.state, isOpen });
         }
 
-        function handleSubmitPassword(): void {
-            context.emit("submit", { ...props.state });
+        function handleSubmitPassword(password: string): void {
+            context.emit("submit", password);
         }
 
         return {

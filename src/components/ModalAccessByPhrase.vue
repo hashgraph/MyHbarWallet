@@ -26,17 +26,19 @@
                     :editable="true"
                     :is-open="state.isOpen"
                     @input="handleMnemonicInput"
+                    @valid="handleMnemonicValid"
                 />
 
                 <OptionalPasswordInput
                     :value="state.password"
-                    @input="handlePasswordInput" />
+                    @input="handlePasswordInput"
+                />
 
                 <Button
                     class="continue-btn"
                     :label="$t('common.continue')"
                     :busy="state.isBusy"
-                    :disabled="!areFieldsFilled"
+                    :disabled="!state.isValid"
                 />
             </form>
             <div class="support">
@@ -55,7 +57,6 @@ import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import OptionalPasswordInput from "./OptionalPasswordInput.vue";
 import Warning from "../components/Warning.vue";
 import {
-    computed,
     createComponent,
     watch,
     SetupContext,
@@ -89,23 +90,18 @@ export default createComponent({
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
         }
+
         function handleMnemonicInput(words: string[]): void {
             context.emit("change", { ...props.state, words });
         }
+
         function handlePasswordInput(password: string): void {
             context.emit("change", { ...props.state, password });
         }
 
-        const areFieldsFilled = computed(() => {
-            if (props.state.words.length === 24) {
-                for (const word of props.state.words) {
-                    if (!word || word.length === 0) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        });
+        function handleMnemonicValid(valid: boolean): void {
+            props.state.isValid = valid;
+        }
 
         // Watch for the modal state to change, and clear input when the modal is reopened
         watch(
@@ -121,7 +117,7 @@ export default createComponent({
             handleModalChangeIsOpen,
             handleMnemonicInput,
             handlePasswordInput,
-            areFieldsFilled
+            handleMnemonicValid
         };
     }
 });
@@ -150,7 +146,7 @@ export default createComponent({
 }
 
 .phrase-input {
-    margin-block-end: 40px;
+    margin-block-end: 20px;
 }
 
 .continue-btn {

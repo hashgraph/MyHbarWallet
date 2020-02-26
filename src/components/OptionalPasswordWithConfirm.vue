@@ -19,81 +19,78 @@
             class="password-input"
             :class="{ expanded: state.showPassword }"
         >
-            <TextInput
-                ref="input"
-                :value="value"
-                :placeholder="$t('optionalPasswordInput.pleaseEnterPassword')"
-                obscure
-                compact
-                :tabindex="state.showPassword ? null : '-1'"
-                @input="handleInput"
-            />
-            <div
-                class="password-warning"
-                :v-if="passwordWarning != null"
-            >
-                <p>{{ passwordWarning }}</p>
-            </div>
+            <transition name="fade">
+                <PasswordWithConfirm
+                    v-if="state.showPassword"
+                    v-model="state.passwordWithConfirmState"
+                    @valid="handlePasswordValid"
+                    @change="handlePasswordChange"
+                />
+            </transition>
+            <transition name="fade">
+                <div
+                    class="password-warning"
+                    :v-if="state.showPassword && passwordWarning != null"
+                >
+                    <p>{{ passwordWarning }}</p>
+                </div>
+            </transition>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext, watch, reactive } from "@vue/composition-api";
+import { createComponent, reactive } from "@vue/composition-api";
 import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
-
-interface Context extends SetupContext {
-    refs: {
-        input: HTMLInputElement;
-    };
-}
-
-interface State {
-    showPassword: boolean;
-}
+import PasswordWithConfirm, { State as PasswordWithConfirmState } from "../components/PasswordWithConfirm.vue";
 
 export default createComponent({
     components: {
         TextInput,
-        SwitchButton
+        SwitchButton,
+        PasswordWithConfirm
     },
-    props: {
-        value: { type: String, default: "" },
-        passwordWarning: { type: String, default: null }
-    },
+    props: { passwordWarning: String },
     setup(props, context) {
-        const state = reactive({ showPassword: false });
-
-        function handleInput(password: string): void {
-            context.emit("input", password);
-        }
+        const state = reactive({
+            showPassword: false,
+            passwordWarning: props.passwordWarning,
+            passwordWithConfirmState: {
+                password: "",
+                confirmationPassword: "",
+                passwordStrength: 0,
+                passwordSuggestion: ""
+            }
+        });
 
         function handleToggleDisplay(show: boolean): void {
+            state.passwordWithConfirmState.password = "";
+            state.passwordWithConfirmState.confirmationPassword = "";
             state.showPassword = show;
         }
 
-        watch(
-            () => state.showPassword,
-            (showPassword: boolean) => {
-                if (showPassword) {
-                    // If we are now showing the password,
-                    // focus the password input
-                    if (
-                        ((context as unknown) as Context).refs.input != null
-                    ) {
-                        ((context as unknown) as Context).refs.input.focus();
-                    }
-                }
-            }
-        );
+        function handlePasswordValid(valid: boolean): void {
+            context.emit("valid", valid);
+        }
 
-        return { state, handleInput, handleToggleDisplay };
+        function handlePasswordChange(state: PasswordWithConfirmState): void {
+            context.emit("change", state);
+        }
+
+        return { state, handleToggleDisplay, handlePasswordValid, handlePasswordChange };
     }
 });
 </script>
 
 <style scoped lang="postcss">
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 .password-container {
     border-bottom: 2px solid var(--color-peral);
     border-top: 2px solid var(--color-peral);
@@ -129,7 +126,7 @@ export default createComponent({
 }
 
 .password-input {
-    padding-inline: 10px;
+    padding: 0 10px;
     transition: all 0.3s ease;
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -138,16 +135,15 @@ export default createComponent({
 }
 
 .password-input:not(.expanded) {
-    max-height: 0;
+    height: 0;
     opacity: 0;
     padding-block-start: 0;
+    overflow-y: hidden;
 }
 
 .password-input.expanded {
-    max-height: 100%;
     opacity: 1;
     padding-block-start: 30px;
-    overflow-y: hidden;
 }
 
 .password-warning {

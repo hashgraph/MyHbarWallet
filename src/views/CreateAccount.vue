@@ -110,13 +110,7 @@ export default createComponent({
             modalCreateBySoftwareState: { isOpen: false },
             modalCreateByKeystoreState: {
                 isOpen: false,
-                isBusy: false,
-                passwordGeneratorState: {
-                    password: "",
-                    confirmationPassword: "",
-                    passwordStrength: 0,
-                    passwordSuggestion: ""
-                }
+                isBusy: false
             },
             modalCreateByPhraseState: { isOpen: false },
             modalKeystoreFilePasswordState: {
@@ -225,26 +219,18 @@ export default createComponent({
             }
         }
 
-        async function handleCreateByKeystoreSubmit(): Promise<void> {
+        async function handleCreateByKeystoreSubmit(password: string): Promise<void> {
             state.modalCreateByKeystoreState.isOpen = false;
 
             state.modalDownloadKeystoreState.isOpen = true;
             try {
                 const { Ed25519PrivateKey } = await import("@hashgraph/sdk");
-
                 const privateKey = await Ed25519PrivateKey.generate();
-
-                state.keyFile = await privateKey.toKeystore(state.modalCreateByKeystoreState.passwordGeneratorState
-                    .password);
-
+                state.keyFile = await privateKey.toKeystore(password);
                 setPrivateKey(privateKey);
-
                 state.modalDownloadKeystoreState.isBusy = false;
-
                 const keyStoreBlob = new Blob([ state.keyFile.buffer as Uint8Array ]);
-
                 const keyStoreUrl = URL.createObjectURL(keyStoreBlob);
-
                 keyStoreLink.value = document.createElement("a") as HTMLAnchorElement;
                 keyStoreLink.value.href = keyStoreUrl;
                 keyStoreLink.value.download =

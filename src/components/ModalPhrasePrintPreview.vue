@@ -31,30 +31,44 @@
                     v-html="
                         formatRich(
                             $t(
-                                'modalPhrasePrintPreview.weCanNotChagneYourPassword'
+                                'modalPhrasePrintPreview.weCanNotChangeYourPassword'
                             ).toString(),
                             { strongClass: 'important' }
                         )
                     "
                 />
+                <div
+                    v-if="password !== ''"
+                >
+                    <p>{{ $t('modalPhrasePrintPreview.yourPassword') }}</p>
+                    <ReadOnlyInput
+                        class="roinput"
+                        :value="password"
+                        multiline
+                        obscure
+                    />
+                </div>
+                <div v-else>
+                    <p>{{ $t('modalPhrasePrintPreview.noPassword') }}</p>
+                </div>
+
+                <div class="contents">
+                    <Mnemonic
+                        :editable="false"
+                        :words="props.words.length"
+                        :value="props.words"
+                    />
+                </div>
             </div>
 
-            <div class="contents">
-                <Mnemonic
-                    :editable="false"
-                    :words="props.words.length"
-                    :value="props.words"
+            <div class="button-container">
+                <Button
+                    class="button-save"
+                    :label="$t('common.save')"
+                    outline
+                    @click="handleClickSave"
                 />
             </div>
-        </div>
-
-        <div class="button-container">
-            <Button
-                class="button-save"
-                :label="$t('common.save')"
-                outline
-                @click="handleClickSave"
-            />
         </div>
     </Modal>
 </template>
@@ -64,18 +78,21 @@ import { createComponent, ref, SetupContext } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "../components/MnemonicInput.vue";
+import ReadOnlyInput from "../components/ReadOnlyInput.vue";
 import { formatRich } from "../formatter";
 
 interface Props {
     isOpen: boolean;
     words: string[];
+    password: string;
 }
 
 export default createComponent({
     components: {
         Button,
         Modal,
-        Mnemonic
+        Mnemonic,
+        ReadOnlyInput
     },
     model: {
         prop: "isOpen",
@@ -83,7 +100,8 @@ export default createComponent({
     },
     props: {
         isOpen: Boolean,
-        words: Array
+        words: Array,
+        password: String
     },
     setup(props: Props, context: SetupContext) {
         const mnemonic = ref(null);
@@ -211,5 +229,11 @@ export default createComponent({
     @media print {
         display: none;
     }
+}
+
+.roinput {
+    border: 1px solid var(--color-jupiter);
+    border-radius: 1px;
+    width: 100%;
 }
 </style>
