@@ -171,28 +171,31 @@ export default createComponent({
         });
 
         const accId = computed(() => {
-            if (isInterface.value === true) {
-                return getters.CURRENT_USER()!.toString();
+            if (isInterface.value) {
+                const user = getters.CURRENT_USER();
+                if (user != null) {
+                    return getters.CURRENT_USER()!.toString();
+                }
             }
             return null;
         });
 
         const network = computed(() => {
-            if (isInterface.value === true) {
+            if (isInterface.value) {
                 return getters.GET_NETWORK()!.name.split(".")[ 1 ];
             }
             return null;
         });
 
         const kabutoLink = computed(() => {
-            if (isInterface.value === true) {
+            if (isInterface.value) {
                 return `https://explorer.kabuto.sh/${network.value}/id/${accId.value}`;
             }
             return null;
         });
 
         const isCustomNetwork = computed(() => {
-            if (isInterface.value === true && network.value != null && network.value.includes("custom")) {
+            if (isInterface.value && network.value != null && network.value.includes("custom")) {
                 return true;
             }
             return false;
