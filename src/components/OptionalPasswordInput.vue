@@ -146,8 +146,8 @@ export default createComponent({
 .password-input.expanded {
     max-height: 100%;
     opacity: 1;
-    padding-block-start: 30px;
     overflow-y: hidden;
+    padding-block-start: 30px;
 }
 
 .password-warning {

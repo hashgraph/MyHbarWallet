@@ -84,11 +84,14 @@ export default createComponent({
 </script>
 
 <style scoped lang="postcss">
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
-  opacity: 0;
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 
 .password-container {
@@ -137,8 +140,8 @@ export default createComponent({
 .password-input:not(.expanded) {
     height: 0;
     opacity: 0;
-    padding-block-start: 0;
     overflow-y: hidden;
+    padding-block-start: 0;
 }
 
 .password-input.expanded {
