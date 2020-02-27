@@ -423,8 +423,6 @@ export const actions = {
 
         const curPrice = new BigNumber(price(await externalRequest(coingeckoEndpoint)));
 
-        console.log(curPrice);
-
         // Set exchange rate
         mutations.SET_EXCHANGE_RATE(curPrice);
     },

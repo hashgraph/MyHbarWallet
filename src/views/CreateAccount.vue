@@ -192,6 +192,7 @@ export default createComponent({
 
                         state.modalCreateByHardwareState.isBusy = true;
                         const wallet = new Ledger();
+                        mutations.SET_WALLET(wallet);
                         state.publicKey = (await wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
                         state.modalEnterAccountIdState.publicKey =
                             state.publicKey;
