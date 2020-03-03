@@ -47,7 +47,7 @@ describe("FAQs.vue", (): void => {
                       </div>
                       <div class="content">
                         <div class="content-text">
-                          MyHbarWallet (MHW) offers three ways to create a new H wallet. These are via Keystore file, Passphrase, or Private Key. Pair the keys with an account ID to start transacting hbar.
+                          MyHbarWallet (MHW) offers three ways to create a new H wallet. These are: By Keystore, By Mnemonic Phrase, or With a Hardware Wallet. Pair your keys with an account ID to start transacting hbar.
                         </div>
                       </div>
                     </div>
@@ -61,7 +61,7 @@ describe("FAQs.vue", (): void => {
                       </div>
                       <div class="content">
                         <div class="content-text">
-                          MHW supports many different wallet types with plans to include support for hardware wallets in the near future. We are also open for anyone to use their H wallets with the appropriate information.
+                          MHW supports many different wallet types, including hardware, with additional hardware wallet support currently in development. We are also open for anyone to use their H wallets with the appropriate information.
                         </div>
                       </div>
                     </div>
