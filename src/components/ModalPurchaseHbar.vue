@@ -64,7 +64,8 @@ export default createComponent({
     color: var(--color-melbourne-cup);
     text-decoration: none;
 
-    &:hover {
+    &:hover,
+    &:focus {
         text-decoration: underline;
     }
 
