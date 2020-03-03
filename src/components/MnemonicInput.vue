@@ -185,12 +185,28 @@ export default createComponent({
 </script>
 
 <style scoped lang="postcss">
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+@media screen and (prefers-reduced-motion: reduce) {
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: none;
+    }
 }
 
-.fade-enter, .fade-leave-to {
-  opacity: 0;
+@media screen and (prefers-reduced-motion: reduce) {
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: none;
+    }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 
 .list-container {
