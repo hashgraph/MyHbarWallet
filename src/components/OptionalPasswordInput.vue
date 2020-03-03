@@ -71,6 +71,7 @@ export default createComponent({
 
         function handleToggleDisplay(show: boolean): void {
             state.showPassword = show;
+            context.emit("input", null);
         }
 
         watch(
