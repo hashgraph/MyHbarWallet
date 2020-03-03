@@ -19,21 +19,25 @@
             class="password-input"
             :class="{ expanded: state.showPassword }"
         >
-            <TextInput
-                ref="input"
-                :value="value"
-                :placeholder="$t('optionalPasswordInput.pleaseEnterPassword')"
-                obscure
-                compact
-                :tabindex="state.showPassword ? null : '-1'"
-                @input="handleInput"
-            />
-            <div
-                class="password-warning"
-                :v-if="passwordWarning != null"
-            >
-                <p>{{ passwordWarning }}</p>
-            </div>
+            <transition name="fade">
+                <TextInput
+                    ref="input"
+                    :value="value"
+                    :placeholder="$t('optionalPasswordInput.pleaseEnterPassword')"
+                    obscure
+                    compact
+                    :tabindex="state.showPassword ? null : '-1'"
+                    @input="handleInput"
+                />
+            </transition>
+            <transition name="fade">
+                <div
+                    class="password-warning"
+                    :v-if="state.showPassword && passwordWarning != null"
+                >
+                    <p>{{ passwordWarning }}</p>
+                </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -95,6 +99,16 @@ export default createComponent({
 </script>
 
 <style scoped lang="postcss">
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
 .password-container {
     border-bottom: 2px solid var(--color-peral);
     border-top: 2px solid var(--color-peral);
@@ -130,7 +144,7 @@ export default createComponent({
 }
 
 .password-input {
-    padding-inline: 10px;
+    padding: 0 10px;
     transition: all 0.3s ease;
 
     @media screen and (prefers-reduced-motion: reduce) {
@@ -139,15 +153,14 @@ export default createComponent({
 }
 
 .password-input:not(.expanded) {
-    max-height: 0;
+    height: 0;
     opacity: 0;
+    overflow-y: hidden;
     padding-block-start: 0;
 }
 
 .password-input.expanded {
-    max-height: 100%;
     opacity: 1;
-    overflow-y: hidden;
     padding-block-start: 30px;
 }
 
