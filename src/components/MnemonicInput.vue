@@ -199,6 +199,13 @@ export default createComponent({
     }
 }
 
+@media screen and (prefers-reduced-motion: reduce) {
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: none;
+    }
+}
+
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.5s;

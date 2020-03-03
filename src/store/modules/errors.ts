@@ -5,7 +5,9 @@ export interface State {
 }
 
 export interface LedgerError {
-    statusCode: number;
+    name?: string;
+    message?: string;
+    statusCode?: number;
 }
 
 export interface LedgerErrorPayload {

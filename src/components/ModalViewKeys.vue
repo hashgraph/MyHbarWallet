@@ -1,53 +1,51 @@
 <template>
-    <div class="modal-view-keys">
-        <Modal
-            :is-open="isOpen"
-            :title="title"
-            @change="this.$listeners.change"
+    <Modal
+        :is-open="isOpen"
+        :title="title"
+        @change="this.$listeners.change"
+    >
+        <div
+            v-if="hasPublicKey"
+            class="key-container public"
         >
             <div
-                v-if="hasPublicKey"
-                class="key-container public"
-            >
-                <div
-                    class="subtitle"
-                    v-text="$t('modalViewKeys.publicKey')"
-                />
-                <ReadOnlyInput
-                    class="input"
-                    :value="publicKey"
-                    multiline
-                />
-                <Button
-                    :label="$t('modalViewKeys.copyPublic')"
-                    class="button"
-                    compact
-                    @click="handleCopyPublicKey"
-                />
-            </div>
+                class="subtitle"
+                v-text="$t('modalViewKeys.publicKey')"
+            />
+            <ReadOnlyInput
+                class="input"
+                :value="publicKey"
+                multiline
+            />
+            <Button
+                :label="$t('modalViewKeys.copyPublic')"
+                class="button"
+                compact
+                @click="handleCopyPublicKey"
+            />
+        </div>
+        <div
+            v-if="hasPrivateKey"
+            class="key-container private"
+        >
             <div
-                v-if="hasPrivateKey"
-                class="key-container private"
-            >
-                <div
-                    class="subtitle"
-                    v-text="$t('modalViewKeys.privateKey')"
-                />
-                <ReadOnlyInput
-                    class="input"
-                    :value="privateKey"
-                    multiline
-                    obscure
-                />
-                <Button
-                    :label="$t('modalViewKeys.copyPrivate')"
-                    class="button"
-                    compact
-                    @click="handleCopyPrivateKey"
-                />
-            </div>
-        </Modal>
-    </div>
+                class="subtitle"
+                v-text="$t('modalViewKeys.privateKey')"
+            />
+            <ReadOnlyInput
+                class="input"
+                :value="privateKey"
+                multiline
+                obscure
+            />
+            <Button
+                :label="$t('modalViewKeys.copyPrivate')"
+                class="button"
+                compact
+                @click="handleCopyPrivateKey"
+            />
+        </div>
+    </Modal>
 </template>
 
 <script lang="ts">

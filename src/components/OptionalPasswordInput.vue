@@ -161,6 +161,7 @@ export default createComponent({
 
 .password-input.expanded {
     opacity: 1;
+    overflow-y: hidden;
     padding-block-start: 30px;
 }
 

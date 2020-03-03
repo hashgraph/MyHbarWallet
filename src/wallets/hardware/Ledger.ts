@@ -110,10 +110,19 @@ export default class Ledger implements Wallet {
     }
 
     private async getTransport(): Promise<Transport> {
-        // Support NodeHID for Electron
-
         if (this.transport != null) {
             return this.transport;
+        }
+
+        // Support NodeHID for Electron
+        if (process.env.IS_ELECTRON) {
+            // @ts-ignore
+            // eslint-disable-next-line dot-notation
+            const TransportNodeHID = (await import("@ledgerhq/hw-transport-node-hid-noevents")).default;
+            // @ts-ignore
+            const devices = await TransportNodeHID.list();
+            this.transport = await TransportNodeHID.open(devices[ 0 ]);
+            return this.transport!;
         }
 
         // WebHID should be what we're doing but it's still unstable on Chrome
@@ -145,6 +154,18 @@ export default class Ledger implements Wallet {
             // Don't steal this
             this.transport.setScrambleKey("BOIL");
         }
+
+        // Kill this on disconnect event
+        this.transport!.on("disconnect", async() => {
+            try {
+                await this.transport!.close();
+                this.transport = null;
+            } catch (error) {
+                if (error instanceof DOMException) { /* lol why ledger */ } else {
+                    throw error;
+                }
+            }
+        });
 
         return this.transport!;
     }

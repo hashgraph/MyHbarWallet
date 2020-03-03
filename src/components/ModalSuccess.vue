@@ -1,39 +1,37 @@
 <template>
-    <div class="modal-success">
-        <Modal
-            :is-open="state.isOpen"
-            small
-            hide-decoration
-            garlands
-            :crown="mdiCheck"
-        >
-            <div class="container">
-                <div class="title">
-                    {{ $t("common.success") }}
-                </div>
-                <div class="description">
-                    <slot />
-                </div>
-                <div class="button-container">
-                    <Button
-                        v-if="hasAction"
-                        :label="actionLabel"
-                        :outline="hasAction && actionClicked"
-                        compact
-                        class="copy-button"
-                        @click="handleAction"
-                    />
-                    <Button
-                        :label="dismissLabel"
-                        :disabled="hasAction && !actionClicked"
-                        compact
-                        :class="{ 'dismiss-button': true, full: !hasAction }"
-                        @click="handleDismiss"
-                    />
-                </div>
+    <Modal
+        :is-open="state.isOpen"
+        small
+        hide-decoration
+        garlands
+        :crown="mdiCheck"
+    >
+        <div class="container">
+            <div class="title">
+                {{ $t("common.success") }}
             </div>
-        </Modal>
-    </div>
+            <div class="description">
+                <slot />
+            </div>
+            <div class="button-container">
+                <Button
+                    v-if="hasAction"
+                    :label="actionLabel"
+                    :outline="hasAction && actionClicked"
+                    compact
+                    class="copy-button"
+                    @click="handleAction"
+                />
+                <Button
+                    :label="dismissLabel"
+                    :disabled="hasAction && !actionClicked"
+                    compact
+                    :class="{ 'dismiss-button': true, full: !hasAction }"
+                    @click="handleDismiss"
+                />
+            </div>
+        </div>
+    </Modal>
 </template>
 
 <script lang="ts">

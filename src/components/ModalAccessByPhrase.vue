@@ -1,51 +1,49 @@
 <template>
-    <div class="modal-mnemonic-phrase">
-        <Modal
-            :title="$t('modalAccessByPhrase.title')"
-            :not-closable="state.isBusy"
-            :is-open="state.isOpen"
-            @change="handleModalChangeIsOpen"
-        >
-            <template v-slot:banner>
-                <Warning
-                    :title="$t('warning.title')"
-                    :message="
-                        $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
-                    "
-                />
-            </template>
+    <Modal
+        :title="$t('modalAccessByPhrase.title')"
+        :not-closable="state.isBusy"
+        :is-open="state.isOpen"
+        @change="handleModalChangeIsOpen"
+    >
+        <template v-slot:banner>
+            <Warning
+                :title="$t('warning.title')"
+                :message="
+                    $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+                "
+            />
+        </template>
 
-            <div class="instruction">
-                {{ $t("modalAccessByPhrase.pleaseTypeInYourMnemonicPhrase") }}
-            </div>
-            <form @submit.prevent="$emit('submit')">
-                <MnemonicInput
-                    class="phrase-input"
-                    :words="24"
-                    :value="state.words"
-                    :editable="true"
-                    :is-open="state.isOpen"
-                    @input="handleMnemonicInput"
-                    @valid="handleMnemonicValid"
-                />
+        <div class="instruction">
+            {{ $t("modalAccessByPhrase.pleaseTypeInYourMnemonicPhrase") }}
+        </div>
+        <form @submit.prevent="$emit('submit')">
+            <MnemonicInput
+                class="phrase-input"
+                :words="24"
+                :value="state.words"
+                :editable="true"
+                :is-open="state.isOpen"
+                @input="handleMnemonicInput"
+                @valid="handleMnemonicValid"
+            />
 
-                <OptionalPasswordInput
-                    :value="state.password"
-                    @input="handlePasswordInput"
-                />
+            <OptionalPasswordInput
+                :value="state.password"
+                @input="handlePasswordInput"
+            />
 
-                <Button
-                    class="continue-btn"
-                    :label="$t('common.continue')"
-                    :busy="state.isBusy"
-                    :disabled="!state.isValid"
-                />
-            </form>
-            <div class="support">
-                <CustomerSupportLink />
-            </div>
-        </Modal>
-    </div>
+            <Button
+                class="continue-btn"
+                :label="$t('common.continue')"
+                :busy="state.isBusy"
+                :disabled="!state.isValid"
+            />
+        </form>
+        <div class="support">
+            <CustomerSupportLink />
+        </div>
+    </Modal>
 </template>
 
 <script lang="ts">

@@ -100,6 +100,7 @@ export default createComponent({
                     valid.value = false;
                 }
 
+                // eslint-disable-next-line promise/always-return, promise/catch-or-return
                 isValid().then((result) => {
                     valid.value = result;
                 });

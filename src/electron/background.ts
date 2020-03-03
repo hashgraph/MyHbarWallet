@@ -1,6 +1,5 @@
 import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import path from "path";
 
 // hack to get __static working
 // see: https://github.com/electron-userland/electron-webpack/issues/172

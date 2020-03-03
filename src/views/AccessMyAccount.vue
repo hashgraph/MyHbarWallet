@@ -238,8 +238,8 @@ export default createComponent({
                         state.modalEnterAccountIdState.isOpen = true;
                     } catch (error) {
                         if (
-                            error.name === "TransportStatusError" &&
-                            state.loginMethod === LoginMethod.Ledger
+                            error.name === "TransportStatusError" ||
+                            error.name === "TransportOpenUserCancelled"
                         ) {
                             await actions.handleLedgerError({
                                 error,

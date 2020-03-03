@@ -1,21 +1,19 @@
 <template>
-    <div class="modal-export-download-keystore">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalExportDownloadKeystore.title')"
-            @change="handleModalChangeIsOpen"
-        >
-            <KeystoreWarningCards />
-            <Button
-                :label="$t('modalExportDownloadKeystore.downloadKeystoreFile')"
-                :busy="state.isBusy"
-                :disabled="state.isBusy"
-                compact
-                class="download"
-                @click="handleDownloadClick"
-            />
-        </Modal>
-    </div>
+    <Modal
+        :is-open="state.isOpen"
+        :title="$t('modalExportDownloadKeystore.title')"
+        @change="handleModalChangeIsOpen"
+    >
+        <KeystoreWarningCards />
+        <Button
+            :label="$t('modalExportDownloadKeystore.downloadKeystoreFile')"
+            :busy="state.isBusy"
+            :disabled="state.isBusy"
+            compact
+            class="download"
+            @click="handleDownloadClick"
+        />
+    </Modal>
 </template>
 
 <script lang="ts">

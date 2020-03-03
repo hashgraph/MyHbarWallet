@@ -1,101 +1,99 @@
 <template>
-    <div class="modal-create-by-mnemonic-phrase">
-        <Modal
-            :is-open="isOpen"
-            :title="$t('modalCreateByPhrase.title')"
-            @change="this.$listeners.change"
-        >
-            <template v-slot:banner>
-                <Warning
-                    :title="$t('warning.title')"
+    <Modal
+        :is-open="isOpen"
+        :title="$t('modalCreateByPhrase.title')"
+        @change="this.$listeners.change"
+    >
+        <template v-slot:banner>
+            <Warning
+                :title="$t('warning.title')"
+                :message="
+                    $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
+                "
+            />
+        </template>
+        <div class="password-info-header-wrapper">
+            <div class="password-info-header">
+                {{ $t("common.password.yourPassword") }}
+                <InfoButton
                     :message="
-                        $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
-                    "
-                />
-            </template>
-            <div class="password-info-header-wrapper">
-                <div class="password-info-header">
-                    {{ $t("common.password.yourPassword") }}
-                    <InfoButton
-                        :message="
-                            $t(
-                                'common.password.thisPasswordEncryptsYourPrivateKey'
-                            )
-                        "
-                    />
-                </div>
-            </div>
-            <div class="value-switch">
-                <div class="spacer" />
-                <div
-                    class="random-button"
-                    @click="randomizeMnemonic"
-                >
-                    <MaterialDesignIcon
-                        :size="16"
-                        :icon="cachedIcon"
-                    />
-                    {{ $t("modalCreateByPhrase.random") }}
-                </div>
-            </div>
-
-            <MnemonicInput
-                class="phrase-input"
-                :words="24"
-                :value="words"
-                :editable="false"
-                :is-open="isOpen"
-            />
-
-            <OptionalPasswordWithConfirm
-                :password-warning="state.passwordWarning"
-                @valid="handlePasswordValid"
-                @change="handlePasswordChange"
-            />
-
-            <div class="continue-btn-container">
-                <Button
-                    :busy="state.isBusy"
-                    :disabled="state.isDisabled"
-                    class="continue-btn"
-                    :label="
-                        $t('modalCreateByPhrase.iWroteDownMyMnemonicPhrase')
-                    "
-                    @click="handleClick"
-                />
-                <ModalVerifyPhrase
-                    v-model="state.verifyPhraseIsOpen"
-                    :words="words"
-                    @success="handleVerifySuccess"
-                />
-                <img
-                    :src="printerIcon"
-                    class="printer-button"
-                    @click="handlePrintModal"
-                >
-
-                <ModalPhrasePrintPreview
-                    v-model="state.printModalIsOpen"
-                    :words="words"
-                    :password="state.password"
-                />
-            </div>
-
-            <div class="warning-container">
-                <div
-                    class="do-not-forget"
-                    v-html="
-                        formatRich(
-                            $t(
-                                'modalCreateByPhrase.doNotForgetToSaveYourPassword'
-                            ).toString(),
-                            { strongClass: 'important' }
+                        $t(
+                            'common.password.thisPasswordEncryptsYourPrivateKey'
                         )
                     "
                 />
             </div>
-        </Modal>
-    </div>
+        </div>
+        <div class="value-switch">
+            <div class="spacer" />
+            <div
+                class="random-button"
+                @click="randomizeMnemonic"
+            >
+                <MaterialDesignIcon
+                    :size="16"
+                    :icon="cachedIcon"
+                />
+                {{ $t("modalCreateByPhrase.random") }}
+            </div>
+        </div>
+
+        <MnemonicInput
+            class="phrase-input"
+            :words="24"
+            :value="words"
+            :editable="false"
+            :is-open="isOpen"
+        />
+
+        <OptionalPasswordWithConfirm
+            :password-warning="state.passwordWarning"
+            @valid="handlePasswordValid"
+            @change="handlePasswordChange"
+        />
+
+        <div class="continue-btn-container">
+            <Button
+                :busy="state.isBusy"
+                :disabled="state.isDisabled"
+                class="continue-btn"
+                :label="
+                    $t('modalCreateByPhrase.iWroteDownMyMnemonicPhrase')
+                "
+                @click="handleClick"
+            />
+            <ModalVerifyPhrase
+                v-model="state.verifyPhraseIsOpen"
+                :words="words"
+                @success="handleVerifySuccess"
+            />
+            <img
+                :src="printerIcon"
+                class="printer-button"
+                @click="handlePrintModal"
+            >
+
+            <ModalPhrasePrintPreview
+                v-model="state.printModalIsOpen"
+                :words="words"
+                :password="state.password"
+            />
+        </div>
+
+        <div class="warning-container">
+            <div
+                class="do-not-forget"
+                v-html="
+                    formatRich(
+                        $t(
+                            'modalCreateByPhrase.doNotForgetToSaveYourPassword'
+                        ).toString(),
+                        { strongClass: 'important' }
+                    )
+                "
+            />
+        </div>
+    </Modal>
 </template>
 
 <script lang="ts">
