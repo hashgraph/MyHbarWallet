@@ -74,7 +74,7 @@ const pluginOptions = {
 };
 
 const backWebpack = {
-    outputDir: "dist/node",
+    outputDir: "dist",
     configureWebpack: {
         target: "electron-renderer",
         ...performance,

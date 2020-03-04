@@ -61,7 +61,7 @@ const performance = {
 const frontEndExternals = { externals: { "@ledgerhq/hw-transport-node-hid-noevents": "module" }};
 
 const frontWebpack = {
-    outputDir: "dist/web",
+    outputDir: "dist",
     configureWebpack: {
         target: "web",
         ...performance,
