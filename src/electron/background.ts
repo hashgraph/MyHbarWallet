@@ -15,7 +15,7 @@ function createWindow(): void {
     win = new BrowserWindow({
         width: 1025,
         height: 768,
-        webPreferences: { nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION as unknown as boolean },
+        webPreferences: { nodeIntegration: true },
         show: false
     });
 

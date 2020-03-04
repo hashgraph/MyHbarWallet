@@ -26,8 +26,8 @@
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_src/electron</title>
-<path fill="#ffffff" stroke="black" stroke-width="2" d="M50.5,-3412.37C50.5,-3412.37 125.5,-3412.37 125.5,-3412.37 131.5,-3412.37 137.5,-3418.37 137.5,-3424.37 137.5,-3424.37 137.5,-3452.37 137.5,-3452.37 137.5,-3458.37 131.5,-3464.37 125.5,-3464.37 125.5,-3464.37 50.5,-3464.37 50.5,-3464.37 44.5,-3464.37 38.5,-3458.37 38.5,-3452.37 38.5,-3452.37 38.5,-3424.37 38.5,-3424.37 38.5,-3418.37 44.5,-3412.37 50.5,-3412.37"/>
-<text text-anchor="middle" x="88" y="-3453.17" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">electron</text>
+<path fill="#ffffff" stroke="black" stroke-width="2" d="M50.5,-3702.37C50.5,-3702.37 125.5,-3702.37 125.5,-3702.37 131.5,-3702.37 137.5,-3708.37 137.5,-3714.37 137.5,-3714.37 137.5,-3742.37 137.5,-3742.37 137.5,-3748.37 131.5,-3754.37 125.5,-3754.37 125.5,-3754.37 50.5,-3754.37 50.5,-3754.37 44.5,-3754.37 38.5,-3748.37 38.5,-3742.37 38.5,-3742.37 38.5,-3714.37 38.5,-3714.37 38.5,-3708.37 44.5,-3702.37 50.5,-3702.37"/>
+<text text-anchor="middle" x="88" y="-3743.17" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="9.00">electron</text>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_src/lang</title>
@@ -185,9 +185,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="817.6,-838.57 815.5,-832.57 813.4,-838.57 817.6,-838.57"/>
 </g>
 <!-- src/components/Alert.vue -->
-<g id="node63" class="node">
+<g id="node64" class="node">
 <title>src/components/Alert.vue</title>
-<g id="a_node63"><a xlink:href="src/components/Alert.vue" xlink:title="Alert.vue">
+<g id="a_node64"><a xlink:href="src/components/Alert.vue" xlink:title="Alert.vue">
 <path fill="#41f083" stroke="black" d="M1017.5,-1320.37C1017.5,-1320.37 972.5,-1320.37 972.5,-1320.37 969.5,-1320.37 966.5,-1317.37 966.5,-1314.37 966.5,-1314.37 966.5,-1308.37 966.5,-1308.37 966.5,-1305.37 969.5,-1302.37 972.5,-1302.37 972.5,-1302.37 1017.5,-1302.37 1017.5,-1302.37 1020.5,-1302.37 1023.5,-1305.37 1023.5,-1308.37 1023.5,-1308.37 1023.5,-1314.37 1023.5,-1314.37 1023.5,-1317.37 1020.5,-1320.37 1017.5,-1320.37"/>
 <text text-anchor="middle" x="995" y="-1309.17" font-family="Helvetica,sans-Serif" font-size="9.00">Alert.vue</text>
 </a>
@@ -200,9 +200,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="960.31,-1313.86 966.45,-1312.22 960.63,-1309.67 960.31,-1313.86"/>
 </g>
 <!-- src/components/MaterialDesignIcon.vue -->
-<g id="node50" class="node">
+<g id="node51" class="node">
 <title>src/components/MaterialDesignIcon.vue</title>
-<g id="a_node50"><a xlink:href="src/components/MaterialDesignIcon.vue" xlink:title="MaterialDesignIcon.vue">
+<g id="a_node51"><a xlink:href="src/components/MaterialDesignIcon.vue" xlink:title="MaterialDesignIcon.vue">
 <path fill="#41f083" stroke="black" d="M1206.5,-1612.37C1206.5,-1612.37 1096.5,-1612.37 1096.5,-1612.37 1093.5,-1612.37 1090.5,-1609.37 1090.5,-1606.37 1090.5,-1606.37 1090.5,-1600.37 1090.5,-1600.37 1090.5,-1597.37 1093.5,-1594.37 1096.5,-1594.37 1096.5,-1594.37 1206.5,-1594.37 1206.5,-1594.37 1209.5,-1594.37 1212.5,-1597.37 1212.5,-1600.37 1212.5,-1600.37 1212.5,-1606.37 1212.5,-1606.37 1212.5,-1609.37 1209.5,-1612.37 1206.5,-1612.37"/>
 <text text-anchor="middle" x="1151.5" y="-1601.17" font-family="Helvetica,sans-Serif" font-size="9.00">MaterialDesignIcon.vue</text>
 </a>
@@ -215,9 +215,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1151.59,-1618.55 1149.9,-1612.42 1147.4,-1618.27 1151.59,-1618.55"/>
 </g>
 <!-- src/components/FooterTop.vue -->
-<g id="node76" class="node">
+<g id="node77" class="node">
 <title>src/components/FooterTop.vue</title>
-<g id="a_node76"><a xlink:href="src/components/FooterTop.vue" xlink:title="FooterTop.vue">
+<g id="a_node77"><a xlink:href="src/components/FooterTop.vue" xlink:title="FooterTop.vue">
 <path fill="#41f083" stroke="black" d="M662,-2796.37C662,-2796.37 595,-2796.37 595,-2796.37 592,-2796.37 589,-2793.37 589,-2790.37 589,-2790.37 589,-2784.37 589,-2784.37 589,-2781.37 592,-2778.37 595,-2778.37 595,-2778.37 662,-2778.37 662,-2778.37 665,-2778.37 668,-2781.37 668,-2784.37 668,-2784.37 668,-2790.37 668,-2790.37 668,-2793.37 665,-2796.37 662,-2796.37"/>
 <text text-anchor="middle" x="628.5" y="-2785.17" font-family="Helvetica,sans-Serif" font-size="9.00">FooterTop.vue</text>
 </a>
@@ -248,9 +248,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1084.14,-1595.39 1090.23,-1597.22 1086.61,-1591.99 1084.14,-1595.39"/>
 </g>
 <!-- src/components/Button.vue -->
-<g id="node60" class="node">
+<g id="node61" class="node">
 <title>src/components/Button.vue</title>
-<g id="a_node60"><a xlink:href="src/components/Button.vue" xlink:title="Button.vue">
+<g id="a_node61"><a xlink:href="src/components/Button.vue" xlink:title="Button.vue">
 <path fill="#41f083" stroke="black" d="M1022.5,-1768.37C1022.5,-1768.37 967.5,-1768.37 967.5,-1768.37 964.5,-1768.37 961.5,-1765.37 961.5,-1762.37 961.5,-1762.37 961.5,-1756.37 961.5,-1756.37 961.5,-1753.37 964.5,-1750.37 967.5,-1750.37 967.5,-1750.37 1022.5,-1750.37 1022.5,-1750.37 1025.5,-1750.37 1028.5,-1753.37 1028.5,-1756.37 1028.5,-1756.37 1028.5,-1762.37 1028.5,-1762.37 1028.5,-1765.37 1025.5,-1768.37 1022.5,-1768.37"/>
 <text text-anchor="middle" x="995" y="-1757.17" font-family="Helvetica,sans-Serif" font-size="9.00">Button.vue</text>
 </a>
@@ -263,9 +263,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="986.47,-1745.44 990.65,-1750.23 990.37,-1743.88 986.47,-1745.44"/>
 </g>
 <!-- src/components/HeaderHamburgerButton.vue -->
-<g id="node78" class="node">
+<g id="node79" class="node">
 <title>src/components/HeaderHamburgerButton.vue</title>
-<g id="a_node78"><a xlink:href="src/components/HeaderHamburgerButton.vue" xlink:title="HeaderHamburgerButton.vue">
+<g id="a_node79"><a xlink:href="src/components/HeaderHamburgerButton.vue" xlink:title="HeaderHamburgerButton.vue">
 <path fill="#41f083" stroke="black" d="M1064.5,-1424.37C1064.5,-1424.37 925.5,-1424.37 925.5,-1424.37 922.5,-1424.37 919.5,-1421.37 919.5,-1418.37 919.5,-1418.37 919.5,-1412.37 919.5,-1412.37 919.5,-1409.37 922.5,-1406.37 925.5,-1406.37 925.5,-1406.37 1064.5,-1406.37 1064.5,-1406.37 1067.5,-1406.37 1070.5,-1409.37 1070.5,-1412.37 1070.5,-1412.37 1070.5,-1418.37 1070.5,-1418.37 1070.5,-1421.37 1067.5,-1424.37 1064.5,-1424.37"/>
 <text text-anchor="middle" x="995" y="-1413.17" font-family="Helvetica,sans-Serif" font-size="9.00">HeaderHamburgerButton.vue</text>
 </a>
@@ -278,9 +278,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="921.19,-1404.75 927.36,-1406.27 923.49,-1401.23 921.19,-1404.75"/>
 </g>
 <!-- src/components/HeaderHamburgerMenu.vue -->
-<g id="node79" class="node">
+<g id="node80" class="node">
 <title>src/components/HeaderHamburgerMenu.vue</title>
-<g id="a_node79"><a xlink:href="src/components/HeaderHamburgerMenu.vue" xlink:title="HeaderHamburgerMenu.vue">
+<g id="a_node80"><a xlink:href="src/components/HeaderHamburgerMenu.vue" xlink:title="HeaderHamburgerMenu.vue">
 <path fill="#41f083" stroke="black" d="M882,-1334.37C882,-1334.37 749,-1334.37 749,-1334.37 746,-1334.37 743,-1331.37 743,-1328.37 743,-1328.37 743,-1322.37 743,-1322.37 743,-1319.37 746,-1316.37 749,-1316.37 749,-1316.37 882,-1316.37 882,-1316.37 885,-1316.37 888,-1319.37 888,-1322.37 888,-1322.37 888,-1328.37 888,-1328.37 888,-1331.37 885,-1334.37 882,-1334.37"/>
 <text text-anchor="middle" x="815.5" y="-1323.17" font-family="Helvetica,sans-Serif" font-size="9.00">HeaderHamburgerMenu.vue</text>
 </a>
@@ -311,9 +311,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="968.92,-1749.77 975.25,-1750.36 970.66,-1745.95 968.92,-1749.77"/>
 </g>
 <!-- src/components/Modal.vue -->
-<g id="node95" class="node">
+<g id="node96" class="node">
 <title>src/components/Modal.vue</title>
-<g id="a_node95"><a xlink:href="src/components/Modal.vue" xlink:title="Modal.vue">
+<g id="a_node96"><a xlink:href="src/components/Modal.vue" xlink:title="Modal.vue">
 <path fill="#41f083" stroke="black" d="M1020,-2135.37C1020,-2135.37 970,-2135.37 970,-2135.37 967,-2135.37 964,-2132.37 964,-2129.37 964,-2129.37 964,-2123.37 964,-2123.37 964,-2120.37 967,-2117.37 970,-2117.37 970,-2117.37 1020,-2117.37 1020,-2117.37 1023,-2117.37 1026,-2120.37 1026,-2123.37 1026,-2123.37 1026,-2129.37 1026,-2129.37 1026,-2132.37 1023,-2135.37 1020,-2135.37"/>
 <text text-anchor="middle" x="995" y="-2124.17" font-family="Helvetica,sans-Serif" font-size="9.00">Modal.vue</text>
 </a>
@@ -326,9 +326,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="981.9,-2113.6 987.12,-2117.23 985.31,-2111.14 981.9,-2113.6"/>
 </g>
 <!-- src/router.ts -->
-<g id="node125" class="node">
+<g id="node126" class="node">
 <title>src/router.ts</title>
-<g id="a_node125"><a xlink:href="src/router.ts" xlink:title="router.ts">
+<g id="a_node126"><a xlink:href="src/router.ts" xlink:title="router.ts">
 <path fill="#ddfeff" stroke="black" d="M1016.5,-3372.37C1016.5,-3372.37 973.5,-3372.37 973.5,-3372.37 970.5,-3372.37 967.5,-3369.37 967.5,-3366.37 967.5,-3366.37 967.5,-3360.37 967.5,-3360.37 967.5,-3357.37 970.5,-3354.37 973.5,-3354.37 973.5,-3354.37 1016.5,-3354.37 1016.5,-3354.37 1019.5,-3354.37 1022.5,-3357.37 1022.5,-3360.37 1022.5,-3360.37 1022.5,-3366.37 1022.5,-3366.37 1022.5,-3369.37 1019.5,-3372.37 1016.5,-3372.37"/>
 <text text-anchor="middle" x="995" y="-3361.17" font-family="Helvetica,sans-Serif" font-size="9.00">router.ts</text>
 </a>
@@ -353,9 +353,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="983.46,-1746.44 988.49,-1750.33 986.99,-1744.15 983.46,-1746.44"/>
 </g>
 <!-- src/components/TextInput.vue -->
-<g id="node84" class="node">
+<g id="node85" class="node">
 <title>src/components/TextInput.vue</title>
-<g id="a_node84"><a xlink:href="src/components/TextInput.vue" xlink:title="TextInput.vue">
+<g id="a_node85"><a xlink:href="src/components/TextInput.vue" xlink:title="TextInput.vue">
 <path fill="#41f083" stroke="black" d="M1028.5,-1554.37C1028.5,-1554.37 961.5,-1554.37 961.5,-1554.37 958.5,-1554.37 955.5,-1551.37 955.5,-1548.37 955.5,-1548.37 955.5,-1542.37 955.5,-1542.37 955.5,-1539.37 958.5,-1536.37 961.5,-1536.37 961.5,-1536.37 1028.5,-1536.37 1028.5,-1536.37 1031.5,-1536.37 1034.5,-1539.37 1034.5,-1542.37 1034.5,-1542.37 1034.5,-1548.37 1034.5,-1548.37 1034.5,-1551.37 1031.5,-1554.37 1028.5,-1554.37"/>
 <text text-anchor="middle" x="995" y="-1543.17" font-family="Helvetica,sans-Serif" font-size="9.00">TextInput.vue</text>
 </a>
@@ -374,9 +374,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="981.86,-2113.63 987.09,-2117.24 985.26,-2111.16 981.86,-2113.63"/>
 </g>
 <!-- src/support.ts -->
-<g id="node114" class="node">
+<g id="node115" class="node">
 <title>src/support.ts</title>
-<g id="a_node114"><a xlink:href="src/support.ts" xlink:title="support.ts">
+<g id="a_node115"><a xlink:href="src/support.ts" xlink:title="support.ts">
 <path fill="#ddfeff" stroke="black" d="M1020.5,-2862.37C1020.5,-2862.37 969.5,-2862.37 969.5,-2862.37 966.5,-2862.37 963.5,-2859.37 963.5,-2856.37 963.5,-2856.37 963.5,-2850.37 963.5,-2850.37 963.5,-2847.37 966.5,-2844.37 969.5,-2844.37 969.5,-2844.37 1020.5,-2844.37 1020.5,-2844.37 1023.5,-2844.37 1026.5,-2847.37 1026.5,-2850.37 1026.5,-2850.37 1026.5,-2856.37 1026.5,-2856.37 1026.5,-2859.37 1023.5,-2862.37 1020.5,-2862.37"/>
 <text text-anchor="middle" x="995" y="-2851.17" font-family="Helvetica,sans-Serif" font-size="9.00">support.ts</text>
 </a>
@@ -395,9 +395,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1084.32,-1595.65 1090.4,-1597.52 1086.82,-1592.27 1084.32,-1595.65"/>
 </g>
 <!-- src/settings.ts -->
-<g id="node119" class="node">
+<g id="node120" class="node">
 <title>src/settings.ts</title>
-<g id="a_node119"><a xlink:href="src/settings.ts" xlink:title="settings.ts">
+<g id="a_node120"><a xlink:href="src/settings.ts" xlink:title="settings.ts">
 <path fill="#ddfeff" stroke="black" d="M1177.5,-256.37C1177.5,-256.37 1125.5,-256.37 1125.5,-256.37 1122.5,-256.37 1119.5,-253.37 1119.5,-250.37 1119.5,-250.37 1119.5,-244.37 1119.5,-244.37 1119.5,-241.37 1122.5,-238.37 1125.5,-238.37 1125.5,-238.37 1177.5,-238.37 1177.5,-238.37 1180.5,-238.37 1183.5,-241.37 1183.5,-244.37 1183.5,-244.37 1183.5,-250.37 1183.5,-250.37 1183.5,-253.37 1180.5,-256.37 1177.5,-256.37"/>
 <text text-anchor="middle" x="1151.5" y="-245.17" font-family="Helvetica,sans-Serif" font-size="9.00">settings.ts</text>
 </a>
@@ -418,9 +418,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="986.85" cy="-3343.31" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/i18n.ts -->
-<g id="node131" class="node">
+<g id="node132" class="node">
 <title>src/i18n.ts</title>
-<g id="a_node131"><a xlink:href="src/i18n.ts" xlink:title="i18n.ts">
+<g id="a_node132"><a xlink:href="src/i18n.ts" xlink:title="i18n.ts">
 <path fill="#ddfeff" stroke="black" d="M1016,-206.37C1016,-206.37 974,-206.37 974,-206.37 971,-206.37 968,-203.37 968,-200.37 968,-200.37 968,-194.37 968,-194.37 968,-191.37 971,-188.37 974,-188.37 974,-188.37 1016,-188.37 1016,-188.37 1019,-188.37 1022,-191.37 1022,-194.37 1022,-194.37 1022,-200.37 1022,-200.37 1022,-203.37 1019,-206.37 1016,-206.37"/>
 <text text-anchor="middle" x="995" y="-195.17" font-family="Helvetica,sans-Serif" font-size="9.00">i18n.ts</text>
 </a>
@@ -433,9 +433,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="969.54,-211.12 973.85,-206.44 967.57,-207.41 969.54,-211.12"/>
 </g>
 <!-- src/units.ts -->
-<g id="node138" class="node">
+<g id="node139" class="node">
 <title>src/units.ts</title>
-<g id="a_node138"><a xlink:href="src/units.ts" xlink:title="units.ts">
+<g id="a_node139"><a xlink:href="src/units.ts" xlink:title="units.ts">
 <path fill="#ddfeff" stroke="black" d="M1016,-2892.37C1016,-2892.37 974,-2892.37 974,-2892.37 971,-2892.37 968,-2889.37 968,-2886.37 968,-2886.37 968,-2880.37 968,-2880.37 968,-2877.37 971,-2874.37 974,-2874.37 974,-2874.37 1016,-2874.37 1016,-2874.37 1019,-2874.37 1022,-2877.37 1022,-2880.37 1022,-2880.37 1022,-2886.37 1022,-2886.37 1022,-2889.37 1019,-2892.37 1016,-2892.37"/>
 <text text-anchor="middle" x="995" y="-2881.17" font-family="Helvetica,sans-Serif" font-size="9.00">units.ts</text>
 </a>
@@ -448,9 +448,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="961.67,-2888.08 967.7,-2886.06 961.73,-2883.89 961.67,-2888.08"/>
 </g>
 <!-- src/request.ts -->
-<g id="node145" class="node">
+<g id="node146" class="node">
 <title>src/request.ts</title>
-<g id="a_node145"><a xlink:href="src/request.ts" xlink:title="request.ts">
+<g id="a_node146"><a xlink:href="src/request.ts" xlink:title="request.ts">
 <path fill="#ddfeff" stroke="black" d="M1020,-832.37C1020,-832.37 970,-832.37 970,-832.37 967,-832.37 964,-829.37 964,-826.37 964,-826.37 964,-820.37 964,-820.37 964,-817.37 967,-814.37 970,-814.37 970,-814.37 1020,-814.37 1020,-814.37 1023,-814.37 1026,-817.37 1026,-820.37 1026,-820.37 1026,-826.37 1026,-826.37 1026,-829.37 1023,-832.37 1020,-832.37"/>
 <text text-anchor="middle" x="995" y="-821.17" font-family="Helvetica,sans-Serif" font-size="9.00">request.ts</text>
 </a>
@@ -463,9 +463,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="957.84,-825.47 963.84,-823.37 957.84,-821.27 957.84,-825.47"/>
 </g>
 <!-- src/store/modules/wallet.ts -->
-<g id="node167" class="node">
+<g id="node168" class="node">
 <title>src/store/modules/wallet.ts</title>
-<g id="a_node167"><a xlink:href="src/store/modules/wallet.ts" xlink:title="wallet.ts">
+<g id="a_node168"><a xlink:href="src/store/modules/wallet.ts" xlink:title="wallet.ts">
 <path fill="#ddfeff" stroke="black" d="M1016,-484.37C1016,-484.37 974,-484.37 974,-484.37 971,-484.37 968,-481.37 968,-478.37 968,-478.37 968,-472.37 968,-472.37 968,-469.37 971,-466.37 974,-466.37 974,-466.37 1016,-466.37 1016,-466.37 1019,-466.37 1022,-469.37 1022,-472.37 1022,-472.37 1022,-478.37 1022,-478.37 1022,-481.37 1019,-484.37 1016,-484.37"/>
 <text text-anchor="middle" x="995" y="-473.17" font-family="Helvetica,sans-Serif" font-size="9.00">wallet.ts</text>
 </a>
@@ -864,19 +864,28 @@
 </a>
 </g>
 </g>
-<!-- src/clipboard.ts -->
+<!-- src/bindings.ts -->
 <g id="node48" class="node">
+<title>src/bindings.ts</title>
+<g id="a_node48"><a xlink:href="src/bindings.ts" xlink:title="bindings.ts">
+<path fill="#ccffcc" stroke="black" d="M115.5,-3417.37C115.5,-3417.37 60.5,-3417.37 60.5,-3417.37 57.5,-3417.37 54.5,-3414.37 54.5,-3411.37 54.5,-3411.37 54.5,-3405.37 54.5,-3405.37 54.5,-3402.37 57.5,-3399.37 60.5,-3399.37 60.5,-3399.37 115.5,-3399.37 115.5,-3399.37 118.5,-3399.37 121.5,-3402.37 121.5,-3405.37 121.5,-3405.37 121.5,-3411.37 121.5,-3411.37 121.5,-3414.37 118.5,-3417.37 115.5,-3417.37"/>
+<text text-anchor="middle" x="88" y="-3406.17" font-family="Helvetica,sans-Serif" font-size="9.00">bindings.ts</text>
+</a>
+</g>
+</g>
+<!-- src/clipboard.ts -->
+<g id="node49" class="node">
 <title>src/clipboard.ts</title>
-<g id="a_node48"><a xlink:href="src/clipboard.ts" xlink:title="clipboard.ts">
+<g id="a_node49"><a xlink:href="src/clipboard.ts" xlink:title="clipboard.ts">
 <path fill="#ddfeff" stroke="black" d="M1180.5,-1210.37C1180.5,-1210.37 1122.5,-1210.37 1122.5,-1210.37 1119.5,-1210.37 1116.5,-1207.37 1116.5,-1204.37 1116.5,-1204.37 1116.5,-1198.37 1116.5,-1198.37 1116.5,-1195.37 1119.5,-1192.37 1122.5,-1192.37 1122.5,-1192.37 1180.5,-1192.37 1180.5,-1192.37 1183.5,-1192.37 1186.5,-1195.37 1186.5,-1198.37 1186.5,-1198.37 1186.5,-1204.37 1186.5,-1204.37 1186.5,-1207.37 1183.5,-1210.37 1180.5,-1210.37"/>
 <text text-anchor="middle" x="1151.5" y="-1199.17" font-family="Helvetica,sans-Serif" font-size="9.00">clipboard.ts</text>
 </a>
 </g>
 </g>
 <!-- src/components/Accordion.vue -->
-<g id="node49" class="node">
+<g id="node50" class="node">
 <title>src/components/Accordion.vue</title>
-<g id="a_node49"><a xlink:href="src/components/Accordion.vue" xlink:title="Accordion.vue">
+<g id="a_node50"><a xlink:href="src/components/Accordion.vue" xlink:title="Accordion.vue">
 <path fill="#41f083" stroke="black" d="M1029.5,-2373.37C1029.5,-2373.37 960.5,-2373.37 960.5,-2373.37 957.5,-2373.37 954.5,-2370.37 954.5,-2367.37 954.5,-2367.37 954.5,-2361.37 954.5,-2361.37 954.5,-2358.37 957.5,-2355.37 960.5,-2355.37 960.5,-2355.37 1029.5,-2355.37 1029.5,-2355.37 1032.5,-2355.37 1035.5,-2358.37 1035.5,-2361.37 1035.5,-2361.37 1035.5,-2367.37 1035.5,-2367.37 1035.5,-2370.37 1032.5,-2373.37 1029.5,-2373.37"/>
 <text text-anchor="middle" x="995" y="-2362.17" font-family="Helvetica,sans-Serif" font-size="9.00">Accordion.vue</text>
 </a>
@@ -889,9 +898,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1151.52,-1618.85 1149.86,-1612.71 1147.33,-1618.54 1151.52,-1618.85"/>
 </g>
 <!-- src/components/AccountCard.vue -->
-<g id="node51" class="node">
+<g id="node52" class="node">
 <title>src/components/AccountCard.vue</title>
-<g id="a_node51"><a xlink:href="src/components/AccountCard.vue" xlink:title="AccountCard.vue">
+<g id="a_node52"><a xlink:href="src/components/AccountCard.vue" xlink:title="AccountCard.vue">
 <path fill="#41f083" stroke="black" d="M129.5,-2124.37C129.5,-2124.37 46.5,-2124.37 46.5,-2124.37 43.5,-2124.37 40.5,-2121.37 40.5,-2118.37 40.5,-2118.37 40.5,-2112.37 40.5,-2112.37 40.5,-2109.37 43.5,-2106.37 46.5,-2106.37 46.5,-2106.37 129.5,-2106.37 129.5,-2106.37 132.5,-2106.37 135.5,-2109.37 135.5,-2112.37 135.5,-2112.37 135.5,-2118.37 135.5,-2118.37 135.5,-2121.37 132.5,-2124.37 129.5,-2124.37"/>
 <text text-anchor="middle" x="88" y="-2113.17" font-family="Helvetica,sans-Serif" font-size="9.00">AccountCard.vue</text>
 </a>
@@ -912,9 +921,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1151.16,-1618.56 1149.64,-1612.39 1146.98,-1618.17 1151.16,-1618.56"/>
 </g>
 <!-- src/components/Identicon.vue -->
-<g id="node52" class="node">
+<g id="node53" class="node">
 <title>src/components/Identicon.vue</title>
-<g id="a_node52"><a xlink:href="src/components/Identicon.vue" xlink:title="Identicon.vue">
+<g id="a_node53"><a xlink:href="src/components/Identicon.vue" xlink:title="Identicon.vue">
 <path fill="#41f083" stroke="black" d="M288,-2258.37C288,-2258.37 221,-2258.37 221,-2258.37 218,-2258.37 215,-2255.37 215,-2252.37 215,-2252.37 215,-2246.37 215,-2246.37 215,-2243.37 218,-2240.37 221,-2240.37 221,-2240.37 288,-2240.37 288,-2240.37 291,-2240.37 294,-2243.37 294,-2246.37 294,-2246.37 294,-2252.37 294,-2252.37 294,-2255.37 291,-2258.37 288,-2258.37"/>
 <text text-anchor="middle" x="254.5" y="-2247.17" font-family="Helvetica,sans-Serif" font-size="9.00">Identicon.vue</text>
 </a>
@@ -927,9 +936,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="208.66,-2252.04 214.82,-2250.46 209.02,-2247.85 208.66,-2252.04"/>
 </g>
 <!-- src/components/ModalViewAccountId.vue -->
-<g id="node53" class="node">
+<g id="node54" class="node">
 <title>src/components/ModalViewAccountId.vue</title>
-<g id="a_node53"><a xlink:href="src/components/ModalViewAccountId.vue" xlink:title="ModalViewAccountId.vue">
+<g id="a_node54"><a xlink:href="src/components/ModalViewAccountId.vue" xlink:title="ModalViewAccountId.vue">
 <path fill="#41f083" stroke="black" d="M874.5,-2094.37C874.5,-2094.37 756.5,-2094.37 756.5,-2094.37 753.5,-2094.37 750.5,-2091.37 750.5,-2088.37 750.5,-2088.37 750.5,-2082.37 750.5,-2082.37 750.5,-2079.37 753.5,-2076.37 756.5,-2076.37 756.5,-2076.37 874.5,-2076.37 874.5,-2076.37 877.5,-2076.37 880.5,-2079.37 880.5,-2082.37 880.5,-2082.37 880.5,-2088.37 880.5,-2088.37 880.5,-2091.37 877.5,-2094.37 874.5,-2094.37"/>
 <text text-anchor="middle" x="815.5" y="-2083.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalViewAccountId.vue</text>
 </a>
@@ -944,9 +953,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="767.66" cy="-2072.31" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/components/Tooltip.vue -->
-<g id="node54" class="node">
+<g id="node55" class="node">
 <title>src/components/Tooltip.vue</title>
-<g id="a_node54"><a xlink:href="src/components/Tooltip.vue" xlink:title="Tooltip.vue">
+<g id="a_node55"><a xlink:href="src/components/Tooltip.vue" xlink:title="Tooltip.vue">
 <path fill="#41f083" stroke="black" d="M1178,-2500.37C1178,-2500.37 1125,-2500.37 1125,-2500.37 1122,-2500.37 1119,-2497.37 1119,-2494.37 1119,-2494.37 1119,-2488.37 1119,-2488.37 1119,-2485.37 1122,-2482.37 1125,-2482.37 1125,-2482.37 1178,-2482.37 1178,-2482.37 1181,-2482.37 1184,-2485.37 1184,-2488.37 1184,-2488.37 1184,-2494.37 1184,-2494.37 1184,-2497.37 1181,-2500.37 1178,-2500.37"/>
 <text text-anchor="middle" x="1151.5" y="-2489.17" font-family="Helvetica,sans-Serif" font-size="9.00">Tooltip.vue</text>
 </a>
@@ -959,9 +968,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1150.67,-2506.64 1149.37,-2500.42 1146.51,-2506.09 1150.67,-2506.64"/>
 </g>
 <!-- src/components/ExportKeystoreButton.vue -->
-<g id="node55" class="node">
+<g id="node56" class="node">
 <title>src/components/ExportKeystoreButton.vue</title>
-<g id="a_node55"><a xlink:href="src/components/ExportKeystoreButton.vue" xlink:title="ExportKeystoreButton.vue">
+<g id="a_node56"><a xlink:href="src/components/ExportKeystoreButton.vue" xlink:title="ExportKeystoreButton.vue">
 <path fill="#41f083" stroke="black" d="M316,-2228.37C316,-2228.37 193,-2228.37 193,-2228.37 190,-2228.37 187,-2225.37 187,-2222.37 187,-2222.37 187,-2216.37 187,-2216.37 187,-2213.37 190,-2210.37 193,-2210.37 193,-2210.37 316,-2210.37 316,-2210.37 319,-2210.37 322,-2213.37 322,-2216.37 322,-2216.37 322,-2222.37 322,-2222.37 322,-2225.37 319,-2228.37 316,-2228.37"/>
 <text text-anchor="middle" x="254.5" y="-2217.17" font-family="Helvetica,sans-Serif" font-size="9.00">ExportKeystoreButton.vue</text>
 </a>
@@ -976,9 +985,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="229.47" cy="-2204.18" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/components/ModalViewKeys.vue -->
-<g id="node56" class="node">
+<g id="node57" class="node">
 <title>src/components/ModalViewKeys.vue</title>
-<g id="a_node56"><a xlink:href="src/components/ModalViewKeys.vue" xlink:title="ModalViewKeys.vue">
+<g id="a_node57"><a xlink:href="src/components/ModalViewKeys.vue" xlink:title="ModalViewKeys.vue">
 <path fill="#41f083" stroke="black" d="M861.5,-2124.37C861.5,-2124.37 769.5,-2124.37 769.5,-2124.37 766.5,-2124.37 763.5,-2121.37 763.5,-2118.37 763.5,-2118.37 763.5,-2112.37 763.5,-2112.37 763.5,-2109.37 766.5,-2106.37 769.5,-2106.37 769.5,-2106.37 861.5,-2106.37 861.5,-2106.37 864.5,-2106.37 867.5,-2109.37 867.5,-2112.37 867.5,-2112.37 867.5,-2118.37 867.5,-2118.37 867.5,-2121.37 864.5,-2124.37 861.5,-2124.37"/>
 <text text-anchor="middle" x="815.5" y="-2113.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalViewKeys.vue</text>
 </a>
@@ -1019,9 +1028,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="958.76,-2117.54 965.11,-2117.26 959.97,-2113.52 958.76,-2117.54"/>
 </g>
 <!-- src/components/ReadOnlyInput.vue -->
-<g id="node105" class="node">
+<g id="node106" class="node">
 <title>src/components/ReadOnlyInput.vue</title>
-<g id="a_node105"><a xlink:href="src/components/ReadOnlyInput.vue" xlink:title="ReadOnlyInput.vue">
+<g id="a_node106"><a xlink:href="src/components/ReadOnlyInput.vue" xlink:title="ReadOnlyInput.vue">
 <path fill="#41f083" stroke="black" d="M1041,-1976.37C1041,-1976.37 949,-1976.37 949,-1976.37 946,-1976.37 943,-1973.37 943,-1970.37 943,-1970.37 943,-1964.37 943,-1964.37 943,-1961.37 946,-1958.37 949,-1958.37 949,-1958.37 1041,-1958.37 1041,-1958.37 1044,-1958.37 1047,-1961.37 1047,-1964.37 1047,-1964.37 1047,-1970.37 1047,-1970.37 1047,-1973.37 1044,-1976.37 1041,-1976.37"/>
 <text text-anchor="middle" x="995" y="-1965.17" font-family="Helvetica,sans-Serif" font-size="9.00">ReadOnlyInput.vue</text>
 </a>
@@ -1054,9 +1063,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1152.68,-2506.39 1150.63,-2500.37 1148.48,-2506.35 1152.68,-2506.39"/>
 </g>
 <!-- src/components/ModalExportDownloadKeystore.vue -->
-<g id="node71" class="node">
+<g id="node72" class="node">
 <title>src/components/ModalExportDownloadKeystore.vue</title>
-<g id="a_node71"><a xlink:href="src/components/ModalExportDownloadKeystore.vue" xlink:title="ModalExportDownloadKeystore.vue">
+<g id="a_node72"><a xlink:href="src/components/ModalExportDownloadKeystore.vue" xlink:title="ModalExportDownloadKeystore.vue">
 <path fill="#41f083" stroke="black" d="M897,-2542.37C897,-2542.37 734,-2542.37 734,-2542.37 731,-2542.37 728,-2539.37 728,-2536.37 728,-2536.37 728,-2530.37 728,-2530.37 728,-2527.37 731,-2524.37 734,-2524.37 734,-2524.37 897,-2524.37 897,-2524.37 900,-2524.37 903,-2527.37 903,-2530.37 903,-2530.37 903,-2536.37 903,-2536.37 903,-2539.37 900,-2542.37 897,-2542.37"/>
 <text text-anchor="middle" x="815.5" y="-2531.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalExportDownloadKeystore.vue</text>
 </a>
@@ -1069,9 +1078,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="788.42,-2523.37 794.7,-2524.31 790.38,-2519.65 788.42,-2523.37"/>
 </g>
 <!-- src/components/ModalExportGenerateKeystore.vue -->
-<g id="node72" class="node">
+<g id="node73" class="node">
 <title>src/components/ModalExportGenerateKeystore.vue</title>
-<g id="a_node72"><a xlink:href="src/components/ModalExportGenerateKeystore.vue" xlink:title="ModalExportGenerateKeystore.vue">
+<g id="a_node73"><a xlink:href="src/components/ModalExportGenerateKeystore.vue" xlink:title="ModalExportGenerateKeystore.vue">
 <path fill="#41f083" stroke="black" d="M523,-2634.37C523,-2634.37 363,-2634.37 363,-2634.37 360,-2634.37 357,-2631.37 357,-2628.37 357,-2628.37 357,-2622.37 357,-2622.37 357,-2619.37 360,-2616.37 363,-2616.37 363,-2616.37 523,-2616.37 523,-2616.37 526,-2616.37 529,-2619.37 529,-2622.37 529,-2622.37 529,-2628.37 529,-2628.37 529,-2631.37 526,-2634.37 523,-2634.37"/>
 <text text-anchor="middle" x="443" y="-2623.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalExportGenerateKeystore.vue</text>
 </a>
@@ -1116,18 +1125,18 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="990.38,-1983.03 990.63,-1976.68 986.48,-1981.49 990.38,-1983.03"/>
 </g>
 <!-- src/components/AccountTileButton.vue -->
-<g id="node57" class="node">
+<g id="node58" class="node">
 <title>src/components/AccountTileButton.vue</title>
-<g id="a_node57"><a xlink:href="src/components/AccountTileButton.vue" xlink:title="AccountTileButton.vue">
+<g id="a_node58"><a xlink:href="src/components/AccountTileButton.vue" xlink:title="AccountTileButton.vue">
 <path fill="#41f083" stroke="black" d="M308,-2750.37C308,-2750.37 201,-2750.37 201,-2750.37 198,-2750.37 195,-2747.37 195,-2744.37 195,-2744.37 195,-2738.37 195,-2738.37 195,-2735.37 198,-2732.37 201,-2732.37 201,-2732.37 308,-2732.37 308,-2732.37 311,-2732.37 314,-2735.37 314,-2738.37 314,-2738.37 314,-2744.37 314,-2744.37 314,-2747.37 311,-2750.37 308,-2750.37"/>
 <text text-anchor="middle" x="254.5" y="-2739.17" font-family="Helvetica,sans-Serif" font-size="9.00">AccountTileButton.vue</text>
 </a>
 </g>
 </g>
 <!-- src/components/AccountTileButtons.vue -->
-<g id="node58" class="node">
+<g id="node59" class="node">
 <title>src/components/AccountTileButtons.vue</title>
-<g id="a_node58"><a xlink:href="src/components/AccountTileButtons.vue" xlink:title="AccountTileButtons.vue">
+<g id="a_node59"><a xlink:href="src/components/AccountTileButtons.vue" xlink:title="AccountTileButtons.vue">
 <path fill="#41f083" stroke="black" d="M144,-2750.37C144,-2750.37 32,-2750.37 32,-2750.37 29,-2750.37 26,-2747.37 26,-2744.37 26,-2744.37 26,-2738.37 26,-2738.37 26,-2735.37 29,-2732.37 32,-2732.37 32,-2732.37 144,-2732.37 144,-2732.37 147,-2732.37 150,-2735.37 150,-2738.37 150,-2738.37 150,-2744.37 150,-2744.37 150,-2747.37 147,-2750.37 144,-2750.37"/>
 <text text-anchor="middle" x="88" y="-2739.17" font-family="Helvetica,sans-Serif" font-size="9.00">AccountTileButtons.vue</text>
 </a>
@@ -1152,9 +1161,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="188.92,-2743.47 194.92,-2741.37 188.92,-2739.27 188.92,-2743.47"/>
 </g>
 <!-- src/components/AdBlockBuyHbar.vue -->
-<g id="node59" class="node">
+<g id="node60" class="node">
 <title>src/components/AdBlockBuyHbar.vue</title>
-<g id="a_node59"><a xlink:href="src/components/AdBlockBuyHbar.vue" xlink:title="AdBlockBuyHbar.vue">
+<g id="a_node60"><a xlink:href="src/components/AdBlockBuyHbar.vue" xlink:title="AdBlockBuyHbar.vue">
 <path fill="#41f083" stroke="black" d="M677.5,-1912.37C677.5,-1912.37 579.5,-1912.37 579.5,-1912.37 576.5,-1912.37 573.5,-1909.37 573.5,-1906.37 573.5,-1906.37 573.5,-1900.37 573.5,-1900.37 573.5,-1897.37 576.5,-1894.37 579.5,-1894.37 579.5,-1894.37 677.5,-1894.37 677.5,-1894.37 680.5,-1894.37 683.5,-1897.37 683.5,-1900.37 683.5,-1900.37 683.5,-1906.37 683.5,-1906.37 683.5,-1909.37 680.5,-1912.37 677.5,-1912.37"/>
 <text text-anchor="middle" x="628.5" y="-1901.17" font-family="Helvetica,sans-Serif" font-size="9.00">AdBlockBuyHbar.vue</text>
 </a>
@@ -1185,9 +1194,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="955.66,-1765.63 961.24,-1762.59 954.98,-1761.49 955.66,-1765.63"/>
 </g>
 <!-- src/components/ModalPurchaseHbar.vue -->
-<g id="node61" class="node">
+<g id="node62" class="node">
 <title>src/components/ModalPurchaseHbar.vue</title>
-<g id="a_node61"><a xlink:href="src/components/ModalPurchaseHbar.vue" xlink:title="ModalPurchaseHbar.vue">
+<g id="a_node62"><a xlink:href="src/components/ModalPurchaseHbar.vue" xlink:title="ModalPurchaseHbar.vue">
 <path fill="#41f083" stroke="black" d="M872,-1964.37C872,-1964.37 759,-1964.37 759,-1964.37 756,-1964.37 753,-1961.37 753,-1958.37 753,-1958.37 753,-1952.37 753,-1952.37 753,-1949.37 756,-1946.37 759,-1946.37 759,-1946.37 872,-1946.37 872,-1946.37 875,-1946.37 878,-1949.37 878,-1952.37 878,-1952.37 878,-1958.37 878,-1958.37 878,-1961.37 875,-1964.37 872,-1964.37"/>
 <text text-anchor="middle" x="815.5" y="-1953.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalPurchaseHbar.vue</text>
 </a>
@@ -1228,9 +1237,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="985.48,-2112.54 989.88,-2117.13 989.3,-2110.8 985.48,-2112.54"/>
 </g>
 <!-- src/components/AdBlockTwitter.vue -->
-<g id="node62" class="node">
+<g id="node63" class="node">
 <title>src/components/AdBlockTwitter.vue</title>
-<g id="a_node62"><a xlink:href="src/components/AdBlockTwitter.vue" xlink:title="AdBlockTwitter.vue">
+<g id="a_node63"><a xlink:href="src/components/AdBlockTwitter.vue" xlink:title="AdBlockTwitter.vue">
 <path fill="#41f083" stroke="black" d="M1039.5,-1290.37C1039.5,-1290.37 950.5,-1290.37 950.5,-1290.37 947.5,-1290.37 944.5,-1287.37 944.5,-1284.37 944.5,-1284.37 944.5,-1278.37 944.5,-1278.37 944.5,-1275.37 947.5,-1272.37 950.5,-1272.37 950.5,-1272.37 1039.5,-1272.37 1039.5,-1272.37 1042.5,-1272.37 1045.5,-1275.37 1045.5,-1278.37 1045.5,-1278.37 1045.5,-1284.37 1045.5,-1284.37 1045.5,-1287.37 1042.5,-1290.37 1039.5,-1290.37"/>
 <text text-anchor="middle" x="995" y="-1279.17" font-family="Helvetica,sans-Serif" font-size="9.00">AdBlockTwitter.vue</text>
 </a>
@@ -1255,9 +1264,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1084.34,-1595.64 1090.42,-1597.51 1086.83,-1592.26 1084.34,-1595.64"/>
 </g>
 <!-- src/components/BalanceCard.vue -->
-<g id="node64" class="node">
+<g id="node65" class="node">
 <title>src/components/BalanceCard.vue</title>
-<g id="a_node64"><a xlink:href="src/components/BalanceCard.vue" xlink:title="BalanceCard.vue">
+<g id="a_node65"><a xlink:href="src/components/BalanceCard.vue" xlink:title="BalanceCard.vue">
 <path fill="#41f083" stroke="black" d="M1035,-1524.37C1035,-1524.37 955,-1524.37 955,-1524.37 952,-1524.37 949,-1521.37 949,-1518.37 949,-1518.37 949,-1512.37 949,-1512.37 949,-1509.37 952,-1506.37 955,-1506.37 955,-1506.37 1035,-1506.37 1035,-1506.37 1038,-1506.37 1041,-1509.37 1041,-1512.37 1041,-1512.37 1041,-1518.37 1041,-1518.37 1041,-1521.37 1038,-1524.37 1035,-1524.37"/>
 <text text-anchor="middle" x="995" y="-1513.17" font-family="Helvetica,sans-Serif" font-size="9.00">BalanceCard.vue</text>
 </a>
@@ -1290,9 +1299,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1147.23,-2476.37 1149.79,-2482.19 1151.42,-2476.05 1147.23,-2476.37"/>
 </g>
 <!-- src/formatter.ts -->
-<g id="node65" class="node">
+<g id="node66" class="node">
 <title>src/formatter.ts</title>
-<g id="a_node65"><a xlink:href="src/formatter.ts" xlink:title="formatter.ts">
+<g id="a_node66"><a xlink:href="src/formatter.ts" xlink:title="formatter.ts">
 <path fill="#ddfeff" stroke="black" d="M1180.5,-4032.37C1180.5,-4032.37 1122.5,-4032.37 1122.5,-4032.37 1119.5,-4032.37 1116.5,-4029.37 1116.5,-4026.37 1116.5,-4026.37 1116.5,-4020.37 1116.5,-4020.37 1116.5,-4017.37 1119.5,-4014.37 1122.5,-4014.37 1122.5,-4014.37 1180.5,-4014.37 1180.5,-4014.37 1183.5,-4014.37 1186.5,-4017.37 1186.5,-4020.37 1186.5,-4020.37 1186.5,-4026.37 1186.5,-4026.37 1186.5,-4029.37 1183.5,-4032.37 1180.5,-4032.37"/>
 <text text-anchor="middle" x="1151.5" y="-4021.17" font-family="Helvetica,sans-Serif" font-size="9.00">formatter.ts</text>
 </a>
@@ -1305,18 +1314,18 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1110.02,-4026.11 1116.26,-4024.87 1110.62,-4021.95 1110.02,-4026.11"/>
 </g>
 <!-- src/components/CirclePage.vue -->
-<g id="node66" class="node">
+<g id="node67" class="node">
 <title>src/components/CirclePage.vue</title>
-<g id="a_node66"><a xlink:href="src/components/CirclePage.vue" xlink:title="CirclePage.vue">
+<g id="a_node67"><a xlink:href="src/components/CirclePage.vue" xlink:title="CirclePage.vue">
 <path fill="#41f083" stroke="black" d="M123.5,-1320.37C123.5,-1320.37 52.5,-1320.37 52.5,-1320.37 49.5,-1320.37 46.5,-1317.37 46.5,-1314.37 46.5,-1314.37 46.5,-1308.37 46.5,-1308.37 46.5,-1305.37 49.5,-1302.37 52.5,-1302.37 52.5,-1302.37 123.5,-1302.37 123.5,-1302.37 126.5,-1302.37 129.5,-1305.37 129.5,-1308.37 129.5,-1308.37 129.5,-1314.37 129.5,-1314.37 129.5,-1317.37 126.5,-1320.37 123.5,-1320.37"/>
 <text text-anchor="middle" x="88" y="-1309.17" font-family="Helvetica,sans-Serif" font-size="9.00">CirclePage.vue</text>
 </a>
 </g>
 </g>
 <!-- src/components/Community.vue -->
-<g id="node67" class="node">
+<g id="node68" class="node">
 <title>src/components/Community.vue</title>
-<g id="a_node67"><a xlink:href="src/components/Community.vue" xlink:title="Community.vue">
+<g id="a_node68"><a xlink:href="src/components/Community.vue" xlink:title="Community.vue">
 <path fill="#41f083" stroke="black" d="M125.5,-2810.37C125.5,-2810.37 50.5,-2810.37 50.5,-2810.37 47.5,-2810.37 44.5,-2807.37 44.5,-2804.37 44.5,-2804.37 44.5,-2798.37 44.5,-2798.37 44.5,-2795.37 47.5,-2792.37 50.5,-2792.37 50.5,-2792.37 125.5,-2792.37 125.5,-2792.37 128.5,-2792.37 131.5,-2795.37 131.5,-2798.37 131.5,-2798.37 131.5,-2804.37 131.5,-2804.37 131.5,-2807.37 128.5,-2810.37 125.5,-2810.37"/>
 <text text-anchor="middle" x="88" y="-2799.17" font-family="Helvetica,sans-Serif" font-size="9.00">Community.vue</text>
 </a>
@@ -1325,37 +1334,37 @@
 <!-- src/components/Community.vue&#45;&gt;src/assets/facebook.png -->
 <g id="edge41" class="edge">
 <title>src/components/Community.vue&#45;&gt;src/assets/facebook.png</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M90.04,-2810.65C96.33,-2866.64 129.59,-3165.26 152,-3409.37 153.02,-3420.47 151.81,-3501.81 160,-3509.37 280.5,-3620.62 375.01,-3565.78 529,-3509.37 536.11,-3506.77 536.06,-3503.06 542,-3498.37 698.28,-3375.13 806.13,-3407.24 903,-3233.37 920.79,-3201.43 889.15,-3094.18 916,-3069.37 941.79,-3045.54 1048.74,-3044.98 1074,-3069.37 1092.16,-3086.9 1065.83,-3276.99 1082,-3296.37 1088.2,-3303.8 1097.15,-3308.07 1106.56,-3310.41"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M131.6,-2802.16C139.46,-2804.32 146.81,-2808.08 152,-2814.37 164.28,-2829.27 146.27,-3495.8 160,-3509.37 276.63,-3624.67 375.01,-3565.78 529,-3509.37 536.11,-3506.77 536.06,-3503.06 542,-3498.37 698.28,-3375.13 806.13,-3407.24 903,-3233.37 920.79,-3201.43 889.15,-3094.18 916,-3069.37 941.79,-3045.54 1048.74,-3044.98 1074,-3069.37 1092.16,-3086.9 1065.83,-3276.99 1082,-3296.37 1088.2,-3303.8 1097.15,-3308.07 1106.56,-3310.41"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1106.15,-3312.47 1112.45,-3311.63 1107,-3308.36 1106.15,-3312.47"/>
 </g>
 <!-- src/components/Community.vue&#45;&gt;src/assets/github.png -->
 <g id="edge42" class="edge">
 <title>src/components/Community.vue&#45;&gt;src/assets/github.png</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M90.12,-2810.64C96.83,-2866.6 132.16,-3165.04 152,-3409.37 153.22,-3424.46 148.99,-3534.99 160,-3545.37 341.97,-3716.95 500.28,-3580.63 715,-3452.37 803.53,-3399.49 853.6,-3406.89 903,-3316.37 915.69,-3293.12 896.77,-3096.58 916,-3078.37 928.75,-3066.3 1061.39,-3066.16 1074,-3078.37 1093.81,-3097.55 1064.37,-3305.17 1082,-3326.37 1089.22,-3335.06 1100.21,-3339.42 1111.29,-3341.45"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M131.61,-2802.16C139.47,-2804.32 146.82,-2808.08 152,-2814.37 164.93,-2830.06 145.54,-3532.07 160,-3546.37 337.87,-3722.3 500.22,-3580.67 715,-3452.37 803.53,-3399.49 853.6,-3406.89 903,-3316.37 915.69,-3293.12 896.77,-3096.58 916,-3078.37 928.75,-3066.3 1061.39,-3066.16 1074,-3078.37 1093.81,-3097.55 1064.37,-3305.17 1082,-3326.37 1089.22,-3335.06 1100.21,-3339.42 1111.29,-3341.45"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1111.19,-3343.55 1117.43,-3342.35 1111.8,-3339.4 1111.19,-3343.55"/>
 </g>
 <!-- src/components/Community.vue&#45;&gt;src/assets/medium.png -->
 <g id="edge43" class="edge">
 <title>src/components/Community.vue&#45;&gt;src/assets/medium.png</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M90.21,-2810.64C97.48,-2866.55 135.48,-3164.79 152,-3409.37 152.95,-3423.4 151.52,-3651.15 160,-3662.37 396.92,-3976.06 949.67,-3979.48 1107.64,-3973.66"/>
-<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1108.07,-3975.75 1113.98,-3973.42 1107.9,-3971.55 1108.07,-3975.75"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M131.61,-2802.15C139.47,-2804.31 146.82,-2808.07 152,-2814.37 166.98,-2832.58 145.99,-3644.4 160,-3663.37 393.51,-3979.46 948.67,-3980.46 1107.42,-3973.88"/>
+<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1107.89,-3975.96 1113.79,-3973.6 1107.7,-3971.76 1107.89,-3975.96"/>
 </g>
 <!-- src/components/Community.vue&#45;&gt;src/assets/reddit.svg -->
 <g id="edge44" class="edge">
 <title>src/components/Community.vue&#45;&gt;src/assets/reddit.svg</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M90.17,-2810.64C97.17,-2866.57 133.92,-3164.9 152,-3409.37 152.74,-3419.35 153.66,-3581.62 160,-3589.37 241.8,-3689.3 312.86,-3659.37 442,-3659.37 442,-3659.37 442,-3659.37 816.5,-3659.37 873.77,-3659.37 1033.58,-3628.81 1074,-3669.37 1091.81,-3687.25 1065.83,-3876.99 1082,-3896.37 1089.84,-3905.76 1102.07,-3910.09 1114.05,-3911.89"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M131.61,-2802.15C139.47,-2804.32 146.82,-2808.08 152,-2814.37 165.72,-2831.03 146.56,-3574.48 160,-3591.37 240.29,-3692.25 313.07,-3659.37 442,-3659.37 442,-3659.37 442,-3659.37 816.5,-3659.37 873.77,-3659.37 1033.58,-3628.81 1074,-3669.37 1091.81,-3687.25 1065.83,-3876.99 1082,-3896.37 1089.84,-3905.76 1102.07,-3910.09 1114.05,-3911.89"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1114.06,-3914 1120.27,-3912.61 1114.55,-3909.83 1114.06,-3914"/>
 </g>
 <!-- src/components/Community.vue&#45;&gt;src/assets/twitter.jpg -->
 <g id="edge45" class="edge">
 <title>src/components/Community.vue&#45;&gt;src/assets/twitter.jpg</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M90.2,-2810.64C97.37,-2866.56 134.92,-3164.83 152,-3409.37 152.86,-3421.63 151.92,-3621.12 160,-3630.37 243.41,-3725.85 315.22,-3673.37 442,-3673.37 442,-3673.37 442,-3673.37 816.5,-3673.37 845.13,-3673.37 1053.81,-3663.06 1074,-3683.37 1093.05,-3702.53 1064.72,-3905.61 1082,-3926.37 1089.76,-3935.69 1101.85,-3940.03 1113.73,-3941.85"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M131.61,-2802.15C139.47,-2804.31 146.82,-2808.08 152,-2814.37 166.42,-2831.9 145.25,-3614.12 160,-3631.37 242.34,-3727.69 315.28,-3673.37 442,-3673.37 442,-3673.37 442,-3673.37 816.5,-3673.37 845.13,-3673.37 1053.81,-3663.06 1074,-3683.37 1093.05,-3702.53 1064.72,-3905.61 1082,-3926.37 1089.76,-3935.69 1101.85,-3940.03 1113.73,-3941.85"/>
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1113.7,-3943.96 1119.9,-3942.59 1114.2,-3939.79 1113.7,-3943.96"/>
 </g>
 <!-- src/components/CommunitySocialIcon.vue -->
-<g id="node68" class="node">
+<g id="node69" class="node">
 <title>src/components/CommunitySocialIcon.vue</title>
-<g id="a_node68"><a xlink:href="src/components/CommunitySocialIcon.vue" xlink:title="CommunitySocialIcon.vue">
+<g id="a_node69"><a xlink:href="src/components/CommunitySocialIcon.vue" xlink:title="CommunitySocialIcon.vue">
 <path fill="#41f083" stroke="black" d="M315.5,-2810.37C315.5,-2810.37 193.5,-2810.37 193.5,-2810.37 190.5,-2810.37 187.5,-2807.37 187.5,-2804.37 187.5,-2804.37 187.5,-2798.37 187.5,-2798.37 187.5,-2795.37 190.5,-2792.37 193.5,-2792.37 193.5,-2792.37 315.5,-2792.37 315.5,-2792.37 318.5,-2792.37 321.5,-2795.37 321.5,-2798.37 321.5,-2798.37 321.5,-2804.37 321.5,-2804.37 321.5,-2807.37 318.5,-2810.37 315.5,-2810.37"/>
 <text text-anchor="middle" x="254.5" y="-2799.17" font-family="Helvetica,sans-Serif" font-size="9.00">CommunitySocialIcon.vue</text>
 </a>
@@ -1368,9 +1377,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="181.33,-2803.47 187.33,-2801.37 181.33,-2799.27 181.33,-2803.47"/>
 </g>
 <!-- src/components/CustomerSupportLink.vue -->
-<g id="node69" class="node">
+<g id="node70" class="node">
 <title>src/components/CustomerSupportLink.vue</title>
-<g id="a_node69"><a xlink:href="src/components/CustomerSupportLink.vue" xlink:title="CustomerSupportLink.vue">
+<g id="a_node70"><a xlink:href="src/components/CustomerSupportLink.vue" xlink:title="CustomerSupportLink.vue">
 <path fill="#41f083" stroke="black" d="M690,-2438.37C690,-2438.37 567,-2438.37 567,-2438.37 564,-2438.37 561,-2435.37 561,-2432.37 561,-2432.37 561,-2426.37 561,-2426.37 561,-2423.37 564,-2420.37 567,-2420.37 567,-2420.37 690,-2420.37 690,-2420.37 693,-2420.37 696,-2423.37 696,-2426.37 696,-2426.37 696,-2432.37 696,-2432.37 696,-2435.37 693,-2438.37 690,-2438.37"/>
 <text text-anchor="middle" x="628.5" y="-2427.17" font-family="Helvetica,sans-Serif" font-size="9.00">CustomerSupportLink.vue</text>
 </a>
@@ -1383,9 +1392,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1102.09,-3581.42 1108.43,-3580.94 1103.18,-3577.36 1102.09,-3581.42"/>
 </g>
 <!-- src/components/ModalCustomerService.vue -->
-<g id="node70" class="node">
+<g id="node71" class="node">
 <title>src/components/ModalCustomerService.vue</title>
-<g id="a_node70"><a xlink:href="src/components/ModalCustomerService.vue" xlink:title="ModalCustomerService.vue">
+<g id="a_node71"><a xlink:href="src/components/ModalCustomerService.vue" xlink:title="ModalCustomerService.vue">
 <path fill="#41f083" stroke="black" d="M879,-2600.37C879,-2600.37 752,-2600.37 752,-2600.37 749,-2600.37 746,-2597.37 746,-2594.37 746,-2594.37 746,-2588.37 746,-2588.37 746,-2585.37 749,-2582.37 752,-2582.37 752,-2582.37 879,-2582.37 879,-2582.37 882,-2582.37 885,-2585.37 885,-2588.37 885,-2588.37 885,-2594.37 885,-2594.37 885,-2597.37 882,-2600.37 879,-2600.37"/>
 <text text-anchor="middle" x="815.5" y="-2589.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalCustomerService.vue</text>
 </a>
@@ -1438,9 +1447,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="955.32,-1759.32 961.16,-1756.81 955.03,-1755.13 955.32,-1759.32"/>
 </g>
 <!-- src/components/KeystoreWarningCards.vue -->
-<g id="node91" class="node">
+<g id="node92" class="node">
 <title>src/components/KeystoreWarningCards.vue</title>
-<g id="a_node91"><a xlink:href="src/components/KeystoreWarningCards.vue" xlink:title="KeystoreWarningCards.vue">
+<g id="a_node92"><a xlink:href="src/components/KeystoreWarningCards.vue" xlink:title="KeystoreWarningCards.vue">
 <path fill="#41f083" stroke="black" d="M1057.5,-2810.37C1057.5,-2810.37 932.5,-2810.37 932.5,-2810.37 929.5,-2810.37 926.5,-2807.37 926.5,-2804.37 926.5,-2804.37 926.5,-2798.37 926.5,-2798.37 926.5,-2795.37 929.5,-2792.37 932.5,-2792.37 932.5,-2792.37 1057.5,-2792.37 1057.5,-2792.37 1060.5,-2792.37 1063.5,-2795.37 1063.5,-2798.37 1063.5,-2798.37 1063.5,-2804.37 1063.5,-2804.37 1063.5,-2807.37 1060.5,-2810.37 1057.5,-2810.37"/>
 <text text-anchor="middle" x="995" y="-2799.17" font-family="Helvetica,sans-Serif" font-size="9.00">KeystoreWarningCards.vue</text>
 </a>
@@ -1465,9 +1474,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1110.07,-4026.07 1116.3,-4024.84 1110.66,-4021.91 1110.07,-4026.07"/>
 </g>
 <!-- src/components/InfoButton.vue -->
-<g id="node85" class="node">
+<g id="node86" class="node">
 <title>src/components/InfoButton.vue</title>
-<g id="a_node85"><a xlink:href="src/components/InfoButton.vue" xlink:title="InfoButton.vue">
+<g id="a_node86"><a xlink:href="src/components/InfoButton.vue" xlink:title="InfoButton.vue">
 <path fill="#41f083" stroke="black" d="M1031,-2500.37C1031,-2500.37 959,-2500.37 959,-2500.37 956,-2500.37 953,-2497.37 953,-2494.37 953,-2494.37 953,-2488.37 953,-2488.37 953,-2485.37 956,-2482.37 959,-2482.37 959,-2482.37 1031,-2482.37 1031,-2482.37 1034,-2482.37 1037,-2485.37 1037,-2488.37 1037,-2488.37 1037,-2494.37 1037,-2494.37 1037,-2497.37 1034,-2500.37 1031,-2500.37"/>
 <text text-anchor="middle" x="995" y="-2489.17" font-family="Helvetica,sans-Serif" font-size="9.00">InfoButton.vue</text>
 </a>
@@ -1486,9 +1495,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="989.15,-2141.78 989.74,-2135.45 985.33,-2140.03 989.15,-2141.78"/>
 </g>
 <!-- src/components/PasswordGenerator.vue -->
-<g id="node107" class="node">
+<g id="node108" class="node">
 <title>src/components/PasswordGenerator.vue</title>
-<g id="a_node107"><a xlink:href="src/components/PasswordGenerator.vue" xlink:title="PasswordGenerator.vue">
+<g id="a_node108"><a xlink:href="src/components/PasswordGenerator.vue" xlink:title="PasswordGenerator.vue">
 <path fill="#41f083" stroke="black" d="M683.5,-2584.37C683.5,-2584.37 573.5,-2584.37 573.5,-2584.37 570.5,-2584.37 567.5,-2581.37 567.5,-2578.37 567.5,-2578.37 567.5,-2572.37 567.5,-2572.37 567.5,-2569.37 570.5,-2566.37 573.5,-2566.37 573.5,-2566.37 683.5,-2566.37 683.5,-2566.37 686.5,-2566.37 689.5,-2569.37 689.5,-2572.37 689.5,-2572.37 689.5,-2578.37 689.5,-2578.37 689.5,-2581.37 686.5,-2584.37 683.5,-2584.37"/>
 <text text-anchor="middle" x="628.5" y="-2573.17" font-family="Helvetica,sans-Serif" font-size="9.00">PasswordGenerator.vue</text>
 </a>
@@ -1501,9 +1510,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="588.97,-2588.05 594.21,-2584.44 587.87,-2583.99 588.97,-2588.05"/>
 </g>
 <!-- src/components/FAQs.vue -->
-<g id="node73" class="node">
+<g id="node74" class="node">
 <title>src/components/FAQs.vue</title>
-<g id="a_node73"><a xlink:href="src/components/FAQs.vue" xlink:title="FAQs.vue">
+<g id="a_node74"><a xlink:href="src/components/FAQs.vue" xlink:title="FAQs.vue">
 <path fill="#41f083" stroke="black" d="M466,-2352.37C466,-2352.37 420,-2352.37 420,-2352.37 417,-2352.37 414,-2349.37 414,-2346.37 414,-2346.37 414,-2340.37 414,-2340.37 414,-2337.37 417,-2334.37 420,-2334.37 420,-2334.37 466,-2334.37 466,-2334.37 469,-2334.37 472,-2337.37 472,-2340.37 472,-2340.37 472,-2346.37 472,-2346.37 472,-2349.37 469,-2352.37 466,-2352.37"/>
 <text text-anchor="middle" x="443" y="-2341.17" font-family="Helvetica,sans-Serif" font-size="9.00">FAQs.vue</text>
 </a>
@@ -1524,18 +1533,18 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="589.4" cy="-2416.44" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/components/Feature.vue -->
-<g id="node74" class="node">
+<g id="node75" class="node">
 <title>src/components/Feature.vue</title>
-<g id="a_node74"><a xlink:href="src/components/Feature.vue" xlink:title="Feature.vue">
+<g id="a_node75"><a xlink:href="src/components/Feature.vue" xlink:title="Feature.vue">
 <path fill="#41f083" stroke="black" d="M283.5,-2780.37C283.5,-2780.37 225.5,-2780.37 225.5,-2780.37 222.5,-2780.37 219.5,-2777.37 219.5,-2774.37 219.5,-2774.37 219.5,-2768.37 219.5,-2768.37 219.5,-2765.37 222.5,-2762.37 225.5,-2762.37 225.5,-2762.37 283.5,-2762.37 283.5,-2762.37 286.5,-2762.37 289.5,-2765.37 289.5,-2768.37 289.5,-2768.37 289.5,-2774.37 289.5,-2774.37 289.5,-2777.37 286.5,-2780.37 283.5,-2780.37"/>
 <text text-anchor="middle" x="254.5" y="-2769.17" font-family="Helvetica,sans-Serif" font-size="9.00">Feature.vue</text>
 </a>
 </g>
 </g>
 <!-- src/components/Features.vue -->
-<g id="node75" class="node">
+<g id="node76" class="node">
 <title>src/components/Features.vue</title>
-<g id="a_node75"><a xlink:href="src/components/Features.vue" xlink:title="Features.vue">
+<g id="a_node76"><a xlink:href="src/components/Features.vue" xlink:title="Features.vue">
 <path fill="#41f083" stroke="black" d="M119,-2780.37C119,-2780.37 57,-2780.37 57,-2780.37 54,-2780.37 51,-2777.37 51,-2774.37 51,-2774.37 51,-2768.37 51,-2768.37 51,-2765.37 54,-2762.37 57,-2762.37 57,-2762.37 119,-2762.37 119,-2762.37 122,-2762.37 125,-2765.37 125,-2768.37 125,-2768.37 125,-2774.37 125,-2774.37 125,-2777.37 122,-2780.37 119,-2780.37"/>
 <text text-anchor="middle" x="88" y="-2769.17" font-family="Helvetica,sans-Serif" font-size="9.00">Features.vue</text>
 </a>
@@ -1578,11 +1587,11 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="803.04,-2606.57 805.63,-2600.77 799.98,-2603.69 803.04,-2606.57"/>
 </g>
 <!-- src/components/HardwareWalletOffer.vue -->
-<g id="node77" class="node">
+<g id="node78" class="node">
 <title>src/components/HardwareWalletOffer.vue</title>
-<g id="a_node77"><a xlink:href="src/components/HardwareWalletOffer.vue" xlink:title="HardwareWalletOffer.vue">
-<path fill="#41f083" stroke="black" d="M146,-1290.37C146,-1290.37 30,-1290.37 30,-1290.37 27,-1290.37 24,-1287.37 24,-1284.37 24,-1284.37 24,-1278.37 24,-1278.37 24,-1275.37 27,-1272.37 30,-1272.37 30,-1272.37 146,-1272.37 146,-1272.37 149,-1272.37 152,-1275.37 152,-1278.37 152,-1278.37 152,-1284.37 152,-1284.37 152,-1287.37 149,-1290.37 146,-1290.37"/>
-<text text-anchor="middle" x="88" y="-1279.17" font-family="Helvetica,sans-Serif" font-size="9.00">HardwareWalletOffer.vue</text>
+<g id="a_node78"><a xlink:href="src/components/HardwareWalletOffer.vue" xlink:title="HardwareWalletOffer.vue">
+<path fill="#41f083" stroke="black" d="M146,-1260.37C146,-1260.37 30,-1260.37 30,-1260.37 27,-1260.37 24,-1257.37 24,-1254.37 24,-1254.37 24,-1248.37 24,-1248.37 24,-1245.37 27,-1242.37 30,-1242.37 30,-1242.37 146,-1242.37 146,-1242.37 149,-1242.37 152,-1245.37 152,-1248.37 152,-1248.37 152,-1254.37 152,-1254.37 152,-1257.37 149,-1260.37 146,-1260.37"/>
+<text text-anchor="middle" x="88" y="-1249.17" font-family="Helvetica,sans-Serif" font-size="9.00">HardwareWalletOffer.vue</text>
 </a>
 </g>
 </g>
@@ -1617,9 +1626,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="973.2,-1504.47 979.33,-1506.16 975.59,-1501.02 973.2,-1504.47"/>
 </g>
 <!-- src/components/NetworkCard.vue -->
-<g id="node80" class="node">
+<g id="node81" class="node">
 <title>src/components/NetworkCard.vue</title>
-<g id="a_node80"><a xlink:href="src/components/NetworkCard.vue" xlink:title="NetworkCard.vue">
+<g id="a_node81"><a xlink:href="src/components/NetworkCard.vue" xlink:title="NetworkCard.vue">
 <path fill="#41f083" stroke="black" d="M1036.5,-1380.37C1036.5,-1380.37 953.5,-1380.37 953.5,-1380.37 950.5,-1380.37 947.5,-1377.37 947.5,-1374.37 947.5,-1374.37 947.5,-1368.37 947.5,-1368.37 947.5,-1365.37 950.5,-1362.37 953.5,-1362.37 953.5,-1362.37 1036.5,-1362.37 1036.5,-1362.37 1039.5,-1362.37 1042.5,-1365.37 1042.5,-1368.37 1042.5,-1368.37 1042.5,-1374.37 1042.5,-1374.37 1042.5,-1377.37 1039.5,-1380.37 1036.5,-1380.37"/>
 <text text-anchor="middle" x="995" y="-1369.17" font-family="Helvetica,sans-Serif" font-size="9.00">NetworkCard.vue</text>
 </a>
@@ -1658,9 +1667,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1151.33,-262.77 1149.73,-256.62 1147.15,-262.43 1151.33,-262.77"/>
 </g>
 <!-- src/components/HomeTileButton.vue -->
-<g id="node81" class="node">
+<g id="node82" class="node">
 <title>src/components/HomeTileButton.vue</title>
-<g id="a_node81"><a xlink:href="src/components/HomeTileButton.vue" xlink:title="HomeTileButton.vue">
+<g id="a_node82"><a xlink:href="src/components/HomeTileButton.vue" xlink:title="HomeTileButton.vue">
 <path fill="#41f083" stroke="black" d="M1043,-1798.37C1043,-1798.37 947,-1798.37 947,-1798.37 944,-1798.37 941,-1795.37 941,-1792.37 941,-1792.37 941,-1786.37 941,-1786.37 941,-1783.37 944,-1780.37 947,-1780.37 947,-1780.37 1043,-1780.37 1043,-1780.37 1046,-1780.37 1049,-1783.37 1049,-1786.37 1049,-1786.37 1049,-1792.37 1049,-1792.37 1049,-1795.37 1046,-1798.37 1043,-1798.37"/>
 <text text-anchor="middle" x="995" y="-1787.17" font-family="Helvetica,sans-Serif" font-size="9.00">HomeTileButton.vue</text>
 </a>
@@ -1673,9 +1682,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1150.52,-1618.83 1149.35,-1612.58 1146.36,-1618.2 1150.52,-1618.83"/>
 </g>
 <!-- src/components/HomeTileButtons.vue -->
-<g id="node82" class="node">
+<g id="node83" class="node">
 <title>src/components/HomeTileButtons.vue</title>
-<g id="a_node82"><a xlink:href="src/components/HomeTileButtons.vue" xlink:title="HomeTileButtons.vue">
+<g id="a_node83"><a xlink:href="src/components/HomeTileButtons.vue" xlink:title="HomeTileButtons.vue">
 <path fill="#41f083" stroke="black" d="M866,-1920.37C866,-1920.37 765,-1920.37 765,-1920.37 762,-1920.37 759,-1917.37 759,-1914.37 759,-1914.37 759,-1908.37 759,-1908.37 759,-1905.37 762,-1902.37 765,-1902.37 765,-1902.37 866,-1902.37 866,-1902.37 869,-1902.37 872,-1905.37 872,-1908.37 872,-1908.37 872,-1914.37 872,-1914.37 872,-1917.37 869,-1920.37 866,-1920.37"/>
 <text text-anchor="middle" x="815.5" y="-1909.17" font-family="Helvetica,sans-Serif" font-size="9.00">HomeTileButtons.vue</text>
 </a>
@@ -1700,9 +1709,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="935.9,-1794.49 940.98,-1790.68 934.63,-1790.49 935.9,-1794.49"/>
 </g>
 <!-- src/components/IDInput.vue -->
-<g id="node83" class="node">
+<g id="node84" class="node">
 <title>src/components/IDInput.vue</title>
-<g id="a_node83"><a xlink:href="src/components/IDInput.vue" xlink:title="IDInput.vue">
+<g id="a_node84"><a xlink:href="src/components/IDInput.vue" xlink:title="IDInput.vue">
 <path fill="#41f083" stroke="black" d="M845,-1408.37C845,-1408.37 786,-1408.37 786,-1408.37 783,-1408.37 780,-1405.37 780,-1402.37 780,-1402.37 780,-1396.37 780,-1396.37 780,-1393.37 783,-1390.37 786,-1390.37 786,-1390.37 845,-1390.37 845,-1390.37 848,-1390.37 851,-1393.37 851,-1396.37 851,-1396.37 851,-1402.37 851,-1402.37 851,-1405.37 848,-1408.37 845,-1408.37"/>
 <text text-anchor="middle" x="815.5" y="-1397.17" font-family="Helvetica,sans-Serif" font-size="9.00">IDInput.vue</text>
 </a>
@@ -1739,18 +1748,18 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1112.79,-2493.47 1118.79,-2491.37 1112.79,-2489.27 1112.79,-2493.47"/>
 </g>
 <!-- src/components/InterfaceForm.vue -->
-<g id="node86" class="node">
+<g id="node87" class="node">
 <title>src/components/InterfaceForm.vue</title>
-<g id="a_node86"><a xlink:href="src/components/InterfaceForm.vue" xlink:title="InterfaceForm.vue">
+<g id="a_node87"><a xlink:href="src/components/InterfaceForm.vue" xlink:title="InterfaceForm.vue">
 <path fill="#41f083" stroke="black" d="M672,-1384.37C672,-1384.37 585,-1384.37 585,-1384.37 582,-1384.37 579,-1381.37 579,-1378.37 579,-1378.37 579,-1372.37 579,-1372.37 579,-1369.37 582,-1366.37 585,-1366.37 585,-1366.37 672,-1366.37 672,-1366.37 675,-1366.37 678,-1369.37 678,-1372.37 678,-1372.37 678,-1378.37 678,-1378.37 678,-1381.37 675,-1384.37 672,-1384.37"/>
 <text text-anchor="middle" x="628.5" y="-1373.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceForm.vue</text>
 </a>
 </g>
 </g>
 <!-- src/components/InterfaceFormTitle.vue -->
-<g id="node87" class="node">
+<g id="node88" class="node">
 <title>src/components/InterfaceFormTitle.vue</title>
-<g id="a_node87"><a xlink:href="src/components/InterfaceFormTitle.vue" xlink:title="InterfaceFormTitle.vue">
+<g id="a_node88"><a xlink:href="src/components/InterfaceFormTitle.vue" xlink:title="InterfaceFormTitle.vue">
 <path fill="#41f083" stroke="black" d="M868.5,-1746.37C868.5,-1746.37 762.5,-1746.37 762.5,-1746.37 759.5,-1746.37 756.5,-1743.37 756.5,-1740.37 756.5,-1740.37 756.5,-1734.37 756.5,-1734.37 756.5,-1731.37 759.5,-1728.37 762.5,-1728.37 762.5,-1728.37 868.5,-1728.37 868.5,-1728.37 871.5,-1728.37 874.5,-1731.37 874.5,-1734.37 874.5,-1734.37 874.5,-1740.37 874.5,-1740.37 874.5,-1743.37 871.5,-1746.37 868.5,-1746.37"/>
 <text text-anchor="middle" x="815.5" y="-1735.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceFormTitle.vue</text>
 </a>
@@ -1779,9 +1788,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="955.19,-1756.68 961.4,-1755.33 955.71,-1752.51 955.19,-1756.68"/>
 </g>
 <!-- src/components/InterfaceNavigation.vue -->
-<g id="node88" class="node">
+<g id="node89" class="node">
 <title>src/components/InterfaceNavigation.vue</title>
-<g id="a_node88"><a xlink:href="src/components/InterfaceNavigation.vue" xlink:title="InterfaceNavigation.vue">
+<g id="a_node89"><a xlink:href="src/components/InterfaceNavigation.vue" xlink:title="InterfaceNavigation.vue">
 <path fill="#41f083" stroke="black" d="M872,-1290.37C872,-1290.37 759,-1290.37 759,-1290.37 756,-1290.37 753,-1287.37 753,-1284.37 753,-1284.37 753,-1278.37 753,-1278.37 753,-1275.37 756,-1272.37 759,-1272.37 759,-1272.37 872,-1272.37 872,-1272.37 875,-1272.37 878,-1275.37 878,-1278.37 878,-1278.37 878,-1284.37 878,-1284.37 878,-1287.37 875,-1290.37 872,-1290.37"/>
 <text text-anchor="middle" x="815.5" y="-1279.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceNavigation.vue</text>
 </a>
@@ -1802,9 +1811,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1084.37,-1595.63 1090.46,-1597.48 1086.85,-1592.24 1084.37,-1595.63"/>
 </g>
 <!-- src/wallets/Wallet.ts -->
-<g id="node89" class="node">
+<g id="node90" class="node">
 <title>src/wallets/Wallet.ts</title>
-<g id="a_node89"><a xlink:href="src/wallets/Wallet.ts" xlink:title="Wallet.ts">
+<g id="a_node90"><a xlink:href="src/wallets/Wallet.ts" xlink:title="Wallet.ts">
 <path fill="#ddfeff" stroke="black" d="M1016.5,-711.37C1016.5,-711.37 973.5,-711.37 973.5,-711.37 970.5,-711.37 967.5,-708.37 967.5,-705.37 967.5,-705.37 967.5,-699.37 967.5,-699.37 967.5,-696.37 970.5,-693.37 973.5,-693.37 973.5,-693.37 1016.5,-693.37 1016.5,-693.37 1019.5,-693.37 1022.5,-696.37 1022.5,-699.37 1022.5,-699.37 1022.5,-705.37 1022.5,-705.37 1022.5,-708.37 1019.5,-711.37 1016.5,-711.37"/>
 <text text-anchor="middle" x="995" y="-700.17" font-family="Helvetica,sans-Serif" font-size="9.00">Wallet.ts</text>
 </a>
@@ -1817,9 +1826,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="961.45,-701.03 967.47,-698.99 961.49,-696.83 961.45,-701.03"/>
 </g>
 <!-- src/components/InterfaceNavigationSection.vue -->
-<g id="node90" class="node">
+<g id="node91" class="node">
 <title>src/components/InterfaceNavigationSection.vue</title>
-<g id="a_node90"><a xlink:href="src/components/InterfaceNavigationSection.vue" xlink:title="InterfaceNavigationSection.vue">
+<g id="a_node91"><a xlink:href="src/components/InterfaceNavigationSection.vue" xlink:title="InterfaceNavigationSection.vue">
 <path fill="#41f083" stroke="black" d="M1068,-1350.37C1068,-1350.37 922,-1350.37 922,-1350.37 919,-1350.37 916,-1347.37 916,-1344.37 916,-1344.37 916,-1338.37 916,-1338.37 916,-1335.37 919,-1332.37 922,-1332.37 922,-1332.37 1068,-1332.37 1068,-1332.37 1071,-1332.37 1074,-1335.37 1074,-1338.37 1074,-1338.37 1074,-1344.37 1074,-1344.37 1074,-1347.37 1071,-1350.37 1068,-1350.37"/>
 <text text-anchor="middle" x="995" y="-1339.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceNavigationSection.vue</text>
 </a>
@@ -1866,18 +1875,18 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1096.59,-2979.2 1102.95,-2979.3 1098.04,-2975.26 1096.59,-2979.2"/>
 </g>
 <!-- src/components/MnemonicInput.vue -->
-<g id="node92" class="node">
+<g id="node93" class="node">
 <title>src/components/MnemonicInput.vue</title>
-<g id="a_node92"><a xlink:href="src/components/MnemonicInput.vue" xlink:title="MnemonicInput.vue">
+<g id="a_node93"><a xlink:href="src/components/MnemonicInput.vue" xlink:title="MnemonicInput.vue">
 <path fill="#41f083" stroke="black" d="M676,-1882.37C676,-1882.37 581,-1882.37 581,-1882.37 578,-1882.37 575,-1879.37 575,-1876.37 575,-1876.37 575,-1870.37 575,-1870.37 575,-1867.37 578,-1864.37 581,-1864.37 581,-1864.37 676,-1864.37 676,-1864.37 679,-1864.37 682,-1867.37 682,-1870.37 682,-1870.37 682,-1876.37 682,-1876.37 682,-1879.37 679,-1882.37 676,-1882.37"/>
 <text text-anchor="middle" x="628.5" y="-1871.17" font-family="Helvetica,sans-Serif" font-size="9.00">MnemonicInput.vue</text>
 </a>
 </g>
 </g>
 <!-- src/components/Warning.vue -->
-<g id="node93" class="node">
+<g id="node94" class="node">
 <title>src/components/Warning.vue</title>
-<g id="a_node93"><a xlink:href="src/components/Warning.vue" xlink:title="Warning.vue">
+<g id="a_node94"><a xlink:href="src/components/Warning.vue" xlink:title="Warning.vue">
 <path fill="#41f083" stroke="black" d="M846.5,-2370.37C846.5,-2370.37 784.5,-2370.37 784.5,-2370.37 781.5,-2370.37 778.5,-2367.37 778.5,-2364.37 778.5,-2364.37 778.5,-2358.37 778.5,-2358.37 778.5,-2355.37 781.5,-2352.37 784.5,-2352.37 784.5,-2352.37 846.5,-2352.37 846.5,-2352.37 849.5,-2352.37 852.5,-2355.37 852.5,-2358.37 852.5,-2358.37 852.5,-2364.37 852.5,-2364.37 852.5,-2367.37 849.5,-2370.37 846.5,-2370.37"/>
 <text text-anchor="middle" x="815.5" y="-2359.17" font-family="Helvetica,sans-Serif" font-size="9.00">Warning.vue</text>
 </a>
@@ -1890,7 +1899,7 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="772.12,-2366.71 778.22,-2364.9 772.32,-2362.51 772.12,-2366.71"/>
 </g>
 <!-- ✖ -->
-<g id="node94" class="node">
+<g id="node95" class="node">
 <title>✖</title>
 <path fill="#ffffcc" stroke="red" d="M836.5,-111.37C836.5,-111.37 794.5,-111.37 794.5,-111.37 791.5,-111.37 788.5,-108.37 788.5,-105.37 788.5,-105.37 788.5,-99.37 788.5,-99.37 788.5,-96.37 791.5,-93.37 794.5,-93.37 794.5,-93.37 836.5,-93.37 836.5,-93.37 839.5,-93.37 842.5,-96.37 842.5,-99.37 842.5,-99.37 842.5,-105.37 842.5,-105.37 842.5,-108.37 839.5,-111.37 836.5,-111.37"/>
 <text text-anchor="middle" x="815.5" y="-100.17" font-family="Helvetica,sans-Serif" font-size="9.00" fill="red">✖</text>
@@ -1902,9 +1911,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="812.9,-117.71 812.27,-111.39 808.82,-116.72 812.9,-117.71"/>
 </g>
 <!-- src/components/Notice.vue -->
-<g id="node118" class="node">
+<g id="node119" class="node">
 <title>src/components/Notice.vue</title>
-<g id="a_node118"><a xlink:href="src/components/Notice.vue" xlink:title="Notice.vue">
+<g id="a_node119"><a xlink:href="src/components/Notice.vue" xlink:title="Notice.vue">
 <path fill="#41f083" stroke="black" d="M1021.5,-1828.37C1021.5,-1828.37 968.5,-1828.37 968.5,-1828.37 965.5,-1828.37 962.5,-1825.37 962.5,-1822.37 962.5,-1822.37 962.5,-1816.37 962.5,-1816.37 962.5,-1813.37 965.5,-1810.37 968.5,-1810.37 968.5,-1810.37 1021.5,-1810.37 1021.5,-1810.37 1024.5,-1810.37 1027.5,-1813.37 1027.5,-1816.37 1027.5,-1816.37 1027.5,-1822.37 1027.5,-1822.37 1027.5,-1825.37 1024.5,-1828.37 1021.5,-1828.37"/>
 <text text-anchor="middle" x="995" y="-1817.17" font-family="Helvetica,sans-Serif" font-size="9.00">Notice.vue</text>
 </a>
@@ -1923,9 +1932,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1151.17,-1618.63 1149.67,-1612.45 1146.99,-1618.22 1151.17,-1618.63"/>
 </g>
 <!-- src/components/ModalAccessByHardware.vue -->
-<g id="node96" class="node">
+<g id="node97" class="node">
 <title>src/components/ModalAccessByHardware.vue</title>
-<g id="a_node96"><a xlink:href="src/components/ModalAccessByHardware.vue" xlink:title="ModalAccessByHardware.vue">
+<g id="a_node97"><a xlink:href="src/components/ModalAccessByHardware.vue" xlink:title="ModalAccessByHardware.vue">
 <path fill="#41f083" stroke="black" d="M511,-2710.37C511,-2710.37 375,-2710.37 375,-2710.37 372,-2710.37 369,-2707.37 369,-2704.37 369,-2704.37 369,-2698.37 369,-2698.37 369,-2695.37 372,-2692.37 375,-2692.37 375,-2692.37 511,-2692.37 511,-2692.37 514,-2692.37 517,-2695.37 517,-2698.37 517,-2698.37 517,-2704.37 517,-2704.37 517,-2707.37 514,-2710.37 511,-2710.37"/>
 <text text-anchor="middle" x="443" y="-2699.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalAccessByHardware.vue</text>
 </a>
@@ -1994,9 +2003,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="989.14,-2141.78 989.73,-2135.45 985.33,-2140.03 989.14,-2141.78"/>
 </g>
 <!-- src/components/RadioButtonGroup.vue -->
-<g id="node97" class="node">
+<g id="node98" class="node">
 <title>src/components/RadioButtonGroup.vue</title>
-<g id="a_node97"><a xlink:href="src/components/RadioButtonGroup.vue" xlink:title="RadioButtonGroup.vue">
+<g id="a_node98"><a xlink:href="src/components/RadioButtonGroup.vue" xlink:title="RadioButtonGroup.vue">
 <path fill="#41f083" stroke="black" d="M682,-2554.37C682,-2554.37 575,-2554.37 575,-2554.37 572,-2554.37 569,-2551.37 569,-2548.37 569,-2548.37 569,-2542.37 569,-2542.37 569,-2539.37 572,-2536.37 575,-2536.37 575,-2536.37 682,-2536.37 682,-2536.37 685,-2536.37 688,-2539.37 688,-2542.37 688,-2542.37 688,-2548.37 688,-2548.37 688,-2551.37 685,-2554.37 682,-2554.37"/>
 <text text-anchor="middle" x="628.5" y="-2543.17" font-family="Helvetica,sans-Serif" font-size="9.00">RadioButtonGroup.vue</text>
 </a>
@@ -2009,9 +2018,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="563.52,-2549.29 568.63,-2545.51 562.28,-2545.27 563.52,-2549.29"/>
 </g>
 <!-- src/components/RadioButton.vue -->
-<g id="node136" class="node">
+<g id="node137" class="node">
 <title>src/components/RadioButton.vue</title>
-<g id="a_node136"><a xlink:href="src/components/RadioButton.vue" xlink:title="RadioButton.vue">
+<g id="a_node137"><a xlink:href="src/components/RadioButton.vue" xlink:title="RadioButton.vue">
 <path fill="#41f083" stroke="black" d="M1035,-2448.37C1035,-2448.37 955,-2448.37 955,-2448.37 952,-2448.37 949,-2445.37 949,-2442.37 949,-2442.37 949,-2436.37 949,-2436.37 949,-2433.37 952,-2430.37 955,-2430.37 955,-2430.37 1035,-2430.37 1035,-2430.37 1038,-2430.37 1041,-2433.37 1041,-2436.37 1041,-2436.37 1041,-2442.37 1041,-2442.37 1041,-2445.37 1038,-2448.37 1035,-2448.37"/>
 <text text-anchor="middle" x="995" y="-2437.17" font-family="Helvetica,sans-Serif" font-size="9.00">RadioButton.vue</text>
 </a>
@@ -2024,9 +2033,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="951.59,-2452.53 956.39,-2448.37 950.04,-2448.63 951.59,-2452.53"/>
 </g>
 <!-- src/components/ModalAccessByPhrase.vue -->
-<g id="node98" class="node">
+<g id="node99" class="node">
 <title>src/components/ModalAccessByPhrase.vue</title>
-<g id="a_node98"><a xlink:href="src/components/ModalAccessByPhrase.vue" xlink:title="ModalAccessByPhrase.vue">
+<g id="a_node99"><a xlink:href="src/components/ModalAccessByPhrase.vue" xlink:title="ModalAccessByPhrase.vue">
 <path fill="#41f083" stroke="black" d="M504,-2183.37C504,-2183.37 382,-2183.37 382,-2183.37 379,-2183.37 376,-2180.37 376,-2177.37 376,-2177.37 376,-2171.37 376,-2171.37 376,-2168.37 379,-2165.37 382,-2165.37 382,-2165.37 504,-2165.37 504,-2165.37 507,-2165.37 510,-2168.37 510,-2171.37 510,-2171.37 510,-2177.37 510,-2177.37 510,-2180.37 507,-2183.37 504,-2183.37"/>
 <text text-anchor="middle" x="443" y="-2172.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalAccessByPhrase.vue</text>
 </a>
@@ -2065,9 +2074,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="992.78,-2141.77 992.12,-2135.44 988.7,-2140.8 992.78,-2141.77"/>
 </g>
 <!-- src/components/SwitchButton.vue -->
-<g id="node99" class="node">
+<g id="node100" class="node">
 <title>src/components/SwitchButton.vue</title>
-<g id="a_node99"><a xlink:href="src/components/SwitchButton.vue" xlink:title="SwitchButton.vue">
+<g id="a_node100"><a xlink:href="src/components/SwitchButton.vue" xlink:title="SwitchButton.vue">
 <path fill="#41f083" stroke="black" d="M858.5,-2340.37C858.5,-2340.37 772.5,-2340.37 772.5,-2340.37 769.5,-2340.37 766.5,-2337.37 766.5,-2334.37 766.5,-2334.37 766.5,-2328.37 766.5,-2328.37 766.5,-2325.37 769.5,-2322.37 772.5,-2322.37 772.5,-2322.37 858.5,-2322.37 858.5,-2322.37 861.5,-2322.37 864.5,-2325.37 864.5,-2328.37 864.5,-2328.37 864.5,-2334.37 864.5,-2334.37 864.5,-2337.37 861.5,-2340.37 858.5,-2340.37"/>
 <text text-anchor="middle" x="815.5" y="-2329.17" font-family="Helvetica,sans-Serif" font-size="9.00">SwitchButton.vue</text>
 </a>
@@ -2080,9 +2089,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="759.84,-2332.52 766.14,-2331.63 760.66,-2328.4 759.84,-2332.52"/>
 </g>
 <!-- src/components/OptionalPasswordInput.vue -->
-<g id="node100" class="node">
+<g id="node101" class="node">
 <title>src/components/OptionalPasswordInput.vue</title>
-<g id="a_node100"><a xlink:href="src/components/OptionalPasswordInput.vue" xlink:title="OptionalPasswordInput.vue">
+<g id="a_node101"><a xlink:href="src/components/OptionalPasswordInput.vue" xlink:title="OptionalPasswordInput.vue">
 <path fill="#41f083" stroke="black" d="M692.5,-2140.37C692.5,-2140.37 564.5,-2140.37 564.5,-2140.37 561.5,-2140.37 558.5,-2137.37 558.5,-2134.37 558.5,-2134.37 558.5,-2128.37 558.5,-2128.37 558.5,-2125.37 561.5,-2122.37 564.5,-2122.37 564.5,-2122.37 692.5,-2122.37 692.5,-2122.37 695.5,-2122.37 698.5,-2125.37 698.5,-2128.37 698.5,-2128.37 698.5,-2134.37 698.5,-2134.37 698.5,-2137.37 695.5,-2140.37 692.5,-2140.37"/>
 <text text-anchor="middle" x="628.5" y="-2129.17" font-family="Helvetica,sans-Serif" font-size="9.00">OptionalPasswordInput.vue</text>
 </a>
@@ -2107,9 +2116,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="760,-2323.77 766.35,-2323.77 761.39,-2319.8 760,-2323.77"/>
 </g>
 <!-- src/components/ModalAccessByPrivateKey.vue -->
-<g id="node101" class="node">
+<g id="node102" class="node">
 <title>src/components/ModalAccessByPrivateKey.vue</title>
-<g id="a_node101"><a xlink:href="src/components/ModalAccessByPrivateKey.vue" xlink:title="ModalAccessByPrivateKey.vue">
+<g id="a_node102"><a xlink:href="src/components/ModalAccessByPrivateKey.vue" xlink:title="ModalAccessByPrivateKey.vue">
 <path fill="#41f083" stroke="black" d="M511.5,-2111.37C511.5,-2111.37 374.5,-2111.37 374.5,-2111.37 371.5,-2111.37 368.5,-2108.37 368.5,-2105.37 368.5,-2105.37 368.5,-2099.37 368.5,-2099.37 368.5,-2096.37 371.5,-2093.37 374.5,-2093.37 374.5,-2093.37 511.5,-2093.37 511.5,-2093.37 514.5,-2093.37 517.5,-2096.37 517.5,-2099.37 517.5,-2099.37 517.5,-2105.37 517.5,-2105.37 517.5,-2108.37 514.5,-2111.37 511.5,-2111.37"/>
 <text text-anchor="middle" x="443" y="-2100.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalAccessByPrivateKey.vue</text>
 </a>
@@ -2148,9 +2157,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="990.93,-2142 990.99,-2135.64 986.98,-2140.58 990.93,-2142"/>
 </g>
 <!-- src/components/ModalAccessBySoftware.vue -->
-<g id="node102" class="node">
+<g id="node103" class="node">
 <title>src/components/ModalAccessBySoftware.vue</title>
-<g id="a_node102"><a xlink:href="src/components/ModalAccessBySoftware.vue" xlink:title="ModalAccessBySoftware.vue">
+<g id="a_node103"><a xlink:href="src/components/ModalAccessBySoftware.vue" xlink:title="ModalAccessBySoftware.vue">
 <path fill="#41f083" stroke="black" d="M509,-2525.37C509,-2525.37 377,-2525.37 377,-2525.37 374,-2525.37 371,-2522.37 371,-2519.37 371,-2519.37 371,-2513.37 371,-2513.37 371,-2510.37 374,-2507.37 377,-2507.37 377,-2507.37 509,-2507.37 509,-2507.37 512,-2507.37 515,-2510.37 515,-2513.37 515,-2513.37 515,-2519.37 515,-2519.37 515,-2522.37 512,-2525.37 509,-2525.37"/>
 <text text-anchor="middle" x="443" y="-2514.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalAccessBySoftware.vue</text>
 </a>
@@ -2207,9 +2216,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="564.23,-2537.5 570.48,-2536.36 564.88,-2533.35 564.23,-2537.5"/>
 </g>
 <!-- src/components/PurchaseWalletLink.vue -->
-<g id="node103" class="node">
+<g id="node104" class="node">
 <title>src/components/PurchaseWalletLink.vue</title>
-<g id="a_node103"><a xlink:href="src/components/PurchaseWalletLink.vue" xlink:title="PurchaseWalletLink.vue">
+<g id="a_node104"><a xlink:href="src/components/PurchaseWalletLink.vue" xlink:title="PurchaseWalletLink.vue">
 <path fill="#41f083" stroke="black" d="M684,-2468.37C684,-2468.37 573,-2468.37 573,-2468.37 570,-2468.37 567,-2465.37 567,-2462.37 567,-2462.37 567,-2456.37 567,-2456.37 567,-2453.37 570,-2450.37 573,-2450.37 573,-2450.37 684,-2450.37 684,-2450.37 687,-2450.37 690,-2453.37 690,-2456.37 690,-2456.37 690,-2462.37 690,-2462.37 690,-2465.37 687,-2468.37 684,-2468.37"/>
 <text text-anchor="middle" x="628.5" y="-2457.17" font-family="Helvetica,sans-Serif" font-size="9.00">PurchaseWalletLink.vue</text>
 </a>
@@ -2222,9 +2231,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="572,-2471.76 577.4,-2468.42 571.09,-2467.66 572,-2471.76"/>
 </g>
 <!-- src/components/ModalConfirmSignMessage.vue -->
-<g id="node104" class="node">
+<g id="node105" class="node">
 <title>src/components/ModalConfirmSignMessage.vue</title>
-<g id="a_node104"><a xlink:href="src/components/ModalConfirmSignMessage.vue" xlink:title="ModalConfirmSignMessage.vue">
+<g id="a_node105"><a xlink:href="src/components/ModalConfirmSignMessage.vue" xlink:title="ModalConfirmSignMessage.vue">
 <path fill="#41f083" stroke="black" d="M888,-1846.37C888,-1846.37 743,-1846.37 743,-1846.37 740,-1846.37 737,-1843.37 737,-1840.37 737,-1840.37 737,-1834.37 737,-1834.37 737,-1831.37 740,-1828.37 743,-1828.37 743,-1828.37 888,-1828.37 888,-1828.37 891,-1828.37 894,-1831.37 894,-1834.37 894,-1834.37 894,-1840.37 894,-1840.37 894,-1843.37 891,-1846.37 888,-1846.37"/>
 <text text-anchor="middle" x="815.5" y="-1835.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalConfirmSignMessage.vue</text>
 </a>
@@ -2255,9 +2264,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1148.78,-1618.77 1148.24,-1612.44 1144.71,-1617.73 1148.78,-1618.77"/>
 </g>
 <!-- src/components/ModalCreateByKeystore.vue -->
-<g id="node106" class="node">
+<g id="node107" class="node">
 <title>src/components/ModalCreateByKeystore.vue</title>
-<g id="a_node106"><a xlink:href="src/components/ModalCreateByKeystore.vue" xlink:title="ModalCreateByKeystore.vue">
+<g id="a_node107"><a xlink:href="src/components/ModalCreateByKeystore.vue" xlink:title="ModalCreateByKeystore.vue">
 <path fill="#41f083" stroke="black" d="M507.5,-2594.37C507.5,-2594.37 378.5,-2594.37 378.5,-2594.37 375.5,-2594.37 372.5,-2591.37 372.5,-2588.37 372.5,-2588.37 372.5,-2582.37 372.5,-2582.37 372.5,-2579.37 375.5,-2576.37 378.5,-2576.37 378.5,-2576.37 507.5,-2576.37 507.5,-2576.37 510.5,-2576.37 513.5,-2579.37 513.5,-2582.37 513.5,-2582.37 513.5,-2588.37 513.5,-2588.37 513.5,-2591.37 510.5,-2594.37 507.5,-2594.37"/>
 <text text-anchor="middle" x="443" y="-2583.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalCreateByKeystore.vue</text>
 </a>
@@ -2300,9 +2309,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="955.32,-1759.32 961.16,-1756.82 955.03,-1755.13 955.32,-1759.32"/>
 </g>
 <!-- src/components/PasswordWithConfirm.vue -->
-<g id="node112" class="node">
+<g id="node113" class="node">
 <title>src/components/PasswordWithConfirm.vue</title>
-<g id="a_node112"><a xlink:href="src/components/PasswordWithConfirm.vue" xlink:title="PasswordWithConfirm.vue">
+<g id="a_node113"><a xlink:href="src/components/PasswordWithConfirm.vue" xlink:title="PasswordWithConfirm.vue">
 <path fill="#41f083" stroke="black" d="M877,-2414.37C877,-2414.37 754,-2414.37 754,-2414.37 751,-2414.37 748,-2411.37 748,-2408.37 748,-2408.37 748,-2402.37 748,-2402.37 748,-2399.37 751,-2396.37 754,-2396.37 754,-2396.37 877,-2396.37 877,-2396.37 880,-2396.37 883,-2399.37 883,-2402.37 883,-2402.37 883,-2408.37 883,-2408.37 883,-2411.37 880,-2414.37 877,-2414.37"/>
 <text text-anchor="middle" x="815.5" y="-2403.17" font-family="Helvetica,sans-Serif" font-size="9.00">PasswordWithConfirm.vue</text>
 </a>
@@ -2315,9 +2324,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="798.03,-2419.83 801.55,-2414.53 795.5,-2416.48 798.03,-2419.83"/>
 </g>
 <!-- src/components/ModalCreateByPhrase.vue -->
-<g id="node108" class="node">
+<g id="node109" class="node">
 <title>src/components/ModalCreateByPhrase.vue</title>
-<g id="a_node108"><a xlink:href="src/components/ModalCreateByPhrase.vue" xlink:title="ModalCreateByPhrase.vue">
+<g id="a_node109"><a xlink:href="src/components/ModalCreateByPhrase.vue" xlink:title="ModalCreateByPhrase.vue">
 <path fill="#41f083" stroke="black" d="M315,-2288.37C315,-2288.37 194,-2288.37 194,-2288.37 191,-2288.37 188,-2285.37 188,-2282.37 188,-2282.37 188,-2276.37 188,-2276.37 188,-2273.37 191,-2270.37 194,-2270.37 194,-2270.37 315,-2270.37 315,-2270.37 318,-2270.37 321,-2273.37 321,-2276.37 321,-2276.37 321,-2282.37 321,-2282.37 321,-2285.37 318,-2288.37 315,-2288.37"/>
 <text text-anchor="middle" x="254.5" y="-2277.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalCreateByPhrase.vue</text>
 </a>
@@ -2384,9 +2393,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="552.24,-2130.9 558.27,-2128.87 552.29,-2126.7 552.24,-2130.9"/>
 </g>
 <!-- src/components/ModalPhrasePrintPreview.vue -->
-<g id="node109" class="node">
+<g id="node110" class="node">
 <title>src/components/ModalPhrasePrintPreview.vue</title>
-<g id="a_node109"><a xlink:href="src/components/ModalPhrasePrintPreview.vue" xlink:title="ModalPhrasePrintPreview.vue">
+<g id="a_node110"><a xlink:href="src/components/ModalPhrasePrintPreview.vue" xlink:title="ModalPhrasePrintPreview.vue">
 <path fill="#41f083" stroke="black" d="M510.5,-2322.37C510.5,-2322.37 375.5,-2322.37 375.5,-2322.37 372.5,-2322.37 369.5,-2319.37 369.5,-2316.37 369.5,-2316.37 369.5,-2310.37 369.5,-2310.37 369.5,-2307.37 372.5,-2304.37 375.5,-2304.37 375.5,-2304.37 510.5,-2304.37 510.5,-2304.37 513.5,-2304.37 516.5,-2307.37 516.5,-2310.37 516.5,-2310.37 516.5,-2316.37 516.5,-2316.37 516.5,-2319.37 513.5,-2322.37 510.5,-2322.37"/>
 <text text-anchor="middle" x="443" y="-2311.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalPhrasePrintPreview.vue</text>
 </a>
@@ -2399,9 +2408,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="386.32,-2305.35 392.6,-2304.37 387.08,-2301.22 386.32,-2305.35"/>
 </g>
 <!-- src/components/ModalVerifyPhrase.vue -->
-<g id="node110" class="node">
+<g id="node111" class="node">
 <title>src/components/ModalVerifyPhrase.vue</title>
-<g id="a_node110"><a xlink:href="src/components/ModalVerifyPhrase.vue" xlink:title="ModalVerifyPhrase.vue">
+<g id="a_node111"><a xlink:href="src/components/ModalVerifyPhrase.vue" xlink:title="ModalVerifyPhrase.vue">
 <path fill="#41f083" stroke="black" d="M868,-2154.37C868,-2154.37 763,-2154.37 763,-2154.37 760,-2154.37 757,-2151.37 757,-2148.37 757,-2148.37 757,-2142.37 757,-2142.37 757,-2139.37 760,-2136.37 763,-2136.37 763,-2136.37 868,-2136.37 868,-2136.37 871,-2136.37 874,-2139.37 874,-2142.37 874,-2142.37 874,-2148.37 874,-2148.37 874,-2151.37 871,-2154.37 868,-2154.37"/>
 <text text-anchor="middle" x="815.5" y="-2143.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalVerifyPhrase.vue</text>
 </a>
@@ -2416,9 +2425,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="746.12" cy="-2141.98" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/components/OptionalPasswordWithConfirm.vue -->
-<g id="node111" class="node">
+<g id="node112" class="node">
 <title>src/components/OptionalPasswordWithConfirm.vue</title>
-<g id="a_node111"><a xlink:href="src/components/OptionalPasswordWithConfirm.vue" xlink:title="OptionalPasswordWithConfirm.vue">
+<g id="a_node112"><a xlink:href="src/components/OptionalPasswordWithConfirm.vue" xlink:title="OptionalPasswordWithConfirm.vue">
 <path fill="#41f083" stroke="black" d="M709,-2268.37C709,-2268.37 548,-2268.37 548,-2268.37 545,-2268.37 542,-2265.37 542,-2262.37 542,-2262.37 542,-2256.37 542,-2256.37 542,-2253.37 545,-2250.37 548,-2250.37 548,-2250.37 709,-2250.37 709,-2250.37 712,-2250.37 715,-2253.37 715,-2256.37 715,-2256.37 715,-2262.37 715,-2262.37 715,-2265.37 712,-2268.37 709,-2268.37"/>
 <text text-anchor="middle" x="628.5" y="-2257.17" font-family="Helvetica,sans-Serif" font-size="9.00">OptionalPasswordWithConfirm.vue</text>
 </a>
@@ -2517,9 +2526,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="949.8,-1549.57 955.27,-1546.33 948.97,-1545.45 949.8,-1549.57"/>
 </g>
 <!-- src/components/ModalCreateBySoftware.vue -->
-<g id="node113" class="node">
+<g id="node114" class="node">
 <title>src/components/ModalCreateBySoftware.vue</title>
-<g id="a_node113"><a xlink:href="src/components/ModalCreateBySoftware.vue" xlink:title="ModalCreateBySoftware.vue">
+<g id="a_node114"><a xlink:href="src/components/ModalCreateBySoftware.vue" xlink:title="ModalCreateBySoftware.vue">
 <path fill="#41f083" stroke="black" d="M508.5,-2438.37C508.5,-2438.37 377.5,-2438.37 377.5,-2438.37 374.5,-2438.37 371.5,-2435.37 371.5,-2432.37 371.5,-2432.37 371.5,-2426.37 371.5,-2426.37 371.5,-2423.37 374.5,-2420.37 377.5,-2420.37 377.5,-2420.37 508.5,-2420.37 508.5,-2420.37 511.5,-2420.37 514.5,-2423.37 514.5,-2426.37 514.5,-2426.37 514.5,-2432.37 514.5,-2432.37 514.5,-2435.37 511.5,-2438.37 508.5,-2438.37"/>
 <text text-anchor="middle" x="443" y="-2427.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalCreateBySoftware.vue</text>
 </a>
@@ -2576,9 +2585,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="565.91,-2451.43 572.17,-2450.32 566.58,-2447.28 565.91,-2451.43"/>
 </g>
 <!-- src/components/ModalDownloadKeystore.vue -->
-<g id="node115" class="node">
+<g id="node116" class="node">
 <title>src/components/ModalDownloadKeystore.vue</title>
-<g id="a_node115"><a xlink:href="src/components/ModalDownloadKeystore.vue" xlink:title="ModalDownloadKeystore.vue">
+<g id="a_node116"><a xlink:href="src/components/ModalDownloadKeystore.vue" xlink:title="ModalDownloadKeystore.vue">
 <path fill="#41f083" stroke="black" d="M882,-1876.37C882,-1876.37 749,-1876.37 749,-1876.37 746,-1876.37 743,-1873.37 743,-1870.37 743,-1870.37 743,-1864.37 743,-1864.37 743,-1861.37 746,-1858.37 749,-1858.37 749,-1858.37 882,-1858.37 882,-1858.37 885,-1858.37 888,-1861.37 888,-1864.37 888,-1864.37 888,-1870.37 888,-1870.37 888,-1873.37 885,-1876.37 882,-1876.37"/>
 <text text-anchor="middle" x="815.5" y="-1865.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalDownloadKeystore.vue</text>
 </a>
@@ -2603,9 +2612,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="982.29,-2113.39 987.43,-2117.14 985.75,-2111.01 982.29,-2113.39"/>
 </g>
 <!-- src/components/ModalEnterAccountId.vue -->
-<g id="node116" class="node">
+<g id="node117" class="node">
 <title>src/components/ModalEnterAccountId.vue</title>
-<g id="a_node116"><a xlink:href="src/components/ModalEnterAccountId.vue" xlink:title="ModalEnterAccountId.vue">
+<g id="a_node117"><a xlink:href="src/components/ModalEnterAccountId.vue" xlink:title="ModalEnterAccountId.vue">
 <path fill="#41f083" stroke="black" d="M504,-1451.37C504,-1451.37 382,-1451.37 382,-1451.37 379,-1451.37 376,-1448.37 376,-1445.37 376,-1445.37 376,-1439.37 376,-1439.37 376,-1436.37 379,-1433.37 382,-1433.37 382,-1433.37 504,-1433.37 504,-1433.37 507,-1433.37 510,-1436.37 510,-1439.37 510,-1439.37 510,-1445.37 510,-1445.37 510,-1448.37 507,-1451.37 504,-1451.37"/>
 <text text-anchor="middle" x="443" y="-1440.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalEnterAccountId.vue</text>
 </a>
@@ -2636,9 +2645,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="986.64,-1982.62 988.09,-1976.43 983.1,-1980.37 986.64,-1982.62"/>
 </g>
 <!-- src/components/NetworkSelector.vue -->
-<g id="node117" class="node">
+<g id="node118" class="node">
 <title>src/components/NetworkSelector.vue</title>
-<g id="a_node117"><a xlink:href="src/components/NetworkSelector.vue" xlink:title="NetworkSelector.vue">
+<g id="a_node118"><a xlink:href="src/components/NetworkSelector.vue" xlink:title="NetworkSelector.vue">
 <path fill="#41f083" stroke="black" d="M677.5,-1451.37C677.5,-1451.37 579.5,-1451.37 579.5,-1451.37 576.5,-1451.37 573.5,-1448.37 573.5,-1445.37 573.5,-1445.37 573.5,-1439.37 573.5,-1439.37 573.5,-1436.37 576.5,-1433.37 579.5,-1433.37 579.5,-1433.37 677.5,-1433.37 677.5,-1433.37 680.5,-1433.37 683.5,-1436.37 683.5,-1439.37 683.5,-1439.37 683.5,-1445.37 683.5,-1445.37 683.5,-1448.37 680.5,-1451.37 677.5,-1451.37"/>
 <text text-anchor="middle" x="628.5" y="-1440.17" font-family="Helvetica,sans-Serif" font-size="9.00">NetworkSelector.vue</text>
 </a>
@@ -2699,9 +2708,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="962.41,-206.72 967.76,-203.29 961.44,-202.63 962.41,-206.72"/>
 </g>
 <!-- src/components/Select.vue -->
-<g id="node132" class="node">
+<g id="node133" class="node">
 <title>src/components/Select.vue</title>
-<g id="a_node132"><a xlink:href="src/components/Select.vue" xlink:title="Select.vue">
+<g id="a_node133"><a xlink:href="src/components/Select.vue" xlink:title="Select.vue">
 <path fill="#41f083" stroke="black" d="M1021,-1590.37C1021,-1590.37 969,-1590.37 969,-1590.37 966,-1590.37 963,-1587.37 963,-1584.37 963,-1584.37 963,-1578.37 963,-1578.37 963,-1575.37 966,-1572.37 969,-1572.37 969,-1572.37 1021,-1572.37 1021,-1572.37 1024,-1572.37 1027,-1575.37 1027,-1578.37 1027,-1578.37 1027,-1584.37 1027,-1584.37 1027,-1587.37 1024,-1590.37 1021,-1590.37"/>
 <text text-anchor="middle" x="995" y="-1579.17" font-family="Helvetica,sans-Serif" font-size="9.00">Select.vue</text>
 </a>
@@ -2714,7 +2723,7 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="956.89,-1584.28 962.85,-1582.07 956.81,-1580.08 956.89,-1584.28"/>
 </g>
 <!-- src/store/modules/network -->
-<g id="node133" class="node">
+<g id="node134" class="node">
 <title>src/store/modules/network</title>
 <path fill="#ffffcc" stroke="red" d="M1016,-514.37C1016,-514.37 974,-514.37 974,-514.37 971,-514.37 968,-511.37 968,-508.37 968,-508.37 968,-502.37 968,-502.37 968,-499.37 971,-496.37 974,-496.37 974,-496.37 1016,-496.37 1016,-496.37 1019,-496.37 1022,-499.37 1022,-502.37 1022,-502.37 1022,-508.37 1022,-508.37 1022,-511.37 1019,-514.37 1016,-514.37"/>
 <text text-anchor="middle" x="995" y="-503.17" font-family="Helvetica,sans-Serif" font-size="9.00" fill="red">network</text>
@@ -2732,9 +2741,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1151.63,-1618.91 1150,-1612.76 1147.44,-1618.58 1151.63,-1618.91"/>
 </g>
 <!-- src/components/ModalFeeSummary.vue -->
-<g id="node120" class="node">
+<g id="node121" class="node">
 <title>src/components/ModalFeeSummary.vue</title>
-<g id="a_node120"><a xlink:href="src/components/ModalFeeSummary.vue" xlink:title="ModalFeeSummary.vue">
+<g id="a_node121"><a xlink:href="src/components/ModalFeeSummary.vue" xlink:title="ModalFeeSummary.vue">
 <path fill="#41f083" stroke="black" d="M682.5,-1942.37C682.5,-1942.37 574.5,-1942.37 574.5,-1942.37 571.5,-1942.37 568.5,-1939.37 568.5,-1936.37 568.5,-1936.37 568.5,-1930.37 568.5,-1930.37 568.5,-1927.37 571.5,-1924.37 574.5,-1924.37 574.5,-1924.37 682.5,-1924.37 682.5,-1924.37 685.5,-1924.37 688.5,-1927.37 688.5,-1930.37 688.5,-1930.37 688.5,-1936.37 688.5,-1936.37 688.5,-1939.37 685.5,-1942.37 682.5,-1942.37"/>
 <text text-anchor="middle" x="628.5" y="-1931.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalFeeSummary.vue</text>
 </a>
@@ -2761,9 +2770,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="974.2,-2140.24 978.45,-2135.51 972.18,-2136.56 974.2,-2140.24"/>
 </g>
 <!-- src/components/ModalFeeSummaryItems.vue -->
-<g id="node121" class="node">
+<g id="node122" class="node">
 <title>src/components/ModalFeeSummaryItems.vue</title>
-<g id="a_node121"><a xlink:href="src/components/ModalFeeSummaryItems.vue" xlink:title="ModalFeeSummaryItems.vue">
+<g id="a_node122"><a xlink:href="src/components/ModalFeeSummaryItems.vue" xlink:title="ModalFeeSummaryItems.vue">
 <path fill="#41f083" stroke="black" d="M510.5,-2056.37C510.5,-2056.37 375.5,-2056.37 375.5,-2056.37 372.5,-2056.37 369.5,-2053.37 369.5,-2050.37 369.5,-2050.37 369.5,-2044.37 369.5,-2044.37 369.5,-2041.37 372.5,-2038.37 375.5,-2038.37 375.5,-2038.37 510.5,-2038.37 510.5,-2038.37 513.5,-2038.37 516.5,-2041.37 516.5,-2044.37 516.5,-2044.37 516.5,-2050.37 516.5,-2050.37 516.5,-2053.37 513.5,-2056.37 510.5,-2056.37"/>
 <text text-anchor="middle" x="443" y="-2045.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalFeeSummaryItems.vue</text>
 </a>
@@ -2778,9 +2787,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="473.19" cy="-2032.62" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/components/ModalFeeSummaryTerms.vue -->
-<g id="node122" class="node">
+<g id="node123" class="node">
 <title>src/components/ModalFeeSummaryTerms.vue</title>
-<g id="a_node122"><a xlink:href="src/components/ModalFeeSummaryTerms.vue" xlink:title="ModalFeeSummaryTerms.vue">
+<g id="a_node123"><a xlink:href="src/components/ModalFeeSummaryTerms.vue" xlink:title="ModalFeeSummaryTerms.vue">
 <path fill="#41f083" stroke="black" d="M883.5,-2240.37C883.5,-2240.37 747.5,-2240.37 747.5,-2240.37 744.5,-2240.37 741.5,-2237.37 741.5,-2234.37 741.5,-2234.37 741.5,-2228.37 741.5,-2228.37 741.5,-2225.37 744.5,-2222.37 747.5,-2222.37 747.5,-2222.37 883.5,-2222.37 883.5,-2222.37 886.5,-2222.37 889.5,-2225.37 889.5,-2228.37 889.5,-2228.37 889.5,-2234.37 889.5,-2234.37 889.5,-2237.37 886.5,-2240.37 883.5,-2240.37"/>
 <text text-anchor="middle" x="815.5" y="-2229.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalFeeSummaryTerms.vue</text>
 </a>
@@ -2793,9 +2802,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="756.01,-2222.08 762.37,-2222.32 757.55,-2218.17 756.01,-2222.08"/>
 </g>
 <!-- src/components/ModalFeeSummaryTitle.vue -->
-<g id="node123" class="node">
+<g id="node124" class="node">
 <title>src/components/ModalFeeSummaryTitle.vue</title>
-<g id="a_node123"><a xlink:href="src/components/ModalFeeSummaryTitle.vue" xlink:title="ModalFeeSummaryTitle.vue">
+<g id="a_node124"><a xlink:href="src/components/ModalFeeSummaryTitle.vue" xlink:title="ModalFeeSummaryTitle.vue">
 <path fill="#41f083" stroke="black" d="M879.5,-1994.37C879.5,-1994.37 751.5,-1994.37 751.5,-1994.37 748.5,-1994.37 745.5,-1991.37 745.5,-1988.37 745.5,-1988.37 745.5,-1982.37 745.5,-1982.37 745.5,-1979.37 748.5,-1976.37 751.5,-1976.37 751.5,-1976.37 879.5,-1976.37 879.5,-1976.37 882.5,-1976.37 885.5,-1979.37 885.5,-1982.37 885.5,-1982.37 885.5,-1988.37 885.5,-1988.37 885.5,-1991.37 882.5,-1994.37 879.5,-1994.37"/>
 <text text-anchor="middle" x="815.5" y="-1983.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalFeeSummaryTitle.vue</text>
 </a>
@@ -2834,9 +2843,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="949.61,-2481.97 955.96,-2482.24 951.17,-2478.06 949.61,-2481.97"/>
 </g>
 <!-- src/components/ModalKeystoreFilePassword.vue -->
-<g id="node124" class="node">
+<g id="node125" class="node">
 <title>src/components/ModalKeystoreFilePassword.vue</title>
-<g id="a_node124"><a xlink:href="src/components/ModalKeystoreFilePassword.vue" xlink:title="ModalKeystoreFilePassword.vue">
+<g id="a_node125"><a xlink:href="src/components/ModalKeystoreFilePassword.vue" xlink:title="ModalKeystoreFilePassword.vue">
 <path fill="#41f083" stroke="black" d="M701,-1810.37C701,-1810.37 556,-1810.37 556,-1810.37 553,-1810.37 550,-1807.37 550,-1804.37 550,-1804.37 550,-1798.37 550,-1798.37 550,-1795.37 553,-1792.37 556,-1792.37 556,-1792.37 701,-1792.37 701,-1792.37 704,-1792.37 707,-1795.37 707,-1798.37 707,-1798.37 707,-1804.37 707,-1804.37 707,-1807.37 704,-1810.37 701,-1810.37"/>
 <text text-anchor="middle" x="628.5" y="-1799.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalKeystoreFilePassword.vue</text>
 </a>
@@ -2875,9 +2884,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="821.58" cy="-843.54" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/AccessMyAccount.vue -->
-<g id="node146" class="node">
+<g id="node147" class="node">
 <title>src/views/AccessMyAccount.vue</title>
-<g id="a_node146"><a xlink:href="src/views/AccessMyAccount.vue" xlink:title="AccessMyAccount.vue">
+<g id="a_node147"><a xlink:href="src/views/AccessMyAccount.vue" xlink:title="AccessMyAccount.vue">
 <path fill="#41f083" stroke="black" d="M307,-840.37C307,-840.37 202,-840.37 202,-840.37 199,-840.37 196,-837.37 196,-834.37 196,-834.37 196,-828.37 196,-828.37 196,-825.37 199,-822.37 202,-822.37 202,-822.37 307,-822.37 307,-822.37 310,-822.37 313,-825.37 313,-828.37 313,-828.37 313,-834.37 313,-834.37 313,-837.37 310,-840.37 307,-840.37"/>
 <text text-anchor="middle" x="254.5" y="-829.17" font-family="Helvetica,sans-Serif" font-size="9.00">AccessMyAccount.vue</text>
 </a>
@@ -2892,9 +2901,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="324.31" cy="-831.16" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/ConvertUnits.vue -->
-<g id="node147" class="node">
+<g id="node148" class="node">
 <title>src/views/ConvertUnits.vue</title>
-<g id="a_node147"><a xlink:href="src/views/ConvertUnits.vue" xlink:title="ConvertUnits.vue">
+<g id="a_node148"><a xlink:href="src/views/ConvertUnits.vue" xlink:title="ConvertUnits.vue">
 <path fill="#41f083" stroke="black" d="M296,-1080.37C296,-1080.37 213,-1080.37 213,-1080.37 210,-1080.37 207,-1077.37 207,-1074.37 207,-1074.37 207,-1068.37 207,-1068.37 207,-1065.37 210,-1062.37 213,-1062.37 213,-1062.37 296,-1062.37 296,-1062.37 299,-1062.37 302,-1065.37 302,-1068.37 302,-1068.37 302,-1074.37 302,-1074.37 302,-1077.37 299,-1080.37 296,-1080.37"/>
 <text text-anchor="middle" x="254.5" y="-1069.17" font-family="Helvetica,sans-Serif" font-size="9.00">ConvertUnits.vue</text>
 </a>
@@ -2907,9 +2916,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="308.19,-1065.55 302.03,-1067.11 307.82,-1069.73 308.19,-1065.55"/>
 </g>
 <!-- src/views/CreateAccount.vue -->
-<g id="node148" class="node">
+<g id="node149" class="node">
 <title>src/views/CreateAccount.vue</title>
-<g id="a_node148"><a xlink:href="src/views/CreateAccount.vue" xlink:title="CreateAccount.vue">
+<g id="a_node149"><a xlink:href="src/views/CreateAccount.vue" xlink:title="CreateAccount.vue">
 <path fill="#41f083" stroke="black" d="M300,-720.37C300,-720.37 209,-720.37 209,-720.37 206,-720.37 203,-717.37 203,-714.37 203,-714.37 203,-708.37 203,-708.37 203,-705.37 206,-702.37 209,-702.37 209,-702.37 300,-702.37 300,-702.37 303,-702.37 306,-705.37 306,-708.37 306,-708.37 306,-714.37 306,-714.37 306,-717.37 303,-720.37 300,-720.37"/>
 <text text-anchor="middle" x="254.5" y="-709.17" font-family="Helvetica,sans-Serif" font-size="9.00">CreateAccount.vue</text>
 </a>
@@ -2924,9 +2933,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="317.65" cy="-709.38" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/Error404.vue -->
-<g id="node149" class="node">
+<g id="node150" class="node">
 <title>src/views/Error404.vue</title>
-<g id="a_node149"><a xlink:href="src/views/Error404.vue" xlink:title="Error404.vue">
+<g id="a_node150"><a xlink:href="src/views/Error404.vue" xlink:title="Error404.vue">
 <path fill="#41f083" stroke="black" d="M287,-1140.37C287,-1140.37 222,-1140.37 222,-1140.37 219,-1140.37 216,-1137.37 216,-1134.37 216,-1134.37 216,-1128.37 216,-1128.37 216,-1125.37 219,-1122.37 222,-1122.37 222,-1122.37 287,-1122.37 287,-1122.37 290,-1122.37 293,-1125.37 293,-1128.37 293,-1128.37 293,-1134.37 293,-1134.37 293,-1137.37 290,-1140.37 287,-1140.37"/>
 <text text-anchor="middle" x="254.5" y="-1129.17" font-family="Helvetica,sans-Serif" font-size="9.00">Error404.vue</text>
 </a>
@@ -2939,9 +2948,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="299.44,-1124.88 293.4,-1126.87 299.36,-1129.08 299.44,-1124.88"/>
 </g>
 <!-- src/views/HardwareWalletAffiliates.vue -->
-<g id="node150" class="node">
+<g id="node151" class="node">
 <title>src/views/HardwareWalletAffiliates.vue</title>
-<g id="a_node150"><a xlink:href="src/views/HardwareWalletAffiliates.vue" xlink:title="HardwareWalletAffiliates.vue">
+<g id="a_node151"><a xlink:href="src/views/HardwareWalletAffiliates.vue" xlink:title="HardwareWalletAffiliates.vue">
 <path fill="#41f083" stroke="black" d="M321,-1050.37C321,-1050.37 188,-1050.37 188,-1050.37 185,-1050.37 182,-1047.37 182,-1044.37 182,-1044.37 182,-1038.37 182,-1038.37 182,-1035.37 185,-1032.37 188,-1032.37 188,-1032.37 321,-1032.37 321,-1032.37 324,-1032.37 327,-1035.37 327,-1038.37 327,-1038.37 327,-1044.37 327,-1044.37 327,-1047.37 324,-1050.37 321,-1050.37"/>
 <text text-anchor="middle" x="254.5" y="-1039.17" font-family="Helvetica,sans-Serif" font-size="9.00">HardwareWalletAffiliates.vue</text>
 </a>
@@ -2954,9 +2963,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="333.38,-1042.23 327.04,-1041.88 331.78,-1046.11 333.38,-1042.23"/>
 </g>
 <!-- src/views/Home.vue -->
-<g id="node151" class="node">
+<g id="node152" class="node">
 <title>src/views/Home.vue</title>
-<g id="a_node151"><a xlink:href="src/views/Home.vue" xlink:title="Home.vue">
+<g id="a_node152"><a xlink:href="src/views/Home.vue" xlink:title="Home.vue">
 <path fill="#41f083" stroke="black" d="M279.5,-1110.37C279.5,-1110.37 229.5,-1110.37 229.5,-1110.37 226.5,-1110.37 223.5,-1107.37 223.5,-1104.37 223.5,-1104.37 223.5,-1098.37 223.5,-1098.37 223.5,-1095.37 226.5,-1092.37 229.5,-1092.37 229.5,-1092.37 279.5,-1092.37 279.5,-1092.37 282.5,-1092.37 285.5,-1095.37 285.5,-1098.37 285.5,-1098.37 285.5,-1104.37 285.5,-1104.37 285.5,-1107.37 282.5,-1110.37 279.5,-1110.37"/>
 <text text-anchor="middle" x="254.5" y="-1099.17" font-family="Helvetica,sans-Serif" font-size="9.00">Home.vue</text>
 </a>
@@ -2971,9 +2980,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="296.98" cy="-1097.01" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/Interface.vue -->
-<g id="node152" class="node">
+<g id="node153" class="node">
 <title>src/views/Interface.vue</title>
-<g id="a_node152"><a xlink:href="src/views/Interface.vue" xlink:title="Interface.vue">
+<g id="a_node153"><a xlink:href="src/views/Interface.vue" xlink:title="Interface.vue">
 <path fill="#41f083" stroke="black" d="M287,-750.37C287,-750.37 222,-750.37 222,-750.37 219,-750.37 216,-747.37 216,-744.37 216,-744.37 216,-738.37 216,-738.37 216,-735.37 219,-732.37 222,-732.37 222,-732.37 287,-732.37 287,-732.37 290,-732.37 293,-735.37 293,-738.37 293,-738.37 293,-744.37 293,-744.37 293,-747.37 290,-750.37 287,-750.37"/>
 <text text-anchor="middle" x="254.5" y="-739.17" font-family="Helvetica,sans-Serif" font-size="9.00">Interface.vue</text>
 </a>
@@ -2988,9 +2997,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="304.79" cy="-737.44" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/InterfaceCreateAccount.vue -->
-<g id="node153" class="node">
+<g id="node154" class="node">
 <title>src/views/InterfaceCreateAccount.vue</title>
-<g id="a_node153"><a xlink:href="src/views/InterfaceCreateAccount.vue" xlink:title="InterfaceCreateAccount.vue">
+<g id="a_node154"><a xlink:href="src/views/InterfaceCreateAccount.vue" xlink:title="InterfaceCreateAccount.vue">
 <path fill="#41f083" stroke="black" d="M320,-780.37C320,-780.37 189,-780.37 189,-780.37 186,-780.37 183,-777.37 183,-774.37 183,-774.37 183,-768.37 183,-768.37 183,-765.37 186,-762.37 189,-762.37 189,-762.37 320,-762.37 320,-762.37 323,-762.37 326,-765.37 326,-768.37 326,-768.37 326,-774.37 326,-774.37 326,-777.37 323,-780.37 320,-780.37"/>
 <text text-anchor="middle" x="254.5" y="-769.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceCreateAccount.vue</text>
 </a>
@@ -3005,9 +3014,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="336.41" cy="-776.45" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/InterfaceDeployContract.vue -->
-<g id="node154" class="node">
+<g id="node155" class="node">
 <title>src/views/InterfaceDeployContract.vue</title>
-<g id="a_node154"><a xlink:href="src/views/InterfaceDeployContract.vue" xlink:title="InterfaceDeployContract.vue">
+<g id="a_node155"><a xlink:href="src/views/InterfaceDeployContract.vue" xlink:title="InterfaceDeployContract.vue">
 <path fill="#41f083" stroke="black" d="M321.5,-960.37C321.5,-960.37 187.5,-960.37 187.5,-960.37 184.5,-960.37 181.5,-957.37 181.5,-954.37 181.5,-954.37 181.5,-948.37 181.5,-948.37 181.5,-945.37 184.5,-942.37 187.5,-942.37 187.5,-942.37 321.5,-942.37 321.5,-942.37 324.5,-942.37 327.5,-945.37 327.5,-948.37 327.5,-948.37 327.5,-954.37 327.5,-954.37 327.5,-957.37 324.5,-960.37 321.5,-960.37"/>
 <text text-anchor="middle" x="254.5" y="-949.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceDeployContract.vue</text>
 </a>
@@ -3022,9 +3031,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="338.09" cy="-957.44" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/InterfaceDownloadFile.vue -->
-<g id="node155" class="node">
+<g id="node156" class="node">
 <title>src/views/InterfaceDownloadFile.vue</title>
-<g id="a_node155"><a xlink:href="src/views/InterfaceDownloadFile.vue" xlink:title="InterfaceDownloadFile.vue">
+<g id="a_node156"><a xlink:href="src/views/InterfaceDownloadFile.vue" xlink:title="InterfaceDownloadFile.vue">
 <path fill="#41f083" stroke="black" d="M316,-1020.37C316,-1020.37 193,-1020.37 193,-1020.37 190,-1020.37 187,-1017.37 187,-1014.37 187,-1014.37 187,-1008.37 187,-1008.37 187,-1005.37 190,-1002.37 193,-1002.37 193,-1002.37 316,-1002.37 316,-1002.37 319,-1002.37 322,-1005.37 322,-1008.37 322,-1008.37 322,-1014.37 322,-1014.37 322,-1017.37 319,-1020.37 316,-1020.37"/>
 <text text-anchor="middle" x="254.5" y="-1009.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceDownloadFile.vue</text>
 </a>
@@ -3039,9 +3048,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="332.96" cy="-1014.63" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/InterfaceInteractWithContract.vue -->
-<g id="node156" class="node">
+<g id="node157" class="node">
 <title>src/views/InterfaceInteractWithContract.vue</title>
-<g id="a_node156"><a xlink:href="src/views/InterfaceInteractWithContract.vue" xlink:title="InterfaceInteractWithContract.vue">
+<g id="a_node157"><a xlink:href="src/views/InterfaceInteractWithContract.vue" xlink:title="InterfaceInteractWithContract.vue">
 <path fill="#41f083" stroke="black" d="M335,-930.37C335,-930.37 174,-930.37 174,-930.37 171,-930.37 168,-927.37 168,-924.37 168,-924.37 168,-918.37 168,-918.37 168,-915.37 171,-912.37 174,-912.37 174,-912.37 335,-912.37 335,-912.37 338,-912.37 341,-915.37 341,-918.37 341,-918.37 341,-924.37 341,-924.37 341,-927.37 338,-930.37 335,-930.37"/>
 <text text-anchor="middle" x="254.5" y="-919.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceInteractWithContract.vue</text>
 </a>
@@ -3056,9 +3065,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="343.67" cy="-940.29" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/InterfaceSendTransfer.vue -->
-<g id="node157" class="node">
+<g id="node158" class="node">
 <title>src/views/InterfaceSendTransfer.vue</title>
-<g id="a_node157"><a xlink:href="src/views/InterfaceSendTransfer.vue" xlink:title="InterfaceSendTransfer.vue">
+<g id="a_node158"><a xlink:href="src/views/InterfaceSendTransfer.vue" xlink:title="InterfaceSendTransfer.vue">
 <path fill="#41f083" stroke="black" d="M316,-870.37C316,-870.37 193,-870.37 193,-870.37 190,-870.37 187,-867.37 187,-864.37 187,-864.37 187,-858.37 187,-858.37 187,-855.37 190,-852.37 193,-852.37 193,-852.37 316,-852.37 316,-852.37 319,-852.37 322,-855.37 322,-858.37 322,-858.37 322,-864.37 322,-864.37 322,-867.37 319,-870.37 316,-870.37"/>
 <text text-anchor="middle" x="254.5" y="-859.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceSendTransfer.vue</text>
 </a>
@@ -3073,9 +3082,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="332.96" cy="-864.63" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/InterfaceSignMessage.vue -->
-<g id="node158" class="node">
+<g id="node159" class="node">
 <title>src/views/InterfaceSignMessage.vue</title>
-<g id="a_node158"><a xlink:href="src/views/InterfaceSignMessage.vue" xlink:title="InterfaceSignMessage.vue">
+<g id="a_node159"><a xlink:href="src/views/InterfaceSignMessage.vue" xlink:title="InterfaceSignMessage.vue">
 <path fill="#41f083" stroke="black" d="M316,-990.37C316,-990.37 193,-990.37 193,-990.37 190,-990.37 187,-987.37 187,-984.37 187,-984.37 187,-978.37 187,-978.37 187,-975.37 190,-972.37 193,-972.37 193,-972.37 316,-972.37 316,-972.37 319,-972.37 322,-975.37 322,-978.37 322,-978.37 322,-984.37 322,-984.37 322,-987.37 319,-990.37 316,-990.37"/>
 <text text-anchor="middle" x="254.5" y="-979.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceSignMessage.vue</text>
 </a>
@@ -3090,9 +3099,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="332.96" cy="-984.63" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/InterfaceUploadFile.vue -->
-<g id="node159" class="node">
+<g id="node160" class="node">
 <title>src/views/InterfaceUploadFile.vue</title>
-<g id="a_node159"><a xlink:href="src/views/InterfaceUploadFile.vue" xlink:title="InterfaceUploadFile.vue">
+<g id="a_node160"><a xlink:href="src/views/InterfaceUploadFile.vue" xlink:title="InterfaceUploadFile.vue">
 <path fill="#41f083" stroke="black" d="M309.5,-810.37C309.5,-810.37 199.5,-810.37 199.5,-810.37 196.5,-810.37 193.5,-807.37 193.5,-804.37 193.5,-804.37 193.5,-798.37 193.5,-798.37 193.5,-795.37 196.5,-792.37 199.5,-792.37 199.5,-792.37 309.5,-792.37 309.5,-792.37 312.5,-792.37 315.5,-795.37 315.5,-798.37 315.5,-798.37 315.5,-804.37 315.5,-804.37 315.5,-807.37 312.5,-810.37 309.5,-810.37"/>
 <text text-anchor="middle" x="254.5" y="-799.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceUploadFile.vue</text>
 </a>
@@ -3107,9 +3116,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="326.64" cy="-801.95" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/InterfaceVerifyMessage.vue -->
-<g id="node160" class="node">
+<g id="node161" class="node">
 <title>src/views/InterfaceVerifyMessage.vue</title>
-<g id="a_node160"><a xlink:href="src/views/InterfaceVerifyMessage.vue" xlink:title="InterfaceVerifyMessage.vue">
+<g id="a_node161"><a xlink:href="src/views/InterfaceVerifyMessage.vue" xlink:title="InterfaceVerifyMessage.vue">
 <path fill="#41f083" stroke="black" d="M318.5,-900.37C318.5,-900.37 190.5,-900.37 190.5,-900.37 187.5,-900.37 184.5,-897.37 184.5,-894.37 184.5,-894.37 184.5,-888.37 184.5,-888.37 184.5,-885.37 187.5,-882.37 190.5,-882.37 190.5,-882.37 318.5,-882.37 318.5,-882.37 321.5,-882.37 324.5,-885.37 324.5,-888.37 324.5,-888.37 324.5,-894.37 324.5,-894.37 324.5,-897.37 321.5,-900.37 318.5,-900.37"/>
 <text text-anchor="middle" x="254.5" y="-889.17" font-family="Helvetica,sans-Serif" font-size="9.00">InterfaceVerifyMessage.vue</text>
 </a>
@@ -3124,9 +3133,9 @@
 <ellipse fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" cx="335.14" cy="-895.73" rx="2.4" ry="2.4"/>
 </g>
 <!-- src/views/PrivacyPolicy.vue -->
-<g id="node161" class="node">
+<g id="node162" class="node">
 <title>src/views/PrivacyPolicy.vue</title>
-<g id="a_node161"><a xlink:href="src/views/PrivacyPolicy.vue" xlink:title="PrivacyPolicy.vue">
+<g id="a_node162"><a xlink:href="src/views/PrivacyPolicy.vue" xlink:title="PrivacyPolicy.vue">
 <path fill="#41f083" stroke="black" d="M294.5,-1170.37C294.5,-1170.37 214.5,-1170.37 214.5,-1170.37 211.5,-1170.37 208.5,-1167.37 208.5,-1164.37 208.5,-1164.37 208.5,-1158.37 208.5,-1158.37 208.5,-1155.37 211.5,-1152.37 214.5,-1152.37 214.5,-1152.37 294.5,-1152.37 294.5,-1152.37 297.5,-1152.37 300.5,-1155.37 300.5,-1158.37 300.5,-1158.37 300.5,-1164.37 300.5,-1164.37 300.5,-1167.37 297.5,-1170.37 294.5,-1170.37"/>
 <text text-anchor="middle" x="254.5" y="-1159.17" font-family="Helvetica,sans-Serif" font-size="9.00">PrivacyPolicy.vue</text>
 </a>
@@ -3139,9 +3148,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="306.72,-1155.4 300.58,-1157.03 306.4,-1159.58 306.72,-1155.4"/>
 </g>
 <!-- src/views/TermsConditions.vue -->
-<g id="node162" class="node">
+<g id="node163" class="node">
 <title>src/views/TermsConditions.vue</title>
-<g id="a_node162"><a xlink:href="src/views/TermsConditions.vue" xlink:title="TermsConditions.vue">
+<g id="a_node163"><a xlink:href="src/views/TermsConditions.vue" xlink:title="TermsConditions.vue">
 <path fill="#41f083" stroke="black" d="M303.5,-1200.37C303.5,-1200.37 205.5,-1200.37 205.5,-1200.37 202.5,-1200.37 199.5,-1197.37 199.5,-1194.37 199.5,-1194.37 199.5,-1188.37 199.5,-1188.37 199.5,-1185.37 202.5,-1182.37 205.5,-1182.37 205.5,-1182.37 303.5,-1182.37 303.5,-1182.37 306.5,-1182.37 309.5,-1185.37 309.5,-1188.37 309.5,-1188.37 309.5,-1194.37 309.5,-1194.37 309.5,-1197.37 306.5,-1200.37 303.5,-1200.37"/>
 <text text-anchor="middle" x="254.5" y="-1189.17" font-family="Helvetica,sans-Serif" font-size="9.00">TermsConditions.vue</text>
 </a>
@@ -3154,9 +3163,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="309.9,-1200.46 303.54,-1200.41 308.47,-1204.41 309.9,-1200.46"/>
 </g>
 <!-- src/components/ModalMessageSigned.vue -->
-<g id="node126" class="node">
+<g id="node127" class="node">
 <title>src/components/ModalMessageSigned.vue</title>
-<g id="a_node126"><a xlink:href="src/components/ModalMessageSigned.vue" xlink:title="ModalMessageSigned.vue">
+<g id="a_node127"><a xlink:href="src/components/ModalMessageSigned.vue" xlink:title="ModalMessageSigned.vue">
 <path fill="#41f083" stroke="black" d="M875.5,-1494.37C875.5,-1494.37 755.5,-1494.37 755.5,-1494.37 752.5,-1494.37 749.5,-1491.37 749.5,-1488.37 749.5,-1488.37 749.5,-1482.37 749.5,-1482.37 749.5,-1479.37 752.5,-1476.37 755.5,-1476.37 755.5,-1476.37 875.5,-1476.37 875.5,-1476.37 878.5,-1476.37 881.5,-1479.37 881.5,-1482.37 881.5,-1482.37 881.5,-1488.37 881.5,-1488.37 881.5,-1491.37 878.5,-1494.37 875.5,-1494.37"/>
 <text text-anchor="middle" x="815.5" y="-1483.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalMessageSigned.vue</text>
 </a>
@@ -3187,9 +3196,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="981.8,-2113.66 987.04,-2117.26 985.19,-2111.18 981.8,-2113.66"/>
 </g>
 <!-- src/components/ModalRequestToCreateAccount.vue -->
-<g id="node127" class="node">
+<g id="node128" class="node">
 <title>src/components/ModalRequestToCreateAccount.vue</title>
-<g id="a_node127"><a xlink:href="src/components/ModalRequestToCreateAccount.vue" xlink:title="ModalRequestToCreateAccount.vue">
+<g id="a_node128"><a xlink:href="src/components/ModalRequestToCreateAccount.vue" xlink:title="ModalRequestToCreateAccount.vue">
 <path fill="#41f083" stroke="black" d="M897,-1538.37C897,-1538.37 734,-1538.37 734,-1538.37 731,-1538.37 728,-1535.37 728,-1532.37 728,-1532.37 728,-1526.37 728,-1526.37 728,-1523.37 731,-1520.37 734,-1520.37 734,-1520.37 897,-1520.37 897,-1520.37 900,-1520.37 903,-1523.37 903,-1526.37 903,-1526.37 903,-1532.37 903,-1532.37 903,-1535.37 900,-1538.37 897,-1538.37"/>
 <text text-anchor="middle" x="815.5" y="-1527.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalRequestToCreateAccount.vue</text>
 </a>
@@ -3234,9 +3243,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="981,-1954.72 986.37,-1958.12 984.3,-1952.11 981,-1954.72"/>
 </g>
 <!-- src/components/ModalSuccess.vue -->
-<g id="node128" class="node">
+<g id="node129" class="node">
 <title>src/components/ModalSuccess.vue</title>
-<g id="a_node128"><a xlink:href="src/components/ModalSuccess.vue" xlink:title="ModalSuccess.vue">
+<g id="a_node129"><a xlink:href="src/components/ModalSuccess.vue" xlink:title="ModalSuccess.vue">
 <path fill="#41f083" stroke="black" d="M859,-1686.37C859,-1686.37 772,-1686.37 772,-1686.37 769,-1686.37 766,-1683.37 766,-1680.37 766,-1680.37 766,-1674.37 766,-1674.37 766,-1671.37 769,-1668.37 772,-1668.37 772,-1668.37 859,-1668.37 859,-1668.37 862,-1668.37 865,-1671.37 865,-1674.37 865,-1674.37 865,-1680.37 865,-1680.37 865,-1683.37 862,-1686.37 859,-1686.37"/>
 <text text-anchor="middle" x="815.5" y="-1675.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalSuccess.vue</text>
 </a>
@@ -3267,9 +3276,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="981.22,-1954.59 986.54,-1958.07 984.55,-1952.03 981.22,-1954.59"/>
 </g>
 <!-- src/components/ModalUploadProgress.vue -->
-<g id="node129" class="node">
+<g id="node130" class="node">
 <title>src/components/ModalUploadProgress.vue</title>
-<g id="a_node129"><a xlink:href="src/components/ModalUploadProgress.vue" xlink:title="ModalUploadProgress.vue">
+<g id="a_node130"><a xlink:href="src/components/ModalUploadProgress.vue" xlink:title="ModalUploadProgress.vue">
 <path fill="#41f083" stroke="black" d="M688.5,-1780.37C688.5,-1780.37 568.5,-1780.37 568.5,-1780.37 565.5,-1780.37 562.5,-1777.37 562.5,-1774.37 562.5,-1774.37 562.5,-1768.37 562.5,-1768.37 562.5,-1765.37 565.5,-1762.37 568.5,-1762.37 568.5,-1762.37 688.5,-1762.37 688.5,-1762.37 691.5,-1762.37 694.5,-1765.37 694.5,-1768.37 694.5,-1768.37 694.5,-1774.37 694.5,-1774.37 694.5,-1777.37 691.5,-1780.37 688.5,-1780.37"/>
 <text text-anchor="middle" x="628.5" y="-1769.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalUploadProgress.vue</text>
 </a>
@@ -3300,9 +3309,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="982.37,-2113.35 987.49,-2117.12 985.84,-2110.98 982.37,-2113.35"/>
 </g>
 <!-- src/components/ModalWelcome.vue -->
-<g id="node130" class="node">
+<g id="node131" class="node">
 <title>src/components/ModalWelcome.vue</title>
-<g id="a_node130"><a xlink:href="src/components/ModalWelcome.vue" xlink:title="ModalWelcome.vue">
+<g id="a_node131"><a xlink:href="src/components/ModalWelcome.vue" xlink:title="ModalWelcome.vue">
 <path fill="#41f083" stroke="black" d="M861,-1612.37C861,-1612.37 770,-1612.37 770,-1612.37 767,-1612.37 764,-1609.37 764,-1606.37 764,-1606.37 764,-1600.37 764,-1600.37 764,-1597.37 767,-1594.37 770,-1594.37 770,-1594.37 861,-1594.37 861,-1594.37 864,-1594.37 867,-1597.37 867,-1600.37 867,-1600.37 867,-1606.37 867,-1606.37 867,-1609.37 864,-1612.37 861,-1612.37"/>
 <text text-anchor="middle" x="815.5" y="-1601.17" font-family="Helvetica,sans-Serif" font-size="9.00">ModalWelcome.vue</text>
 </a>
@@ -3327,9 +3336,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="981.84,-2113.63 987.07,-2117.25 985.24,-2111.16 981.84,-2113.63"/>
 </g>
 <!-- src/lang/en.json -->
-<g id="node142" class="node">
+<g id="node143" class="node">
 <title>src/lang/en.json</title>
-<g id="a_node142"><a xlink:href="src/lang/en.json" xlink:title="en.json">
+<g id="a_node143"><a xlink:href="src/lang/en.json" xlink:title="en.json">
 <path fill="#ffee44" stroke="black" d="M1172.5,-204.37C1172.5,-204.37 1130.5,-204.37 1130.5,-204.37 1127.5,-204.37 1124.5,-201.37 1124.5,-198.37 1124.5,-198.37 1124.5,-192.37 1124.5,-192.37 1124.5,-189.37 1127.5,-186.37 1130.5,-186.37 1130.5,-186.37 1172.5,-186.37 1172.5,-186.37 1175.5,-186.37 1178.5,-189.37 1178.5,-192.37 1178.5,-192.37 1178.5,-198.37 1178.5,-198.37 1178.5,-201.37 1175.5,-204.37 1172.5,-204.37"/>
 <text text-anchor="middle" x="1151.5" y="-193.17" font-family="Helvetica,sans-Serif" font-size="9.00">en.json</text>
 </a>
@@ -3348,9 +3357,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1083.97,-1596.02 1090.21,-1594.79 1084.57,-1591.86 1083.97,-1596.02"/>
 </g>
 <!-- src/components/OptionalMemoField.vue -->
-<g id="node134" class="node">
+<g id="node135" class="node">
 <title>src/components/OptionalMemoField.vue</title>
-<g id="a_node134"><a xlink:href="src/components/OptionalMemoField.vue" xlink:title="OptionalMemoField.vue">
+<g id="a_node135"><a xlink:href="src/components/OptionalMemoField.vue" xlink:title="OptionalMemoField.vue">
 <path fill="#41f083" stroke="black" d="M683,-1840.37C683,-1840.37 574,-1840.37 574,-1840.37 571,-1840.37 568,-1837.37 568,-1834.37 568,-1834.37 568,-1828.37 568,-1828.37 568,-1825.37 571,-1822.37 574,-1822.37 574,-1822.37 683,-1822.37 683,-1822.37 686,-1822.37 689,-1825.37 689,-1828.37 689,-1828.37 689,-1834.37 689,-1834.37 689,-1837.37 686,-1840.37 683,-1840.37"/>
 <text text-anchor="middle" x="628.5" y="-1829.17" font-family="Helvetica,sans-Serif" font-size="9.00">OptionalMemoField.vue</text>
 </a>
@@ -3369,11 +3378,11 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="793.7,-2320.65 799.84,-2322.29 796.07,-2317.18 793.7,-2320.65"/>
 </g>
 <!-- src/components/PageTitle.vue -->
-<g id="node135" class="node">
+<g id="node136" class="node">
 <title>src/components/PageTitle.vue</title>
-<g id="a_node135"><a xlink:href="src/components/PageTitle.vue" xlink:title="PageTitle.vue">
-<path fill="#41f083" stroke="black" d="M120.5,-1260.37C120.5,-1260.37 55.5,-1260.37 55.5,-1260.37 52.5,-1260.37 49.5,-1257.37 49.5,-1254.37 49.5,-1254.37 49.5,-1248.37 49.5,-1248.37 49.5,-1245.37 52.5,-1242.37 55.5,-1242.37 55.5,-1242.37 120.5,-1242.37 120.5,-1242.37 123.5,-1242.37 126.5,-1245.37 126.5,-1248.37 126.5,-1248.37 126.5,-1254.37 126.5,-1254.37 126.5,-1257.37 123.5,-1260.37 120.5,-1260.37"/>
-<text text-anchor="middle" x="88" y="-1249.17" font-family="Helvetica,sans-Serif" font-size="9.00">PageTitle.vue</text>
+<g id="a_node136"><a xlink:href="src/components/PageTitle.vue" xlink:title="PageTitle.vue">
+<path fill="#41f083" stroke="black" d="M120.5,-1290.37C120.5,-1290.37 55.5,-1290.37 55.5,-1290.37 52.5,-1290.37 49.5,-1287.37 49.5,-1284.37 49.5,-1284.37 49.5,-1278.37 49.5,-1278.37 49.5,-1275.37 52.5,-1272.37 55.5,-1272.37 55.5,-1272.37 120.5,-1272.37 120.5,-1272.37 123.5,-1272.37 126.5,-1275.37 126.5,-1278.37 126.5,-1278.37 126.5,-1284.37 126.5,-1284.37 126.5,-1287.37 123.5,-1290.37 120.5,-1290.37"/>
+<text text-anchor="middle" x="88" y="-1279.17" font-family="Helvetica,sans-Serif" font-size="9.00">PageTitle.vue</text>
 </a>
 </g>
 </g>
@@ -3384,9 +3393,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="1152.72,-1618.48 1150.58,-1612.49 1148.52,-1618.51 1152.72,-1618.48"/>
 </g>
 <!-- src/components/UnitConverter.vue -->
-<g id="node137" class="node">
+<g id="node138" class="node">
 <title>src/components/UnitConverter.vue</title>
-<g id="a_node137"><a xlink:href="src/components/UnitConverter.vue" xlink:title="UnitConverter.vue">
+<g id="a_node138"><a xlink:href="src/components/UnitConverter.vue" xlink:title="UnitConverter.vue">
 <path fill="#41f083" stroke="black" d="M858.5,-1568.37C858.5,-1568.37 772.5,-1568.37 772.5,-1568.37 769.5,-1568.37 766.5,-1565.37 766.5,-1562.37 766.5,-1562.37 766.5,-1556.37 766.5,-1556.37 766.5,-1553.37 769.5,-1550.37 772.5,-1550.37 772.5,-1550.37 858.5,-1550.37 858.5,-1550.37 861.5,-1550.37 864.5,-1553.37 864.5,-1556.37 864.5,-1556.37 864.5,-1562.37 864.5,-1562.37 864.5,-1565.37 861.5,-1568.37 858.5,-1568.37"/>
 <text text-anchor="middle" x="815.5" y="-1557.17" font-family="Helvetica,sans-Serif" font-size="9.00">UnitConverter.vue</text>
 </a>
@@ -3411,9 +3420,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="961.68,-2888.08 967.71,-2886.06 961.74,-2883.88 961.68,-2888.08"/>
 </g>
 <!-- src/components/UploadZone.vue -->
-<g id="node139" class="node">
+<g id="node140" class="node">
 <title>src/components/UploadZone.vue</title>
-<g id="a_node139"><a xlink:href="src/components/UploadZone.vue" xlink:title="UploadZone.vue">
+<g id="a_node140"><a xlink:href="src/components/UploadZone.vue" xlink:title="UploadZone.vue">
 <path fill="#41f083" stroke="black" d="M854.5,-1364.37C854.5,-1364.37 776.5,-1364.37 776.5,-1364.37 773.5,-1364.37 770.5,-1361.37 770.5,-1358.37 770.5,-1358.37 770.5,-1352.37 770.5,-1352.37 770.5,-1349.37 773.5,-1346.37 776.5,-1346.37 776.5,-1346.37 854.5,-1346.37 854.5,-1346.37 857.5,-1346.37 860.5,-1349.37 860.5,-1352.37 860.5,-1352.37 860.5,-1358.37 860.5,-1358.37 860.5,-1361.37 857.5,-1364.37 854.5,-1364.37"/>
 <text text-anchor="middle" x="815.5" y="-1353.17" font-family="Helvetica,sans-Serif" font-size="9.00">UploadZone.vue</text>
 </a>
@@ -3432,36 +3441,36 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="983.12,-1746.35 988.09,-1750.3 986.67,-1744.11 983.12,-1746.35"/>
 </g>
 <!-- src/directives.ts -->
-<g id="node140" class="node">
+<g id="node141" class="node">
 <title>src/directives.ts</title>
-<g id="a_node140"><a xlink:href="src/directives.ts" xlink:title="directives.ts">
+<g id="a_node141"><a xlink:href="src/directives.ts" xlink:title="directives.ts">
 <path fill="#ddfeff" stroke="black" d="M284,-318.37C284,-318.37 225,-318.37 225,-318.37 222,-318.37 219,-315.37 219,-312.37 219,-312.37 219,-306.37 219,-306.37 219,-303.37 222,-300.37 225,-300.37 225,-300.37 284,-300.37 284,-300.37 287,-300.37 290,-303.37 290,-306.37 290,-306.37 290,-312.37 290,-312.37 290,-315.37 287,-318.37 284,-318.37"/>
 <text text-anchor="middle" x="254.5" y="-307.17" font-family="Helvetica,sans-Serif" font-size="9.00">directives.ts</text>
 </a>
 </g>
 </g>
 <!-- src/electron/background.ts -->
-<g id="node141" class="node">
+<g id="node142" class="node">
 <title>src/electron/background.ts</title>
-<g id="a_node141"><a xlink:href="src/electron/background.ts" xlink:title="background.ts">
-<path fill="#ccffcc" stroke="black" d="M123.5,-3438.37C123.5,-3438.37 52.5,-3438.37 52.5,-3438.37 49.5,-3438.37 46.5,-3435.37 46.5,-3432.37 46.5,-3432.37 46.5,-3426.37 46.5,-3426.37 46.5,-3423.37 49.5,-3420.37 52.5,-3420.37 52.5,-3420.37 123.5,-3420.37 123.5,-3420.37 126.5,-3420.37 129.5,-3423.37 129.5,-3426.37 129.5,-3426.37 129.5,-3432.37 129.5,-3432.37 129.5,-3435.37 126.5,-3438.37 123.5,-3438.37"/>
-<text text-anchor="middle" x="88" y="-3427.17" font-family="Helvetica,sans-Serif" font-size="9.00">background.ts</text>
+<g id="a_node142"><a xlink:href="src/electron/background.ts" xlink:title="background.ts">
+<path fill="#ccffcc" stroke="black" d="M123.5,-3728.37C123.5,-3728.37 52.5,-3728.37 52.5,-3728.37 49.5,-3728.37 46.5,-3725.37 46.5,-3722.37 46.5,-3722.37 46.5,-3716.37 46.5,-3716.37 46.5,-3713.37 49.5,-3710.37 52.5,-3710.37 52.5,-3710.37 123.5,-3710.37 123.5,-3710.37 126.5,-3710.37 129.5,-3713.37 129.5,-3716.37 129.5,-3716.37 129.5,-3722.37 129.5,-3722.37 129.5,-3725.37 126.5,-3728.37 123.5,-3728.37"/>
+<text text-anchor="middle" x="88" y="-3717.17" font-family="Helvetica,sans-Serif" font-size="9.00">background.ts</text>
 </a>
 </g>
 </g>
 <!-- src/main.css -->
-<g id="node143" class="node">
+<g id="node144" class="node">
 <title>src/main.css</title>
-<g id="a_node143"><a xlink:href="src/main.css" xlink:title="main.css">
+<g id="a_node144"><a xlink:href="src/main.css" xlink:title="main.css">
 <path fill="#ffffcc" stroke="black" d="M276.5,-392.37C276.5,-392.37 232.5,-392.37 232.5,-392.37 229.5,-392.37 226.5,-389.37 226.5,-386.37 226.5,-386.37 226.5,-380.37 226.5,-380.37 226.5,-377.37 229.5,-374.37 232.5,-374.37 232.5,-374.37 276.5,-374.37 276.5,-374.37 279.5,-374.37 282.5,-377.37 282.5,-380.37 282.5,-380.37 282.5,-386.37 282.5,-386.37 282.5,-389.37 279.5,-392.37 276.5,-392.37"/>
 <text text-anchor="middle" x="254.5" y="-381.17" font-family="Helvetica,sans-Serif" font-size="9.00">main.css</text>
 </a>
 </g>
 </g>
 <!-- src/main.ts -->
-<g id="node144" class="node">
+<g id="node145" class="node">
 <title>src/main.ts</title>
-<g id="a_node144"><a xlink:href="src/main.ts" xlink:title="main.ts">
+<g id="a_node145"><a xlink:href="src/main.ts" xlink:title="main.ts">
 <path fill="#ddfeff" stroke="black" d="M109,-351.37C109,-351.37 67,-351.37 67,-351.37 64,-351.37 61,-348.37 61,-345.37 61,-345.37 61,-339.37 61,-339.37 61,-336.37 64,-333.37 67,-333.37 67,-333.37 109,-333.37 109,-333.37 112,-333.37 115,-336.37 115,-339.37 115,-339.37 115,-345.37 115,-345.37 115,-348.37 112,-351.37 109,-351.37"/>
 <text text-anchor="middle" x="88" y="-340.17" font-family="Helvetica,sans-Serif" font-size="9.00">main.ts</text>
 </a>
@@ -3598,8 +3607,8 @@
 <!-- src/views/AccessMyAccount.vue&#45;&gt;src/components/PageTitle.vue -->
 <g id="edge325" class="edge">
 <title>src/views/AccessMyAccount.vue&#45;&gt;src/components/PageTitle.vue</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M195.87,-828.48C182.25,-830.76 169.07,-835.95 160,-846.37 145.7,-862.8 165.93,-1221.62 152,-1238.37 147.09,-1244.27 140.27,-1247.94 132.93,-1250.15"/>
-<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="131.99,-1248.22 126.66,-1251.68 132.99,-1252.3 131.99,-1248.22"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M195.86,-828.47C182.24,-830.75 169.06,-835.95 160,-846.37 144.69,-863.99 166.64,-1248.2 152,-1266.37 147.05,-1272.51 140.09,-1276.41 132.59,-1278.84"/>
+<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="132,-1276.82 126.77,-1280.42 133.11,-1280.88 132,-1276.82"/>
 </g>
 <!-- src/views/AccessMyAccount.vue&#45;&gt;src/store/modules/wallet.ts -->
 <g id="edge328" class="edge">
@@ -3608,7 +3617,7 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="961.74,-473.7 967.94,-472.3 962.22,-469.53 961.74,-473.7"/>
 </g>
 <!-- src/store/modules/errors -->
-<g id="node169" class="node">
+<g id="node170" class="node">
 <title>src/store/modules/errors</title>
 <path fill="#ffffcc" stroke="red" d="M1016,-424.37C1016,-424.37 974,-424.37 974,-424.37 971,-424.37 968,-421.37 968,-418.37 968,-418.37 968,-412.37 968,-412.37 968,-409.37 971,-406.37 974,-406.37 974,-406.37 1016,-406.37 1016,-406.37 1019,-406.37 1022,-409.37 1022,-412.37 1022,-412.37 1022,-418.37 1022,-418.37 1022,-421.37 1019,-424.37 1016,-424.37"/>
 <text text-anchor="middle" x="995" y="-413.17" font-family="Helvetica,sans-Serif" font-size="9.00" fill="red">errors</text>
@@ -3620,9 +3629,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="961.73,-418.04 967.69,-415.83 961.65,-413.84 961.73,-418.04"/>
 </g>
 <!-- src/wallets/software/SoftwareWallet.ts -->
-<g id="node174" class="node">
+<g id="node175" class="node">
 <title>src/wallets/software/SoftwareWallet.ts</title>
-<g id="a_node174"><a xlink:href="src/wallets/software/SoftwareWallet.ts" xlink:title="SoftwareWallet.ts">
+<g id="a_node175"><a xlink:href="src/wallets/software/SoftwareWallet.ts" xlink:title="SoftwareWallet.ts">
 <path fill="#ddfeff" stroke="black" d="M857,-608.37C857,-608.37 774,-608.37 774,-608.37 771,-608.37 768,-605.37 768,-602.37 768,-602.37 768,-596.37 768,-596.37 768,-593.37 771,-590.37 774,-590.37 774,-590.37 857,-590.37 857,-590.37 860,-590.37 863,-593.37 863,-596.37 863,-596.37 863,-602.37 863,-602.37 863,-605.37 860,-608.37 857,-608.37"/>
 <text text-anchor="middle" x="815.5" y="-597.17" font-family="Helvetica,sans-Serif" font-size="9.00">SoftwareWallet.ts</text>
 </a>
@@ -3739,8 +3748,8 @@
 <!-- src/views/CreateAccount.vue&#45;&gt;src/components/PageTitle.vue -->
 <g id="edge344" class="edge">
 <title>src/views/CreateAccount.vue&#45;&gt;src/components/PageTitle.vue</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M202.67,-707.54C186.72,-709.14 170.55,-714.19 160,-726.37 141.38,-747.88 170.14,-1216.46 152,-1238.37 147.1,-1244.28 140.29,-1247.96 132.95,-1250.17"/>
-<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="132.02,-1248.24 126.69,-1251.7 133.02,-1252.32 132.02,-1248.24"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M202.66,-707.54C186.71,-709.13 170.54,-714.19 160,-726.37 140.37,-749.06 170.77,-1242.96 152,-1266.37 147.07,-1272.52 140.11,-1276.43 132.61,-1278.86"/>
+<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="132.03,-1276.84 126.79,-1280.44 133.13,-1280.89 132.03,-1276.84"/>
 </g>
 <!-- src/views/CreateAccount.vue&#45;&gt;src/store/modules/wallet.ts -->
 <g id="edge348" class="edge">
@@ -3749,9 +3758,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="961.91,-479.85 967.94,-477.86 961.98,-475.65 961.91,-479.85"/>
 </g>
 <!-- src/store/modules/errors.ts -->
-<g id="node170" class="node">
+<g id="node171" class="node">
 <title>src/store/modules/errors.ts</title>
-<g id="a_node170"><a xlink:href="src/store/modules/errors.ts" xlink:title="errors.ts">
+<g id="a_node171"><a xlink:href="src/store/modules/errors.ts" xlink:title="errors.ts">
 <path fill="#ddfeff" stroke="black" d="M1016,-394.37C1016,-394.37 974,-394.37 974,-394.37 971,-394.37 968,-391.37 968,-388.37 968,-388.37 968,-382.37 968,-382.37 968,-379.37 971,-376.37 974,-376.37 974,-376.37 1016,-376.37 1016,-376.37 1019,-376.37 1022,-379.37 1022,-382.37 1022,-382.37 1022,-388.37 1022,-388.37 1022,-391.37 1019,-394.37 1016,-394.37"/>
 <text text-anchor="middle" x="995" y="-383.17" font-family="Helvetica,sans-Serif" font-size="9.00">errors.ts</text>
 </a>
@@ -3778,14 +3787,14 @@
 <!-- src/views/HardwareWalletAffiliates.vue&#45;&gt;src/components/HardwareWalletOffer.vue -->
 <g id="edge353" class="edge">
 <title>src/views/HardwareWalletAffiliates.vue&#45;&gt;src/components/HardwareWalletOffer.vue</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M181.72,-1042.24C173.45,-1045.22 165.89,-1049.72 160,-1056.37 144.52,-1073.85 166.82,-1248.33 152,-1266.37 151.54,-1266.94 151.06,-1267.48 150.56,-1268.01"/>
-<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="148.82,-1266.74 145.69,-1272.27 151.59,-1269.9 148.82,-1266.74"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M181.76,-1042.27C173.48,-1045.24 165.91,-1049.74 160,-1056.37 147.43,-1070.48 162.8,-1203.45 150.95,-1236.79"/>
+<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="148.97,-1236.03 147.98,-1242.31 152.67,-1238.02 148.97,-1236.03"/>
 </g>
 <!-- src/views/HardwareWalletAffiliates.vue&#45;&gt;src/components/PageTitle.vue -->
 <g id="edge354" class="edge">
 <title>src/views/HardwareWalletAffiliates.vue&#45;&gt;src/components/PageTitle.vue</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M181.76,-1042.27C173.48,-1045.24 165.91,-1049.74 160,-1056.37 146.53,-1071.48 165.13,-1222.96 152,-1238.37 147.02,-1244.21 140.17,-1247.86 132.82,-1250.06"/>
-<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="131.88,-1248.13 126.55,-1251.59 132.88,-1252.21 131.88,-1248.13"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M181.72,-1042.24C173.45,-1045.22 165.89,-1049.72 160,-1056.37 144.52,-1073.85 166.82,-1248.33 152,-1266.37 147,-1272.46 140.01,-1276.34 132.49,-1278.77"/>
+<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="131.91,-1276.75 126.67,-1280.35 133.01,-1280.8 131.91,-1276.75"/>
 </g>
 <!-- src/views/Home.vue&#45;&gt;src/store.ts -->
 <g id="edge363" class="edge">
@@ -4262,8 +4271,8 @@
 <!-- src/views/PrivacyPolicy.vue&#45;&gt;src/components/PageTitle.vue -->
 <g id="edge427" class="edge">
 <title>src/views/PrivacyPolicy.vue&#45;&gt;src/components/PageTitle.vue</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M208.28,-1157.83C190.93,-1158.96 172.36,-1163.62 160,-1176.37 140.66,-1196.32 170.89,-1218 152,-1238.37 146.9,-1243.87 140.13,-1247.38 132.93,-1249.56"/>
-<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="132.12,-1247.6 126.81,-1251.1 133.14,-1251.68 132.12,-1247.6"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M208.02,-1157.59C190.64,-1158.68 172.11,-1163.38 160,-1176.37 146.31,-1191.06 165.13,-1251.18 152,-1266.37 147,-1272.15 140.22,-1275.92 132.95,-1278.34"/>
+<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="131.97,-1276.43 126.75,-1280.06 133.1,-1280.48 131.97,-1276.43"/>
 </g>
 <!-- src/views/TermsConditions.vue&#45;&gt;src/formatter.ts -->
 <g id="edge430" class="edge">
@@ -4280,85 +4289,85 @@
 <!-- src/views/TermsConditions.vue&#45;&gt;src/components/PageTitle.vue -->
 <g id="edge429" class="edge">
 <title>src/views/TermsConditions.vue&#45;&gt;src/components/PageTitle.vue</title>
-<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M226.19,-1200.46C206.92,-1207.48 180.92,-1218.21 160,-1231.37 156,-1233.89 156.23,-1236.27 152,-1238.37 146.03,-1241.34 139.41,-1243.63 132.78,-1245.4"/>
-<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="132.04,-1243.42 126.7,-1246.88 133.03,-1247.5 132.04,-1243.42"/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" d="M211.02,-1200.38C192.85,-1206.3 172.9,-1215.92 160,-1231.37 149.77,-1243.62 163.23,-1255.04 152,-1266.37 146.74,-1271.67 139.98,-1275.23 132.83,-1277.6"/>
+<polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="131.97,-1275.66 126.77,-1279.32 133.12,-1279.7 131.97,-1275.66"/>
 </g>
 <!-- src/shims&#45;html2pdf.d.ts -->
-<g id="node163" class="node">
+<g id="node164" class="node">
 <title>src/shims&#45;html2pdf.d.ts</title>
-<g id="a_node163"><a xlink:href="src/shims-html2pdf.d.ts" xlink:title="shims&#45;html2pdf.d.ts">
+<g id="a_node164"><a xlink:href="src/shims-html2pdf.d.ts" xlink:title="shims&#45;html2pdf.d.ts">
 <path fill="#ccffcc" stroke="black" d="M135.5,-318.37C135.5,-318.37 40.5,-318.37 40.5,-318.37 37.5,-318.37 34.5,-315.37 34.5,-312.37 34.5,-312.37 34.5,-306.37 34.5,-306.37 34.5,-303.37 37.5,-300.37 40.5,-300.37 40.5,-300.37 135.5,-300.37 135.5,-300.37 138.5,-300.37 141.5,-303.37 141.5,-306.37 141.5,-306.37 141.5,-312.37 141.5,-312.37 141.5,-315.37 138.5,-318.37 135.5,-318.37"/>
 <text text-anchor="middle" x="88" y="-307.17" font-family="Helvetica,sans-Serif" font-size="9.00">shims&#45;html2pdf.d.ts</text>
 </a>
 </g>
 </g>
 <!-- src/shims&#45;images.d.ts -->
-<g id="node164" class="node">
+<g id="node165" class="node">
 <title>src/shims&#45;images.d.ts</title>
-<g id="a_node164"><a xlink:href="src/shims-images.d.ts" xlink:title="shims&#45;images.d.ts">
+<g id="a_node165"><a xlink:href="src/shims-images.d.ts" xlink:title="shims&#45;images.d.ts">
 <path fill="#ccffcc" stroke="black" d="M131,-283.37C131,-283.37 45,-283.37 45,-283.37 42,-283.37 39,-280.37 39,-277.37 39,-277.37 39,-271.37 39,-271.37 39,-268.37 42,-265.37 45,-265.37 45,-265.37 131,-265.37 131,-265.37 134,-265.37 137,-268.37 137,-271.37 137,-271.37 137,-277.37 137,-277.37 137,-280.37 134,-283.37 131,-283.37"/>
 <text text-anchor="middle" x="88" y="-272.17" font-family="Helvetica,sans-Serif" font-size="9.00">shims&#45;images.d.ts</text>
 </a>
 </g>
 </g>
 <!-- src/shims&#45;tsx.d.ts -->
-<g id="node165" class="node">
+<g id="node166" class="node">
 <title>src/shims&#45;tsx.d.ts</title>
-<g id="a_node165"><a xlink:href="src/shims-tsx.d.ts" xlink:title="shims&#45;tsx.d.ts">
+<g id="a_node166"><a xlink:href="src/shims-tsx.d.ts" xlink:title="shims&#45;tsx.d.ts">
 <path fill="#ccffcc" stroke="black" d="M122,-243.37C122,-243.37 54,-243.37 54,-243.37 51,-243.37 48,-240.37 48,-237.37 48,-237.37 48,-231.37 48,-231.37 48,-228.37 51,-225.37 54,-225.37 54,-225.37 122,-225.37 122,-225.37 125,-225.37 128,-228.37 128,-231.37 128,-231.37 128,-237.37 128,-237.37 128,-240.37 125,-243.37 122,-243.37"/>
 <text text-anchor="middle" x="88" y="-232.17" font-family="Helvetica,sans-Serif" font-size="9.00">shims&#45;tsx.d.ts</text>
 </a>
 </g>
 </g>
 <!-- src/shims&#45;vue.d.ts -->
-<g id="node166" class="node">
+<g id="node167" class="node">
 <title>src/shims&#45;vue.d.ts</title>
-<g id="a_node166"><a xlink:href="src/shims-vue.d.ts" xlink:title="shims&#45;vue.d.ts">
+<g id="a_node167"><a xlink:href="src/shims-vue.d.ts" xlink:title="shims&#45;vue.d.ts">
 <path fill="#ccffcc" stroke="black" d="M123.5,-192.37C123.5,-192.37 52.5,-192.37 52.5,-192.37 49.5,-192.37 46.5,-189.37 46.5,-186.37 46.5,-186.37 46.5,-180.37 46.5,-180.37 46.5,-177.37 49.5,-174.37 52.5,-174.37 52.5,-174.37 123.5,-174.37 123.5,-174.37 126.5,-174.37 129.5,-177.37 129.5,-180.37 129.5,-180.37 129.5,-186.37 129.5,-186.37 129.5,-189.37 126.5,-192.37 123.5,-192.37"/>
 <text text-anchor="middle" x="88" y="-181.17" font-family="Helvetica,sans-Serif" font-size="9.00">shims&#45;vue.d.ts</text>
 </a>
 </g>
 </g>
 <!-- src/store/modules/alerts.ts -->
-<g id="node168" class="node">
+<g id="node169" class="node">
 <title>src/store/modules/alerts.ts</title>
-<g id="a_node168"><a xlink:href="src/store/modules/alerts.ts" xlink:title="alerts.ts">
+<g id="a_node169"><a xlink:href="src/store/modules/alerts.ts" xlink:title="alerts.ts">
 <path fill="#ccffcc" stroke="black" d="M1016,-454.37C1016,-454.37 974,-454.37 974,-454.37 971,-454.37 968,-451.37 968,-448.37 968,-448.37 968,-442.37 968,-442.37 968,-439.37 971,-436.37 974,-436.37 974,-436.37 1016,-436.37 1016,-436.37 1019,-436.37 1022,-439.37 1022,-442.37 1022,-442.37 1022,-448.37 1022,-448.37 1022,-451.37 1019,-454.37 1016,-454.37"/>
 <text text-anchor="middle" x="995" y="-443.17" font-family="Helvetica,sans-Serif" font-size="9.00">alerts.ts</text>
 </a>
 </g>
 </g>
 <!-- src/store/modules/fees.ts -->
-<g id="node171" class="node">
+<g id="node172" class="node">
 <title>src/store/modules/fees.ts</title>
-<g id="a_node171"><a xlink:href="src/store/modules/fees.ts" xlink:title="fees.ts">
+<g id="a_node172"><a xlink:href="src/store/modules/fees.ts" xlink:title="fees.ts">
 <path fill="#ccffcc" stroke="black" d="M1016,-364.37C1016,-364.37 974,-364.37 974,-364.37 971,-364.37 968,-361.37 968,-358.37 968,-358.37 968,-352.37 968,-352.37 968,-349.37 971,-346.37 974,-346.37 974,-346.37 1016,-346.37 1016,-346.37 1019,-346.37 1022,-349.37 1022,-352.37 1022,-352.37 1022,-358.37 1022,-358.37 1022,-361.37 1019,-364.37 1016,-364.37"/>
 <text text-anchor="middle" x="995" y="-353.17" font-family="Helvetica,sans-Serif" font-size="9.00">fees.ts</text>
 </a>
 </g>
 </g>
 <!-- src/store/modules/interfaceMenu.ts -->
-<g id="node172" class="node">
+<g id="node173" class="node">
 <title>src/store/modules/interfaceMenu.ts</title>
-<g id="a_node172"><a xlink:href="src/store/modules/interfaceMenu.ts" xlink:title="interfaceMenu.ts">
+<g id="a_node173"><a xlink:href="src/store/modules/interfaceMenu.ts" xlink:title="interfaceMenu.ts">
 <path fill="#ccffcc" stroke="black" d="M1035,-334.37C1035,-334.37 955,-334.37 955,-334.37 952,-334.37 949,-331.37 949,-328.37 949,-328.37 949,-322.37 949,-322.37 949,-319.37 952,-316.37 955,-316.37 955,-316.37 1035,-316.37 1035,-316.37 1038,-316.37 1041,-319.37 1041,-322.37 1041,-322.37 1041,-328.37 1041,-328.37 1041,-331.37 1038,-334.37 1035,-334.37"/>
 <text text-anchor="middle" x="995" y="-323.17" font-family="Helvetica,sans-Serif" font-size="9.00">interfaceMenu.ts</text>
 </a>
 </g>
 </g>
 <!-- src/store/modules/network.ts -->
-<g id="node173" class="node">
+<g id="node174" class="node">
 <title>src/store/modules/network.ts</title>
-<g id="a_node173"><a xlink:href="src/store/modules/network.ts" xlink:title="network.ts">
+<g id="a_node174"><a xlink:href="src/store/modules/network.ts" xlink:title="network.ts">
 <path fill="#ccffcc" stroke="black" d="M1021.5,-304.37C1021.5,-304.37 968.5,-304.37 968.5,-304.37 965.5,-304.37 962.5,-301.37 962.5,-298.37 962.5,-298.37 962.5,-292.37 962.5,-292.37 962.5,-289.37 965.5,-286.37 968.5,-286.37 968.5,-286.37 1021.5,-286.37 1021.5,-286.37 1024.5,-286.37 1027.5,-289.37 1027.5,-292.37 1027.5,-292.37 1027.5,-298.37 1027.5,-298.37 1027.5,-301.37 1024.5,-304.37 1021.5,-304.37"/>
 <text text-anchor="middle" x="995" y="-293.17" font-family="Helvetica,sans-Serif" font-size="9.00">network.ts</text>
 </a>
 </g>
 </g>
 <!-- src/wallets/hardware/Ledger.ts -->
-<g id="node175" class="node">
+<g id="node176" class="node">
 <title>src/wallets/hardware/Ledger.ts</title>
-<g id="a_node175"><a xlink:href="src/wallets/hardware/Ledger.ts" xlink:title="Ledger.ts">
+<g id="a_node176"><a xlink:href="src/wallets/hardware/Ledger.ts" xlink:title="Ledger.ts">
 <path fill="#ddfeff" stroke="black" d="M838.5,-698.37C838.5,-698.37 792.5,-698.37 792.5,-698.37 789.5,-698.37 786.5,-695.37 786.5,-692.37 786.5,-692.37 786.5,-686.37 786.5,-686.37 786.5,-683.37 789.5,-680.37 792.5,-680.37 792.5,-680.37 838.5,-680.37 838.5,-680.37 841.5,-680.37 844.5,-683.37 844.5,-686.37 844.5,-686.37 844.5,-692.37 844.5,-692.37 844.5,-695.37 841.5,-698.37 838.5,-698.37"/>
 <text text-anchor="middle" x="815.5" y="-687.17" font-family="Helvetica,sans-Serif" font-size="9.00">Ledger.ts</text>
 </a>
@@ -4371,9 +4380,9 @@
 <polygon fill="#000000" fill-opacity="0.200000" stroke="#000000" stroke-width="2" stroke-opacity="0.200000" points="961.32,-702.08 967.46,-700.43 961.63,-697.89 961.32,-702.08"/>
 </g>
 <!-- src/wallets/hardware/trezor.ts -->
-<g id="node176" class="node">
+<g id="node177" class="node">
 <title>src/wallets/hardware/trezor.ts</title>
-<g id="a_node176"><a xlink:href="src/wallets/hardware/trezor.ts" xlink:title="trezor.ts">
+<g id="a_node177"><a xlink:href="src/wallets/hardware/trezor.ts" xlink:title="trezor.ts">
 <path fill="#ccffcc" stroke="black" d="M836.5,-668.37C836.5,-668.37 794.5,-668.37 794.5,-668.37 791.5,-668.37 788.5,-665.37 788.5,-662.37 788.5,-662.37 788.5,-656.37 788.5,-656.37 788.5,-653.37 791.5,-650.37 794.5,-650.37 794.5,-650.37 836.5,-650.37 836.5,-650.37 839.5,-650.37 842.5,-653.37 842.5,-656.37 842.5,-656.37 842.5,-662.37 842.5,-662.37 842.5,-665.37 839.5,-668.37 836.5,-668.37"/>
 <text text-anchor="middle" x="815.5" y="-657.17" font-family="Helvetica,sans-Serif" font-size="9.00">trezor.ts</text>
 </a>

@@ -3,6 +3,7 @@
 const path = require("path");
 const package = require("./package.json");
 const webpack = require("webpack");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const hash = require("child_process").execSync("git rev-parse --short HEAD");
 
 const plugins = [
@@ -13,7 +14,15 @@ const plugins = [
         IS_ELECTRON: "false",
         HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
         CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`
-    })
+    }),
+    new CopyWebpackPlugin([
+        "node_modules/node-hid/build/Release/HID-hidraw.node",
+        "node_modules/node-hid/build/Release/HID.node"
+    ]),
+    new webpack.NormalModuleReplacementPlugin(
+        /^bindings$/,
+        `${__dirname}/src/bindings`
+    )
 ];
 
 const css = {
@@ -35,6 +44,7 @@ const performance = {
 const pluginOptions = {
     pluginOptions: {
         electronBuilder: {
+            outputDir: "dist/electron",
             mainProcessFile: "src/electron/background.ts",
             customFileProtocol: "mhw://./",
             chainWebpackRendererProcess(config) {
@@ -48,16 +58,16 @@ const pluginOptions = {
                 appId: "com.myhbarwallet.app",
                 productName: "MyHbarWallet",
                 copyright: "Copyright © 2020 MyHbarWallet",
-                files: [ "**", "dist/icon.*" ],
+                files: [ "**", "dist/electron/icon.*" ],
                 npmRebuild: true,
                 win: {
                     target: [ "nsis" ],
-                    icon: "./dist/icons/icon.ico"
+                    icon: "./dist/electron/icons/icon.ico"
                 },
                 mac: {
                     category: "public.app-category.utilities",
                     target: "dmg",
-                    icon: "./dist/icons/icon.icns"
+                    icon: "./dist/electron/icons/icon.icns"
                 },
                 linux: {
                     target: [ "pacman", "deb", "rpm" ],
@@ -73,14 +83,17 @@ const pluginOptions = {
     }
 };
 
+const devServer = { devServer: { writeToDisk: true }};
+
 const backWebpack = {
-    outputDir: "dist",
+    outputDir: "dist/electron",
     configureWebpack: {
         target: "electron-renderer",
         ...performance,
         plugins
     },
-    ...pluginOptions
+    ...pluginOptions,
+    ...devServer
 };
 
 const chainConfig = {
@@ -128,6 +141,6 @@ const chainConfig = {
     }
 };
 
-const backEnd = { ...css, ...backWebpack, ...chainConfig };
+const backEnd = { ...css, ...backWebpack, ...chainConfig, ...devServer };
 
 module.exports = backEnd;

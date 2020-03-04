@@ -58,10 +58,16 @@ const performance = {
 // Webpack externals are modules that are expected to be present externally
 // Therefore, webpack will not bundle dependencies from this list
 // So, to exclude node only libraries on the front end, list here
-const frontEndExternals = { externals: { "@ledgerhq/hw-transport-node-hid-noevents": "module" }};
+const frontEndExternals = {
+    externals: {
+        "@ledgerhq/hw-transport-node-hid-noevents": "module",
+        "@improbable-eng/grpc-web-node-http-transport": "module",
+        "node-hid": "module"
+    }
+};
 
 const frontWebpack = {
-    outputDir: "dist",
+    outputDir: "dist/web",
     configureWebpack: {
         target: "web",
         ...performance,
