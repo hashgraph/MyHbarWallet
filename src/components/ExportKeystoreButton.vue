@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import {
-    createComponent,
+    defineComponent,
     reactive,
     Ref,
     ref,
@@ -39,7 +39,7 @@ export interface State {
     modalExportDownloadKeystoreState: ModalExportDownloadKeystoreState;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Tooltip,
         MaterialDesignIcon,

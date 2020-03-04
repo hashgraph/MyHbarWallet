@@ -79,7 +79,7 @@
 <script lang="ts">
 import {
     computed,
-    createComponent,
+    defineComponent,
     PropType,
     SetupContext,
     ref,
@@ -116,7 +116,7 @@ export interface Props {
     state: State;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Button,

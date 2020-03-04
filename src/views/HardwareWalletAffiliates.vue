@@ -24,12 +24,12 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 import HardwareWalletOffer from "../components/HardwareWalletOffer.vue";
 import PageTitle from "../components/PageTitle.vue";
 import affiliates from "../affiliates";
 
-export default createComponent({
+export default defineComponent({
     components: {
         HardwareWalletOffer,
         PageTitle

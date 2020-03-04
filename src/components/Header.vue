@@ -133,7 +133,7 @@
 <script lang="ts">
 import Button from "../components/Button.vue";
 import {
-    createComponent,
+    defineComponent,
     computed,
     reactive
 } from "@vue/composition-api";
@@ -150,7 +150,7 @@ function handleReturnClick(): void {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Button,
         HeaderHamburgerMenu,

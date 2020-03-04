@@ -58,7 +58,7 @@ import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import {
     computed,
-    createComponent,
+    defineComponent,
     reactive,
     SetupContext,
     watch
@@ -106,7 +106,7 @@ async function isPublicKeyValid(key: string): Promise<boolean> {
     }
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         TextInput,
         InterfaceForm,

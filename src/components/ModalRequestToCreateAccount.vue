@@ -62,7 +62,7 @@
 import Modal from "../components/Modal.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
-import { createComponent, PropType, SetupContext } from "@vue/composition-api";
+import { defineComponent, PropType, SetupContext } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import { writeToClipboard } from "../clipboard";
 import ReadOnlyInput from "../components/ReadOnlyInput.vue";
@@ -75,7 +75,7 @@ interface Props {
     event: string;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         TextInput,

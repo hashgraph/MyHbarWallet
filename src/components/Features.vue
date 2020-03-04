@@ -23,9 +23,9 @@
 import Feature from "../components/Feature.vue";
 import wallet from "../assets/icon-wallet.svg";
 import hardware from "../assets/icon-hardware.svg";
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     components: { Feature },
     props: {},
     setup() {

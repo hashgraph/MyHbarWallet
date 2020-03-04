@@ -44,7 +44,7 @@ import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import {
-    createComponent,
+    defineComponent,
     SetupContext,
     PropType,
     watch,
@@ -57,7 +57,7 @@ export interface State {
     isBusy: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Button,
         Modal,

@@ -40,12 +40,12 @@
 </template>
 
 <script lang="ts">
-import { createComponent, reactive } from "@vue/composition-api";
+import { defineComponent, reactive } from "@vue/composition-api";
 import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 import PasswordWithConfirm, { State as PasswordWithConfirmState } from "../components/PasswordWithConfirm.vue";
 
-export default createComponent({
+export default defineComponent({
     components: {
         TextInput,
         SwitchButton,

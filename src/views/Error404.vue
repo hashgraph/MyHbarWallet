@@ -12,9 +12,9 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 
-export default createComponent({ components: {}, props: {}});
+export default defineComponent({ components: {}, props: {}});
 </script>
 
 <style scoped lang="postcss">

@@ -74,7 +74,7 @@ import ModalEnterAccountId, { ModalEnterAccountIdElement } from "../components/M
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { AccessAccountDTO } from "../store/modules/wallet";
 import {
-    createComponent,
+    defineComponent,
     reactive,
     ref,
     SetupContext,
@@ -91,7 +91,7 @@ interface State {
     loginMethod: LoginMethod | null;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         FAQs,
         AccountTileButtons,

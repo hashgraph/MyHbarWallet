@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { computed, createComponent, SetupContext } from "@vue/composition-api";
+import { computed, defineComponent, SetupContext } from "@vue/composition-api";
 import Modal from "./Modal.vue";
 import ReadOnlyInput from "./ReadOnlyInput.vue";
 import { writeToClipboard } from "../clipboard";
@@ -62,7 +62,7 @@ interface Props {
     publicKey: string;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         ReadOnlyInput,

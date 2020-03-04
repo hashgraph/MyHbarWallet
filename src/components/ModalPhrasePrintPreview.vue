@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, SetupContext } from "@vue/composition-api";
+import { defineComponent, ref, SetupContext } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import Modal from "./Modal.vue";
 import Mnemonic from "../components/MnemonicInput.vue";
@@ -87,7 +87,7 @@ interface Props {
     password: string;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Button,
         Modal,

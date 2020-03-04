@@ -59,9 +59,9 @@
 import noLoseIcon from "../assets/icon-no-lose.svg";
 import noShareIcon from "../assets/icon-no-share.svg";
 import makeBackupIcon from "../assets/icon-make-backup.svg";
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     setup() {
         return {
             noLoseIcon,

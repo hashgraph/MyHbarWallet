@@ -33,7 +33,7 @@
 <script lang="ts">
 import Tooltip from "./Tooltip.vue";
 import {
-    createComponent,
+    defineComponent,
     computed,
     reactive,
     watch
@@ -46,7 +46,7 @@ async function getNetwork(): Promise<NetworkSettings> {
     return getters.GET_NETWORK();
 }
 
-export default createComponent({
+export default defineComponent({
     components: { Tooltip },
     props: {},
     setup() {

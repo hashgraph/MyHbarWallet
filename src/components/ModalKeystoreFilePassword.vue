@@ -32,7 +32,7 @@ import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import {
     computed,
-    createComponent,
+    defineComponent,
     PropType,
     watch,
     SetupContext,
@@ -50,7 +50,7 @@ interface Props {
     state: State;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Warning,

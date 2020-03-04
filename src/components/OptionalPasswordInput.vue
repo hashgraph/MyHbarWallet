@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext, watch, reactive } from "@vue/composition-api";
+import { defineComponent, SetupContext, watch, reactive } from "@vue/composition-api";
 import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 
@@ -57,7 +57,7 @@ interface State {
     showPassword: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         TextInput,
         SwitchButton

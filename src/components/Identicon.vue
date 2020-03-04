@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, PropType } from "@vue/composition-api";
+import { defineComponent, computed, PropType } from "@vue/composition-api";
 
 // Must turn off observe setting BEFORE importing this module.. someone shoot me
 ((window as unknown) as { jdenticon_config: { replaceMode: string } })[
@@ -21,7 +21,7 @@ interface Props {
     value: string;
 }
 
-export default createComponent({
+export default defineComponent({
     props: {
         size: (Number as unknown) as PropType<number>,
         value: (String as unknown) as PropType<string>

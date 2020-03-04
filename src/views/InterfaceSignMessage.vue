@@ -45,7 +45,7 @@ import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import ModalConfirmSignMessage from "../components/ModalConfirmSignMessage.vue";
 import ModalMessageSigned from "../components/ModalMessageSigned.vue";
-import { createComponent, reactive, watch } from "@vue/composition-api";
+import { defineComponent, reactive, watch } from "@vue/composition-api";
 
 interface State {
     message: string | null;
@@ -55,7 +55,7 @@ interface State {
     signedModalIsOpen: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     name: "InterfaceSignMessage",
     components: {
         InterfaceForm,

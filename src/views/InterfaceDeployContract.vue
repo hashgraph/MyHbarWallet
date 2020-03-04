@@ -42,7 +42,7 @@ import InterfaceForm from "../components/InterfaceForm.vue";
 import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 
-import { createComponent, reactive, computed } from "@vue/composition-api";
+import { defineComponent, reactive, computed } from "@vue/composition-api";
 
 interface State {
     byteCodeIsValid: boolean;
@@ -50,7 +50,7 @@ interface State {
     maxFeeIsValid: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         InterfaceForm,
         TextInput,

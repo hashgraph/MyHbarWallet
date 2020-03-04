@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, SetupContext, reactive } from "@vue/composition-api";
+import { defineComponent, SetupContext, reactive } from "@vue/composition-api";
 import TextInput from "../components/TextInput.vue";
 import SwitchButton from "../components/SwitchButton.vue";
 
@@ -38,7 +38,7 @@ interface Context extends SetupContext {
     };
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         TextInput,
         SwitchButton

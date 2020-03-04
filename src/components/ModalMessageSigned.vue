@@ -22,13 +22,13 @@
     </Modal>
 </template>
 <script lang="ts">
-import { createComponent, PropType } from "@vue/composition-api";
+import { defineComponent, PropType } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import TextInput from "../components/TextInput.vue";
 import { writeToClipboard } from "../clipboard";
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Button,

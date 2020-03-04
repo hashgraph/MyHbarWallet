@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import {
-    createComponent,
+    defineComponent,
     reactive,
     computed,
     ref,
@@ -48,7 +48,7 @@ export interface Props {
     compact: boolean | null;
 }
 
-export default createComponent({
+export default defineComponent({
     components: { TextInput },
     props: {
         isOpen: Boolean,

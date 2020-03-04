@@ -17,9 +17,9 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType } from "@vue/composition-api";
+import { defineComponent, PropType } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     props: {
         image: (String as unknown) as PropType<string>,
         title: (String as unknown) as PropType<string>

@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, reactive } from "@vue/composition-api";
+import { defineComponent, reactive } from "@vue/composition-api";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import Button from "../components/Button.vue";
 import visaMasterImage from "../assets/visamaster.png";
@@ -32,7 +32,7 @@ import ModalPurchaseHbar from "../components/ModalPurchaseHbar.vue";
 import iconHBarOutline from "../assets/icon-hbar-outline.svg";
 import { mdiTwitter } from "@mdi/js";
 
-export default createComponent({
+export default defineComponent({
     components: { Button, MaterialDesignIcon, ModalPurchaseHbar },
     setup() {
         const state = reactive({ isOpen: false });

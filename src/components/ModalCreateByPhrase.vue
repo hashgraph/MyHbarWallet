@@ -113,7 +113,7 @@ import OptionalPasswordWithConfirm from "../components/OptionalPasswordWithConfi
 import { State as PasswordWithConfirmState } from "../components/PasswordWithConfirm.vue";
 import {
     computed,
-    createComponent,
+    defineComponent,
     onMounted,
     PropType,
     reactive,
@@ -127,7 +127,7 @@ interface Props {
     isOpen: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Warning,

@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, reactive, Ref } from "@vue/composition-api";
+import { defineComponent, ref, reactive, Ref } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiFileUpload } from "@mdi/js";
@@ -59,7 +59,7 @@ async function uint8ArrayOf(file: File): Promise<Uint8Array> {
     return new Uint8Array(fileBuff);
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Button,
         MaterialDesignIcon

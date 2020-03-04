@@ -42,7 +42,7 @@
 <script lang="ts">
 import {
     computed,
-    createComponent,
+    defineComponent,
     reactive,
     SetupContext,
     watch,
@@ -94,7 +94,7 @@ function untranslate(value: string): NetworkName {
     return NetworkName.TESTNET;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Button,
         IDInput,

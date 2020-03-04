@@ -22,9 +22,9 @@
 import HomeTileButton from "../components/HomeTileButton.vue";
 import unlockWallet from "../assets/unlock-wallet.png";
 import walletImage from "../assets/wallet-hbar.svg";
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     components: { HomeTileButton },
     props: {},
     setup() {

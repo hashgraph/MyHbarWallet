@@ -36,7 +36,7 @@ import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import PurchaseWalletLink from "../components/PurchaseWalletLink.vue";
 import {
-    createComponent,
+    defineComponent,
     reactive,
     watch,
     SetupContext
@@ -48,7 +48,7 @@ export enum AccessSoftwareOption {
     Key = "key"
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         RadioButtonGroup,
         Button,

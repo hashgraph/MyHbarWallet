@@ -16,9 +16,9 @@
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiAlertCircle } from "@mdi/js";
 import Tooltip from "../components/Tooltip.vue";
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     components: {
         MaterialDesignIcon,
         Tooltip

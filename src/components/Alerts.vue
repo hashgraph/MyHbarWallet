@@ -16,10 +16,10 @@
 
 <script lang="ts">
 import Alert from "../components/Alert.vue";
-import { createComponent, computed } from "@vue/composition-api";
+import { defineComponent, computed } from "@vue/composition-api";
 import { store } from "../store";
 
-export default createComponent({
+export default defineComponent({
     components: { Alert },
     props: {},
     setup() {

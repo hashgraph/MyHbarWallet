@@ -30,9 +30,9 @@
 <script lang="ts">
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiCheckCircle } from "@mdi/js";
-import { createComponent, computed } from "@vue/composition-api";
+import { defineComponent, computed } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     model: {
         prop: "checked",

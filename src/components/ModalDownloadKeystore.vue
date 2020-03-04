@@ -30,7 +30,7 @@
 <script lang="ts">
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
-import { createComponent, SetupContext } from "@vue/composition-api";
+import { defineComponent, SetupContext } from "@vue/composition-api";
 import KeystoreWarningCards from "./KeystoreWarningCards.vue";
 
 export interface State {
@@ -43,7 +43,7 @@ interface Props {
     state: State;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Button,

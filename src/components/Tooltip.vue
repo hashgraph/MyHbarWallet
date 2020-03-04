@@ -24,7 +24,7 @@ import {
     computed,
     onBeforeMount,
     reactive,
-    createComponent,
+    defineComponent,
     SetupContext
 } from "@vue/composition-api";
 
@@ -39,7 +39,7 @@ type Context = SetupContext & {
     };
 };
 
-export default createComponent({
+export default defineComponent({
     props: {
         message: { type: String, required: true },
         pinnable: { type: Boolean, required: false }

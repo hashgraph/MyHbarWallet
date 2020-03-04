@@ -14,13 +14,13 @@
 <script lang="ts">
 import { mdiChevronUp } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
-import { computed, createComponent, ref } from "@vue/composition-api";
+import { computed, defineComponent, ref } from "@vue/composition-api";
 
 function handleClick(): void {
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     props: {},
     setup() {

@@ -18,9 +18,9 @@
 <script lang="ts">
 import ModalCustomerService from "../components/ModalCustomerService.vue";
 import serviceBell from "../assets/help-center.svg";
-import { createComponent, reactive } from "@vue/composition-api";
+import { defineComponent, reactive } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     components: { ModalCustomerService },
     props: {},
     setup() {

@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import {
-    createComponent,
+    defineComponent,
     PropType,
     reactive,
     watch,
@@ -56,7 +56,7 @@ interface Props {
     words: string[];
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Button,

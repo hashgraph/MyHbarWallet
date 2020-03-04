@@ -60,7 +60,7 @@ import {
     mdiCoinOutline,
     mdiFileDocumentBoxMultipleOutline
 } from "@mdi/js";
-import { computed, createComponent } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import { LoginMethod } from "../wallets/Wallet";
 import { mutations, store } from "../store";
 
@@ -70,7 +70,7 @@ function handleClick(): void {
     mutations.SET_INTERFACE_MENU_IS_OPEN(false);
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         InterfaceNavigationSection,
         MaterialDesignIcon

@@ -25,9 +25,9 @@
 
 <script lang="ts">
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
-import { computed, createComponent, PropType } from "@vue/composition-api";
+import { computed, defineComponent, PropType } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     props: {
         title: (String as unknown) as PropType<string>,

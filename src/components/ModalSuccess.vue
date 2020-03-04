@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { computed, createComponent, PropType, ref } from "@vue/composition-api";
+import { computed, defineComponent, PropType, ref } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
 import { mdiCheck } from "@mdi/js";
@@ -53,7 +53,7 @@ interface Props {
     state: State;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Button,

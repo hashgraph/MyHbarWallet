@@ -28,7 +28,7 @@
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiMinus } from "@mdi/js";
 import {
-    createComponent,
+    defineComponent,
     PropType,
     SetupContext,
     computed
@@ -39,7 +39,7 @@ interface Props {
     isInterface: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     props: {
         isOpen: (Boolean as unknown) as PropType<boolean>,

@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, SetupContext, computed, ref } from "@vue/composition-api";
+import { defineComponent, PropType, SetupContext, computed, ref } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
@@ -67,7 +67,7 @@ export interface State {
     termsShowNonOperator: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     props: { state: Object as PropType<State> },
     components: {
         Button,

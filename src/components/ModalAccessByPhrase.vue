@@ -55,7 +55,7 @@ import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import OptionalPasswordInput from "./OptionalPasswordInput.vue";
 import Warning from "../components/Warning.vue";
 import {
-    createComponent,
+    defineComponent,
     watch,
     SetupContext,
     PropType
@@ -69,7 +69,7 @@ export interface State {
     isValid: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         MnemonicInput,

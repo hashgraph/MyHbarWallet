@@ -18,14 +18,14 @@
 </template>
 
 <script lang="ts">
-import { computed, createComponent, PropType } from "@vue/composition-api";
+import { computed, defineComponent, PropType } from "@vue/composition-api";
 
 interface Props {
     checked: boolean | string | number;
     values: string[] | null;
 }
 
-export default createComponent({
+export default defineComponent({
     model: {
         prop: "checked",
         event: "change"

@@ -115,7 +115,7 @@ import NetworkCard from "./NetworkCard.vue";
 import Button from "../components/Button.vue";
 
 import {
-    createComponent,
+    defineComponent,
     PropType,
     computed,
     SetupContext,
@@ -129,7 +129,7 @@ interface Props {
     network: string;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         MaterialDesignIcon,
         BalanceCard,

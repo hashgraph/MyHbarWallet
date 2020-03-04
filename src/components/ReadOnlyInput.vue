@@ -18,14 +18,14 @@
 <script lang="ts">
 import {
     computed,
-    createComponent,
+    defineComponent,
     PropType,
     reactive
 } from "@vue/composition-api";
 import { mdiEye, mdiEyeOutline } from "@mdi/js";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
-export default createComponent({
+export default defineComponent({
     props: {
         value: (String as unknown) as PropType<string | null>,
         multiline: Boolean,

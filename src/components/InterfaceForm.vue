@@ -13,10 +13,10 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 import InterfaceFormTitle from "../components/InterfaceFormTitle.vue";
 
-export default createComponent({
+export default defineComponent({
     components: { InterfaceFormTitle },
     props: { title: { type: String, required: true }}
 });

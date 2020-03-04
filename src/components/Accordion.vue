@@ -24,11 +24,11 @@
 </template>
 
 <script lang="ts">
-import { reactive, createComponent } from "@vue/composition-api";
+import { reactive, defineComponent } from "@vue/composition-api";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiChevronUp } from "@mdi/js";
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     props: {},
     setup() {

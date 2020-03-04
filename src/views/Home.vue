@@ -68,7 +68,7 @@ import FAQs from "../components/FAQs.vue";
 import Community from "../components/Community.vue";
 import HomeTileButtons from "../components/HomeTileButtons.vue";
 import circleImage from "../assets/circle.png";
-import { createComponent, reactive } from "@vue/composition-api";
+import { defineComponent, reactive } from "@vue/composition-api";
 import hbarOrb from "../assets/hbar_orb.svg";
 import mountainTop from "../assets/mountain_top.svg";
 import ModalWelcome from "../components/ModalWelcome.vue";
@@ -77,7 +77,7 @@ import platform from "platform";
 
 declare const IS_ELECTRON: boolean;
 
-export default createComponent({
+export default defineComponent({
     components: {
         FAQs,
         HomeTileButtons,

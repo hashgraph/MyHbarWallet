@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import { mutations } from "../store";
 
@@ -19,7 +19,7 @@ function emitMenuOpen(): void {
     mutations.SET_INTERFACE_MENU_IS_OPEN(true);
 }
 
-export default createComponent({
+export default defineComponent({
     props: { title: { type: String, required: true }},
     components: { Button },
     setup() {
