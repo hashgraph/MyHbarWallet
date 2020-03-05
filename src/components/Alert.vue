@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, PropType } from "@vue/composition-api";
+import { defineComponent, computed, PropType } from "@vue/composition-api";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import {
     mdiClose,
@@ -34,7 +34,7 @@ interface Props {
     level: string;
 }
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     props: {
         id: (Number as unknown) as PropType<number>,

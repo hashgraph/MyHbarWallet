@@ -47,7 +47,7 @@
 import InterfaceForm from "../components/InterfaceForm.vue";
 import Button from "../components/Button.vue";
 import {
-    createComponent,
+    defineComponent,
     computed,
     reactive,
     Ref,
@@ -72,7 +72,7 @@ async function hashFile(file: Uint8Array): Promise<Uint8Array> {
 // The approximate maximum size of a chunk - formerly 2923 which would sometimes cause transaction oversize error
 const MAX_CHUNK_LENGTH = 2900;
 
-export default createComponent({
+export default defineComponent({
     components: {
         InterfaceForm,
         UploadZone,

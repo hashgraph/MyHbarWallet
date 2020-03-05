@@ -28,11 +28,11 @@
 </template>
 
 <script lang="ts">
-import { createComponent, reactive, watch } from "@vue/composition-api";
+import { defineComponent, reactive, watch } from "@vue/composition-api";
 import { mdiLoading } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     props: {
         outline: { type: Boolean },

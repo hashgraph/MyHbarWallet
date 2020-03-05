@@ -1,30 +1,28 @@
 <template>
-    <div class="modal-password">
-        <Modal
-            :title="$t('modalKeystoreFilePassword.title')"
-            :not-closable="state.isBusy"
-            :is-open="state.isOpen"
-            @change="handleModalChangeIsOpen"
-        >
-            <form @submit.prevent="handleSubmit">
-                <TextInput
-                    ref="input"
-                    class="input"
-                    :value="state.password"
-                    :error="state.error"
-                    :placeholder="$t('common.password.nineCharacters')"
-                    obscure
-                    @input="handleInputChange"
-                />
-                <Button
-                    class="btn"
-                    :busy="state.isBusy"
-                    :label="$t('modalKeystoreFilePassword.accessWallet')"
-                    :disabled="disabled"
-                />
-            </form>
-        </Modal>
-    </div>
+    <Modal
+        :title="$t('modalKeystoreFilePassword.title')"
+        :not-closable="state.isBusy"
+        :is-open="state.isOpen"
+        @change="handleModalChangeIsOpen"
+    >
+        <form @submit.prevent="handleSubmit">
+            <TextInput
+                ref="input"
+                class="input"
+                :value="state.password"
+                :error="state.error"
+                :placeholder="$t('common.password.nineCharacters')"
+                obscure
+                @input="handleInputChange"
+            />
+            <Button
+                class="btn"
+                :busy="state.isBusy"
+                :label="$t('modalKeystoreFilePassword.accessWallet')"
+                :disabled="disabled"
+            />
+        </form>
+    </Modal>
 </template>
 
 <script lang="ts">
@@ -34,7 +32,7 @@ import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import {
     computed,
-    createComponent,
+    defineComponent,
     PropType,
     watch,
     SetupContext,
@@ -52,7 +50,7 @@ interface Props {
     state: State;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Warning,

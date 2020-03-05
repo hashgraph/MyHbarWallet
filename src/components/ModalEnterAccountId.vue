@@ -1,87 +1,85 @@
 <template>
-    <div class="modal-enter-account-id">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalEnterAccountId.title')"
-            @change="handleModalChangeIsOpen"
-        >
-            <template v-slot:banner>
-                <Notice
-                    class="notice"
-                    :symbol="mdiHelpCircleOutline"
-                >
-                    {{ $t("modalEnterAccountId.hederaAccountIdsAre") }}
-                </Notice>
-            </template>
-            <form @submit.stop.prevent="handleSubmit">
+    <Modal
+        :is-open="state.isOpen"
+        :title="$t('modalEnterAccountId.title')"
+        @change="handleModalChangeIsOpen"
+    >
+        <template v-slot:banner>
+            <Notice
+                class="notice"
+                :symbol="mdiHelpCircleOutline"
+            >
+                {{ $t("modalEnterAccountId.hederaAccountIdsAre") }}
+            </Notice>
+        </template>
+        <form @submit.stop.prevent="handleSubmit">
+            <div
+                v-if="hasPublicKey"
+                class="container"
+            >
                 <div
-                    v-if="hasPublicKey"
-                    class="container"
-                >
-                    <div
-                        class="subtitle"
-                        v-text="$t('modalEnterAccountId.verifyKey')"
-                    />
-                    <ReadOnlyInput
-                        class="input"
-                        :value="publicKey"
-                        multiline
-                    />
-                </div>
-                <div class="container">
-                    <div
-                        class="subtitle"
-                        v-text="$t('modalEnterAccountId.network')"
-                    />
-                    <NetworkSelector
-                        ref="networkSelector"
-                        :node-error="state.nodeError"
-                        :address-error="state.addressError"
-                        @network="reEmitNetwork"
-                        @valid="handleNetworkValid"
-                    />
-                </div>
-                <div class="container">
-                    <div
-                        class="subtitle"
-                        v-text="$t('modalEnterAccountId.accountId')"
-                    />
-                    <IDInput
-                        ref="input"
-                        :is-open="state.isOpen"
-                        :error="state.errorMessage"
-                        :disabled="state.isBusy"
-                        @valid="handleValid"
-                        @input="handleAccount"
-                    />
-                </div>
-                <div class="buttons">
-                    <Button
-                        compact
-                        outline
-                        :label="$t('modalEnterAccountId.noAccountId')"
-                        class="button"
-                        type="button"
-                        @click="handleDontHaveAccount"
-                    />
-                    <Button
-                        compact
-                        :label="$t('common.continue')"
-                        class="button"
-                        type="submit"
-                        :disabled="!allValid"
-                        :busy="state.isBusy"
-                    />
-                </div>
-            </form>
-        </Modal>
-    </div>
+                    class="subtitle"
+                    v-text="$t('modalEnterAccountId.verifyKey')"
+                />
+                <ReadOnlyInput
+                    class="input"
+                    :value="publicKey"
+                    multiline
+                />
+            </div>
+            <div class="container">
+                <div
+                    class="subtitle"
+                    v-text="$t('modalEnterAccountId.network')"
+                />
+                <NetworkSelector
+                    ref="networkSelector"
+                    :node-error="state.nodeError"
+                    :address-error="state.addressError"
+                    @network="reEmitNetwork"
+                    @valid="handleNetworkValid"
+                />
+            </div>
+            <div class="container">
+                <div
+                    class="subtitle"
+                    v-text="$t('modalEnterAccountId.accountId')"
+                />
+                <IDInput
+                    ref="input"
+                    :is-open="state.isOpen"
+                    :error="state.errorMessage"
+                    :disabled="state.isBusy"
+                    @valid="handleValid"
+                    @input="handleAccount"
+                />
+            </div>
+            <div class="buttons">
+                <Button
+                    compact
+                    outline
+                    :label="$t('modalEnterAccountId.noAccountId')"
+                    class="button"
+                    type="button"
+                    @click="handleDontHaveAccount"
+                />
+                <Button
+                    compact
+                    :label="$t('common.continue')"
+                    class="button"
+                    type="submit"
+                    :disabled="!allValid"
+                    :busy="state.isBusy"
+                />
+            </div>
+        </form>
+    </Modal>
 </template>
 
 <script lang="ts">
 import {
     computed,
-    createComponent,
+    defineComponent,
     PropType,
     SetupContext,
     ref,
@@ -118,7 +116,7 @@ export interface Props {
     state: State;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Button,

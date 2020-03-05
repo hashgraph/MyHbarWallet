@@ -33,7 +33,7 @@
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 import {
-    createComponent,
+    defineComponent,
     reactive,
     computed,
     PropType,
@@ -50,7 +50,7 @@ interface State {
     dropdownIsOpen: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     model: {
         prop: "selected",

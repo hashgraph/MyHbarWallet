@@ -31,9 +31,9 @@
 <script lang="ts">
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiArrowRight } from "@mdi/js";
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     props: {
         route: { type: String, required: true },

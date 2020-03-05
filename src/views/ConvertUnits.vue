@@ -49,9 +49,9 @@
 <script lang="ts">
 import UnitConverter from "../components/UnitConverter.vue";
 import CirclePage from "../components/CirclePage.vue";
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     components: {
         UnitConverter,
         CirclePage

@@ -95,12 +95,12 @@
 </template>
 
 <script lang="ts">
-import { createComponent, reactive } from "@vue/composition-api";
+import { defineComponent, reactive } from "@vue/composition-api";
 import ModalCustomerService from "../components/ModalCustomerService.vue";
 import hbar from "../assets/icon-hbar-outline.svg";
 import affiliates from "../affiliates";
 
-export default createComponent({
+export default defineComponent({
     components: { ModalCustomerService },
     props: {},
     setup() {

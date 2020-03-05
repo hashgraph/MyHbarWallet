@@ -1,44 +1,42 @@
 <template>
-    <div class="create-with-keystore-file">
-        <Modal
-            :title="$t('modalCreateByKeystore.title')"
-            :is-open="state.isOpen"
-            @change="handleModalChangeIsOpen"
-        >
-            <div class="password-info-header-wrapper">
-                <div class="password-info-header">
-                    {{ $t("modalCreateByKeystore.yourPassword") }}
-                    <InfoButton
-                        :message="
-                            $t(
-                                'common.password.thisPasswordEncryptsYourPrivateKey'
-                            )
-                        "
-                    />
-                </div>
-            </div>
-
-            <PasswordGenerator
-                @submit="handleSubmitPassword"
-            />
-
-            <p
-                class="footer"
-                v-html="
-                    formatRich(
+    <Modal
+        :title="$t('modalCreateByKeystore.title')"
+        :is-open="state.isOpen"
+        @change="handleModalChangeIsOpen"
+    >
+        <div class="password-info-header-wrapper">
+            <div class="password-info-header">
+                {{ $t("modalCreateByKeystore.yourPassword") }}
+                <InfoButton
+                    :message="
                         $t(
-                            'modalCreateByKeystore.doNotForgetToSaveYourPassword'
-                        ).toString(),
-                        { strongClass: 'important' }
-                    )
-                "
-            />
-        </Modal>
-    </div>
+                            'common.password.thisPasswordEncryptsYourPrivateKey'
+                        )
+                    "
+                />
+            </div>
+        </div>
+
+        <PasswordGenerator
+            @submit="handleSubmitPassword"
+        />
+
+        <p
+            class="footer"
+            v-html="
+                formatRich(
+                    $t(
+                        'modalCreateByKeystore.doNotForgetToSaveYourPassword'
+                    ).toString(),
+                    { strongClass: 'important' }
+                )
+            "
+        />
+    </Modal>
 </template>
 
 <script lang="ts">
-import { createComponent, PropType } from "@vue/composition-api";
+import { defineComponent, PropType } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
 import InfoButton from "../components/InfoButton.vue";
@@ -55,7 +53,7 @@ interface Props {
     state: State;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Warning,

@@ -64,7 +64,7 @@ import ModalDownloadKeystore from "../components/ModalDownloadKeystore.vue";
 import ModalEnterAccountId, { ModalEnterAccountIdElement } from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import {
-    createComponent,
+    defineComponent,
     reactive,
     ref,
     SetupContext,
@@ -82,7 +82,7 @@ interface State {
     loginMethod: LoginMethod | null;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         FAQs,
         AccountTileButtons,
@@ -200,8 +200,8 @@ export default createComponent({
                         state.modalRequestToCreateAccountState.isOpen = true;
                     } catch (error) {
                         if (
-                            error.name === "TransportStatusError" &&
-                            state.loginMethod === LoginMethod.Ledger
+                            error.name === "TransportStatusError" ||
+                            error.name === "TransportOpenUserCancelled"
                         ) {
                             await actions.handleLedgerError({
                                 error,

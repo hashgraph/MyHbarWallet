@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, PropType, Ref } from "@vue/composition-api";
+import { defineComponent, computed, PropType, Ref } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 import { Item } from "./ModalFeeSummary.vue";
 import { formatSplit, formatRightPad } from "../formatter";
@@ -51,7 +51,7 @@ interface SplitItem {
     value: string | null;
 }
 
-export default createComponent({
+export default defineComponent({
     props: { items: Array as PropType<Item[]> },
     components: { InfoButton },
     setup(props: { items: Item[] }) {

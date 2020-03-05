@@ -1,47 +1,45 @@
 <template>
-    <div class="verify-phrase">
-        <Modal
-            :title="$t('modalVerifyPhrase.title')"
-            :is-open="isOpen"
-            @change="this.$listeners.change"
-        >
-            <div class="prompt">
-                {{ $t("modalVerifyPhrase.pleaseEnterAndFillOut") }}
-            </div>
-            <form @submit.prevent="handleVerify">
-                <div class="mnemonic">
-                    <label
-                        v-for="index in words.length"
-                        :key="index"
-                        :class="{
-                            readonly: isDisabled(index - 1),
-                            'is-focused': state.focused === index - 1
-                        }"
+    <Modal
+        :title="$t('modalVerifyPhrase.title')"
+        :is-open="isOpen"
+        @change="this.$listeners.change"
+    >
+        <div class="prompt">
+            {{ $t("modalVerifyPhrase.pleaseEnterAndFillOut") }}
+        </div>
+        <form @submit.prevent="handleVerify">
+            <div class="mnemonic">
+                <label
+                    v-for="index in words.length"
+                    :key="index"
+                    :class="{
+                        readonly: isDisabled(index - 1),
+                        'is-focused': state.focused === index - 1
+                    }"
+                >
+                    <span class="number">{{ index }}.</span>
+                    <input
+                        ref="input"
+                        class="word"
+                        :readonly="isDisabled(index - 1)"
+                        :value="valueForIndex(index - 1)"
+                        :data-index="index - 1"
+                        :tabindex="isDisabled(index - 1) ? -1 : null"
+                        @focus="handleFocus"
+                        @input="handleInput"
                     >
-                        <span class="number">{{ index }}.</span>
-                        <input
-                            ref="input"
-                            class="word"
-                            :readonly="isDisabled(index - 1)"
-                            :value="valueForIndex(index - 1)"
-                            :data-index="index - 1"
-                            :tabindex="isDisabled(index - 1) ? -1 : null"
-                            @focus="handleFocus"
-                            @input="handleInput"
-                        >
-                    </label>
-                </div>
-                <div class="btn-container">
-                    <Button :label="$t('modalVerifyPhrase.verify')" />
-                </div>
-            </form>
-        </Modal>
-    </div>
+                </label>
+            </div>
+            <div class="btn-container">
+                <Button :label="$t('modalVerifyPhrase.verify')" />
+            </div>
+        </form>
+    </Modal>
 </template>
 
 <script lang="ts">
 import {
-    createComponent,
+    defineComponent,
     PropType,
     reactive,
     watch,
@@ -58,7 +56,7 @@ interface Props {
     words: string[];
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Button,

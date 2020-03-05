@@ -41,7 +41,7 @@
 
 <script lang="ts">
 import {
-    createComponent,
+    defineComponent,
     PropType,
     computed,
     SetupContext
@@ -67,7 +67,7 @@ function handleClick(): void {
     mutations.SET_INTERFACE_MENU_IS_OPEN(false);
 }
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     props: {
         icon: (String as unknown) as PropType<string>,

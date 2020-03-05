@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, reactive, watch } from "@vue/composition-api";
+import { defineComponent, reactive, watch } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import RadioButtonGroup from "../components/RadioButtonGroup.vue";
 import imagePhrase from "../assets/button-phrase.svg";
@@ -46,7 +46,7 @@ interface State {
     optionSelected: CreateSoftwareOption | null;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         RadioButtonGroup,
         Button,

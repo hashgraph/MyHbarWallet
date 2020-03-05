@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 
-export default createComponent({
+export default defineComponent({
     props: {
         title: { type: String, required: true },
         large: { type: Boolean }

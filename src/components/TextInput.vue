@@ -119,7 +119,7 @@
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiEye, mdiEyeOutline, mdiCheckCircle } from "@mdi/js";
 import {
-    createComponent,
+    defineComponent,
     Ref,
     computed,
     PropType,
@@ -173,7 +173,7 @@ export interface Component {
     hasDecorations: Ref<boolean>;
 }
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     props: {
         placeholder: (String as unknown) as PropType<string>,

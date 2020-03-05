@@ -1,38 +1,36 @@
 <template>
-    <div class="modal-create-by-mnemonic-phrase">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalDownloadKeystore.title')"
-            not-closable
-            @change="handleModalChangeIsOpen"
-        >
-            <KeystoreWarningCards />
-            <div class="button-container">
-                <Button
-                    :label="$t('modalDownloadKeystore.downloadKeystoreFile')"
-                    :busy="state.isBusy"
-                    :disabled="state.isBusy"
-                    :outline="state.downloadClicked"
-                    compact
-                    class="download-button"
-                    @click="handleDownloadClick"
-                />
-                <Button
-                    :label="$t('common.continue')"
-                    :disabled="!state.downloadClicked"
-                    compact
-                    class="continue-button"
-                    @click="$emit('continue')"
-                />
-            </div>
-        </Modal>
-    </div>
+    <Modal
+        :is-open="state.isOpen"
+        :title="$t('modalDownloadKeystore.title')"
+        not-closable
+        @change="handleModalChangeIsOpen"
+    >
+        <KeystoreWarningCards />
+        <div class="button-container">
+            <Button
+                :label="$t('modalDownloadKeystore.downloadKeystoreFile')"
+                :busy="state.isBusy"
+                :disabled="state.isBusy"
+                :outline="state.downloadClicked"
+                compact
+                class="download-button"
+                @click="handleDownloadClick"
+            />
+            <Button
+                :label="$t('common.continue')"
+                :disabled="!state.downloadClicked"
+                compact
+                class="continue-button"
+                @click="$emit('continue')"
+            />
+        </div>
+    </Modal>
 </template>
 
 <script lang="ts">
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
-import { createComponent, SetupContext } from "@vue/composition-api";
+import { defineComponent, SetupContext } from "@vue/composition-api";
 import KeystoreWarningCards from "./KeystoreWarningCards.vue";
 
 export interface State {
@@ -45,7 +43,7 @@ interface Props {
     state: State;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Button,

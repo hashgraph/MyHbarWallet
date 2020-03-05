@@ -38,7 +38,7 @@
 <script lang="ts">
 import InterfaceForm from "../components/InterfaceForm.vue";
 import {
-    createComponent,
+    defineComponent,
     reactive,
     ref,
     computed,
@@ -75,7 +75,7 @@ type IdInput = Vue & {
     clear(): void;
 };
 
-export default createComponent({
+export default defineComponent({
     components: {
         InterfaceForm,
         Button,

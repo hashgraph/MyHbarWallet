@@ -1,5 +1,5 @@
+/* eslint-disable no-process-env, @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports */
 /* eslint-env node */
-/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 const package = require("./package.json");
 const webpack = require("webpack");
@@ -13,7 +13,7 @@ const plugins = [
         COMMIT_HASH: `"${hash.toString().trim()}"`,
         IS_ELECTRON: "false",
         HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
-        CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`,
+        CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`
     })
 ];
 
@@ -39,58 +39,44 @@ if (process.env.NODE_ENV === "production") {
     );
 }
 
-module.exports = {
+const css = {
     css: {
         // Turn on CSS source maps in development
         sourceMap: process.env.NODE_ENV !== "production"
-    },
+    }
+};
+
+const performance = {
+    performance: {
+        // only report this as an error when building for production
+        hints: process.env.NODE_ENV === "production" ? "error" : false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 1450000
+    }
+};
+
+// Webpack externals are modules that are expected to be present externally
+// Therefore, webpack will not bundle dependencies from this list
+// So, to exclude node only libraries on the front end, list here
+const frontEndExternals = {
+    externals: {
+        "@ledgerhq/hw-transport-node-hid-noevents": "module",
+        "@improbable-eng/grpc-web-node-http-transport": "module",
+        "node-hid": "module"
+    }
+};
+
+const frontWebpack = {
+    outputDir: "dist/web",
     configureWebpack: {
         target: "web",
-        performance: {
-            // only report this as an error when building for production
-            hints: process.env.NODE_ENV === "production" ? "error" : false,
-            maxEntrypointSize: 512000,
-            maxAssetSize: 1450000
-        },
+        ...performance,
+        ...frontEndExternals,
         plugins
-    },
-    pluginOptions: {
-        electronBuilder: {
-            mainProcessFile: "src/electron/background.ts",
-            customFileProtocol: "mhw://./",
-            chainWebpackRendererProcess(config) {
-                config.plugin("define").tap((args) => {
-                    args[ 0 ].IS_ELECTRON = "true";
-                    return args;
-                });
-            },
-            nodeIntegration: true,
-            builderOptions: {
-                appId: "com.myhbarwallet.app",
-                productName: "MyHbarWallet",
-                copyright: "Copyright © 2019 MyHbarWallet",
-                files: [ "**", "build/icon.*" ],
-                win: {
-                    target: [ "nsis" ],
-                    icon: "./build/icons/icon.ico"
-                },
-                mac: {
-                    category: "public.app-category.utilities",
-                    target: "dmg",
-                    icon: "./build/icons/icon.icns"
-                },
-                linux: {
-                    target: [ "pacman", "deb", "rpm" ],
-                    executableName: "MyHbarWallet",
-                    category: "Utility",
-                    desktop: {
-                        Name: "MyHbarWallet",
-                        Type: "Application"
-                    }
-                }
-            }
-        }
-    },
+    }
+};
+
+const chainConfig = {
     chainWebpack(config) {
         // Use a standard HTML template instead of rolling our own (which is default)
         // https://github.com/jaketrent/html-webpack-template#basic-usage
@@ -134,3 +120,7 @@ module.exports = {
         }
     }
 };
+
+const frontEnd = { ...css, ...frontWebpack, ...chainConfig };
+
+module.exports = frontEnd;

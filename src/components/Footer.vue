@@ -89,14 +89,14 @@
 import { mdiFacebook, mdiGithubCircle, mdiTwitter, mdiMedium } from "@mdi/js";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import FooterTop from "../components/FooterTop.vue";
-import { createComponent, computed } from "@vue/composition-api";
+import { defineComponent, computed } from "@vue/composition-api";
 
 // Both of these are defined in vue.config.js.
 // VERSION reads from package.json and COMMIT_HASH is git rev-parse --short HEAD output
 declare const VERSION: string;
 declare const COMMIT_HASH: string;
 
-export default createComponent({
+export default defineComponent({
     components: {
         MaterialDesignIcon,
         FooterTop

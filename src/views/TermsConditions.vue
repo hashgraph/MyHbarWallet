@@ -210,10 +210,10 @@
 <script lang="ts">
 import CirclePage from "../components/CirclePage.vue";
 import PageTitle from "../components/PageTitle.vue";
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 import { formatRich } from "../formatter";
 
-export default createComponent({
+export default defineComponent({
     components: {
         CirclePage,
         PageTitle

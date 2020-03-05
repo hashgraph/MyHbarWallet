@@ -54,7 +54,7 @@ import Button from "../components/Button.vue";
 import TextInput from "../components/TextInput.vue";
 import {
     computed,
-    createComponent,
+    defineComponent,
     reactive,
     SetupContext,
     watch
@@ -73,7 +73,7 @@ interface Props {
     isOpen: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Button,
         Modal,

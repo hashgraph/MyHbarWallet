@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import {
-    createComponent,
+    defineComponent,
     watch,
     SetupContext,
     computed,
@@ -153,7 +153,7 @@ export interface Props {
     state: State;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         RadioButtonGroup,
         Button,

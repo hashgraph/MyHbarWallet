@@ -23,7 +23,7 @@ import ZoomTopButton from "./components/ZoomTopButton.vue";
 import ModalLogOut from "./components/ModalLogOut.vue";
 import ModalReportError from "./components/ModalReportError.vue";
 import {
-    createComponent,
+    defineComponent,
     SetupContext,
     computed,
     ref,
@@ -31,7 +31,7 @@ import {
 } from "@vue/composition-api";
 import { getters, store } from "./store";
 
-export default createComponent({
+export default defineComponent({
     components: {
         Header,
         Footer,

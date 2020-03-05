@@ -26,7 +26,7 @@
     </div>
 </template>
 <script lang="ts">
-import { createComponent, PropType } from "@vue/composition-api";
+import { defineComponent, PropType } from "@vue/composition-api";
 import InfoButton from "./InfoButton.vue";
 
 export interface State {
@@ -35,7 +35,7 @@ export interface State {
     receiver?: string | undefined;
 }
 
-export default createComponent({
+export default defineComponent({
     props: { state: Object as PropType<State> },
     components: { InfoButton },
     setup(props) {

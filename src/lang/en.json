@@ -47,6 +47,7 @@
     "common.error.lockedDevice": "Permission Denied from Device",
     "common.error.loginFailed": "Failed to log in",
     "common.error.noConnection": "Could not reach the network. Check your connection and try again",
+    "common.error.noDeviceSelected": "No device selected. Please reload, then try again.",
     "common.error.noSession": "Invalid session, try re-logging in",
     "common.error.nullAccountOnInterface": "Null account on interface!",
     "common.error.nullTransaction": "Transaction returned is null",

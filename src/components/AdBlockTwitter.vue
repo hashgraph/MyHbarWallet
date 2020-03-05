@@ -16,11 +16,11 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiTwitter } from "@mdi/js";
 
-export default createComponent({
+export default defineComponent({
     components: { MaterialDesignIcon },
     setup() {
         return { mdiTwitter };

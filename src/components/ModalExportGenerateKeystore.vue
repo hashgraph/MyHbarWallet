@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, SetupContext } from "@vue/composition-api";
+import { defineComponent, PropType, SetupContext } from "@vue/composition-api";
 import Modal from "../components/Modal.vue";
 import InfoButton from "../components/InfoButton.vue";
 import { mdiArrowRight } from "@mdi/js";
@@ -46,7 +46,7 @@ interface Props {
     state: State;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         InfoButton,

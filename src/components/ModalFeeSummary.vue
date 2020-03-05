@@ -1,47 +1,45 @@
 <template>
-    <div class="modal-fee-summary">
-        <Modal
-            :is-open="state.isOpen"
-            :title="$t('modalFeeSummary.title')"
-            not-closable
-            @change="handleCancel"
-        >
-            <ModalFeeSummaryTitle
-                :amount="state.amount"
-                :account="state.account"
-                :type="state.txType"
+    <Modal
+        :is-open="state.isOpen"
+        :title="$t('modalFeeSummary.title')"
+        not-closable
+        @change="handleCancel"
+    >
+        <ModalFeeSummaryTitle
+            :amount="state.amount"
+            :account="state.account"
+            :type="state.txType"
+        />
+        <div class="separator" />
+        <ModalFeeSummaryTerms
+            :state="termsState"
+        />
+        <div class="separator" />
+        <ModalFeeSummaryItems :items="state.items" />
+        <div class="buttons">
+            <Button
+                compact
+                outline
+                :label="state.cancelLabel ? state.cancelLabel : $t('common.cancel')"
+                class="button"
+                type="button"
+                @click="handleCancel"
             />
-            <div class="separator" />
-            <ModalFeeSummaryTerms
-                :state="termsState"
+            <Button
+                compact
+                :busy="state.isBusy"
+                :label="state.submitLabel ? state.submitLabel : $t('common.continue')"
+                class="button"
+                type="submit"
+                @submit="handleSubmit"
+                @click="handleSubmit"
             />
-            <div class="separator" />
-            <ModalFeeSummaryItems :items="state.items" />
-            <div class="buttons">
-                <Button
-                    compact
-                    outline
-                    :label="state.cancelLabel ? state.cancelLabel : $t('common.cancel')"
-                    class="button"
-                    type="button"
-                    @click="handleCancel"
-                />
-                <Button
-                    compact
-                    :busy="state.isBusy"
-                    :label="state.submitLabel ? state.submitLabel : $t('common.continue')"
-                    class="button"
-                    type="submit"
-                    @submit="handleSubmit"
-                    @click="handleSubmit"
-                />
-            </div>
-        </Modal>
-    </div>
+        </div>
+    </Modal>
 </template>
 
 <script lang="ts">
-import { createComponent, PropType, SetupContext, computed, ref } from "@vue/composition-api";
+import { defineComponent, PropType, SetupContext, computed, ref } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
@@ -69,7 +67,7 @@ export interface State {
     termsShowNonOperator: boolean;
 }
 
-export default createComponent({
+export default defineComponent({
     props: { state: Object as PropType<State> },
     components: {
         Button,

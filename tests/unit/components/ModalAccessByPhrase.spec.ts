@@ -52,11 +52,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
             listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-mnemonic-phrase">
-              <!---->
-            </div>
-        `);
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 
     it("renders not busy, valid", (): void => {
@@ -102,11 +98,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
             listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-mnemonic-phrase">
-              <!---->
-            </div>
-        `);
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 
     it("renders busy, not valid", (): void => {
@@ -152,11 +144,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
             listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-mnemonic-phrase">
-              <!---->
-            </div>
-        `);
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 
     it("renders busy, valid", (): void => {
@@ -202,10 +190,6 @@ describe("ModalAccessByPhrase.vue", (): void => {
             listeners: { change: onChange }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(`
-            <div class="modal-mnemonic-phrase">
-              <!---->
-            </div>
-        `);
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 });

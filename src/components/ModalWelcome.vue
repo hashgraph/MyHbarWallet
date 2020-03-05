@@ -61,7 +61,7 @@ import {
     mdiRedhat
 } from "@mdi/js";
 import {
-    createComponent,
+    defineComponent,
     PropType,
     SetupContext,
     computed
@@ -72,7 +72,7 @@ interface Props {
     platform: string;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Button,
         Modal,

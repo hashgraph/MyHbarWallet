@@ -1,30 +1,28 @@
 <template>
-    <div class="modal-access-by-software">
-        <Modal
-            :is-open="isOpen"
-            :title="$t('modalAccessBySoftware.title')"
-            @change="this.$listeners.change"
-        >
-            <template>
-                <form
-                    class="modal-access-by-software"
-                    @submit.prevent="handleSubmit"
-                >
-                    <RadioButtonGroup
-                        v-model="state.optionSelected"
-                        name="software-access-option"
-                        :options="options"
-                    />
-                    <PurchaseWalletLink />
-                    <Button
-                        :disabled="state.optionSelected == null"
-                        :label="$t('common.continue')"
-                    />
-                    <CustomerSupportLink class="support-link" />
-                </form>
-            </template>
-        </Modal>
-    </div>
+    <Modal
+        :is-open="isOpen"
+        :title="$t('modalAccessBySoftware.title')"
+        @change="this.$listeners.change"
+    >
+        <template>
+            <form
+                class="modal-access-by-software"
+                @submit.prevent="handleSubmit"
+            >
+                <RadioButtonGroup
+                    v-model="state.optionSelected"
+                    name="software-access-option"
+                    :options="options"
+                />
+                <PurchaseWalletLink />
+                <Button
+                    :disabled="state.optionSelected == null"
+                    :label="$t('common.continue')"
+                />
+                <CustomerSupportLink class="support-link" />
+            </form>
+        </template>
+    </Modal>
 </template>
 
 <script lang="ts">
@@ -38,7 +36,7 @@ import Warning from "../components/Warning.vue";
 import CustomerSupportLink from "../components/CustomerSupportLink.vue";
 import PurchaseWalletLink from "../components/PurchaseWalletLink.vue";
 import {
-    createComponent,
+    defineComponent,
     reactive,
     watch,
     SetupContext
@@ -50,7 +48,7 @@ export enum AccessSoftwareOption {
     Key = "key"
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         RadioButtonGroup,
         Button,
@@ -105,9 +103,9 @@ export default createComponent({
 
 <style lang="postcss" scoped>
 .modal-access-by-software {
-    align-items: stretch;
-    display: flex;
-    flex-direction: column;
+    & button {
+        width: 100%;
+    }
 }
 
 .hardware-link {

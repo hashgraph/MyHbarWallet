@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType } from "@vue/composition-api";
+import { defineComponent, PropType } from "@vue/composition-api";
 import RadioButton from "../components/RadioButton.vue";
 
 interface Option {
@@ -26,7 +26,7 @@ interface Option {
     image: string;
 }
 
-export default createComponent({
+export default defineComponent({
     components: { RadioButton },
     model: {
         prop: "selected",

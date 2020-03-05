@@ -62,7 +62,7 @@ import { mdiQrcode, mdiKey } from "@mdi/js";
 import Tooltip from "../components/Tooltip.vue";
 import {
     computed,
-    createComponent,
+    defineComponent,
     reactive,
     watch
 } from "@vue/composition-api";
@@ -97,7 +97,7 @@ interface Props {
     account: number;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         MaterialDesignIcon,
         Tooltip,

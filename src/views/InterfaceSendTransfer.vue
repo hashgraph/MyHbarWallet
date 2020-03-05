@@ -57,7 +57,7 @@ import Button from "../components/Button.vue";
 import IDInput, { IdInputElement } from "../components/IDInput.vue";
 import {
     computed,
-    createComponent,
+    defineComponent,
     reactive,
     ref,
     Ref,
@@ -90,7 +90,7 @@ interface State {
 const estimatedFeeHbar = new BigNumber(0.01);
 const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
 
-export default createComponent({
+export default defineComponent({
     components: {
         TextInput,
         InterfaceForm,

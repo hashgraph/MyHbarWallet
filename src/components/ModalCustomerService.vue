@@ -65,7 +65,7 @@ import Button from "../components/Button.vue";
 import TextInput from "../components/TextInput.vue";
 import { UAParser } from "ua-parser-js";
 import {
-    createComponent,
+    defineComponent,
     PropType,
     computed,
     watch,
@@ -81,7 +81,7 @@ import { AccountId } from "@hashgraph/sdk";
 declare const VERSION: string;
 declare const COMMIT_HASH: string;
 
-export default createComponent({
+export default defineComponent({
     components: {
         Button,
         Modal,

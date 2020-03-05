@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import {
-    createComponent,
+    defineComponent,
     PropType,
     reactive,
     SetupContext,
@@ -67,7 +67,7 @@ interface State {
 
 const notBlank = (word: string): boolean => word.length > 0;
 
-export default createComponent({
+export default defineComponent({
     props: {
         editable: Boolean,
         words: Number,
@@ -185,6 +185,13 @@ export default createComponent({
 </script>
 
 <style scoped lang="postcss">
+@media screen and (prefers-reduced-motion: reduce) {
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: none;
+    }
+}
+
 @media screen and (prefers-reduced-motion: reduce) {
     .fade-enter-active,
     .fade-leave-active {

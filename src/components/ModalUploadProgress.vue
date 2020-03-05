@@ -110,7 +110,7 @@
 </template>
 
 <script lang="ts">
-import { computed, createComponent, SetupContext } from "@vue/composition-api";
+import { computed, defineComponent, SetupContext } from "@vue/composition-api";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import Warning from "../components/Warning.vue";
@@ -125,7 +125,7 @@ export interface State {
     totalChunks: number;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Button,
         Modal,

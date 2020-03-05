@@ -57,13 +57,13 @@
 import MaterialDesignIcon from "../components/MaterialDesignIcon.vue";
 import { mdiLoading, mdiRefresh, mdiBankPlus } from "@mdi/js";
 import Tooltip from "./Tooltip.vue";
-import { computed, createComponent, reactive } from "@vue/composition-api";
+import { computed, defineComponent, reactive } from "@vue/composition-api";
 import walletHbar from "../assets/wallet-hbar.svg";
 import { formatHbar, formatUSD } from "../formatter";
 import BigNumber from "bignumber.js";
 import { actions, store } from "../store";
 
-export default createComponent({
+export default defineComponent({
     components: {
         MaterialDesignIcon,
         Tooltip

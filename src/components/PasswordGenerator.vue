@@ -16,12 +16,12 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref } from "@vue/composition-api";
+import { defineComponent, ref } from "@vue/composition-api";
 import Button from "./Button.vue";
 import PasswordWithConfirm, { State as PasswordConfirmState } from "./PasswordWithConfirm.vue";
 import { mdiArrowRight } from "@mdi/js";
 
-export default createComponent({
+export default defineComponent({
     props: {},
     components: {
         Button,

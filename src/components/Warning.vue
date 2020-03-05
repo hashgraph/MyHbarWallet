@@ -10,11 +10,11 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 import { mdiAlertOutline } from "@mdi/js";
 import Notice from "../components/Notice.vue";
 
-export default createComponent({
+export default defineComponent({
     components: { Notice },
     props: {
         title: { type: String },

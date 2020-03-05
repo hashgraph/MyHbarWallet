@@ -28,10 +28,10 @@ import BalanceCard from "../components/BalanceCard.vue";
 import AccountCard from "../components/AccountCard.vue";
 import AdBlockTwitter from "../components/AdBlockTwitter.vue";
 import AdBlockBuyHbar from "../components/AdBlockBuyHbar.vue";
-import { computed, createComponent, SetupContext } from "@vue/composition-api";
+import { computed, defineComponent, SetupContext } from "@vue/composition-api";
 import { store } from "../store";
 
-export default createComponent({
+export default defineComponent({
     components: {
         InterfaceNavigation,
         NetworkCard,

@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import {
-    createComponent,
+    defineComponent,
     watch,
     onUnmounted,
     SetupContext,
@@ -60,7 +60,7 @@ function modalIsTop(id: number): boolean {
 
 // The isOpen property controls if the modal is open or not. It should be bound with
 // the v-model directive to allow the modal to close itself (click out and close button).
-export default createComponent({
+export default defineComponent({
     props: {
         notClosable: Boolean,
         isOpen: Boolean,

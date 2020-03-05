@@ -39,7 +39,7 @@ import Vue from "vue";
 import Button from "../components/Button.vue";
 import Modal from "../components/Modal.vue";
 import {
-    createComponent,
+    defineComponent,
     SetupContext,
     computed
 } from "@vue/composition-api";
@@ -60,7 +60,7 @@ function handleGoBack(): void {
     Vue.nextTick(() => router.push({ name: "interface" }));
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Button,
         Modal,

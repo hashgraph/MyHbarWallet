@@ -1,4 +1,9 @@
 /* eslint-env node */
+
+// Pro Hacker Move
+process.env.VUE_CLI_BABEL_TARGET_NODE = true;
+process.env.VUE_CLI_BABEL_TRANSPILE_MODULES = true;
+
 module.exports = {
     moduleFileExtensions: [ "js", "jsx", "json", "vue", "ts", "tsx" ],
     moduleNameMapper: { "\\.(css|less|scss|sass)$": "jest-transform-css" },

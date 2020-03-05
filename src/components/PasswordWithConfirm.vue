@@ -75,7 +75,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { createComponent, PropType, ref, computed, watch } from "@vue/composition-api";
+import { defineComponent, PropType, ref, computed, watch } from "@vue/composition-api";
 import TextInput from "./TextInput.vue";
 
 const wordlist: string[] = [
@@ -98,7 +98,7 @@ export interface State {
     passwordSuggestion: string;
 }
 
-export default createComponent({
+export default defineComponent({
     name: "PasswordWithConfirm",
     props: { state: Object as unknown as PropType<State> },
     components: { TextInput },

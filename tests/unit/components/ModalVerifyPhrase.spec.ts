@@ -54,11 +54,7 @@ describe("ModalVerifyPhrase.vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(`
-            <div class="verify-phrase">
-              <!---->
-            </div>
-        `);
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 
     it("renders closed, with list", (): void => {
@@ -79,11 +75,7 @@ describe("ModalVerifyPhrase.vue", (): void => {
             }
         });
 
-        expect(wrapper).toMatchInlineSnapshot(`
-            <div class="verify-phrase">
-              <!---->
-            </div>
-        `);
+        expect(wrapper).toMatchInlineSnapshot(``);
     });
 
     it("does not get stuck in infinite loop if empty list is passed", (): void => {
@@ -105,25 +97,23 @@ describe("ModalVerifyPhrase.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div class="verify-phrase">
-              <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
-                <div class="modal">
-                  <header><span class="title">Verification</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
-                      <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
-                    </svg></header>
-                  <!---->
-                  <div class="main">
-                    <div class="content-container">
-                      <div class="prompt">
-                        Please enter and fill out the empty boxes below to verify your mnemonic phrase key.
-                      </div>
-                      <form>
-                        <div class="mnemonic"></div>
-                        <div class="btn-container"><button type="submit" class="">
-                            <!----> <span>Verify</span>
-                            <!----></button></div>
-                      </form>
+            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
+              <div class="modal">
+                <header><span class="title">Verification</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                    <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
+                  </svg></header>
+                <!---->
+                <div class="main">
+                  <div class="content-container">
+                    <div class="prompt">
+                      Please enter and fill out the empty boxes below to verify your mnemonic phrase key.
                     </div>
+                    <form>
+                      <div class="mnemonic"></div>
+                      <div class="btn-container"><button type="submit" class="">
+                          <!----> <span>Verify</span>
+                          <!----></button></div>
+                    </form>
                   </div>
                 </div>
               </div>

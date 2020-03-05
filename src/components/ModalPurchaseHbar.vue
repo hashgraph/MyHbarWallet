@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import Modal from "../components/Modal.vue";
-import { createComponent } from "@vue/composition-api";
+import { defineComponent } from "@vue/composition-api";
 import { getters } from "../store";
 import carbonLogo from "../assets/carbon-logo.svg";
 
@@ -36,7 +36,7 @@ import carbonLogo from "../assets/carbon-logo.svg";
 declare const MHW_ENV: string;
 declare const CARBON_API_KEY: string;
 
-export default createComponent({
+export default defineComponent({
     components: { Modal },
     model: {
         prop: "isOpen",

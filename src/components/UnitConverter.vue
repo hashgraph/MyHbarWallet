@@ -59,7 +59,7 @@
 import Select from "./Select.vue";
 import TextInput from "./TextInput.vue";
 import { Unit, convert } from "../units";
-import { createComponent, reactive } from "@vue/composition-api";
+import { defineComponent, reactive } from "@vue/composition-api";
 import BigNumber from "bignumber.js";
 
 interface State {
@@ -69,7 +69,7 @@ interface State {
     valueRight: string;
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Select,
         TextInput

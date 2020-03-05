@@ -10,6 +10,8 @@ import Router from "vue-router";
 import VueCompositionApi from "@vue/composition-api";
 import { mutations } from "./store";
 
+declare const IS_ELECTRON: string;
+
 // Globally install the Vue3 Function API
 Vue.use(VueCompositionApi);
 Vue.use(Router);
@@ -25,3 +27,10 @@ new Vue({
     render: (h): VNode => h(App),
     i18n
 }).$mount("#app");
+
+if ("serviceWorker" in navigator && !IS_ELECTRON) {
+    // Use the window load event to keep the page load performant
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/service-worker.js");
+    });
+}

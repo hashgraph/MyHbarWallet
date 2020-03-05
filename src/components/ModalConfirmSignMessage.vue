@@ -39,7 +39,7 @@
     </Modal>
 </template>
 <script lang="ts">
-import { createComponent, computed, SetupContext } from "@vue/composition-api";
+import { defineComponent, computed, SetupContext } from "@vue/composition-api";
 
 import Modal from "../components/Modal.vue";
 import Button from "../components/Button.vue";
@@ -52,7 +52,7 @@ function hexEncode(str: string): string {
         .join("");
 }
 
-export default createComponent({
+export default defineComponent({
     components: {
         Modal,
         Button,
