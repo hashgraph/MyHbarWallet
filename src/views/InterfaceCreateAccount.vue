@@ -182,6 +182,7 @@ export default defineComponent({
                     .setInitialBalance(Hbar.fromTinybar(newBalanceTinybar))
                     .setMaxTransactionFee(Hbar.fromTinybar(estimatedFeeTinybar))
                     .setKey(key)
+                    .setTransactionMemo(" ") // Hack for Nano X paging
                     .execute(client))
                     .getReceipt(client))
                     .getAccountId();

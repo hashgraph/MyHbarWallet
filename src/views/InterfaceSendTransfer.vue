@@ -293,7 +293,7 @@ export default defineComponent({
 
                 const sendAmountTinybar = new BigNumber(state.amount).multipliedBy(getValueOfUnit(Unit.Hbar));
 
-                const { CryptoTransferTransaction, Hbar, Client } = await import("@hashgraph/sdk");
+                const { CryptoTransferTransaction, Hbar } = await import("@hashgraph/sdk");
 
                 const tx = new CryptoTransferTransaction()
                     .addSender(
@@ -303,9 +303,11 @@ export default defineComponent({
                     .addRecipient(recipient, Hbar.fromTinybar(sendAmountTinybar))
                     .setMaxTransactionFee(Hbar.fromTinybar(estimatedFeeTinybar));
 
-                if (state.memo !== "" && state.memo != null) {
-                    tx.setTransactionMemo(state.memo);
+                if (state.memo == null || state.memo === "") {
+                    state.memo = " "; // Hack for Nano X paging
                 }
+
+                tx.setTransactionMemo(state.memo);
 
                 await (await tx.execute(client)).getReceipt(client);
 
