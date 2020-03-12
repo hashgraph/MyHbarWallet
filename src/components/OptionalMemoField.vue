@@ -15,7 +15,10 @@
                 />
             </div>
         </div>
-        <div class="memo-input" :class="{ expanded: state.showMemo }">
+        <div
+            class="memo-input"
+            :class="{ expanded: state.showMemo }"
+        >
             <TextInput
                 ref="input"
                 :value="value"
