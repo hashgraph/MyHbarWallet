@@ -166,7 +166,7 @@ export default defineComponent({
         }
 
         async function handleUpload(file: Uint8Array): Promise<void> {
-            const user = getters.USER();
+            const user = getters.currentUser();
             const client = user.session.client;
             if (file == null) {
                 throw new Error(context.root.$t("uploadFile.errors.earlyUpload").toString());
@@ -209,7 +209,7 @@ export default defineComponent({
 
             state.isBusy = true;
             state.modalFeeSummaryState.isBusy = true;
-            const user = getters.USER();
+            const user = getters.currentUser();
 
             const receipt: Ref<import("@hashgraph/sdk").TransactionReceipt | null> = ref(null);
             const publicKey = await user.wallet.getPublicKey();

@@ -134,7 +134,7 @@ export default defineComponent({
             details: ""
         });
 
-        const errorMessage = computed(getters.ERROR_MESSAGE);
+        const errorMessage = computed(getters.errorMessage);
 
         const sendLink = computed(() => formatSupportLink(
             state.url,
@@ -151,7 +151,7 @@ export default defineComponent({
             context.emit("change", false);
 
             // Wait until the close animation to clear the form
-            setTimeout(mutations.ERROR_VIEWED, 150);
+            setTimeout(mutations.errorViewed, 150);
         }
 
         function handleCancel(): void {

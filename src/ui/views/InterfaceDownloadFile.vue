@@ -129,12 +129,12 @@ export default defineComponent({
         }
 
         async function handleDownloadClick(): Promise<void> {
-            if (!getters.USER().session) {
+            if (!getters.currentUser().session) {
                 throw new Error(context.root.$t("common.error.noSession").toString());
             }
 
             const { FileContentsQuery, Hbar } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
-            const client = getters.USER().session.client;
+            const client = getters.currentUser().session.client;
             client.setMaxQueryPayment(Hbar.fromTinybar(100000000));
 
             try {
@@ -174,7 +174,7 @@ export default defineComponent({
 
         async function triggerDownload(): Promise<void> {
             const { FileContentsQuery, Hbar } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
-            const client = getters.USER().session.client;
+            const client = getters.currentUser().session.client;
             client.setMaxQueryPayment(Hbar.fromTinybar(100000000));
 
             try {

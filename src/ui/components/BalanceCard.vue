@@ -60,7 +60,7 @@ import { BigNumber } from "bignumber.js";
 
 import walletHbar from "../assets/wallet-hbar.svg";
 import { formatHbar, formatUSD } from "../../service/format";
-import { actions, store } from "../store";
+import { actions, getters } from "../store";
 
 import Tooltip from "./Tooltip.vue";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
@@ -80,15 +80,15 @@ export default defineComponent({
             HbarfUnit.value = HbarUnit;
         });
         const state = reactive({ isBusy: false });
-        const hasFetchedBalance = computed(() => store.state.account.balance != null);
-        const hasFetchedRate = computed(() => store.state.account.exchangeRate != null);
+        const hasFetchedBalance = computed(() => getters.currentUserBalance() != null);
+        const hasFetchedRate = computed(() => getters.exchangeRate() != null);
         const balanceHbar = computed(() => {
             if (Hbarf.value != null && HbarfUnit.value != null) {
-                return store.state.account.balance!.as(HbarfUnit.value.Hbar) || new Hbarf.value(0);
+                return getters.currentUserBalance()!.as(HbarfUnit.value.Hbar) || new Hbarf.value(0);
             }
             return new BigNumber(0);
         });
-        const exchangeRate = computed(() => store.state.account.exchangeRate || new BigNumber(0).div(1));
+        const exchangeRate = computed(() => getters.exchangeRate() || new BigNumber(0).div(1));
         const balanceHBarFormatted = computed(() => formatHbar(balanceHbar.value));
 
         const balanceUSDFormatted = computed(() => {

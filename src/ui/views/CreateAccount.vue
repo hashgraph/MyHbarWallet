@@ -149,10 +149,10 @@ export default defineComponent({
 
         function handleNetworkChange(settings: NetworkSettings): void {
             if (
-                getters.NETWORK().name !== settings.name ||
+                getters.currentNetwork().name !== settings.name ||
                 settings.name === NetworkName.CUSTOM
             ) {
-                mutations.SET_NETWORK(settings);
+                mutations.setCurrentNetwork(settings);
             }
         }
 
@@ -282,9 +282,9 @@ export default defineComponent({
             }
 
             try {
-                await actions.logIn(account, state.wallet!, getters.NETWORK());
+                await actions.logIn(account, state.wallet!, getters.currentNetwork());
                 state.modalEnterAccountIdState.isOpen = false;
-                mutations.NAVIGATE_TO_INTERFACE();
+                mutations.navigateToInterface();
             } catch (error) {
                 const { HederaStatusError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
                 if (error instanceof HederaStatusError) {

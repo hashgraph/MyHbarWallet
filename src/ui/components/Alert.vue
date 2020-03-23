@@ -58,7 +58,7 @@ export default defineComponent({
         });
 
         function destroyMe(): void {
-            mutations.REMOVE_ALERT(props.id);
+            mutations.removeAlert(props.id);
         }
 
         return {

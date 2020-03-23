@@ -258,7 +258,7 @@ export default defineComponent({
         async function handleSendTransfer(): Promise<void> {
             state.isBusy = true;
             state.modalSummaryState.isBusy = true;
-            const client = getters.USER().session.client;
+            const client = getters.currentUser().session.client;
 
             try {
                 if (state.account == null) {
@@ -279,7 +279,7 @@ export default defineComponent({
 
                 const tx = new CryptoTransferTransaction()
                     .addSender(
-                        getters.USER().session.account,
+                        getters.currentUser().session.account,
                         sendAmount
                     )
                     .addRecipient(recipient, sendAmount)
@@ -334,7 +334,7 @@ export default defineComponent({
                     }
                 } else if (
                     error.name === "TransportStatusError" &&
-                    getters.USER().wallet.getLoginMethod() ===
+                    getters.currentUser().wallet.getLoginMethod() ===
                         LoginMethod.Ledger
                 ) {
                     actions.handleLedgerError({

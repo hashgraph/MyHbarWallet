@@ -48,12 +48,12 @@ export default defineComponent({
         });
 
         const isOpen = computed(() => !isInterface.value &&
-                getters.IS_LOGGED_IN() &&
-                getters.HAS_BEEN_TO_INTERFACE());
+                getters.isLoggedIn() &&
+                getters.hasBeenToInterface());
 
         const errorIsOpen = ref(false);
         watch(
-            () => getters.HAS_ERROR(),
+            () => getters.hasError(),
             (newValue: boolean) => {
                 errorIsOpen.value = newValue;
             }

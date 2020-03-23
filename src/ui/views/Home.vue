@@ -93,12 +93,12 @@ export default defineComponent({
                 IS_ELECTRON)
             ) {
                 state.welcomeIsOpen = false;
-            } else if (!getters.HAS_BEEN_HOME()) {
+            } else if (!getters.hasBeenHome()) {
                 state.welcomeIsOpen = true;
             }
         });
 
-        mutations.SET_HAS_BEEN_HOME();
+        mutations.setHasBeenHome();
 
         return {
             state,

@@ -170,7 +170,7 @@ export default defineComponent({
 
         const accId = computed(() => {
             if (isInterface.value) {
-                const user = getters.USER();
+                const user = getters.currentUser();
                 if (user != null) {
                     return user.session.account.toString();
                 }
@@ -180,7 +180,7 @@ export default defineComponent({
 
         const network = computed(() => {
             if (isInterface.value) {
-                return getters.NETWORK()!.name.split(".")[ 1 ];
+                return getters.currentNetwork()!.name.split(".")[ 1 ];
             }
             return null;
         });
@@ -216,7 +216,7 @@ export default defineComponent({
 
         function close(): void {
             state.isHamburgerOpen = false;
-            mutations.NAVIGATE_HOME();
+            mutations.navigateToHome();
         }
 
         const isHome = computed(() => {
@@ -249,7 +249,7 @@ export default defineComponent({
             context.root.$router.push({ name: "home", hash: path });
         }
 
-        const loggedIn = computed(getters.IS_LOGGED_IN);
+        const loggedIn = computed(getters.isLoggedIn);
 
         function handleLogout(): void {
             state.isHamburgerOpen = false;

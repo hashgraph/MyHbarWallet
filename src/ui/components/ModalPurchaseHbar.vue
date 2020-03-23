@@ -45,7 +45,7 @@ export default defineComponent({
     },
     props: { isOpen: Boolean },
     setup(props, context) {
-        const user = getters.USER();
+        const user = getters.currentUser();
         const accId = user != null ? user.session.account : "";
         const accIdString = accId.toString();
 

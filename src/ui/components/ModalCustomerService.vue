@@ -91,8 +91,8 @@ export default defineComponent({
         const input = ref<HTMLInputElement | null>(null);
         const ua = new UAParser(navigator.userAgent);
 
-        const account = computed(() => getters.USER() != null ?
-            getters.USER().session.account :
+        const account = computed(() => getters.currentUser() != null ?
+            getters.currentUser().session.account :
             null);
 
         const accountId = computed(() => {

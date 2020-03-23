@@ -71,7 +71,7 @@ import ExportKeystoreButton from "./ExportKeystoreButton.vue";
 import ModalViewKeys from "./ModalViewKeys.vue";
 
 async function getUser(): Promise<User | null> {
-    return getters.USER();
+    return getters.currentUser();
 }
 
 async function getPrivateKey(): Promise<import("@hashgraph/sdk").Ed25519PrivateKey | null> {

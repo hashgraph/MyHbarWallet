@@ -46,7 +46,7 @@ export default defineComponent({
         const state = reactive({ network: null as NetworkSettings | null });
 
         watch(
-            getters.NETWORK,
+            getters.currentNetwork,
             // eslint-disable-next-line no-return-assign
             async(newValue: NetworkSettings) => state.network = newValue
         );

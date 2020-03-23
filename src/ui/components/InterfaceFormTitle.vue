@@ -18,7 +18,7 @@ import { mutations } from "../store";
 import Button from "./Button.vue";
 
 function emitMenuOpen(): void {
-    mutations.SET_INTERFACE_MENU_IS_OPEN(true);
+    mutations.setInterfaceMenuIsOpen(true);
 }
 
 export default defineComponent({

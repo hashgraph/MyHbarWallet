@@ -87,8 +87,8 @@ export default defineComponent({
         context: SetupContext
     ): object {
         const account = computed(() => {
-            if (getters.USER() != null) {
-                const user = getters.USER();
+            if (getters.currentUser() != null) {
+                const user = getters.currentUser();
                 return user.session.account;
             }
             return null;

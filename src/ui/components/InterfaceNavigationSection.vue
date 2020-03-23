@@ -61,7 +61,7 @@ interface Props {
 // Yes, it is used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleClick(): void {
-    mutations.SET_INTERFACE_MENU_IS_OPEN(false);
+    mutations.setInterfaceMenuIsOpen(false);
 }
 
 export default defineComponent({

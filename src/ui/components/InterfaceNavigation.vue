@@ -65,7 +65,7 @@ import InterfaceNavigationSection from "./InterfaceNavigationSection.vue";
 // Yes, it is used
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleClick(): void {
-    mutations.SET_INTERFACE_MENU_IS_OPEN(false);
+    mutations.setInterfaceMenuIsOpen(false);
 }
 
 export default defineComponent({
@@ -103,9 +103,9 @@ export default defineComponent({
         });
 
         const notLedger = computed(() => {
-            if (getters.USER() != null) {
+            if (getters.currentUser() != null) {
                 return (
-                    getters.USER().wallet.getLoginMethod() !==
+                    getters.currentUser().wallet.getLoginMethod() !==
                     LoginMethod.Ledger
                 );
             }

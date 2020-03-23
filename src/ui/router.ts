@@ -119,7 +119,7 @@ function RequireWallet(
         (): void;
     }
 ): void {
-    if (!getters.IS_LOGGED_IN()) {
+    if (!getters.isLoggedIn()) {
         return next("/");
     }
 

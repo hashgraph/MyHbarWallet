@@ -44,10 +44,10 @@ export default defineComponent({
     props: {},
     setup() {
         // Not a good idea to show the "buy" button if this isn't mainnet
-        const inMainNet = computed(() => getters.NETWORK() != null ? getters.NETWORK().name.includes("mainnet") : false);
+        const inMainNet = computed(() => getters.currentNetwork() != null ? getters.currentNetwork().name.includes("mainnet") : false);
 
-        const account = computed(() => getters.USER() != null ?
-            getters.USER().session.account :
+        const account = computed(() => getters.currentUser() != null ?
+            getters.currentUser().session.account :
             null);
 
         return { account, inMainNet };

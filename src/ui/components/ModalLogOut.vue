@@ -54,7 +54,7 @@ interface Props {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleGoBack(): void {
     // have to wait till next tick so modal gives us back the scrollbar
-    Vue.nextTick(() => mutations.NAVIGATE_TO_INTERFACE());
+    Vue.nextTick(() => mutations.navigateToInterface());
 }
 
 export default defineComponent({
@@ -75,7 +75,7 @@ export default defineComponent({
         function handleClickLogOut(): void {
             actions.logOut();
             if (!props.forgot) {
-                Vue.nextTick(() => mutations.NAVIGATE_HOME());
+                Vue.nextTick(() => mutations.navigateToHome());
                 context.emit("change", !props.isOpen);
             }
         }

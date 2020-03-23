@@ -186,7 +186,7 @@ export default defineComponent({
             context.root.$router.push({ name: "home", hash: path });
         }
 
-        const loggedIn = computed(() => getters.IS_LOGGED_IN());
+        const loggedIn = computed(() => getters.isLoggedIn());
 
         function handleLogout(): void {
             context.emit("toggle", !props.isOpen);

@@ -49,10 +49,10 @@ export const store = Vue.observable({
 } as Index);
 
 export const getters = {
-    HAS_ERROR(): boolean {
+    hasError(): boolean {
         return store.state.errors.queue.length > 0;
     },
-    ERROR_MESSAGE(): string | null {
+    errorMessage(): string | null {
         const error =
             store.state.errors.queue.length > 0 ?
                 store.state.errors.queue[ 0 ] :
@@ -71,35 +71,35 @@ export const getters = {
 
         return error;
     },
-    HAS_BEEN_TO_INTERFACE(): boolean {
+    hasBeenToInterface(): boolean {
         return store.state.ui.interfaceMenu.hasBeen;
     },
-    HAS_BEEN_HOME(): boolean {
+    hasBeenHome(): boolean {
         if (localStorage.getItem("home") != null) {
             store.state.ui.home.hasBeen = true;
         }
         return store.state.ui.home.hasBeen;
     },
-    NETWORK(): NetworkSettings {
+    currentNetwork(): NetworkSettings {
         return store.state.network.network;
     },
-    USER(): User {
+    currentUser(): User {
         return store.state.account.user;
     },
-    IS_LOGGED_IN(): boolean {
+    isLoggedIn(): boolean {
         return store.state.account.user != null;
     },
-    BALANCE(): import("@hashgraph/sdk").Hbar | null {
+    currentUserBalance(): import("@hashgraph/sdk").Hbar | null {
         return store.state.account.balance;
     },
-    EXCHANGE_RATE(): BigNumber | null {
+    exchangeRate(): BigNumber | null {
         return store.state.account.exchangeRate;
     }
 };
 
 export const mutations = {
-    ADD_ALERT: (alert: Alert): number => store.state.alerts.queue.push(alert),
-    REMOVE_ALERT(id: number): void {
+    addAlert: (alert: Alert): number => store.state.alerts.queue.push(alert),
+    removeAlert(id: number): void {
         for (let i = 0; i < store.state.alerts.queue.length; i++) {
             if (store.state.alerts.queue[ i ].id === id) {
                 store.state.alerts.queue.splice(i, 1);
@@ -107,37 +107,37 @@ export const mutations = {
             }
         }
     },
-    ERROR_OCCURRED(e: { error: Error }): void {
+    errorOccurred(e: { error: Error }): void {
         store.state.errors.queue.push(e.error);
     },
-    ERROR_VIEWED(): void {
+    errorViewed(): void {
         store.state.errors.queue.pop();
     },
-    NAVIGATE_TO_INTERFACE(): void {
-        router.push({ name: "interface" }, () => mutations.SET_HAS_BEEN_TO_INTERFACE(true));
+    navigateToInterface(): void {
+        router.push({ name: "interface" }, () => mutations.setHasBeenToInterface(true));
     },
-    NAVIGATE_HOME(): void {
-        router.push({ name: "home" }, () => mutations.SET_HAS_BEEN_TO_INTERFACE(false));
+    navigateToHome(): void {
+        router.push({ name: "home" }, () => mutations.setHasBeenToInterface(false));
     },
-    SET_INTERFACE_MENU_IS_OPEN(open: boolean): void {
+    setInterfaceMenuIsOpen(open: boolean): void {
         store.state.ui.interfaceMenu.isOpen = open;
     },
-    SET_HAS_BEEN_TO_INTERFACE(visited: boolean): void {
+    setHasBeenToInterface(visited: boolean): void {
         store.state.ui.interfaceMenu.hasBeen = visited;
     },
-    SET_HAS_BEEN_HOME(): void {
+    setHasBeenHome(): void {
         localStorage.setItem("home", "true");
     },
-    SET_USER(user: User): void {
+    setCurrentUser(user: User): void {
         store.state.account.user = user;
     },
-    SET_BALANCE(balance: import("@hashgraph/sdk").Hbar | null): void {
+    setCurrentUserBalance(balance: import("@hashgraph/sdk").Hbar | null): void {
         store.state.account.balance = balance;
     },
-    SET_EXCHANGE_RATE(rate: BigNumber): void {
+    setExchangeRate(rate: BigNumber): void {
         store.state.account.exchangeRate = rate;
     },
-    SET_NETWORK(settings: NetworkSettings): void {
+    setCurrentNetwork(settings: NetworkSettings): void {
         const name = settings.name;
         switch (name) {
             case NetworkName.MAINNET:
@@ -164,10 +164,10 @@ export const actions = {
             ...payload
         };
 
-        mutations.ADD_ALERT(alert);
+        mutations.addAlert(alert);
 
         setTimeout((): void => {
-            mutations.REMOVE_ALERT(alert.id);
+            mutations.removeAlert(alert.id);
         }, 5000);
     },
 
@@ -317,12 +317,12 @@ export const actions = {
             .setAccountId(store.state.account.user.session.account)
             .execute(store.state.account.user.session.client);
 
-        mutations.SET_BALANCE(balance);
+        mutations.setCurrentUserBalance(balance);
     },
 
     async refreshExchangeRate(): Promise<void> {
         const curPrice = await currentPrice();
-        mutations.SET_EXCHANGE_RATE(curPrice);
+        mutations.setExchangeRate(curPrice);
     },
 
     async refreshBalanceAndRate(): Promise<void> {
@@ -346,7 +346,7 @@ export const actions = {
         }
 
         if (user.session != null && user.wallet != null) {
-            mutations.SET_USER({ session: user.session, wallet: user.wallet });
+            mutations.setCurrentUser({ session: user.session, wallet: user.wallet });
         } else {
             throw new Error("null session or wallet on login, could not set user");
         }

@@ -156,7 +156,7 @@ export default defineComponent({
                     Ed25519PublicKey
                 } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
-                const client = getters.USER().session.client;
+                const client = getters.currentUser().session.client;
                 const key = Ed25519PublicKey.fromString(state.publicKey);
 
                 const transaction = await new AccountCreateTransaction()
@@ -165,7 +165,7 @@ export default defineComponent({
                     .setKey(key);
 
                 // NOTE: We should consider adding OptionalMemo for Account Creation
-                if (getters.USER().wallet.getLoginMethod() === LoginMethod.Ledger) {
+                if (getters.currentUser().wallet.getLoginMethod() === LoginMethod.Ledger) {
                     transaction.setTransactionMemo(" "); // Hack to deal with broken Nano X paging macro
                 }
 
@@ -221,7 +221,7 @@ export default defineComponent({
                     }
                 } else if (
                     error.name === "TransportStatusError" &&
-                    getters.USER().wallet.getLoginMethod() ===
+                    getters.currentUser().wallet.getLoginMethod() ===
                         LoginMethod.Ledger
                 ) {
                     await actions.handleLedgerError({
