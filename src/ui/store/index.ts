@@ -117,7 +117,7 @@ export const mutations = {
         router.push({ name: "interface" }, () => mutations.setHasBeenToInterface(true));
     },
     navigateToHome(): void {
-        router.push({ name: "home" }, () => mutations.setHasBeenToInterface(false));
+        router.push({ name: "home" });
     },
     setInterfaceMenuIsOpen(open: boolean): void {
         store.state.ui.interfaceMenu.isOpen = open;
@@ -356,5 +356,6 @@ export const actions = {
 
     logOut(): void {
         store.state.account.user = null;
+        mutations.setHasBeenToInterface(false);
     }
 };
