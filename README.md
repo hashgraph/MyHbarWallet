@@ -36,7 +36,20 @@ limitations under the License.
 
 Send us a Pull Request!
 
+You can run tests with `yarn test`
+
+We use Jest (rn) for Snapshots of Components and Nightwatch for E2E
+tests
+
+The project is split into a configuration for web and a configuration
+for electron via `vue.config.front.js` and `vue.config.back.js`.
+These configs are copied into place before via scripts before
+downstream commands run.
+
+`yarn build` builds for production and drops a webpack `stats.json`
+in the dist subfolder of the currently running build.
+
 <details>
   <summary>Source Dependency Graph</summary>
-  <img src="src/assets/deps.svg"></img>
+  <img src="src/ui/assets/deps.svg"></img>
 </details>

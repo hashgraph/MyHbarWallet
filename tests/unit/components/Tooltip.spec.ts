@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import Tooltip from "../../../src/components/Tooltip.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
-import i18n from "../../../src/i18n";
+
+import Tooltip from "../../../src/ui/components/Tooltip.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("Tooltip.vue", (): void => {
     const localVue = createLocalVue();

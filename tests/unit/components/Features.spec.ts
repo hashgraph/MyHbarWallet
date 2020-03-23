@@ -1,6 +1,7 @@
 import { mount } from "@vue/test-utils";
-import Features from "../../../src/components/Features.vue";
-import i18n from "../../../src/i18n";
+
+import Features from "../../../src/ui/components/Features.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("Features.vue", (): void => {
     it("renders", (): void => {

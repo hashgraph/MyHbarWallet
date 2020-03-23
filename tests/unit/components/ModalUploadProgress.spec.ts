@@ -1,6 +1,7 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalUploadProgress from "../../../src/components/ModalUploadProgress.vue";
+
+import ModalUploadProgress from "../../../src/ui/components/ModalUploadProgress.vue";
 
 describe("ModalUploadProgress.vue", (): void => {
     const localVue = createLocalVue();
@@ -10,7 +11,7 @@ describe("ModalUploadProgress.vue", (): void => {
     const onFinish = jest.fn();
     const onRetry = jest.fn();
 
-    it("renders, in progress, 0%", (): void => {
+    it("renders, in progress, 0%", async(): Promise<void> => {
         const wrapper = mount(ModalUploadProgress, {
             localVue,
             propsData: {
@@ -29,9 +30,19 @@ describe("ModalUploadProgress.vue", (): void => {
             }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            (child) => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
-              <div class="modal">
+            <div role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
+              <div class="modal slidefade-enter slidefade-enter-active">
                 <!---->
                 <!---->
                 <div class="main">
@@ -73,7 +84,7 @@ describe("ModalUploadProgress.vue", (): void => {
         `);
     });
 
-    it("renders, in progress, 70%", (): void => {
+    it("renders, in progress, 70%", async(): Promise<void> => {
         const wrapper = mount(ModalUploadProgress, {
             localVue,
             propsData: {
@@ -92,9 +103,19 @@ describe("ModalUploadProgress.vue", (): void => {
             }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            (child) => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
-              <div class="modal">
+            <div role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
+              <div class="modal slidefade-enter slidefade-enter-active">
                 <!---->
                 <!---->
                 <div class="main">
@@ -136,7 +157,7 @@ describe("ModalUploadProgress.vue", (): void => {
         `);
     });
 
-    it("renders, finished, success", (): void => {
+    it("renders, finished, success", async(): Promise<void> => {
         const wrapper = mount(ModalUploadProgress, {
             localVue,
             propsData: {
@@ -155,9 +176,19 @@ describe("ModalUploadProgress.vue", (): void => {
             }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            (child) => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
-              <div class="modal">
+            <div role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
+              <div class="modal slidefade-enter slidefade-enter-active">
                 <!---->
                 <!---->
                 <div class="main">
@@ -199,7 +230,7 @@ describe("ModalUploadProgress.vue", (): void => {
         `);
     });
 
-    it("renders, finished, failure", (): void => {
+    it("renders, finished, failure", async(): Promise<void> => {
         const wrapper = mount(ModalUploadProgress, {
             localVue,
             propsData: {
@@ -218,9 +249,19 @@ describe("ModalUploadProgress.vue", (): void => {
             }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            (child) => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
-              <div class="modal">
+            <div role="dialog" aria-modal="true" class="modal-background" not-closeable="" listeners="[object Object]">
+              <div class="modal slidefade-enter slidefade-enter-active">
                 <!---->
                 <!---->
                 <div class="main">

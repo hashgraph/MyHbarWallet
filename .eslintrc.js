@@ -2,28 +2,18 @@
 module.exports = {
     root: true,
     extends: [
+        "plugin:import/recommended",
+        "plugin:import/warnings",
+        "plugin:import/errors",
+        "plugin:import/typescript",
         "@launchbadge/eslint-config/vue",
         "@launchbadge/eslint-config/vue-typescript"
     ],
     rules: {
-        // v-html is used for rich text formatting for i18n
         "vue/no-v-html": "off",
-
-        // this rule has many false positives in this codebase
         "require-atomic-updates": "off",
-
-        // default rule is for 2-space indent
         "vue/html-indent": [ "warn", 4 ],
-
-        // this isn't a library so we don't need to be as strict
         "@typescript-eslint/member-naming": "off",
-
-        //
-        // what follows is several rules that aren't _that_ important to
-        // fix at this time. we should go back and fix these in the
-        // future
-        //
-
         "new-cap": "off",
         "no-plusplus": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
@@ -59,6 +49,14 @@ module.exports = {
         "no-param-reassign": "off",
         "require-unicode-regexp": "off",
         "require-await": "off",
-        "unicorn/no-unsafe-regex": "warn"
+        "unicorn/no-unsafe-regex": "warn",
+        "import/order": [
+            "warn",
+            {
+                "groups": [ "builtin", "external", "parent", "sibling", "index" ],
+                "newlines-between": "always"
+            }
+        ],
+        "import/dynamic-import-chunkname": "warn"
     }
 };

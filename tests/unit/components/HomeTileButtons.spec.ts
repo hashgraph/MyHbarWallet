@@ -1,9 +1,10 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import HomeTileButtons from "../../../src/components/HomeTileButtons.vue";
 import VueRouter from "vue-router";
-import router from "../../../src/router";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import HomeTileButtons from "../../../src/ui/components/HomeTileButtons.vue";
+import router from "../../../src/ui/router";
+import i18n from "../../../src/service/i18n";
 
 describe("HomeTileButtons.vue", (): void => {
     const localVue = createLocalVue();

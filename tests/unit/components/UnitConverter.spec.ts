@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import UnitConverter from "../../../src/components/UnitConverter.vue";
 import VueI18n from "vue-i18n";
-import i18n from "../../../src/i18n";
+
+import UnitConverter from "../../../src/ui/components/UnitConverter.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("UnitConverter.vue", (): void => {
     const localVue = createLocalVue();

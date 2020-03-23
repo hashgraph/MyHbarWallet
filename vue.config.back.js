@@ -1,10 +1,15 @@
 /* eslint-disable no-process-env, @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports */
 /* eslint-env node */
 const path = require("path");
+
 const package = require("./package.json");
+
 const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+
 const hash = require("child_process").execSync("git rev-parse --short HEAD");
+
+const StatsPlugin = require("stats-webpack-plugin");
 
 const plugins = [
     new webpack.DefinePlugin({
@@ -21,8 +26,9 @@ const plugins = [
     ]),
     new webpack.NormalModuleReplacementPlugin(
         /^bindings$/,
-        `${__dirname}/src/bindings`
-    )
+        `${__dirname}/src/electron/bindings`
+    ),
+    new StatsPlugin("stats.json")
 ];
 
 const css = {

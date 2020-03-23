@@ -1,4 +1,4 @@
-import { convert, Unit } from "../../src/units";
+import { convert, Unit } from "../../src/service/units";
 
 describe("units", (): void => {
     it("converts tinybar to hbar", (): void => {

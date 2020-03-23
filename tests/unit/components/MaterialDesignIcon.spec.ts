@@ -1,9 +1,10 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import MaterialDesignIcon from "../../../src/components/MaterialDesignIcon.vue";
 import { mdiChevronUp } from "@mdi/js";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import MaterialDesignIcon from "../../../src/ui/components/MaterialDesignIcon.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("MaterialDesignIcon.vue", (): void => {
     const localVue = createLocalVue();

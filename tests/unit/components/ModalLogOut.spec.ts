@@ -1,29 +1,16 @@
-import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalLogOut from "../../../src/components/ModalLogOut.vue";
-import i18n from "../../../src/i18n";
+import { createLocalVue, mount } from "@vue/test-utils";
 import VueI18n from "vue-i18n";
+
+import ModalLogOut from "../../../src/ui/components/ModalLogOut.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("ModalLogOut.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    it("renders closed", (): void => {
-        expect.assertions(1);
-
-        const onChange = jest.fn();
-        const wrapper = mount(ModalLogOut, {
-            localVue,
-            i18n,
-            propsData: { isOpen: false },
-            listeners: { change: onChange }
-        });
-
-        expect(wrapper).toMatchInlineSnapshot(``);
-    });
-
-    it("renders open", (): void => {
+    it("renders open", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -34,9 +21,19 @@ describe("ModalLogOut.vue", (): void => {
             listeners: { change: onChange }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            (child) => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal">
+            <div role="dialog" aria-modal="true" class="modal-background">
+              <div class="modal slidefade-enter slidefade-enter-active">
                 <!---->
                 <!---->
                 <div class="main">

@@ -1,10 +1,15 @@
 /* eslint-disable no-process-env, @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports */
 /* eslint-env node */
 const path = require("path");
+
 const package = require("./package.json");
+
 const webpack = require("webpack");
+
 const hash = require("child_process").execSync("git rev-parse --short HEAD");
+
 const WorkboxPlugin = require("workbox-webpack-plugin");
+const StatsPlugin = require("stats-webpack-plugin");
 
 const plugins = [
     new webpack.DefinePlugin({
@@ -14,7 +19,8 @@ const plugins = [
         IS_ELECTRON: "false",
         HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
         CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`
-    })
+    }),
+    new StatsPlugin("stats.json")
 ];
 
 if (process.env.NODE_ENV === "production") {
@@ -52,7 +58,8 @@ const performance = {
         hints: process.env.NODE_ENV === "production" ? "error" : false,
         maxEntrypointSize: 512000,
         maxAssetSize: 1450000
-    }
+    },
+    optimization: { splitChunks: { chunks: "all", maxInitialRequests: 4, maxAsyncRequests: 7 }}
 };
 
 // Webpack externals are modules that are expected to be present externally

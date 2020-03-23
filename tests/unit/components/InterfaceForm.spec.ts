@@ -1,6 +1,7 @@
 import { mount } from "@vue/test-utils";
-import InterfaceForm from "../../../src/components/InterfaceForm.vue";
-import i18n from "../../../src/i18n";
+
+import InterfaceForm from "../../../src/ui/components/InterfaceForm.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("InterfaceForm.vue", (): void => {
     it("renders", (): void => {

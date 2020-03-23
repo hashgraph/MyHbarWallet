@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import NetworkCard from "../../../src/components/NetworkCard.vue";
 import VueI18n from "vue-i18n";
-import i18n from "../../../src/i18n";
+
+import NetworkCard from "../../../src/ui/components/NetworkCard.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("NetworkCard.vue", (): void => {
     const localVue = createLocalVue();
@@ -25,10 +26,10 @@ describe("NetworkCard.vue", (): void => {
                     Network
                   </div>
                   <div class="subtitle">
-
+                    Hedera™ Hashgraph Main Network
                   </div>
                   <div class="subtitle">
-
+                    35.237.200.180:50211
                   </div>
                 </div>
                 <div class="actions">

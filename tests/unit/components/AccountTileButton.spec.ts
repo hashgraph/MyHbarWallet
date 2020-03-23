@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import AccountTileButton from "../../../src/components/AccountTileButton.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import AccountTileButton from "../../../src/ui/components/AccountTileButton.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("AccountTileButton.vue", (): void => {
     const localVue = createLocalVue();

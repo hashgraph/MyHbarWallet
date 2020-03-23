@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import PageTitle from "../../../src/components/PageTitle.vue";
 import VueI18n from "vue-i18n";
-import i18n from "../../../src/i18n";
+
+import PageTitle from "../../../src/ui/components/PageTitle.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("PageTitle.vue", (): void => {
     const localVue = createLocalVue();

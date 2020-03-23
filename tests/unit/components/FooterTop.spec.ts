@@ -1,10 +1,11 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import FooterTop from "../../../src/components/FooterTop.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueRouter from "vue-router";
-import router from "../../../src/router";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import FooterTop from "../../../src/ui/components/FooterTop.vue";
+import router from "../../../src/ui/router";
+import i18n from "../../../src/service/i18n";
 
 describe("FooterTop.vue", (): void => {
     const localVue = createLocalVue();

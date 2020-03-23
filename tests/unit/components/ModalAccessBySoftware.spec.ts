@@ -1,10 +1,11 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalAccessBySoftware from "../../../src/components/ModalAccessBySoftware.vue";
 import VueRouter from "vue-router";
-import router from "../../../src/router";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import ModalAccessBySoftware from "../../../src/ui/components/ModalAccessBySoftware.vue";
+import router from "../../../src/ui/router";
+import i18n from "../../../src/service/i18n";
 
 describe("ModalAccessBySoftware.vue", (): void => {
     const localVue = createLocalVue();
@@ -12,23 +13,7 @@ describe("ModalAccessBySoftware.vue", (): void => {
     localVue.use(VueRouter);
     localVue.use(VueI18n);
 
-    it("renders closed", (): void => {
-        expect.assertions(1);
-
-        const onChange = jest.fn();
-        const wrapper = mount(ModalAccessBySoftware, {
-            localVue,
-            i18n,
-            router,
-            propsData: { isOpen: false },
-            listeners: { change: onChange },
-            stubs: { MaterialDesignIcon: true }
-        });
-
-        expect(wrapper).toMatchInlineSnapshot(``);
-    });
-
-    it("renders open", (): void => {
+    it("renders open", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -41,9 +26,19 @@ describe("ModalAccessBySoftware.vue", (): void => {
             stubs: { MaterialDesignIcon: true }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            (child) => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal">
+            <div role="dialog" aria-modal="true" class="modal-background">
+              <div class="modal slidefade-enter slidefade-enter-active">
                 <header><span class="title">Software Account Access</span>
                   <materialdesignicon-stub icon="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" class="close"></materialdesignicon-stub>
                 </header>

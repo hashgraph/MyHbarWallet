@@ -1,7 +1,8 @@
-import OptionalPasswordInput from "../../../src/components/OptionalPasswordInput.vue";
 import VueCompositionApi from "@vue/composition-api";
 import { createLocalVue, mount } from "@vue/test-utils";
-import i18n from "../../../src/i18n";
+
+import OptionalPasswordInput from "../../../src/ui/components/OptionalPasswordInput.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("OptionalPasswordInput", (): void => {
     const localVue = createLocalVue();
@@ -14,7 +15,7 @@ describe("OptionalPasswordInput", (): void => {
             i18n,
             methods: {
                 // This test has warnings if the values aren't defined
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
                 handleChangeShowPassword(showPassword: boolean): void {}
             },
             stubs: {

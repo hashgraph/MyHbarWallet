@@ -1,34 +1,16 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalDownloadKeystore from "../../../src/components/ModalDownloadKeystore.vue";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import ModalDownloadKeystore from "../../../src/ui/components/ModalDownloadKeystore.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("ModalDownloadKeystore.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    it("renders, closed, not busy", (): void => {
-        expect.assertions(1);
-
-        const onChange = jest.fn();
-        const wrapper = mount(ModalDownloadKeystore, {
-            localVue,
-            i18n,
-            propsData: {
-                state: {
-                    isOpen: false,
-                    isBusy: false
-                }
-            },
-            listeners: { change: onChange }
-        });
-
-        expect(wrapper).toMatchInlineSnapshot(``);
-    });
-
-    it("renders, open, not busy", (): void => {
+    it("renders, open, not busy", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -44,9 +26,19 @@ describe("ModalDownloadKeystore.vue", (): void => {
             listeners: { change: onChange }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            (child) => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal">
+            <div role="dialog" aria-modal="true" class="modal-background">
+              <div class="modal slidefade-enter slidefade-enter-active">
                 <header><span class="title">By Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
@@ -88,26 +80,7 @@ describe("ModalDownloadKeystore.vue", (): void => {
         `);
     });
 
-    it("renders, closed, busy", (): void => {
-        expect.assertions(1);
-
-        const onChange = jest.fn();
-        const wrapper = mount(ModalDownloadKeystore, {
-            localVue,
-            i18n,
-            propsData: {
-                state: {
-                    isOpen: false,
-                    isBusy: true
-                }
-            },
-            listeners: { change: onChange }
-        });
-
-        expect(wrapper).toMatchInlineSnapshot(``);
-    });
-
-    it("renders, open, busy", (): void => {
+    it("renders, open, busy", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -123,9 +96,19 @@ describe("ModalDownloadKeystore.vue", (): void => {
             listeners: { change: onChange }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            (child) => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal">
+            <div role="dialog" aria-modal="true" class="modal-background">
+              <div class="modal slidefade-enter slidefade-enter-active">
                 <header><span class="title">By Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
