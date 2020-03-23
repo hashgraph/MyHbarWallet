@@ -10,7 +10,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    it("renders open, not busy", async(): Promise<void> => {
+    it("renders open, not busy", async (): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -29,7 +29,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            (child) => child.$options.name === "Modal"
+            child => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -39,7 +39,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div role="dialog" aria-modal="true" class="modal-background">
               <div class="modal slidefade-enter slidefade-enter-active">
-                <header><span class="title"></span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                <header><span class="title">Create with Keystore</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
                 <!---->
@@ -47,7 +47,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                   <div class="content-container">
                     <div class="password-info-header-wrapper">
                       <div class="password-info-header">
-
+                        Your Password
                         <span class="info-button"><div class="tooltip-container"><div class="slot-container"><svg width="24" height="24" viewBox="0 0 24 24" class="icon"><path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg></div> <div class="message">
                     This password encrypts your private key. This does not act as a seed to generate your keys.
                 </div></div></span></div>
@@ -85,7 +85,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
         `);
     });
 
-    it("renders open, busy", async(): Promise<void> => {
+    it("renders open, busy", async (): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -104,7 +104,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            (child) => child.$options.name === "Modal"
+            child => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -114,7 +114,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div role="dialog" aria-modal="true" class="modal-background">
               <div class="modal slidefade-enter slidefade-enter-active">
-                <header><span class="title"></span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+                <header><span class="title">Create with Keystore</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
                 <!---->
@@ -122,7 +122,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
                   <div class="content-container">
                     <div class="password-info-header-wrapper">
                       <div class="password-info-header">
-
+                        Your Password
                         <span class="info-button"><div class="tooltip-container"><div class="slot-container"><svg width="24" height="24" viewBox="0 0 24 24" class="icon"><path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg></div> <div class="message">
                     This password encrypts your private key. This does not act as a seed to generate your keys.
                 </div></div></span></div>
