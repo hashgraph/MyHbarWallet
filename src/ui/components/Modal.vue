@@ -234,8 +234,8 @@ export default defineComponent({
     flex-direction: column;
     margin: auto;
     max-width: 530px;
-    overflow: hidden;
-    overflow-y: auto;
+    overflow: visible;
+    overflow-y: visible;
     transform: none;
     width: 100vw;
     z-index: 3;
