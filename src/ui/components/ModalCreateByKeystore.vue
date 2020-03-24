@@ -70,6 +70,7 @@ export default defineComponent({
     setup(props: Props, context) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
+            context.listeners.change();
         }
 
         function handleSubmitPassword(password: string): void {

@@ -83,6 +83,7 @@ export default defineComponent({
     setup(props: { state: State }, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
+            context.listeners.change();
         }
 
         function handleMnemonicInput(words: string[]): void {

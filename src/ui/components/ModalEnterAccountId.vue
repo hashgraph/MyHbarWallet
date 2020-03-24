@@ -157,6 +157,7 @@ export default defineComponent({
         function handleModalChangeIsOpen(isOpen: boolean): void {
             if (!isOpen) props.state.errorMessage = null;
             context.emit("change", { ...props.state, isOpen });
+            context.listeners.change();
         }
 
         function handleDontHaveAccount(): void {

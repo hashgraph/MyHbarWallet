@@ -135,6 +135,7 @@ export default defineComponent({
 
         function onChange(): void {
             context.emit("change");
+            context.listeners.change();
         }
 
         return {

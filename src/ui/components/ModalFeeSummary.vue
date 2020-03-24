@@ -3,7 +3,7 @@
         :is-open="state.isOpen"
         :title="$t('modalFeeSummary.title')"
         not-closable
-        @change="handleCancel"
+        @change="handleChange"
     >
         <ModalFeeSummaryTitle
             :amount="state.amount"
@@ -23,7 +23,7 @@
                 :label="state.cancelLabel ? state.cancelLabel : $t('common.cancel')"
                 class="button"
                 type="button"
-                @click="handleCancel"
+                @click="handleChange"
             />
             <Button
                 compact
@@ -108,10 +108,11 @@ export default defineComponent({
             receiver: props.state!.termsShowNonOperator ? props.state!.account : null
         }));
 
-        function handleCancel(): void {
+        function handleChange(): void {
             props.state!.isBusy = false;
             props.state!.isOpen = false;
             context.emit("change", { ...props.state });
+            context.listeners.change();
         }
 
         function handleSubmit(): void {
@@ -126,7 +127,7 @@ export default defineComponent({
             props,
             termsState,
             BigNumber,
-            handleCancel,
+            handleChange,
             handleSubmit
         };
     }

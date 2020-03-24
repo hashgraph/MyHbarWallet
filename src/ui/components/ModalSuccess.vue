@@ -5,6 +5,7 @@
         hide-decoration
         garlands
         :crown="mdiCheck"
+        @change="this.$listeners.change"
     >
         <div class="container">
             <div class="title">

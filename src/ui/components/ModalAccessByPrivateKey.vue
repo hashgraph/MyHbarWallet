@@ -104,6 +104,7 @@ export default defineComponent({
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
+            context.listeners.change();
         }
 
         function handlePrivateKeyInput(rawPrivateKey: string): void {

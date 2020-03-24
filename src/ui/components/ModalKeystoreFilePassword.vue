@@ -64,6 +64,7 @@ export default defineComponent({
         function handleModalChangeIsOpen(isOpen: boolean): void {
             if (!isOpen) props.state.error = null;
             context.emit("change", { ...props.state, isOpen });
+            context.listeners.change();
         }
 
         function handleInputChange(value: string): void {

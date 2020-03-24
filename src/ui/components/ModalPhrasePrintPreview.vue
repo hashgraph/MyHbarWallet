@@ -5,7 +5,10 @@
         :title="$t('modalPhrasePrintPreview.title')"
         @change="onChange"
     >
-        <div ref="mnemonic">
+        <div
+            ref="mnemonic"
+            class="mnemonic"
+        >
             <div class="logo-contents">
                 <div class="header-container">
                     <span class="header">
@@ -143,6 +146,7 @@ export default defineComponent({
 
         function onChange(): void {
             context.emit("change", props.isOpen);
+            context.listeners.change();
         }
 
         return {
@@ -157,6 +161,10 @@ export default defineComponent({
 </script>
 
 <style scoped lang="postcss">
+.mnemonic {
+    font-family: "Montserrat", sans-serif, serif;
+}
+
 .logo-contents {
     align-items: center;
     display: flex;

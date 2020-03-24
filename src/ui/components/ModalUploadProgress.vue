@@ -4,6 +4,7 @@
         :title="$t('modalUploadProgress.title')"
         hide-decoration
         not-closeable
+        @change="this.$listeners.change"
     >
         <template v-slot:banner>
             <Warning
