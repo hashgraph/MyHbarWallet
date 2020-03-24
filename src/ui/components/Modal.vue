@@ -96,6 +96,7 @@ export default defineComponent({
 
         function handleClose(): void {
             if (!props.notClosable && modalIsTop(id)) {
+                document.body.classList.toggle("modal-is-open", false);
                 backgroundShown.value = false;
                 context.emit("close");
                 context.emit("change", false);
@@ -104,6 +105,7 @@ export default defineComponent({
 
         function handleXClose(): void {
             backgroundShown.value = false;
+            document.body.classList.toggle("modal-is-open", false);
             context.emit("close");
             context.emit("change", false);
         }
@@ -121,68 +123,15 @@ export default defineComponent({
 
         window.addEventListener("keydown", handleWindowKeyDown);
 
-        onMounted(() => {
-            // Do nothing if the modal is not open
-            if (!props.isOpen) {
-                return;
-            }
-
-            const elModals = context.root.$el.querySelectorAll(".modal");
-            elModals.forEach((element) => {
-                element.addEventListener(
-                    "touchstart",
-                    () => {
-                        if (element.scrollTop <= 0) {
-                            element.scrollTo(0, 1);
-                            return;
-                        }
-                        if (
-                            element.scrollTop + element.clientHeight >=
-                            element.scrollHeight
-                        ) {
-                            element.scrollTo(
-                                0,
-                                element.scrollHeight - element.clientHeight - 1
-                            );
-                        }
-                    },
-                    { passive: true }
-                );
-            });
-        });
-
-        onUnmounted(() => {
-            unregister();
-            window.removeEventListener("keydown", handleWindowKeyDown);
-            const elModals = context.root.$el.querySelectorAll(".modal");
-            elModals.forEach((element) => {
-                // eslint-disable-next-line sonarjs/no-identical-functions
-                element.removeEventListener("touchstart", () => {
-                    if (element.scrollTop <= 0) {
-                        element.scrollTo(0, 1);
-                        return;
-                    }
-                    if (
-                        element.scrollTop + element.clientHeight >=
-                        element.scrollHeight
-                    ) {
-                        element.scrollTo(
-                            0,
-                            element.scrollHeight - element.clientHeight - 1
-                        );
-                    }
-                });
-            });
-        });
-
         watch(
             () => props.isOpen,
             (isOpen: boolean, prevIsOpen: boolean) => {
                 const hasOpened = isOpen && !prevIsOpen;
                 const hasClosed = !isOpen && prevIsOpen;
 
-                document.body.classList.toggle("modal-is-open", isOpen);
-
+                if (isOpen) {
+                    document.body.classList.toggle("modal-is-open", isOpen);
+                }
                 if (hasOpened) {
                     modalIds.push(id);
                 } else if (hasClosed) {
