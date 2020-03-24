@@ -60,7 +60,6 @@
                     />
                 </div>
             </div>
-
             <div class="button-container">
                 <Button
                     class="button-save"
@@ -74,9 +73,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, SetupContext } from "@vue/composition-api";
+import { defineComponent, Ref, ref, SetupContext, onMounted } from "@vue/composition-api";
 
 import { formatRich } from "../../service/format";
+import { actions } from "../store";
 
 import Button from "./Button.vue";
 import Modal from "./Modal.vue";
@@ -106,16 +106,15 @@ export default defineComponent({
         password: String
     },
     setup(props: Props, context: SetupContext) {
-        const mnemonic = ref(null);
+        const mnemonic = ref(null); // My intended value cannot be accessed via .value because I am not reactive
+        const HTML2PDF: Ref<typeof import("html2pdf.js")[ "default" ] | null> = ref(null);
 
         async function handleClickSave(): Promise<void> {
-            let element = null;
-
-            try {
-                // Note: Vue Instances need $el to get their HTML, dumb elements do not
-                element = (mnemonic.value as unknown) as HTMLElement;
-            } catch (error) {
-                throw error;
+            if (HTML2PDF.value == null) {
+                actions.alert({
+                    message: context.root.$i18n.t("pdf.noLoad").toString(),
+                    level: "warn"
+                });
             }
 
             const options = {
@@ -126,15 +125,24 @@ export default defineComponent({
                 jsPDF: { unit: "mm" }
             };
 
-            const HTML2PDF = await import(/* webpackChunkName: "pdf" */ "html2pdf.js");
-            HTML2PDF[ "default" ]()
-                .set(options)
-                .from(element)
-                .save();
+            if (HTML2PDF.value != null) {
+                await HTML2PDF.value()
+                    .set(options)
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    .from(context.refs.mnemonic)
+                    .save();
+            } else {
+                window.print();
+            }
         }
 
+        onMounted(async() => {
+            HTML2PDF.value = (await import(/* webpackChunkName: "pdf" */ "html2pdf.js"))[ "default" ];
+        });
+
         function onChange(): void {
-            context.emit("change");
+            context.emit("change", props.isOpen);
         }
 
         return {

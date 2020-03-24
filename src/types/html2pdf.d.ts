@@ -19,7 +19,7 @@ declare module "html2pdf.js" {
     interface Html2Pdf {
         set(options: Html2PdfOptions): this;
 
-        from(element: HTMLElement): this;
+        from(element: HTMLElement, type?: string): this;
 
         toPdf(): this;
 
