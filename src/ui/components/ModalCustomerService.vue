@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { UAParser } from "ua-parser-js";
-import { computed, defineComponent, PropType, reactive, ref, watch } from "@vue/composition-api";
+import { computed, defineComponent, reactive, ref, watch } from "@vue/composition-api";
 import { AccountId } from "@hashgraph/sdk";
 
 import { getters } from "../store";
@@ -86,7 +86,7 @@ export default defineComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: { isOpen: (Boolean as unknown) as PropType<boolean> },
+    props: { isOpen: Boolean },
     setup(props, context) {
         const input = ref<HTMLInputElement | null>(null);
         const ua = new UAParser(navigator.userAgent);

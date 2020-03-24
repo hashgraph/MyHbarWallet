@@ -56,9 +56,8 @@ export default defineComponent({
 
         const url = `https://buy.carbon.money/?tokens=hbar&receiveAddressHbar=${accIdString}&environment=${environment}&apiKey=${CARBON_API_KEY}`;
 
-        function onChange(): void {
-            context.emit("change");
-            context.listeners.change();
+        function onChange(isOpen: boolean): void {
+            context.emit("change", isOpen);
         }
 
         return { url, carbonLogo, onChange };

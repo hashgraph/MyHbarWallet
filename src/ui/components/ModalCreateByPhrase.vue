@@ -98,7 +98,7 @@
 
 <script lang="ts">
 import { mdiCached } from "@mdi/js";
-import { computed, defineComponent, onMounted, PropType, reactive, SetupContext, watch } from "@vue/composition-api";
+import { computed, defineComponent, onMounted, reactive, SetupContext, watch } from "@vue/composition-api";
 
 import printIcon from "../assets/icon-printer.svg";
 import { formatRich } from "../../service/format";
@@ -138,11 +138,7 @@ export default defineComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: {
-        isOpen: ({ type: Boolean, required: true } as unknown) as PropType<
-        boolean
-        >
-    },
+    props: { isOpen: Boolean },
     setup(props: Props, context: SetupContext) {
         const numberWords = 24;
         const state = reactive({

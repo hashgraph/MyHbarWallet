@@ -62,7 +62,7 @@ export default defineComponent({
         event: "change"
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
+        isOpen: Boolean,
         words: (Array as unknown) as PropType<string[]>
     },
     setup(props: Props, context: SetupContext) {

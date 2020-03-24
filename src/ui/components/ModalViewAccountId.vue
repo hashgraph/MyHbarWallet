@@ -59,8 +59,8 @@ export default defineComponent({
     },
     props: {
         value: (Object as unknown) as PropType<AccountId | null>,
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        event: (String as unknown) as PropType<string>
+        isOpen: Boolean,
+        event: String
     },
     setup(props: Props, context) {
         const accountId = computed(() => props.value ?

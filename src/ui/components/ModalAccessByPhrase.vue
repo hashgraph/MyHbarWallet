@@ -83,7 +83,6 @@ export default defineComponent({
     setup(props: { state: State }, context: SetupContext) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
-            context.listeners.change();
         }
 
         function handleMnemonicInput(words: string[]): void {
@@ -100,7 +99,7 @@ export default defineComponent({
 
         // Watch for the modal state to change, and clear input when the modal is reopened
         watch(
-            () => props.state.isOpen,
+            () => props.state ? props.state.isOpen : false,
             (newVal: boolean) => {
                 if (newVal) {
                     context.emit("change", { ...props.state, words: []});

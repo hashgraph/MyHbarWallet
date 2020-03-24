@@ -89,9 +89,9 @@ export default defineComponent({
         event: "change"
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
+        isOpen: Boolean,
         publicKey: (Object as unknown) as PropType<import("@hashgraph/sdk").Ed25519PublicKey>,
-        event: (String as unknown) as PropType<string>
+        event: String
     },
     setup(props: Props, context: SetupContext) {
         async function handleClickCopy(): Promise<void> {

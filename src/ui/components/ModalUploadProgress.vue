@@ -111,7 +111,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, SetupContext } from "@vue/composition-api";
+import { computed, defineComponent, SetupContext, PropType } from "@vue/composition-api";
 import { mdiFileCheckOutline, mdiFileRemoveOutline, mdiLoading } from "@mdi/js";
 
 import Button from "./Button.vue";
@@ -138,7 +138,7 @@ export default defineComponent({
         prop: "state",
         event: "change"
     },
-    props: { state: { type: Object, required: true }},
+    props: { state: { type: (Object as unknown) as PropType<State>, required: true }},
     setup(props: { state: State }, context: SetupContext) {
         const buttonLabel = computed<string>(() => context.root
             .$t("modalUploadProgress.failure.buttonLabel")

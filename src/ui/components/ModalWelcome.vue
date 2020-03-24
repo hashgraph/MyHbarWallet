@@ -133,9 +133,8 @@ export default defineComponent({
 
         const noPlatLabel = context.root.$t("modalWelcome.noPlatDownload");
 
-        function onChange(): void {
-            context.emit("change");
-            context.listeners.change();
+        function onChange(isOpen: boolean): void {
+            context.emit("change", isOpen);
         }
 
         return {

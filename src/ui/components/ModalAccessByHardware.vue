@@ -173,7 +173,6 @@ export default defineComponent({
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
-            context.listeners.change();
         }
 
         function handleSubmit(): void {
@@ -181,16 +180,7 @@ export default defineComponent({
         }
 
         watch(
-            () => props.state.isOpen,
-            (newVal: boolean) => {
-                if (newVal) {
-                    props.state.optionSelected = "";
-                }
-            }
-        );
-
-        watch(
-            () => props.state.optionSelected.length,
+            () => props.state ? props.state.optionSelected.length : 0,
             () => {
                 // if require chrome but not chrome, or if nothing selected, disable button
                 props.state.disableButton =

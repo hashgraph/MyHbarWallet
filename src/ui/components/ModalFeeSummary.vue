@@ -109,10 +109,7 @@ export default defineComponent({
         }));
 
         function handleChange(): void {
-            props.state!.isBusy = false;
-            props.state!.isOpen = false;
-            context.emit("change", { ...props.state });
-            context.listeners.change();
+            context.emit("change", { ...props.state, isOpen: false, isBusy: false });
         }
 
         function handleSubmit(): void {

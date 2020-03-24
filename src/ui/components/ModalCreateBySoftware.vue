@@ -61,7 +61,7 @@ export default defineComponent({
         prop: "isOpen",
         event: "change"
     },
-    props: { isOpen: { type: Boolean }},
+    props: { isOpen: Boolean },
     setup(props: { isOpen: boolean }) {
         const state = reactive<State>({ optionSelected: null });
 

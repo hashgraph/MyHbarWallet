@@ -144,9 +144,8 @@ export default defineComponent({
             HTML2PDF.value = (await import(/* webpackChunkName: "pdf" */ "html2pdf.js"))[ "default" ];
         });
 
-        function onChange(): void {
-            context.emit("change", props.isOpen);
-            context.listeners.change();
+        function onChange(isOpen: boolean): void {
+            context.emit("change", isOpen);
         }
 
         return {
