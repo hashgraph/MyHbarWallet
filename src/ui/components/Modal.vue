@@ -96,29 +96,26 @@ export default defineComponent({
 
         function handleClose(): void {
             if (!props.notClosable && modalIsTop(id)) {
-                document.body.classList.toggle("modal-is-open", false);
-                backgroundShown.value = false;
-                context.emit("close");
-                context.emit("change", false);
+                handleXClose();
             }
         }
 
         function handleXClose(): void {
+            context.emit("change", false); // flips isOpen
+        }
+
+        function unregister(): void {
             backgroundShown.value = false;
+            modalIds.splice(modalIds.indexOf(id), 1);
             document.body.classList.toggle("modal-is-open", false);
             context.emit("close");
-            context.emit("change", false);
         }
 
         function handleWindowKeyDown(event: KeyboardEvent): void {
             // ESCAPE (27)
-            if (!props.notClosable && props.isOpen && event.keyCode === 27) {
-                handleClose();
+            if (!props.notClosable && props.isOpen && event.keyCode === 27 && modalIsTop(id)) {
+                handleXClose();
             }
-        }
-
-        function unregister(): void {
-            modalIds.splice(modalIds.indexOf(id), 1);
         }
 
         window.addEventListener("keydown", handleWindowKeyDown);

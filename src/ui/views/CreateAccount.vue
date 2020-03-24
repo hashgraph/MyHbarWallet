@@ -55,6 +55,7 @@
 </template>
 
 <script lang="ts">
+import Vue from "vue";
 import { defineComponent, reactive, ref, Ref, SetupContext } from "@vue/composition-api";
 
 import FAQs from "../components/FAQs.vue";
@@ -284,7 +285,7 @@ export default defineComponent({
             try {
                 await actions.logIn(account, state.wallet!, getters.currentNetwork());
                 state.modalEnterAccountIdState.isOpen = false;
-                mutations.navigateToInterface();
+                Vue.nextTick(() => mutations.navigateToInterface());
             } catch (error) {
                 const { HederaStatusError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
                 if (error instanceof HederaStatusError) {
