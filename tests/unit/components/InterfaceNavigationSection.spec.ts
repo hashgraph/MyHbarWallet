@@ -1,9 +1,10 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import InterfaceNavigationSection from "../../../src/components/InterfaceNavigationSection.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueRouter from "vue-router";
 import VueI18n from "vue-i18n";
-import i18n from "../../../src/i18n";
+
+import InterfaceNavigationSection from "../../../src/ui/components/InterfaceNavigationSection.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("InterfaceNavigationSection.vue", (): void => {
     const localVue = createLocalVue();

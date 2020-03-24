@@ -1,10 +1,11 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import HeaderHamburgerMenu from "../../../src/components/HeaderHamburgerMenu.vue";
-import i18n from "../../../src/i18n";
-import router from "../../../src/router";
 import VueRouter from "vue-router";
 import VueI18n from "vue-i18n";
+
+import HeaderHamburgerMenu from "../../../src/ui/components/HeaderHamburgerMenu.vue";
+import i18n from "../../../src/service/i18n";
+import router from "../../../src/ui/router";
 
 describe("HeaderHamburgerMenu.vue", (): void => {
     const localVue = createLocalVue();

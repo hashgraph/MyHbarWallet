@@ -1,9 +1,10 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalCustomerService from "../../../src/components/ModalCustomerService.vue";
 import VueRouter from "vue-router";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import ModalCustomerService from "../../../src/ui/components/ModalCustomerService.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("ModalCustomerService.vue", (): void => {
     const localVue = createLocalVue();
@@ -17,21 +18,7 @@ describe("ModalCustomerService.vue", (): void => {
         }
     });
 
-    it("renders closed", (): void => {
-        expect.assertions(1);
-
-        const onChange = jest.fn();
-        const wrapper = mount(ModalCustomerService, {
-            localVue,
-            i18n,
-            propsData: { isOpen: false },
-            listeners: { change: onChange }
-        });
-
-        expect(wrapper).toMatchInlineSnapshot(``);
-    });
-
-    it("renders open", (): void => {
+    it("renders open", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -42,9 +29,19 @@ describe("ModalCustomerService.vue", (): void => {
             listeners: { change: onChange }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            (child) => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal">
+            <div role="dialog" aria-modal="true" class="modal-background">
+              <div class="modal slidefade-enter slidefade-enter-active">
                 <header><span class="title">Issue Information</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>

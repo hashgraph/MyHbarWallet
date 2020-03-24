@@ -1,11 +1,12 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import Header from "../../../src/components/Header.vue";
 import VueRouter from "vue-router";
-import router from "../../../src/router";
 import VueCompositionApi from "@vue/composition-api";
-import "../../../src/directives";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import Header from "../../../src/ui/components/Header.vue";
+import router from "../../../src/ui/router";
+import "../../../src/ui/directives";
+import i18n from "../../../src/service/i18n";
 
 describe("Header.vue", (): void => {
     const localVue = createLocalVue();

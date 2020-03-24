@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import SwitchButton from "../../../src/components/SwitchButton.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
-import i18n from "../../../src/i18n";
+
+import SwitchButton from "../../../src/ui/components/SwitchButton.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("SwitchButton.vue", (): void => {
     const localVue = createLocalVue();

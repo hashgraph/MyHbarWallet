@@ -1,6 +1,7 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import UploadZone from "../../../src/components/UploadZone.vue";
+
+import UploadZone from "../../../src/ui/components/UploadZone.vue";
 
 describe("UploadZone.vue", (): void => {
     const localVue = createLocalVue();

@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import CirclePage from "../../../src/components/CirclePage.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
-import i18n from "../../../src/i18n";
+
+import CirclePage from "../../../src/ui/components/CirclePage.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("CirclePage.vue", (): void => {
     const localVue = createLocalVue();

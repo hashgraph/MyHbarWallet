@@ -1,6 +1,7 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import Warning from "../../../src/components/Warning.vue";
 import VueCompositionApi from "@vue/composition-api";
+
+import Warning from "../../../src/ui/components/Warning.vue";
 
 describe("Warning.vue", (): void => {
     const localVue = createLocalVue();

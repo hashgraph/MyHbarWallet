@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import InterfaceNavigation from "../../../src/components/InterfaceNavigation.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import InterfaceNavigation from "../../../src/ui/components/InterfaceNavigation.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("InterfaceNavigation", (): void => {
     const localVue = createLocalVue();

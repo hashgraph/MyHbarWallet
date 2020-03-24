@@ -1,9 +1,10 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import ZoomTopButton from "../../../src/components/ZoomTopButton.vue";
-import "../../../src/directives";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
-import i18n from "../../../src/i18n";
+
+import ZoomTopButton from "../../../src/ui/components/ZoomTopButton.vue";
+import "../../../src/ui/directives";
+import i18n from "../../../src/service/i18n";
 
 describe("ZoomTopButton", (): void => {
     const localVue = createLocalVue();

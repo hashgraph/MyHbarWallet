@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import Alerts from "../../../src/components/Alerts.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import Alerts from "../../../src/ui/components/Alerts.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("Alerts.vue", (): void => {
     const localVue = createLocalVue();

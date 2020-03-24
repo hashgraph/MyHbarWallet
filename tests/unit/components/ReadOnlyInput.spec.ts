@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import ReadOnlyInput from "../../../src/components/ReadOnlyInput.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import ReadOnlyInput from "../../../src/ui/components/ReadOnlyInput.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("ReadOnlyInput.vue", (): void => {
     const localVue = createLocalVue();

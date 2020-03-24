@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import ExportKeystoreButton from "../../../src/components/ExportKeystoreButton.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
-import i18n from "../../../src/i18n";
+
+import ExportKeystoreButton from "../../../src/ui/components/ExportKeystoreButton.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("ExportKeystoreButton.vue", (): void => {
     const localVue = createLocalVue();

@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/camelcase */
 /* eslint-env node */
-/* eslint-disable @typescript-eslint/camelcase */
 module.exports = {
     src_folders: [ "tests/e2e/specs" ],
     output_folder: "tests/e2e/reports",

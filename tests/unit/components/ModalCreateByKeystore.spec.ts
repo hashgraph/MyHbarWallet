@@ -1,67 +1,16 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import ModalCreateByKeystore from "../../../src/components/ModalCreateByKeystore.vue";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import ModalCreateByKeystore from "../../../src/ui/components/ModalCreateByKeystore.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("ModalCreateByKeystore.vue", (): void => {
     const localVue = createLocalVue();
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    const PASSWORD = "password";
-
-    it("renders closed, not busy", (): void => {
-        expect.assertions(1);
-
-        const onChange = jest.fn();
-        const wrapper = mount(ModalCreateByKeystore, {
-            localVue,
-            i18n,
-            propsData: {
-                state: {
-                    isOpen: false,
-                    isBusy: false,
-                    passwordGeneratorState: {
-                        password: PASSWORD,
-                        confirmationPassword: PASSWORD,
-                        passwordStrength: 0,
-                        passwordSuggestion: ""
-                    }
-                }
-            },
-            listeners: { change: onChange }
-        });
-
-        expect(wrapper).toMatchInlineSnapshot(``);
-    });
-
-    it("renders closed, busy", (): void => {
-        expect.assertions(1);
-
-        const onChange = jest.fn();
-        const wrapper = mount(ModalCreateByKeystore, {
-            localVue,
-            i18n,
-            propsData: {
-                state: {
-                    isOpen: false,
-                    isBusy: true,
-                    passwordGeneratorState: {
-                        password: PASSWORD,
-                        confirmationPassword: PASSWORD,
-                        passwordStrength: 0,
-                        passwordSuggestion: ""
-                    }
-                }
-            },
-            listeners: { change: onChange }
-        });
-
-        expect(wrapper).toMatchInlineSnapshot(``);
-    });
-
-    it("renders open, not busy", (): void => {
+    it("renders open, not busy", async (): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -71,22 +20,26 @@ describe("ModalCreateByKeystore.vue", (): void => {
             propsData: {
                 state: {
                     isOpen: true,
-                    isBusy: false,
-                    passwordGeneratorState: {
-                        password: PASSWORD,
-                        confirmationPassword: PASSWORD,
-                        passwordStrength: 0,
-                        passwordSuggestion: ""
-                    }
+                    isBusy: false
                 }
             },
             listeners: { change: onChange }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            child => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal">
-                <header><span class="title">Create By Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+            <div role="dialog" aria-modal="true" class="modal-background">
+              <div class="modal slidefade-enter slidefade-enter-active">
+                <header><span class="title">Create with Keystore</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
                 <!---->
@@ -132,7 +85,7 @@ describe("ModalCreateByKeystore.vue", (): void => {
         `);
     });
 
-    it("renders open, busy", (): void => {
+    it("renders open, busy", async (): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -142,22 +95,26 @@ describe("ModalCreateByKeystore.vue", (): void => {
             propsData: {
                 state: {
                     isOpen: true,
-                    isBusy: true,
-                    passwordGeneratorState: {
-                        password: PASSWORD,
-                        confirmationPassword: PASSWORD,
-                        passwordStrength: 0,
-                        passwordSuggestion: ""
-                    }
+                    isBusy: true
                 }
             },
             listeners: { change: onChange }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            child => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal">
-                <header><span class="title">Create By Keystore File</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
+            <div role="dialog" aria-modal="true" class="modal-background">
+              <div class="modal slidefade-enter slidefade-enter-active">
+                <header><span class="title">Create with Keystore</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>
                 <!---->

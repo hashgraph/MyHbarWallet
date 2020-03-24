@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import FAQs from "../../../src/components/FAQs.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import FAQs from "../../../src/ui/components/FAQs.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("FAQs.vue", (): void => {
     const localVue = createLocalVue();

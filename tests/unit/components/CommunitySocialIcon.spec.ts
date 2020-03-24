@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import CommunitySocialIcon from "../../../src/components/CommunitySocialIcon.vue";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
-import i18n from "../../../src/i18n";
+
+import CommunitySocialIcon from "../../../src/ui/components/CommunitySocialIcon.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("CommunitySocialIcon.vue", (): void => {
     const localVue = createLocalVue();

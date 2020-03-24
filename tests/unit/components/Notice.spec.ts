@@ -1,9 +1,10 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import Notice from "../../../src/components/Notice.vue";
 import VueCompositionApi from "@vue/composition-api";
 import { mdiPartyPopper } from "@mdi/js";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import i18n from "../../../src/service/i18n";
+import Notice from "../../../src/ui/components/Notice.vue";
 
 describe("Notice.vue", (): void => {
     const localVue = createLocalVue();

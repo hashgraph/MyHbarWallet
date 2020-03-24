@@ -1,3 +1,4 @@
+/* eslint-disable no-process-env, no-undef */
 import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 

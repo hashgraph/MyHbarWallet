@@ -1,9 +1,10 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import RadioButton from "../../../src/components/RadioButton.vue";
-import imageKey from "../../../src/assets/button-key.svg";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import RadioButton from "../../../src/ui/components/RadioButton.vue";
+import imageKey from "../../../src/ui/assets/button-key.svg";
+import i18n from "../../../src/service/i18n";
 
 describe("RadioButton.vue", (): void => {
     const localVue = createLocalVue();

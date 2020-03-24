@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import HeaderHamburgerButton from "../../../src/components/HeaderHamburgerButton.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import HeaderHamburgerButton from "../../../src/ui/components/HeaderHamburgerButton.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("HeaderHamburgerButton.vue", (): void => {
     const localVue = createLocalVue();

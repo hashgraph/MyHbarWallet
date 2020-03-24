@@ -1,9 +1,10 @@
 import { mount } from "@vue/test-utils";
-import RadioButtonGroup from "../../../src/components/RadioButtonGroup.vue";
-import imageKey from "../../../src/assets/button-key.svg";
-import imagePhrase from "../../../src/assets/button-phrase.svg";
-import imageFile from "../../../src/assets/button-file.svg";
-import i18n from "../../../src/i18n";
+
+import RadioButtonGroup from "../../../src/ui/components/RadioButtonGroup.vue";
+import imageKey from "../../../src/ui/assets/button-key.svg";
+import imagePhrase from "../../../src/ui/assets/button-phrase.svg";
+import imageFile from "../../../src/ui/assets/button-file.svg";
+import i18n from "../../../src/service/i18n";
 
 describe("RadioButtonGroup.vue", (): void => {
     const name = "RadioButtonGroup";

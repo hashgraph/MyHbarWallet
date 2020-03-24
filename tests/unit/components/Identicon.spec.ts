@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
-import Identicon from "../../../src/components/Identicon.vue";
 import VueCompositionApi from "@vue/composition-api";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import Identicon from "../../../src/ui/components/Identicon.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("Identicon.vue", (): void => {
     const localVue = createLocalVue();

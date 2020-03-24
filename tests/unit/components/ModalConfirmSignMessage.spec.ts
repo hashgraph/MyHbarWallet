@@ -1,8 +1,9 @@
 import VueCompositionApi from "@vue/composition-api";
-import ModalConfirmSignMessage from "../../../src/components/ModalConfirmSignMessage.vue";
 import { createLocalVue, mount } from "@vue/test-utils";
-import i18n from "../../../src/i18n";
 import VueI18n from "vue-i18n";
+
+import ModalConfirmSignMessage from "../../../src/ui/components/ModalConfirmSignMessage.vue";
+import i18n from "../../../src/service/i18n";
 
 describe("ModalConfirmSignMessage.vue", (): void => {
     const localVue = createLocalVue();
@@ -12,25 +13,7 @@ describe("ModalConfirmSignMessage.vue", (): void => {
     const PUBLIC_KEY =
         "302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29";
 
-    it("renders closed", (): void => {
-        expect.assertions(1);
-
-        const onChange = jest.fn();
-        const wrapper = mount(ModalConfirmSignMessage, {
-            localVue,
-            i18n,
-            propsData: {
-                isOpen: false,
-                message: "message",
-                publicKey: PUBLIC_KEY
-            },
-            listeners: { change: onChange }
-        });
-
-        expect(wrapper).toMatchInlineSnapshot(``);
-    });
-
-    it("renders open", (): void => {
+    it("renders open", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -45,9 +28,19 @@ describe("ModalConfirmSignMessage.vue", (): void => {
             listeners: { change: onChange }
         });
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        const modal = wrapper.vm.$children.find(
+            (child) => child.$options.name === "Modal"
+        );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        modal!.showModal();
+        await localVue.nextTick();
+
         expect(wrapper).toMatchInlineSnapshot(`
-            <div transition="modal-fade" role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal large">
+            <div role="dialog" aria-modal="true" class="modal-background">
+              <div class="modal large slidefade-enter slidefade-enter-active">
                 <header><span class="title">Confirmation</span> <svg width="24" height="24" viewBox="0 0 24 24" class="close">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
                   </svg></header>

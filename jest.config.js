@@ -29,6 +29,9 @@ module.exports = {
         // to the use of webpack DefinePlugin
         "VERSION": "1.1.1",
         "COMMIT_HASH": "placeholderhash",
-        "HEDERA_NETWORK": "testnet"
+        "HEDERA_NETWORK": "testnet",
+        "MHW_ENV": "sandbox",
+        "CARBON_API_KEY": "89fa28dd-b26e-4af4-8313-1536054767d5",
+        "IS_ELECTRON": false
     }
 };
