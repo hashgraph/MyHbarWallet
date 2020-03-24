@@ -104,13 +104,6 @@ export default defineComponent({
             context.emit("change", false); // flips isOpen
         }
 
-        function unregister(): void {
-            backgroundShown.value = false;
-            modalIds.splice(modalIds.indexOf(id), 1);
-            document.body.classList.toggle("modal-is-open", false);
-            context.emit("close");
-        }
-
         function handleWindowKeyDown(event: KeyboardEvent): void {
             // ESCAPE (27)
             if (!props.notClosable && props.isOpen && event.keyCode === 27 && modalIsTop(id)) {
@@ -129,10 +122,17 @@ export default defineComponent({
                 if (isOpen) {
                     document.body.classList.toggle("modal-is-open", isOpen);
                 }
+
                 if (hasOpened) {
                     modalIds.push(id);
                 } else if (hasClosed) {
-                    unregister();
+                    backgroundShown.value = false;
+                    modalIds.splice(modalIds.indexOf(id), 1);
+                    context.emit("close");
+                }
+
+                if (modalIds.length === 0) {
+                    document.body.classList.toggle("modal-is-open", false);
                 }
             }
         );
