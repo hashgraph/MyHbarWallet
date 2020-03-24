@@ -4,7 +4,7 @@
         :title="$t('modalUploadProgress.title')"
         hide-decoration
         not-closeable
-        @change="this.$listeners.change"
+        @change="onChange"
     >
         <template v-slot:banner>
             <Warning
@@ -170,6 +170,10 @@ export default defineComponent({
             close();
         }
 
+        function onChange(): void {
+            context.emit("change");
+        }
+
         return {
             buttonLabel,
             mdiLoading,
@@ -178,7 +182,8 @@ export default defineComponent({
             progressString,
             isElectron,
             onClickRetry,
-            onClickCancel
+            onClickCancel,
+            onChange
         };
     }
 });

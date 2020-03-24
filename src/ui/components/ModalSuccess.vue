@@ -5,7 +5,7 @@
         hide-decoration
         garlands
         :crown="mdiCheck"
-        @change="this.$listeners.change"
+        @change="onChange"
     >
         <div class="container">
             <div class="title">
@@ -87,6 +87,10 @@ export default defineComponent({
             context.emit("dismiss");
         }
 
+        function onChange(): void {
+            context.emit("change");
+        }
+
         return {
             hasAction,
             actionLabel,
@@ -94,7 +98,8 @@ export default defineComponent({
             actionClicked,
             handleAction,
             handleDismiss,
-            mdiCheck
+            mdiCheck,
+            onChange
         };
     }
 });
