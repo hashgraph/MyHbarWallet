@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, SetupContext, watch, ref } from "@vue/composition-api";
+import { defineComponent, SetupContext, watch, ref } from "@vue/composition-api";
 import { mdiClose } from "@mdi/js";
 
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";

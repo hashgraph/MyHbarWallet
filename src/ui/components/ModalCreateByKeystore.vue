@@ -69,7 +69,7 @@ export default defineComponent({
     props: { state: (Object as unknown) as PropType<State> },
     setup(props: Props, context) {
         function handleModalChangeIsOpen(isOpen: boolean): void {
-            context.emit("change", { ...props.state, isOpen });
+            context.emit("change", isOpen);
             context.listeners.change();
         }
 
