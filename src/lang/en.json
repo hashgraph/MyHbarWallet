@@ -156,6 +156,8 @@
     "keystoreWarningCards.saveMyKeystoreFile": "Save This Keystore File!",
     "keystoreWarningCards.secureIt": "Secure it like the millions of dollars it may one day be worth.",
     "keystoreWarningCards.yourFundsWillBeStolen": "Your funds will be stolen if you use this file on a malicious phishing site.",
+    "mnemonic.noMatch": "Mnemonic does not match",
+    "mnemonic.passwordMismatch": "Passwords do not match",
     "mnemonic.wordsNotInWordlist": "The following words were not found in the BIP39 English Wordlist",
     "modalAccessByHardware.chooseAHardware": "Continue",
     "modalAccessByHardware.ledgerChromeOnly": "Ledger devices require the Chrome browser.",

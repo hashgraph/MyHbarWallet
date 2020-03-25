@@ -65,6 +65,7 @@
             <ModalVerifyPhrase
                 v-model="state.verifyPhraseIsOpen"
                 :words="words"
+                :password="state.password"
                 @success="handleVerifySuccess"
             />
             <img
