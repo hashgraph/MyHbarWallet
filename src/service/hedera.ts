@@ -2,27 +2,11 @@ import { NetworkName, NetworkSettings } from "../domain/network";
 import { Session } from "../domain/user";
 import Wallet from "../domain/wallets/Wallet";
 
-// Construct a Client
-export async function constructClient(
-    account: import("@hashgraph/sdk").AccountId,
-    wallet: Wallet,
-    network: NetworkSettings
-): Promise<import("@hashgraph/sdk").Client | null> {
-    let privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null = null;
-    let publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null = null;
-    let signer: import("@hashgraph/sdk").TransactionSigner | null = null;
+async function nodeClient(network: NetworkSettings): Promise<import("@hashgraph/sdk/lib/index-node.js").Client | null> {
+    const { Client } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk/lib/index-node.js");
+    let client: import("@hashgraph/sdk/lib/index-node.js").Client | null = null;
 
-    if (wallet.hasPrivateKey()) {
-        privateKey = await wallet.getPrivateKey();
-    }
-
-    publicKey = await wallet.getPublicKey() as import("@hashgraph/sdk").Ed25519PublicKey;
-    signer = wallet.signTransaction.bind(wallet) as import("@hashgraph/sdk").TransactionSigner;
-    let client: import("@hashgraph/sdk").Client | null = null;
-    const { Client } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
-
-    // eslint-disable-next-line no-process-env, no-undef
-    if (network.name !== NetworkName.CUSTOM && !process.env.IS_ELECTRON) {
+    if (network.name !== NetworkName.CUSTOM) {
         if (network.name === NetworkName.MAINNET) {
             client = Client.forMainnet();
         } else if (network.name === NetworkName.TESTNET) {
@@ -40,6 +24,59 @@ export async function constructClient(
         });
     }
 
+    return client;
+}
+
+async function webClient(network: NetworkSettings): Promise<import("@hashgraph/sdk").Client | null> {
+    const { Client } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+    let client: import("@hashgraph/sdk").Client | null = null;
+
+    if (network.name !== NetworkName.CUSTOM) {
+        if (network.name === NetworkName.MAINNET) {
+            client = Client.forMainnet();
+        } else if (network.name === NetworkName.TESTNET) {
+            client = Client.forTestnet();
+        }
+    } else {
+        client = new Client({
+            network: {
+                [ network.proxy || network.address ]: {
+                    shard: network.node.shard,
+                    realm: network.node.realm,
+                    account: network.node.node
+                }
+            }
+        });
+    }
+
+    return client;
+}
+
+// Construct a Client
+export async function constructClient(
+    account: import("@hashgraph/sdk").AccountId,
+    wallet: Wallet,
+    network: NetworkSettings
+): Promise<import("@hashgraph/sdk").Client | import("@hashgraph/sdk/lib/index-node.js").Client | null> {
+    let privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null = null;
+    let publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null = null;
+    let signer: import("@hashgraph/sdk").TransactionSigner | null = null;
+
+    if (wallet.hasPrivateKey()) {
+        privateKey = await wallet.getPrivateKey();
+    }
+
+    publicKey = await wallet.getPublicKey() as import("@hashgraph/sdk").Ed25519PublicKey;
+    signer = wallet.signTransaction.bind(wallet) as import("@hashgraph/sdk").TransactionSigner;
+    let client: import("@hashgraph/sdk").Client | import("@hashgraph/sdk/lib/index-node.js").Client | null = null;
+
+    // eslint-disable-next-line no-process-env, no-undef
+    if (!process.env.IS_ELECTRON) {
+        client = await webClient(network);
+    } else {
+        client = await nodeClient(network);
+    }
+
     if (client != null) {
         if (wallet.hasPrivateKey()) {
             client.setOperator(account, privateKey!);
@@ -54,7 +91,7 @@ export async function constructClient(
 // Does the operator key belong to this account?
 export async function testClient(
     account: import("@hashgraph/sdk").AccountId,
-    client: import("@hashgraph/sdk").Client
+    client: import("@hashgraph/sdk").Client | import("@hashgraph/sdk/lib/index-node.js").Client
 ): Promise<boolean> {
     const { CryptoTransferTransaction, HederaStatusError, Status } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
