@@ -1,4 +1,4 @@
-/* eslint-disable no-process-env, @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports */
+/* eslint-disable no-process-env, @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports, import/order */
 /* eslint-env node */
 const path = require("path");
 
@@ -69,7 +69,8 @@ const frontEndExternals = {
     externals: {
         "@ledgerhq/hw-transport-node-hid-noevents": "module",
         "@improbable-eng/grpc-web-node-http-transport": "module",
-        "node-hid": "module"
+        "node-hid": "module",
+        "grpc": "module"
     }
 };
 

@@ -1,4 +1,4 @@
-/* eslint-disable no-process-env, @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports */
+/* eslint-disable no-process-env, @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports, import/order */
 /* eslint-env node */
 const path = require("path");
 
@@ -96,7 +96,8 @@ const backWebpack = {
     configureWebpack: {
         target: "electron-renderer",
         ...performance,
-        plugins
+        plugins,
+        resolve: { alias: { "@hashgraph/sdk": path.resolve(__dirname, "node_modules/@hashgraph/sdk/lib/index-node.js") }}
     },
     ...pluginOptions,
     ...devServer
