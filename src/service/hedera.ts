@@ -21,7 +21,6 @@ export async function constructClient(
     let client: import("@hashgraph/sdk").Client | null = null;
     const { Client } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
-    // eslint-disable-next-line no-process-env, no-undef
     if (network.name !== NetworkName.CUSTOM) {
         if (network.name === NetworkName.MAINNET) {
             client = Client.forMainnet();
