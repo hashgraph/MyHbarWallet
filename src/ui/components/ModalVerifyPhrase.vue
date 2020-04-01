@@ -30,6 +30,9 @@
                     >
                 </label>
             </div>
+            <OptionalPasswordInput
+                v-model="state.password"
+            />
             <div class="btn-container">
                 <Button :label="$t('modalVerifyPhrase.verify')" />
             </div>
@@ -45,17 +48,20 @@ import { actions } from "../store";
 import Modal from "./Modal.vue";
 import Button from "./Button.vue";
 import TextInput from "./TextInput.vue";
+import OptionalPasswordInput from "./OptionalPasswordInput.vue";
 
 interface Props {
     isOpen: boolean;
     words: string[];
+    password: string;
 }
 
 export default defineComponent({
     components: {
         Modal,
         Button,
-        TextInput
+        TextInput,
+        OptionalPasswordInput
     },
     model: {
         prop: "isOpen",
@@ -63,16 +69,16 @@ export default defineComponent({
     },
     props: {
         isOpen: Boolean,
-        words: (Array as unknown) as PropType<string[]>
+        words: (Array as unknown) as PropType<string[]>,
+        password: String
     },
     setup(props: Props, context: SetupContext) {
-        // let inputMap: Map<number, string> = ;
-
         const input = ref<HTMLInputElement[] | null>(null);
 
         const state = reactive({
             focused: null as number | null,
-            inputMap: new Map() as Map<number, string>
+            inputMap: new Map() as Map<number, string>,
+            password: ""
         });
 
         let firstIndex = 24;
@@ -121,7 +127,15 @@ export default defineComponent({
             for (const [ index, value ] of state.inputMap.entries()) {
                 if (props.words[ index ] !== value) {
                     actions.alert({
-                        message: "Memonic does not match",
+                        message: context.root.$t("mnemonic.noMatch").toString(),
+                        level: "error"
+                    });
+
+                    return;
+                }
+                if (props.password !== state.password) {
+                    actions.alert({
+                        message: context.root.$t("mnemonic.passwordMismatch").toString(),
                         level: "error"
                     });
 
