@@ -203,7 +203,7 @@ export default defineComponent({
 
         async function fileCreateUpload(
             chunks: Uint8Array[],
-            client: import("@hashgraph/sdk").Client
+            client: import("@hashgraph/sdk").Client | import("@hashgraph/sdk/lib/index-node").Client
         ): Promise<import("@hashgraph/sdk").FileId> {
             const { FileCreateTransaction, Ed25519PublicKey } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
