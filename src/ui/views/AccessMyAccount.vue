@@ -350,7 +350,6 @@ export default defineComponent({
             }
 
             try {
-                debugger;
                 await actions.logIn(account, state.wallet!, getters.currentNetwork());
                 state.modalEnterAccountIdState.isOpen = false;
                 Vue.nextTick(() => mutations.navigateToInterface());
