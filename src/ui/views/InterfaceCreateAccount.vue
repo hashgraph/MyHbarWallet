@@ -15,16 +15,9 @@
             show-validation
         />
 
-        <TextInput
-            v-model="state.publicKey"
-            :error="state.keyError"
-            :valid="state.isPublicKeyValid"
-            :spellcheck-disabled="true"
-            :autocomplete-disabled="true"
-            :label="$t('interfaceCreateAccount.publicKey')"
-            show-validation
-        />
-
+        <div>
+            <PublicKeyRing @keyRing="handleKeyRing" />
+        </div>
         <template v-slot:footer>
             <Button
                 :busy="state.isBusy"
@@ -69,6 +62,7 @@ import { formatHbar } from "../../service/format";
 import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuccess.vue";
 import { writeToClipboard } from "../../service/clipboard";
 import { LoginMethod } from "../../domain/wallets/Wallet";
+import PublicKeyRing, { FormattedKey } from "../components/PublicKeyRing.vue";
 
 const estimatedFeeHbar = new BigNumber(0.5);
 const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
@@ -76,6 +70,7 @@ const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hb
 interface State {
     newBalance: string;
     publicKey: string;
+    keys?: FormatedKey;
     isBusy: boolean;
     keyError: string;
     newBalanceError: string;
@@ -99,6 +94,46 @@ async function isPublicKeyValid(key: string): Promise<boolean> {
         throw error;
     }
 }
+async function buildThresholdKeys(
+    keys: FormatedKey
+): ThresholdKey {
+    const { ThresholdKey, Ed25519PublicKey } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+    // build the initail threshold key
+    const thresholdKey = new ThresholdKey(keys.threshold as number);
+    // for each key in this key we need to check what kind of key it is and add it to the threshold properly
+    (keys.keyList as FormatedKey[]).forEach((key) => {
+        if (key.threshold !== key.keyList.length && key.threshold !== 0) {
+            // if the user made a list and selected a threshold
+            thresholdKey.addAll(buildThresholdKeys(key));
+        } else if (key.keyList.length > 1) {
+            // user built a list with max threshold
+            thresholdKey.addAll(buildKeyList(key));
+        } else {
+            // single key
+            thresholdKey.add(
+                Ed25519PublicKey.fromString(key.keyList[ 0 ].toString())
+            );
+        }
+    });
+    return thresholdKey;
+}
+async function buildKeyList(
+    keys: FormatedKey
+): KeyList {
+    const { KeyList, Ed25519PublicKey } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+    // key list, similar procedure as above.
+    const keyList = new KeyList();
+    (keys.keyList as FormatedKey[]).forEach((key) => {
+        if (key.threshold !== key.keyList.length && key.threshold !== 0) {
+            keyList.addAll(buildThresholdKeys(key));
+        } else if (key.keyList.length > 1) {
+            keyList.addAll(buildKeyList(key));
+        } else {
+            keyList.add(Ed25519PublicKey.fromString(key.keyList[ 0 ].toString()));
+        }
+    });
+    return keyList;
+}
 
 export default defineComponent({
     components: {
@@ -107,12 +142,14 @@ export default defineComponent({
         Button,
         ModalSuccess,
         Notice,
-        ModalFeeSummary
+        ModalFeeSummary,
+        PublicKeyRing
     },
     setup(_: object | null, context: SetupContext) {
         const state = reactive<State>({
             newBalance: "",
             publicKey: "",
+            keys: undefined,
             isBusy: false,
             keyError: "",
             newBalanceError: "",
@@ -157,7 +194,22 @@ export default defineComponent({
                 } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
                 const client = getters.currentUser().session.client;
-                const key = Ed25519PublicKey.fromString(state.publicKey);
+                let key;
+                if (
+                    state.keys.keyList.length !== state.keys.threshold &&
+                    state.keys.threshold !== 0
+                ) {
+                    key = await buildThresholdKeys(state.keys);
+                } else if (
+                    state.keys.keyList.length > 1 &&
+                    state.keys.threshold === state.keys.keyList.length
+                ) {
+                    key = await buildKeyList(state.keys);
+                }
+                key = Ed25519PublicKey.fromString(
+                    (state.keys
+                        .keyList[ 0 ] as FormatedKey).keyList[ 0 ].toString()
+                );
 
                 const transaction = await new AccountCreateTransaction()
                     .setInitialBalance(Hbar.fromTinybar(newBalanceTinybar))
@@ -285,9 +337,19 @@ export default defineComponent({
             state.modalSummaryState.isOpen = true;
         }
 
+        function handleKeyRing(keyRing: {
+            key: FormatedKey;
+            validity: boolean;
+        }): void {
+            state.keys = keyRing.key;
+            state.isPublicKeyValid = keyRing.validity;
+        }
+
         return {
             state,
             validBalance,
+            PublicKeyRing,
+            handleKeyRing,
             handleCreateAccount,
             handleShowSummary,
             handleModalSuccessAction,

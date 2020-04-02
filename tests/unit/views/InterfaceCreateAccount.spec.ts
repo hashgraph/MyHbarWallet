@@ -23,7 +23,9 @@ describe("InterfaceCreateAccount.vue", (): void => {
                 To create an account, you need the public key of the person requesting an account.
               </notice-stub>
               <textinput-stub value="" label="Initial Balance" min="1" showvalidation="true" error="" suffix="hbar" has-input=""></textinput-stub>
-              <textinput-stub value="" label="Public Key" autocompletedisabled="true" spellcheckdisabled="true" showvalidation="true" error=""></textinput-stub>
+              <div>
+                <publickeyring-stub></publickeyring-stub>
+              </div>
               <modalsuccess-stub state="[object Object]">
                 <i18n-stub path="modalSuccess.createdAccount"><strong></strong> <strong></strong></i18n-stub>
               </modalsuccess-stub>
