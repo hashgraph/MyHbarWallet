@@ -171,7 +171,7 @@ function newKey(type: string): Key {
     };
 }
 
-async function isPublicKeyValid(key: string): boolean {
+async function isPublicKeyValid(key: string): Promise<boolean> {
     const { Ed25519PublicKey, BadKeyError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
     try {
         Ed25519PublicKey.fromString(key);
@@ -187,7 +187,7 @@ async function isPublicKeyValid(key: string): boolean {
 
 function formatedKeys(keyRing: Key[]): FormatedKey[] {
     // building the format required in the sdk
-    const keys: FormatedKey[] = keyRing.map((key) => {
+    const keys: unknown[] = keyRing.map((key) => {
         let keyList: unknown[] = [];
         if (typeof key.key[ 0 ] === "string") {
             keyList = key.key;
@@ -226,7 +226,7 @@ export default defineComponent({
         });
 
         // eslint-disable-next-line sonarjs/cognitive-complexity
-        async function validateKeys(keyRing: Key[]): void {
+        async function validateKeys(keyRing: Key[]): Promise<void> {
             let invalid = 0;
             if (keyRing[ 0 ].key[ 0 ] != null) {
                 for (const key of keyRing) {
@@ -239,6 +239,7 @@ export default defineComponent({
                         }
                     } else {
                         for (const subKey of key.key as Key[]) {
+                            // eslint-disable-next-line no-await-in-loop
                             subKey.isPublicKeyValid = await isPublicKeyValid(subKey
                                 .key[ 0 ] as string);
                             if (subKey.isPublicKeyValid === false) {
