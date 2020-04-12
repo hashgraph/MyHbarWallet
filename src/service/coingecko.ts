@@ -21,5 +21,11 @@ function price(json: MarketDataJSON): number {
 }
 
 export async function currentPrice(): Promise<BigNumber> {
-    return new BigNumber(price(await externalRequest(coingeckoEndpoint)));
+    // try {
+    //     return new BigNumber(price(await externalRequest(coingeckoEndpoint)));
+    // } catch (error) {
+    //     console.warn(error);
+    // using static price because CoinGecko is down right now
+    return new BigNumber("0.032804");
+    // }
 }
