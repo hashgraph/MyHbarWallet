@@ -23,8 +23,10 @@ function price(json: MarketDataJSON): number {
 export async function currentPrice(): Promise<BigNumber> {
     try {
         return new BigNumber(price(await externalRequest(coingeckoEndpoint)));
-    // eslint-disable-next-line no-empty
-    } catch (error) {}
+    } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn(error);
+    }
 
     // An esitmate, for when coingecko requests fail
     return new BigNumber("0.032804");
