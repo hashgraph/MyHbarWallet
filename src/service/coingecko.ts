@@ -24,6 +24,7 @@ export async function currentPrice(): Promise<BigNumber> {
     try {
         return new BigNumber(price(await externalRequest(coingeckoEndpoint)));
     } catch (error) {
+        // eslint-disable-line no-console
         console.warn(error);
     }
 
