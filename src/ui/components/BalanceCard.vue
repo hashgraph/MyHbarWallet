@@ -106,7 +106,7 @@ export default defineComponent({
             state.isBusy = true;
 
             try {
-                await actions.refreshBalanceAndRate();
+                actions.refreshBalanceAndRate();
             } finally {
                 setTimeout(() => {
                     state.isBusy = false;
