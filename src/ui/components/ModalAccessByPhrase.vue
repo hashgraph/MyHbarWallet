@@ -20,7 +20,7 @@
         <form @submit.prevent="$emit('submit')">
             <MnemonicInput
                 class="phrase-input"
-                :words="24"
+                :words="[22, 24]"
                 :value="state.words"
                 :editable="true"
                 :is-open="state.isOpen"
