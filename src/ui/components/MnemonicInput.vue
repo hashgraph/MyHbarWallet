@@ -1,6 +1,10 @@
 <template>
     <div class="mnemonic-input">
-        <div class="list-container">
+        <transition-group
+            name="fade"
+            tag="div"
+            class="list-container"
+        >
             <label
                 v-for="index in words"
                 :key="index"
@@ -26,7 +30,7 @@
                     @focus="handleFocus"
                 >
             </label>
-        </div>
+        </transition-group>
         <transition name="fade">
             <Warning
                 v-if="strangeWords != null && strangeWords.length > 0"
@@ -94,6 +98,7 @@ export default defineComponent({
         const strangeWords = computed(() => {
             if (state.words == null) return null;
             if (state.words.length === 0) return [];
+            if (props.words !== 24) return []; // Don't validate legacy mnemonics
             return [ ...new Set(state.words.filter(notInWordList).filter(notBlank)) ];
         });
 

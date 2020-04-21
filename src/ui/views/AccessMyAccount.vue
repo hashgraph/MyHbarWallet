@@ -70,7 +70,7 @@ import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "../components/AccountTileButtons.vue";
 import ModalAccessByHardware, { AccessHardwareOption } from "../components/ModalAccessByHardware.vue";
 import ModalAccessBySoftware, { AccessSoftwareOption } from "../components/ModalAccessBySoftware.vue";
-import ModalAccessByPhrase from "../components/ModalAccessByPhrase.vue";
+import ModalAccessByPhrase, { WordCount } from "../components/ModalAccessByPhrase.vue";
 import ModalAccessByPrivateKey from "../components/ModalAccessByPrivateKey.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
@@ -119,6 +119,8 @@ export default defineComponent({
                 isOpen: false,
                 isBusy: false,
                 password: "",
+                wordToggle: false,
+                wordCount: WordCount.TwentyFour,
                 words: [],
                 isValid: true
             },

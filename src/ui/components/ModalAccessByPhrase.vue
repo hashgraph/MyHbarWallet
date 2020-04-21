@@ -13,14 +13,33 @@
                 "
             />
         </template>
-
         <div class="instruction">
             {{ $t("modalAccessByPhrase.pleaseTypeInYourMnemonicPhrase") }}
+        </div>
+        <div class="toggle">
+            <SwitchButton
+                v-model="state.wordToggle"
+                :values="toggleValues"
+                @change="handleWordCountChange"
+            />
+            <transition
+                name="fuzz"
+                mode="out-in"
+            >
+                <span
+                    v-if="state.wordCount === 22"
+                    key="22"
+                >{{ $t('mnemonic.22words') }}</span>
+                <span
+                    v-else
+                    key="24"
+                >{{ $t('mnemonic.24words') }}</span>
+            </transition>
         </div>
         <form @submit.prevent="$emit('submit')">
             <MnemonicInput
                 class="phrase-input"
-                :words="24"
+                :words="state.wordCount"
                 :value="state.words"
                 :editable="true"
                 :is-open="state.isOpen"
@@ -57,8 +76,15 @@ import CustomerSupportLink from "./CustomerSupportLink.vue";
 import OptionalPasswordInput from "./OptionalPasswordInput.vue";
 import Warning from "./Warning.vue";
 
+export enum WordCount {
+    TwentyTwo = 22,
+    TwentyFour = 24
+}
+
 export interface State {
     isOpen: boolean;
+    wordToggle: boolean;
+    wordCount: WordCount;
     words: string[];
     password: string;
     isBusy: boolean;
@@ -81,6 +107,16 @@ export default defineComponent({
     },
     props: { state: { type: Object as PropType<State>, required: true }},
     setup(props: { state: State }, context: SetupContext) {
+        const toggleValues = [ WordCount.TwentyFour, WordCount.TwentyTwo ];
+
+        function handleWordCountChange(changedTo: number): void {
+            props.state.wordCount = changedTo;
+            if (changedTo === WordCount.TwentyTwo) {
+                if (props.state.words[ 23 ] != null) props.state.words[ 23 ] = "";
+                if (props.state.words[ 22 ] != null) props.state.words[ 22 ] = "";
+            }
+        }
+
         function handleModalChangeIsOpen(isOpen: boolean): void {
             context.emit("change", { ...props.state, isOpen });
         }
@@ -108,6 +144,8 @@ export default defineComponent({
         );
 
         return {
+            toggleValues,
+            handleWordCountChange,
             handleModalChangeIsOpen,
             handleMnemonicInput,
             handlePasswordInput,
@@ -118,10 +156,38 @@ export default defineComponent({
 </script>
 
 <style scoped lang="postcss">
+.fuzz-enter-active,
+.fuzz-leave-active {
+    transition: opacity 0.1s ease-in;
+
+    @media (prefers-reduced-motion) {
+        transition: none;
+    }
+}
+
+.fuzz-enter,
+.fuzz-leave-to {
+    opacity: 0;
+}
+
 .instruction {
+    border-bottom: 2px solid var(--color-peral);
     color: var(--color-china-blue);
     font-size: 14px;
-    margin-block-end: 20px;
+    margin-block-end: 10px;
+    padding-block-end: 10px;
+}
+
+.toggle {
+    align-items: center;
+    border-bottom: 2px solid var(--color-peral);
+    justify-content: space-between;
+    color: var(--color-china-blue);
+    display: flex;
+    font-size: 14px;
+    margin-block-end: 10px;
+    padding-block-end: 10px;
+    width: 100%;
 }
 
 .value-switch {

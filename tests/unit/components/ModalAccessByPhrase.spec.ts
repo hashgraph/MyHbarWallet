@@ -12,6 +12,8 @@ describe("ModalAccessByPhrase.vue", (): void => {
 
     const state = {
         isOpen: true,
+        wordToggle: false,
+        wordCount: 24,
         words: [
             "skull",
             "emerge",
@@ -43,7 +45,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
         password: ""
     };
 
-    it("renders not busy, not valid", async(): Promise<void> => {
+    it("renders not busy, not valid", async (): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -57,7 +59,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            (child) => child.$options.name === "Modal"
+            child => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -89,8 +91,9 @@ describe("ModalAccessByPhrase.vue", (): void => {
                   </div>
                   <div class="content-container">
                     <div class="instruction">
-                      Please type in your mnemonic phrase
+                      Please select your mnemonic phrase length, then type your mnemonic below. Toggle the optional password input and type your password if your mnemonic requires a password.
                     </div>
+                    <div class="toggle"><label class="switch-button has-values"><input type="checkbox" class="input"> <span class="thumb"></span> <span class="leading">24</span> <span class="trailing">22</span></label> <span>24 Word</span></div>
                     <form>
                       <div class="mnemonic-input phrase-input">
                         <div class="list-container"><label class="list-item"><span class="number">1.</span> <input type="text" data-index="1" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">2.</span> <input type="text" data-index="2" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">3.</span> <input type="text" data-index="3" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">4.</span> <input type="text" data-index="4" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">5.</span> <input type="text" data-index="5" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">6.</span> <input type="text" data-index="6" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">7.</span> <input type="text" data-index="7" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">8.</span> <input type="text" data-index="8" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">9.</span> <input type="text" data-index="9" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">10.</span> <input type="text" data-index="10" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">11.</span> <input type="text" data-index="11" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">12.</span> <input type="text" data-index="12" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">13.</span> <input type="text" data-index="13" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">14.</span> <input type="text" data-index="14" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">15.</span> <input type="text" data-index="15" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">16.</span> <input type="text" data-index="16" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">17.</span> <input type="text" data-index="17" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">18.</span> <input type="text" data-index="18" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">19.</span> <input type="text" data-index="19" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">20.</span> <input type="text" data-index="20" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">21.</span> <input type="text" data-index="21" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">22.</span> <input type="text" data-index="22" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">23.</span> <input type="text" data-index="23" autocomplete="off" autocapitalize="off" class="word"></label><label class="list-item"><span class="number">24.</span> <input type="text" data-index="24" autocomplete="off" autocapitalize="off" class="word"></label></div>
