@@ -66,7 +66,9 @@ export async function testClient(
         if (error instanceof HederaStatusError) {
             // If the transaction fails with Insufficient Tx Fee, this means
             // that the account ID verification succeeded before this point
-            if (error.status.code === Status.InsufficientTxFee.code) {
+            // Same for Insufficient Payer Balance
+            if (error.status.code === Status.InsufficientTxFee.code ||
+                error.status.code === Status.InsufficientPayerBalance.code) {
                 return true;
             }
         }
