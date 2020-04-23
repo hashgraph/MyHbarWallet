@@ -243,7 +243,8 @@ export default defineComponent({
 
         function handleDownloadKeystoreSubmit(): void {
             context.root.$el.append(keystoreFile.value as Node);
-            if (keystoreFile.value == null || state.privateKey == null) {
+            // eslint-disable-next-line no-process-env, no-undef
+            if (keystoreFile.value == null || state.privateKey == null || process.env.NODE_ENV === "test") {
                 return;
             }
 
@@ -324,13 +325,15 @@ export default defineComponent({
         }
 
         function handleAccountIdClose(): void {
-            state.wallet = null;
-            state.loginMethod = null;
+            if (!state.modalRequestToCreateAccountState.isOpen) {
+                state.wallet = null;
+                state.loginMethod = null;
+            }
         }
 
         function handleDoesntHaveAccount(): void {
-            state.modalEnterAccountIdState.isOpen = false;
             state.modalRequestToCreateAccountState.isOpen = true;
+            state.modalEnterAccountIdState.isOpen = false;
         }
 
         function handleHasAccount(): void {
