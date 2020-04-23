@@ -297,7 +297,7 @@ export default defineComponent({
                 const rootPrivateKey = await Ed25519PrivateKey.fromMnemonic(
                     new Mnemonic(accessByPhraseState.words), accessByPhraseState.password);
 
-                if (derive) {
+                if (derive && rootPrivateKey.supportsDerivation) {
                     setPrivateKey(rootPrivateKey.derive(0));
                 } else {
                     setPrivateKey(rootPrivateKey);
@@ -392,13 +392,15 @@ export default defineComponent({
         }
 
         function handleAccountIdClose(): void {
-            state.wallet = null;
-            state.loginMethod = null;
+            if (!state.modalRequestToCreateAccountState.isOpen) {
+                state.wallet = null;
+                state.loginMethod = null;
+            }
         }
 
         function handleDoesntHaveAccount(): void {
-            state.modalEnterAccountIdState.isOpen = false;
             state.modalRequestToCreateAccountState.isOpen = true;
+            state.modalEnterAccountIdState.isOpen = false;
         }
 
         function handleHasAccount(): void {
