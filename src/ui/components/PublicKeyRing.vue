@@ -35,7 +35,6 @@
                 @click="genNewKey('list')"
             />
         </div>
-        <hr v-if="isList">
         <!-- This conditionaly renders a key list based on the the state.keyRing, rendering either a list or single key based on key type. -->
         <div
             v-for="(key, index) in state.keyRing"
@@ -97,15 +96,6 @@
                 v-else
                 class="single-key key"
             >
-                <div
-                    v-if="isList"
-                    class="head"
-                >
-                    <span class="title">{{
-                        $t("interfaceCreateAccount.publicKey")
-                    }}</span>
-                    <div class="spacer" />
-                </div>
                 <div class="text-block">
                     <TextInput
                         v-model="key.key[0]"
@@ -123,7 +113,6 @@
                     />
                 </div>
             </div>
-            <hr>
         </div>
     </div>
 </template>
@@ -364,6 +353,7 @@ export default defineComponent({
 
 .threshold {
     display: flex;
+    transition: opacity .3;
 }
 
 .head {
@@ -404,7 +394,6 @@ hr {
 .single-key {
     display: flex;
     flex-direction: column;
-    margin-block-end: 10px;
-    padding-block-end: 24px;
+    margin-block: 10px;
 }
 </style>
