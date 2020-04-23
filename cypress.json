@@ -1,0 +1,12 @@
+{
+  "baseUrl": "http://localhost:8080",
+  "fixturesFolder": "tests/fixtures",
+  "integrationFolder": "tests/specs",
+  "pluginsFile": "tests/plugins/index.js",
+  "screenshotsFolder": "tests/screenshots",
+  "videosFolder": "tests/videos",
+  "supportFile": "tests/support/index.ts",
+  "chromeWebSecurity": false,
+  "snapshotFileName": "tests/snapshots.js",
+  "video": false
+}

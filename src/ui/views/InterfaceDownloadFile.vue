@@ -200,8 +200,9 @@ export default defineComponent({
                 fileLink.value.download = `MHW_File_${state.fileId.shard}_${
                     state.fileId.realm
                 }_${state.fileId.file}${type ? `.${type.ext}` : ""}`;
-
                 context.root.$el.append(fileLink.value as Node);
+                // eslint-disable-next-line no-process-env, no-undef
+                if (process.env.NODE_ENV === "test") return; // leave the file link for inspection in test
                 fileLink.value.click();
                 context.root.$el.removeChild(fileLink.value as HTMLAnchorElement);
                 await actions.refreshBalanceAndRate();

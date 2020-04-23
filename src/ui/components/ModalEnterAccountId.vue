@@ -140,6 +140,8 @@ export default defineComponent({
         });
 
         function handleAccount(value: string, account: import("@hashgraph/sdk").AccountId | null): void {
+            // eslint-disable-next-line no-console
+            console.log(account);
             props.state.errorMessage = null;
             props.state.account = account;
         }

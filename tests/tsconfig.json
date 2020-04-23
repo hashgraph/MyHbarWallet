@@ -14,6 +14,7 @@
     "types": [
       "webpack-env",
       "node",
+      "cypress"
     ],
     "lib": [
       "esnext",
@@ -23,13 +24,8 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "specs/**/*.ts",
+    "support/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
