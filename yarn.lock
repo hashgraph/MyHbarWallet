@@ -861,9 +861,9 @@
     "@hapi/hoek" "^8.3.0"
 
 "@hashgraph/sdk@^1.1.8":
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-1.1.10.tgz#43387e4a02948cdc0ddbf1bcc3c28b07c9efa50b"
-  integrity sha512-7Q5NiVKvYg8v2sHjsUSNdxczdytrWYgo96exjmpp1I2PY91+4O23etUkQvlNMKUDmnJwm3ZbTNiZWvifdv7ZyA==
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-1.1.11.tgz#5282659fd999d70df3211a20ae149a3b993c5e1b"
+  integrity sha512-+Hv4Kdr1D9z+c7/p1bWqUwhLFoYIE5gcaGker5m9nE64De8KD/+FM106fPa8pXrAJwJU6CsPSdenIL8mqU6N7Q==
   dependencies:
     "@improbable-eng/grpc-web" "^0.12.0"
     "@improbable-eng/grpc-web-node-http-transport" "^0.12.0"
@@ -6911,9 +6911,9 @@ fast-levenshtein@~2.0.6:
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
 fastestsmallesttextencoderdecoder@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/fastestsmallesttextencoderdecoder/-/fastestsmallesttextencoderdecoder-1.0.17.tgz#7582ba4a9b70a2998ea4edb045912ff0c6bafedc"
-  integrity sha512-qLDmgNrm1P1fkdXvdUKqs6euF1zHJSXCvshEStkej1zqOpLKi2dQ/lKL1u+mgVc9qd4vRjcOvhi6oD+5aN90gA==
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/fastestsmallesttextencoderdecoder/-/fastestsmallesttextencoderdecoder-1.0.21.tgz#b67599f879417229bad311c9e1f2918dfd155c63"
+  integrity sha512-43gkbs+ruBXej0jhqcOKZ/DfKJmdWXrHZ5ZeHfYdnJ53aqU+p4JfhZrcNHBLNswieV7DOlj6f4q/+Fw9YMy/5Q==
 
 fastparse@^1.1.2:
   version "1.1.2"
