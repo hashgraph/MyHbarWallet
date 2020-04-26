@@ -5,7 +5,7 @@
     "name": "myhbarwallet",
     "version": "0.5.0",
     "dependencies": {
-        "@hashgraph/sdk": "^1.1.8",
+        "@hashgraph/sdk": "^1.1.11",
         "@ledgerhq/errors": "^5.9.0",
         "@ledgerhq/hw-transport": "^5.9.0",
         "@ledgerhq/hw-transport-u2f": "^5.9.0",
