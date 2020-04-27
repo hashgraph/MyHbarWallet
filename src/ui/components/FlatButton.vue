@@ -1,6 +1,7 @@
 <template>
     <button
         type="button"
+        :class="{ red: props.red }"
         :disabled="disabled"
         v-on="disabled ? null : $listeners"
     >
@@ -17,7 +18,8 @@ export default defineComponent({
     components: { MaterialDesignIcon },
     props: {
         disabled: { type: Boolean },
-        icon: { type: String }
+        icon: { type: String },
+        red: { type: Boolean }
     },
     setup(props) {
         return { props };
@@ -49,4 +51,9 @@ button {
         transform: scale(0.85);
     }
 }
+
+.red {
+    color: var(--color-lightish-red);
+}
+
 </style>

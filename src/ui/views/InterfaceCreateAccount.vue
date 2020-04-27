@@ -16,12 +16,15 @@
         />
 
         <div>
-            <PublicKeyRing @keyRing="handleKeyRing" />
+            <PublicKeyRing
+                @keyRing="handleKeyRing"
+                @formOpen="handleFormOpen"
+            />
         </div>
         <template v-slot:footer>
             <Button
                 :busy="state.isBusy"
-                :disabled="!state.isPublicKeyValid || !validBalance"
+                :disabled="!state.isPublicKeyValid || !validBalance || state.isFormOpen"
                 :label="$t('common.createAccount')"
                 @click="handleShowSummary"
             />
@@ -73,6 +76,7 @@ interface State {
     keys?: FormatedKey;
     isBusy: boolean;
     keyError: string;
+    isFormOpen: boolean;
     newBalanceError: string;
     account: string;
     isPublicKeyValid: boolean;
@@ -155,6 +159,7 @@ export default defineComponent({
             newBalanceError: "",
             account: "",
             isPublicKeyValid: false,
+            isFormOpen: false,
             modalSummaryState: {
                 isOpen: false,
                 isBusy: false,
@@ -345,6 +350,10 @@ export default defineComponent({
             state.isPublicKeyValid = keyRing.validity;
         }
 
+        function handleFormOpen(isFormOpen: boolean): void {
+            state.isFormOpen = isFormOpen;
+        }
+
         return {
             state,
             validBalance,
@@ -355,6 +364,7 @@ export default defineComponent({
             handleModalSuccessAction,
             handleModalSuccessDismiss,
             Unit,
+            handleFormOpen,
             mdiHelpCircleOutline
         };
     }

@@ -1,119 +1,52 @@
 <template>
     <div>
-        <div class="head">
-            <span class="title">{{
-                isList
-                    ? $t("interfaceCreateAccount.keyList")
-                    : $t("interfaceCreateAccount.publicKey")
-            }}</span>
-            <div class="spacer" />
-            <div
-                v-if="isList"
-                class="threshold"
-            >
-                <p>
-                    {{ $t("interfaceCreateAccount.thresholdLimit") }}:
-                    <input
-                        v-model="state.rootThreshold"
-                        type="number"
-                        class="number-input"
-                        :step="false"
-                    >
-                    /
-                    <!-- this will be the threshold input -->
-                    {{ state.numOfInputs }}
-                </p>
+        <div class="header">
+            <div class="title">
+                {{ $t('interfaceCreateAccount.publicKey') }}
             </div>
-            <FlatButton
-                class="add-key"
-                :icon="mdiPlus"
-                @click="genNewKey('single')"
-            />
-            <FlatButton
-                class="add-list"
-                :icon="mdiPlaylistPlus"
-                @click="genNewKey('list')"
-            />
+            <div class="subtitle">
+                <!-- find actual text for this -->
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, enim tempore natus mollitia, quis reprehenderit.
+            </div>
         </div>
-        <!-- This conditionaly renders a key list based on the the state.keyRing, rendering either a list or single key based on key type. -->
+        <div>
+            <div v-if="isList.value">
+                <!-- If isList dislay the threshold picker for the list, also need to translate all the text and add an opptional data flattener for if the user adds a single list of keys (maybe?) -->
+            </div>
+        </div>
         <div
-            v-for="(key, index) in state.keyRing"
-            :key="key.listKey"
+            v-if="state.numOfKeys > 0"
         >
             <div
-                v-if="key.keyType === 'list'"
-                class="key-list key"
+                v-for="keys in state.keyRing"
+                :key="keys.key[0]"
             >
-                <div class="head">
-                    <span class="title">{{
-                        $t("interfaceCreateAccount.keyList")
-                    }}</span>
-                    <div class="spacer" />
-                    <div class="threshold">
-                        {{ $t("interfaceCreateAccount.thresholdLimit") }}:
-                        <div>
-                            <input
-                                v-model="key.thresholdLimit"
-                                class="number-input"
-                                type="number"
-                            >
-                            /
-                            <!-- this will be the threshold input -->
-                            {{ key.key.length }}
-                        </div>
-                    </div>
-                    <FlatButton
-                        class="add-key"
-                        :icon="mdiPlus"
-                        @click="handleAddSubKey(index)"
-                    />
-                </div>
-                <div
-                    v-for="(subKey, subIndex) in key.key"
-                    :key="subKey.listKey"
-                    class="single-key"
-                >
-                    <div class="text-block">
-                        <TextInput
-                            v-model="subKey.key[0]"
-                            :error="subKey.keyError"
-                            :valid="subKey.isPublicKeyValid"
-                            :placeholder="
-                                $t('interfaceCreateAccount.publicKey')
-                            "
-                            :spellcheck-disabled="true"
-                            :autocomplete-disabled="true"
-                            show-validation
-                        />
-                        <FlatButton
-                            :icon="mdiMinus"
-                            @click="handleRemoveSubField(index, subIndex)"
-                        />
-                    </div>
-                </div>
-            </div>
-            <div
-                v-else
-                class="single-key key"
-            >
-                <div class="text-block">
-                    <TextInput
-                        v-model="key.key[0]"
-                        :error="key.keyError"
-                        :valid="key.isPublicKeyValid"
-                        :placeholder="$t('interfaceCreateAccount.publicKey')"
-                        :spellcheck-disabled="true"
-                        :autocomplete-disabled="true"
-                        show-validation
-                    />
-                    <FlatButton
-                        v-if="isList"
-                        :icon="mdiMinus"
-                        @click="handleRemoveField(index)"
-                    />
-                </div>
+                <!-- translate -->
+                <ReadOnlyInput
+                    :value="truncateKeys(keys.key)"
+                    :suffix="keys.threshold"
+                />
             </div>
         </div>
+        <div class="buttons">
+            <Button
+                outline
+                compact
+                :label="$t('interfaceCreateAccount.addKey')"
+                :disabled="state.isFormOpen"
+                @click="handleOpenForm"
+            />
+        </div>
+        <hr>
+        <ModalNewKeyForm
+            v-model="state.newKeyState"
+            :state="state.newKeyState"
+            :is-open="state.isOpen"
+            @add="handleAddInput"
+            @submit="handleSubmit"
+            @dismiss="handleCloseForm"
+            @remove="handleRemoveInput"
+        />
     </div>
 </template>
 <script lang="ts">
@@ -123,18 +56,18 @@ import {
     watch,
     computed
 } from "@vue/composition-api";
-import { mdiPlus, mdiMinus, mdiPlaylistPlus } from "@mdi/js";
+import { mdiPlus, mdiMinusCircleOutline, mdiPlaylistPlus } from "@mdi/js";
 
-import TextInput from "./TextInput.vue";
+import ReadOnlyInput from "./ReadOnlyInput.vue";
 import Button from "./Button.vue";
 import SwitchButton from "./SwitchButton.vue";
 import FlatButton from "./FlatButton.vue";
+import ModalNewKeyForm, { State as NewKeyState } from "./ModalNewKeyForm.vue";
 
 export interface Key {
-    keyError: string;
-    isPublicKeyValid: boolean;
-    keyType: string;
-    thresholdLimit: number;
+    keyType?: string;
+    threshold?: string;
+    isKeyValid: boolean;
     key: Key[] | string[];
 }
 
@@ -144,20 +77,12 @@ export interface FormatedKey {
 }
 
 interface State {
-    keyRing: Key[];
+    keyRing: FormatedKey[];
     rootThreshold: number;
     areKeysValid: boolean;
-    numOfInputs: number;
-}
-
-function newKey(type: string): Key {
-    return {
-        keyError: "",
-        isPublicKeyValid: false,
-        thresholdLimit: 1,
-        keyType: type,
-        key: type === "single" ? [ "" ] : [ newKey("single"), newKey("single") ]
-    };
+    numOfKeys: number;
+    isOpen: boolean;
+    newKeyState: NewKeyState;
 }
 
 async function isPublicKeyValid(key: string): Promise<boolean> {
@@ -174,118 +99,53 @@ async function isPublicKeyValid(key: string): Promise<boolean> {
     }
 }
 
-function formatedKeys(keyRing: Key[]): FormatedKey[] {
-    // building the format required in the sdk
-    const keys: unknown[] = keyRing.map((key) => {
-        let keyList: unknown[] = [];
-        if (typeof key.key[ 0 ] === "string") {
-            keyList = key.key;
-        } else {
-            (key.key as Key[]).forEach((subKey) => {
-                keyList.push({ keyList: subKey.key, threshold: 1 });
-            });
-        }
-        return { keyList, threshold: key.thresholdLimit };
-    });
-
-    return keys as FormatedKey[];
+function truncateKeys(keys: Key[]): string {
+    if (keys.length > 1) {
+        return keys.map((key) => `${key.key[ 0 ].slice(0, 5)}...`).join("");
+    }
+    return `${keys[ 0 ].slice(0, 5)}...`;
 }
 
 export default defineComponent({
     components: {
-        TextInput,
+        ReadOnlyInput,
         Button,
         SwitchButton,
-        FlatButton
+        FlatButton,
+        ModalNewKeyForm
     },
     setup(props, context) {
         const state = reactive<State>({
-            keyRing: [
-                {
-                    keyError: "",
-                    isPublicKeyValid: false,
-                    keyType: "single",
-                    thresholdLimit: 0,
-                    key: [ "" ]
-                }
-            ],
+            keyRing: [],
             rootThreshold: 0,
             areKeysValid: false,
-            numOfInputs: 1
+            numOfKeys: 0,
+            isOpen: false,
+            newKeyState: {
+                key: [
+                    {
+                        isKeyValid: false,
+                        key: [ "" ]
+                    }
+                ],
+                threshold: "1",
+                areKeysValid: true,
+                numOfKeys: 1
+            }
         });
 
-        // eslint-disable-next-line sonarjs/cognitive-complexity
-        async function validateKeys(keyRing: Key[]): Promise<void> {
-            let invalid = 0;
-            if (keyRing[ 0 ].key[ 0 ] != null) {
-                for (const key of keyRing) {
-                    if (typeof key.key[ 0 ] === "string") {
-                        // eslint-disable-next-line no-await-in-loop
-                        key.isPublicKeyValid = await isPublicKeyValid(key
-                            .key[ 0 ] as string);
-                        if (key.isPublicKeyValid === false) {
-                            invalid++;
-                        }
-                    } else {
-                        for (const subKey of key.key as Key[]) {
-                            // eslint-disable-next-line no-await-in-loop
-                            subKey.isPublicKeyValid = await isPublicKeyValid(subKey
-                                .key[ 0 ] as string);
-                            if (subKey.isPublicKeyValid === false) {
-                                invalid++;
-                            }
-                        }
-                    }
-                }
-            }
-            state.areKeysValid = invalid < 1;
-        }
+        const isList = computed(() => state.numOfKeys > 1);
 
         watch(
-            // watches the nested content to maintain valid threshold limits
-            () => [
-                state.keyRing.map((key) => key.thresholdLimit),
-                state.keyRing.map((key) => key.key.length)
-            ],
-            () => {
-                state.keyRing.forEach((key) => {
-                    if (key.key.length < key.thresholdLimit) {
-                        key.thresholdLimit = key.key.length;
-                    } else if (
-                        key.thresholdLimit <= 0 ||
-                        key.key.length === 1 && key.thresholdLimit !== 1
-                    ) {
-                        key.thresholdLimit = 1;
-                    }
-                });
-            }
-        );
-
-        watch(
-            // watches for changes in the root keyring and keeps the threshold valid
-            () => [ state.keyRing.length, state.rootThreshold ],
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            ([ newLength, newThreshold ]) => {
-                if (state.rootThreshold > state.keyRing.length) {
-                    state.rootThreshold = state.keyRing.length;
-                }
-                if (newThreshold <= 0) {
-                    state.rootThreshold = 1;
-                }
-            }
-        );
-
-        watch(
-            // /watches for changes on the text input fields
+            // /watches for changes of the "final Keyring"
             () =>
-                state.keyRing.map((key) => key.keyType === "single" ?
+                state.keyRing.map((key) => key.key.length === 1 ?
                     key.key[ 0 ] :
-                    (key.key as Key[]).map((subKey) => subKey.key[ 0 ])),
+                    key.key.map((subKey) => subKey.key[ 0 ])),
             async() => {
-                await validateKeys(state.keyRing);
                 context.emit("keyRing", {
                     key: {
-                        keyList: formatedKeys(state.keyRing),
+                        keyList: state.keyRing,
                         threshold: state.rootThreshold
                     },
                     validity: state.areKeysValid
@@ -293,42 +153,106 @@ export default defineComponent({
             }
         );
 
-        const isList = computed(() => state.numOfInputs > 1);
+        watch(
+            () => state.newKeyState.key.map((key) => key.key[ 0 ]),
+            async() => {
+                await validateKeys(state.newKeyState.key);
+            }
+        );
 
-        function genNewKey(type: string): void {
-            state.numOfInputs++;
-            state.keyRing.push(newKey(type));
+        watch(
+            () => [ state.newKeyState.numOfKeys, state.newKeyState.threshold ],
+            () => {
+                if (state.newKeyState.numOfKeys < parseInt(state.newKeyState.threshold)) {
+                    state.newKeyState.threshold = state.newKeyState.numOfKeys.toString();
+                }
+                if (parseInt(state.newKeyState.threshold) === 0) {
+                    state.newKeyState.threshold = "1";
+                }
+            }
+        );
+        // for use only on the new  KeyState
+        async function validateKeys(key: Key[]): Promise<void> {
+            let invalid = 0;
+            for (const k of key) {
+                // eslint-disable-next-line no-await-in-loop
+                const valid = await isPublicKeyValid(k.key[ 0 ] as string);
+                if (!valid) {
+                    invalid++;
+                    k.isKeyValid = false;
+                }
+            }
+            state.newKeyState.areKeysValid = invalid < 1;
         }
 
-        function handleAddSubKey(idx: number): void {
-            (state.keyRing[ idx ].key as Key[]).push(newKey("single"));
+        function processForm(key: NewKeyState): void {
+            const newKey = key.key.length > 1 ? key.key.map((key) => ({
+                key: key.key,
+                threshold: 1
+            })
+            ) : key.key[ 0 ].key;
+            state.keyRing.push({
+                threshold: parseInt(key.threshold),
+                key: newKey
+            });
         }
 
-        function handleRemoveField(idx: number): void {
-            if (state.numOfInputs > 1) {
-                state.keyRing.splice(idx, 1);
-                state.numOfInputs--;
+        function handleOpenForm(): void {
+            state.isOpen = true;
+            resetForm();
+            context.emit("newKeyForm", true);
+        }
+
+        function handleCloseForm(): void {
+            state.isOpen = false;
+            context.emit("formOpen", false);
+        }
+
+        function handleAddInput(): void {
+            state.newKeyState.key.push({
+                isKeyValid: false,
+                key: [ "" ]
+            });
+            state.newKeyState.numOfKeys += 1;
+        }
+
+        function handleRemoveInput(index: number): void {
+            state.newKeyState.key.splice(index, 1);
+            state.newKeyState.numOfKeys -= 1;
+        }
+
+        async function handleSubmit(): Promise<void> {
+            if (state.newKeyState.areKeysValid) {
+                processForm(state.newKeyState);
+                state.numOfKeys += 1;
+                state.areKeysValid = true;
+                handleCloseForm();
             }
         }
 
-        function handleRemoveSubField(pIdx: number, idx: number): void {
-            if (state.keyRing[ pIdx ].key.length > 1) {
-                state.keyRing[ pIdx ].key.splice(idx, 1);
-            } else if (state.keyRing[ pIdx ].key.length === 1) {
-                handleRemoveField(pIdx);
-            }
+        function resetForm(): void {
+            state.newKeyState.key.push({
+                isKeyValid: false,
+                key: [ "" ]
+            });
+            state.newKeyState.key.splice(0, state.newKeyState.key.length - 1);
+            state.newKeyState.threshold = "1";
+            state.newKeyState.numOfKeys = 1;
+            state.newKeyState.areKeysValid = true;
         }
 
         return {
             state,
-            genNewKey,
-            handleRemoveField,
-            handleRemoveSubField,
-            handleAddSubKey,
             isList,
             mdiPlus,
             mdiPlaylistPlus,
-            mdiMinus
+            mdiMinusCircleOutline,
+            handleOpenForm,
+            handleAddInput,
+            handleCloseForm,
+            handleSubmit,
+            handleRemoveInput,
+            truncateKeys
         };
     }
 });
@@ -345,6 +269,12 @@ export default defineComponent({
     padding: 0 8px;
 }
 
+.subtitle{
+    font-size: 14px;
+    padding-inline: 8px;
+    margin-block-end: 10px;
+}
+
 .text-block {
     align-items: center;
     display: flex;
@@ -353,7 +283,7 @@ export default defineComponent({
 
 .threshold {
     display: flex;
-    transition: opacity .3;
+    align-items: center;
 }
 
 .head {
@@ -363,18 +293,11 @@ export default defineComponent({
     min-height: 66px;
 }
 
-.number-input {
-    -webkit-appearance: textfield;
-    background-color: var(--color-peral);
-    border: 2px solid var(--color-peral);
-    border-radius: 4px;
-    outline: none;
-    text-align: center;
-    width: 2rem;
-
-    &:focus {
-        border: 2px solid var(--color-melbourne-cup);
-    }
+.buttons {
+    width: 100%;
+    margin-block-start: 25px;
+    display: flex;
+    justify-content: center;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -387,13 +310,4 @@ hr {
     border: 1px solid var(--color-peral);
 }
 
-.spacer {
-    flex-grow: 1;
-}
-
-.single-key {
-    display: flex;
-    flex-direction: column;
-    margin-block: 10px;
-}
 </style>

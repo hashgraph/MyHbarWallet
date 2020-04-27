@@ -1,9 +1,23 @@
 <template>
-    <div class="read-only-input">
+    <div
+        class="read-only-input"
+        :class="{
+            'has-suffix': props.suffix != null
+        }"
+    >
         <div
-            :class="{ value, multiline, obscure: obscure && !state.isEyeOpen }"
+            :class="{
+                value,
+                multiline,
+                obscure: obscure && !state.isEyeOpen
+            }"
         >
             {{ value }}
+        </div>
+        <div
+            class="suffix"
+        >
+            {{ props.suffix }}
         </div>
         <MaterialDesignIcon
             v-if="obscure"
@@ -25,10 +39,11 @@ export default defineComponent({
     props: {
         value: (String as unknown) as PropType<string | null>,
         multiline: Boolean,
-        obscure: Boolean
+        obscure: Boolean,
+        suffix: (String as unknown) as PropType<string | null>
     },
     components: { MaterialDesignIcon },
-    setup(props: { value: string; multiline: boolean; obscure: boolean }) {
+    setup(props: { value: string; multiline: boolean; obscure: boolean; suffix: string }) {
         const state = reactive({
             isEyeOpen: false,
             hasFocus: false
@@ -93,5 +108,9 @@ export default defineComponent({
         color: var(--color-melbourne-cup);
         opacity: 1;
     }
+}
+
+.suffix {
+    justify-content: space-between;
 }
 </style>
