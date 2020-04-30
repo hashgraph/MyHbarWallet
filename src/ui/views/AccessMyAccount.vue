@@ -293,9 +293,12 @@ export default defineComponent({
 
             try {
                 const { Ed25519PrivateKey, Mnemonic } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
-
+                const mnemonic = new Mnemonic(accessByPhraseState.words);
+                mnemonic.validate();
                 const rootPrivateKey = await Ed25519PrivateKey.fromMnemonic(
-                    new Mnemonic(accessByPhraseState.words), accessByPhraseState.password);
+                    mnemonic,
+                    accessByPhraseState.password
+                );
 
                 if (derive && rootPrivateKey.supportsDerivation) {
                     setPrivateKey(rootPrivateKey.derive(0));
