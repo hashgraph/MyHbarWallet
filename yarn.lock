@@ -867,7 +867,7 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@hashgraph/sdk@^1.1.11":
+"@hashgraph/sdk@^1.1.12":
   version "1.1.12"
   resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-1.1.12.tgz#be24d3d9182339288b54ef717d82ed154f646066"
   integrity sha512-1PcvHW1ldULwbQ9i6cgj+GihwXckhZNnUSIm2n4hIUKMyG4mz/zpDnJesdg1Qx9baTglikbxrNIhajSXN49Q8A==
