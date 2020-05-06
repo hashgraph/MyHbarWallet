@@ -285,7 +285,7 @@ export default defineComponent({
                     .addRecipient(recipient, sendAmount)
                     .setMaxTransactionFee(Hbar.fromTinybar(estimatedFeeTinybar));
 
-                if (state.memo == null) {
+                if (state.memo == null || state.memo === "") {
                     state.memo = " "; // Hack for Nano X paging
                 }
 
