@@ -13,7 +13,6 @@
                 "
             />
         </template>
-        <!--
         <div class="instruction">
             {{ $t("modalAccessByPhrase.pleaseTypeInYourMnemonicPhrase") }}
         </div>
@@ -37,7 +36,6 @@
                 >{{ $t('mnemonic.24words') }}</span>
             </transition>
         </div>
-        -->
         <form @submit.prevent="$emit('submit')">
             <MnemonicInput
                 class="phrase-input"

@@ -287,6 +287,7 @@ export default defineComponent({
 
         async function handleAccessByPhraseSubmit(derive: boolean): Promise<void> {
             if (derive === undefined) derive = true;
+            if (state.modalAccessByPhraseState.wordCount === WordCount.TwentyTwo) derive = false;
 
             const accessByPhraseState = state.modalAccessByPhraseState;
             accessByPhraseState.isBusy = true;
@@ -309,6 +310,8 @@ export default defineComponent({
                 state.modalEnterAccountIdState.isOpen = true;
                 accessByPhraseState.isValid = true;
             } catch (error) {
+                // This will never trigger, actually,
+                // unless we make it an error for mnemonic validation to fail
                 accessByPhraseState.isBusy = false;
 
                 if (derive) {
