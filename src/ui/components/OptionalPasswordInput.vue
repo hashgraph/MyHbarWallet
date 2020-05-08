@@ -71,12 +71,12 @@ export default defineComponent({
         const state = reactive({ showPassword: false });
 
         function handleInput(password: string): void {
-            context.emit("input", password);
+            if (state.showPassword) context.emit("input", password);
         }
 
         function handleToggleDisplay(show: boolean): void {
             state.showPassword = show;
-            context.emit("input", null);
+            if (!show) context.emit("input", "");
         }
 
         watch(
