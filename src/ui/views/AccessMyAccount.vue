@@ -288,6 +288,7 @@ export default defineComponent({
         async function handleAccessByPhraseSubmit(derive: boolean): Promise<void> {
             if (derive === undefined) derive = true;
             if (state.modalAccessByPhraseState.wordCount === WordCount.TwentyTwo) derive = false;
+            if (state.modalAccessByPhraseState.password == null) state.modalAccessByPhraseState.password = "";
 
             const accessByPhraseState = state.modalAccessByPhraseState;
             accessByPhraseState.isBusy = true;
@@ -295,8 +296,14 @@ export default defineComponent({
             try {
                 const { Ed25519PrivateKey, Mnemonic } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
+                // console.log(accessByPhraseState.password);
                 const rootPrivateKey = await Ed25519PrivateKey.fromMnemonic(
                     new Mnemonic(accessByPhraseState.words), accessByPhraseState.password);
+
+                // console.log((await new Mnemonic(accessByPhraseState.words).toPrivateKey("")).toString());
+                // console.log((await Ed25519PrivateKey.fromMnemonic(new Mnemonic(accessByPhraseState.words), "")).toString());
+                // console.log(rootPrivateKey.toString());
+                // console.log(rootPrivateKey.publicKey.toString());
 
                 if (derive && rootPrivateKey.supportsDerivation) {
                     setPrivateKey(rootPrivateKey.derive(0));
