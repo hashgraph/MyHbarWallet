@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
+/* eslint-disable @typescript-eslint/ban-ts-ignore, compat/compat */
 import Wallet, { LoginMethod } from "../Wallet";
 
 // Preserving, in case we need this later

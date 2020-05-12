@@ -55,9 +55,10 @@ const css = {
 const performance = {
     performance: {
         // only report this as an error when building for production
-        hints: process.env.NODE_ENV === "production" ? "error" : false,
+        // warn during development so there are no surprises
+        hints: process.env.NODE_ENV === "production" ? "error" : "warning",
         maxEntrypointSize: 512000,
-        maxAssetSize: 1500000
+        maxAssetSize: 1600000
     },
     optimization: { splitChunks: { chunks: "all", maxInitialRequests: 4, maxAsyncRequests: 7 }}
 };

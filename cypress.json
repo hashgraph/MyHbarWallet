@@ -1,0 +1,29 @@
+{
+  "baseUrl": "http://localhost:8080",
+  "fixturesFolder": "tests/e2e/fixtures",
+  "integrationFolder": "tests/e2e/specs",
+  "pluginsFile": "tests/e2e/plugins/index.js",
+  "screenshotsFolder": "tests/e2e/screenshots",
+  "videosFolder": "tests/e2e/videos",
+  "supportFile": "tests/e2e/support/index.ts",
+  "chromeWebSecurity": false,
+  "snapshotFileName": "tests/e2e/snapshots.js",
+  "video": false,
+  "env": {
+    "CREATE_ACCOUNT_KEY": "b7d52acdb3efa63891fe1ea321813509f1b5fe4b59364ca4faf3a7cc819e5f0d",
+    "FILE_DL_ID": "0.0.26724",
+    "KEY_ACCOUNT_ID": "0.0.21883",
+    "KEY_PRIVATE_KEY": "302e020100300506032b6570042204207f7ac6c8025a15ff1e07ef57c7295601379a4e9a526560790ae85252393868f0",
+    "KEY_PUBLIC_KEY": "302a300506032b6570032100480474335c38c27bfde1f0c2010d3db95eeb74a1f8ac65212f7824ce1ab84eca",
+    "KEYSTORE_ACCOUNT_ID": "0.0.21883",
+    "KEYSTORE_PASSWORD": "DO NOT FORGET to save your password.",
+    "MNEMONIC_ACCOUNT_ID": "0.0.28645",
+    "MNEMONIC_PHRASE": "reform,sea,choose,glimpse,rural,quote,quick,slender,letter,shaft,absurd,cup,spray,light,junior,vibrant,lucky,supply,cradle,asthma,dilemma,pencil,ridge,flush", 
+    "MNEMONICP_ACCOUNT_ID": "0.0.26211",
+    "MNEMONICP_PASSWORD": "DO NOT FORGET to save your password.",
+    "MNEMONICP_PHRASE": "message,risk,loop,skate,upgrade,scare,camera,inflict,pear,resist,drama,plate,federal,foot,skill,lobster,tag,broom,pond,potato,liberty,mosquito,entire,embody",
+    "MNEMONICL_ACCOUNT_ID": "0.0.41540",
+    "MNEMONICL_PHRASE": "jolly,kidnap,Tom,lawn,drunk,chick,optic,lust,mutter,mole,bride,galley,dense,member,sage,neural,widow,decide,curb,aboard,margin,manure",
+    "NODE_ENV": "test"
+  }
+}

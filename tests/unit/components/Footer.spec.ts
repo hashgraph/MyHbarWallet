@@ -77,7 +77,9 @@ describe("Footer.vue", (): void => {
                     0.0.1001
                   </div>
                 </div>
-                <!---->
+                <transition-stub name="fade">
+                  <!---->
+                </transition-stub>
               </div>
               <div class="wrapper">
                 <div class="links"><a href="/privacy-policy" class="link">

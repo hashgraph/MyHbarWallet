@@ -157,7 +157,6 @@ export default defineComponent({
             const target = event.target as HTMLInputElement;
 
             if (target.files == null) {
-                // User hit cancel
                 return;
             }
 
@@ -178,6 +177,8 @@ export default defineComponent({
             target.value = ""; // change back to initial state to guarantee that click fires next time
             state.modalKeystoreFilePasswordState.isOpen = true;
             state.keyFile = new Uint8Array(keyStoreArrayBuff);
+            // In case the submit for AccessBySoftware does not fire (i.e. when programmatically uploading the file)
+            state.loginMethod = LoginMethod.KeyStore;
         }
 
         function setPrivateKey(newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey): void {
@@ -207,8 +208,6 @@ export default defineComponent({
             state.modalAccessBySoftwareState.isOpen = false;
 
             if (which === AccessSoftwareOption.File) {
-                state.loginMethod = LoginMethod.KeyStore;
-
                 if (keystoreFile.value != null) {
                     keystoreFile.value.click(); // triggers loadKeystore via hidden input @click
                 }
@@ -272,7 +271,7 @@ export default defineComponent({
 
                 setPrivateKey(await Ed25519PrivateKey.fromKeystore(
                     state.keyFile as Uint8Array,
-                    state.modalKeystoreFilePasswordState.password
+                    pwState.password
                 ));
 
                 // Close  previous modal and open another one
@@ -296,14 +295,11 @@ export default defineComponent({
             try {
                 const { Ed25519PrivateKey, Mnemonic } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
-                // console.log(accessByPhraseState.password);
+                const mnemonic = new Mnemonic(accessByPhraseState.words);
                 const rootPrivateKey = await Ed25519PrivateKey.fromMnemonic(
-                    new Mnemonic(accessByPhraseState.words), accessByPhraseState.password);
-
-                // console.log((await new Mnemonic(accessByPhraseState.words).toPrivateKey("")).toString());
-                // console.log((await Ed25519PrivateKey.fromMnemonic(new Mnemonic(accessByPhraseState.words), "")).toString());
-                // console.log(rootPrivateKey.toString());
-                // console.log(rootPrivateKey.publicKey.toString());
+                    mnemonic,
+                    accessByPhraseState.password
+                );
 
                 if (derive && rootPrivateKey.supportsDerivation) {
                     setPrivateKey(rootPrivateKey.derive(0));

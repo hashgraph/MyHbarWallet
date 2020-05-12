@@ -76,7 +76,9 @@ describe("FooterTop.vue", (): void => {
                   0.0.1001
                 </div>
               </div>
-              <!---->
+              <transition-stub name="fade">
+                <!---->
+              </transition-stub>
             </div>
         `);
     });

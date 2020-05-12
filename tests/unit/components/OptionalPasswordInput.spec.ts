@@ -38,10 +38,14 @@ describe("OptionalPasswordInput", (): void => {
                 </div>
               </div>
               <div class="password-input">
-                <textinput-stub placeholder="Please Enter Password" value="" tabindex="-1" compact="true" obscure="true"></textinput-stub>
-                <div class="password-warning">
-                  <p></p>
-                </div>
+                <transition-stub name="fade">
+                  <textinput-stub placeholder="Please Enter Password" value="" tabindex="-1" compact="true" obscure="true"></textinput-stub>
+                </transition-stub>
+                <transition-stub name="fade">
+                  <div class="password-warning">
+                    <p></p>
+                  </div>
+                </transition-stub>
               </div>
             </div>
         `);

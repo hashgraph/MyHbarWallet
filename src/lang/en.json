@@ -27,6 +27,7 @@
     "common.copied": "Copied",
     "common.copy": "Copy",
     "common.createAccount": "Create Account",
+    "common.error.payerDoesNotExist": "Payer Account does not exist",
     "common.error.cannotSendHbarToYourself": "Cannot transfer to your own account",
     "common.error.generalDeviceError": "Irrecoverable device error. Reset device, then try again.",
     "common.error.illegalState": "An illegal state has been reached",

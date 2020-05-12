@@ -31,10 +31,14 @@ describe("OptionalPasswordWithConfirm.vue", (): void => {
                 </div>
               </div>
               <div class="password-input">
-                <!---->
-                <div class="password-warning">
-                  <p></p>
-                </div>
+                <transition-stub name="fade">
+                  <!---->
+                </transition-stub>
+                <transition-stub name="fade">
+                  <div class="password-warning">
+                    <p></p>
+                  </div>
+                </transition-stub>
               </div>
             </div>
         `);

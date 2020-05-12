@@ -48,7 +48,9 @@ describe("AccountCard.vue", (): void => {
                   <!---->
                 </div>
               </div>
-              <!---->
+              <transition-stub name="fade">
+                <!---->
+              </transition-stub>
               <!---->
             </div>
         `);
