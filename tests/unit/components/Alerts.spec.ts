@@ -18,6 +18,8 @@ describe("Alerts.vue", (): void => {
             i18n
         });
 
-        expect(wrapper).toMatchInlineSnapshot("<div class=\"alerts\"></div>");
+        expect(wrapper).toMatchInlineSnapshot(
+            `<transition-group-stub tag="div" name="list" class="alerts"></transition-group-stub>`
+        );
     });
 });

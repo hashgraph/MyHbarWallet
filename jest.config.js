@@ -17,7 +17,7 @@ module.exports = {
     transformIgnorePatterns: [ "<rootDir>/node_modules/" ],
     setupFiles: [ "jest-canvas-mock", "<rootDir>/tests/unit/jest.init.js" ],
     snapshotSerializers: [ "jest-serializer-vue" ],
-    testMatch: [ "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)" ],
+    testMatch: [ "<rootDir>/tests/unit/**/*.spec.ts" ],
     testURL: "http://localhost/",
     watchPlugins: [
         "jest-watch-typeahead/filename",

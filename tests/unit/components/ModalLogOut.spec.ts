@@ -10,7 +10,7 @@ describe("ModalLogOut.vue", (): void => {
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    it("renders open", async(): Promise<void> => {
+    it("renders open", async (): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -24,7 +24,7 @@ describe("ModalLogOut.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            (child) => child.$options.name === "Modal"
+            child => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -32,25 +32,29 @@ describe("ModalLogOut.vue", (): void => {
         await localVue.nextTick();
 
         expect(wrapper).toMatchInlineSnapshot(`
-            <div role="dialog" aria-modal="true" class="modal-background">
-              <div class="modal slidefade-enter slidefade-enter-active">
-                <!---->
-                <!---->
-                <div class="main">
-                  <div class="content-container">
-                    <div class="modal-forgot-to-logout"><span>Log Out</span>
-                      <p>
-                        Are you sure?
-                      </p>
-                      <div class="button-group">
-                        <!----> <button type="submit" class="button-logout danger center-button">
-                          <!----> <span>Log Out</span>
-                          <!----></button></div>
+            <transition-stub name="fade">
+              <div role="dialog" aria-modal="true" class="modal-background">
+                <transition-stub name="slidefade">
+                  <div class="modal">
+                    <!---->
+                    <!---->
+                    <div class="main">
+                      <div class="content-container">
+                        <div class="modal-forgot-to-logout"><span>Log Out</span>
+                          <p>
+                            Are you sure?
+                          </p>
+                          <div class="button-group">
+                            <!----> <button type="submit" class="button-logout danger center-button">
+                              <!----> <span>Log Out</span>
+                              <!----></button></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </transition-stub>
               </div>
-            </div>
+            </transition-stub>
         `);
     });
 });

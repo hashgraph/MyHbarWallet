@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": [
+      "webpack-env",
+      "cypress",
+      "node"
+    ],
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "specs/**/*.ts",
+    "support/**/*.ts", 
+    "fixtures/access.ts",
+    "../../node_modules/cypress"
+  ]
+}

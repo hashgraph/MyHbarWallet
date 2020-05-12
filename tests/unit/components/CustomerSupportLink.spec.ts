@@ -23,7 +23,9 @@ describe("CustomerSupportLink.vue", (): void => {
             <div class="customer-support-link">
               <div class="customer-support-container"><img alt="" src="">Customer Support
               </div>
-              <!---->
+              <transition-stub name="fade">
+                <!---->
+              </transition-stub>
             </div>
         `);
     });

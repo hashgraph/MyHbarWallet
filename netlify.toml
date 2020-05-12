@@ -1,3 +1,9 @@
+[build.environment]
+CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
+TERM = "xterm"
+CI = "1"
+DEBUG = "netlify-plugin-cypress,netlify-plugin-cypress:verbose"
+
 # Set the HEDERA_NETWORK to mainnet for production
 [context.production.environment]
 HEDERA_NETWORK = "mainnet"
@@ -11,3 +17,11 @@ HEDERA_NETWORK = "testnet"
 from = "/*"
 to = "/"
 status = 200
+
+[[plugins]]
+package = "netlify-plugin-cypress"
+
+# [plugins.inputs.preBuild]
+# start = "yarn serve:test"
+# wait-on = 'http://localhost:8080'
+# wait-on-timeout = '120' # seconds

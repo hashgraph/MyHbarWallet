@@ -181,10 +181,10 @@ export default defineComponent({
 .toggle {
     align-items: center;
     border-bottom: 2px solid var(--color-peral);
-    justify-content: space-between;
     color: var(--color-china-blue);
     display: flex;
     font-size: 14px;
+    justify-content: space-between;
     margin-block-end: 10px;
     padding-block-end: 10px;
     width: 100%;

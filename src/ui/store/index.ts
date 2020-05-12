@@ -184,6 +184,8 @@ export const actions = {
 
         switch (payload.error.status.code) {
             case Status.PayerAccountNotFound.code:
+                message = i18n.t("common.error.payerDoesNotExist").toString();
+                break;
             case Status.InvalidAccountId.code:
                 message = i18n.t("common.error.invalidAccount").toString();
                 break;

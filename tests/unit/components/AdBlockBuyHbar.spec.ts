@@ -25,7 +25,9 @@ describe("AdBlockBuyHbar.vue", (): void => {
               <div class="AdBlockBuyHbar-action"><button type="submit" class="outline compact">
                   <!----> <span>Buy Now</span>
                   <!----></button> <img src="" class="AdBlockBuyHbar-icon"></div> <img src="" class="AdBlockBuyHbar-backdrop">
-              <!---->
+              <transition-stub name="fade">
+                <!---->
+              </transition-stub>
             </div>
         `);
     });
