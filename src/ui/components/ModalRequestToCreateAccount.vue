@@ -24,17 +24,19 @@
             @submit.prevent="$emit('submit')"
         >
             <qrcode-vue
-                v-if="publicKey"
-                :value="publicKey.toString(true)"
+                v-show="publicKey != null"
+                :value="publicKey != null ? publicKey.toString(true) : ''"
                 size="180"
                 level="L"
                 class="pub-qr"
             />
 
             <ReadOnlyInput
-                v-if="publicKey"
+                v-show="publicKey != null"
+                :key="componentKey"
+                ref="keyRef"
                 multiline
-                :value="publicKey.toString(true)"
+                :value="publicKey != null ? publicKey.toString(true) : ''"
             />
 
             <div class="buttons">
@@ -59,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, SetupContext } from "@vue/composition-api";
+import { defineComponent, PropType, SetupContext, Ref, ref } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 
 import { writeToClipboard } from "../../service/clipboard";
@@ -94,11 +96,21 @@ export default defineComponent({
         event: String
     },
     setup(props: Props, context: SetupContext) {
+        const keyRef: Ref<Vue | null> = ref(null);
+        const componentKey = ref(0);
+
         async function handleClickCopy(): Promise<void> {
-            await writeToClipboard(props.publicKey.toString());
-            await actions.alert({
-                message: context.root.$t("common.copied").toString(),
-                level: "info"
+            componentKey.value += 1;
+
+            context.root.$nextTick(async() => {
+                if (keyRef.value != null) {
+                    writeToClipboard(keyRef.value.$el as HTMLElement);
+
+                    await actions.alert({
+                        message: context.root.$t("common.copied").toString(),
+                        level: "info"
+                    });
+                }
             });
         }
 
@@ -107,6 +119,8 @@ export default defineComponent({
         }
 
         return {
+            keyRef,
+            componentKey,
             handleClickCopy,
             handleHasAccount
         };

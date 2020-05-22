@@ -20,6 +20,7 @@
                             <textarea
                                 v-if="multiline"
                                 ref="input"
+                                :key="inputKey"
                                 class="text-area"
                                 :placeholder="placeholder"
                                 :tabindex="tabindex"
@@ -33,6 +34,7 @@
                             <input
                                 v-else
                                 ref="input"
+                                :key="inputKey"
                                 :value="value"
                                 :placeholder="placeholder"
                                 :type="keyboardType"
@@ -150,6 +152,7 @@ interface Props {
 
 export interface Component {
     input: Ref<HTMLInputElement | null>;
+    inputKey: Ref<number>;
     state: {
         isEyeOpen: boolean;
     };
@@ -204,12 +207,13 @@ export default defineComponent({
         suffix: (String as unknown) as PropType<string>
     },
     setup(props: Props, context): Component {
-        // If the eye is open to show the obscured text anyway
         const state = reactive({
             isEyeOpen: false,
             hasFocus: false
         });
+
         const input = ref<HTMLInputElement | null>(null);
+        const inputKey = ref(0);
 
         const keyboardType = computed(() => {
             if (props.type) return props.type;
@@ -236,9 +240,12 @@ export default defineComponent({
         }));
 
         function focus(): void {
-            if (input.value != null) {
-                input.value.focus();
-            }
+            inputKey.value += 1;
+            context.root.$nextTick(() => {
+                if (input.value != null) {
+                    input.value.focus();
+                }
+            });
         }
 
         function handleClickEye(): void {
@@ -256,7 +263,12 @@ export default defineComponent({
         }
 
         async function handleClickCopy(): Promise<void> {
-            await writeToClipboard(props.value.toString());
+            inputKey.value += 1;
+            context.root.$nextTick(() => {
+                if (input.value != null) {
+                    writeToClipboard(input.value);
+                }
+            });
         }
 
         function handleFocusIn(): void {
@@ -269,6 +281,7 @@ export default defineComponent({
 
         return {
             input,
+            inputKey,
             state,
             keyboardType,
             eye,

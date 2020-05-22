@@ -25,7 +25,7 @@ describe("InterfaceCreateAccount.vue", (): void => {
               <textinput-stub value="" label="Initial Balance" min="1" showvalidation="true" error="" suffix="hbar" has-input=""></textinput-stub>
               <textinput-stub value="" label="Public Key" autocompletedisabled="true" spellcheckdisabled="true" showvalidation="true" error=""></textinput-stub>
               <modalsuccess-stub state="[object Object]">
-                <i18n-stub path="modalSuccess.createdAccount"><strong></strong> <strong></strong></i18n-stub>
+                <i18n-stub path="modalSuccess.createdAccount"><span><strong></strong></span> <strong></strong></i18n-stub>
               </modalsuccess-stub>
               <modalfeesummary-stub state="[object Object]"></modalfeesummary-stub>
             </interfaceform-stub>

@@ -5,7 +5,7 @@
         @change="this.$listeners.change"
     >
         <div
-            v-if="hasPublicKey"
+            v-show="hasPublicKey"
             class="key-container public"
         >
             <div
@@ -13,6 +13,8 @@
                 v-text="$t('modalViewKeys.publicKey')"
             />
             <ReadOnlyInput
+                ref="publicInput"
+                :key="publicCompKey"
                 class="input"
                 :value="publicKey"
                 multiline
@@ -25,7 +27,7 @@
             />
         </div>
         <div
-            v-if="hasPrivateKey"
+            v-show="hasPrivateKey"
             class="key-container private"
         >
             <div
@@ -33,6 +35,8 @@
                 v-text="$t('modalViewKeys.privateKey')"
             />
             <ReadOnlyInput
+                ref="privateInput"
+                :key="privateCompKey"
                 class="input"
                 :value="privateKey"
                 multiline
@@ -49,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, SetupContext } from "@vue/composition-api";
+import { computed, defineComponent, SetupContext, Ref, ref } from "@vue/composition-api";
 
 import { writeToClipboard } from "../../service/clipboard";
 import { actions } from "../store";
@@ -80,8 +84,12 @@ export default defineComponent({
         publicKey: String
     },
     setup(props: Props, context: SetupContext) {
-        const hasPrivateKey = computed(() => props.privateKey !== "" && props.privateKey != null);
+        const publicInput: Ref<HTMLElement | null> = ref(null);
+        const publicCompKey = ref(0);
+        const privateInput: Ref<HTMLElement | null> = ref(null);
+        const privateCompKey = ref(0);
 
+        const hasPrivateKey = computed(() => props.privateKey !== "" && props.privateKey != null);
         const hasPublicKey = computed(() => props.publicKey !== "" && props.publicKey != null);
 
         const title = computed(() => {
@@ -96,28 +104,42 @@ export default defineComponent({
         });
 
         async function handleCopyPublicKey(): Promise<void> {
-            await writeToClipboard(props.publicKey == null ? "" : props.publicKey);
+            publicCompKey.value += 1;
+            context.root.$nextTick(() => {
+                if (publicInput.value != null) {
+                    writeToClipboard(publicInput.value);
 
-            actions.alert({
-                level: "info",
-                message: context.root
-                    .$t("modalViewKeys.copiedPublic")
-                    .toString()
+                    actions.alert({
+                        level: "info",
+                        message: context.root
+                            .$t("modalViewKeys.copiedPublic")
+                            .toString()
+                    });
+                }
             });
         }
 
         async function handleCopyPrivateKey(): Promise<void> {
-            await writeToClipboard(props.privateKey == null ? "" : props.privateKey);
+            privateCompKey.value += 1;
+            context.root.$nextTick(() => {
+                if (privateInput.value != null) {
+                    writeToClipboard(privateInput.value);
 
-            actions.alert({
-                level: "info",
-                message: context.root
-                    .$t("modalViewKeys.copiedPrivate")
-                    .toString()
+                    actions.alert({
+                        level: "info",
+                        message: context.root
+                            .$t("modalViewKeys.copiedPrivate")
+                            .toString()
+                    });
+                }
             });
         }
 
         return {
+            publicInput,
+            publicCompKey,
+            privateInput,
+            privateCompKey,
             title,
             hasPrivateKey,
             hasPublicKey,

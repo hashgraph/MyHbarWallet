@@ -4,9 +4,9 @@
         :is-open="isOpen"
         @change="this.$listeners.change"
     >
-        <!-- fixme: either bind this to save edits or make it non-editable -->
         <TextInput
             ref="input"
+            :key="compKey"
             :label="$t('modalMessageSigned.signedMessage')"
             can-copy
             multiline
@@ -22,7 +22,7 @@
     </Modal>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from "@vue/composition-api";
+import { defineComponent, PropType, Ref, ref } from "@vue/composition-api";
 
 import { writeToClipboard } from "../../service/clipboard";
 
@@ -37,8 +37,8 @@ export default defineComponent({
         TextInput
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        value: (String as unknown) as PropType<string>
+        isOpen: Boolean as PropType<boolean>,
+        value: String as PropType<string>
     },
     setup(
         props: {
@@ -47,12 +47,20 @@ export default defineComponent({
         },
         context
     ) {
+        const input: Ref<HTMLElement | null> = ref(null);
+        const compKey = ref(0);
+
         async function handleClickCopy(): Promise<void> {
-            await writeToClipboard(props.value);
-            context.emit("change", false);
+            compKey.value += 1;
+            context.root.$nextTick(() => {
+                if (input.value != null) {
+                    writeToClipboard(input.value);
+                    context.emit("change", false);
+                }
+            });
         }
 
-        return { handleClickCopy };
+        return { input, compKey, handleClickCopy };
     }
 });
 </script>
