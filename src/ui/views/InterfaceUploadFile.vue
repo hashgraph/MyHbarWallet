@@ -37,7 +37,12 @@
             @dismiss="handleUploadFinish"
         >
             <i18n path="modalSuccess.uploadedFile">
-                <strong>{{ fileIDString }}</strong>
+                <span
+                    ref="accountInput"
+                    :key="compKey"
+                >
+                    <strong>{{ fileIDString }}</strong>
+                </span>
             </i18n>
         </ModalSuccess>
     </InterfaceForm>
@@ -111,6 +116,9 @@ export default defineComponent({
                 actionLabel: "Copy File ID"
             } as SuccessState
         });
+
+        const accountInput: Ref<HTMLElement | null> = ref(null);
+        const compKey = ref(0);
 
         const fileID: Ref<import("@hashgraph/sdk").FileId | null> = ref(null);
 
@@ -368,10 +376,16 @@ export default defineComponent({
                 return;
             }
 
-            await writeToClipboard(fileIDString.value);
-            actions.alert({
-                level: "info",
-                message: context.root.$t("modalSuccess.copiedFileID").toString()
+            compKey.value += 1;
+            context.root.$nextTick(() => {
+                if (accountInput.value != null) {
+                    writeToClipboard(accountInput.value);
+
+                    actions.alert({
+                        level: "info",
+                        message: context.root.$t("modalSuccess.copiedFileID").toString()
+                    });
+                }
             });
         }
 
@@ -388,6 +402,8 @@ export default defineComponent({
         }
 
         return {
+            accountInput,
+            compKey,
             handleUploadSubmit,
             handleFileSelect,
             handleUploadClick,

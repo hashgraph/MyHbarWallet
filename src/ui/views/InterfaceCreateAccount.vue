@@ -40,7 +40,12 @@
             @dismiss="handleModalSuccessDismiss"
         >
             <i18n path="modalSuccess.createdAccount">
-                <strong>{{ state.account }}</strong>
+                <span
+                    ref="accountInput"
+                    :key="compKey"
+                >
+                    <strong>{{ state.account }}</strong>
+                </span>
                 <strong>{{ state.newBalance }}</strong>
             </i18n>
         </ModalSuccess>
@@ -53,22 +58,22 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, SetupContext, watch } from "@vue/composition-api";
+import { computed, defineComponent, reactive, SetupContext, watch, Ref, ref } from "@vue/composition-api";
 import { BigNumber } from "bignumber.js";
 import { mdiHelpCircleOutline } from "@mdi/js";
 import { BadKeyError } from "@hashgraph/sdk";
 
-import TextInput from "../components/TextInput.vue";
 import Button from "../components/Button.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
-import { actions, getters } from "../store";
 import ModalFeeSummary, { Item, State as ModalSummaryState } from "../components/ModalFeeSummary.vue";
-import { getValueOfUnit, Unit } from "../../service/units";
-import Notice from "../components/Notice.vue";
-import { formatHbar } from "../../service/format";
 import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuccess.vue";
-import { writeToClipboard } from "../../service/clipboard";
+import Notice from "../components/Notice.vue";
+import TextInput from "../components/TextInput.vue";
 import { LoginMethod } from "../../domain/wallets/Wallet";
+import { actions, getters } from "../store";
+import { formatHbar } from "../../service/format";
+import { getValueOfUnit, Unit } from "../../service/units";
+import { writeToClipboard } from "../../service/clipboard";
 
 const estimatedFeeHbar = new BigNumber(0.5);
 const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
@@ -133,9 +138,12 @@ export default defineComponent({
             modalSuccessState: {
                 isOpen: false,
                 hasAction: true,
-                actionLabel: "Copy Account ID"
+                actionLabel: context.root.$t("modalViewAccountId.copyAccountId").toString()
             }
         });
+
+        const accountInput: Ref<HTMLElement | null> = ref(null);
+        const compKey = ref(0);
 
         watch(async() => {
             state.isPublicKeyValid = await isPublicKeyValid(state.publicKey);
@@ -239,13 +247,18 @@ export default defineComponent({
         }
 
         async function handleModalSuccessAction(): Promise<void> {
-            // Copy created AccountID
-            await writeToClipboard(state.account);
-            actions.alert({
-                level: "info",
-                message: context.root
-                    .$t("modalSuccess.copiedAccountID")
-                    .toString()
+            compKey.value += 1;
+            context.root.$nextTick(() => {
+                if (accountInput.value != null) {
+                    writeToClipboard(accountInput.value);
+
+                    actions.alert({
+                        level: "info",
+                        message: context.root
+                            .$t("modalSuccess.copiedAccountID")
+                            .toString()
+                    });
+                }
             });
         }
 
@@ -286,6 +299,8 @@ export default defineComponent({
         }
 
         return {
+            accountInput,
+            compKey,
             state,
             validBalance,
             handleCreateAccount,

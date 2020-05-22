@@ -14,6 +14,8 @@
             />
 
             <ReadOnlyInput
+                ref="input"
+                :key="compKey"
                 class="account-id"
                 :value="accountId"
             />
@@ -29,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "@vue/composition-api";
+import { computed, defineComponent, PropType, Ref, ref } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 import { AccountId } from "@hashgraph/sdk";
 
@@ -63,22 +65,31 @@ export default defineComponent({
         event: String
     },
     setup(props: Props, context) {
+        const input: Ref<HTMLElement | null> = ref(null);
+        const compKey = ref(0);
+
         const accountId = computed(() => props.value ?
             `${props.value.shard}.${props.value.realm}.${props.value.account}` :
             "");
 
         async function handleClickCopy(): Promise<void> {
             const id = accountId.value;
-            if (id != null) {
-                await writeToClipboard(id);
-                actions.alert({
-                    message: context.root.$t("common.copied").toString(),
-                    level: "info"
-                });
-            }
+            compKey.value += 1;
+            context.root.$nextTick(() => {
+                if (input.value != null && id != null) {
+                    writeToClipboard(input.value);
+
+                    actions.alert({
+                        message: context.root.$t("common.copied").toString(),
+                        level: "info"
+                    });
+                }
+            });
         }
 
         return {
+            input,
+            compKey,
             accountId,
             handleClickCopy
         };
