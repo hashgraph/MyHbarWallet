@@ -68,7 +68,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                               <div class="select select">
                                 <div class="select-value-container">
                                   <div class="select-value">
-                                    Hedera™ Hashgraph Test Network
+                                    Hedera™ Hashgraph Main Network
                                   </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                                     <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
                                   </svg>
@@ -198,7 +198,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                               <div class="select select">
                                 <div class="select-value-container">
                                   <div class="select-value">
-                                    Hedera™ Hashgraph Test Network
+                                    Hedera™ Hashgraph Main Network
                                   </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                                     <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
                                   </svg>
@@ -330,7 +330,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                               <div class="select select">
                                 <div class="select-value-container">
                                   <div class="select-value">
-                                    Hedera™ Hashgraph Test Network
+                                    Hedera™ Hashgraph Main Network
                                   </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                                     <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
                                   </svg>
@@ -462,7 +462,7 @@ describe("ModalEnterAccountId.vue", (): void => {
                               <div class="select select">
                                 <div class="select-value-container">
                                   <div class="select-value">
-                                    Hedera™ Hashgraph Test Network
+                                    Hedera™ Hashgraph Main Network
                                   </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                                     <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
                                   </svg>

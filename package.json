@@ -144,7 +144,7 @@
     "config:back": "cp vue.config.back.js vue.config.js",
     "config:front": "cp vue.config.front.js vue.config.js",
     "config:rm": "rm vue.config.js",
-    "deptree": "depcruise --exclude '(node_modules|test|tests|__tests__|dist|assets)' --output-type dot src | dot -T svg > src/ui/assets/deps.svg",
+    "deptree": "depcruise --exclude '(node_modules|test|tests|__tests__|dist|assets|components)' --output-type dot src | dot -T svg > src/ui/assets/deps.svg",
     "electron:build": "npm-run-all deptree config:back electron:generate-icons _electron:build config:rm",
     "electron:generate-icons": "electron-icon-builder --input=./public/android-chrome-512x512.png --output=dist/electron --flatten",
     "electron:serve": "npm-run-all config:back _electron:serve config:rm",

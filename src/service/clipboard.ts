@@ -13,8 +13,7 @@ export async function writeToClipboardAsync(target: HTMLElement | Vue): Promise<
         const value = (_target as HTMLElement).textContent?.trim() || ""; // :^)
         await navigator.clipboard.writeText(value);
     } catch (error) {
-        console.warn("Failed to Copy");
-        console.warn(error);
+        throw error;
     }
 }
 
@@ -39,8 +38,7 @@ export function writeToClipboardSync(target: HTMLElement): void {
             document.execCommand("copy");
         }
     } catch (error) {
-        console.warn("Failed to Copy");
-        console.warn(error);
+        throw error;
     }
 }
 

@@ -226,7 +226,7 @@ export default defineComponent({
                 state.keyFile = await privateKey.toKeystore(password);
                 setPrivateKey(privateKey);
                 state.modalDownloadKeystoreState.isBusy = false;
-                const keyStoreBlob = new Blob([ state.keyFile.buffer as Uint8Array ]);
+                const keyStoreBlob = new Blob([ new Uint8Array(state.keyFile.buffer) ]);
                 const keyStoreUrl = URL.createObjectURL(keyStoreBlob);
                 keystoreFile.value = document.createElement("a") as HTMLAnchorElement;
                 keystoreFile.value.href = keyStoreUrl;
@@ -245,11 +245,13 @@ export default defineComponent({
             context.root.$el.append(keystoreFile.value as Node);
             // eslint-disable-next-line no-process-env, no-undef
             if (keystoreFile.value == null || state.privateKey == null || process.env.NODE_ENV === "test") {
-                return;
+                // Download Skipped
+            } else {
+                keystoreFile.value.click();
+                context.root.$el.removeChild(keystoreFile.value as HTMLAnchorElement);
             }
 
-            keystoreFile.value.click();
-            context.root.$el.removeChild(keystoreFile.value as HTMLAnchorElement);
+            // Don't remove keystore element (needed in test, cleaned up when you leave page)
         }
 
         function handleDownloadKeystoreContinue(): void {
