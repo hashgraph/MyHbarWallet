@@ -23,7 +23,7 @@ describe("HeaderHamburgerMenu.vue", (): void => {
         });
         expect(wrapper).toMatchInlineSnapshot(`
             <nav class="nav-open">
-              <!----> <a href="/" class="link-block router-link-exact-active router-link-active">
+              <!----> <a href="/" aria-current="page" class="link-block router-link-exact-active router-link-active">
                 <div class="link">
                   Home
                 </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">

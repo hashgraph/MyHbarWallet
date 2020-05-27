@@ -74,6 +74,7 @@ import { actions, getters } from "../store";
 import { formatHbar } from "../../service/format";
 import { getValueOfUnit, Unit } from "../../service/units";
 import { writeToClipboard } from "../../service/clipboard";
+import { prefixPublic } from "../../service/hedera";
 
 const estimatedFeeHbar = new BigNumber(0.5);
 const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
@@ -90,13 +91,14 @@ interface State {
     modalSuccessState: ModalSuccessState;
 }
 
-async function isPublicKeyValid(key: string): Promise<boolean> {
+async function isPublicKeyValid(key: string, retry: boolean | undefined): Promise<boolean> {
     try {
         const { Ed25519PublicKey } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
         Ed25519PublicKey.fromString(key);
         return true;
     } catch (error) {
         if (error instanceof BadKeyError) {
+            if (retry) return isPublicKeyValid(prefixPublic(key), false);
             // The exception message changes depending on the input
             return false;
         }
@@ -146,7 +148,7 @@ export default defineComponent({
         const compKey = ref(0);
 
         watch(async() => {
-            state.isPublicKeyValid = await isPublicKeyValid(state.publicKey);
+            state.isPublicKeyValid = await isPublicKeyValid(state.publicKey, true);
         });
 
         // eslint-disable-next-line sonarjs/cognitive-complexity

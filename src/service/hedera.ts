@@ -98,3 +98,18 @@ export async function constructSession(
     }
     return null;
 }
+
+function prefix(prefix: string, key: string): string {
+    if (key.startsWith(prefix)) return key;
+    return `${prefix}${key}`;
+}
+
+const publicPrefix = "302a300506032b657003210013d392c9";
+export function prefixPublic(key: string): string {
+    return prefix(publicPrefix, key);
+}
+
+const privatePrefix = "302e020100300506032b657004220420";
+export function prefixPrivate(key: string): string {
+    return prefix(privatePrefix, key);
+}

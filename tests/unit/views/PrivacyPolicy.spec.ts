@@ -120,7 +120,7 @@ describe("PrivacyPolicy.vue", (): void => {
                     Right to data portability: the right to request that we return any information you have provided in a structured, commonly used, and machine-readable format, or that we send it directly to another company, where technically feasible; and
                   </li>
                   <li class="item">
-                    <i18n-stub path="privacyPolicy.section11.paragraph2.subsection6"><br> <a href="mailto:support@myhbarwallet.com">
+                    <i18n-stub tag="span" path="privacyPolicy.section11.paragraph2.subsection6"><br> <a href="mailto:support@myhbarwallet.com">
                         support@myhbarwallet.com
                       </a></i18n-stub>
                   </li>
@@ -149,7 +149,7 @@ describe("PrivacyPolicy.vue", (): void => {
                   CONTACT INFORMATION
                 </div>
                 <div class="paragraph">
-                  <i18n-stub path="privacyPolicy.section14.paragraph1"><a href="mailto:support@myhbarwallet.com">
+                  <i18n-stub tag="span" path="privacyPolicy.section14.paragraph1"><a href="mailto:support@myhbarwallet.com">
                       support@myhbarwallet.com
                     </a></i18n-stub>
                 </div>

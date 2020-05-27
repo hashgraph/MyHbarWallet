@@ -40,6 +40,8 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, SetupContext, watch } from "@vue/composition-api";
 
+import { prefixPublic } from "../../service/hedera";
+
 import Warning from "./Warning.vue";
 import TextInput from "./TextInput.vue";
 import Button from "./Button.vue";
@@ -75,7 +77,7 @@ export default defineComponent({
             const { Ed25519PrivateKey, BadKeyError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
             try {
-                Ed25519PrivateKey.fromString(props.state.rawPrivateKey);
+                Ed25519PrivateKey.fromString(prefixPublic(props.state.rawPrivateKey));
                 return true;
             } catch (error) {
                 // The exception message changes depending on the input
@@ -96,7 +98,7 @@ export default defineComponent({
                 }
 
                 // eslint-disable-next-line promise/always-return, promise/catch-or-return
-                isValid().then((result) => {
+                void isValid().then((result) => {
                     valid.value = result;
                 });
             }

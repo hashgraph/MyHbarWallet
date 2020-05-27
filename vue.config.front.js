@@ -26,21 +26,11 @@ const plugins = [
 if (process.env.NODE_ENV === "production") {
     plugins.push(
         new WorkboxPlugin.GenerateSW({
-            // Do not precache images
-            exclude: [ /\.(?:png|jpg|jpeg|svg)$/ ],
-            runtimeCaching: [
-                {
-                    urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
-                    handler: "CacheFirst",
-                    options: {
-                        cacheName: "images",
-                        expiration: {
-                            maxEntries: 10,
-                            maxAgeSeconds: 30 * 24 * 60 * 60
-                        }
-                    }
-                }
-            ]
+            mode: "production",
+            cacheId: "mhw",
+            cleanupOutdatedCaches: true,
+            clientsClaim: true,
+            skipWaiting: true
         })
     );
 }
