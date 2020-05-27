@@ -26,7 +26,7 @@ describe("AccessMyAccount.vue", (): void => {
               <div class="wrap">
                 <pagetitle-stub title="Access My Account">
                   Don't have an account?
-                  <router-link-stub to="[object Object]" tag="a" event="click">
+                  <router-link-stub to="[object Object]" tag="a" ariacurrentvalue="page" event="click">
                     Create a new account
                   </router-link-stub>
                 </pagetitle-stub>
