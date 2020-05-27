@@ -3,6 +3,7 @@
         :is-open="state.isOpen"
         small
         hide-decoration
+        not-closable
         garlands
         :crown="mdiCheck"
         @change="onChange"

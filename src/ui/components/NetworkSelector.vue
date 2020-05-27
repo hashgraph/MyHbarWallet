@@ -69,12 +69,12 @@ function isValidAddress(address: string): boolean {
     return IP_AND_PORT_REGEX.test(address) || URL_REGEX.test(address);
 }
 
-function translate(key: NetworkName): string {
+export function translate(key: NetworkName): string {
     return i18n.t(key).toString();
 }
 
 // Can't believe I've done this
-function untranslate(value: string): NetworkName {
+export function untranslate(value: string): NetworkName {
     // eslint-disable-next-line default-case
     switch (value) {
         case translate(NetworkName.MAINNET):
@@ -96,14 +96,10 @@ export default defineComponent({
         TextInput,
         Notice
     },
-    setup(props: {}, context: SetupContext) {
-        // eslint-disable-next-line no-process-env, no-undef
-        const defaultNetwork = computed(() => process.env.NODE_ENV !== "production" ?
-            translate(NetworkName.TESTNET) :
-            translate(NetworkName.MAINNET));
-
+    props: { network: String },
+    setup(props, context: SetupContext) {
         const state = reactive({
-            networkSelected: defaultNetwork.value,
+            networkSelected: props.network ?? translate(NetworkName.MAINNET),
             address: "",
             idInput: "",
             id: null as NodeId | null,
@@ -128,6 +124,7 @@ export default defineComponent({
 
         function handleSelectChange(): void {
             clearState();
+            emitNetwork();
         }
 
         function handleIdInput(input: string, id: import("@hashgraph/sdk").AccountId): void {

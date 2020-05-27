@@ -34,9 +34,9 @@
                     v-text="$t('modalEnterAccountId.network')"
                 />
                 <NetworkSelector
+                    :key="networkSelectorKey"
                     ref="networkSelector"
-                    :node-error="state.nodeError"
-                    :address-error="state.addressError"
+                    :network="networkSelected"
                     @network="reEmitNetwork"
                     @valid="handleNetworkValid"
                 />
@@ -82,12 +82,12 @@ import { computed, defineComponent, PropType, ref, Ref, SetupContext } from "@vu
 import { mdiHelpCircleOutline } from "@mdi/js";
 import { Vue } from "vue/types/vue";
 
-import { NetworkSettings } from "../../domain/network";
+import { NetworkSettings, NetworkName } from "../../domain/network";
 
 import Modal from "./Modal.vue";
 import Button from "./Button.vue";
 import IDInput, { IdInputElement } from "./IDInput.vue";
-import NetworkSelector, { NetworkSelectorElement } from "./NetworkSelector.vue";
+import NetworkSelector, { NetworkSelectorElement, translate } from "./NetworkSelector.vue";
 import Notice from "./Notice.vue";
 import ReadOnlyInput from "./ReadOnlyInput.vue";
 
@@ -127,6 +127,8 @@ export default defineComponent({
     props: { state: Object as PropType<State> },
     setup(props: Props, context: SetupContext) {
         const networkSelector: Ref<NetworkSelectorElement | null> = ref(null);
+        const networkSelectorKey = ref(0);
+        const networkSelected = ref(translate(NetworkName.MAINNET));
         const input: Ref<IdInputElement | null> = ref(null);
 
         const hasPublicKey = computed(() => props.state.publicKey != null);
@@ -166,6 +168,7 @@ export default defineComponent({
 
         // Pass Child Network Events up to Parent
         function reEmitNetwork(settings: NetworkSettings): void {
+            networkSelected.value = translate(settings.name); // I'm a v-model :^)
             context.emit("network", settings);
         }
 
@@ -180,14 +183,16 @@ export default defineComponent({
         async function handleSubmit(): Promise<void> {
             props.state.errorMessage = null;
             props.state.isBusy = true;
+            networkSelectorKey.value += 1; // :^)
 
-            (networkSelector.value as NetworkSelectorElement).emitNetwork();
-
-            if (props.state.account == null) {
-                throw new Error(context.root.$t("common.error.illegalState").toString());
-            }
-
-            context.emit("submit", props.state.account);
+            context.root.$nextTick(() => {
+                if (networkSelector.value != null && props.state.account != null) {
+                    networkSelector.value.emitNetwork();
+                    context.emit("submit", props.state.account);
+                } else {
+                    throw new Error(context.root.$t("common.illegalState").toString());
+                }
+            });
         }
 
         function emitClose(): void {
@@ -197,6 +202,8 @@ export default defineComponent({
         return {
             input,
             networkSelector,
+            networkSelectorKey,
+            networkSelected,
             hasPublicKey,
             publicKey,
             handleAccount,
