@@ -28,7 +28,7 @@ describe("Header.vue", (): void => {
               <header class="header">
                 <div class="link"><img alt="" src="../assets/myhbarwallet-logo.svg" class="logo"></div>
                 <div class="spacer"></div>
-                <div class="links"><a href="/" class="link router-link-exact-active router-link-active">
+                <div class="links"><a href="/" aria-current="page" class="link router-link-exact-active router-link-active">
                     Home
                   </a> <a href="/#about" class="link">
                     About
@@ -54,7 +54,7 @@ describe("Header.vue", (): void => {
                 <!---->
               </header>
               <nav class="">
-                <!----> <a href="/" class="link-block router-link-exact-active router-link-active">
+                <!----> <a href="/" aria-current="page" class="link-block router-link-exact-active router-link-active">
                   <div class="link">
                     Home
                   </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">

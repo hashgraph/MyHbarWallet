@@ -25,7 +25,7 @@ describe("InterfaceDownloadFile.vue", (): void => {
               </div>
               <modalfeesummary-stub state="[object Object]"></modalfeesummary-stub>
               <modalsuccess-stub state="[object Object]">
-                <i18n-stub path="modalSuccess.downloadFile"><strong>0.0.0</strong></i18n-stub>
+                <i18n-stub tag="span" path="modalSuccess.downloadFile"><strong>0.0.0</strong></i18n-stub>
               </modalsuccess-stub>
             </interfaceform-stub>
         `);
