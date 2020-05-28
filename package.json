@@ -42,6 +42,7 @@
     "@cypress/snapshot": "^2.1.7",
     "@cypress/webpack-preprocessor": "^5.1.2",
     "@launchbadge/eslint-config": "^0.18.0",
+    "@ledgerhq/hw-transport-web-ble": "^5.15.0",
     "@types/chai": "^4.2.11",
     "@types/core-js": "^2.5.3",
     "@types/jest": "^25.2.1",

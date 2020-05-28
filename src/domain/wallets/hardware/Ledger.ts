@@ -31,6 +31,11 @@ interface APDU {
     buffer: Buffer;
 }
 
+const AndroidRegex = /android/i;
+const LGRegex = /webos/i;
+const AppleRegex = /iphone|ipad|ipod/i;
+const GoogleRegex = /nexus|pixel/i;
+
 export default class Ledger implements Wallet {
     private publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null = null;
     private transport: import("@ledgerhq/hw-transport").default | null = null;
@@ -104,7 +109,24 @@ export default class Ledger implements Wallet {
         throw new Error("Unexpected Empty Response From Ledger Device");
     }
 
+    private isMobile(platform: typeof import(/* webpackChunkName: "hardware" */ "platform")): boolean {
+        if (typeof platform.product !== "undefined") {
+            if (platform.product != null) {
+                if (AppleRegex.exec(platform.product) != null ||
+                    AndroidRegex.exec(platform.product) != null ||
+                    LGRegex.exec(platform.product) != null ||
+                    GoogleRegex.exec(platform.product)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     private async getTransport(): Promise<import("@ledgerhq/hw-transport").default> {
+        debugger;
+
         if (this.transport != null) {
             return this.transport;
         }
@@ -112,51 +134,56 @@ export default class Ledger implements Wallet {
         // Support NodeHID for Electron
         // eslint-disable-next-line no-process-env, no-undef
         if (process.env.IS_ELECTRON) {
-            // https://github.com/LedgerHQ/ledgerjs/issues/332
-            // @ts-ignore
-            // eslint-disable-next-line no-unused-expressions
-            (await import(/* webpackChunkName: "hardware" */ "regenerator-runtime"))[ "default" ];
             // @ts-ignore
             const TransportNodeHID = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-node-hid-noevents"))[ "default" ];
             const devices = await TransportNodeHID.list();
-            this.transport = await TransportNodeHID.open(devices[ 0 ]);
+            this.transport = await TransportNodeHID.open(devices[ 0 ]); // sorry if you connect more than 1
             return this.transport!;
         }
 
         const platform = (await import(/* webpackChunkName: "platform" */ "platform"))[ "default" ];
 
-        // @ts-ignore
-        const TransportWebHID = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-webhid"))[ "default" ];
-        const TransportWebUSB = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-webusb"))[ "default" ];
-
-        // WebHID should be what we're doing but it's still unstable on Chrome
-        const shouldUseWebHid = false;
-
-        // WebUSB is *supposed* to work on Windows (and Opera?), but alas
-        const webusbSupported = await TransportWebUSB.isSupported() &&
-            platform.os!.family !== "Windows" &&
-            platform.name !== "Opera";
-
-        if (shouldUseWebHid) {
-            this.transport = await TransportWebHID.create(
-                OPEN_TIMEOUT,
-                LISTENER_TIMEOUT
-            );
-        } else if (webusbSupported) {
-            this.transport = await TransportWebUSB.create(
+        if (this.isMobile(platform)) {
+            // @ts-ignore
+            const TransportWebBLE = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-web-ble"))[ "default" ];
+            this.transport = await TransportWebBLE.create(
                 OPEN_TIMEOUT,
                 LISTENER_TIMEOUT
             );
         } else {
-            const TransportU2F = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-u2f"))[ "default" ];
-            this.transport = await TransportU2F.create(
-                OPEN_TIMEOUT,
-                LISTENER_TIMEOUT
-            );
+            // @ts-ignore
+            const TransportWebHID = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-webhid"))[ "default" ];
+            const TransportWebUSB = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-webusb"))[ "default" ];
 
-            // U2F requires a pre-negotiated scramble key
-            // Don't steal this
-            this.transport.setScrambleKey("BOIL");
+            // WebHID should be what we're doing but it's still unstable on Chrome
+            const shouldUseWebHid = false;
+
+            // WebUSB is *supposed* to work on Windows (and Opera?), but alas
+            const webusbSupported = await TransportWebUSB.isSupported() &&
+            platform.os!.family !== "Windows" &&
+            platform.name !== "Opera";
+
+            if (shouldUseWebHid) {
+                this.transport = await TransportWebHID.create(
+                    OPEN_TIMEOUT,
+                    LISTENER_TIMEOUT
+                );
+            } else if (webusbSupported) {
+                this.transport = await TransportWebUSB.create(
+                    OPEN_TIMEOUT,
+                    LISTENER_TIMEOUT
+                );
+            } else {
+                const TransportU2F = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-u2f"))[ "default" ];
+                this.transport = await TransportU2F.create(
+                    OPEN_TIMEOUT,
+                    LISTENER_TIMEOUT
+                );
+
+                // U2F requires a pre-negotiated scramble key
+                // Don't steal this
+                this.transport.setScrambleKey("BOIL");
+            }
         }
 
         // Kill this on disconnect event
