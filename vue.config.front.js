@@ -25,7 +25,13 @@ const plugins = [
 
 if (process.env.NODE_ENV === "production") {
     plugins.push(
-        new WorkboxPlugin.GenerateSW()
+        new WorkboxPlugin.GenerateSW({
+            mode: "production",
+            cacheId: "mhw",
+            cleanupOutdatedCaches: true,
+            clientsClaim: true,
+            skipWaiting: true
+        })
     );
 }
 
