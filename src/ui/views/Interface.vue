@@ -6,7 +6,7 @@
                 <router-view />
             </div>
             <div class="interface-ads">
-                <AdBlockBuyHbar v-if="inMainNet" />
+                <AdBlockBuyHbar v-if="inMainNet && !inUS" />
                 <AdBlockTwitter />
             </div>
             <AccountCard
@@ -22,7 +22,7 @@
     </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent } from "@vue/composition-api";
+import { computed, defineComponent, ref, onMounted } from "@vue/composition-api";
 
 import InterfaceNavigation from "../components/InterfaceNavigation.vue";
 import NetworkCard from "../components/NetworkCard.vue";
@@ -31,6 +31,7 @@ import AccountCard from "../components/AccountCard.vue";
 import AdBlockTwitter from "../components/AdBlockTwitter.vue";
 import AdBlockBuyHbar from "../components/AdBlockBuyHbar.vue";
 import { getters } from "../store";
+import { inUnitedStates } from "../../service/location";
 
 export default defineComponent({
     components: {
@@ -45,12 +46,16 @@ export default defineComponent({
     setup() {
         // Not a good idea to show the "buy" button if this isn't mainnet
         const inMainNet = computed(() => getters.currentNetwork() != null ? getters.currentNetwork().name.includes("mainnet") : false);
-
         const account = computed(() => getters.currentUser() != null ?
             getters.currentUser().session.account :
             null);
 
-        return { account, inMainNet };
+        const inUS = ref(true);
+        onMounted(async() => {
+            inUS.value = await inUnitedStates() ?? true;
+        });
+
+        return { account, inMainNet, inUS };
     }
 });
 </script>

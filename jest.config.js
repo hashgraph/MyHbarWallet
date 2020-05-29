@@ -25,13 +25,11 @@ module.exports = {
     ],
     globals: {
         "ts-jest": { babelConfig: true },
-        // HACK: These are used to make the footer unit test pass due
-        // to the use of webpack DefinePlugin
         "VERSION": "1.1.1",
         "COMMIT_HASH": "placeholderhash",
         "HEDERA_NETWORK": "testnet",
         "MHW_ENV": "sandbox",
-        "CARBON_API_KEY": "89fa28dd-b26e-4af4-8313-1536054767d5",
+        "MOONPAY_API_KEY": "pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ",
         "IS_ELECTRON": false
     }
 };

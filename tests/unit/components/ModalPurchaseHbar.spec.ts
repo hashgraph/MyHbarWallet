@@ -37,9 +37,9 @@ describe("ModalPurchaseHbar.vue", (): void => {
                     <!---->
                     <!---->
                     <div class="main">
-                      <div class="content-container"><iframe title="Carbon Fiber" width="450" height="800" allow="fullscreen" src="https://buy.carbon.money/?tokens=hbar&amp;receiveAddressHbar=&amp;environment=sandbox&amp;apiKey=89fa28dd-b26e-4af4-8313-1536054767d5"></iframe>
+                      <div class="content-container"><iframe title="Moonpay" width="450" height="800" allow="accelerometer; autoplay; camera; gyroscope; payment" src="https://buy-staging.moonpay.io?apiKey=pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ&amp;currencyCode=hbar&amp;colorCode=%233BC1AA"></iframe>
                         <div class="ModalPurchaseHbar-link-container">
-                          Powered By <a href="https://www.carbon.money/" class="ModalPurchaseHbar-link"><img src="" class="logo"></a></div>
+                          Powered By <a href="https://www.moonpay.io/" class="ModalPurchaseHbar-link"><img src="" class="logo"></a></div>
                       </div>
                     </div>
                   </div>

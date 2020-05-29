@@ -5,20 +5,20 @@
         @change="onChange"
     >
         <iframe
-            title="Carbon Fiber"
+            title="Moonpay"
             width="450"
             height="800"
-            allow="fullscreen"
+            allow="accelerometer; autoplay; camera; gyroscope; payment"
             :src="url"
         />
         <div class="ModalPurchaseHbar-link-container">
             {{ $t('modalPurchaseHbar.poweredBy') }} <a
                 class="ModalPurchaseHbar-link"
-                href="https://www.carbon.money/"
+                href="https://www.moonpay.io/"
             >
                 <img
                     class="logo"
-                    :src="carbonLogo"
+                    :src="logo"
                 >
             </a>
         </div>
@@ -29,13 +29,12 @@
 import { defineComponent } from "@vue/composition-api";
 
 import { getters } from "../store";
-import carbonLogo from "../assets/carbon-logo.svg";
+import logo from "../assets/moonpay_logo.svg";
 
 import Modal from "./Modal.vue";
 
-// Both of these are defined in vue.config.js.
-declare const MHW_ENV: string;
-declare const CARBON_API_KEY: string;
+// Defined in vue.config.js.
+declare const MOONPAY_API_KEY: string;
 
 export default defineComponent({
     components: { Modal },
@@ -48,25 +47,25 @@ export default defineComponent({
         const user = getters.currentUser();
         const accId = user != null ? user.session.account : "";
         const accIdString = accId.toString();
+        console.log(accIdString);
 
-        let environment = "sandbox";
-        if (MHW_ENV != null) {
-            environment = MHW_ENV !== "production" ? "sandbox" : "production";
-        }
-
-        const url = `https://buy.carbon.money/?tokens=hbar&receiveAddressHbar=${accIdString}&environment=${environment}&apiKey=${CARBON_API_KEY}`;
+        // melbourne cup
+        const color = "%233BC1AA";
+        const url = `https://buy-staging.moonpay.io?apiKey=${MOONPAY_API_KEY}&currencyCode=HBAR&colorCode=${color}`;
 
         function onChange(isOpen: boolean): void {
             context.emit("change", isOpen);
         }
 
-        return { url, carbonLogo, onChange };
+        return { url, logo, onChange };
     }
 });
 </script>
 <style scoped lang="postcss">
 .ModalPurchaseHbar-link-container {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .ModalPurchaseHbar-link {
@@ -85,5 +84,6 @@ export default defineComponent({
 
 .logo {
     margin-inline-start: 5px;
+    height: 35px;
 }
 </style>

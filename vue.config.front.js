@@ -18,7 +18,7 @@ const plugins = [
         COMMIT_HASH: `"${hash.toString().trim()}"`,
         IS_ELECTRON: "false",
         HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
-        CARBON_API_KEY: `"${process.env.CARBON_API_KEY || "89fa28dd-b26e-4af4-8313-1536054767d5"}"`
+        MOONPAY_API_KEY: `"${process.env.MOONPAY_API_KEY || "pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ"}"`
     }),
     new StatsPlugin("stats.json")
 ];
