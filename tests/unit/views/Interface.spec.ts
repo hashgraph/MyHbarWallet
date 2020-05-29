@@ -29,7 +29,7 @@ describe("Interface.vue", (): void => {
                   <router-view-stub name="default"></router-view-stub>
                 </div>
                 <div class="interface-ads">
-                  <adblockbuyhbar-stub></adblockbuyhbar-stub>
+                  <!---->
                   <adblocktwitter-stub></adblocktwitter-stub>
                 </div>
                 <!---->
