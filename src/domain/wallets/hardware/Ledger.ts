@@ -125,8 +125,6 @@ export default class Ledger implements Wallet {
     }
 
     private async getTransport(): Promise<import("@ledgerhq/hw-transport").default> {
-        debugger;
-
         if (this.transport != null) {
             return this.transport;
         }

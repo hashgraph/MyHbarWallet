@@ -42,6 +42,6 @@ window.vueapp.$store = store;
 if ("serviceWorker" in navigator && !IS_ELECTRON) {
     // Use the window load event to keep the page load performant
     window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/service-worker.js");
+        navigator.serviceWorker.register("./service-worker.js");
     });
 }
