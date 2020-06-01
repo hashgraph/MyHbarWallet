@@ -40,7 +40,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, SetupContext, watch } from "@vue/composition-api";
 
-import { prefixPublic } from "../../service/hedera";
+import { prefixPrivate } from "../../service/hedera";
 
 import Warning from "./Warning.vue";
 import TextInput from "./TextInput.vue";
@@ -77,7 +77,7 @@ export default defineComponent({
             const { Ed25519PrivateKey, BadKeyError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
             try {
-                Ed25519PrivateKey.fromString(prefixPublic(props.state.rawPrivateKey));
+                Ed25519PrivateKey.fromString(prefixPrivate(props.state.rawPrivateKey));
                 return true;
             } catch (error) {
                 // The exception message changes depending on the input

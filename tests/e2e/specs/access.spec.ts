@@ -25,6 +25,7 @@ import {
     privateKeyContinueButton,
     mnemonicInput
 } from "../fixtures/access";
+import { Ed25519PrivateKey } from '@hashgraph/sdk';
 
 // Note: Netlify cannot currently parse JSON arrays (however they are specified)
 // Therefore, we use comma-separated strings for arrays
@@ -184,7 +185,7 @@ describe("Access My Account", () => {
         cy.url().should("include", "interface");
     });
 
-    it("Can access by Private Key", () => {
+    it("Can access by Private Key (Prefixed)", () => {
         const {
             KEY_ACCOUNT_ID,
             KEY_PRIVATE_KEY
@@ -199,6 +200,41 @@ describe("Access My Account", () => {
             .click()
             .get(privateKeyInput)
             .type(KEY_PRIVATE_KEY)
+            .then(() => {
+                cy.get(privateKeyContinueButton).click();
+            })
+            .get(networkSelector)
+            .click()
+            .then(() => {
+                cy.get(testnetNetworkOption).click();
+            })
+            .get(accountIdInput)
+            .type(KEY_ACCOUNT_ID)
+            .then(() => {
+                cy.get(accountIdContinueButton).click();
+            });
+        cy.wait(1000);
+        cy.url().should("include", "interface");
+    });
+
+    it("Can access by Private Key (Unprefixed)", () => {
+        const {
+            KEY_ACCOUNT_ID,
+            KEY_PRIVATE_KEY
+        } = Cypress.env();
+
+        const key = Ed25519PrivateKey.fromString(KEY_PRIVATE_KEY);
+        const KEY_PRIVATE_KEY_UNPREFIXED = key.toString(true);  // true = no prefix
+
+        cy
+            .get(softwareTile)
+            .click()
+            .get(privateKeyOption)
+            .click()
+            .get(accessContinueButton)
+            .click()
+            .get(privateKeyInput)
+            .type(KEY_PRIVATE_KEY_UNPREFIXED)
             .then(() => {
                 cy.get(privateKeyContinueButton).click();
             })
