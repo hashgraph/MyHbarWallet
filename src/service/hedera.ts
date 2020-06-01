@@ -104,7 +104,7 @@ function prefix(prefix: string, key: string): string {
     return `${prefix}${key}`;
 }
 
-const publicPrefix = "302a300506032b657003210013d392c9";
+const publicPrefix = "302a300506032b657003210048047433";
 export function prefixPublic(key: string): string {
     return prefix(publicPrefix, key);
 }
