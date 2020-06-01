@@ -1,6 +1,6 @@
 import { convert, Unit } from "../../src/service/units";
 
-describe("units", (): void => {
+describe("Units Service", (): void => {
     it("converts tinybar to hbar", (): void => {
         expect(convert("10", Unit.Tinybar, Unit.Hbar)).toBe("0.0000001");
         expect(convert("1000000", Unit.Tinybar, Unit.Hbar)).toBe("0.01");
