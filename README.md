@@ -38,8 +38,7 @@ Send us a Pull Request!
 
 You can run tests with `yarn test`
 
-We use Jest (rn) for Snapshots of Components and Nightwatch for E2E
-tests
+We use Jest for Snapshots/Unit Tests and Cypress for E2E
 
 The project is split into a configuration for web and a configuration
 for electron via `vue.config.front.js` and `vue.config.back.js`.
