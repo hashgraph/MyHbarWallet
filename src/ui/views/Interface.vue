@@ -6,7 +6,7 @@
                 <router-view />
             </div>
             <div class="interface-ads">
-                <AdBlockBuyHbar v-if="inMainNet && !inUS" />
+                <AdBlockBuyHbar v-if="false" />
                 <AdBlockTwitter />
             </div>
             <AccountCard
