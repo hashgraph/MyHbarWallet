@@ -32,15 +32,17 @@ const app = new Vue({
 
 app.$mount("#app");
 
-// For Cypress
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-window.vueapp = app;
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-window.vueapp.$store = store;
+if (MHW_ENV === "test") {
+    // For Cypress
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    window.vueapp = app;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    window.vueapp.$store = store;
+}
 
-if ("serviceWorker" in navigator && !IS_ELECTRON && MHW_ENV === "production") {
+if ("serviceWorker" in navigator && !IS_ELECTRON && MHW_ENV !== "development") {
     window.addEventListener("load", () => {
         navigator.serviceWorker.register("./service-worker.js");
     });
