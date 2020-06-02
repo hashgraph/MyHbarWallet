@@ -22,5 +22,5 @@ status = 200
 
 [[redirects]]
 from = "/*"
-to ="/404"
+to ="/"
 status = 200
