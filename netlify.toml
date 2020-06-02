@@ -14,3 +14,8 @@ HEDERA_NETWORK = "testnet"
 
 [[plugins]]
 package = "netlify-plugin-cypress"
+
+[[redirects]]
+from = "/*"
+to ="/"
+status = 200
