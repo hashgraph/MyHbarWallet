@@ -9,6 +9,7 @@ import { currentPrice } from "../../service/coingecko";
 import { constructSession } from "../../service/hedera";
 import i18n from "../../service/i18n";
 import router from "../router";
+import { inUnitedStates } from "../../service/location";
 
 import { State as AccountState } from "./modules/account";
 import { Alert, NewAlert, State as AlertsState } from "./modules/alerts";
@@ -37,7 +38,8 @@ export const store = Vue.observable({
                 isOpen: false,
                 hasBeen: false
             },
-            home: { hasBeen: false }
+            home: { hasBeen: false },
+            inUS: true
         } as UIState,
         account: {
             user: null,
@@ -94,6 +96,9 @@ export const getters = {
     },
     exchangeRate(): BigNumber | null {
         return store.state.account.exchangeRate;
+    },
+    inUS(): boolean {
+        return store.state.ui.inUS;
     }
 };
 
@@ -136,6 +141,9 @@ export const mutations = {
     },
     setExchangeRate(rate: BigNumber): void {
         store.state.account.exchangeRate = rate;
+    },
+    setInUS(inUS: boolean): void {
+        store.state.ui.inUS = inUS;
     },
     setCurrentNetwork(settings: NetworkSettings): void {
         const name = settings.name;
@@ -332,6 +340,11 @@ export const actions = {
         await this.refreshExchangeRate();
     },
 
+    async determineInUS(): Promise<void> {
+        const inUS = await inUnitedStates();
+        if (inUS != null) mutations.setInUS(inUS);
+    },
+
     async logIn(
         account: import("@hashgraph/sdk").AccountId,
         wallet: Wallet,
@@ -353,7 +366,8 @@ export const actions = {
             throw new Error("null session or wallet on login, could not set user");
         }
 
-        await this.refreshBalanceAndRate();
+        void this.refreshBalanceAndRate();
+        void this.determineInUS();
     },
 
     logOut(): void {

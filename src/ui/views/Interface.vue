@@ -31,7 +31,6 @@ import AccountCard from "../components/AccountCard.vue";
 import AdBlockTwitter from "../components/AdBlockTwitter.vue";
 import AdBlockBuyHbar from "../components/AdBlockBuyHbar.vue";
 import { getters } from "../store";
-import { inUnitedStates } from "../../service/location";
 
 export default defineComponent({
     components: {
@@ -52,7 +51,7 @@ export default defineComponent({
 
         const inUS = ref(true);
         onMounted(async() => {
-            inUS.value = await inUnitedStates() ?? true;
+            inUS.value = await getters.inUS() ?? true;
         });
 
         return { account, inMainNet, inUS };

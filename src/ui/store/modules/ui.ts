@@ -6,4 +6,5 @@ export interface State {
     home: {
         hasBeen: boolean;
     };
+    inUS: boolean;
 }
