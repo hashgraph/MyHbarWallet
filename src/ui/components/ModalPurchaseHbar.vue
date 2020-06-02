@@ -47,7 +47,6 @@ export default defineComponent({
         const user = getters.currentUser();
         const accId = user != null ? user.session.account : "";
         const accIdString = accId.toString();
-        console.log(accIdString);
 
         // melbourne cup
         const color = "%233BC1AA";

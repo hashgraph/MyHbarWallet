@@ -12,16 +12,5 @@ HEDERA_NETWORK = "mainnet"
 [context.deploy-preview.environment]
 HEDERA_NETWORK = "testnet"
 
-# Redirect all access to / as this is a Single Page Application
-[[redirects]]
-from = "/*"
-to = "/"
-status = 200
-
 [[plugins]]
 package = "netlify-plugin-cypress"
-
-# [plugins.inputs.preBuild]
-# start = "yarn serve:test"
-# wait-on = 'http://localhost:8080'
-# wait-on-timeout = '120' # seconds

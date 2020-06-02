@@ -12,6 +12,7 @@ import i18n from "./service/i18n";
 import * as store from "./ui/store";
 
 declare const IS_ELECTRON: string;
+declare const MHW_ENV: string;
 
 // Globally install the Vue3 Function API
 Vue.use(VueCompositionApi);
@@ -39,8 +40,7 @@ window.vueapp = app;
 // @ts-ignore
 window.vueapp.$store = store;
 
-if ("serviceWorker" in navigator && !IS_ELECTRON) {
-    // Use the window load event to keep the page load performant
+if ("serviceWorker" in navigator && !IS_ELECTRON && MHW_ENV === "production") {
     window.addEventListener("load", () => {
         navigator.serviceWorker.register("./service-worker.js");
     });
