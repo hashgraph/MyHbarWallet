@@ -29,6 +29,8 @@ import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import ModalExportGenerateKeystore, { State as ModalExportGenerateKeystoreState } from "./ModalExportGenerateKeystore.vue";
 import ModalExportDownloadKeystore, { State as ModalExportDownloadKeystoreState } from "./ModalExportDownloadKeystore.vue";
 
+declare const MHW_ENV: string;
+
 export interface State {
     password: string;
     modalExportGenerateKeystoreState: ModalExportGenerateKeystoreState;
@@ -86,19 +88,24 @@ export default defineComponent({
         }
 
         function handleDownloadKeystoreSubmit(): void {
+            context.root.$el.append(keystoreLink.value as Node);
+
             try {
-                context.root.$el.append(keystoreLink.value as Node);
-                keystoreLink.value!.click();
-                context.root.$el.removeChild(keystoreLink.value as HTMLAnchorElement);
+                // Note, want this to work in test env but not in cypress
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                if (window.Cypress == null) keystoreLink.value!.click();
             } catch (error) {
                 actions.alert({
-                    level: "error",
-                    message: context.root
-                        .$t("modalExportDownloadKeystore.couldNotDownload")
-                        .toString()
+                    message: context.root.$t("modalExportDownloadKeystore.couldNotDownload").toString(),
+                    level: "warn"
                 });
-                throw error;
             }
+
+            // Don't immediately remove, for testing
+            setTimeout(() => {
+                context.root.$el.removeChild(keystoreLink.value as HTMLAnchorElement);
+            }, 300);
 
             state.modalExportGenerateKeystoreState.isOpen = false;
             state.modalExportDownloadKeystoreState.isOpen = false;

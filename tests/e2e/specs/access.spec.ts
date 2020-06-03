@@ -38,7 +38,7 @@ describe("Access My Account", () => {
         cy.url().should("include", "access-my-account");
     });
 
-    it("Can access by Keystore", () => {
+    it("can access by Keystore", () => {
         const {
             KEYSTORE_ACCOUNT_ID,
             KEYSTORE_PASSWORD
@@ -69,7 +69,7 @@ describe("Access My Account", () => {
         cy.url().should("include", "interface");
     });
 
-    it("Can access by Mnemonic Phrase (24 Words)", () => {
+    it("can access by Mnemonic Phrase (24 Words)", () => {
         const {
             MNEMONIC_ACCOUNT_ID,
             MNEMONIC_PHRASE
@@ -105,7 +105,7 @@ describe("Access My Account", () => {
         cy.url().should("include", "interface");
     });
 
-    it("Can access by Mnemonic Phrase (22 Words)", () => {
+    it("can access by Mnemonic Phrase (22 Words)", () => {
         const {
             MNEMONICL_ACCOUNT_ID,
             MNEMONICL_PHRASE
@@ -143,7 +143,7 @@ describe("Access My Account", () => {
         cy.url().should("include", "interface");
     });
 
-    it("Can access by Mnemonic Phrase with Password", () => {
+    it("can access by Mnemonic Phrase with Password", () => {
         const {
             MNEMONICP_ACCOUNT_ID,
             MNEMONICP_PHRASE,
@@ -185,7 +185,7 @@ describe("Access My Account", () => {
         cy.url().should("include", "interface");
     });
 
-    it("Can access by Private Key (Prefixed)", () => {
+    it("can access by Private Key (Prefixed)", () => {
         const {
             KEY_ACCOUNT_ID,
             KEY_PRIVATE_KEY
@@ -217,7 +217,7 @@ describe("Access My Account", () => {
         cy.url().should("include", "interface");
     });
 
-    it("Can access by Private Key (Unprefixed)", () => {
+    it("can access by Private Key (Unprefixed)", () => {
         const {
             KEY_ACCOUNT_ID,
             KEY_PRIVATE_KEY

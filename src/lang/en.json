@@ -75,6 +75,7 @@
     "convertUnits.ourHelpfulConversionTool": "Our helpful conversion tool and hbar unit reference allow you to calculate your total transaction cost.",
     "convertUnits.title": "Convert Units",
     "createAccount.alreadyHaveOne": "Already Have One?",
+    "createAccount.noKeystore": "No Keystore Generated, Refresh and try again.",
     "createAccount.unableToDownload": "Unable to Download",
     "customerSupport.customerSupport": "Customer Support",
     "downloadFile.download": "Download File",

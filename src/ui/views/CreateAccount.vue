@@ -75,6 +75,8 @@ import { actions, getters, mutations } from "../store";
 import { CreateAccountDTO } from "../store/modules/account";
 import { NetworkSettings, NetworkName } from "../../domain/network";
 
+declare const MHW_ENV: string;
+
 interface State {
     loginMethod: LoginMethod | null;
     wallet: Wallet | null;
@@ -243,15 +245,23 @@ export default defineComponent({
 
         function handleDownloadKeystoreSubmit(): void {
             context.root.$el.append(keystoreFile.value as Node);
-            // eslint-disable-next-line no-process-env, no-undef
-            if (keystoreFile.value == null || state.privateKey == null || process.env.NODE_ENV === "test") {
-                // Download Skipped
-            } else {
-                keystoreFile.value.click();
-                context.root.$el.removeChild(keystoreFile.value as HTMLAnchorElement);
+
+            try {
+                // Note, want this to work in test env but not in cypress
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                if (window.Cypress == null) keystoreFile.value!.click();
+            } catch (error) {
+                actions.alert({
+                    message: context.root.$t("createAccount.noKeystore").toString(),
+                    level: "warn"
+                });
             }
 
-            // Don't remove keystore element (needed in test, cleaned up when you leave page)
+            // Don't immediately remove, for testing
+            setTimeout(() => {
+                context.root.$el.removeChild(keystoreFile.value as HTMLAnchorElement);
+            }, 300);
         }
 
         function handleDownloadKeystoreContinue(): void {

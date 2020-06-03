@@ -7,38 +7,38 @@
 describe("Static", () => {
     beforeEach(() => cy.viewport("macbook-13"));
 
-    it("Can visit Home", () => {
+    it("can visit Home", () => {
         cy.visit("/");
     });
 
-    it("Can visit About", () => {
+    it("can visit About", () => {
         cy.visit("/#about");
     });
 
-    it("Can visit FAQs", () => {
+    it("can visit FAQs", () => {
         cy.visit("/#faqs");
     });
 
     // Currently, netlify-plugin-cypress does not support redirects of any kind
     // So, navigating to pages other than / will not work
 
-    // it("Can visit Terms & Conditions", () => {
+    // it("can visit Terms & Conditions", () => {
     //     cy.visit("/terms-and-conditions");
     // });
 
-    // it("Can visit Privacy Policy", () => {
+    // it("can visit Privacy Policy", () => {
     //     cy.visit("/privacy-policy");
     // });
 
-    // it("Can visit Hardware Wallet Affiliates", () => {
+    // it("can visit Hardware Wallet Affiliates", () => {
     //     cy.visit("/hardware-wallet-affiliates");
     // });
 
-    // it("Can visit Convert Units", () => {
+    // it("can visit Convert Units", () => {
     //     cy.visit("/convert-units");
     // });
 
-    it("Can Convert Units", () => {
+    it("can Convert Units", () => {
         const unitsButton = ":nth-child(1) > :nth-child(2) > .link";
         const leftSelect = ".block-left > .select-block > .select > .select-value-container";
         const hbarOption = ".block-left > .select-block > .select > .select-menu > :nth-child(4)";
@@ -86,7 +86,7 @@ describe("Static", () => {
             });
     });
 
-    it("Can navigate to Privacy Policy from Home", () => {
+    it("can navigate to Privacy Policy from Home", () => {
         cy.visit("/")
             .get("[href='/privacy-policy']")
             .click()
@@ -95,7 +95,7 @@ describe("Static", () => {
             });
     });
 
-    it("Can navigate to Terms & Conditions from Home", () => {
+    it("can navigate to Terms & Conditions from Home", () => {
         cy.visit("/")
             .get("[href='/terms-and-conditions']")
             .click()
@@ -104,7 +104,7 @@ describe("Static", () => {
             });
     });
 
-    it("Can navigate to Access My Account from Home", () => {
+    it("can navigate to Access My Account from Home", () => {
         cy.visit("/")
             .get(".tile-grid > [href='/access-my-account']")
             .click()
@@ -113,7 +113,7 @@ describe("Static", () => {
             });
     });
 
-    it("Can navigate to Create Account from Home", () => {
+    it("can navigate to Create Account from Home", () => {
         cy.visit("/")
             .get(".tile-grid > [href='/create-account']")
             .click()
@@ -122,7 +122,7 @@ describe("Static", () => {
             });
     });
 
-    it("Can request Customer Service", () => {
+    it("can request Customer Service", () => {
         cy.visit("/");
 
         cy.window().then((win) => {

@@ -18,7 +18,7 @@ describe("Create An Account", () => {
 
     const { KEYSTORE_PASSWORD, MNEMONICP_PASSWORD } = Cypress.env();
 
-    it("Can create an account With Keystore File", () => {
+    it("can create an account With Keystore File", () => {
         cy.get(".tile-grid > :nth-child(2)")
             .click()
             .wait(1000)
@@ -73,7 +73,7 @@ describe("Create An Account", () => {
         });
     });
 
-    it("Can create an account With Mnemonic Phrase, without password", () => {
+    it("can create an account With Mnemonic Phrase, without password", () => {
         const mnemonicPhraseList: string[] = [];
         cy.get(".tile-grid > :nth-child(2)")
             .click()
@@ -106,7 +106,7 @@ describe("Create An Account", () => {
             .should("be.disabled");
     });
 
-    it("Can create an account with Mnemonic Phrase, with password", () => {
+    it("can create an account with Mnemonic Phrase, with password", () => {
         const mnemonicPhraseList: string[] = [];
         cy.get(".tile-grid > :nth-child(2)")
             .click()

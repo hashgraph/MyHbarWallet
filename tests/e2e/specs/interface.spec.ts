@@ -2,6 +2,8 @@
 // eslint-disable-next-line spaced-comment
 /// <reference types="cypress" />
 
+import { Ed25519PrivateKey } from "@hashgraph/sdk";
+
 describe("Interface", () => {
     const menuButton = ".interface-form-title-container > button[type=submit]";
     const filesHeader = ":nth-child(2) > .nav-section-header > .nav-title";
@@ -15,7 +17,7 @@ describe("Interface", () => {
         cy.visit("/").wait(1000).login().wait(100)
     });
 
-    it("Can navigate to create account through the menus, and use it", () => {
+    it("can navigate to create account through the menus, and use it", () => {
         cy.get(menuButton)
             .click().wait(1000)
             .get("a[href='/interface/create-account']")
@@ -43,7 +45,7 @@ describe("Interface", () => {
             .click();
     });
 
-    it("Can navigate to upload file through the menus, and use it", () => {
+    it("can navigate to upload file through the menus, and use it", () => {
         cy.get(menuButton)
             .click().wait(100)
             .get(filesTab)
@@ -70,7 +72,7 @@ describe("Interface", () => {
             .click();
     });
 
-    it("Can navigate to download file through the menus, and use it", () => {
+    it("can navigate to download file through the menus, and use it", () => {
         cy.get(menuButton)
             .click()
             .get(filesHeader)
@@ -114,7 +116,7 @@ describe("Interface", () => {
             .click();
     });
 
-    it("Can navigate to transfer through the menus, and use it", () => {
+    it("can navigate to transfer through the menus, and use it", () => {
         cy.get(menuButton)
             .click()
             .get(filesHeader)
@@ -146,5 +148,67 @@ describe("Interface", () => {
             .get("div.main.garlands > div.content-container > div.container > div.title")
             .contains(" Success ")
             .should("be.visible");
+    });
+
+    it("can export a Keystore", () => {
+        const firstInput = ".password-with-confirm > :nth-child(1) > .label-container > .input-container > .input-wrapper > .flex-container > .text-flex-item > input";
+        const secondInput = ".password-with-confirm > :nth-child(2) > .label-container > .input-container > .input-wrapper > .flex-container > .text-flex-item > input";
+        const password = "horse are starting to take action...";
+
+        cy
+            .get(".export-keystore-icon")
+            .click()
+            .get(firstInput)
+            .type(password)
+            .get(secondInput)
+            .type(password)
+            .get(".btn-container > .btn")
+            .click()
+            .get(".download")
+            .click();
+        
+        cy.get("a[download]").then((anchor) =>
+            new Cypress.Promise((resolve) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", anchor.prop("href"), true);
+                xhr.responseType = "blob";
+
+                xhr.addEventListener("load", () => {
+                    if (xhr.status === 200) {
+                        const blob = xhr.response;
+                        const reader = new FileReader();
+                        reader.addEventListener("load", () => {
+                            resolve(reader.result);
+                        });
+                        reader.readAsArrayBuffer(blob);
+                    }
+                });
+                xhr.send();
+            })
+        ).then(async(key) => {
+            try {
+                Ed25519PrivateKey.fromKeystore(
+                    key as Uint8Array,
+                    password
+                );
+                assert(true, "Successfully downloaded Keystore and checked Private key from Keystore");
+            } catch {
+                assert(false, "Unable to download Keystore and generate Private Key");
+            }
+        });
+    });
+
+    it("can log out", () => {
+        cy
+            .get(".bar-3")
+            .click()
+            .get(".logout-container > .logout")
+            .click()
+            .get(".button-logout")
+            .click()
+            .wait(100)
+            .then(() => {
+                cy.url().should("be", "/");
+            });
     });
 });

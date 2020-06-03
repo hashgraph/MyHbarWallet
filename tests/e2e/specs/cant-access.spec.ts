@@ -39,7 +39,7 @@ describe("Access Genesis Account", () => {
         cy.url().should("include", "access-my-account");
     });
 
-    it("Can't access by Keystore", () => {
+    it("can't access by Keystore", () => {
         const { KEYSTORE_PASSWORD } = Cypress.env();
 
         cy
@@ -68,7 +68,7 @@ describe("Access Genesis Account", () => {
         cy.url().should("include", "access-my-account");
     });
 
-    it("Can't access by Mnemonic Phrase (24 Words)", () => {
+    it("can't access by Mnemonic Phrase (24 Words)", () => {
         const { MNEMONIC_PHRASE } = Cypress.env();
 
         const phrase = MNEMONIC_PHRASE.split(",");
@@ -102,7 +102,7 @@ describe("Access Genesis Account", () => {
         cy.url().should("include", "access-my-account");
     });
 
-    it("Can't access by Mnemonic Phrase (22 Words)", () => {
+    it("can't access by Mnemonic Phrase (22 Words)", () => {
         const { MNEMONICL_PHRASE } = Cypress.env();
 
         const phrase = MNEMONICL_PHRASE.split(",");
@@ -138,7 +138,7 @@ describe("Access Genesis Account", () => {
         cy.url().should("include", "access-my-account");
     });
 
-    it("Can't access by Mnemonic Phrase with Password", () => {
+    it("can't access by Mnemonic Phrase with Password", () => {
         const {
             MNEMONICP_PHRASE,
             MNEMONICP_PASSWORD
@@ -180,7 +180,7 @@ describe("Access Genesis Account", () => {
         cy.url().should("include", "access-my-account");
     });
 
-    it("Can't access by Private Key", () => {
+    it("can't access by Private Key", () => {
         const { KEY_PRIVATE_KEY } = Cypress.env();
 
         cy
