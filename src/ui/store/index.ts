@@ -240,11 +240,14 @@ export const actions = {
             console.error(payload.error);
         }
 
-        // see: https://github.com/LedgerHQ/ledgerjs/blob/master/packages/errors/src/index.js#L196-L227
+        // @see https://ledgerhq.github.io/btchip-doc/bitcoin-technical.html#_status_words
+        // @see https://github.com/LedgerHQ/ledgerjs/blob/master/packages/errors/src/index.ts#L241-L273
         let message = "";
         let severity = "error";
 
         const { StatusCodes } = await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport");
+
+        console.log(StatusCodes);
 
         if (payload.error.name != null && payload.error.name === "TransportOpenUserCancelled") {
             message = i18n.t("common.error.noDeviceSelected").toString();
