@@ -104,7 +104,8 @@ function prefix(prefix: string, key: string): string {
     return `${prefix}${key}`;
 }
 
-const publicPrefix = "302a300506032b657003210048047433";
+// https://github.com/hashgraph/hedera-sdk-js/blob/master/src/crypto/util.ts#L7-L8
+const publicPrefix = "302a300506032b6570032100";
 export function prefixPublic(key: string): string {
     return prefix(publicPrefix, key);
 }
