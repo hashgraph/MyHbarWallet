@@ -31,7 +31,7 @@ import { Ed25519PrivateKey } from '@hashgraph/sdk';
 // Therefore, we use comma-separated strings for arrays
 
 describe("Access My Account", () => {
-    
+
     beforeEach(() => {
         cy.viewport("ipad-2");
         cy.visit("/").get(".tile-grid > [href='/access-my-account']").click();
@@ -235,6 +235,42 @@ describe("Access My Account", () => {
             .click()
             .get(privateKeyInput)
             .type(KEY_PRIVATE_KEY_UNPREFIXED)
+            .then(() => {
+                cy.get(privateKeyContinueButton).click();
+            })
+            .get(networkSelector)
+            .click()
+            .then(() => {
+                cy.get(testnetNetworkOption).click();
+            })
+            .get(accountIdInput)
+            .type(KEY_ACCOUNT_ID)
+            .then(() => {
+                cy.get(accountIdContinueButton).click();
+            });
+        cy.wait(1000);
+        cy.url().should("include", "interface");
+    });
+
+    it("can access by Private Key (Combined)", () => {
+        const {
+            KEY_ACCOUNT_ID,
+            KEY_PRIVATE_KEY
+        } = Cypress.env();
+
+        const key = Ed25519PrivateKey.fromString(KEY_PRIVATE_KEY);
+        const publicKeyString = key.publicKey.toString(true);
+        const KEY_PRIVATE_KEY_COMBINED = `${key.toString(true)}${publicKeyString}`;  // true = no prefix
+
+        cy
+            .get(softwareTile)
+            .click()
+            .get(privateKeyOption)
+            .click()
+            .get(accessContinueButton)
+            .click()
+            .get(privateKeyInput)
+            .type(KEY_PRIVATE_KEY_COMBINED)
             .then(() => {
                 cy.get(privateKeyContinueButton).click();
             })
