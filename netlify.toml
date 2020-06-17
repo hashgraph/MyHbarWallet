@@ -1,6 +1,7 @@
 [build.environment]
 CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
 TERM = "xterm"
+NODE_ENV = "production"
 CI = "1"
 DEBUG = "netlify-plugin-cypress,netlify-plugin-cypress:verbose"
 
@@ -16,11 +17,6 @@ HEDERA_NETWORK = "testnet"
 package = "netlify-plugin-cypress"
 
 [[redirects]]
-from = "/service-worker.js"
-to = "/service-worker.js"
-status = 200
-
-[[redirects]]
 from = "/*"
-to ="/"
+to = "/index.html"
 status = 200
