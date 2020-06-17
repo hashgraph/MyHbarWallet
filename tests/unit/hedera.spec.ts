@@ -18,7 +18,7 @@ const PRIVATE_KEY_UNPREFIXED =
 const PUBLIC_KEY =
     "302a300506032b6570032100480474335c38c27bfde1f0c2010d3db95eeb74a1f8ac65212f7824ce1ab84eca";
 const PUBLIC_KEY_UNPREFIXED =
-    "5c38c27bfde1f0c2010d3db95eeb74a1f8ac65212f7824ce1ab84eca";
+    "480474335c38c27bfde1f0c2010d3db95eeb74a1f8ac65212f7824ce1ab84eca";
 
 describe("Hedera Service", () => {
     it("can construct a client", async () => {
@@ -303,6 +303,7 @@ describe("Hedera Service", () => {
     it("can prefix a public key (without existing prefix)", () => {
         const key = Ed25519PrivateKey.fromString(PRIVATE_KEY);
         const publicKey = key.publicKey;
+
         expect(publicKey.toString()).toStrictEqual(
             prefixPublic(PUBLIC_KEY_UNPREFIXED)
         );
