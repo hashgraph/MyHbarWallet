@@ -1,6 +1,6 @@
 <div align="center">
    <h1>
-       <img src="public/android-chrome-192x192.png" alt="logo" />
+       <img src="src/ui/assets/myhbarwallet-logo.svg" alt="logo" />
    </h1>
 </div>
 
