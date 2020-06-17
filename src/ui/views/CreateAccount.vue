@@ -75,8 +75,6 @@ import { actions, getters, mutations } from "../store";
 import { CreateAccountDTO } from "../store/modules/account";
 import { NetworkSettings, NetworkName } from "../../domain/network";
 
-declare const MHW_ENV: string;
-
 interface State {
     loginMethod: LoginMethod | null;
     wallet: Wallet | null;
