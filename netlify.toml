@@ -1,7 +1,6 @@
 [build.environment]
 CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
 TERM = "xterm"
-NODE_ENV = "production"
 CI = "1"
 DEBUG = "netlify-plugin-cypress,netlify-plugin-cypress:verbose"
 
