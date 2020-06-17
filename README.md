@@ -1,15 +1,7 @@
 <div align="center">
    <h1>
-       <img src="https://myhbarwallet.com/img/myhbarwallet-logo.c74a7d51.svg" alt="logo" />
+       <img src="public/android-chrome-192x192.png" alt="logo" />
    </h1>
-</div>
-
-<div align="center">
-  <!-- Netlify Status -->
-  <a href="https://app.netlify.com/sites/myhbarwallet/deploys">
-    <img src="https://img.shields.io/netlify/c533cd8a-a127-48d5-a123-292202cab01c?style=flat-square"
-    alt="Netlify Status" />
-  </a>
 </div>
 
 <br>
