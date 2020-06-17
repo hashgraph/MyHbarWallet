@@ -1,8 +1,6 @@
 import { Ed25519PrivateKey, AccountId } from "@hashgraph/sdk";
 
 import {
-    prefixPrivate,
-    prefixPublic,
     constructClient,
     testClient,
     constructSession
@@ -13,19 +11,13 @@ import { availableNetworks } from "../../src/domain/network";
 
 const PRIVATE_KEY =
     "302e020100300506032b6570042204207f7ac6c8025a15ff1e07ef57c7295601379a4e9a526560790ae85252393868f0";
-const PRIVATE_KEY_UNPREFIXED =
-    "7f7ac6c8025a15ff1e07ef57c7295601379a4e9a526560790ae85252393868f0";
-const PUBLIC_KEY =
-    "302a300506032b6570032100480474335c38c27bfde1f0c2010d3db95eeb74a1f8ac65212f7824ce1ab84eca";
-const PUBLIC_KEY_UNPREFIXED =
-    "480474335c38c27bfde1f0c2010d3db95eeb74a1f8ac65212f7824ce1ab84eca";
 
 describe("Hedera Service", () => {
-    it("can construct a client", async () => {
+    it("can construct a client", async() => {
         const account = AccountId.fromString("0.0.21883");
         const privateKey = Ed25519PrivateKey.fromString(PRIVATE_KEY);
         const wallet = new SoftwareWallet(LoginMethod.PrivateKey, privateKey);
-        const networkSettings = availableNetworks["network.testnet"];
+        const networkSettings = availableNetworks[ "network.testnet" ];
         const client = await constructClient(account, wallet, networkSettings);
         expect(client).toMatchInlineSnapshot(`
             Client {
@@ -141,21 +133,21 @@ describe("Hedera Service", () => {
         `);
     });
 
-    it("can test a client", async () => {
+    it("can test a client", async() => {
         const account = AccountId.fromString("0.0.21883");
         const privateKey = Ed25519PrivateKey.fromString(PRIVATE_KEY);
         const wallet = new SoftwareWallet(LoginMethod.PrivateKey, privateKey);
-        const networkSettings = availableNetworks["network.testnet"];
+        const networkSettings = availableNetworks[ "network.testnet" ];
         const client = await constructClient(account, wallet, networkSettings);
         const result = await testClient(account, client!);
         expect(result).toBe(true);
     });
 
-    it("can construct a session", async () => {
+    it("can construct a session", async() => {
         const account = AccountId.fromString("0.0.21883");
         const privateKey = Ed25519PrivateKey.fromString(PRIVATE_KEY);
         const wallet = new SoftwareWallet(LoginMethod.PrivateKey, privateKey);
-        const networkSettings = availableNetworks["network.testnet"];
+        const networkSettings = availableNetworks[ "network.testnet" ];
         const session = await constructSession(
             account,
             wallet,
@@ -280,32 +272,5 @@ describe("Hedera Service", () => {
               },
             }
         `);
-    });
-
-    it("can prefix a private key (with existing prefix)", () => {
-        const key = Ed25519PrivateKey.fromString(PRIVATE_KEY);
-        expect(key.toString()).toStrictEqual(prefixPrivate(PRIVATE_KEY));
-    });
-
-    it("can prefix a private key (without existing prefix)", () => {
-        const key = Ed25519PrivateKey.fromString(PRIVATE_KEY);
-        expect(key.toString()).toStrictEqual(
-            prefixPrivate(PRIVATE_KEY_UNPREFIXED)
-        );
-    });
-
-    it("can prefix a public key (with existing prefix)", () => {
-        const key = Ed25519PrivateKey.fromString(PRIVATE_KEY);
-        const publicKey = key.publicKey;
-        expect(publicKey.toString()).toStrictEqual(prefixPublic(PUBLIC_KEY));
-    });
-
-    it("can prefix a public key (without existing prefix)", () => {
-        const key = Ed25519PrivateKey.fromString(PRIVATE_KEY);
-        const publicKey = key.publicKey;
-
-        expect(publicKey.toString()).toStrictEqual(
-            prefixPublic(PUBLIC_KEY_UNPREFIXED)
-        );
     });
 });

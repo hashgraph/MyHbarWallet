@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, Ref } from "@vue/composition-api";
+import { computed, defineComponent, reactive, ref, Ref, onUnmounted } from "@vue/composition-api";
 import { BigNumber } from "bignumber.js";
 import * as fileType from "file-type";
 import { Vue } from "vue/types/vue";
@@ -202,9 +202,7 @@ export default defineComponent({
                 }_${state.fileId.file}${type ? `.${type.ext}` : ""}`;
                 context.root.$el.append(fileLink.value as Node);
                 // eslint-disable-next-line no-process-env, no-undef
-                if (process.env.NODE_ENV === "test") return; // leave the file link for inspection in test
                 fileLink.value.click();
-                context.root.$el.removeChild(fileLink.value as HTMLAnchorElement);
                 await actions.refreshBalanceAndRate();
             } catch (error) {
                 actions.alert({
@@ -213,6 +211,10 @@ export default defineComponent({
                 });
             }
         }
+
+        onUnmounted(() => {
+            context.root.$el.removeChild(fileLink.value as HTMLAnchorElement);
+        });
 
         function handleDownloadFinish(): void {
             state.modalFeeSummaryState.isBusy = false;

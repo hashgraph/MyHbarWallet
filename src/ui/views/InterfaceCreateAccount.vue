@@ -74,7 +74,6 @@ import { actions, getters } from "../store";
 import { formatHbar } from "../../service/format";
 import { getValueOfUnit, Unit } from "../../service/units";
 import { writeToClipboard } from "../../service/clipboard";
-import { prefixPublic } from "../../service/hedera";
 
 const estimatedFeeHbar = new BigNumber(0.5);
 const estimatedFeeTinybar = estimatedFeeHbar.multipliedBy(getValueOfUnit(Unit.Hbar));
@@ -98,7 +97,7 @@ async function isPublicKeyValid(key: string, retry: boolean | undefined): Promis
         return true;
     } catch (error) {
         if (error instanceof BadKeyError) {
-            if (retry) return isPublicKeyValid(prefixPublic(key), false);
+            if (retry) return isPublicKeyValid(key, false);
             // The exception message changes depending on the input
             return false;
         }

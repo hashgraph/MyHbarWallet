@@ -29,8 +29,6 @@ import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import ModalExportGenerateKeystore, { State as ModalExportGenerateKeystoreState } from "./ModalExportGenerateKeystore.vue";
 import ModalExportDownloadKeystore, { State as ModalExportDownloadKeystoreState } from "./ModalExportDownloadKeystore.vue";
 
-declare const MHW_ENV: string;
-
 export interface State {
     password: string;
     modalExportGenerateKeystoreState: ModalExportGenerateKeystoreState;
