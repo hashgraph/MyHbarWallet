@@ -205,7 +205,7 @@ export default defineComponent({
         background-color: var(--color-white);
         border-radius: 0;
         height: 100vh;
-        padding-bottom: 50px;
+        padding-block-end: 50px;
     }
 
     @supports (-webkit-overflow-scrolling: touch) {

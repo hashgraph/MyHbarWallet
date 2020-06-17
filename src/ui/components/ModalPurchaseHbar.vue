@@ -62,9 +62,9 @@ export default defineComponent({
 </script>
 <style scoped lang="postcss">
 .ModalPurchaseHbar-link-container {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .ModalPurchaseHbar-link {
@@ -82,7 +82,7 @@ export default defineComponent({
 }
 
 .logo {
-    margin-inline-start: 5px;
     height: 35px;
+    margin-inline-start: 5px;
 }
 </style>
