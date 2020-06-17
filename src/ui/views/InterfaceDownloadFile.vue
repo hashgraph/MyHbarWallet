@@ -201,8 +201,11 @@ export default defineComponent({
                     state.fileId.realm
                 }_${state.fileId.file}${type ? `.${type.ext}` : ""}`;
                 context.root.$el.append(fileLink.value as Node);
-                // eslint-disable-next-line no-process-env, no-undef
-                fileLink.value.click();
+
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                if (window.Cypress == null) fileLink.value.click(); // :^) sorry
+
                 await actions.refreshBalanceAndRate();
             } catch (error) {
                 actions.alert({
