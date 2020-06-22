@@ -10,7 +10,7 @@ MyHbarWallet is a free, client-side interface helping you interact with Hederaâ„
 
 ## License
 
-Copyright 2019 Hedera Hashgraph LLC
+Copyright 2020 Hedera Hashgraph LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
