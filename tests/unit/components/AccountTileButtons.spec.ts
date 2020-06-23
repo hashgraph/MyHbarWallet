@@ -42,7 +42,7 @@ describe("AccountTileButtons.vue", (): void => {
                     Keystore file, Private key, Mnemonic phrase
                   </div>
                   <div class="note">
-                    Not Recommended
+
                   </div>
                 </div>
               </div>
