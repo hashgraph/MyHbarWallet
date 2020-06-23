@@ -12,7 +12,6 @@
                 $t('accountTileButtons.keystoreFilePrivateKeyMnemonicPhrase')
             "
             :image="softwareImage"
-            :note="$t('accountTileButtons.notRecommended')"
             @click="$emit('click', 'software')"
         />
     </div>
@@ -58,12 +57,5 @@ export default defineComponent({
     overflow: hidden;
     padding: 0;
     position: relative;
-}
-
-.account-tile-button:last-child {
-    &:hover,
-    &:focus {
-        background-color: var(--color-sunkist-coral);
-    }
 }
 </style>
