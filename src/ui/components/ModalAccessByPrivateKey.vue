@@ -5,14 +5,6 @@
         :title="$t('modalAccessByPrivateKey.title')"
         @change="handleModalChangeIsOpen"
     >
-        <template v-slot:banner>
-            <Warning
-                :title="$t('warning.title')"
-                :message="
-                    $t('warning.thisIsNotARecommendedWayToAccessYourWallet')
-                "
-            />
-        </template>
         <form
             class="modal-access-by-private-key"
             @submit.prevent="$emit('submit')"

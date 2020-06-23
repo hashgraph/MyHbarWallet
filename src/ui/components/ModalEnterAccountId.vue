@@ -5,14 +5,6 @@
         @change="handleModalChangeIsOpen"
         @close="emitClose"
     >
-        <template v-slot:banner>
-            <Notice
-                class="notice"
-                :symbol="mdiHelpCircleOutline"
-            >
-                {{ $t("modalEnterAccountId.hederaAccountIdsAre") }}
-            </Notice>
-        </template>
         <form @submit.stop.prevent="handleSubmit">
             <div
                 v-if="hasPublicKey"
