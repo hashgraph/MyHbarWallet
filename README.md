@@ -1,4 +1,4 @@
-<div align="center".
+<div align="center">
    <h1>
        <img src="src/ui/assets/myhbarwallet-logo.svg" alt="logo" />
    </h1>
