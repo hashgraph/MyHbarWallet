@@ -2,12 +2,14 @@
     <transition
         name="fade"
         @after-enter="showModal"
+        @after-leave="removeModalIsOpen"
     >
         <div
             v-if="isOpen"
             class="modal-background"
             role="dialog"
             aria-modal="true"
+            @click.stop
             @mousedown.self="handleClose"
         >
             <transition name="slidefade">
@@ -92,6 +94,12 @@ export default defineComponent({
 
         function showModal(): void {
             backgroundShown.value = true;
+            document.body.classList.toggle("modal-is-open", true);
+        }
+
+        function removeModalIsOpen(): void {
+            backgroundShown.value = false;
+            document.body.classList.toggle("modal-is-open", false);
         }
 
         function handleClose(): void {
@@ -119,8 +127,8 @@ export default defineComponent({
                 const hasOpened = isOpen && !prevIsOpen;
                 const hasClosed = !isOpen && prevIsOpen;
 
-                if (isOpen) {
-                    document.body.classList.toggle("modal-is-open", isOpen);
+                if (hasOpened) {
+                    document.body.classList.toggle("modal-is-open", true);
                 }
 
                 if (hasOpened) {
@@ -143,6 +151,7 @@ export default defineComponent({
             mdiClose,
             handleClose,
             handleWindowKeyDown,
+            removeModalIsOpen,
             props,
             handleXClose
         };
@@ -159,16 +168,12 @@ export default defineComponent({
     inset: 0;
     opacity: 1;
     overflow: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
     padding: 0 0 50px 0;
     pointer-events: all;
     position: fixed;
     width: 100vw;
     z-index: 2;
-
-    @supports (-webkit-overflow-scrolling: touch) {
-        background-color: var(--color-white);
-    }
 }
 
 .modal {
@@ -180,10 +185,8 @@ export default defineComponent({
     flex-direction: column;
     margin: auto;
     max-width: 530px;
-    overflow: visible;
-    overflow-y: visible;
     transform: none;
-    width: 100vw;
+    width: 100%;
     z-index: 3;
 
     & .crown {
@@ -202,15 +205,7 @@ export default defineComponent({
     }
 
     @media (max-width: 600px) {
-        background-color: var(--color-white);
         border-radius: 0;
-        height: 100vh;
-        padding-block-end: 50px;
-    }
-
-    @supports (-webkit-overflow-scrolling: touch) {
-        -webkit-overflow-scrolling: auto;
-        padding-block-end: 75px;
     }
 }
 
@@ -287,10 +282,6 @@ header {
         background-repeat: no-repeat;
         background-size: 100%;
     }
-
-    @media (max-width: 600px) {
-        height: 100%;
-    }
 }
 
 .close {
@@ -298,8 +289,6 @@ header {
 }
 
 .content-container {
-    height: 100%;
-    max-width: 100%;
     padding: 40px;
 
     @media (max-width: 600px) {

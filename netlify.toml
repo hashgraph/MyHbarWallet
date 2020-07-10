@@ -2,7 +2,6 @@
 CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
 TERM = "xterm"
 CI = "1"
-DEBUG = "netlify-plugin-cypress,netlify-plugin-cypress:verbose"
 
 # Set the HEDERA_NETWORK to mainnet for production
 [context.production.environment]
@@ -11,9 +10,6 @@ HEDERA_NETWORK = "mainnet"
 # Set the HEDERA_NETWORK to testnet for deployment previews on PRs
 [context.deploy-preview.environment]
 HEDERA_NETWORK = "testnet"
-
-[[plugins]]
-package = "netlify-plugin-cypress"
 
 [[redirects]]
 from = "/*"

@@ -4,7 +4,7 @@ const cypressTypeScriptPreprocessor = require("./cy-ts-preprocessor");
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, no-undef
 module.exports = (on, config) => {
     on("before:browser:launch", (browser, launchOptions) => {
-        if (browser.name === "chrome") {
+        if (browser.family === "chrome") {
             launchOptions.args.push("--disable-dev-shm-usage");
         }
 
@@ -12,6 +12,4 @@ module.exports = (on, config) => {
     });
 
     on("file:preprocessor", cypressTypeScriptPreprocessor);
-
-    return { ...config };
 };

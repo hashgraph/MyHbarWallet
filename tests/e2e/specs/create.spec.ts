@@ -145,6 +145,7 @@ describe("Create An Account", () => {
             .first()
             .type(MNEMONICP_PASSWORD)
             .get("div.btn-container >  button[type=submit]")
+            .scrollIntoView()
             .click()
             .wait(1000)
             .get("div.buttons > button:last-of-type")

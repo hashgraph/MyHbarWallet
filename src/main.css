@@ -57,18 +57,15 @@ body {
 
     /* For the Modal component */
     &.modal-is-open {
-        overflow: hidden;
-
-        @supports (-webkit-overflow-scrolling: touch) {
-            position: fixed;
-        }
+        height: 100vh;
+        overflow-y: hidden;
+        position: fixed;
     }
 
+    /* For Hamburger Menu */
     &.ham-menu-is-open {
-        overflow: hidden;
-
-        @supports (-webkit-overflow-scrolling: touch) {
-            position: fixed;
-        }
+        height: 100vh;
+        overflow-y: hidden;
+        position: fixed;
     }
 }
