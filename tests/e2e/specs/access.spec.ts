@@ -5,26 +5,27 @@
 /// <reference types="cypress" />
 
 import {
-    softwareTile,
-    keystoreOption,
-    hiddenFileInput,
-    keystorePasswordInput,
-    keystorePasswordBtn,
-    networkSelector,
-    testnetNetworkOption,
-    accountIdInput,
-    accountIdContinueButton,
-    mnemonicPhraseOption,
     accessContinueButton,
+    accountIdContinueButton,
+    accountIdInput,
+    hiddenFileInput,
+    keystoreOption,
+    keystorePasswordBtn,
+    keystorePasswordInput,
     mnemonicContinueButton,
-    mnemonicToggle,
-    mnemonicPasswordToggle,
+    mnemonicInput,
     mnemonicPasswordInput,
-    privateKeyOption,
-    privateKeyInput,
+    mnemonicPasswordToggle,
+    mnemonicPhraseOption,
+    mnemonicToggle,
+    networkSelector,
     privateKeyContinueButton,
-    mnemonicInput
+    privateKeyInput,
+    privateKeyOption,
+    softwareTile,
+    testnetNetworkOption
 } from "../fixtures/access";
+
 import { Ed25519PrivateKey } from '@hashgraph/sdk';
 
 // Note: Netlify cannot currently parse JSON arrays (however they are specified)
@@ -179,7 +180,7 @@ describe("Access My Account", () => {
             .get(accountIdInput)
             .type(MNEMONICP_ACCOUNT_ID)
             .then(() => {
-                cy.get(accountIdContinueButton).click();
+                cy.get(accountIdContinueButton).scrollIntoView().click();
             });
         cy.wait(1000);
         cy.url().should("include", "interface");
