@@ -1,6 +1,7 @@
 <template>
     <Modal
         :is-open="isOpen"
+        not-closable
         :title="$t('modalCreateByPhrase.title')"
         @change="this.$listeners.change"
     >

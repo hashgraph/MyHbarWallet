@@ -1,7 +1,7 @@
 <template>
     <Modal
         :title="$t('modalAccessByPhrase.title')"
-        :not-closable="state.isBusy"
+        not-closable
         :is-open="state.isOpen"
         @change="handleModalChangeIsOpen"
     >
