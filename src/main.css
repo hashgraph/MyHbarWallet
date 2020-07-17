@@ -60,6 +60,7 @@ body {
         height: 100vh;
         overflow-y: hidden;
         position: fixed;
+        width: 100vw;
     }
 
     /* For Hamburger Menu */
