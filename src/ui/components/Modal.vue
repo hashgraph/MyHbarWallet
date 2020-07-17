@@ -95,11 +95,17 @@ export default defineComponent({
         function showModal(): void {
             backgroundShown.value = true;
             document.body.classList.toggle("modal-is-open", true);
+            modalIds.push(id);
         }
 
         function removeModalIsOpen(): void {
             backgroundShown.value = false;
-            document.body.classList.toggle("modal-is-open", false);
+            modalIds.splice(modalIds.indexOf(id), 1);
+            context.emit("close");
+
+            if (modalIds.length === 0) {
+                document.body.classList.toggle("modal-is-open", false);
+            }
         }
 
         function handleClose(): void {
@@ -120,30 +126,6 @@ export default defineComponent({
         }
 
         window.addEventListener("keydown", handleWindowKeyDown);
-
-        watch(
-            () => props.isOpen,
-            (isOpen: boolean, prevIsOpen: boolean) => {
-                const hasOpened = isOpen && !prevIsOpen;
-                const hasClosed = !isOpen && prevIsOpen;
-
-                if (hasOpened) {
-                    document.body.classList.toggle("modal-is-open", true);
-                }
-
-                if (hasOpened) {
-                    modalIds.push(id);
-                } else if (hasClosed) {
-                    backgroundShown.value = false;
-                    modalIds.splice(modalIds.indexOf(id), 1);
-                    context.emit("close");
-                }
-
-                if (modalIds.length === 0) {
-                    document.body.classList.toggle("modal-is-open", false);
-                }
-            }
-        );
 
         return {
             backgroundShown,
