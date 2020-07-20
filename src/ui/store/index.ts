@@ -39,7 +39,8 @@ export const store = Vue.observable({
                 hasBeen: false
             },
             home: { hasBeen: false },
-            inUS: true
+            inUS: true,
+            modalIds: []
         } as UIState,
         account: {
             user: null,
@@ -51,6 +52,9 @@ export const store = Vue.observable({
 } as Index);
 
 export const getters = {
+    modalIds(): number[] {
+        return store.state.ui.modalIds;
+    },
     hasError(): boolean {
         return store.state.errors.queue.length > 0;
     },
@@ -104,6 +108,14 @@ export const getters = {
 
 export const mutations = {
     addAlert: (alert: Alert): number => store.state.alerts.queue.push(alert),
+    addModal: (id: number): number => store.state.ui.modalIds.push(id),
+    removeModal(id: number): void {
+        store.state.ui.modalIds.splice(store.state.ui.modalIds.indexOf(id), 1);
+    },
+    removeAllModals(): void {
+        store.state.ui.modalIds.length = 0;
+        document.body.classList.toggle("modal-is-open", false);
+    },
     removeAlert(id: number): void {
         for (let i = 0; i < store.state.alerts.queue.length; i++) {
             if (store.state.alerts.queue[ i ].id === id) {
@@ -120,8 +132,10 @@ export const mutations = {
     },
     navigateToInterface(): void {
         router.push({ name: "interface" }, () => mutations.setHasBeenToInterface(true));
+        mutations.removeAllModals();
     },
     navigateToHome(): void {
+        mutations.removeAllModals();
         router.push({ name: "home" });
     },
     setInterfaceMenuIsOpen(open: boolean): void {

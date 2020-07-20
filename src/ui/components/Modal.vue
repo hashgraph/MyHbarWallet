@@ -48,16 +48,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, SetupContext, watch, ref } from "@vue/composition-api";
+import { defineComponent, SetupContext, ref } from "@vue/composition-api";
 import { mdiClose } from "@mdi/js";
+
+import { getters, mutations } from "../store";
 
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
-const modalIds: number[] = [];
 let nextModalId = 0;
 
 function modalIsTop(id: number): boolean {
-    return modalIds[ modalIds.length - 1 ] === id;
+    const ids = getters.modalIds();
+    return ids[ ids.length - 1 ] === id;
 }
 
 // The isOpen property controls if the modal is open or not. It should be bound with
@@ -95,15 +97,15 @@ export default defineComponent({
         function showModal(): void {
             backgroundShown.value = true;
             document.body.classList.toggle("modal-is-open", true);
-            modalIds.push(id);
+            mutations.addModal(id);
         }
 
         function removeModalIsOpen(): void {
             backgroundShown.value = false;
-            modalIds.splice(modalIds.indexOf(id), 1);
+            mutations.removeModal(id);
             context.emit("close");
 
-            if (modalIds.length === 0) {
+            if (getters.modalIds().length === 0) {
                 document.body.classList.toggle("modal-is-open", false);
             }
         }
