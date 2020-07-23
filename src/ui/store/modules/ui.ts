@@ -7,4 +7,5 @@ export interface State {
         hasBeen: boolean;
     };
     inUS: boolean;
+    modalIds: number[];
 }
