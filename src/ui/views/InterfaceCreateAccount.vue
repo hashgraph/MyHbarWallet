@@ -39,15 +39,20 @@
             @action="handleModalSuccessAction"
             @dismiss="handleModalSuccessDismiss"
         >
-            <i18n path="modalSuccess.createdAccount">
-                <span
-                    ref="accountInput"
-                    :key="compKey"
-                >
-                    <strong>{{ state.account }}</strong>
-                </span>
-                <strong>{{ state.newBalance }}</strong>
-            </i18n>
+            <div class="success">
+                <i18n path="modalSuccess.txId">
+                    <strong>{{ state.transactionId }}</strong>
+                </i18n>
+                <i18n path="modalSuccess.createdAccount">
+                    <span
+                        ref="accountInput"
+                        :key="compKey"
+                    >
+                        <strong>{{ state.account }}</strong>
+                    </span>
+                    <strong>{{ state.newBalance }}</strong>
+                </i18n>
+            </div>
         </ModalSuccess>
 
         <ModalFeeSummary
@@ -85,6 +90,7 @@ interface State {
     keyError: string;
     newBalanceError: string;
     account: string;
+    transactionId: string;
     isPublicKeyValid: boolean;
     modalSummaryState: ModalSummaryState;
     modalSuccessState: ModalSuccessState;
@@ -123,6 +129,7 @@ export default defineComponent({
             keyError: "",
             newBalanceError: "",
             account: "",
+            transactionId: "",
             isPublicKeyValid: false,
             modalSummaryState: {
                 isOpen: false,
@@ -178,9 +185,8 @@ export default defineComponent({
                     transaction.setTransactionMemo(" "); // Hack to deal with broken Nano X paging macro
                 }
 
-                const accountIdIntermediate = (await (await transaction.execute(client))
-                    .getReceipt(client))
-                    .getAccountId();
+                const accountIdIntermediate = await (await transaction.execute(client))
+                    .getRecord(client);
 
                 // Handle undefined
                 if (accountIdIntermediate == null) {
@@ -191,12 +197,14 @@ export default defineComponent({
 
                 // state.accountIdIntermediate must be AccountID
                 // get shard, realm, state.account separately and construct a new object
-                state.account =
-                    `${accountIdIntermediate.shard
-                    }.${
-                        accountIdIntermediate.realm
-                    }.${
-                        accountIdIntermediate.account}`;
+                if (accountIdIntermediate.receipt != null) {
+                    const { seconds, nanos } = accountIdIntermediate.transactionId.validStart;
+                    const { shard, realm, account } = accountIdIntermediate.receipt.getAccountId();
+
+                    state.account = `${shard}.${realm}.${account}`;
+
+                    state.transactionId = `${state.account}@${seconds}.${nanos}`;
+                }
 
                 // If creating state.account succeeds then remove errors
                 state.newBalanceError = "";
@@ -314,3 +322,9 @@ export default defineComponent({
     }
 });
 </script>
+<style lang="postcss" scoped>
+.success > span:first-of-type {
+    display: block;
+    padding-block-end: 20px;
+}
+</style>

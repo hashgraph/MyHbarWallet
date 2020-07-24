@@ -23,7 +23,10 @@ describe("InterfaceSendTransfer.vue", (): void => {
               <idinput-stub error="" cancopy="true" label="To Account" show-validation=""></idinput-stub>
               <optionalmemofield-stub value=""></optionalmemofield-stub>
               <modalsuccess-stub state="[object Object]">
-                <i18n-stub tag="span" path="modalSuccess.transferred"><strong>0</strong> <strong></strong></i18n-stub>
+                <div class="success">
+                  <i18n-stub tag="span" path="modalSuccess.txId"><strong></strong></i18n-stub>
+                  <i18n-stub tag="span" path="modalSuccess.transferred"><strong>0</strong> <strong></strong></i18n-stub>
+                </div>
               </modalsuccess-stub>
               <modalfeesummary-stub state="[object Object]"></modalfeesummary-stub>
             </interfaceform-stub>

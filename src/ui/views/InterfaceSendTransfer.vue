@@ -37,10 +37,15 @@
             v-model="state.modalSuccessState"
             @dismiss="handleModalSuccessDismiss"
         >
-            <i18n path="modalSuccess.transferred">
-                <strong>{{ amount }}</strong>
-                <strong>{{ state.accountString }}</strong>
-            </i18n>
+            <div class="success">
+                <i18n path="modalSuccess.txId">
+                    <strong>{{ state.transactionId }}</strong>
+                </i18n>
+                <i18n path="modalSuccess.transferred">
+                    <strong>{{ amount }}</strong>
+                    <strong>{{ state.accountString }}</strong>
+                </i18n>
+            </div>
         </ModalSuccess>
 
         <ModalFeeSummary
@@ -76,6 +81,7 @@ interface State {
     idErrorMessage: string | null;
     amountErrorMessage: string | null;
     idValid: boolean;
+    transactionId: string;
     modalSummaryState: ModalSummaryState;
     modalSuccessState: ModalSuccessState;
 }
@@ -104,6 +110,7 @@ export default defineComponent({
             idErrorMessage: "",
             amountErrorMessage: "",
             idValid: false,
+            transactionId: "",
             modalSummaryState: {
                 isOpen: false,
                 isBusy: false,
@@ -291,7 +298,13 @@ export default defineComponent({
 
                 tx.setTransactionMemo(state.memo);
 
-                await (await tx.execute(client)).getReceipt(client);
+                const record = await (await tx.execute(client)).getRecord(client);
+
+                const { shard, realm, account } = record.transactionId.accountId;
+                const { seconds, nanos } = record.transactionId.validStart;
+
+                // build the transaction id from the data.
+                state.transactionId = `${shard}.${realm}.${account}@${seconds}.${nanos}`;
 
                 // Refresh Balance
                 await actions.refreshBalanceAndRate();
@@ -385,3 +398,9 @@ export default defineComponent({
     }
 });
 </script>
+<style lang="postcss" scoped>
+.success > span:first-of-type {
+    display: block;
+    padding-block-end: 20px;
+}
+</style>
