@@ -36,14 +36,19 @@
             @action="handleCopyFileID"
             @dismiss="handleUploadFinish"
         >
-            <i18n path="modalSuccess.uploadedFile">
-                <span
-                    ref="accountInput"
-                    :key="compKey"
-                >
-                    <strong>{{ fileIDString }}</strong>
-                </span>
-            </i18n>
+            <div class="success">
+                <i18n path="modalSuccess.txId">
+                    <strong>{{ state.transactionId }}</strong>
+                </i18n>
+                <i18n path="modalSuccess.uploadedFile">
+                    <span
+                        ref="accountInput"
+                        :key="compKey"
+                    >
+                        <strong>{{ fileIDString }}</strong>
+                    </span>
+                </i18n>
+            </div>
         </ModalSuccess>
     </InterfaceForm>
 </template>
@@ -91,6 +96,7 @@ export default defineComponent({
             isUploading: false,
             isBusy: false,
             buttonsDisabled: true,
+            transactionId: "",
             modalFeeSummaryState: {
                 isOpen: false,
                 isBusy: false,
@@ -219,7 +225,7 @@ export default defineComponent({
             state.modalFeeSummaryState.isBusy = true;
             const user = getters.currentUser();
 
-            const receipt: Ref<import("@hashgraph/sdk").TransactionReceipt | null> = ref(null);
+            const receipt: Ref<import("@hashgraph/sdk").TransactionRecord | null> = ref(null);
             const publicKey = await user.wallet.getPublicKey();
 
             if (!publicKey) {
@@ -240,11 +246,19 @@ export default defineComponent({
                     .addKey(Ed25519PublicKey.fromString(publicKey.toString())) // lol
                     .setMaxTransactionFee(520000000)
                     .execute(client))
-                    .getReceipt(client);
+                    .getRecord(client);
+
+                const { accountId, validStart } = receipt.value.transactionId;
+                const { shard, realm, account } = accountId;
+                const { seconds, nanos } = validStart;
+
+                state.transactionId = `${shard}.${realm}.${account}@${seconds}.${nanos}`;
 
                 state.uploadProgress.currentChunk += 1;
 
-                fileId = receipt.value.getFileId();
+                if (receipt.value.receipt != null) {
+                    fileId = receipt.value.receipt.getFileId();
+                }
             } catch (error) {
                 state.uploadProgress.wasSuccess = false;
                 state.uploadProgress.inProgress = false;
@@ -434,5 +448,10 @@ export default defineComponent({
 
 .upload-button {
     margin-inline-end: 20px;
+}
+
+.success > span:first-of-type {
+    display: block;
+    padding-block-end: 20px;
 }
 </style>

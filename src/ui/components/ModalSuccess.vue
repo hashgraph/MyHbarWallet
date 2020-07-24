@@ -128,7 +128,8 @@ export default defineComponent({
 
 .description {
     color: var(--color-china-blue);
-    margin-block-end: 50px;
+    margin-block-end: 30px;
+    text-align: center;
 }
 
 .button-container {

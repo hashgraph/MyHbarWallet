@@ -29,7 +29,10 @@ describe("InterfaceUploadFile.vue", (): void => {
               <modalfeesummary-stub state="[object Object]"></modalfeesummary-stub>
               <modaluploadprogress-stub state="[object Object]"></modaluploadprogress-stub>
               <modalsuccess-stub state="[object Object]">
-                <i18n-stub tag="span" path="modalSuccess.uploadedFile"><span><strong></strong></span></i18n-stub>
+                <div class="success">
+                  <i18n-stub tag="span" path="modalSuccess.txId"><strong></strong></i18n-stub>
+                  <i18n-stub tag="span" path="modalSuccess.uploadedFile"><span><strong></strong></span></i18n-stub>
+                </div>
               </modalsuccess-stub>
             </interfaceform-stub>
         `);
