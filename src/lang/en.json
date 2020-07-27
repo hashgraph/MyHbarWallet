@@ -284,6 +284,7 @@
     "network.invalidSettings": "Invalid network settings",
     "network.mainnet": "Hedera™ Hashgraph Main Network",
     "network.testnet": "Hedera™ Hashgraph Test Network",
+    "network.previewnet": "Hedera™ Hashgraph Preview Network",
     "networkCard.changeNetwork": "Change Network",
     "networkCard.network": "Network",
     "networkSelector.address": "Node Address",

@@ -81,6 +81,8 @@ export function untranslate(value: string): NetworkName {
             return NetworkName.MAINNET;
         case translate(NetworkName.TESTNET):
             return NetworkName.TESTNET;
+        case translate(NetworkName.PREVIEW):
+            return NetworkName.PREVIEW;
         case translate(NetworkName.CUSTOM):
             return NetworkName.CUSTOM;
     }
