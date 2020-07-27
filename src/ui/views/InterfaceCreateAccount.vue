@@ -199,11 +199,12 @@ export default defineComponent({
                 // get shard, realm, state.account separately and construct a new object
                 if (accountIdIntermediate.receipt != null) {
                     const { seconds, nanos } = accountIdIntermediate.transactionId.validStart;
-                    const { shard, realm, account } = accountIdIntermediate.receipt.getAccountId();
+                    const userAccount = accountIdIntermediate.transactionId.accountId;
+                    const createdAccount = accountIdIntermediate.receipt.getAccountId();
 
-                    state.account = `${shard}.${realm}.${account}`;
+                    state.account = `${createdAccount.shard}.${createdAccount.realm}.${createdAccount.account}`;
 
-                    state.transactionId = `${state.account}@${seconds}.${nanos}`;
+                    state.transactionId = `${userAccount.shard}.${userAccount.realm}.${userAccount.account}@${seconds}.${nanos}`;
                 }
 
                 // If creating state.account succeeds then remove errors
