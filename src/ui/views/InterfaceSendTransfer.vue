@@ -261,6 +261,53 @@ export default defineComponent({
             boundInput(event, value, state.amount);
         }
 
+        async function handleError(error: { status: { code: number }; name: string }): Promise<void> {
+            // eslint-disable-next-line require-atomic-updates
+            state.idErrorMessage = "";
+            // eslint-disable-next-line require-atomic-updates
+            state.amountErrorMessage = "";
+
+            const { HederaStatusError, Status } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+
+            if (error instanceof HederaStatusError) {
+                const errorMessage = (await actions.handleHederaError({
+                    error,
+                    showAlert: false
+                })).message;
+
+                // Small duplication of effort to assign errorMessage to correct TextInput
+                switch (error.status.code) {
+                    case Status.InvalidAccountId.code:
+                    case Status.AccountRepeatedInAccountAmounts.code:
+                        state.idErrorMessage = errorMessage;
+                        break;
+                    case Status.InsufficientAccountBalance.code:
+                        state.amountErrorMessage = errorMessage;
+                        break;
+                    default:
+                        if (errorMessage !== "") {
+                            actions.alert({
+                                message: errorMessage,
+                                level: "warn"
+                            });
+                        } else {
+                            throw error; // Unhandled Error Modal will open
+                        }
+                }
+            } else if (
+                error.name === "TransportStatusError" &&
+                    getters.currentUser().wallet.getLoginMethod() ===
+                        LoginMethod.Ledger
+            ) {
+                actions.handleLedgerError({
+                    error,
+                    showAlert: true
+                });
+            } else {
+                throw error;
+            }
+        }
+
         // eslint-disable-next-line sonarjs/cognitive-complexity
         async function handleSendTransfer(): Promise<void> {
             state.isBusy = true;
@@ -298,13 +345,16 @@ export default defineComponent({
 
                 tx.setTransactionMemo(state.memo);
 
-                const record = await (await tx.execute(client)).getRecord(client);
+                const transactionIntermediate = await tx.execute(client);
+                const receipt = await transactionIntermediate.getReceipt(client);
 
-                const { shard, realm, account } = record.transactionId.accountId;
-                const { seconds, nanos } = record.transactionId.validStart;
+                if (receipt != null) {
+                    const { shard, realm, account } = transactionIntermediate.accountId;
+                    const { seconds, nanos } = transactionIntermediate.validStart;
 
-                // build the transaction id from the data.
-                state.transactionId = `${shard}.${realm}.${account}@${seconds}.${nanos}`;
+                    // build the transaction id from the data.
+                    state.transactionId = `${shard}.${realm}.${account}@${seconds}.${nanos}`;
+                }
 
                 // Refresh Balance
                 await actions.refreshBalanceAndRate();
@@ -313,50 +363,7 @@ export default defineComponent({
                 state.modalSummaryState.isOpen = false;
                 state.modalSuccessState.isOpen = true;
             } catch (error) {
-                // eslint-disable-next-line require-atomic-updates
-                state.idErrorMessage = "";
-                // eslint-disable-next-line require-atomic-updates
-                state.amountErrorMessage = "";
-
-                const { HederaStatusError, Status } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
-
-                if (error instanceof HederaStatusError) {
-                    const errorMessage = (await actions.handleHederaError({
-                        error,
-                        showAlert: false
-                    })).message;
-
-                    // Small duplication of effort to assign errorMessage to correct TextInput
-                    switch (error.status.code) {
-                        case Status.InvalidAccountId.code:
-                        case Status.AccountRepeatedInAccountAmounts.code:
-                            state.idErrorMessage = errorMessage;
-                            break;
-                        case Status.InsufficientAccountBalance.code:
-                            state.amountErrorMessage = errorMessage;
-                            break;
-                        default:
-                            if (errorMessage !== "") {
-                                actions.alert({
-                                    message: errorMessage,
-                                    level: "warn"
-                                });
-                            } else {
-                                throw error; // Unhandled Error Modal will open
-                            }
-                    }
-                } else if (
-                    error.name === "TransportStatusError" &&
-                    getters.currentUser().wallet.getLoginMethod() ===
-                        LoginMethod.Ledger
-                ) {
-                    actions.handleLedgerError({
-                        error,
-                        showAlert: true
-                    });
-                } else {
-                    throw error;
-                }
+                handleError(error);
             } finally {
                 // eslint-disable-next-line require-atomic-updates
                 state.modalSummaryState.isBusy = false;

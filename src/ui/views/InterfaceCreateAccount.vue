@@ -185,11 +185,12 @@ export default defineComponent({
                     transaction.setTransactionMemo(" "); // Hack to deal with broken Nano X paging macro
                 }
 
-                const accountIdIntermediate = await (await transaction.execute(client))
-                    .getRecord(client);
+                const transactionId = await transaction.execute(client);
+
+                const receipt = await transactionId.getReceipt(client);
 
                 // Handle undefined
-                if (accountIdIntermediate == null) {
+                if (receipt == null) {
                     throw new Error(context.root
                         .$t("common.error.invalidAccount")
                         .toString());
@@ -197,14 +198,15 @@ export default defineComponent({
 
                 // state.accountIdIntermediate must be AccountID
                 // get shard, realm, state.account separately and construct a new object
-                if (accountIdIntermediate.receipt != null) {
-                    const { seconds, nanos } = accountIdIntermediate.transactionId.validStart;
-                    const userAccount = accountIdIntermediate.transactionId.accountId;
-                    const createdAccount = accountIdIntermediate.receipt.getAccountId();
+                if (receipt != null) {
+                    const createdAccount = receipt.getAccountId();
+
+                    const { nanos, seconds } = transactionId.validStart;
+                    const { shard, realm, account } = transactionId.accountId;
+
+                    state.transactionId = `${shard}.${realm}.${account}@${seconds}.${nanos}`;
 
                     state.account = `${createdAccount.shard}.${createdAccount.realm}.${createdAccount.account}`;
-
-                    state.transactionId = `${userAccount.shard}.${userAccount.realm}.${userAccount.account}@${seconds}.${nanos}`;
                 }
 
                 // If creating state.account succeeds then remove errors
