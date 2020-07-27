@@ -346,24 +346,11 @@ export default defineComponent({
                 tx.setTransactionMemo(state.memo);
 
                 const transactionIntermediate = await tx.execute(client);
-                await transactionIntermediate.getReceipt(client);
+                const receipt = await transactionIntermediate.getReceipt(client);
 
-                let record = null;
-
-                try {
-                    record = await transactionIntermediate.getRecord(client);
-                } catch (error) {
-                    handleError(error);
-                    state.amountErrorMessage = ""; // if hedera error, actually no.
-                    actions.alert({
-                        message: context.root.$t("common.error.failedToFetchRecord").toString(),
-                        level: "warn"
-                    });
-                }
-
-                if (record != null) {
-                    const { shard, realm, account } = record.transactionId.accountId;
-                    const { seconds, nanos } = record.transactionId.validStart;
+                if (receipt != null) {
+                    const { shard, realm, account } = transactionIntermediate.accountId;
+                    const { seconds, nanos } = transactionIntermediate.validStart;
 
                     // build the transaction id from the data.
                     state.transactionId = `${shard}.${realm}.${account}@${seconds}.${nanos}`;

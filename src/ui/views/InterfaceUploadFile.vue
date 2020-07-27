@@ -225,7 +225,7 @@ export default defineComponent({
             state.modalFeeSummaryState.isBusy = true;
             const user = getters.currentUser();
 
-            const receipt: Ref<import("@hashgraph/sdk").TransactionRecord | null> = ref(null);
+            const receipt: Ref<import("@hashgraph/sdk").TransactionReceipt | null> = ref(null);
             const publicKey = await user.wallet.getPublicKey();
 
             if (!publicKey) {
@@ -240,15 +240,16 @@ export default defineComponent({
             try {
                 state.uploadProgress.currentChunk = 0;
                 const chunk = chunks.shift() as Uint8Array;
-                receipt.value = await (await new FileCreateTransaction()
+                const txId = await new FileCreateTransaction()
                     .setContents(chunk)
                     .setExpirationTime(Date.now() + 7890000000)
                     .addKey(Ed25519PublicKey.fromString(publicKey.toString())) // lol
                     .setMaxTransactionFee(520000000)
-                    .execute(client))
-                    .getRecord(client);
+                    .execute(client);
 
-                const { accountId, validStart } = receipt.value.transactionId;
+                receipt.value = await txId.getReceipt(client);
+
+                const { accountId, validStart } = txId;
                 const { shard, realm, account } = accountId;
                 const { seconds, nanos } = validStart;
 
@@ -256,8 +257,8 @@ export default defineComponent({
 
                 state.uploadProgress.currentChunk += 1;
 
-                if (receipt.value.receipt != null) {
-                    fileId = receipt.value.receipt.getFileId();
+                if (receipt.value != null) {
+                    fileId = receipt.value.getFileId();
                 }
             } catch (error) {
                 state.uploadProgress.wasSuccess = false;

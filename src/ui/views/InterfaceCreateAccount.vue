@@ -157,48 +157,11 @@ export default defineComponent({
             state.isPublicKeyValid = await isPublicKeyValid(state.publicKey, true);
         });
 
-        async function handleError(error: { status: { code: any }; name: string }): Promise<void> {
-            const { HederaStatusError, Status } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
-            if (error instanceof HederaStatusError) {
-                const errorMessage = (await actions.handleHederaError({
-                    error,
-                    showAlert: false
-                })).message;
-
-                switch (error.status.code) {
-                    case Status.InsufficientAccountBalance.code:
-                    case Status.InsufficientPayerBalance.code:
-                        state.newBalanceError = errorMessage;
-                        break;
-                    default:
-                        if (errorMessage !== "") {
-                            actions.alert({
-                                message: errorMessage,
-                                level: "warn"
-                            });
-                        } else {
-                            throw error; // Unhandled Error Modal will open
-                        }
-                }
-            } else if (
-                error.name === "TransportStatusError" &&
-                    getters.currentUser().wallet.getLoginMethod() ===
-                        LoginMethod.Ledger
-            ) {
-                await actions.handleLedgerError({
-                    error,
-                    showAlert: true
-                });
-            } else {
-                throw error;
-            }
-        }
-
         // eslint-disable-next-line sonarjs/cognitive-complexity
         async function handleCreateAccount(): Promise<void> {
             state.isBusy = true;
             state.modalSummaryState.isBusy = true;
-            const { Hbar } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+            const { HederaStatusError, Status, Hbar } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
             try {
                 // The new wallet's initial balance
@@ -222,33 +185,32 @@ export default defineComponent({
                     transaction.setTransactionMemo(" "); // Hack to deal with broken Nano X paging macro
                 }
 
-                const transactionIntermediate = await transaction.execute(client);
-                const transactionReceipt = await transactionIntermediate.getReceipt(client); // transaction succeeded
+                const transactionId = await transaction.execute(client);
 
-                if (transactionReceipt != null) {
-                    const createdAccount = transactionReceipt.getAccountId();
-                    state.account = `${createdAccount.shard}.${createdAccount.realm}.${createdAccount.account}`;
-                }
+                const receipt = await transactionId.getReceipt(client);
 
-                let accountIdIntermediate = null;
-                try {
-                    accountIdIntermediate = await transactionIntermediate.getRecord(client);
-                } catch (error) {
-                    handleError(error);
-                    state.newBalanceError = ""; // if hedera error, actually no it wasn't.
-                    actions.alert({
-                        message: context.root.$t("common.error.failedToFetchRecord").toString(),
-                        level: "warn"
-                    });
+                // Handle undefined
+                if (receipt == null) {
+                    throw new Error(context.root
+                        .$t("common.error.invalidAccount")
+                        .toString());
                 }
 
                 // state.accountIdIntermediate must be AccountID
                 // get shard, realm, state.account separately and construct a new object
-                if (accountIdIntermediate != null) {
-                    const { seconds, nanos } = accountIdIntermediate.transactionId.validStart;
-                    const userAccount = accountIdIntermediate.transactionId.accountId;
-                    state.transactionId = `${userAccount.shard}.${userAccount.realm}.${userAccount.account}@${seconds}.${nanos}`;
+                if (receipt != null) {
+                    const createdAccount = receipt.getAccountId();
+
+                    const { nanos, seconds } = transactionId.validStart;
+                    const { shard, realm, account } = transactionId.accountId;
+
+                    state.transactionId = `${shard}.${realm}.${account}@${seconds}.${nanos}`;
+
+                    state.account = `${createdAccount.shard}.${createdAccount.realm}.${createdAccount.account}`;
                 }
+
+                // If creating state.account succeeds then remove errors
+                state.newBalanceError = "";
 
                 // Refresh Balance
                 await actions.refreshBalanceAndRate();
@@ -256,7 +218,39 @@ export default defineComponent({
                 state.modalSummaryState.isOpen = false;
                 state.modalSuccessState.isOpen = true;
             } catch (error) {
-                handleError(error);
+                if (error instanceof HederaStatusError) {
+                    const errorMessage = (await actions.handleHederaError({
+                        error,
+                        showAlert: false
+                    })).message;
+
+                    switch (error.status.code) {
+                        case Status.InsufficientAccountBalance.code:
+                        case Status.InsufficientPayerBalance.code:
+                            state.newBalanceError = errorMessage;
+                            break;
+                        default:
+                            if (errorMessage !== "") {
+                                actions.alert({
+                                    message: errorMessage,
+                                    level: "warn"
+                                });
+                            } else {
+                                throw error; // Unhandled Error Modal will open
+                            }
+                    }
+                } else if (
+                    error.name === "TransportStatusError" &&
+                    getters.currentUser().wallet.getLoginMethod() ===
+                        LoginMethod.Ledger
+                ) {
+                    await actions.handleLedgerError({
+                        error,
+                        showAlert: true
+                    });
+                } else {
+                    throw error;
+                }
             } finally {
                 state.modalSummaryState.isOpen = false;
                 state.modalSummaryState.isBusy = false;
