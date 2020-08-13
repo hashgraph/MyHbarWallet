@@ -284,50 +284,28 @@ export default defineComponent({
             }
         }
 
-        async function handleAccessByPhraseSubmit(derive: boolean): Promise<void> {
-            if (derive === undefined) derive = true;
-            if (state.modalAccessByPhraseState.wordCount === WordCount.TwentyTwo) derive = false;
+        async function handleAccessByPhraseSubmit(): Promise<void> {
             if (state.modalAccessByPhraseState.password == null) state.modalAccessByPhraseState.password = "";
 
             const accessByPhraseState = state.modalAccessByPhraseState;
             accessByPhraseState.isBusy = true;
 
-            try {
-                const { Ed25519PrivateKey, Mnemonic } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+            const { Ed25519PrivateKey, Mnemonic } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
-                const mnemonic = new Mnemonic(accessByPhraseState.words);
-                const rootPrivateKey = await Ed25519PrivateKey.fromMnemonic(
-                    mnemonic,
-                    accessByPhraseState.password
-                );
+            const mnemonic = new Mnemonic(accessByPhraseState.words);
+            const rootPrivateKey = await Ed25519PrivateKey.fromMnemonic(
+                mnemonic,
+                accessByPhraseState.password
+            );
 
-                if (derive && rootPrivateKey.supportsDerivation) {
-                    setPrivateKey(rootPrivateKey.derive(0));
-                } else {
-                    setPrivateKey(rootPrivateKey);
-                }
+            // For now, set key to the root key
+            setPrivateKey(rootPrivateKey);
 
-                // Close previous modal and open another one
-                accessByPhraseState.isBusy = false;
-                accessByPhraseState.isOpen = false;
-                state.modalEnterAccountIdState.isOpen = true;
-                accessByPhraseState.isValid = true;
-            } catch (error) {
-                // This will never trigger, actually,
-                // unless we make it an error for mnemonic validation to fail
-                accessByPhraseState.isBusy = false;
-
-                if (derive) {
-                    handleAccessByPhraseSubmit(false);
-                } else {
-                    actions.alert({
-                        level: "error",
-                        message: "Invalid Mnemonic"
-                    });
-                }
-
-                accessByPhraseState.isValid = false;
-            }
+            // Close previous modal and open another one
+            accessByPhraseState.isBusy = false;
+            accessByPhraseState.isOpen = false;
+            state.modalEnterAccountIdState.isOpen = true;
+            accessByPhraseState.isValid = true;
         }
 
         async function handleAccessByPrivateKeySubmit(): Promise<void> {
@@ -339,22 +317,19 @@ export default defineComponent({
             state.modalEnterAccountIdState.isOpen = true;
         }
 
-        async function handleAccountIdSubmit(account: import("@hashgraph/sdk").AccountId): Promise<void> {
-            state.modalEnterAccountIdState.isBusy = true;
-
-            if (state.loginMethod == null) {
-                state.modalEnterAccountIdState.isBusy = false;
-                throw new Error(context.root.$t("common.error.illegalState").toString());
+        async function handleAccountIdSubmit(account: import("@hashgraph/sdk").AccountId, attemptDerive: boolean | undefined): Promise<void> {
+            if (attemptDerive == null) {
+                attemptDerive = true;
             }
 
-            if (state.wallet == null) {
-                if (state.privateKey != null) {
-                    state.wallet = new SoftwareWallet(
-                        state.loginMethod,
-                        state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
-                        state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
-                    );
-                }
+            state.modalEnterAccountIdState.isBusy = true;
+
+            if (state.privateKey != null) {
+                state.wallet = new SoftwareWallet(
+                    state.loginMethod!,
+                    state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
+                    state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
+                );
             }
 
             try {
@@ -362,8 +337,17 @@ export default defineComponent({
                 state.modalEnterAccountIdState.isOpen = false;
                 Vue.nextTick(() => mutations.navigateToInterface());
             } catch (error) {
-                const { HederaStatusError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
-                if (error instanceof HederaStatusError) {
+                // :/
+                const { HederaStatusError, HederaPrecheckStatusError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+                if (error instanceof HederaStatusError || error instanceof HederaPrecheckStatusError) {
+                    // Retry login with derived mnemonic key if the root key login fails
+                    if (state.loginMethod === LoginMethod.Mnemonic) {
+                        if (state.privateKey!.supportsDerivation && attemptDerive) {
+                            setPrivateKey(state.privateKey!.derive(0));
+                            return handleAccountIdSubmit(account, false);
+                        }
+                    }
+
                     const result: HederaStatusErrorTuple = await actions.handleHederaError({ error, showAlert: false });
                     state.modalEnterAccountIdState.errorMessage =
                         result.message;

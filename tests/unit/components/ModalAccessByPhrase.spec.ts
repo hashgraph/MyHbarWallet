@@ -80,8 +80,27 @@ describe("ModalAccessByPhrase.vue", (): void => {
                         <div class="instruction">
                           Please select your mnemonic phrase length, then type your mnemonic below. Toggle the optional password input and type your password if your mnemonic requires a password.
                         </div>
-                        <div class="toggle"><label class="switch-button has-values"><input type="checkbox" class="input"> <span class="thumb"></span> <span class="leading">24</span> <span class="trailing">22</span></label>
-                          <transition-stub name="fuzz" mode="out-in"><span>24 Word</span></transition-stub>
+                        <div class="word-count"><span class="bold">Mnemonic Phrase</span>
+                          <div class="select select">
+                            <div class="select-value-container">
+                              <div class="select-value">
+                                24 Words
+                              </div> <svg width="24" height="24" viewBox="0 0 24 24" class="icon">
+                                <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
+                              </svg>
+                            </div>
+                            <div class="select-menu">
+                              <div class="select-option">
+                                12 Words
+                              </div>
+                              <div class="select-option">
+                                22 Words
+                              </div>
+                              <div class="select-option">
+                                24 Words
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <form>
                           <div class="mnemonic-input phrase-input">
