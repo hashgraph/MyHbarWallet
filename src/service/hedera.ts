@@ -26,6 +26,8 @@ export async function constructClient(
             client = Client.forMainnet();
         } else if (network.name === NetworkName.TESTNET) {
             client = Client.forTestnet();
+        } else if (network.name === NetworkName.PREVIEW) {
+            client = Client.forPreviewnet();
         }
     } else {
         client = new Client({

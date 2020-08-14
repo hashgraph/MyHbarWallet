@@ -11,6 +11,7 @@ export interface NodeId {
 export enum NetworkName {
     MAINNET = "network.mainnet",
     TESTNET = "network.testnet",
+    PREVIEW = "network.previewnet",
     CUSTOM = "network.custom"
 }
 
@@ -28,6 +29,12 @@ export const availableNetworks: { [key: string]: NetworkSettings } = {
         address: "0.testnet.hedera.com:50211",
         node: { shard: 0, realm: 0, node: 3 },
         name: NetworkName.TESTNET
+    },
+    "network.previewnet": {
+        proxy: "https://grpc-web.previewnet.myhbarwallet.com",
+        address: "0.previewnet.hedera.com:50211",
+        node: { shard: 0, realm: 0, node: 3 },
+        name: NetworkName.PREVIEW
     },
     "network.mainnet": {
         proxy: "https://grpc-web.myhbarwallet.com",
