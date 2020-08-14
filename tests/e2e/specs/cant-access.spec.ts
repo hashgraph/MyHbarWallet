@@ -17,13 +17,16 @@ import {
     mnemonicPhraseOption,
     accessContinueButton,
     mnemonicContinueButton,
-    mnemonicToggle,
     mnemonicPasswordToggle,
     mnemonicPasswordInput,
     privateKeyOption,
     privateKeyInput,
     privateKeyContinueButton,
-    mnemonicInput
+    mnemonicInput,
+    mnemonicWordSelect,
+    mnemonic24WordOption,
+    mnemonic22WordOption,
+    mnemonic12WordOption
 } from "../fixtures/access";
 
 // Note: Netlify cannot currently parse JSON arrays (however they are specified)
@@ -80,6 +83,10 @@ describe("Access Genesis Account", () => {
             .click()
             .get(accessContinueButton)
             .click()
+            .get(mnemonicWordSelect)
+            .click()
+            .get(mnemonic24WordOption)
+            .click()
             .then(() => {
                 for (let i = 1; i < 25; i++) {
                     cy.get(mnemonicInput(i.toString())).type(phrase[ i - 1 ]);
@@ -114,10 +121,50 @@ describe("Access Genesis Account", () => {
             .click()
             .get(accessContinueButton)
             .click()
-            .get(mnemonicToggle)
+            .get(mnemonicWordSelect)
+            .click()
+            .get(mnemonic22WordOption)
             .click()
             .then(() => {
                 for (let i = 1; i < 23; i++) {
+                    cy.get(mnemonicInput(i.toString())).type(phrase[ i - 1 ]);
+                }
+            })
+            .get(mnemonicContinueButton)
+            .click()
+            .get(networkSelector)
+            .click()
+            .then(() => {
+                cy.get(testnetNetworkOption).click();
+            })
+            .get(accountIdInput)
+            .type(genesisAccount)
+            .then(() => {
+                cy.get(accountIdContinueButton).click();
+            });
+        cy.wait(500);
+        cy.get(".error").its("text").should("be", error);
+        cy.url().should("include", "access-my-account");
+    });
+
+    it("can't access by Mnemonic Phrase (12 Words)", () => {
+        const { MNEMONIC12_PHRASE } = Cypress.env();
+
+        const phrase = MNEMONIC12_PHRASE.split(",");
+
+        cy
+            .get(softwareTile)
+            .click()
+            .get(mnemonicPhraseOption)
+            .click()
+            .get(accessContinueButton)
+            .click()
+            .get(mnemonicWordSelect)
+            .click()
+            .get(mnemonic12WordOption)
+            .click()
+            .then(() => {
+                for (let i = 1; i < 13; i++) {
                     cy.get(mnemonicInput(i.toString())).type(phrase[ i - 1 ]);
                 }
             })

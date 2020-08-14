@@ -13,11 +13,14 @@ import {
     keystorePasswordBtn,
     keystorePasswordInput,
     mnemonicContinueButton,
+    mnemonicWordSelect,
+    mnemonic12WordOption,
+    mnemonic22WordOption,
+    mnemonic24WordOption,
     mnemonicInput,
     mnemonicPasswordInput,
     mnemonicPasswordToggle,
     mnemonicPhraseOption,
-    mnemonicToggle,
     networkSelector,
     privateKeyContinueButton,
     privateKeyInput,
@@ -85,6 +88,10 @@ describe("Access My Account", () => {
             .click()
             .get(accessContinueButton)
             .click()
+            .get(mnemonicWordSelect)
+            .click()
+            .get(mnemonic24WordOption)
+            .click()
             .then(() => {
                 for (let i = 1; i < 25; i++) {
                     cy.get(mnemonicInput(i.toString())).type(phrase[ i - 1 ]);
@@ -121,7 +128,9 @@ describe("Access My Account", () => {
             .click()
             .get(accessContinueButton)
             .click()
-            .get(mnemonicToggle)
+            .get(mnemonicWordSelect)
+            .click()
+            .get(mnemonic22WordOption)
             .click()
             .then(() => {
                 for (let i = 1; i < 23; i++) {
@@ -144,6 +153,47 @@ describe("Access My Account", () => {
         cy.url().should("include", "interface");
     });
 
+    it("can access by Mnemonic Phrase (12 Words)", () => {
+        const {
+            MNEMONIC12_ACCOUNT_ID,
+            MNEMONIC12_PHRASE
+        } = Cypress.env();
+
+        const phrase = MNEMONIC12_PHRASE.split(",");
+
+        cy
+            .get(softwareTile)
+            .click()
+            .get(mnemonicPhraseOption)
+            .click()
+            .get(accessContinueButton)
+            .click()
+            .get(mnemonicWordSelect)
+            .click()
+            .get(mnemonic12WordOption)
+            .click()
+            .then(() => {
+                for (let i = 1; i < 13; i++) {
+                    cy.get(mnemonicInput(i.toString())).type(phrase[ i - 1 ]);
+                }
+            })
+            .get(mnemonicContinueButton)
+            .click()
+            .get(networkSelector)
+            .click()
+            .then(() => {
+                cy.get(testnetNetworkOption).click();
+            })
+            .get(accountIdInput)
+            .type(MNEMONIC12_ACCOUNT_ID)
+            .then(() => {
+                cy.get(accountIdContinueButton).click();
+            });
+
+        cy.wait(1000);
+        cy.url().should("include", "interface");
+    });
+
     it("can access by Mnemonic Phrase with Password", () => {
         const {
             MNEMONICP_ACCOUNT_ID,
@@ -159,6 +209,10 @@ describe("Access My Account", () => {
             .get(mnemonicPhraseOption)
             .click()
             .get(accessContinueButton)
+            .click()
+            .get(mnemonicWordSelect)
+            .click()
+            .get(mnemonic24WordOption)
             .click()
             .then(() => {
                 for (let i = 1; i < 25; i++) {

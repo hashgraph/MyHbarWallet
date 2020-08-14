@@ -8,25 +8,14 @@
         <div class="instruction">
             {{ $t("modalAccessByPhrase.pleaseTypeInYourMnemonicPhrase") }}
         </div>
-        <div class="toggle">
-            <SwitchButton
-                v-model="state.wordToggle"
-                :values="toggleValues"
+        <div class="word-count">
+            <span class="bold">{{ $t('mnemonic.myMnemonicHas') }}</span>
+            <Select
+                v-model="selected"
+                class="select"
+                :options="wordCountOptions"
                 @change="handleWordCountChange"
             />
-            <transition
-                name="fuzz"
-                mode="out-in"
-            >
-                <span
-                    v-if="state.wordCount === 22"
-                    key="22"
-                >{{ $t('mnemonic.22words') }}</span>
-                <span
-                    v-else
-                    key="24"
-                >{{ $t('mnemonic.24words') }}</span>
-            </transition>
         </div>
         <form @submit.prevent="$emit('submit')">
             <MnemonicInput
@@ -58,20 +47,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, SetupContext, watch } from "@vue/composition-api";
+import { defineComponent, PropType, SetupContext, watch, ref } from "@vue/composition-api";
 
 import Modal from "./Modal.vue";
 import SwitchButton from "./SwitchButton.vue";
 import MnemonicInput from "./MnemonicInput.vue";
 import Button from "./Button.vue";
+import Select from "./Select.vue";
 import CustomerSupportLink from "./CustomerSupportLink.vue";
 import OptionalPasswordInput from "./OptionalPasswordInput.vue";
 import Warning from "./Warning.vue";
 
 export enum WordCount {
+    Twelve = 12,
     TwentyTwo = 22,
     TwentyFour = 24
 }
+
+const wordCountOptions = Object.keys(WordCount).map((x) => parseInt(x)).filter((x) => !isNaN(x))
+    .map((x) => `${x} Words`);
 
 export interface State {
     isOpen: boolean;
@@ -87,6 +81,7 @@ export default defineComponent({
     components: {
         Modal,
         MnemonicInput,
+        Select,
         SwitchButton,
         Button,
         CustomerSupportLink,
@@ -99,14 +94,11 @@ export default defineComponent({
     },
     props: { state: { type: Object as PropType<State>, required: true }},
     setup(props: { state: State }, context: SetupContext) {
-        const toggleValues = [ WordCount.TwentyFour, WordCount.TwentyTwo ];
+        const selected = ref("24 Words");
 
-        function handleWordCountChange(changedTo: number): void {
-            props.state.wordCount = changedTo;
-            if (changedTo === WordCount.TwentyTwo) {
-                if (props.state.words[ 23 ] != null) props.state.words[ 23 ] = "";
-                if (props.state.words[ 22 ] != null) props.state.words[ 22 ] = "";
-            }
+        function handleWordCountChange(changedTo: string): void {
+            props.state.wordCount = parseInt(changedTo.split(" ")[ 0 ]);
+            props.state.words = props.state.words.slice(0, props.state.wordCount);
         }
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
@@ -136,7 +128,8 @@ export default defineComponent({
         );
 
         return {
-            toggleValues,
+            selected,
+            wordCountOptions,
             handleWordCountChange,
             handleModalChangeIsOpen,
             handleMnemonicInput,
@@ -148,20 +141,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="postcss">
-.fuzz-enter-active,
-.fuzz-leave-active {
-    transition: opacity 0.1s ease-in;
-
-    @media (prefers-reduced-motion) {
-        transition: none;
-    }
-}
-
-.fuzz-enter,
-.fuzz-leave-to {
-    opacity: 0;
-}
-
 .instruction {
     border-bottom: 2px solid var(--color-peral);
     color: var(--color-china-blue);
@@ -170,31 +149,25 @@ export default defineComponent({
     padding-block-end: 10px;
 }
 
-.toggle {
+.bold {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--color-washed-black);
+}
+
+.select {
+    flex: 1 1 0;
+    max-width: 200px;
+}
+
+.word-count {
     align-items: center;
     border-bottom: 2px solid var(--color-peral);
     color: var(--color-china-blue);
+    justify-content: space-between;
     display: flex;
     font-size: 14px;
-    justify-content: space-between;
-    margin-block-end: 10px;
-    padding-block-end: 10px;
     width: 100%;
-}
-
-.value-switch {
-    align-items: center;
-    display: flex;
-    margin-block-end: 10px;
-
-    & > .btn {
-        margin-inline-end: 10px;
-    }
-
-    & > .text {
-        color: var(--color-boathouse);
-        font-size: 14px;
-    }
 }
 
 .phrase-input {

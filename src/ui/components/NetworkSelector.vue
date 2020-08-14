@@ -202,7 +202,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 .network-selector {
     width: 100%;
 }

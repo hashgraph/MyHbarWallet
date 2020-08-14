@@ -24,6 +24,8 @@
     "MNEMONICP_PHRASE": "message,risk,loop,skate,upgrade,scare,camera,inflict,pear,resist,drama,plate,federal,foot,skill,lobster,tag,broom,pond,potato,liberty,mosquito,entire,embody",
     "MNEMONICL_ACCOUNT_ID": "0.0.41540",
     "MNEMONICL_PHRASE": "jolly,kidnap,Tom,lawn,drunk,chick,optic,lust,mutter,mole,bride,galley,dense,member,sage,neural,widow,decide,curb,aboard,margin,manure",
+    "MNEMONIC12_ACCOUNT_ID": "0.0.123154",
+    "MNEMONIC12_PHRASE": "spy,base,tired,useless,rug,riot,ticket,enroll,disorder,kiwi,client,impulse",
     "NODE_ENV": "test"
   }
 }
