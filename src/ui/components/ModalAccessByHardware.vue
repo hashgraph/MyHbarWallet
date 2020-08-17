@@ -167,13 +167,7 @@ export default defineComponent({
         }\n${
             context.root.$t("warning.browserWarningBody2").toString()}`);
 
-        const isChrome = computed(() => {
-            const name = new UAParser(navigator.userAgent).getBrowser().name;
-            // eslint-disable-next-line no-alert
-            return name === "Chromium" ||
-                    name === "Chrome" ||
-                    name === "Mobile Safari";
-        });
+        const isChrome = computed(() => true);
 
         const requiresChrome = computed(() => props.state.optionSelected === AccessHardwareOption.Ledger);
 
