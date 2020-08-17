@@ -35,6 +35,9 @@ describe("NetworkSelector.vue", (): void => {
                     Hedera™ Hashgraph Test Network
                   </div>
                   <div class="select-option">
+                    Hedera™ Hashgraph Preview Network
+                  </div>
+                  <div class="select-option">
                     Custom Network
                   </div>
                 </div>
