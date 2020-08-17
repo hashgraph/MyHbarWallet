@@ -169,6 +169,8 @@ export default defineComponent({
 
         const isChrome = computed(() => {
             const name = new UAParser(navigator.userAgent).getBrowser().name;
+            // eslint-disable-next-line no-alert
+            window.alert(name);
             return name === "Chromium" ||
                     name === "Chrome" ||
                     name === "Safari";
