@@ -42,6 +42,7 @@ window.vueapp.$store = store;
 
 if ("serviceWorker" in navigator && !IS_ELECTRON && MHW_ENV !== "development") {
     window.addEventListener("load", () => {
+        // eslint-disable-next-line compat/compat
         navigator.serviceWorker.register("./service-worker.js");
     });
 }

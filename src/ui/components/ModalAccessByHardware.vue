@@ -167,7 +167,12 @@ export default defineComponent({
         }\n${
             context.root.$t("warning.browserWarningBody2").toString()}`);
 
-        const isChrome = computed(() => new UAParser(navigator.userAgent).getBrowser().name === "Chrome");
+        const isChrome = computed(() => {
+            const name = new UAParser(navigator.userAgent).getBrowser().name;
+            return name === "Chromium" ||
+                    name === "Chrome" ||
+                    name!.includes("Safari");
+        });
 
         const requiresChrome = computed(() => props.state.optionSelected === AccessHardwareOption.Ledger);
 
