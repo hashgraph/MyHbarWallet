@@ -77,7 +77,7 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
                             <div class="header-container"><span class="header">
                                 My<strong>Hbar</strong>Wallet
                             </span> <span class="sub-header">Mnemonic Phrase</span></div>
-                            <div class="support-email"><img alt="" src="../assets/icon-bell.svg" class="icon">support@myhbarwallet.app
+                            <div class="support-email"><img alt="" src="../assets/icon-bell.svg" class="icon">support@myhbarwallet.com
                             </div>
                           </div>
                           <div class="password-disclaimer">
@@ -106,7 +106,8 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
                           </div>
                           <div class="button-container"><button type="submit" class="button-save outline">
                               <!----> <span>Save</span>
-                              <!----></button></div>
+                              <!---->
+                            </button></div>
                         </div>
                       </div>
                     </div>
@@ -157,7 +158,7 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
                             <div class="header-container"><span class="header">
                                 My<strong>Hbar</strong>Wallet
                             </span> <span class="sub-header">Mnemonic Phrase</span></div>
-                            <div class="support-email"><img alt="" src="../assets/icon-bell.svg" class="icon">support@myhbarwallet.app
+                            <div class="support-email"><img alt="" src="../assets/icon-bell.svg" class="icon">support@myhbarwallet.com
                             </div>
                           </div>
                           <div class="password-disclaimer">
@@ -186,7 +187,8 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
                           </div>
                           <div class="button-container"><button type="submit" class="button-save outline">
                               <!----> <span>Save</span>
-                              <!----></button></div>
+                              <!---->
+                            </button></div>
                         </div>
                       </div>
                     </div>

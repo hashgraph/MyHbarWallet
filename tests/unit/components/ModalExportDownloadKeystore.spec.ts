@@ -72,7 +72,8 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                           </div>
                         </div> <button type="submit" class="download compact">
                           <!----> <span>Download Keystore File</span>
-                          <!----></button>
+                          <!---->
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -146,7 +147,8 @@ describe("ModalExportDownloadKeystore.vue", (): void => {
                             <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
                           </svg>
                           <!---->
-                          <!----></button>
+                          <!---->
+                        </button>
                       </div>
                     </div>
                   </div>

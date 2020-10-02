@@ -47,7 +47,8 @@ describe("ModalCreateByPhrase.vue", (): void => {
                             Your Password
                             <span class="info-button"><div class="tooltip-container"><div class="slot-container"><svg width="24" height="24" viewBox="0 0 24 24" class="icon"><path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path></svg></div> <div class="message">
                     This password encrypts your private key. This does not act as a seed to generate your keys.
-                </div></div></span></div>
+                </div></div></span>
+                          </div>
                         </div>
                         <div class="value-switch">
                           <div class="spacer"></div>
@@ -72,7 +73,8 @@ describe("ModalCreateByPhrase.vue", (): void => {
                               <div class="text">
                                 Optional
                               </div> <label class="switch-button btn"><input type="checkbox" class="input"> <span class="thumb"></span>
-                                <!----></label>
+                                <!---->
+                              </label>
                             </div>
                           </div>
                           <div class="password-input">
@@ -88,7 +90,8 @@ describe("ModalCreateByPhrase.vue", (): void => {
                         </div>
                         <div class="continue-btn-container"><button type="submit" class="continue-btn">
                             <!----> <span>I Wrote Down My Mnemonic Phrase</span>
-                            <!----></button>
+                            <!---->
+                          </button>
                           <transition-stub name="fade">
                             <!---->
                           </transition-stub> <img src="" class="printer-button">

@@ -25,7 +25,8 @@ describe("UploadZone.vue", (): void => {
                 or
               </div> <button type="submit" class="button">
                 <!----> <span>Select a file from your computer</span>
-                <!----></button>
+                <!---->
+              </button>
               <!----> <input id="file-upload" type="file" style="display: none;">
             </div>
         `);
@@ -47,7 +48,8 @@ describe("UploadZone.vue", (): void => {
                 or
               </div> <button type="submit" class="button">
                 <!----> <span>Select a file from your computer</span>
-                <!----></button>
+                <!---->
+              </button>
               <div class="file-name-container"><svg width="24" height="24" viewBox="0 0 24 24" class="icon">
                   <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M13.5,16V19H10.5V16H8L12,12L16,16H13.5M13,9V3.5L18.5,9H13Z"></path>
                 </svg> <span class="file-name">hello.zip</span></div> <input id="file-upload" type="file" style="display: none;">

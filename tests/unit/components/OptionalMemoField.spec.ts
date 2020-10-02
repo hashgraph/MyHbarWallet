@@ -27,13 +27,15 @@ describe("OptionalMemoField.vue", (): void => {
                   <div class="text">
                     Optional
                   </div> <label class="switch-button btn"><input type="checkbox" class="input"> <span class="thumb"></span>
-                    <!----></label>
+                    <!---->
+                  </label>
                 </div>
               </div>
               <div class="memo-input">
                 <div class="text-input"><label class="label-container">
                     <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Memo" type="text" tabindex="-1" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                    <!----></span></label>
+                    <!----></span>
+                  </label>
                   <!---->
                   <!---->
                 </div>

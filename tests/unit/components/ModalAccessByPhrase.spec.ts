@@ -118,7 +118,8 @@ describe("ModalAccessByPhrase.vue", (): void => {
                                 <div class="text">
                                   Optional
                                 </div> <label class="switch-button btn"><input type="checkbox" class="input"> <span class="thumb"></span>
-                                  <!----></label>
+                                  <!---->
+                                </label>
                               </div>
                             </div>
                             <div class="password-input">
@@ -141,7 +142,8 @@ describe("ModalAccessByPhrase.vue", (): void => {
                   <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
                 </svg>
                 <!---->
-                <!----></button></form>
+                <!---->
+              </button></form>
               <div class="support">
                 <div class="customer-support-link">
                   <div class="customer-support-container"><img alt="" src="">Customer Support
@@ -152,30 +154,35 @@ describe("ModalAccessByPhrase.vue", (): void => {
                       <!---->
                       <div class="text-input issue-item"><label class="label-container">
                           <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                          <!----></span></label>
+                          <!----></span>
+                        </label>
                         <!---->
                         <!---->
                       </div>
                       <div class="text-input issue-item"><label class="label-container">
                           <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Account ID (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                          <!----></span></label>
+                          <!----></span>
+                        </label>
                         <!---->
                         <!---->
                       </div>
                       <div class="text-input issue-item"><label class="label-container">
                           <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="URL" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                          <!----></span></label>
+                          <!----></span>
+                        </label>
                         <!---->
                         <!---->
                       </div>
                       <div class="text-input issue-item is-multiline"><label class="label-container">
                           <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea placeholder="Describe the issue" rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                          <!----></span></label>
+                          <!----></span>
+                        </label>
                         <!---->
                         <!---->
                       </div> <button type="submit" class="send-button compact">
                         <!----> <span>Send</span>
-                        <!----></button>
+                        <!---->
+                      </button>
                     </form>
                   </modal>
                 </div>

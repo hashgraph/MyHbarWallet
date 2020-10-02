@@ -38,7 +38,7 @@ describe("RadioButtonGroup.vue", (): void => {
         });
 
         expect(wrapper).toMatchInlineSnapshot(
-            "<div class=\"radio-button-group\"></div>"
+            '<div class="radio-button-group"></div>'
         );
     });
 
@@ -56,11 +56,14 @@ describe("RadioButtonGroup.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="radio-button-group">
               <div><label for="file" class="radio-button"><img alt="" src="" class="icon"> <input id="file" type="radio" name="RadioButtonGroup" class="input" value="file"> <span class="label">Keystore File</span>
-                  <!----></label></div>
+                  <!---->
+                </label></div>
               <div><label for="phrase" class="radio-button"><img alt="" src="" class="icon"> <input id="phrase" type="radio" name="RadioButtonGroup" class="input" value="phrase"> <span class="label">Mnemonic Phrase</span>
-                  <!----></label></div>
+                  <!---->
+                </label></div>
               <div><label for="key" class="radio-button"><img alt="" src="" class="icon"> <input id="key" type="radio" name="RadioButtonGroup" class="input" value="key"> <span class="label">Private Key</span>
-                  <!----></label></div>
+                  <!---->
+                </label></div>
             </div>
         `);
     });

@@ -52,7 +52,8 @@ describe("ModalAccessByHardware.vue", (): void => {
                         <form class="modal-access-by-hardware">
                           <div class="radio-button-group">
                             <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger</span>
-                                <!----></label></div>
+                                <!---->
+                              </label></div>
                           </div>
                           <div class="instructions">
                             <div>Continue</div>
@@ -64,7 +65,8 @@ describe("ModalAccessByHardware.vue", (): void => {
                             <div>Watch for prompts on your hardware wallet.</div>
                           </div> <button type="submit" disabled="disabled" class="button-choose-a-hardware">
                             <!----> <span>Continue</span>
-                            <!----></button>
+                            <!---->
+                          </button>
                           <div class="customer-support-link">
                             <div class="customer-support-container"><img alt="" src="">Customer Support
                             </div>
@@ -74,30 +76,35 @@ describe("ModalAccessByHardware.vue", (): void => {
                                 <!---->
                                 <div class="text-input issue-item"><label class="label-container">
                                     <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span></label>
+                                    <!----></span>
+                                  </label>
                                   <!---->
                                   <!---->
                                 </div>
                                 <div class="text-input issue-item"><label class="label-container">
                                     <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Account ID (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span></label>
+                                    <!----></span>
+                                  </label>
                                   <!---->
                                   <!---->
                                 </div>
                                 <div class="text-input issue-item"><label class="label-container">
                                     <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="URL" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span></label>
+                                    <!----></span>
+                                  </label>
                                   <!---->
                                   <!---->
                                 </div>
                                 <div class="text-input issue-item is-multiline"><label class="label-container">
                                     <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea placeholder="Describe the issue" rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span></label>
+                                    <!----></span>
+                                  </label>
                                   <!---->
                                   <!---->
                                 </div> <button type="submit" class="send-button compact">
                                   <!----> <span>Send</span>
-                                  <!----></button>
+                                  <!---->
+                                </button>
                               </form>
                             </modal>
                           </div>
@@ -153,7 +160,8 @@ describe("ModalAccessByHardware.vue", (): void => {
                         <form class="modal-access-by-hardware">
                           <div class="radio-button-group">
                             <div><label for="ledger" class="radio-button"><img alt="" src="" class="icon"> <input id="ledger" type="radio" name="hardware-access-option" class="input" value="ledger"> <span class="label">Ledger</span>
-                                <!----></label></div>
+                                <!---->
+                              </label></div>
                           </div>
                           <div class="instructions">
                             <div>Continue</div>
@@ -167,7 +175,8 @@ describe("ModalAccessByHardware.vue", (): void => {
                               <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
                             </svg>
                             <!---->
-                            <!----></button>
+                            <!---->
+                          </button>
                           <div class="customer-support-link">
                             <div class="customer-support-container"><img alt="" src="">Customer Support
                             </div>
@@ -177,30 +186,35 @@ describe("ModalAccessByHardware.vue", (): void => {
                                 <!---->
                                 <div class="text-input issue-item"><label class="label-container">
                                     <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span></label>
+                                    <!----></span>
+                                  </label>
                                   <!---->
                                   <!---->
                                 </div>
                                 <div class="text-input issue-item"><label class="label-container">
                                     <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Account ID (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span></label>
+                                    <!----></span>
+                                  </label>
                                   <!---->
                                   <!---->
                                 </div>
                                 <div class="text-input issue-item"><label class="label-container">
                                     <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="URL" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span></label>
+                                    <!----></span>
+                                  </label>
                                   <!---->
                                   <!---->
                                 </div>
                                 <div class="text-input issue-item is-multiline"><label class="label-container">
                                     <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea placeholder="Describe the issue" rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span></label>
+                                    <!----></span>
+                                  </label>
                                   <!---->
                                   <!---->
                                 </div> <button type="submit" class="send-button compact">
                                   <!----> <span>Send</span>
-                                  <!----></button>
+                                  <!---->
+                                </button>
                               </form>
                             </modal>
                           </div>

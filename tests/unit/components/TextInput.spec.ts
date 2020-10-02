@@ -23,7 +23,8 @@ describe("TextInput.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="text-input"><label class="label-container">
                 <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                <!----></span></label>
+                <!----></span>
+              </label>
               <!---->
               <!---->
             </div>
@@ -72,7 +73,8 @@ describe("TextInput.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="text-input is-multiline"><label class="label-container">
                 <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea placeholder="placeholder text" rows="8" class="text-area"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                <!----></span></label>
+                <!----></span>
+              </label>
               <!---->
               <!---->
             </div>
@@ -94,7 +96,8 @@ describe("TextInput.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="text-input is-multiline has-label"><label class="label-container"><span class="label">label text</span> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                <!----></span></label>
+                <!----></span>
+              </label>
               <div class="actions">
                 <!---->
                 <!---->
@@ -148,7 +151,8 @@ describe("TextInput.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="text-input is-multiline has-label"><label class="label-container">
                 <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                <!----></span></label>
+                <!----></span>
+              </label>
               <div class="actions">
                 <!---->
                 <!---->
@@ -178,7 +182,8 @@ describe("TextInput.vue", (): void => {
         expect(wrapper).toMatchInlineSnapshot(`
             <div class="text-input is-multiline has-label"><label class="label-container">
                 <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                <!----></span></label>
+                <!----></span>
+              </label>
               <div class="actions">
                 <!---->
                 <div class="action">

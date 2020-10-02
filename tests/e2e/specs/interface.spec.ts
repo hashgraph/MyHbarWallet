@@ -110,7 +110,7 @@ describe("Interface", () => {
                 });
                 xhr.send();
             })
-        ).should("eq", "e2e test files")
+        ).should("eq", "( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°)")
             .get("div.button-container > button:last-of-type")
             .should("not.be.disabled")
             .click();

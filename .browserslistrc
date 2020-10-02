@@ -1,5 +1,2 @@
 # Supported Browsers
 > 1%
-not and_uc > 0
-not op_mini all
-not ie < 12

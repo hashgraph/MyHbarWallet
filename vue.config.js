@@ -1,53 +1,68 @@
-/* eslint-disable no-process-env, @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports, import/order */
 /* eslint-env node */
+/* 
+    eslint-disable 
+    no-process-env, 
+    @typescript-eslint/explicit-function-return-type, 
+    @typescript-eslint/no-var-requires, 
+    @typescript-eslint/no-require-imports, 
+    import/order
+*/
 const path = require("path");
-
 const package = require("./package.json");
-
 const webpack = require("webpack");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 
+// current git revision in footer of app
 const hash = require("child_process").execSync("git rev-parse --short HEAD");
 
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const StatsPlugin = require("stats-webpack-plugin");
+const WorkboxPlugin = require("workbox-webpack-plugin");
 
+// is electron or web
+const is_electron = process.env.IS_ELECTRON === "true" ? true : false;
+
+// environment variables present in app and output stats
 const plugins = [
     new webpack.DefinePlugin({
         MHW_ENV: `"${process.env.NODE_ENV}"`,
         VERSION: `"${package.version.toString()}"`,
         COMMIT_HASH: `"${hash.toString().trim()}"`,
-        IS_ELECTRON: "false",
+        IS_ELECTRON: is_electron,
         HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
         MOONPAY_API_KEY: `"${process.env.MOONPAY_API_KEY || "pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ"}"`
     }),
-    new CopyWebpackPlugin([
-        "node_modules/node-hid/build/Release/HID-hidraw.node",
-        "node_modules/node-hid/build/Release/HID.node"
-    ]),
-    new webpack.NormalModuleReplacementPlugin(
-        /^bindings$/,
-        `${__dirname}/src/electron/bindings`
-    ),
     new StatsPlugin("stats.json")
 ];
 
-const css = {
-    css: {
-        // Turn on CSS source maps in development
-        sourceMap: process.env.NODE_ENV !== "production"
-    }
-};
+// service worker if web production
+if (process.env.NODE_ENV === "production" && !is_electron) {
+    plugins.push(
+        new WorkboxPlugin.GenerateSW({
+            mode: "production",
+            cacheId: "mhw",
+            cleanupOutdatedCaches: true,
+            clientsClaim: true,
+            skipWaiting: true
+        })
+    );
+}
 
-const performance = {
-    performance: {
-        // only report this as an error when building for production
-        hints: process.env.NODE_ENV === "production" ? "error" : false,
-        maxEntrypointSize: 512000,
-        maxAssetSize: 1600000
-    }
-};
+// if electron, manually copy bindings for some packages that need this
+if (is_electron) {
+    plugins.push(
+        new CopyWebpackPlugin([
+            "node_modules/node-hid/build/Release/HID-hidraw.node",
+            "node_modules/node-hid/build/Release/HID.node"
+        ]));
+    plugins.push(
+        new webpack.NormalModuleReplacementPlugin(
+            /^bindings$/,
+            `${__dirname}/src/electron/bindings`
+        ));
+}
 
-const pluginOptions = {
+// boilerplate for electron
+const electronOptions = {
     pluginOptions: {
         electronBuilder: {
             outputDir: "dist/electron",
@@ -89,9 +104,28 @@ const pluginOptions = {
     }
 };
 
-const devServer = { devServer: { writeToDisk: true }};
+// write to disk preferred for electron
+const electronDevServer = { devServer: { writeToDisk: true }};
 
-const backWebpack = {
+// source map in dev, test
+const css = {
+    css: {
+        sourceMap: process.env.NODE_ENV !== "production"
+    }
+};
+
+// Keep entrypoint small and asynchronously load chunks at a reasonable pace
+const performance = {
+    performance: {
+        hints: process.env.NODE_ENV === "production" ? "error" : "warning",
+        maxEntrypointSize: 512000,
+        maxAssetSize: 1600000
+    },
+    optimization: { splitChunks: { chunks: "all", maxInitialRequests: 4, maxAsyncRequests: 7 }}
+};
+
+// explicitly use node version of the hashgraph SDK in electron
+const electronConfig = {
     outputDir: "dist/electron",
     configureWebpack: {
         target: "electron-renderer",
@@ -99,14 +133,34 @@ const backWebpack = {
         plugins,
         resolve: { alias: { "@hashgraph/sdk": path.resolve(__dirname, "node_modules/@hashgraph/sdk/lib/index-node.js") }}
     },
-    ...pluginOptions,
-    ...devServer
+    ...electronOptions,
+    ...electronDevServer
 };
 
+// pretend these packages don't exist in web environment
+const webExternals = {
+    externals: {
+        "@ledgerhq/hw-transport-node-hid-noevents": "module",
+        "@improbable-eng/grpc-web-node-http-transport": "module",
+        "node-hid": "module",
+        "grpc-js": "module"
+    }
+};
+
+// mostly the same except ignoring packages that won't build in web
+const webConfig = {
+    outputDir: "dist/web",
+    configureWebpack: {
+        target: "web",
+        ...performance,
+        ...webExternals,
+        plugins
+    }
+};
+
+// some optimization and qol
 const chainConfig = {
     chainWebpack(config) {
-        // Use a standard HTML template instead of rolling our own (which is default)
-        // https://github.com/jaketrent/html-webpack-template#basic-usage
         config.plugin("html").tap((args) => [
             {
                 ...args[ 0 ],
@@ -117,16 +171,12 @@ const chainConfig = {
         config.plugin("fork-ts-checker").tap((args) => [
             {
                 ...args[ 0 ],
-                // Only report errors
                 silent: true,
-                // Use as much threads as we have physical CPUs
-                workers: require("os").cpus().length
+                workers: require("os").cpus().length * 2
             }
         ]);
 
         if (process.env.NODE_ENV === "production") {
-            // Use the advanced preset for cssnano instead of the default.
-            // https://cssnano.co/guides/optimisations
             config.plugin("optimize-css").tap((args) => [
                 {
                     ...args[ 0 ],
@@ -137,7 +187,6 @@ const chainConfig = {
                 }
             ]);
 
-            // Pass images through an optimization pipeline
             config.module
                 .rule("optimize-images")
                 .test(/\.(jpg|png|gif|svg)$/)
@@ -148,6 +197,8 @@ const chainConfig = {
     }
 };
 
-const backEnd = { ...css, ...backWebpack, ...chainConfig, ...devServer };
+const electron = { ...css, ...electronConfig, ...chainConfig };
+const web = { ...css, ...webConfig, ...chainConfig };
 
-module.exports = backEnd;
+if (is_electron) module.exports = electron;
+else module.exports = web;

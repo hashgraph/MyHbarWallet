@@ -100,9 +100,11 @@ describe("ModalLogOut.vue", (): void => {
                         </div>
                         <div class="buttons"><button type="button" class="button outline compact">
                             <!----> <span>Cancel</span>
-                            <!----></button> <button type="submit" class="button compact">
+                            <!---->
+                          </button> <button type="submit" class="button compact">
                             <!----> <span>Transfer</span>
-                            <!----></button></div>
+                            <!---->
+                          </button></div>
                       </div>
                     </div>
                   </div>

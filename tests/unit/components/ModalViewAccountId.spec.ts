@@ -55,7 +55,8 @@ describe("ModalViewAccountId.vue", (): void => {
                             <!---->
                           </div> <button type="submit" class="button compact">
                             <!----> <span>Copy Account ID</span>
-                            <!----></button>
+                            <!---->
+                          </button>
                         </div>
                       </div>
                     </div>

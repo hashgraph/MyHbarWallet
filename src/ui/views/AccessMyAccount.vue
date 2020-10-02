@@ -319,7 +319,7 @@ export default defineComponent({
 
         async function handleAccountIdSubmit(account: import("@hashgraph/sdk").AccountId, attemptDerive: boolean | undefined): Promise<void> {
             if (attemptDerive == null) {
-                attemptDerive = true;
+                attemptDerive = false;
             }
 
             state.modalEnterAccountIdState.isBusy = true;
@@ -344,7 +344,7 @@ export default defineComponent({
                     if (state.loginMethod === LoginMethod.Mnemonic) {
                         if (state.privateKey!.supportsDerivation && attemptDerive) {
                             setPrivateKey(state.privateKey!.derive(0));
-                            return handleAccountIdSubmit(account, false);
+                            return handleAccountIdSubmit(account, true);
                         }
                     }
 

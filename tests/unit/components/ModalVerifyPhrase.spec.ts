@@ -90,7 +90,8 @@ describe("ModalVerifyPhrase.vue", (): void => {
                                 <div class="text">
                                   Optional
                                 </div> <label class="switch-button btn"><input type="checkbox" class="input"> <span class="thumb"></span>
-                                  <!----></label>
+                                  <!---->
+                                </label>
                               </div>
                             </div>
                             <div class="password-input">
@@ -112,7 +113,8 @@ describe("ModalVerifyPhrase.vue", (): void => {
               </div>
               <div class="btn-container"><button type="submit" class="">
                   <!----> <span>Verify</span>
-                  <!----></button></div>
+                  <!---->
+                </button></div>
               </form>
               </div>
               </div>

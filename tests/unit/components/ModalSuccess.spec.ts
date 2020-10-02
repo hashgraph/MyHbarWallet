@@ -47,7 +47,9 @@ describe("ModalSuccess.vue", (): void => {
                           <div class="button-container">
                             <!----> <button type="submit" class="compact dismiss-button full">
                               <!----> <span>Dismiss</span>
-                              <!----></button></div>
+                              <!---->
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>

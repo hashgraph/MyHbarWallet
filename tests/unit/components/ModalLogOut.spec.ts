@@ -47,7 +47,9 @@ describe("ModalLogOut.vue", (): void => {
                           <div class="button-group">
                             <!----> <button type="submit" class="button-logout danger center-button">
                               <!----> <span>Log Out</span>
-                              <!----></button></div>
+                              <!---->
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -23,7 +23,7 @@
                         alt=""
                         class="icon"
                         src="../assets/icon-bell.svg"
-                    >support@myhbarwallet.app
+                    >support@myhbarwallet.com
                 </div>
             </div>
             <div class="password-disclaimer">
