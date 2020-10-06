@@ -245,10 +245,7 @@ export default defineComponent({
             context.root.$el.append(keystoreFile.value as Node);
 
             try {
-                // Note, want this to work in test env but not in cypress
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                if (window.Cypress == null) keystoreFile.value!.click();
+                if (process.env.NODE_ENV !== "test") keystoreFile.value!.click();
             } catch (error) {
                 actions.alert({
                     message: context.root.$t("createAccount.noKeystore").toString(),
@@ -256,10 +253,12 @@ export default defineComponent({
                 });
             }
 
-            // Don't immediately remove, for testing
+            let timeoutLength = 0;
+            if (process.env.NODE_ENV === "test") timeoutLength = 500;
+
             setTimeout(() => {
                 context.root.$el.removeChild(keystoreFile.value as HTMLAnchorElement);
-            }, 300);
+            }, timeoutLength);
         }
 
         function handleDownloadKeystoreContinue(): void {

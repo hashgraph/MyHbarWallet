@@ -202,9 +202,7 @@ export default defineComponent({
                 }_${state.fileId.file}${type ? `.${type.ext}` : ""}`;
                 context.root.$el.append(fileLink.value as Node);
 
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                if (window.Cypress == null) fileLink.value.click(); // :^) sorry
+                if (process.env.NODE_ENV !== "test") fileLink.value.click();
 
                 await actions.refreshBalanceAndRate();
             } catch (error) {
