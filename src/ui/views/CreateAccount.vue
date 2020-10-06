@@ -75,6 +75,8 @@ import { actions, getters, mutations } from "../store";
 import { CreateAccountDTO } from "../store/modules/account";
 import { NetworkSettings, NetworkName } from "../../domain/network";
 
+declare const MHW_ENV: string;
+
 interface State {
     loginMethod: LoginMethod | null;
     wallet: Wallet | null;
@@ -242,10 +244,12 @@ export default defineComponent({
         }
 
         function handleDownloadKeystoreSubmit(): void {
+            // eslint-disable-next-line no-console
+            console.log(MHW_ENV);
             context.root.$el.append(keystoreFile.value as Node);
 
             try {
-                if (process.env.NODE_ENV !== "test") keystoreFile.value!.click();
+                if (MHW_ENV !== "test") keystoreFile.value!.click();
             } catch (error) {
                 actions.alert({
                     message: context.root.$t("createAccount.noKeystore").toString(),
@@ -254,7 +258,7 @@ export default defineComponent({
             }
 
             let timeoutLength = 0;
-            if (process.env.NODE_ENV === "test") timeoutLength = 500;
+            if (MHW_ENV === "test") timeoutLength = 500;
 
             setTimeout(() => {
                 context.root.$el.removeChild(keystoreFile.value as HTMLAnchorElement);

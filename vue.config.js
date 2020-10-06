@@ -19,23 +19,23 @@ const StatsPlugin = require("stats-webpack-plugin");
 const WorkboxPlugin = require("workbox-webpack-plugin");
 
 // is electron or web
-const is_electron = process.env.IS_ELECTRON === "true" ? true : false;
+const is_electron = process.env.VUE_APP_IS_ELECTRON === "true" ? true : false;
 
 // environment variables present in app and output stats
 const plugins = [
     new webpack.DefinePlugin({
-        MHW_ENV: `"${process.env.NODE_ENV}"`,
+        MHW_ENV: `"${process.env.VUE_APP_MHW_ENV || "test"}"`,
         VERSION: `"${package.version.toString()}"`,
         COMMIT_HASH: `"${hash.toString().trim()}"`,
         IS_ELECTRON: is_electron,
-        HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
-        MOONPAY_API_KEY: `"${process.env.MOONPAY_API_KEY || "pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ"}"`
+        HEDERA_NETWORK: `"${process.env.VUE_APP_HEDERA_NETWORK || "testnet"}"`,
+        MOONPAY_API_KEY: `"${process.env.VUE_APP_MOONPAY_API_KEY || "pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ"}"`
     }),
     new StatsPlugin("stats.json")
 ];
 
 // service worker if web production
-if (process.env.NODE_ENV === "production" && !is_electron) {
+if (process.env.MHW_ENV === "production" && !is_electron) {
     plugins.push(
         new WorkboxPlugin.GenerateSW({
             mode: "production",

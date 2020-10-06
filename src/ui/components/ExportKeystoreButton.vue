@@ -29,6 +29,8 @@ import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import ModalExportGenerateKeystore, { State as ModalExportGenerateKeystoreState } from "./ModalExportGenerateKeystore.vue";
 import ModalExportDownloadKeystore, { State as ModalExportDownloadKeystoreState } from "./ModalExportDownloadKeystore.vue";
 
+declare const MHW_ENV: string;
+
 export interface State {
     password: string;
     modalExportGenerateKeystoreState: ModalExportGenerateKeystoreState;
@@ -89,7 +91,7 @@ export default defineComponent({
             context.root.$el.append(keystoreLink.value as Node);
 
             try {
-                if (process.env.NODE_ENV !== "test") keystoreLink.value!.click();
+                if (MHW_ENV !== "test") keystoreLink.value!.click();
             } catch (error) {
                 actions.alert({
                     message: context.root.$t("modalExportDownloadKeystore.couldNotDownload").toString(),
@@ -98,11 +100,11 @@ export default defineComponent({
             }
 
             let timeoutLength = 0;
-            if (process.env.NODE_ENV === "test") timeoutLength = 500;
+            if (MHW_ENV === "test") timeoutLength = 500;
 
             setTimeout(() => {
                 context.root.$el.removeChild(keystoreLink.value as HTMLAnchorElement);
-            }, 300);
+            }, timeoutLength);
 
             state.modalExportGenerateKeystoreState.isOpen = false;
             state.modalExportDownloadKeystoreState.isOpen = false;

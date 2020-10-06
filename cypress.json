@@ -26,6 +26,8 @@
     "MNEMONICL_PHRASE": "jolly,kidnap,Tom,lawn,drunk,chick,optic,lust,mutter,mole,bride,galley,dense,member,sage,neural,widow,decide,curb,aboard,margin,manure",
     "MNEMONIC12_ACCOUNT_ID": "0.0.59364",
     "MNEMONIC12_PHRASE": "spy,base,tired,useless,rug,riot,ticket,enroll,disorder,kiwi,client,impulse",
-    "NODE_ENV": "test"
+    "NODE_ENV": "production",
+    "MHW_ENV": "test",
+    "IS_ELECTRON": "false"
   }
 }

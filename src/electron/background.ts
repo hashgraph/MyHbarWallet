@@ -6,7 +6,9 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 // see: https://github.com/electron-userland/electron-webpack/issues/172
 declare const __static: string;
 
-const isDevelopment = process.env.NODE_ENV !== "production";
+declare const MHW_ENV: string;
+
+const isDevelopment = MHW_ENV === "development";
 
 let win: BrowserWindow | null;
 

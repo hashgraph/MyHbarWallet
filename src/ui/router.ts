@@ -6,6 +6,8 @@ import { getters } from "./store";
 import Error404 from "./views/Error404.vue";
 import Home from "./views/Home.vue";
 
+declare const IS_ELECTRON: boolean;
+
 function HardwareWalletAffiliates(): Promise<
 typeof import("./views/HardwareWalletAffiliates.vue")
 > {
@@ -128,7 +130,7 @@ function RequireWallet(
 
 export default new Router({
     // eslint-disable-next-line no-undef
-    mode: process.env.IS_ELECTRON ? "hash" : "history",
+    mode: IS_ELECTRON ? "hash" : "history",
     // eslint-disable-next-line no-undef
     base: process.env.BASE_URL,
     routes: [

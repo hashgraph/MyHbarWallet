@@ -49,6 +49,8 @@ import Button from "../components/Button.vue";
 import IdInput from "../components/IDInput.vue";
 import { actions, getters } from "../store";
 
+declare const MHW_ENV: string;
+
 interface Summary {
     value: BigNumber | string;
     description: string;
@@ -202,7 +204,7 @@ export default defineComponent({
                 }_${state.fileId.file}${type ? `.${type.ext}` : ""}`;
                 context.root.$el.append(fileLink.value as Node);
 
-                if (process.env.NODE_ENV !== "test") fileLink.value.click();
+                if (MHW_ENV !== "test") fileLink.value.click();
 
                 await actions.refreshBalanceAndRate();
             } catch (error) {

@@ -50,6 +50,8 @@ import Button from "./Button.vue";
 import TextInput from "./TextInput.vue";
 import OptionalPasswordInput from "./OptionalPasswordInput.vue";
 
+declare const MHW_ENV: string;
+
 interface Props {
     isOpen: boolean;
     words: string[];
@@ -104,7 +106,7 @@ export default defineComponent({
                 if (isOpen && !oldIsOpen) {
                     state.focused = null;
                     // eslint-disable-next-line no-process-env, no-undef
-                    if (process.env.NODE_ENV !== "test") randomizeEmpties();
+                    if (MHW_ENV !== "test") randomizeEmpties();
                 }
             }
         );
