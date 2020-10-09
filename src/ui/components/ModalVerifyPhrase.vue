@@ -107,6 +107,8 @@ export default defineComponent({
                     state.focused = null;
                     // eslint-disable-next-line no-process-env, no-undef
                     if (MHW_ENV !== "test") randomizeEmpties();
+                    // eslint-disable-next-line no-console
+                    console.log(MHW_ENV);
                 }
             }
         );

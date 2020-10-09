@@ -19,17 +19,17 @@ const StatsPlugin = require("stats-webpack-plugin");
 const WorkboxPlugin = require("workbox-webpack-plugin");
 
 // is electron or web
-const is_electron = process.env.VUE_APP_IS_ELECTRON === "true" ? true : false;
+const is_electron = process.env.IS_ELECTRON === "true" ? true : false;
 
 // environment variables present in app and output stats
 const plugins = [
     new webpack.DefinePlugin({
-        MHW_ENV: `"${process.env.VUE_APP_MHW_ENV || "test"}"`,
+        MHW_ENV: `"${process.env.MHW_ENV || "test"}"`,
         VERSION: `"${package.version.toString()}"`,
         COMMIT_HASH: `"${hash.toString().trim()}"`,
         IS_ELECTRON: is_electron,
-        HEDERA_NETWORK: `"${process.env.VUE_APP_HEDERA_NETWORK || "testnet"}"`,
-        MOONPAY_API_KEY: `"${process.env.VUE_APP_MOONPAY_API_KEY || "pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ"}"`
+        HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
+        MOONPAY_API_KEY: `"${process.env.MOONPAY_API_KEY || "pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ"}"`
     }),
     new StatsPlugin("stats.json")
 ];
