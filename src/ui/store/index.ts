@@ -17,6 +17,8 @@ import { HederaStatusErrorPayload, HederaStatusErrorTuple, LedgerErrorPayload, L
 import { State as NetworkState } from "./modules/network";
 import { State as UIState } from "./modules/ui";
 
+declare const MHW_ENV: string;
+
 export interface RootState {
     alerts: AlertsState;
     ui: UIState;
@@ -65,7 +67,7 @@ export const getters = {
                 null;
 
         // eslint-disable-next-line no-process-env, no-undef
-        if (process.env.NODE_ENV !== "production" && error != null) {
+        if (MHW_ENV !== "production" && error != null) {
             console.error(error);
         }
 
@@ -195,7 +197,7 @@ export const actions = {
 
     async handleHederaError(payload: HederaStatusErrorPayload): Promise<HederaStatusErrorTuple> {
         // eslint-disable-next-line no-process-env, no-undef
-        if (process.env.NODE_ENV !== "production" && payload.error != null) {
+        if (MHW_ENV !== "production" && payload.error != null) {
             console.error(payload.error);
         }
 
@@ -250,7 +252,7 @@ export const actions = {
     },
     async handleLedgerError(payload: LedgerErrorPayload): Promise<LedgerErrorTuple> {
         // eslint-disable-next-line no-process-env, no-undef
-        if (process.env.NODE_ENV !== "production" && payload.error != null) {
+        if (MHW_ENV !== "production" && payload.error != null) {
             console.error(payload.error);
         }
 

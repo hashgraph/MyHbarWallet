@@ -31,9 +31,6 @@ yarn-error.log*
 /dist_electron
 /build
 
-# default config
-vue.config.js
-
 # Cypress
 cypress.env.json
 tests/e2e/videos/

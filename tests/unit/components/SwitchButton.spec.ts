@@ -23,7 +23,8 @@ describe("SwitchButton.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <label class="switch-button"><input type="checkbox" class="input"> <span class="thumb"></span>
-              <!----></label>
+              <!---->
+            </label>
         `);
     });
 
@@ -40,7 +41,8 @@ describe("SwitchButton.vue", (): void => {
 
         expect(wrapper).toMatchInlineSnapshot(`
             <label class="switch-button"><input type="checkbox" class="input"> <span class="thumb"></span>
-              <!----></label>
+              <!---->
+            </label>
         `);
     });
 });

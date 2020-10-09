@@ -61,7 +61,8 @@ describe("ModalViewKeys.vue", (): void => {
                             <!---->
                           </div> <button type="submit" class="button compact">
                             <!----> <span>Copy Public Key</span>
-                            <!----></button>
+                            <!---->
+                          </button>
                         </div>
                         <div class="key-container private">
                           <div class="subtitle">Private Key</div>
@@ -73,7 +74,8 @@ describe("ModalViewKeys.vue", (): void => {
                             </svg>
                           </div> <button type="submit" class="button compact">
                             <!----> <span>Copy Private Key</span>
-                            <!----></button>
+                            <!---->
+                          </button>
                         </div>
                       </div>
                     </div>

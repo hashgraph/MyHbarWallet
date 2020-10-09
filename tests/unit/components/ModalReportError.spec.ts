@@ -61,15 +61,18 @@ describe("ModalReportError.Vue", (): void => {
                           </div>
                           <div class="text-input user-details is-multiline"><label class="label-container">
                               <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                              <!----></span></label>
+                              <!----></span>
+                            </label>
                             <!---->
                             <!---->
                           </div>
                           <div class="button-group"><button type="submit" class="button-cancel outline compact">
                               <!----> <span>Cancel</span>
-                              <!----></button> <button type="submit" class="button-send compact">
+                              <!---->
+                            </button> <button type="submit" class="button-send compact">
                               <!----> <span>Send</span>
-                              <!----></button></div>
+                              <!---->
+                            </button></div>
                         </div>
                       </div>
                     </div>

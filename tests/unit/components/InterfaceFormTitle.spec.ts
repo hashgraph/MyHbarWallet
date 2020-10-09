@@ -28,7 +28,8 @@ describe("InterfaceForm.vue", (): void => {
                 Bacon ipsum dolor amet strip steak pork chop eu consequat pork belly excepteur.
               </div> <button type="submit" class="">
                 <!----> <span>Menu</span>
-                <!----></button>
+                <!---->
+              </button>
             </div>
         `);
     });

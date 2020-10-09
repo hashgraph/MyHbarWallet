@@ -27,7 +27,8 @@ describe("OptionalPasswordWithConfirm.vue", (): void => {
                   <div class="text">
                     Optional
                   </div> <label class="switch-button btn"><input type="checkbox" class="input"> <span class="thumb"></span>
-                    <!----></label>
+                    <!---->
+                  </label>
                 </div>
               </div>
               <div class="password-input">

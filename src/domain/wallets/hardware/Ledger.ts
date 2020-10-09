@@ -17,6 +17,8 @@ const P2_UNUSED_APDU = 0x00;
 const OPEN_TIMEOUT = 100000;
 const LISTENER_TIMEOUT = 300000;
 
+declare const IS_ELECTRON: boolean;
+
 export interface LedgerDeviceStatus {
     deviceStatus: number;
     publicKey?: import("@hashgraph/sdk").PublicKey | null;
@@ -131,7 +133,7 @@ export default class Ledger implements Wallet {
 
         // Support NodeHID for Electron
         // eslint-disable-next-line no-process-env, no-undef
-        if (process.env.IS_ELECTRON) {
+        if (IS_ELECTRON) {
             // @ts-ignore
             const TransportNodeHID = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-node-hid-noevents"))[ "default" ];
             const devices = await TransportNodeHID.list();
