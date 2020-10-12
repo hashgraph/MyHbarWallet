@@ -23,7 +23,7 @@ describe("Interface", () => {
             .get("a[href='/interface/create-account']")
             .click()
             .then(() => {
-                cy.url().should("be", "/interface/create-account");
+                cy.url().should("include", "/interface/create-account");
             });
 
         cy.get("div.form-main > div.text-input.has-suffix")
@@ -54,7 +54,7 @@ describe("Interface", () => {
             .get("a[href='/interface/upload-file']")
             .click()
             .then(() => {
-                cy.url().should("be", "/interface/upload-file");
+                cy.url().should("include", "/interface/upload-file");
             });
 
         cy.get("#file-upload").attachFile("testfile.txt").trigger("change", { force: true })
@@ -81,7 +81,7 @@ describe("Interface", () => {
             .click()
             .wait(100)
             .then(() => {
-                cy.url().should("be", "/interface/download-file");
+                cy.url().should("include", "/interface/download-file");
             });
 
         cy.get("input[placeholder='shard.realm.file']")
@@ -128,7 +128,7 @@ describe("Interface", () => {
             .click()
             .wait(100)
             .then(() => {
-                cy.url().should("be", "/interface/send-transfer");
+                cy.url().should("include", "/interface/send-transfer");
             });
 
         cy.get("div.form-main > div.has-suffix > label > .input-container").click().type("1")
@@ -208,7 +208,7 @@ describe("Interface", () => {
             .click()
             .wait(100)
             .then(() => {
-                cy.url().should("be", "/");
+                cy.url().should("equal", Cypress.config().baseUrl);
             });
     });
 });
