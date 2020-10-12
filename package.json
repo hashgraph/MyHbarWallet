@@ -17,7 +17,7 @@
     "_test:e2e:dev": "cross-env-shell 'vue-cli-service test:e2e'",
     "_test:e2e:ci": "cross-env-shell 'vue-cli-service test:e2e --headless'",
     "_test:unit": "cross-env-shell 'vue-cli-service test:unit --env jsdom'",
-    "_test:unit:u": "cross-env-shell 'jest --clearCache && vue-cli-service test:unit -u'",
+    "_test:unit:u": "cross-env-shell 'vue-cli-service test:unit -u'",
     "_build:electron": "cross-env-shell 'vue-cli-service build:electron'",
     "build:electron": "run-s env:electron _icons _build:electron",
     "ci": "run-s env:test _test:unit _test:e2e:ci",

@@ -25,10 +25,10 @@ module.exports = {
     ],
     globals: {
         "ts-jest": { babelConfig: true },
-        "VERSION": "1.1.1",
+        "VERSION": "6.6.6",
         "COMMIT_HASH": "placeholderhash",
         "HEDERA_NETWORK": "testnet",
-        "MHW_ENV": "sandbox",
+        "MHW_ENV": "test",
         "MOONPAY_API_KEY": "pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ",
         "IS_ELECTRON": false
     }

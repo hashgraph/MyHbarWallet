@@ -87,7 +87,7 @@ describe("Footer.vue", (): void => {
                   </a> <a href="/terms-and-conditions" class="link">
                     Terms
                   </a> <a target="_blank" href="https://github.com/hashgraph/MyHbarWallet/commit/placeholderhash" class="link">
-                    v1.1.1+placeholderhash
+                    v6.6.6+placeholderhash
                   </a></div>
                 <div class="copyright"><a target="_blank" href="https://www.coingecko.com/" class="link">
                     Pricing taken from CoinGekco
