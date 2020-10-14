@@ -99,11 +99,15 @@ export default defineComponent({
                 });
             }
 
-            let timeoutLength = 0;
+            let timeoutLength = 100;
             if (MHW_ENV === "test") timeoutLength = 500;
 
             setTimeout(() => {
-                context.root.$el.removeChild(keystoreLink.value as HTMLAnchorElement);
+                try {
+                    context.root.$el.removeChild(keystoreLink.value as HTMLAnchorElement);
+                } catch {
+                    // Doesn't matter
+                }
             }, timeoutLength);
 
             state.modalExportGenerateKeystoreState.isOpen = false;
