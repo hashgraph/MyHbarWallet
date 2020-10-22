@@ -2,6 +2,7 @@
     <Modal
         :is-open="state.isOpen"
         :title="$t('modalEnterAccountId.title')"
+        medium
         @change="handleModalChangeIsOpen"
         @close="emitClose"
     >
@@ -12,11 +13,24 @@
             >
                 <div
                     class="subtitle"
-                    v-text="$t('modalEnterAccountId.verifyKey')"
+                    v-text="keyTitle"
                 />
+                <Notice
+                    v-if="hasDerivedPublicKey"
+                    :symbol="mdiHelpCircleOutline"
+                    class="notice"
+                >
+                    {{ $t('modalEnterAccountId.aboutDerivedKey') }}
+                </Notice>
                 <ReadOnlyInput
                     class="input"
                     :value="publicKey"
+                    multiline
+                />
+                <ReadOnlyInput
+                    v-if="hasDerivedPublicKey"
+                    class="input"
+                    :value="derivedPublicKey"
                     multiline
                 />
             </div>
@@ -89,7 +103,6 @@ export type ModalEnterAccountIdElement = Vue & {
 };
 
 export interface State {
-    failed: string | null;
     errorMessage: string | null;
     isOpen: boolean;
     isBusy: boolean;
@@ -97,6 +110,7 @@ export interface State {
     valid: boolean;
     networkValid: boolean;
     publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
+    derivedPublicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
 }
 
 export interface Props {
@@ -124,10 +138,26 @@ export default defineComponent({
         const input: Ref<IdInputElement | null> = ref(null);
 
         const hasPublicKey = computed(() => props.state.publicKey != null);
+        const hasDerivedPublicKey = computed(() => props.state.derivedPublicKey != null);
+        const keyTitle = computed(() => {
+            if (hasPublicKey.value && hasDerivedPublicKey.value) {
+                return context.root.$t("modalEnterAccountId.publicKeys").toString();
+            }
+
+            return context.root.$t("modalEnterAccountId.publicKey").toString();
+        });
 
         const publicKey = computed(() => {
             if (hasPublicKey.value) {
                 return props.state.publicKey!.toString(true);
+            }
+
+            return null;
+        });
+
+        const derivedPublicKey = computed(() => {
+            if (hasDerivedPublicKey.value) {
+                return props.state.derivedPublicKey!.toString(true);
             }
 
             return null;
@@ -197,7 +227,10 @@ export default defineComponent({
             networkSelectorKey,
             networkSelected,
             hasPublicKey,
+            hasDerivedPublicKey,
             publicKey,
+            keyTitle,
+            derivedPublicKey,
             handleAccount,
             handleModalChangeIsOpen,
             handleDontHaveAccount,
@@ -226,6 +259,14 @@ export default defineComponent({
 .subtitle {
     color: var(--color-china-blue);
     font-size: 24px;
+    margin-block-end: 10px;
+}
+
+.input {
+    margin-block-end: 10px;
+}
+
+.notice {
     margin-block-end: 10px;
 }
 
