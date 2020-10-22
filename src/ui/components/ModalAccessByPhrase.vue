@@ -150,9 +150,9 @@ export default defineComponent({
 }
 
 .bold {
-    font-weight: 600;
-    font-size: 16px;
     color: var(--color-washed-black);
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .select {
@@ -164,9 +164,9 @@ export default defineComponent({
     align-items: center;
     border-bottom: 2px solid var(--color-peral);
     color: var(--color-china-blue);
-    justify-content: space-between;
     display: flex;
     font-size: 14px;
+    justify-content: space-between;
     width: 100%;
 }
 

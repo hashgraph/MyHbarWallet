@@ -17,8 +17,9 @@
                     v-if="backgroundShown"
                     class="modal"
                     :class="{
-                        large: !props.small && props.large,
-                        small: !props.large && props.small
+                        large: !props.small && !props.medium && props.large,
+                        small: !props.large && !props.medium && props.small,
+                        medium: !props.small && !props.large && props.medium
                     }"
                 >
                     <header v-if="!props.hideDecoration">
@@ -72,6 +73,7 @@ export default defineComponent({
         title: String,
         hideDecoration: Boolean,
         small: Boolean,
+        medium: Boolean,
         large: Boolean,
         garlands: Boolean,
         crown: String
@@ -198,6 +200,14 @@ export default defineComponent({
 
     & .crown {
         transform: translate(150px, -70px);
+    }
+}
+
+.modal.medium {
+    max-width: 600px;
+
+    & .crown {
+        transform: translate(200px, -70px);
     }
 }
 

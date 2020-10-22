@@ -84,6 +84,8 @@ import { NetworkName, NetworkSettings } from "../../domain/network";
 
 import { HederaStatusErrorTuple, LedgerErrorTuple } from "src/ui/store/modules/errors";
 
+declare const MHW_ENV: string;
+
 interface State {
     loginMethod: LoginMethod | null;
     wallet: Wallet | null;
@@ -136,14 +138,14 @@ export default defineComponent({
                 isBusy: false
             },
             modalEnterAccountIdState: {
-                failed: null,
                 errorMessage: null,
                 isOpen: false,
                 isBusy: false,
                 account: null,
                 valid: false,
                 networkValid: false,
-                publicKey: null
+                publicKey: null,
+                derivedPublicKey: null
             },
             modalRequestToCreateAccountState: { isOpen: false },
             loginMethod: null,
@@ -185,6 +187,10 @@ export default defineComponent({
             state.privateKey = newPrivateKey;
             state.publicKey = newPrivateKey.publicKey;
             state.modalEnterAccountIdState.publicKey = newPrivateKey.publicKey;
+
+            if (state.privateKey.supportsDerivation) {
+                state.modalEnterAccountIdState.derivedPublicKey = newPrivateKey.derive(0).publicKey;
+            }
         }
 
         function handleNetworkChange(settings: NetworkSettings): void {
@@ -209,7 +215,7 @@ export default defineComponent({
 
             if (which === AccessSoftwareOption.File) {
                 if (keystoreFile.value != null) {
-                    keystoreFile.value.click(); // triggers loadKeystore via hidden input @click
+                    if (MHW_ENV !== "test") keystoreFile.value.click(); // triggers loadKeystore via hidden input @click
                 }
             } else if (which === AccessSoftwareOption.Phrase) {
                 state.loginMethod = LoginMethod.Mnemonic;
@@ -293,12 +299,12 @@ export default defineComponent({
             const { Ed25519PrivateKey, Mnemonic } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
             const mnemonic = new Mnemonic(accessByPhraseState.words);
+
             const rootPrivateKey = await Ed25519PrivateKey.fromMnemonic(
                 mnemonic,
                 accessByPhraseState.password
             );
 
-            // For now, set key to the root key
             setPrivateKey(rootPrivateKey);
 
             // Close previous modal and open another one
@@ -317,13 +323,9 @@ export default defineComponent({
             state.modalEnterAccountIdState.isOpen = true;
         }
 
-        async function handleAccountIdSubmit(account: import("@hashgraph/sdk").AccountId, attemptDerive: boolean | undefined): Promise<void> {
-            if (attemptDerive == null) {
-                attemptDerive = false;
-            }
-
-            state.modalEnterAccountIdState.isBusy = true;
-
+        async function logIn(account: import("@hashgraph/sdk").AccountId): Promise<void> {
+            // Key is null here only when the user has a wallet that we cannot export the
+            // private key from, such as a hardware wallet
             if (state.privateKey != null) {
                 state.wallet = new SoftwareWallet(
                     state.loginMethod!,
@@ -332,30 +334,49 @@ export default defineComponent({
                 );
             }
 
+            await actions.logIn(account, state.wallet!, getters.currentNetwork());
+            state.modalEnterAccountIdState.isOpen = false;
+            Vue.nextTick(() => mutations.navigateToInterface());
+        }
+
+        async function handleLoginError(error: import("@hashgraph/sdk").HederaStatusError): Promise<void> {
+            const result: HederaStatusErrorTuple = await actions.handleHederaError({ error, showAlert: false });
+            state.modalEnterAccountIdState.errorMessage = result.message;
+        }
+
+        // :^)
+        // eslint-disable-next-line sonarjs/cognitive-complexity
+        async function handleAccountIdSubmit(
+            account: import("@hashgraph/sdk").AccountId
+        ): Promise<void> {
+            state.modalEnterAccountIdState.isBusy = true;
+
             try {
-                await actions.logIn(account, state.wallet!, getters.currentNetwork());
-                state.modalEnterAccountIdState.isOpen = false;
-                Vue.nextTick(() => mutations.navigateToInterface());
+                await logIn(account);
             } catch (error) {
-                // :/
                 const { HederaStatusError, HederaPrecheckStatusError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
                 if (error instanceof HederaStatusError || error instanceof HederaPrecheckStatusError) {
-                    // Retry login with derived mnemonic key if the root key login fails
-                    if (state.loginMethod === LoginMethod.Mnemonic) {
-                        if (state.privateKey!.supportsDerivation && attemptDerive) {
-                            setPrivateKey(state.privateKey!.derive(0));
-                            return handleAccountIdSubmit(account, true);
-                        }
-                    }
-
-                    const result: HederaStatusErrorTuple = await actions.handleHederaError({ error, showAlert: false });
-                    state.modalEnterAccountIdState.errorMessage =
-                        result.message;
-
                     if (
                         error.message.includes(context.root.$t("common.error.unhandled").toString())
                     ) { // Unhandled Error on Hedera Network, not this application
                         throw error;
+                    }
+
+                    // If their key supports derivation, try to log in with the derived key and handle errors from that
+                    if (state.privateKey!.supportsDerivation) {
+                        const originalKey = state.privateKey;
+                        setPrivateKey(state.privateKey!.derive(0));
+
+                        try {
+                            await logIn(account);
+                        } catch (childError) {
+                            await handleLoginError(childError);
+                        } finally {
+                            setPrivateKey(originalKey!);
+                        }
+                    } else {
+                        // otherwise, just handle the original error
+                        await handleLoginError(error);
                     }
                 } else if (
                     error.name === "TransportStatusError" &&

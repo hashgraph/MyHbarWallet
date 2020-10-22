@@ -24,14 +24,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
 export default defineComponent({
     components: { MaterialDesignIcon },
     props: {
-        title: (String as unknown) as PropType<string>,
+        title: String,
         symbol: { type: String, required: true }
     },
     setup(props) {
