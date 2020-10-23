@@ -24,7 +24,7 @@ const is_electron = process.env.IS_ELECTRON === "true" ? true : false;
 // environment variables present in app and output stats
 const plugins = [
     new webpack.DefinePlugin({
-        MHW_ENV: `"${process.env.MHW_ENV || "test"}"`,
+        MHW_ENV: `"${process.env.MHW_ENV || process.env.NODE_ENV || "test"}"`,
         VERSION: `"${package.version.toString()}"`,
         COMMIT_HASH: `"${hash.toString().trim()}"`,
         IS_ELECTRON: is_electron,
