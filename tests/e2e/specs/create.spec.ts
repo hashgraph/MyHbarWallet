@@ -18,61 +18,6 @@ describe("Create An Account", () => {
 
     const { KEYSTORE_PASSWORD, MNEMONICP_PASSWORD } = Cypress.env();
 
-    it("can create an account With Keystore File", () => {
-        cy.get(".tile-grid > :nth-child(2)")
-            .click()
-            .wait(1000)
-            .get("label[for=file]")
-            .click()
-            .get(softwareSelectButton)
-            .click()
-            .wait(1000)
-            .get(".text-flex-item > input")
-            .first()
-            .click()
-            .type(KEYSTORE_PASSWORD)
-            .get(".text-flex-item > input")
-            .last()
-            .click()
-            .type(KEYSTORE_PASSWORD)
-            .get("div.btn-container > button.btn")
-            .click()
-            .wait(1000)
-            .get("div.button-container")
-            .within(() => {
-                cy.get("button.download-button").should("not.be.disabled").click();
-            });
-        cy.get("a[download]").then((anchor) =>
-            new Cypress.Promise((resolve) => {
-                const xhr = new XMLHttpRequest();
-                xhr.open("GET", anchor.prop("href"), true);
-                xhr.responseType = "blob";
-
-                xhr.addEventListener("load", () => {
-                    if (xhr.status === 200) {
-                        const blob = xhr.response;
-                        const reader = new FileReader();
-                        reader.addEventListener("load", () => {
-                            resolve(reader.result);
-                        });
-                        reader.readAsArrayBuffer(blob);
-                    }
-                });
-                xhr.send();
-            })
-        ).then(async(key) => {
-            try {
-                Ed25519PrivateKey.fromKeystore(
-                    key as Uint8Array,
-                    KEYSTORE_PASSWORD
-                );
-                assert(true, "Successfully downloaded Keystore and checked Private key from Keystore");
-            } catch {
-                assert(false, "Unable to download Keystore and generate Private Key");
-            }
-        });
-    });
-
     it("can create an account With Mnemonic Phrase, without password", () => {
         const mnemonicPhraseList: string[] = [];
         cy.get(".tile-grid > :nth-child(2)")
