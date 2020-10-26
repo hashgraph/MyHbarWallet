@@ -362,21 +362,24 @@ export default defineComponent({
                         throw error;
                     }
 
-                    // If their key supports derivation, try to log in with the derived key and handle errors from that
-                    if (state.privateKey!.supportsDerivation) {
-                        const originalKey = state.privateKey;
-                        setPrivateKey(state.privateKey!.derive(0));
+                    // Their key may be null here, i.e w/ hardware wallets etc.
+                    if (state.privateKey != null) {
+                        if (state.privateKey.supportsDerivation) {
+                            // Try to login w/ derived key if supported
+                            const originalKey = state.privateKey;
+                            setPrivateKey(state.privateKey.derive(0));
 
-                        try {
-                            await logIn(account);
-                        } catch (childError) {
-                            await handleLoginError(childError);
-                        } finally {
-                            setPrivateKey(originalKey!);
+                            try {
+                                await logIn(account);
+                            } catch (childError) {
+                                await handleLoginError(childError);
+                            } finally {
+                                setPrivateKey(originalKey);
+                            }
+                        } else {
+                            // Otherwise, just handle the original error
+                            await handleLoginError(error);
                         }
-                    } else {
-                        // otherwise, just handle the original error
-                        await handleLoginError(error);
                     }
                 } else if (
                     error.name === "TransportStatusError" &&
