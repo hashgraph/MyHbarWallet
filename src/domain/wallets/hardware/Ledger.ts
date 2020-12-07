@@ -50,7 +50,7 @@ export default class Ledger implements Wallet {
         throw new Error("Cannot get private key from ledger wallet");
     }
 
-    public async getPublicKey(): Promise<import("@hashgraph/sdk").PublicKey | null> {
+    public async getPublicKey(): Promise<import("@hashgraph/sdk").Ed25519PublicKey | null> {
         if (this.publicKey == null) {
             // eslint-disable-next-line no-undef
             const buffer = Buffer.alloc(4);
