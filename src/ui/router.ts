@@ -98,6 +98,30 @@ typeof import("./views/InterfaceDownloadFile.vue")
         "./views/InterfaceDownloadFile.vue");
 }
 
+function InterfaceTokenBalances(): Promise<
+typeof import(".views/InterfaceTokenBalances.vue")> {
+    return import(
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceTokenBalances.vue"
+    );
+}
+
+function InterfaceSendToken(): Promise<
+typeof import("./views/InterfaceSendToken.vue")> {
+    return import(
+    /* webpackChunkName: "interface" */
+        "./views/InterfaceSendToken.vue"
+    );
+}
+
+function InterfaceAssociateToken(): Promise<
+typeof import("./views/InterfaceSendToken.vue")> {
+    return import(
+    /* webpackChunkName: "interface" */
+        "./views/InterfaceAssociateToken.vue"
+    );
+}
+
 function CreateAccount(): Promise<typeof import("./views/CreateAccount.vue")> {
     return import(
         /* webpackChunkName: "interface" */
@@ -215,6 +239,21 @@ export default new Router({
                     path: "download-file",
                     name: "download-file",
                     component: InterfaceDownloadFile
+                },
+                {
+                    path: "token-balances",
+                    name: "token-balances",
+                    component: InterfaceTokenBalances
+                },
+                {
+                    path: "send-token",
+                    name: "send-token",
+                    component: InterfaceSendToken
+                },
+                {
+                    path: "associate-token",
+                    name: "associate-token",
+                    component: InterfaceAssociateToken
                 }
             ]
         },

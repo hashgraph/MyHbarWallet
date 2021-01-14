@@ -1,6 +1,12 @@
+import type { AccountId, TokenId, Client } from "@hashgraph/sdk";
+import { BigNumber } from "bignumber.js";
+
 import { NetworkName, NetworkSettings } from "../domain/network";
 import { Session } from "../domain/user";
-import Wallet from "../domain/wallets/Wallet";
+import Wallet from "../domain/wallets/wallet";
+import { Token } from "../domain/token";
+
+import { kabutoRequest } from "./request";
 
 // Construct a Client
 export async function constructClient(
@@ -99,4 +105,113 @@ export async function constructSession(
         throw error;
     }
     return null;
+}
+
+export async function getBalance(
+    accountId: AccountId,
+    client: Client
+): Promise<import("@hashgraph/sdk").Hbar | null> {
+    try {
+        const { AccountBalanceQuery } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+
+        return new AccountBalanceQuery()
+            .setAccountId(accountId)
+            .execute(client);
+    } catch (error) {
+        throw error;
+    }
+}
+
+interface token {
+    decimals: number;
+}
+interface TokensResult {
+    tokens: token[];
+}
+
+export async function getTokenDecimals(keys: string[], testnet = false): Promise<number[]> {
+    // /v1/token?q={"$or": [{"id": "0.0.253281"}, {"id": "0.0.253335"}]}
+    const queryList: Array<Record<string, string>> = [];
+    keys.forEach((key) => {
+        queryList.push({ id: key });
+    });
+
+    return (
+        await kabutoRequest<TokensResult>(`v1/token?q={"$or": ${JSON.stringify(queryList)}}`, testnet)
+    ).tokens.map((token: { decimals: number }) => token.decimals);
+}
+
+export async function getTokens(
+    accountId: AccountId,
+    client: Client,
+    testnet?: boolean
+): Promise<Token[] | null> {
+    const { TokenBalanceQuery } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+
+    try {
+        const tokenBalances = await new TokenBalanceQuery()
+            .setAccountId(accountId)
+            .execute(client);
+
+        const keys = [ ...tokenBalances.keys() ];
+        const balances = [ ...tokenBalances.values() ];
+        let decimals: number[] = [];
+
+        decimals = await getTokenDecimals(keys.map((key) => key.toString()), testnet ?? false);
+
+        const tokens: Token[] = [];
+        for (const [ i, element ] of keys.entries()) {
+            tokens.push({
+                tokenId: element,
+                balance: balances[ i ],
+                decimals: decimals[ i ]
+            });
+        }
+
+        return tokens;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function associateTokenWithAccount(
+    tokenId: TokenId,
+    accountId: AccountId,
+    client: Client
+): Promise<void> {
+    const { TokenAssociateTransaction } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+    try {
+        await (await new TokenAssociateTransaction()
+            .setAccountId(accountId)
+            .addTokenId(tokenId)
+            .execute(client))
+            .getReceipt(client);
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function sendToken(
+    tokenId: TokenId,
+    recipient: AccountId,
+    client: Client,
+    amount: BigNumber,
+    memo?: string | null
+): Promise<void> {
+    try {
+        const { TokenTransferTransaction } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+        const tx = new TokenTransferTransaction()
+            .addRecipient(tokenId, recipient, amount)
+            .addSender(tokenId, client._getOperatorAccountId()!, amount);
+
+        if (memo != null) {
+            tx.setTransactionMemo(memo);
+        }
+
+        await (await tx
+            .execute(client))
+            .getReceipt(client);
+    } catch (error) {
+        throw error;
+    }
 }

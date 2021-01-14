@@ -77,9 +77,9 @@ import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.v
 import ModalEnterAccountId, { ModalEnterAccountIdElement } from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { actions, getters, mutations } from "../store";
-import SoftwareWallet from "../../domain/wallets/software/SoftwareWallet";
-import Wallet, { LoginMethod } from "../../domain/wallets/Wallet";
-import { AccessAccountDTO } from "../store/modules/account";
+import SoftwareWallet from "../../domain/wallets/software";
+import Wallet, { LoginMethod } from "../../domain/wallets/wallet";
+import { AccessAccountDTO } from "../../dto/access";
 import { NetworkName, NetworkSettings } from "../../domain/network";
 
 import { HederaStatusErrorTuple, LedgerErrorTuple } from "src/ui/store/modules/errors";
@@ -188,8 +188,10 @@ export default defineComponent({
             state.publicKey = newPrivateKey.publicKey;
             state.modalEnterAccountIdState.publicKey = newPrivateKey.publicKey;
 
-            if (state.privateKey.supportsDerivation) {
-                state.modalEnterAccountIdState.derivedPublicKey = newPrivateKey.derive(0).publicKey;
+            if (state.privateKey != null) {
+                if (state.privateKey.supportsDerivation) {
+                    state.modalEnterAccountIdState.derivedPublicKey = newPrivateKey.derive(0).publicKey;
+                }
             }
         }
 
@@ -235,10 +237,10 @@ export default defineComponent({
                     state.loginMethod = LoginMethod.Ledger;
                     state.modalAccessByHardwareState.isBusy = true;
                     try {
-                        const { Ledger } = await import(/* webpackChunkName: "hardware" */ "../../domain/wallets/hardware/Ledger");
+                        const { Ledger } = await import(/* webpackChunkName: "hardware" */ "../../domain/wallets/ledger");
                         state.modalAccessByHardwareState.isBusy = true;
                         state.wallet = new Ledger();
-                        state.publicKey = (await state.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+                        state.publicKey = (await state.wallet!.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
                         state.modalEnterAccountIdState.publicKey = state.publicKey;
                         state.modalAccessByHardwareState.isOpen = false;
                         state.modalEnterAccountIdState.isOpen = true;

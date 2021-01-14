@@ -1,15 +1,17 @@
 /* eslint-disable no-console */
 import { BigNumber } from "bignumber.js";
 import Vue from "vue";
+import type { Hbar, Client } from "@hashgraph/sdk";
 
 import { availableNetworks, NetworkName, NetworkSettings } from "../../domain/network";
 import { Session, User } from "../../domain/user";
-import Wallet from "../../domain/wallets/Wallet";
+import Wallet from "../../domain/wallets/wallet";
+import { Token } from "../../domain/token";
 import { currentPrice } from "../../service/coingecko";
-import { constructSession } from "../../service/hedera";
+import { constructSession, getBalance, getTokens } from "../../service/hedera";
+import { inUnitedStates } from "../../service/location";
 import i18n from "../../service/i18n";
 import router from "../router";
-import { inUnitedStates } from "../../service/location";
 
 import { State as AccountState } from "./modules/account";
 import { Alert, NewAlert, State as AlertsState } from "./modules/alerts";
@@ -47,6 +49,7 @@ export const store = Vue.observable({
         account: {
             user: null,
             balance: null,
+            tokens: null,
             exchangeRate: null
         } as AccountState,
         network: { network: availableNetworks[ NetworkName.MAINNET ] }
@@ -92,13 +95,16 @@ export const getters = {
         return store.state.network.network;
     },
     currentUser(): User {
-        return store.state.account.user;
+        return store.state.account.user!;
     },
     isLoggedIn(): boolean {
         return store.state.account.user != null;
     },
     currentUserBalance(): import("@hashgraph/sdk").Hbar | null {
         return store.state.account.balance;
+    },
+    currentUserTokens(): Token[] | null {
+        return store.state.account.tokens;
     },
     exchangeRate(): BigNumber | null {
         return store.state.account.exchangeRate;
@@ -154,6 +160,9 @@ export const mutations = {
     },
     setCurrentUserBalance(balance: import("@hashgraph/sdk").Hbar | null): void {
         store.state.account.balance = balance;
+    },
+    setCurrentUserTokens(tokens: Token[] | null): void {
+        store.state.account.tokens = tokens;
     },
     setExchangeRate(rate: BigNumber): void {
         store.state.account.exchangeRate = rate;
@@ -235,6 +244,21 @@ export const actions = {
                     .t("common.error.cannotSendHbarToYourself")
                     .toString();
                 break;
+            case Status.TokenAlreadyAssociatedToAccount.code:
+                message = i18n
+                    .t("common.error.tokenAlreadyAssociated")
+                    .toString();
+                break;
+            case Status.TokenNotAssociatedToAccount.code:
+                message = i18n
+                    .t("common.error.tokenNotAssociated")
+                    .toString();
+                break;
+            case Status.AccountKycNotGrantedForToken.code:
+                message = i18n
+                    .t("common.error.tokenAccountNeedsKYC")
+                    .toString();
+                break;
             default:
                 console.warn(payload.error.status);
                 console.warn(payload.error.message);
@@ -245,11 +269,12 @@ export const actions = {
         }
 
         if (payload.showAlert) {
-            self.alert({ message, level: severity });
+            actions.alert({ message, level: severity });
         }
 
         return { message, error: payload.error };
     },
+
     async handleLedgerError(payload: LedgerErrorPayload): Promise<LedgerErrorTuple> {
         // eslint-disable-next-line no-process-env, no-undef
         if (MHW_ENV !== "production" && payload.error != null) {
@@ -336,17 +361,34 @@ export const actions = {
     },
 
     async refreshBalance(): Promise<void> {
-        if (store.state.account.user.session == null) {
-            throw new Error("session null, cannot refresh balance");
+        let balance: Hbar | null = null;
+
+        try {
+            balance = await getBalance(
+                store.state.account.user?.session.account!,
+                store.state.account.user?.session.client as Client
+            );
+        } catch (error) {
+            this.handleHederaError({ error, showAlert: true });
         }
 
-        const { AccountBalanceQuery } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
-
-        const balance = await new AccountBalanceQuery()
-            .setAccountId(store.state.account.user.session.account)
-            .execute(store.state.account.user.session.client);
-
         mutations.setCurrentUserBalance(balance);
+    },
+
+    async refreshTokens(): Promise<void> {
+        let tokens: Token[] | null = null;
+
+        try {
+            tokens = await getTokens(
+                store.state.account.user?.session.account!,
+                store.state.account.user?.session.client as Client,
+                getters.currentNetwork().name === NetworkName.TESTNET
+            );
+        } catch (error) {
+            this.handleHederaError({ error, showAlert: true });
+        }
+
+        mutations.setCurrentUserTokens(tokens);
     },
 
     async refreshExchangeRate(): Promise<void> {
@@ -354,8 +396,9 @@ export const actions = {
         mutations.setExchangeRate(curPrice);
     },
 
-    async refreshBalanceAndRate(): Promise<void> {
+    async refreshBalancesAndRate(): Promise<void> {
         await this.refreshBalance();
+        await this.refreshTokens();
         await this.refreshExchangeRate();
     },
 
@@ -385,12 +428,14 @@ export const actions = {
             throw new Error("null session or wallet on login, could not set user");
         }
 
-        void this.refreshBalanceAndRate();
+        void this.refreshBalancesAndRate();
         void this.determineInUS();
     },
 
     logOut(): void {
         store.state.account.user = null;
+        store.state.account.balance = null;
+        store.state.account.tokens = null;
         mutations.setHasBeenToInterface(false);
     }
 };

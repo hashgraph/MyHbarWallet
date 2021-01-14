@@ -24,8 +24,18 @@ export async function kabutoRequest<T>(
     token: CancelToken|null = null
 ): Promise<T> {
     const url = `${apiBase(testnet)}${endpoint}`;
-    if (token == null) return axios.get(url).then((resp) => resp.data as T);
-    return axios.get(url, { cancelToken: token }).then((resp) => resp.data as T);
+    if (token == null) {
+        return axios.get(url, {
+            paramsSerializer(params) {
+                return "";
+            }
+        }).then((resp) => resp.data as T);
+    }
+    return axios.get(url, {
+        cancelToken: token, paramsSerializer(params) {
+            return "";
+        }
+    }).then((resp) => resp.data as T);
 }
 
 export async function externalRequest<T>(

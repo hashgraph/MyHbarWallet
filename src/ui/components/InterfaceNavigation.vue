@@ -31,6 +31,13 @@ import {LoginMethod} from "../wallets/Wallet";
             />
 
             <InterfaceNavigationSection
+                v-if="notLedger"
+                :icon="mdiCoins"
+                :title="$t('interfaceNavigation.tokens')"
+                :routes="tokensRoutes"
+            />
+
+            <InterfaceNavigationSection
                 v-if="false"
                 :icon="contractImage"
                 :title="$t('interfaceNavigation.contract')"
@@ -53,10 +60,10 @@ import {LoginMethod} from "../wallets/Wallet";
 </template>
 
 <script lang="ts">
-import { mdiClose, mdiCoinOutline, mdiFileDocumentBoxMultipleOutline } from "@mdi/js";
+import { mdiClose, mdiCoinOutline, mdiFileDocumentBoxMultipleOutline, mdiCoins } from "@mdi/js";
 import { computed, defineComponent } from "@vue/composition-api";
 
-import { LoginMethod } from "../../domain/wallets/Wallet";
+import { LoginMethod } from "../../domain/wallets/wallet";
 import { mutations, store, getters } from "../store";
 
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
@@ -74,25 +81,64 @@ export default defineComponent({
         MaterialDesignIcon
     },
     props: {},
-    setup() {
+    setup(_, context) {
         const cryptoRoutes = [
-            { name: "send-transfer", label: "Send" },
-            { name: "create-account-transaction", label: "Create Account" }
+            {
+                name: "send-transfer",
+                label: context.root.$t("interfaceNavigation.send").toString()
+            },
+            {
+                name: "create-account-transaction",
+                label: context.root.$t("interfaceNavigation.createAccount").toString()
+            }
         ];
 
         const contractRoutes = [
-            { name: "interact-with-contract", label: "Interact with Contract" },
-            { name: "deploy-contract", label: "Deploy Contract" }
+            {
+                name: "interact-with-contract",
+                label: context.root.$t("interfaceNavigation.interactWithContract").toString()
+            },
+            {
+                name: "deploy-contract",
+                label: context.root.$t("interfaceNavigation.deployContract").toString()
+            }
         ];
 
         const messageRoutes = [
-            { name: "sign-message", label: "Sign Message" },
-            { name: "verify-message", label: "Verify Message" }
+            {
+                name: "sign-message",
+                label: context.root.$t("interfaceNavigation.signMessage").toString()
+            },
+            {
+                name: "verify-message",
+                label: "Verify Message"
+            }
         ];
 
         const filesRoutes = [
-            { name: "upload-file", label: "Upload" },
-            { name: "download-file", label: "Download" }
+            {
+                name: "upload-file",
+                label: context.root.$t("interfaceNavigation.uploadFile").toString()
+            },
+            {
+                name: "download-file",
+                label: context.root.$t("interfaceNavigation.downloadFile").toString()
+            }
+        ];
+
+        const tokensRoutes = [
+            {
+                name: "token-balances",
+                label: context.root.$t("interfaceNavigation.balances").toString()
+            },
+            {
+                name: "send-token",
+                label: context.root.$t("interfaceNavigation.send").toString()
+            },
+            {
+                name: "associate-token",
+                label: context.root.$t("interfaceNavigation.associate").toString()
+            }
         ];
 
         const menuOpen = computed(() => store.state.ui.interfaceMenu.isOpen);
@@ -121,8 +167,10 @@ export default defineComponent({
             mdiClose,
             classObject,
             filesRoutes,
+            tokensRoutes,
             mdiFileDocumentBoxMultipleOutline,
             mdiCoinOutline,
+            mdiCoins,
             handleClick
         };
     }

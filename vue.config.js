@@ -1,10 +1,10 @@
 /* eslint-env node */
-/* 
-    eslint-disable 
-    no-process-env, 
-    @typescript-eslint/explicit-function-return-type, 
-    @typescript-eslint/no-var-requires, 
-    @typescript-eslint/no-require-imports, 
+/*
+    eslint-disable
+    no-process-env,
+    @typescript-eslint/explicit-function-return-type,
+    @typescript-eslint/no-var-requires,
+    @typescript-eslint/no-require-imports,
     import/order
 */
 const path = require("path");
@@ -118,8 +118,8 @@ const css = {
 const performance = {
     performance: {
         hints: process.env.NODE_ENV === "production" ? "error" : "warning",
-        maxEntrypointSize: 512000,
-        maxAssetSize: 1600000
+        maxEntrypointSize: 8000000,
+        maxAssetSize: 8000000
     },
     optimization: { splitChunks: { chunks: "all", maxInitialRequests: 4, maxAsyncRequests: 7 }}
 };
@@ -168,13 +168,8 @@ const chainConfig = {
             }
         ]);
 
-        config.plugin("fork-ts-checker").tap((args) => [
-            {
-                ...args[ 0 ],
-                silent: true,
-                workers: require("os").cpus().length * 2
-            }
-        ]);
+        // eslint-disable-next-line dot-notation
+        config.plugins.delete("fork-ts-checker");
 
         if (process.env.NODE_ENV === "production") {
             config.plugin("optimize-css").tap((args) => [

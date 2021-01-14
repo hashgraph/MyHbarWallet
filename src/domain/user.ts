@@ -1,4 +1,4 @@
-import Wallet from "./wallets/Wallet";
+import Wallet from "./wallets/wallet";
 
 export interface Session {
     account: import("@hashgraph/sdk").AccountId;

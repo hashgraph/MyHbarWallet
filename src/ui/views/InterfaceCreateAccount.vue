@@ -74,7 +74,7 @@ import ModalFeeSummary, { Item, State as ModalSummaryState } from "../components
 import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuccess.vue";
 import Notice from "../components/Notice.vue";
 import TextInput from "../components/TextInput.vue";
-import { LoginMethod } from "../../domain/wallets/Wallet";
+import { LoginMethod } from "../../domain/wallets/wallet";
 import { actions, getters } from "../store";
 import { formatHbar } from "../../service/format";
 import { getValueOfUnit, Unit } from "../../service/units";
@@ -213,7 +213,7 @@ export default defineComponent({
                 state.newBalanceError = "";
 
                 // Refresh Balance
-                await actions.refreshBalanceAndRate();
+                await actions.refreshBalancesAndRate();
 
                 state.modalSummaryState.isOpen = false;
                 state.modalSuccessState.isOpen = true;
