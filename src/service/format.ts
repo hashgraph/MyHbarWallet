@@ -137,7 +137,6 @@ ${description}
     return `mailto:support@myhbarwallet.com?subject=${encodeURIComponent(subjectTemplate)}&body=${encodeURIComponent(bodyTemplate)}`;
 }
 
-export function formatTokenBalance(input: number, decimals: number): string {
-    // eslint-disable-next-line unicorn/no-unsafe-regex
-    return input.toFixed(decimals).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export function formatTokenBalance(number: number, decimals: number): string {
+    return new BigNumber(number).div(new BigNumber(10).pow(decimals)).toString();
 }

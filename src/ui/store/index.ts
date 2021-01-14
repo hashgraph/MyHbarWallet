@@ -254,6 +254,11 @@ export const actions = {
                     .t("common.error.tokenNotAssociated")
                     .toString();
                 break;
+            case Status.AccountKycNotGrantedForToken.code:
+                message = i18n
+                    .t("common.error.tokenAccountNeedsKYC")
+                    .toString();
+                break;
             default:
                 console.warn(payload.error.status);
                 console.warn(payload.error.message);
@@ -376,7 +381,8 @@ export const actions = {
         try {
             tokens = await getTokens(
                 store.state.account.user?.session.account!,
-                store.state.account.user?.session.client as Client
+                store.state.account.user?.session.client as Client,
+                getters.currentNetwork().name === NetworkName.TESTNET
             );
         } catch (error) {
             this.handleHederaError({ error, showAlert: true });

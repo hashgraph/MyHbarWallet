@@ -2,19 +2,17 @@
     <div class="token">
         <div class="info">
             <div class="title">
-                <span class="symbol">{{ token.symbol }}</span>
                 <span class="id">{{ token.tokenId }}</span>
             </div>
         </div>
         <div class="balance">
-            <span>{{ formatTokenBalance(token.balance, token.deciamls) }}</span>
+            <span>{{ formatTokenBalance(token.balance, token.decimals) }}</span>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "@vue/composition-api";
-import { mdiAccountLock, mdiExclamation } from "@mdi/js";
 
 import { Token } from "../../domain/token";
 import { formatTokenBalance } from "../../service/format";
@@ -32,11 +30,7 @@ export default defineComponent({
         }
     },
     setup() {
-        return {
-            formatTokenBalance,
-            mdiAccountLock,
-            mdiExclamation
-        };
+        return { formatTokenBalance };
     }
 });
 </script>

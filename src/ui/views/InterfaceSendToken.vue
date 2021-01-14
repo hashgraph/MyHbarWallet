@@ -128,11 +128,22 @@ export default defineComponent({
             state.accountValid = valid;
         }
 
+        const scaleFactor = computed(() => {
+            const decimals = tokens.value!.filter(
+                (token) => token.tokenId.toString() === state.tokenSelected
+            )[ 0 ].decimals;
+
+            return new BigNumber(
+                Math.pow(10, decimals)
+            );
+        });
+
         function validateTokenBalance(amount: BigNumber): boolean {
+            const adjustedAmount = amount.multipliedBy(scaleFactor.value);
             if (tokens.value != null) {
                 return tokens.value.filter(
                     (token) => token.tokenId.toString() === state.tokenSelected
-                )[ 0 ].balance.isGreaterThan(amount);
+                )[ 0 ].balance.isGreaterThan(adjustedAmount);
             }
             return false;
         }
@@ -177,13 +188,7 @@ export default defineComponent({
                     getters.currentUser().session.client as Client,
                     new BigNumber(
                         state.amount!
-                    ).multipliedBy(
-                        new BigNumber(
-                            tokens.value!.filter(
-                                (token) => token.tokenId.toString() === state.tokenSelected
-                            )[ 0 ].decimals
-                        )
-                    ),
+                    ).multipliedBy(scaleFactor.value),
                     state.memo
                 );
 

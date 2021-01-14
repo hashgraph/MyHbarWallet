@@ -44,6 +44,7 @@
     "common.error.nullTransaction": "Transaction returned is null",
     "common.error.nullTransferAmount": "Null hbar. This is not allowed >:(",
     "common.error.payerDoesNotExist": "Payer Account does not exist",
+    "common.error.tokenAccountNeedsKYC": "This account requires KYC approval for this token.",
     "common.error.tokenAlreadyAssociated": "Token is already associated with your account",
     "common.error.tokenNotAssociated": "Token is not associated with this account",
     "common.error.traitorDevice": "Device attestation failed. Oh no!",

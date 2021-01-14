@@ -122,19 +122,29 @@ export async function getBalance(
     }
 }
 
-export async function getTokenDecimals(keys: string[]): Promise<number[]> {
+interface token {
+    decimals: number;
+}
+interface TokensResult {
+    tokens: token[];
+}
+
+export async function getTokenDecimals(keys: string[], testnet: false): Promise<number[]> {
     // /v1/token?q={"$or": [{"id": "0.0.253281"}, {"id": "0.0.253335"}]}
     const queryList: Array<Record<string, string>> = [];
     keys.forEach((key) => {
         queryList.push({ id: key });
     });
 
-    return kabutoRequest(`/v1/token?q={"$or", ${queryList}}`);
+    return (
+        await kabutoRequest<TokensResult>(`v1/token?q={"$or": ${JSON.stringify(queryList)}}`, testnet)
+    ).tokens.map((token: { decimals: number }) => token.decimals);
 }
 
 export async function getTokens(
     accountId: AccountId,
-    client: Client
+    client: Client,
+    testnet?: boolean
 ): Promise<Token[] | null> {
     const { TokenBalanceQuery } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
@@ -148,7 +158,7 @@ export async function getTokens(
         let decimals: number[] = [];
 
         try {
-            decimals = await getTokenDecimals(keys.map((key) => key.toString()));
+            decimals = await getTokenDecimals(keys.map((key) => key.toString()), testnet ?? false);
         } catch (error) {
             console.log("oopsie woopsie we couldn't fetch the decimals for your token wokens, looks like they have to go in the forever box :((((");
         }
