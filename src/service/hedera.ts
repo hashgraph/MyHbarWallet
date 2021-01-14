@@ -129,7 +129,7 @@ interface TokensResult {
     tokens: token[];
 }
 
-export async function getTokenDecimals(keys: string[], testnet: false): Promise<number[]> {
+export async function getTokenDecimals(keys: string[], testnet = false): Promise<number[]> {
     // /v1/token?q={"$or": [{"id": "0.0.253281"}, {"id": "0.0.253335"}]}
     const queryList: Array<Record<string, string>> = [];
     keys.forEach((key) => {
