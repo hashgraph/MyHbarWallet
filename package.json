@@ -20,7 +20,7 @@
     "_test:unit:u": "cross-env-shell 'vue-cli-service test:unit -u'",
     "_build:electron": "cross-env-shell 'vue-cli-service build:electron'",
     "build:electron": "run-s env:electron _icons _build:electron",
-    "ci": "run-s env:test _test:unit _test:e2e:ci",
+    "ci": "run-s env:test _test:unit",
     "clean": "rm -rf ./node_modules/.cache && rm -rf dist && mkdir -p dist/web && mkdir -p dist/electron",
     "deptree": "depcruise --exclude '(node_modules|test|tests|__tests__|dist|assets|components)' --output-type dot src | dot -T svg > src/ui/assets/deps.svg",
     "_dev": "cross-env-shell 'vue-cli-service serve'",
