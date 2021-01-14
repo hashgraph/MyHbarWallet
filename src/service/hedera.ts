@@ -157,11 +157,7 @@ export async function getTokens(
         const balances = [ ...tokenBalances.values() ];
         let decimals: number[] = [];
 
-        try {
-            decimals = await getTokenDecimals(keys.map((key) => key.toString()), testnet ?? false);
-        } catch (error) {
-            console.log("oopsie woopsie we couldn't fetch the decimals for your token wokens, looks like they have to go in the forever box :((((");
-        }
+        decimals = await getTokenDecimals(keys.map((key) => key.toString()), testnet ?? false);
 
         const tokens: Token[] = [];
         for (const [ i, element ] of keys.entries()) {
