@@ -1,13 +1,8 @@
 import { BigNumber } from "bignumber.js";
 import type { TokenId } from "@hashgraph/sdk";
 
-// not exported from sdk
-export interface TokenRelationship {
+export interface Token {
     tokenId: TokenId;
-    symbol: string;
     balance: BigNumber;
-    kycStatus: boolean | null;
-    freezeStatus: boolean | null;
+    decimals: number;
 }
-
-export type Token = TokenRelationship;

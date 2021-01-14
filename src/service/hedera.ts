@@ -6,6 +6,8 @@ import { Session } from "../domain/user";
 import Wallet from "../domain/wallets/wallet";
 import { Token } from "../domain/token";
 
+import { kabutoRequest } from "./request";
+
 // Construct a Client
 export async function constructClient(
     account: import("@hashgraph/sdk").AccountId,
@@ -120,18 +122,47 @@ export async function getBalance(
     }
 }
 
+export async function getTokenDecimals(keys: string[]): Promise<number[]> {
+    // /v1/token?q={"$or": [{"id": "0.0.253281"}, {"id": "0.0.253335"}]}
+    const queryList: Array<Record<string, string>> = [];
+    keys.forEach((key) => {
+        queryList.push({ id: key });
+    });
+
+    return kabutoRequest(`/v1/token?q={"$or", ${queryList}}`);
+}
+
 export async function getTokens(
     accountId: AccountId,
     client: Client
 ): Promise<Token[] | null> {
-    const { AccountInfoQuery } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+    const { TokenBalanceQuery } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+
     try {
-        return [
-            ...(await new AccountInfoQuery()
-                .setAccountId(accountId)
-                .execute(client)
-            ).tokenRelationships.values()
-        ];
+        const tokenBalances = await new TokenBalanceQuery()
+            .setAccountId(accountId)
+            .execute(client);
+
+        const keys = [ ...tokenBalances.keys() ];
+        const balances = [ ...tokenBalances.values() ];
+        let decimals: number[] = [];
+
+        try {
+            decimals = await getTokenDecimals(keys.map((key) => key.toString()));
+        } catch (error) {
+            console.log("oopsie woopsie we couldn't fetch the decimals for your token wokens, looks like they have to go in the forever box :((((");
+        }
+
+        const tokens: Token[] = [];
+        for (const [ i, element ] of keys.entries()) {
+            tokens.push({
+                tokenId: element,
+                balance: balances[ i ],
+                decimals: decimals[ i ]
+            });
+        }
+
+        return tokens;
     } catch (error) {
         throw error;
     }

@@ -5,29 +5,9 @@
                 <span class="symbol">{{ token.symbol }}</span>
                 <span class="id">{{ token.tokenId }}</span>
             </div>
-            <div class="statuses">
-                <Tooltip
-                    v-if="!token.kycStatus"
-                    :message="$t('token.requiresKYC')"
-                >
-                    <MaterialDesignIcon
-                        class="icon"
-                        :icon="mdiAccountLock"
-                    />
-                </Tooltip>
-                <Tooltip
-                    v-if="token.freezeStatus"
-                    :message="$t('token.frozen')"
-                >
-                    <MaterialDesignIcon
-                        class="icon"
-                        :icon="mdiExclamation"
-                    />
-                </Tooltip>
-            </div>
         </div>
         <div class="balance">
-            <span>{{ formatNumber(token.balance) }}</span>
+            <span>{{ formatTokenBalance(token.balance, token.deciamls) }}</span>
         </div>
     </div>
 </template>
@@ -37,7 +17,7 @@ import { defineComponent, PropType } from "@vue/composition-api";
 import { mdiAccountLock, mdiExclamation } from "@mdi/js";
 
 import { Token } from "../../domain/token";
-import { formatNumber } from "../../service/format";
+import { formatTokenBalance } from "../../service/format";
 
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import Tooltip from "./Tooltip.vue";
@@ -53,7 +33,7 @@ export default defineComponent({
     },
     setup() {
         return {
-            formatNumber,
+            formatTokenBalance,
             mdiAccountLock,
             mdiExclamation
         };
