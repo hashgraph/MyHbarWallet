@@ -130,6 +130,7 @@
     "interfaceAssociateToken.title": "Associate Token",
     "interfaceAssociateToken.tokenAssociated": "Token successfully associated with your account!",
     "interfaceAssociateToken.tokenId": "Token ID",
+    "interfaceAssociateToken.help": "To send or receive a token, you need to first associate your account with the token.",
     "interfaceContractDeploy.byteCode": "Byte Code",
     "interfaceContractDeploy.interface": "Interface",
     "interfaceContractDeploy.maximumTransactionFee": "Maximum Transaction Fee",

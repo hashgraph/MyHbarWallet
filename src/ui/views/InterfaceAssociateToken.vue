@@ -1,5 +1,9 @@
 <template>
     <InterfaceForm :title="$t('interfaceAssociateToken.title')">
+        <Notice :symbol="mdiHelpCircleOutline">
+            {{ $t("interfaceAssociateToken.help") }}
+        </Notice>
+
         <IDInput
             ref="input"
             :error="state.errorMessage"
@@ -24,16 +28,18 @@
 <script lang="ts">
 import type { Client, TokenId } from "@hashgraph/sdk";
 import { defineComponent, reactive, Ref, ref } from "@vue/composition-api";
+import { mdiHelpCircleOutline } from "@mdi/js";
 
 import { associateTokenWithAccount } from "../../service/hedera";
 import Button from "../components/Button.vue";
+import Notice from "../components/Notice.vue";
 import IDInput, { IdInputElement } from "../components/IDInput.vue";
 import InterfaceForm from "../components/InterfaceForm.vue";
 import { actions, getters } from "../store";
 
 export default defineComponent({
     name: "InterfaceAssociateToken",
-    components: { Button, IDInput, InterfaceForm },
+    components: { Button, IDInput, InterfaceForm, Notice },
     setup(_, context) {
         const input: Ref<IdInputElement | null> = ref(null);
         const state = reactive({
@@ -81,7 +87,7 @@ export default defineComponent({
             state.busy = false;
         }
 
-        return { input, state, handleValid, handleAccount, handleSubmit };
+        return { input, state, handleValid, handleAccount, handleSubmit, mdiHelpCircleOutline };
     }
 });
 </script>

@@ -32,7 +32,7 @@ import {LoginMethod} from "../wallets/Wallet";
 
             <InterfaceNavigationSection
                 v-if="notLedger"
-                :icon="mdiFlashCircle"
+                :icon="mdiCoins"
                 :title="$t('interfaceNavigation.tokens')"
                 :routes="tokensRoutes"
             />
@@ -60,7 +60,7 @@ import {LoginMethod} from "../wallets/Wallet";
 </template>
 
 <script lang="ts">
-import { mdiClose, mdiCoinOutline, mdiFileDocumentBoxMultipleOutline, mdiFlashCircle } from "@mdi/js";
+import { mdiClose, mdiCoinOutline, mdiFileDocumentBoxMultipleOutline, mdiCoins } from "@mdi/js";
 import { computed, defineComponent } from "@vue/composition-api";
 
 import { LoginMethod } from "../../domain/wallets/wallet";
@@ -170,7 +170,7 @@ export default defineComponent({
             tokensRoutes,
             mdiFileDocumentBoxMultipleOutline,
             mdiCoinOutline,
-            mdiFlashCircle,
+            mdiCoins,
             handleClick
         };
     }

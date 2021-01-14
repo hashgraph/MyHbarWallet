@@ -38,7 +38,7 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .token {
     align-items: center;
-    border: 1px solid var(--color-ashen-wind);
+    border-bottom: 1px solid var(--color-jupiter);
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
@@ -50,7 +50,6 @@ export default defineComponent({
 .head {
     align-self: flex-start;
     padding-block-end: 5px;
-    font-weight: 600;
 }
 
 .symbol {
@@ -61,12 +60,10 @@ export default defineComponent({
 }
 
 .id {
-    font-style: italic;
 }
 
 .balance {
     display: flex;
     flex-direction: column;
-    font-weight: 600;
 }
 </style>

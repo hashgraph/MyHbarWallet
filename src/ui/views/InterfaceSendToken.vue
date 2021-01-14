@@ -1,6 +1,6 @@
 <template>
     <InterfaceForm :title="$t('interfaceSendToken.title')">
-        <div
+        <template
             v-if="hasTokens"
             class="content"
         >
@@ -16,16 +16,18 @@
                 @input="handleAmount"
             />
 
-            <span
-                class="label"
-            >
-                {{ $t('token.token') }}
-            </span>
-            <Select
-                v-model="state.tokenSelected"
-                class="select"
-                :options="tokenIds"
-            />
+            <div>
+                <span
+                    class="label"
+                >
+                    {{ $t('token.token') }}
+                </span>
+                <Select
+                    v-model="state.tokenSelected"
+                    class="select"
+                    :options="tokenIds"
+                />
+            </div>
 
             <IDInput
                 ref="idInput"
@@ -41,12 +43,12 @@
             <OptionalMemoField
                 v-model="state.memo"
             />
-        </div>
-        <div v-else>
+        </template>
+        <template v-else>
             <Notice :symbol="mdiHelpCircleOutline">
                 {{ $t("interfaceTokenBalances.noTokens") }}
             </Notice>
-        </div>
+        </template>
         <template v-slot:footer>
             <Button
                 :busy="state.busy"
