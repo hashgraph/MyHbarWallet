@@ -143,7 +143,6 @@ export default defineComponent({
                 return (
                     !bigAmount.isNaN() &&
                     bigAmount.isGreaterThan(new BigNumber(0)) &&
-                    bigAmount.isInteger() &&
                     validateTokenBalance(bigAmount)
                 );
             }
@@ -160,8 +159,7 @@ export default defineComponent({
                 } else if (
                     // slight reproduction of effort
                     new BigNumber(state.amount).isNaN() ||
-                    new BigNumber(state.amount).isLessThanOrEqualTo(new BigNumber(0)) ||
-                    !new BigNumber(state.amount).isInteger()) {
+                    new BigNumber(state.amount).isLessThanOrEqualTo(new BigNumber(0))) {
                     state.amountError = context.root.$t("interfaceSendToken.invalidAmount").toString();
                 } else {
                     state.amountError = context.root.$t("interfaceSendToken.insufficientTokenBalance").toString();
@@ -177,7 +175,15 @@ export default defineComponent({
                     TokenId.fromString(state.tokenSelected!),
                     state.recipient!,
                     getters.currentUser().session.client as Client,
-                    new BigNumber(state.amount!),
+                    new BigNumber(
+                        state.amount!
+                    ).multipliedBy(
+                        new BigNumber(
+                            tokens.value!.filter(
+                                (token) => token.tokenId.toString() === state.tokenSelected
+                            )[ 0 ].decimals
+                        )
+                    ),
                     state.memo
                 );
 
