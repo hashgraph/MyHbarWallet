@@ -84,13 +84,7 @@ describe("ModalCreateWithSoftware.vue", (): void => {
                                   <!---->
                                   <!---->
                                 </div>
-                                <div class="text-input issue-item"><label class="label-container">
-                                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="URL" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span>
-                                  </label>
-                                  <!---->
-                                  <!---->
-                                </div>
+                                <!---->
                                 <div class="text-input issue-item is-multiline"><label class="label-container">
                                     <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea placeholder="Describe the issue" rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
                                     <!----></span>
