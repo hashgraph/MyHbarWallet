@@ -65,7 +65,7 @@ interface Props {
 
 interface State {
     focused: number | null;
-    inputTimeout: ReturnType<typeof setTimeout> | null;
+    inputTimeout: unknown | null;
     bip39: typeof import("bip39") | null;
     words: string[] | null;
 }
@@ -128,6 +128,8 @@ export default defineComponent({
 
             // Add 500ms delay to change root dependency
             // Prevents warning form popping up as the user types
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             if (state.inputTimeout != null) clearTimeout(state.inputTimeout);
             state.inputTimeout = setTimeout(() => {
                 state.words = newValues;

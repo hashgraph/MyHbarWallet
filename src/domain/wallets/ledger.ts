@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore, compat/compat */
-import Wallet, { LoginMethod } from "../Wallet";
+import Wallet, { LoginMethod } from "./wallet";
 
 // Preserving, in case we need this later
 // (this path w/o index is encoded in the BOLOS app)

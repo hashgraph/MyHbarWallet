@@ -1,6 +1,10 @@
+import type { AccountId, TokenId, Client } from "@hashgraph/sdk";
+import { BigNumber } from "bignumber.js";
+
 import { NetworkName, NetworkSettings } from "../domain/network";
 import { Session } from "../domain/user";
-import Wallet from "../domain/wallets/Wallet";
+import Wallet from "../domain/wallets/wallet";
+import { Token } from "../domain/token";
 
 // Construct a Client
 export async function constructClient(
@@ -99,4 +103,78 @@ export async function constructSession(
         throw error;
     }
     return null;
+}
+
+export async function getBalance(
+    accountId: AccountId,
+    client: Client
+): Promise<import("@hashgraph/sdk").Hbar | null> {
+    try {
+        const { AccountBalanceQuery } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+
+        return new AccountBalanceQuery()
+            .setAccountId(accountId)
+            .execute(client);
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getTokens(
+    accountId: AccountId,
+    client: Client
+): Promise<Token[] | null> {
+    const { AccountInfoQuery } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+    try {
+        return [
+            ...(await new AccountInfoQuery()
+                .setAccountId(accountId)
+                .execute(client)
+            ).tokenRelationships.values()
+        ];
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function associateTokenWithAccount(
+    tokenId: TokenId,
+    accountId: AccountId,
+    client: Client
+): Promise<void> {
+    const { TokenAssociateTransaction } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+    try {
+        await (await new TokenAssociateTransaction()
+            .setAccountId(accountId)
+            .addTokenId(tokenId)
+            .execute(client))
+            .getReceipt(client);
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function sendToken(
+    tokenId: TokenId,
+    recipient: AccountId,
+    client: Client,
+    amount: BigNumber,
+    memo?: string | null
+): Promise<void> {
+    try {
+        const { TokenTransferTransaction } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+        const tx = new TokenTransferTransaction()
+            .addRecipient(tokenId, recipient, amount)
+            .addSender(tokenId, client._getOperatorAccountId()!, amount);
+
+        if (memo != null) {
+            tx.setTransactionMemo(memo);
+        }
+
+        await (await tx
+            .execute(client))
+            .getReceipt(client);
+    } catch (error) {
+        throw error;
+    }
 }

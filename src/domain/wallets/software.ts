@@ -1,4 +1,4 @@
-import Wallet, { LoginMethod } from "../Wallet";
+import Wallet, { LoginMethod } from "./wallet";
 
 export default class SoftwareWallet implements Wallet {
     private readonly privateKey: import("@hashgraph/sdk").Ed25519PrivateKey;

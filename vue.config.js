@@ -119,7 +119,7 @@ const performance = {
     performance: {
         hints: process.env.NODE_ENV === "production" ? "error" : "warning",
         maxEntrypointSize: 512000,
-        maxAssetSize: 1600000
+        maxAssetSize: 2000000
     },
     optimization: { splitChunks: { chunks: "all", maxInitialRequests: 4, maxAsyncRequests: 7 }}
 };

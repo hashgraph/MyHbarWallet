@@ -42,9 +42,6 @@ import SoftwareWallet from "../../../src/domain/wallets/software/SoftwareWallet"
 import { availableNetworks } from "../../../src/domain/network";
 import "cypress-file-upload";
 
-// eslint-disable-next-line no-undef
-require("@cypress/snapshot").register();
-
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const getStore = () => cy.window().its("vueapp.$store");
 

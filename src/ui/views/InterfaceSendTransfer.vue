@@ -69,7 +69,7 @@ import ModalFeeSummary, { Item, State as ModalSummaryState } from "../components
 import { formatHbar, validateHbar } from "../../service/format";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 import ModalSuccess, { State as ModalSuccessState } from "../components/ModalSuccess.vue";
-import { LoginMethod } from "../../domain/wallets/Wallet";
+import { LoginMethod } from "../../domain/wallets/wallet";
 import { actions, getters } from "../store";
 
 interface State {
@@ -357,7 +357,7 @@ export default defineComponent({
                 }
 
                 // Refresh Balance
-                await actions.refreshBalanceAndRate();
+                await actions.refreshBalancesAndRate();
 
                 // eslint-disable-next-line require-atomic-updates
                 state.modalSummaryState.isOpen = false;

@@ -68,11 +68,11 @@ import ModalDownloadKeystore from "../components/ModalDownloadKeystore.vue";
 import ModalEnterAccountId, { ModalEnterAccountIdElement } from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import ModalCreateBySoftware, { CreateSoftwareOption } from "../components/ModalCreateBySoftware.vue";
-import SoftwareWallet from "../../domain/wallets/software/SoftwareWallet";
+import SoftwareWallet from "../../domain/wallets/software";
 import { HederaStatusErrorTuple, LedgerErrorTuple } from "../store/modules/errors";
-import Wallet, { LoginMethod } from "../../domain/wallets/Wallet";
+import Wallet, { LoginMethod } from "../../domain/wallets/wallet";
 import { actions, getters, mutations } from "../store";
-import { CreateAccountDTO } from "../store/modules/account";
+import { CreateAccountDTO } from "../../dto/access";
 import { NetworkSettings, NetworkName } from "../../domain/network";
 
 declare const MHW_ENV: string;
@@ -184,11 +184,11 @@ export default defineComponent({
                 case AccessHardwareOption.Ledger:
                     state.loginMethod = LoginMethod.Ledger;
                     try {
-                        const { Ledger } = await import(/* webpackChunkName: "hardware" */ "../../domain/wallets/hardware/Ledger");
+                        const { Ledger } = await import(/* webpackChunkName: "hardware" */ "../../domain/wallets/ledger");
 
                         state.modalCreateByHardwareState.isBusy = true;
                         state.wallet = new Ledger();
-                        state.publicKey = (await state.wallet.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+                        state.publicKey = (await state.wallet!.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
                         state.modalEnterAccountIdState.publicKey = state.publicKey;
                         state.modalCreateByHardwareState.isOpen = false;
                         state.modalRequestToCreateAccountState.isOpen = true;

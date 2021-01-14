@@ -92,7 +92,7 @@ describe("Footer.vue", (): void => {
                 <div class="copyright"><a target="_blank" href="https://www.coingecko.com/" class="link">
                     Pricing taken from CoinGekco
                   </a>
-                  © 2020 MyHbarWallet, All Rights reserved.
+                  © 2021 MyHbarWallet, All Rights reserved.
                 </div>
                 <div></div>
                 <div class="social">

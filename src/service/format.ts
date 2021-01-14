@@ -136,3 +136,8 @@ ${description}
 `;
     return `mailto:support@myhbarwallet.com?subject=${encodeURIComponent(subjectTemplate)}&body=${encodeURIComponent(bodyTemplate)}`;
 }
+
+export function formatNumber(input: number): string {
+    // eslint-disable-next-line unicorn/no-unsafe-regex
+    return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

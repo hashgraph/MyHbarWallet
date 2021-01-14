@@ -206,7 +206,7 @@ export default defineComponent({
 
             // FileAppendTransaction - rest of chunks
             await fileAppendUploads(chunks, fileId, client);
-            await actions.refreshBalanceAndRate();
+            await actions.refreshBalancesAndRate();
 
             fileID.value = fileId;
             state.uploadProgress.wasSuccess = true;

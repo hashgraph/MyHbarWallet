@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, Ref, onUnmounted } from "@vue/composition-api";
+import { computed, defineComponent, reactive, ref, Ref } from "@vue/composition-api";
 import { BigNumber } from "bignumber.js";
 import * as fileType from "file-type";
 import { Vue } from "vue/types/vue";
@@ -206,7 +206,7 @@ export default defineComponent({
 
                 if (MHW_ENV !== "test") fileLink.value.click();
 
-                await actions.refreshBalanceAndRate();
+                await actions.refreshBalancesAndRate();
             } catch (error) {
                 actions.alert({
                     level: "error",
@@ -214,10 +214,6 @@ export default defineComponent({
                 });
             }
         }
-
-        onUnmounted(() => {
-            context.root.$el.removeChild(fileLink.value as HTMLAnchorElement);
-        });
 
         function handleDownloadFinish(): void {
             state.modalFeeSummaryState.isBusy = false;
