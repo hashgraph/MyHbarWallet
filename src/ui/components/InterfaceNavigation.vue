@@ -31,7 +31,6 @@ import {LoginMethod} from "../wallets/Wallet";
             />
 
             <InterfaceNavigationSection
-                v-if="notLedger"
                 :icon="mdiCoins"
                 :title="$t('interfaceNavigation.tokens')"
                 :routes="tokensRoutes"
