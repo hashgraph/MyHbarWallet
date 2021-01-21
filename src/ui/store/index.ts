@@ -288,8 +288,6 @@ export const actions = {
 
         const { StatusCodes } = await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport");
 
-        console.log(StatusCodes);
-
         if (payload.error.name != null && payload.error.name === "TransportOpenUserCancelled") {
             message = i18n.t("common.error.noDeviceSelected").toString();
             severity = "warn";
