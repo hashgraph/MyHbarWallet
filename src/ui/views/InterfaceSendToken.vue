@@ -73,7 +73,7 @@ import TextInput from "../components/TextInput.vue";
 import Notice from "../components/Notice.vue";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 import Select from "../components/Select.vue";
-import { actions, getters } from "../store";
+import { actions, getters, mutations } from "../store";
 import { sendToken } from "../../service/hedera";
 
 export default defineComponent({
@@ -184,6 +184,14 @@ export default defineComponent({
             state.busy = true;
 
             try {
+                // Hack, pass token decimals to store for retrieval by hardware wallet
+                // signing callbacks
+                mutations.setCurrentTransferDecimals(
+                    tokens.value!.filter(
+                        (token) => token.tokenId.toString() === state.tokenSelected!
+                    )[ 0 ].decimals
+                );
+
                 await sendToken(
                     TokenId.fromString(state.tokenSelected!),
                     state.recipient!,
@@ -191,7 +199,7 @@ export default defineComponent({
                     new BigNumber(
                         state.amount!
                     ).multipliedBy(scaleFactor.value),
-                    state.memo
+                    state.memo ?? ""
                 );
 
                 actions.alert({

@@ -7,4 +7,5 @@ export interface State {
     balance: import("@hashgraph/sdk").Hbar | null;
     tokens: Token[] | null;
     exchangeRate: BigNumber | null;
+    decimals: number | null;
 }

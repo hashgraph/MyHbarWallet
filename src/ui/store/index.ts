@@ -50,11 +50,16 @@ export const store = Vue.observable({
             user: null,
             balance: null,
             tokens: null,
-            exchangeRate: null
+            exchangeRate: null,
+            decimals: null
         } as AccountState,
         network: { network: availableNetworks[ NetworkName.MAINNET ] }
     } as RootState
 } as Index);
+
+interface TxInfo {
+    decimals: number | null;
+}
 
 export const getters = {
     modalIds(): number[] {
@@ -81,6 +86,9 @@ export const getters = {
         }
 
         return error;
+    },
+    extraTxInfo(): TxInfo {
+        return { decimals: store.state.account.decimals };
     },
     hasBeenToInterface(): boolean {
         return store.state.ui.interfaceMenu.hasBeen;
@@ -131,6 +139,9 @@ export const mutations = {
                 break;
             }
         }
+    },
+    setCurrentTransferDecimals(n: number): void {
+        store.state.account.decimals = n;
     },
     errorOccurred(e: { error: Error }): void {
         store.state.errors.queue.push(e.error);

@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore, compat/compat */
+import { getters } from "../../ui/store";
+
 import Wallet, { LoginMethod } from "./wallet";
 
 // Preserving, in case we need this later
@@ -87,6 +89,17 @@ export default class Ledger implements Wallet {
     }
 
     public async signTransaction(txnData: Buffer | Uint8Array): Promise<Uint8Array | null> {
+        // IOC hack
+        // Need to reverse lookup the decimals for tokens, to pass it as a parameter
+        // to the ledger, because the decimals for tokens are nowhere in the protos
+        // as of Fri, Jan 22, 2021
+        // "I can't believe I've done this"^tm
+        let decimals = P1_UNUSED_APDU;
+        const extra = getters.extraTxInfo();
+        if (extra.decimals != null) {
+            decimals = extra.decimals;
+        }
+
         // eslint-disable-next-line no-undef
         const dataBuffer = Buffer.from(txnData);
         // eslint-disable-next-line no-undef
@@ -98,7 +111,7 @@ export default class Ledger implements Wallet {
         const response = await this.sendAPDU({
             CLA,
             INS: INS_SIGN_TX,
-            P1: P1_UNUSED_APDU,
+            P1: decimals,
             P2: P2_UNUSED_APDU,
             buffer
         });
