@@ -6,31 +6,43 @@
             </div>
         </div>
         <div class="balance">
-            <span>{{ formatTokenBalance(token.balance, token.decimals) }}</span>
+            <InfoButton
+                v-if="balanceIsNaN"
+                class="warning"
+                :message="$t('token.couldNotCalculateBalance')"
+            />
+            <span v-else>{{ formattedBalance }}</span>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "@vue/composition-api";
+import { defineComponent, PropType, computed } from "@vue/composition-api";
 
 import { Token } from "../../domain/token";
 import { formatTokenBalance } from "../../service/format";
 
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
-import Tooltip from "./Tooltip.vue";
+import InfoButton from "./InfoButton.vue";
 
 export default defineComponent({
     name: "Token",
-    components: { MaterialDesignIcon, Tooltip },
+    components: { MaterialDesignIcon, InfoButton },
     props: {
         token: {
             type: Object as PropType<Token>,
             required: true
         }
     },
-    setup() {
-        return { formatTokenBalance };
+    setup(props) {
+        const formattedBalance = computed(() => formatTokenBalance(
+            props.token.balance.toNumber(),
+            props.token.decimals
+        ));
+
+        const balanceIsNaN = computed(() => formattedBalance.value === "NaN");
+
+        return { formattedBalance, balanceIsNaN };
     }
 });
 </script>
@@ -47,23 +59,13 @@ export default defineComponent({
     width: 100%;
 }
 
-.head {
-    align-self: flex-start;
-    padding-block-end: 5px;
-}
-
-.symbol {
-    border: 1px solid var(--color-melbourne-cup);
-    border-radius: 50px;
-    padding: 5px;
-    margin-inline-end: 10px;
-}
-
-.id {
-}
-
 .balance {
+    align-items: center;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+}
+
+.warning {
+    padding-inline-start: 5px;
 }
 </style>
