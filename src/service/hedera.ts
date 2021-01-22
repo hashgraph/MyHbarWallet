@@ -123,22 +123,38 @@ export async function getBalance(
 }
 
 interface token {
+    id: string;
     decimals: number;
 }
 interface TokensResult {
     tokens: token[];
 }
 
-export async function getTokenDecimals(keys: string[], testnet = false): Promise<number[]> {
+export async function getTokenDecimals(keys: string[], testnet = false): Promise<Map<string, number>> {
     // /v1/token?q={"$or": [{"id": "0.0.253281"}, {"id": "0.0.253335"}]}
     const queryList: Array<Record<string, string>> = [];
     keys.forEach((key) => {
         queryList.push({ id: key });
     });
 
-    return (
-        await kabutoRequest<TokensResult>(`v1/token?q={"$or": ${JSON.stringify(queryList)}}`, testnet)
-    ).tokens.map((token: { decimals: number }) => token.decimals);
+    const results = new Map<string, number>();
+    const promises: Array<Promise<TokensResult>> = [];
+
+    let i = 0;
+    while (i * 50 < keys.length) {
+        const querySublist = queryList.slice(i * 50, (i + 1) * 50);
+        i += 1;
+
+        promises.push(kabutoRequest<TokensResult>(`v1/token?q={"$or": ${JSON.stringify(querySublist)}}`, testnet));
+    }
+
+    (await Promise.all(promises)).forEach((tokensResult) => {
+        tokensResult.tokens.forEach((token) => {
+            results.set(token.id, token.decimals);
+        });
+    });
+
+    return results;
 }
 
 export async function getTokens(
@@ -155,16 +171,14 @@ export async function getTokens(
 
         const keys = [ ...tokenBalances.keys() ];
         const balances = [ ...tokenBalances.values() ];
-        let decimals: number[] = [];
-
-        decimals = await getTokenDecimals(keys.map((key) => key.toString()), testnet ?? false);
+        const decimals: Map<string, number> = await getTokenDecimals(keys.map((key) => key.toString()), testnet ?? false);
 
         const tokens: Token[] = [];
         for (const [ i, element ] of keys.entries()) {
             tokens.push({
                 tokenId: element,
                 balance: balances[ i ],
-                decimals: decimals[ i ]
+                decimals: decimals.get(element.toString())!
             });
         }
 
