@@ -90,9 +90,6 @@ export default class Ledger implements Wallet {
 
     public async signTransaction(txnData: Buffer | Uint8Array): Promise<Uint8Array | null> {
         // IOC hack
-        // Need to reverse lookup the decimals for tokens, to pass it as a parameter
-        // to the ledger, because the decimals for tokens are nowhere in the protos
-        // as of Fri, Jan 22, 2021
         // "I can't believe I've done this"^tm
         let decimals = P1_UNUSED_APDU;
         const extra = getters.extraTxInfo();

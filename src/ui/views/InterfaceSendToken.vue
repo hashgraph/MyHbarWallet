@@ -26,6 +26,7 @@
                     v-model="state.tokenSelected"
                     class="select"
                     :options="tokenIds"
+                    @change="handleToken"
                 />
             </div>
 
@@ -126,6 +127,11 @@ export default defineComponent({
             state.recipient = account;
         }
 
+        function handleToken(): void {
+            state.accountError = null;
+            state.amountError = null;
+        }
+
         function handleAccountValid(valid: boolean): void {
             state.accountValid = valid;
         }
@@ -214,7 +220,7 @@ export default defineComponent({
             state.busy = false;
         }
 
-        return { isAmountValid, mdiHelpCircleOutline, tokens, hasTokens, tokenIds, state, idInput, amountInput, handleAccount, handleAccountValid, handleAmount, handleSubmit };
+        return { isAmountValid, mdiHelpCircleOutline, tokens, hasTokens, tokenIds, state, idInput, amountInput, handleAccount, handleToken, handleAccountValid, handleAmount, handleSubmit };
     }
 });
 </script>
