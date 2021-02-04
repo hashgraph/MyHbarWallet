@@ -13,11 +13,6 @@ describe("OptionalPasswordInput", (): void => {
             propsData: { value: "", passwordWarning: null },
             localVue,
             i18n,
-            methods: {
-                // This test has warnings if the values aren't defined
-                // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-                handleChangeShowPassword(showPassword: boolean): void {}
-            },
             stubs: {
                 TextInput: true,
                 SwitchButton: true

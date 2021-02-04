@@ -26,6 +26,7 @@
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
+    name: "AccountTileButton",
     props: {
         disabled: Boolean,
         title: { type: String, required: true },

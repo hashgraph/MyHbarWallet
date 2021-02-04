@@ -77,6 +77,7 @@ declare const VERSION: string;
 declare const COMMIT_HASH: string;
 
 export default defineComponent({
+    name: "ModalCustomerService",
     components: {
         Button,
         Modal,

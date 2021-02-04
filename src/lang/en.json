@@ -1,6 +1,8 @@
 {
     "accessMyAccount.createANewAccount": "Create a new account",
     "accessMyAccount.dontHaveAnAccount": "Don't have an account?",
+    "accessMyAccount.invalidPassword": "Invalid Password",
+    "accessMyAccount.pleaseTryAgain": "Could not access wallet, please try again.",
     "accountCard.account": "Account",
     "accountCard.accountQrCode": "Account QR Code",
     "accountCard.keys": "Your Keys",
@@ -225,7 +227,7 @@
     "modalCustomerService.url": "URL",
     "modalDownloadKeystore.downloadKeystoreFile": "Download Keystore File",
     "modalDownloadKeystore.title": "By Keystore File",
-    "modalEnterAccountId.aboutDerivedKey": "There are two types of keys that can be used to create an account ID on Hedera — MyHbarWallet offers access to account IDs created using either type.",
+    "modalEnterAccountId.aboutDerivedKeys": "Hashgraph wallet applications may derive keys from your phrase in multiple ways. MyHbarWallet will try each of these keys on login. If login succeeds, please check your associated key and download a Keystore for future use.",
     "modalEnterAccountId.accountId": "Account ID",
     "modalEnterAccountId.hederaAccountIdsAre": "Hedera™ Account IDs are three numbers separated by dots (ex. 0.0.10000). Accounts are controlled by keys. To get an account, another existing account must create and fund a new account on your behalf using your public key.",
     "modalEnterAccountId.network": "Network",

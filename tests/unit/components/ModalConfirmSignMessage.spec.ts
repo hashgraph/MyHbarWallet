@@ -13,7 +13,7 @@ describe("ModalConfirmSignMessage.vue", (): void => {
     const PUBLIC_KEY =
         "302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29";
 
-    it("renders open", async (): Promise<void> => {
+    it("renders open", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -31,7 +31,7 @@ describe("ModalConfirmSignMessage.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore

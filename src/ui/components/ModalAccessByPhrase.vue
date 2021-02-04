@@ -78,6 +78,7 @@ export interface State {
 }
 
 export default defineComponent({
+    name: "ModalAccessByPhrase",
     components: {
         Modal,
         MnemonicInput,

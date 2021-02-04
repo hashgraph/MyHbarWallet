@@ -128,6 +128,7 @@ export interface State {
 }
 
 export default defineComponent({
+    name: "ModalUploadProgress",
     components: {
         Button,
         Modal,

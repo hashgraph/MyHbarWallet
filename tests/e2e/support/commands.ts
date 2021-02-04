@@ -37,8 +37,8 @@ declare global {
     }
 }
 
-import { LoginMethod } from "../../../src/domain/wallets/Wallet";
-import SoftwareWallet from "../../../src/domain/wallets/software/SoftwareWallet";
+import { LoginMethod } from "../../../src/domain/wallets/wallet";
+import SoftwareWallet from "../../../src/domain/wallets/software";
 import { availableNetworks } from "../../../src/domain/network";
 import "cypress-file-upload";
 

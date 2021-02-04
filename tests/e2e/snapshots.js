@@ -1,3 +1,1 @@
-module.exports = {
-  "__version": "5.3.0"
-}
+module.exports = { __version: "5.3.0" };

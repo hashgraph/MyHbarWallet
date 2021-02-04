@@ -49,6 +49,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalViewAccountId",
     components: {
         Modal,
         ReadOnlyInput,

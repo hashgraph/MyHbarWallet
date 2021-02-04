@@ -45,6 +45,7 @@ export interface State {
 }
 
 export default defineComponent({
+    name: "ModalAccessByPrivateKey",
     components: {
         Button,
         Modal,

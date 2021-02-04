@@ -69,6 +69,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalReportError",
     components: {
         Button,
         Modal,

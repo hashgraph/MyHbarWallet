@@ -19,6 +19,7 @@
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
+    name: "CommunitySocialIcon",
     props: {
         href: { type: String, required: false, default: "" },
         name: { type: String, required: true },

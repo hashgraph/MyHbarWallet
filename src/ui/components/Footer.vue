@@ -98,11 +98,11 @@ declare const VERSION: string;
 declare const COMMIT_HASH: string;
 
 export default defineComponent({
+    name: "Footer",
     components: {
         MaterialDesignIcon,
         FooterTop
     },
-    props: {},
     setup() {
         const facebook = mdiFacebook;
         const twitter = mdiTwitter;

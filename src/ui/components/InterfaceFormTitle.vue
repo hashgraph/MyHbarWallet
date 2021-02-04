@@ -22,6 +22,7 @@ function emitMenuOpen(): void {
 }
 
 export default defineComponent({
+    name: "InterfaceFormTitle",
     props: { title: { type: String, required: true }},
     components: { Button },
     setup() {

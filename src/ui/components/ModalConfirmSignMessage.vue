@@ -53,6 +53,7 @@ function hexEncode(str: string): string {
 }
 
 export default defineComponent({
+    name: "ModalConfirmSignMessage",
     components: {
         Modal,
         Button,

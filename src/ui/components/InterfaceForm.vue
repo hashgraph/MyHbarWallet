@@ -18,6 +18,7 @@ import { defineComponent } from "@vue/composition-api";
 import InterfaceFormTitle from "./InterfaceFormTitle.vue";
 
 export default defineComponent({
+    name: "InterfaceForm",
     components: { InterfaceFormTitle },
     props: { title: { type: String, required: true }}
 });

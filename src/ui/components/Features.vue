@@ -28,8 +28,8 @@ import hardware from "../assets/icon-hardware.svg";
 import Feature from "./Feature.vue";
 
 export default defineComponent({
+    name: "Features",
     components: { Feature },
-    props: {},
     setup() {
         return {
             wallet,

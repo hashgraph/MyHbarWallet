@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 /* eslint-env node */
 /*
     eslint-disable
@@ -19,7 +20,7 @@ const StatsPlugin = require("stats-webpack-plugin");
 const WorkboxPlugin = require("workbox-webpack-plugin");
 
 // is electron or web
-const is_electron = process.env.IS_ELECTRON === "true" ? true : false;
+const is_electron = process.env.IS_ELECTRON === "true";
 
 // environment variables present in app and output stats
 const plugins = [
@@ -108,11 +109,7 @@ const electronOptions = {
 const electronDevServer = { devServer: { writeToDisk: true }};
 
 // source map in dev, test
-const css = {
-    css: {
-        sourceMap: process.env.NODE_ENV !== "production"
-    }
-};
+const css = { css: { sourceMap: process.env.NODE_ENV !== "production" }};
 
 // Keep entrypoint small and asynchronously load chunks at a reasonable pace
 const performance = {

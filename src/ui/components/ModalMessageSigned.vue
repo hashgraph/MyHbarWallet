@@ -31,6 +31,7 @@ import Button from "./Button.vue";
 import TextInput from "./TextInput.vue";
 
 export default defineComponent({
+    name: "ModalMessageSigned",
     components: {
         Modal,
         Button,

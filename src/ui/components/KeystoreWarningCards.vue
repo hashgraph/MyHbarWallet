@@ -55,6 +55,7 @@
         </div>
     </div>
 </template>
+
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 
@@ -63,6 +64,7 @@ import noShareIcon from "../assets/icon-no-share.svg";
 import makeBackupIcon from "../assets/icon-make-backup.svg";
 
 export default defineComponent({
+    name: "KeystoreWarningCards",
     setup() {
         return {
             noLoseIcon,
@@ -72,6 +74,7 @@ export default defineComponent({
     }
 });
 </script>
+
 <style lang="postcss" scoped>
 .save-my-keystore-cards {
     display: flex;

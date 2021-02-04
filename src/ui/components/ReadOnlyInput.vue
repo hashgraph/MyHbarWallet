@@ -22,6 +22,7 @@ import { mdiEye, mdiEyeOutline } from "@mdi/js";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
 export default defineComponent({
+    name: "ReadOnlyInput",
     props: {
         value: (String as unknown) as PropType<string | null>,
         multiline: Boolean,

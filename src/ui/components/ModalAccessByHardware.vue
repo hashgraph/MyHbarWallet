@@ -150,6 +150,7 @@ export interface Props {
 }
 
 export default defineComponent({
+    name: "ModalAccessByHardware",
     components: {
         RadioButtonGroup,
         Button,

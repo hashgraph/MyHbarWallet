@@ -20,6 +20,7 @@ import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import Tooltip from "./Tooltip.vue";
 
 export default defineComponent({
+    name: "InfoButton",
     components: {
         MaterialDesignIcon,
         Tooltip

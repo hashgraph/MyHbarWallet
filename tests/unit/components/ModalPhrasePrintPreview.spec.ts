@@ -37,7 +37,7 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
         "coast"
     ];
 
-    it("renders open, no words", async (): Promise<void> => {
+    it("renders open, no words", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -54,7 +54,7 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -118,7 +118,7 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
         `);
     });
 
-    it("renders open, words", async (): Promise<void> => {
+    it("renders open, words", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -135,7 +135,7 @@ describe("ModalPhrasePrintPreview.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore

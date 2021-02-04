@@ -172,6 +172,7 @@ export interface Component {
 }
 
 export default defineComponent({
+    name: "TextInput",
     components: { MaterialDesignIcon },
     props: {
         placeholder: (String as unknown) as PropType<string>,

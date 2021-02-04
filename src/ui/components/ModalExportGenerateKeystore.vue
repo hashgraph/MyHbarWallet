@@ -49,6 +49,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalExportGenerateKeystore",
     components: {
         Modal,
         InfoButton,

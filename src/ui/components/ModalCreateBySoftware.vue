@@ -49,6 +49,7 @@ interface State {
 }
 
 export default defineComponent({
+    name: "ModalCreateBySoftware",
     components: {
         RadioButtonGroup,
         Button,

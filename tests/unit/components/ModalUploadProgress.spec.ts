@@ -11,7 +11,7 @@ describe("ModalUploadProgress.vue", (): void => {
     const onFinish = jest.fn();
     const onRetry = jest.fn();
 
-    it("renders, in progress, 0%", async (): Promise<void> => {
+    it("renders, in progress, 0%", async(): Promise<void> => {
         const wrapper = mount(ModalUploadProgress, {
             localVue,
             propsData: {
@@ -33,7 +33,7 @@ describe("ModalUploadProgress.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -88,7 +88,7 @@ describe("ModalUploadProgress.vue", (): void => {
         `);
     });
 
-    it("renders, in progress, 70%", async (): Promise<void> => {
+    it("renders, in progress, 70%", async(): Promise<void> => {
         const wrapper = mount(ModalUploadProgress, {
             localVue,
             propsData: {
@@ -110,7 +110,7 @@ describe("ModalUploadProgress.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -165,7 +165,7 @@ describe("ModalUploadProgress.vue", (): void => {
         `);
     });
 
-    it("renders, finished, success", async (): Promise<void> => {
+    it("renders, finished, success", async(): Promise<void> => {
         const wrapper = mount(ModalUploadProgress, {
             localVue,
             propsData: {
@@ -187,7 +187,7 @@ describe("ModalUploadProgress.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -242,7 +242,7 @@ describe("ModalUploadProgress.vue", (): void => {
         `);
     });
 
-    it("renders, finished, failure", async (): Promise<void> => {
+    it("renders, finished, failure", async(): Promise<void> => {
         const wrapper = mount(ModalUploadProgress, {
             localVue,
             propsData: {
@@ -264,7 +264,7 @@ describe("ModalUploadProgress.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore

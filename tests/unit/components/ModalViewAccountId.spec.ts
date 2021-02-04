@@ -6,7 +6,7 @@ import ModalViewAccountId from "../../../src/ui/components/ModalViewAccountId.vu
 import i18n from "../../../src/service/i18n";
 
 describe("ModalViewAccountId.vue", (): void => {
-    it("renders open", async (): Promise<void> => {
+    it("renders open", async(): Promise<void> => {
         expect.assertions(1);
 
         const localVue = createLocalVue();
@@ -28,7 +28,7 @@ describe("ModalViewAccountId.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore

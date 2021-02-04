@@ -26,6 +26,6 @@ export const testnetNetworkOption = ".select-menu > :nth-child(2)";
 export const accountIdInput = ":nth-child(3) > .text-input > .label-container > .input-container > .input-wrapper > .flex-container > .text-flex-item > input";
 export const accountIdContinueButton = ".buttons > [type='submit']";
 
-export function mnemonicInput(index: string): string {
+export function mnemonicInput(index: number): string {
     return `:nth-child(${index}) > .word`;
 }

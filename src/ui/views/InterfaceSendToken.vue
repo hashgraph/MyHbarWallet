@@ -82,12 +82,14 @@ export default defineComponent({
     components: { Button, InterfaceForm, TextInput, Notice, IDInput, OptionalMemoField, Select },
     setup(_, context) {
         onMounted(() => {
-            if (getters.currentUserTokens() == null) {
-                actions.refreshBalancesAndRate();
+            if (getters.currentUser() != null) {
+                if (getters.currentUserTokens() == null) {
+                    actions.refreshBalancesAndRate();
+                }
             }
         });
 
-        const tokens = computed(() => getters.currentUserTokens());
+        const tokens = computed(() => getters.currentUserTokens() || []);
 
         const hasTokens = computed(() => {
             if (tokens.value != null) {

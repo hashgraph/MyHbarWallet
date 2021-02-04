@@ -20,6 +20,7 @@
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
+    name: "Feature",
     props: {
         image: String,
         title: String

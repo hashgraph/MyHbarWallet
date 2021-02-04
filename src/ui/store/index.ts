@@ -420,25 +420,17 @@ export const actions = {
         account: import("@hashgraph/sdk").AccountId,
         wallet: Wallet,
         network: NetworkSettings
-    ): Promise<void> {
+    ): Promise<boolean> {
         const user = { session: null as Session | null, wallet };
+        const session = await constructSession(account, user.wallet, network); // Throws
 
-        if (user.wallet != null) {
-            try {
-                user.session = await constructSession(account, user.wallet, network);
-            } catch (error) {
-                throw error;
-            }
+        if (session != null) {
+            mutations.setCurrentUser({ session, wallet: user.wallet });
+            await this.refreshBalancesAndRate();
+            return true;
         }
 
-        if (user.session != null && user.wallet != null) {
-            mutations.setCurrentUser({ session: user.session, wallet: user.wallet });
-        } else {
-            throw new Error("null session or wallet on login, could not set user");
-        }
-
-        void this.refreshBalancesAndRate();
-        void this.determineInUS();
+        return false;
     },
 
     logOut(): void {

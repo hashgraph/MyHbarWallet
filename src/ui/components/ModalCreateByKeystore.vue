@@ -56,6 +56,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalCreateByKeystore",
     components: {
         Modal,
         Warning,

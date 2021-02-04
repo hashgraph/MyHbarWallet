@@ -15,8 +15,7 @@ type ModalCreateByPhraseState = ModalIsOpen;
 type ModalRequestToCreateAccountState = ModalIsOpen;
 
 export interface AccountDTO {
-    privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null;
-    publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
+    possibleKeys: Array<import("@hashgraph/sdk").Ed25519PrivateKey>;
     keyFile: Uint8Array | null;
 }
 

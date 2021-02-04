@@ -33,6 +33,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalExportDownloadKeystore",
     components: {
         Modal,
         Button,

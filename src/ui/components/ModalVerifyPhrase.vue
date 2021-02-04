@@ -59,6 +59,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalVerifyPhrase",
     components: {
         Modal,
         Button,

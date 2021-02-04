@@ -43,6 +43,7 @@ interface Context extends SetupContext {
 }
 
 export default defineComponent({
+    name: "OptionalMemoField",
     components: {
         TextInput,
         SwitchButton

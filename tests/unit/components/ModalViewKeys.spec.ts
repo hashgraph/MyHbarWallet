@@ -15,7 +15,7 @@ describe("ModalViewKeys.vue", (): void => {
     const fakePublicKey =
         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
 
-    it("renders open", async (): Promise<void> => {
+    it("renders open", async(): Promise<void> => {
         expect.assertions(2);
         const onChange = jest.fn();
 
@@ -33,7 +33,7 @@ describe("ModalViewKeys.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore

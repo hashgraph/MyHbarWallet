@@ -30,6 +30,7 @@ import {
 } from "../fixtures/access";
 
 import { Ed25519PrivateKey } from '@hashgraph/sdk';
+import { isString } from "cypress/types/lodash";
 
 // Note: Netlify cannot currently parse JSON arrays (however they are specified)
 // Therefore, we use comma-separated strings for arrays
@@ -94,7 +95,7 @@ describe("Access My Account", () => {
             .click()
             .then(() => {
                 for (let i = 1; i < 25; i++) {
-                    cy.get(mnemonicInput(i.toString())).type(phrase[ i - 1 ]);
+                    cy.get(mnemonicInput(i)).type(phrase[ i - 1 ]);
                 }
             })
             .get(mnemonicContinueButton)
@@ -106,6 +107,46 @@ describe("Access My Account", () => {
             })
             .get(accountIdInput)
             .type(MNEMONIC_ACCOUNT_ID)
+            .then(() => {
+                cy.get(accountIdContinueButton).click();
+            });
+        cy.wait(1000);
+        cy.url().should("include", "interface");
+    });
+
+    it("can access by Mnemonic Phrase (Legacy 24 Words)", () => {
+        const {
+            MNEMONICL24_ACCOUNT_ID,
+            MNEMONICL24_PHRASE
+        } = Cypress.env();
+
+        const phrase = MNEMONICL24_PHRASE.split(",");
+
+        cy
+            .get(softwareTile)
+            .click()
+            .get(mnemonicPhraseOption)
+            .click()
+            .get(accessContinueButton)
+            .click()
+            .get(mnemonicWordSelect)
+            .click()
+            .get(mnemonic24WordOption)
+            .click()
+            .then(() => {
+                for (let i = 1; i < 25; i++) {
+                    cy.get(mnemonicInput(i)).type(phrase[ i - 1 ]);
+                }
+            })
+            .get(mnemonicContinueButton)
+            .click()
+            .get(networkSelector)
+            .click()
+            .then(() => {
+                cy.get(testnetNetworkOption).click();
+            })
+            .get(accountIdInput)
+            .type(MNEMONICL24_ACCOUNT_ID)
             .then(() => {
                 cy.get(accountIdContinueButton).click();
             });
@@ -134,7 +175,7 @@ describe("Access My Account", () => {
             .click()
             .then(() => {
                 for (let i = 1; i < 23; i++) {
-                    cy.get(mnemonicInput(i.toString())).type(phrase[ i - 1 ]);
+                    cy.get(mnemonicInput(i)).type(phrase[ i - 1 ]);
                 }
             })
             .get(mnemonicContinueButton)
@@ -174,7 +215,7 @@ describe("Access My Account", () => {
             .click()
             .then(() => {
                 for (let i = 1; i < 13; i++) {
-                    cy.get(mnemonicInput(i.toString())).type(phrase[ i - 1 ]);
+                    cy.get(mnemonicInput(i)).type(phrase[ i - 1 ]);
                 }
             })
             .get(mnemonicContinueButton)
@@ -216,7 +257,7 @@ describe("Access My Account", () => {
             .click()
             .then(() => {
                 for (let i = 1; i < 25; i++) {
-                    cy.get(mnemonicInput(i.toString())).type(phrase[ i - 1 ]);
+                    cy.get(mnemonicInput(i)).type(phrase[ i - 1 ]);
                 }
             })
             .get(mnemonicPasswordToggle)
@@ -279,7 +320,7 @@ describe("Access My Account", () => {
         } = Cypress.env();
 
         const key = Ed25519PrivateKey.fromString(KEY_PRIVATE_KEY);
-        const KEY_PRIVATE_KEY_UNPREFIXED = key.toString(true);  // true = no prefix
+        const KEY_PRIVATE_KEY_UNPREFIXED = key.toString();
 
         cy
             .get(softwareTile)
