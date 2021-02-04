@@ -11,7 +11,7 @@ describe("ModalEnterAccountId.vue", (): void => {
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    it("renders", async(): Promise<void> => {
+    it("renders", async (): Promise<void> => {
         expect.assertions(2);
 
         const state = {
@@ -32,7 +32,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            (child) => child.$options.name === "Modal"
+            child => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -140,7 +140,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         `);
     });
 
-    it("renders with list", async(): Promise<void> => {
+    it("renders with list", async (): Promise<void> => {
         expect.assertions(1);
 
         const state = {
@@ -174,7 +174,7 @@ describe("ModalEnterAccountId.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            (child) => child.$options.name === "Modal"
+            child => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -202,31 +202,31 @@ describe("ModalEnterAccountId.vue", (): void => {
                               <div class="text">
                                 <!---->
                                 <div class="message">
-                                  Hashgraph wallet applications may derive keys from your seed information in multiple ways. MyHbarWallet will try each of these keys on login. If login succeeds, please check your associated key and download a Keystore for future use.
+                                  Hashgraph wallet applications may derive keys from your phrase in multiple ways. MyHbarWallet will try each of these keys on login. If login succeeds, please check your associated key and download a Keystore for future use.
                                 </div>
                               </div>
                             </div>
                             <div class="read-only-input input">
                               <div class="value multiline">
-                                302a300506032b6570032100480474335c38c27bfde1f0c2010d3db95eeb74a1f8ac65212f7824ce1ab84eca
+                                480474335c38c27bfde1f0c2010d3db95eeb74a1f8ac65212f7824ce1ab84eca
                               </div>
                               <!---->
                             </div>
                             <div class="read-only-input input">
                               <div class="value multiline">
-                                302a300506032b6570032100393f0b3878c12d76926ac62cf048bd47fa939ea74c1bbe1411062fabdd02ccb7
+                                393f0b3878c12d76926ac62cf048bd47fa939ea74c1bbe1411062fabdd02ccb7
                               </div>
                               <!---->
                             </div>
                             <div class="read-only-input input">
                               <div class="value multiline">
-                                302a300506032b6570032100b1b8a35b91cb8ad9f4aa0caad9310d74a6e95a5493c78158c6a7e237e49e038f
+                                b1b8a35b91cb8ad9f4aa0caad9310d74a6e95a5493c78158c6a7e237e49e038f
                               </div>
                               <!---->
                             </div>
                             <div class="read-only-input input">
                               <div class="value multiline">
-                                302a300506032b6570032100011a8d4eb2aaa9cf03af805bae828ba8e3c954bb5a7571f02f2288d89264ab1c
+                                011a8d4eb2aaa9cf03af805bae828ba8e3c954bb5a7571f02f2288d89264ab1c
                               </div>
                               <!---->
                             </div>
