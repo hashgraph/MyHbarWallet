@@ -60,7 +60,7 @@ describe("ModalAccessByHardware.vue", (): void => {
                             <div>Continue</div>
                           </div>
                           <div class="instructions bold">
-                            <div>Please use Chrome to continue.</div>
+                            <div>Device communication failed, please reset your device or use a different browser to continue.</div>
                           </div>
                           <div class="instructions bold">
                             <div>Watch for prompts on your hardware wallet.</div>
@@ -129,7 +129,7 @@ describe("ModalAccessByHardware.vue", (): void => {
                             <div>Continue</div>
                           </div>
                           <div class="instructions bold">
-                            <div>Please use Chrome to continue.</div>
+                            <div>Device communication failed, please reset your device or use a different browser to continue.</div>
                           </div>
                           <div class="instructions bold">
                             <div>Watch for prompts on your hardware wallet.</div>
