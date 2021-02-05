@@ -1,0 +1,30 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 2,
+    "total": 2,
+    "workspacePrefix": null
+  },
+  "1 debug pnpm": {
+    "isCaseSensitive": null,
+    "store": "/home/chris/Projects/Hedera/my-hbar-wallet/node_modules/.pnpm-store/2"
+  },
+  "2 info pnpm": {
+    "err": {
+      "name": "TypeError [ERR_INVALID_ARG_TYPE]",
+      "message": "The \"from\" argument must be of type string. Received type undefined",
+      "code": "ERR_INVALID_ARG_TYPE",
+      "stack": "TypeError [ERR_INVALID_ARG_TYPE]: The \"from\" argument must be of type string. Received type undefined\n    at validateString (internal/validators.js:125:11)\n    at Object.relative (path.js:1162:5)\n    at Object.checkCompatibility [as default] (/home/chris/.npm/_npx/20524/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/checkCompatibility/index.js:12:14)\n    at Promise.all.importers.map (/home/chris/.npm/_npx/20524/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/index.js:82:41)\n    at Array.map (<anonymous>)\n    at validateNodeModules (/home/chris/.npm/_npx/20524/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/index.js:72:33)\n    at Object.getContext [as default] (/home/chris/.npm/_npx/20524/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/index.js:17:15)\n    at process._tickCallback (internal/process/next_tick.js:68:7)"
+    }
+  },
+  "3 error pnpm": {
+    "message": {
+      "prefix": "/home/chris/Projects/Hedera/my-hbar-wallet"
+    },
+    "err": {
+      "name": "TypeError [ERR_INVALID_ARG_TYPE]",
+      "message": "The \"from\" argument must be of type string. Received type undefined",
+      "code": "ERR_INVALID_ARG_TYPE",
+      "stack": "TypeError [ERR_INVALID_ARG_TYPE]: The \"from\" argument must be of type string. Received type undefined\n    at validateString (internal/validators.js:125:11)\n    at Object.relative (path.js:1162:5)\n    at Object.checkCompatibility [as default] (/home/chris/.npm/_npx/20524/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/checkCompatibility/index.js:12:14)\n    at Promise.all.importers.map (/home/chris/.npm/_npx/20524/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/index.js:82:41)\n    at Array.map (<anonymous>)\n    at validateNodeModules (/home/chris/.npm/_npx/20524/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/index.js:72:33)\n    at Object.getContext [as default] (/home/chris/.npm/_npx/20524/lib/node_modules/pnpm/lib/node_modules/supi/lib/getContext/index.js:17:15)\n    at process._tickCallback (internal/process/next_tick.js:68:7)"
+    }
+  }
+}

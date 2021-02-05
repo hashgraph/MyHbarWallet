@@ -66,11 +66,11 @@ import Tooltip from "./Tooltip.vue";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
 export default defineComponent({
+    name: "BalanceCard",
     components: {
         MaterialDesignIcon,
         Tooltip
     },
-    props: {},
     setup() {
         const Hbarf: Ref<typeof import("@hashgraph/sdk").Hbar | null> = ref(null);
         const HbarfUnit: Ref<typeof import("@hashgraph/sdk").HbarUnit | null> = ref(null);

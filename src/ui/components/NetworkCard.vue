@@ -40,8 +40,8 @@ import { NetworkSettings } from "../../domain/network";
 import Tooltip from "./Tooltip.vue";
 
 export default defineComponent({
+    name: "NetworkCard",
     components: { Tooltip },
-    props: {},
     setup() {
         const state = reactive({ network: null as NetworkSettings | null });
 

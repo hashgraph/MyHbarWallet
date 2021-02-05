@@ -72,11 +72,11 @@ interface State {
 }
 
 export default defineComponent({
+    name: "UnitConverter",
     components: {
         Select,
         TextInput
     },
-    props: {},
     setup() {
         // eslint-disable-next-line compat/compat
         const options = Object.values(Unit);

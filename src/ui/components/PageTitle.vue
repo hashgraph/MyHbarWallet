@@ -16,6 +16,7 @@
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
+    name: "PageTitle",
     props: {
         title: { type: String, required: true },
         large: { type: Boolean }

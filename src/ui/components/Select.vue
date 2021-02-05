@@ -45,6 +45,7 @@ interface State {
 }
 
 export default defineComponent({
+    name: "Select",
     components: { MaterialDesignIcon },
     model: {
         prop: "selected",

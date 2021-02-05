@@ -23,7 +23,7 @@ import Button from "./Button.vue";
 import PasswordWithConfirm, { State as PasswordConfirmState } from "./PasswordWithConfirm.vue";
 
 export default defineComponent({
-    props: {},
+    name: "PasswordGenerator",
     components: {
         Button,
         PasswordWithConfirm

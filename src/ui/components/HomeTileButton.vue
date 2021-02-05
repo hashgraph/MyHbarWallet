@@ -35,6 +35,7 @@ import { defineComponent } from "@vue/composition-api";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
 export default defineComponent({
+    name: "HomeTileButton",
     components: { MaterialDesignIcon },
     props: {
         route: { type: String, required: true },

@@ -13,7 +13,7 @@ describe("ModalCreateWithSoftware.vue", (): void => {
     localVue.use(VueRouter);
     localVue.use(VueI18n);
 
-    it("renders open", async (): Promise<void> => {
+    it("renders open", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -22,13 +22,14 @@ describe("ModalCreateWithSoftware.vue", (): void => {
             i18n,
             router,
             propsData: { isOpen: true },
-            listeners: { change: onChange }
+            listeners: { change: onChange },
+            stubs: { CustomerSupportLink: true }
         });
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -63,41 +64,7 @@ describe("ModalCreateWithSoftware.vue", (): void => {
                             <!----> <span>Continue</span>
                             <!---->
                           </button>
-                          <div class="customer-support-link support-link">
-                            <div class="customer-support-container"><img alt="" src="">Customer Support
-                            </div>
-                            <modal title="Issue Information">
-                              <form class="modal-issue-information">
-                                <!---->
-                                <!---->
-                                <div class="text-input issue-item"><label class="label-container">
-                                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span>
-                                  </label>
-                                  <!---->
-                                  <!---->
-                                </div>
-                                <div class="text-input issue-item"><label class="label-container">
-                                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Account ID (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span>
-                                  </label>
-                                  <!---->
-                                  <!---->
-                                </div>
-                                <!---->
-                                <div class="text-input issue-item is-multiline"><label class="label-container">
-                                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea placeholder="Describe the issue" rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                                    <!----></span>
-                                  </label>
-                                  <!---->
-                                  <!---->
-                                </div> <button type="submit" class="send-button compact">
-                                  <!----> <span>Send</span>
-                                  <!---->
-                                </button>
-                              </form>
-                            </modal>
-                          </div>
+                          <customersupportlink-stub class="support-link"></customersupportlink-stub>
                         </form>
                       </div>
                     </div>

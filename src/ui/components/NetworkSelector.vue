@@ -39,6 +39,7 @@
         </div>
     </div>
 </template>
+
 <script lang="ts">
 import { computed, defineComponent, reactive, Ref, ref, SetupContext, watch } from "@vue/composition-api";
 import { mdiInformationOutline } from "@mdi/js";

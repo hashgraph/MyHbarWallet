@@ -27,8 +27,8 @@ import walletImage from "../assets/wallet-hbar.svg";
 import HomeTileButton from "./HomeTileButton.vue";
 
 export default defineComponent({
+    name: "HomeTileButtons",
     components: { HomeTileButton },
-    props: {},
     setup() {
         const wallet = walletImage;
 

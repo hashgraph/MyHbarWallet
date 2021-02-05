@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, SetupContext } from "@vue/composition-api";
+import { computed, defineComponent, PropType } from "@vue/composition-api";
 import { mdiChevronDown, mdiChevronUp } from "@mdi/js";
 
 import { mutations } from "../store";
@@ -65,14 +65,15 @@ function handleClick(): void {
 }
 
 export default defineComponent({
+    name: "InterfaceNavigationSection",
     components: { MaterialDesignIcon },
     props: {
-        icon: (String as unknown) as PropType<string>,
-        title: (String as unknown) as PropType<string>,
+        icon: String,
+        title: String,
         routes: (Array as unknown) as PropType<InterfaceNavigationItem[]>
     },
     watch: {},
-    setup(props: Props, context: SetupContext) {
+    setup(props: Props, context) {
         const isSectionActive = computed(() => {
             if (
                 props.routes.some((route) => route.name ===

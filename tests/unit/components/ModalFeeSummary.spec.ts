@@ -11,7 +11,7 @@ describe("ModalLogOut.vue", (): void => {
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    it("renders", async (): Promise<void> => {
+    it("renders", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -44,7 +44,7 @@ describe("ModalLogOut.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore

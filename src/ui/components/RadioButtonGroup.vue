@@ -28,6 +28,7 @@ interface Option {
 }
 
 export default defineComponent({
+    name: "RadioButtonGroup",
     components: { RadioButton },
     model: {
         prop: "selected",

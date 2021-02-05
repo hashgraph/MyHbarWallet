@@ -149,6 +149,7 @@ function handleReturnClick(): void {
 }
 
 export default defineComponent({
+    name: "Header",
     components: {
         Button,
         HeaderHamburgerMenu,
@@ -156,8 +157,7 @@ export default defineComponent({
         ModalLogOut,
         MaterialDesignIcon
     },
-    props: {},
-    setup(props, context) {
+    setup(_, context) {
         const isInterface = computed(() => {
             // This conditional is required for unit tests to pass
             if (context.root != null) {

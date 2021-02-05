@@ -26,6 +26,7 @@ import softwareImage from "../assets/button-software.svg";
 import AccountTileButton from "./AccountTileButton.vue";
 
 export default defineComponent({
+    name: "AccountTileButtons",
     components: { AccountTileButton },
     props: {},
     setup() {

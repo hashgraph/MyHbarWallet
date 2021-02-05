@@ -35,6 +35,7 @@ import Button from "./Button.vue";
 import ModalPurchaseHbar from "./ModalPurchaseHbar.vue";
 
 export default defineComponent({
+    name: "AdBlockBuyHbar",
     components: { Button, MaterialDesignIcon, ModalPurchaseHbar },
     setup() {
         const state = reactive({ isOpen: false });

@@ -49,6 +49,7 @@
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
+    name: "ModalFeeSummaryTitle",
     props: {
         amount: String,
         account: String,

@@ -46,6 +46,7 @@ export enum AccessSoftwareOption {
 }
 
 export default defineComponent({
+    name: "ModalAccessBySoftware",
     components: {
         RadioButtonGroup,
         Button,

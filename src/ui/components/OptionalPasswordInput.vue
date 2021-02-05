@@ -54,11 +54,8 @@ interface Context extends SetupContext {
     };
 }
 
-interface State {
-    showPassword: boolean;
-}
-
 export default defineComponent({
+    name: "OptionalPasswordInput",
     components: {
         TextInput,
         SwitchButton
@@ -67,7 +64,7 @@ export default defineComponent({
         value: { type: String, default: "" },
         passwordWarning: { type: String, default: null }
     },
-    setup(props, context) {
+    setup(_, context) {
         const state = reactive({ showPassword: false });
 
         function handleInput(password: string): void {

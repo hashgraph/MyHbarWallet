@@ -4,8 +4,6 @@
 // eslint-disable-next-line spaced-comment
 /// <reference types="cypress" />
 
-import { Ed25519PrivateKey } from "@hashgraph/sdk";
-
 const softwareSelectButton = ".modal-access-by-software > button";
 
 describe("Create An Account", () => {
@@ -16,7 +14,7 @@ describe("Create An Account", () => {
         cy.url().should("include", "create-account");
     });
 
-    const { KEYSTORE_PASSWORD, MNEMONICP_PASSWORD } = Cypress.env();
+    const { MNEMONICP_PASSWORD } = Cypress.env();
 
     it("can create an account With Mnemonic Phrase, without password", () => {
         const mnemonicPhraseList: string[] = [];

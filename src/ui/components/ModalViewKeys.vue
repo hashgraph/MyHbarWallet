@@ -69,6 +69,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalViewKeys",
     components: {
         Modal,
         ReadOnlyInput,

@@ -62,12 +62,13 @@ async function uint8ArrayOf(file: File): Promise<Uint8Array> {
 }
 
 export default defineComponent({
+    name: "UploadZone",
     components: {
         Button,
         MaterialDesignIcon
     },
     props: { fileName: String },
-    setup(props, context) {
+    setup(_, context) {
         const state = reactive({
             isFileHovering: false,
             dragCounter: 0

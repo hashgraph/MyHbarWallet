@@ -22,8 +22,8 @@ import { store } from "../store";
 import Alert from "./Alert.vue";
 
 export default defineComponent({
+    name: "Alerts",
     components: { Alert },
-    props: {},
     setup() {
         const alerts = computed(() => store.state.alerts.queue);
 

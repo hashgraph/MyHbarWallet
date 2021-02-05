@@ -58,6 +58,7 @@ function handleGoBack(): void {
 }
 
 export default defineComponent({
+    name: "ModalLogOut",
     components: {
         Button,
         Modal,

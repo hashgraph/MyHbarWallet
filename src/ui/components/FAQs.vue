@@ -70,6 +70,7 @@ import Accordion from "./Accordion.vue";
 import CustomerSupportLink from "./CustomerSupportLink.vue";
 
 export default defineComponent({
+    name: "FAQs",
     components: {
         Accordion,
         CustomerSupportLink

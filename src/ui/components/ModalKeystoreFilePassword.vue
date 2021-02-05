@@ -45,6 +45,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalKeystoreFilePassword",
     components: {
         Modal,
         Warning,

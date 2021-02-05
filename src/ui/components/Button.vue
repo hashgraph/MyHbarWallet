@@ -34,6 +34,7 @@ import { mdiLoading } from "@mdi/js";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
 export default defineComponent({
+    name: "Button",
     components: { MaterialDesignIcon },
     props: {
         outline: { type: Boolean },

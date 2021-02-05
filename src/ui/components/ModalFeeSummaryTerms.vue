@@ -37,6 +37,7 @@ export interface State {
 }
 
 export default defineComponent({
+    name: "ModalFeeSummaryTerms",
     props: { state: Object as PropType<State> },
     components: { InfoButton },
     setup(props) {

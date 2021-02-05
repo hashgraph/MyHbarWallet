@@ -93,6 +93,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalPhrasePrintPreview",
     components: {
         Button,
         Modal,

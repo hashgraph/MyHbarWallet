@@ -36,6 +36,7 @@
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
+    name: "HardwareWalletOffer",
     props: {
         description: { type: String, required: true },
         image: { type: String, required: true },

@@ -105,6 +105,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "AccountCard",
     components: {
         MaterialDesignIcon,
         Tooltip,

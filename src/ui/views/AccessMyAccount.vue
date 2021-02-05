@@ -38,12 +38,10 @@
         />
 
         <ModalEnterAccountId
-            ref="modalEnterAccountId"
             v-model="state.modalEnterAccountIdState"
             @network="handleNetworkChange"
             @noAccount="handleDoesntHaveAccount"
             @submit="handleAccountIdSubmit"
-            @close="handleAccountIdClose"
         />
 
         <ModalRequestToCreateAccount
@@ -64,7 +62,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { defineComponent, reactive, ref, Ref, SetupContext } from "@vue/composition-api";
+import { defineComponent, reactive, ref, Ref } from "@vue/composition-api";
 
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "../components/AccountTileButtons.vue";
@@ -74,15 +72,14 @@ import ModalAccessByPhrase, { WordCount } from "../components/ModalAccessByPhras
 import ModalAccessByPrivateKey from "../components/ModalAccessByPrivateKey.vue";
 import PageTitle from "../components/PageTitle.vue";
 import ModalKeystoreFilePassword from "../components/ModalKeystoreFilePassword.vue";
-import ModalEnterAccountId, { ModalEnterAccountIdElement } from "../components/ModalEnterAccountId.vue";
+import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import { actions, getters, mutations } from "../store";
 import SoftwareWallet from "../../domain/wallets/software";
 import Wallet, { LoginMethod } from "../../domain/wallets/wallet";
 import { AccessAccountDTO } from "../../dto/access";
 import { NetworkName, NetworkSettings } from "../../domain/network";
-
-import { HederaStatusErrorTuple, LedgerErrorTuple } from "src/ui/store/modules/errors";
+import { HederaStatusErrorTuple, LedgerErrorTuple } from "../store/modules/errors";
 
 declare const MHW_ENV: string;
 
@@ -105,11 +102,10 @@ export default defineComponent({
         ModalRequestToCreateAccount
     },
     props: {},
-    setup(props: object, context: SetupContext) {
+    setup(_, context) {
         const state: AccessAccountDTO & State = reactive({
-            privateKey: null,
-            publicKey: null,
             keyFile: null,
+            possibleKeys: [], // Private Keys
             modalAccessByHardwareState: {
                 isOpen: false,
                 isBusy: false,
@@ -142,18 +138,67 @@ export default defineComponent({
                 isOpen: false,
                 isBusy: false,
                 account: null,
+                possiblePublicKeys: [], // Public Keys
                 valid: false,
-                networkValid: false,
-                publicKey: null,
-                derivedPublicKey: null
+                networkValid: false
             },
             modalRequestToCreateAccountState: { isOpen: false },
             loginMethod: null,
             wallet: null
         });
 
+        type SeedInfo = import("@hashgraph/sdk").Mnemonic | import("@hashgraph/sdk").Ed25519PrivateKey;
+        async function addKeysFromSeed(info: SeedInfo, password?: string): Promise<void> {
+            const { Ed25519PrivateKey, Mnemonic } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+
+            if (info instanceof Mnemonic) {
+                // Mnemonic
+                if (info.words.length === WordCount.TwentyFour) {
+                    // Add Legacy Derivation Scheme Keys
+                    const legacyKey = await info.toLegacyPrivateKey();
+                    state.possibleKeys.push(legacyKey);
+                    state.modalEnterAccountIdState.possiblePublicKeys.push(legacyKey.publicKey);
+
+                    const derivedLegacyKey = await legacyKey.legacyDerive(0);
+                    state.possibleKeys.push(derivedLegacyKey);
+                    state.modalEnterAccountIdState.possiblePublicKeys.push(derivedLegacyKey.publicKey);
+                }
+
+                if (password == null) password = "";
+
+                const key = await info.toPrivateKey(password);
+                state.possibleKeys.push(key);
+                state.modalEnterAccountIdState.possiblePublicKeys.push(key.publicKey);
+
+                if (key.supportsDerivation) {
+                    const derivedKey = await key.derive2(0);
+                    state.possibleKeys.push(derivedKey);
+                    state.modalEnterAccountIdState.possiblePublicKeys.push(derivedKey.publicKey);
+                }
+            } else if (info instanceof Ed25519PrivateKey) {
+                state.possibleKeys.push(info);
+                state.modalEnterAccountIdState.possiblePublicKeys.push(info.publicKey);
+            }
+        }
+
+        async function resetState(): Promise<void> {
+            state.possibleKeys = [];
+            state.modalEnterAccountIdState.possiblePublicKeys = [];
+            state.modalEnterAccountIdState.account = null;
+            state.modalAccessByPhraseState.words = [];
+            state.modalAccessByPhraseState.password = "";
+
+            state.wallet = null;
+            state.loginMethod = null;
+            state.keyFile = null;
+
+            state.modalAccessByPhraseState.isBusy = false;
+            state.modalKeystoreFilePasswordState.isBusy = false;
+            state.modalAccessByPrivateKeyState.isBusy = false;
+            state.modalEnterAccountIdState.isBusy = false;
+        }
+
         const keystoreFile: Ref<HTMLInputElement | null> = ref(null);
-        const modalEnterAccountId: Ref<ModalEnterAccountIdElement | null> = ref(null);
 
         async function loadKeystore(event: Event): Promise<void> {
             const target = event.target as HTMLInputElement;
@@ -176,23 +221,14 @@ export default defineComponent({
                 reader.readAsArrayBuffer(keystoreFile);
             });
 
-            target.value = ""; // change back to initial state to guarantee that click fires next time
-            state.modalKeystoreFilePasswordState.isOpen = true;
+            // click will not fire again unless cleared
+            target.value = "";
+
             state.keyFile = new Uint8Array(keyStoreArrayBuff);
-            // In case the submit for AccessBySoftware does not fire (i.e. when programmatically uploading the file)
             state.loginMethod = LoginMethod.KeyStore;
-        }
-
-        function setPrivateKey(newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey): void {
-            state.privateKey = newPrivateKey;
-            state.publicKey = newPrivateKey.publicKey;
-            state.modalEnterAccountIdState.publicKey = newPrivateKey.publicKey;
-
-            if (state.privateKey != null) {
-                if (state.privateKey.supportsDerivation) {
-                    state.modalEnterAccountIdState.derivedPublicKey = newPrivateKey.derive(0).publicKey;
-                }
-            }
+            Vue.nextTick(() => {
+                state.modalKeystoreFilePasswordState.isOpen = true;
+            });
         }
 
         function handleNetworkChange(settings: NetworkSettings): void {
@@ -204,46 +240,58 @@ export default defineComponent({
             }
         }
 
-        function handleClickTiles(which: string): void {
+        async function handleClickTiles(which: string): Promise<void> {
+            await resetState();
+
             if (which === "hardware") {
-                state.modalAccessByHardwareState.isOpen = true;
+                Vue.nextTick(() => {
+                    state.modalAccessByHardwareState.isOpen = true;
+                });
             } else if (which === "software") {
-                state.modalAccessBySoftwareState.isOpen = true;
+                Vue.nextTick(() => {
+                    state.modalAccessBySoftwareState.isOpen = true;
+                });
             }
         }
 
-        function handleAccessBySoftwareSubmit(which: AccessSoftwareOption): void {
-            state.modalAccessBySoftwareState.isOpen = false;
+        async function handleAccessBySoftwareSubmit(which: AccessSoftwareOption): Promise<void> {
+            Vue.nextTick(() => {
+                state.modalAccessBySoftwareState.isOpen = false;
+            });
 
             if (which === AccessSoftwareOption.File) {
-                if (keystoreFile.value != null) {
-                    if (MHW_ENV !== "test") keystoreFile.value.click(); // triggers loadKeystore via hidden input @click
+                state.loginMethod = LoginMethod.KeyStore;
+                if (MHW_ENV !== "test") { // try not to do this in test env
+                    Vue.nextTick(() => {
+                        if (keystoreFile.value != null) keystoreFile.value.click();
+                    }); // triggers loadKeystore via hidden input @click
                 }
             } else if (which === AccessSoftwareOption.Phrase) {
                 state.loginMethod = LoginMethod.Mnemonic;
-                state.modalAccessByPhraseState.isOpen = true;
+                Vue.nextTick(() => state.modalAccessByPhraseState.isOpen = true);
             } else if (which === AccessSoftwareOption.Key) {
                 state.loginMethod = LoginMethod.PrivateKey;
-                state.modalAccessByPrivateKeyState.isOpen = true;
-            } else {
-                state.wallet = null;
-                state.loginMethod = null;
+                Vue.nextTick(() => state.modalAccessByPrivateKeyState.isOpen = true);
             }
         }
 
         async function handleAccessByHardwareSubmit(which: AccessHardwareOption): Promise<void> {
             switch (which) {
                 case AccessHardwareOption.Ledger:
-                    state.loginMethod = LoginMethod.Ledger;
                     state.modalAccessByHardwareState.isBusy = true;
+
                     try {
                         const { Ledger } = await import(/* webpackChunkName: "hardware" */ "../../domain/wallets/ledger");
-                        state.modalAccessByHardwareState.isBusy = true;
                         state.wallet = new Ledger();
-                        state.publicKey = (await state.wallet!.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
-                        state.modalEnterAccountIdState.publicKey = state.publicKey;
-                        state.modalAccessByHardwareState.isOpen = false;
-                        state.modalEnterAccountIdState.isOpen = true;
+                        state.loginMethod = LoginMethod.Ledger;
+
+                        const publicKey = (await state.wallet!.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
+                        state.modalEnterAccountIdState.possiblePublicKeys.push(publicKey);
+
+                        Vue.nextTick(() => {
+                            state.modalAccessByHardwareState.isOpen = false;
+                            state.modalEnterAccountIdState.isOpen = true;
+                        });
                     } catch (error) {
                         state.wallet = null;
                         state.loginMethod = null;
@@ -277,157 +325,169 @@ export default defineComponent({
             try {
                 const { Ed25519PrivateKey } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
-                setPrivateKey(await Ed25519PrivateKey.fromKeystore(
+                const key = await Ed25519PrivateKey.fromKeystore(
                     state.keyFile as Uint8Array,
                     pwState.password
-                ));
+                );
 
-                // Close  previous modal and open another one
-                pwState.isBusy = false;
-                pwState.isOpen = false;
-                state.modalEnterAccountIdState.isOpen = true;
+                await addKeysFromSeed(key);
+
+                Vue.nextTick(() => {
+                    pwState.isOpen = false;
+                    state.modalEnterAccountIdState.isOpen = true;
+                });
             } catch (error) {
+                pwState.error = context.root.$t("accessMyAccount.invalidPassword");
+            } finally {
                 pwState.isBusy = false;
-                pwState.error = "Invalid password";
             }
         }
 
         async function handleAccessByPhraseSubmit(): Promise<void> {
-            if (state.modalAccessByPhraseState.password == null) state.modalAccessByPhraseState.password = "";
-
             const accessByPhraseState = state.modalAccessByPhraseState;
             accessByPhraseState.isBusy = true;
 
-            const { Ed25519PrivateKey, Mnemonic } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+            const { Mnemonic } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
             const mnemonic = new Mnemonic(accessByPhraseState.words);
+            await addKeysFromSeed(mnemonic, accessByPhraseState.password);
 
-            const rootPrivateKey = await Ed25519PrivateKey.fromMnemonic(
-                mnemonic,
-                accessByPhraseState.password
-            );
-
-            setPrivateKey(rootPrivateKey);
-
-            // Close previous modal and open another one
-            accessByPhraseState.isBusy = false;
-            accessByPhraseState.isOpen = false;
-            state.modalEnterAccountIdState.isOpen = true;
-            accessByPhraseState.isValid = true;
+            Vue.nextTick(() => {
+                accessByPhraseState.isBusy = false;
+                accessByPhraseState.isOpen = false;
+                state.modalEnterAccountIdState.isOpen = true;
+                accessByPhraseState.isValid = true;
+            });
         }
 
         async function handleAccessByPrivateKeySubmit(): Promise<void> {
             state.modalAccessByPrivateKeyState.isBusy = true;
+
             const { Ed25519PrivateKey } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
-            setPrivateKey(Ed25519PrivateKey.fromString(state.modalAccessByPrivateKeyState.rawPrivateKey));
-            state.modalAccessByPrivateKeyState.isOpen = false;
-            state.modalAccessByPrivateKeyState.isBusy = false;
-            state.modalEnterAccountIdState.isOpen = true;
+            const key = Ed25519PrivateKey.fromString(state.modalAccessByPrivateKeyState.rawPrivateKey);
+            await addKeysFromSeed(key);
+
+            Vue.nextTick(() => {
+                state.modalAccessByPrivateKeyState.isOpen = false;
+                state.modalAccessByPrivateKeyState.isBusy = false;
+                state.modalEnterAccountIdState.isOpen = true;
+            });
         }
 
-        async function logIn(account: import("@hashgraph/sdk").AccountId): Promise<void> {
-            // Key is null here only when the user has a wallet that we cannot export the
-            // private key from, such as a hardware wallet
-            if (state.privateKey != null) {
-                state.wallet = new SoftwareWallet(
-                    state.loginMethod!,
-                    state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
-                    state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
-                );
+        async function handleLoginError(error: Error): Promise<void> {
+            const { HederaStatusError, HederaPrecheckStatusError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
+
+            if (
+                error instanceof HederaStatusError ||
+                    error instanceof HederaPrecheckStatusError
+            ) {
+                if (error.message.includes(
+                    context.root.$t("common.error.unhandled").toString()
+                )) { // Unhandled Error on Hedera Network, not this application
+                    throw error;
+                }
+
+                const result: HederaStatusErrorTuple = await actions.handleHederaError({ error, showAlert: false });
+                state.modalEnterAccountIdState.errorMessage = result.message;
+            } else if (
+                error.name === "TransportStatusError" &&
+                    state.loginMethod === LoginMethod.Ledger
+            ) {
+                const result: LedgerErrorTuple = await actions.handleLedgerError({ error, showAlert: false });
+
+                state.modalEnterAccountIdState.errorMessage =
+                        result.message;
+            } else if (
+                error.message === "Response closed without headers" ||
+                    error.message === "Response closed without grpc-status" ||
+                    error.message === "404 (Not Found)" ||
+                    error.stack?.includes("grpc")
+            ) {
+                const message = context.root
+                    .$t("network.connectionFailed")
+                    .toString();
+
+                state.modalEnterAccountIdState.errorMessage = message;
             }
-
-            await actions.logIn(account, state.wallet!, getters.currentNetwork());
-            state.modalEnterAccountIdState.isOpen = false;
-            Vue.nextTick(() => mutations.navigateToInterface());
         }
 
-        async function handleLoginError(error: import("@hashgraph/sdk").HederaStatusError): Promise<void> {
-            const result: HederaStatusErrorTuple = await actions.handleHederaError({ error, showAlert: false });
-            state.modalEnterAccountIdState.errorMessage = result.message;
+        function handleLogin(): void {
+            Vue.nextTick(async() => {
+                state.modalEnterAccountIdState.isOpen = false;
+                await mutations.navigateToInterface();
+            });
         }
 
-        // :^)
-        // eslint-disable-next-line sonarjs/cognitive-complexity
         async function handleAccountIdSubmit(
             account: import("@hashgraph/sdk").AccountId
         ): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
+            const network = getters.currentNetwork();
+            let lastError: Error | undefined;
 
             try {
-                await logIn(account);
-            } catch (error) {
-                const { HederaStatusError, HederaPrecheckStatusError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
-                if (error instanceof HederaStatusError || error instanceof HederaPrecheckStatusError) {
-                    if (
-                        error.message.includes(context.root.$t("common.error.unhandled").toString())
-                    ) { // Unhandled Error on Hedera Network, not this application
-                        throw error;
-                    }
-
-                    // Their key may be null here, i.e w/ hardware wallets etc.
-                    if (state.privateKey != null) {
-                        if (state.privateKey.supportsDerivation) {
-                            // Try to login w/ derived key if supported
-                            const originalKey = state.privateKey;
-                            setPrivateKey(state.privateKey.derive(0));
+                switch (state.loginMethod) {
+                    case LoginMethod.Ledger:
+                    case LoginMethod.Trezor:
+                        if (await actions.logIn(account, state.wallet!, network)) {
+                            handleLogin();
+                        }
+                        break;
+                    case LoginMethod.KeyStore:
+                    case LoginMethod.Mnemonic:
+                    case LoginMethod.PrivateKey:
+                        // user might have one of several different keys
+                        // associated with their account due to historical reasons
+                        for (const key of state.possibleKeys) {
+                            state.wallet = new SoftwareWallet(
+                                state.loginMethod,
+                                key
+                            );
 
                             try {
-                                await logIn(account);
-                            } catch (childError) {
-                                await handleLoginError(childError);
-                            } finally {
-                                setPrivateKey(originalKey);
+                                // eslint-disable-next-line no-await-in-loop
+                                if (await actions.logIn(
+                                    account,
+                                    state.wallet,
+                                    network
+                                )) {
+                                    handleLogin();
+                                }
+                                break;
+                            } catch (error) {
+                                lastError = error;
                             }
-                        } else {
-                            // Otherwise, just handle the original error
-                            await handleLoginError(error);
                         }
-                    }
-                } else if (
-                    error.name === "TransportStatusError" &&
-                    state.loginMethod === LoginMethod.Ledger
-                ) {
-                    const result: LedgerErrorTuple = await actions.handleLedgerError({ error, showAlert: false });
 
-                    state.modalEnterAccountIdState.errorMessage =
-                        result.message;
-                } else if (
-                    error.message === "Response closed without headers" ||
-                    error.message === "Response closed without grpc-status" ||
-                    error.message === "404 (Not Found)" ||
-                    error.stack.includes("grpc")
-                ) {
-                    const message = context.root
-                        .$t("network.connectionFailed")
-                        .toString();
-                    (modalEnterAccountId.value as ModalEnterAccountIdElement).setAddressError(message);
+                        if (lastError != null) throw lastError;
+                        break;
+                    default:
+                        return;
                 }
+            } catch (error) {
+                await handleLoginError(error);
             } finally {
                 state.modalEnterAccountIdState.isBusy = false;
             }
         }
 
-        function handleAccountIdClose(): void {
-            if (!state.modalRequestToCreateAccountState.isOpen) {
-                state.wallet = null;
-                state.loginMethod = null;
-            }
-        }
-
         function handleDoesntHaveAccount(): void {
-            state.modalRequestToCreateAccountState.isOpen = true;
-            state.modalEnterAccountIdState.isOpen = false;
+            Vue.nextTick(() => {
+                state.modalRequestToCreateAccountState.isOpen = true;
+                state.modalEnterAccountIdState.isOpen = false;
+            });
         }
 
         function handleHasAccount(): void {
-            state.modalRequestToCreateAccountState.isOpen = false;
-            state.modalEnterAccountIdState.isOpen = true;
+            Vue.nextTick(() => {
+                state.modalRequestToCreateAccountState.isOpen = false;
+                state.modalEnterAccountIdState.isOpen = true;
+            });
         }
 
         return {
             state,
             keystoreFile,
-            modalEnterAccountId,
             handleClickTiles,
             handleAccessBySoftwareSubmit,
             loadKeystore,
@@ -435,7 +495,6 @@ export default defineComponent({
             handleAccessByPhraseSubmit,
             handleAccessByPrivateKeySubmit,
             handleAccountIdSubmit,
-            handleAccountIdClose,
             handleAccessByHardwareSubmit,
             handleDoesntHaveAccount,
             handleHasAccount,

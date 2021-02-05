@@ -57,6 +57,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalSuccess",
     components: {
         Modal,
         Button,

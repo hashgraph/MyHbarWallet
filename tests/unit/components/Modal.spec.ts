@@ -12,7 +12,7 @@ describe("Modal.vue", (): void => {
 
     const TEXT = "Test Content";
 
-    it("renders", async (): Promise<void> => {
+    it("renders", async(): Promise<void> => {
         expect.assertions(1);
 
         const wrapper = mount(Modal, {
@@ -49,7 +49,7 @@ describe("Modal.vue", (): void => {
         `);
     });
 
-    it("renders as not closable", async (): Promise<void> => {
+    it("renders as not closable", async(): Promise<void> => {
         expect.assertions(1);
 
         const wrapper = mount(Modal, {

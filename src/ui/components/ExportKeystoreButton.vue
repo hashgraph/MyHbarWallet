@@ -38,6 +38,7 @@ export interface State {
 }
 
 export default defineComponent({
+    name: "ExportKeystoreButton",
     components: {
         Tooltip,
         MaterialDesignIcon,
@@ -91,7 +92,9 @@ export default defineComponent({
             context.root.$el.append(keystoreLink.value as Node);
 
             try {
-                if (MHW_ENV !== "test") keystoreLink.value!.click();
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                if (window.Cypress == null) keystoreLink.value!.click();
             } catch (error) {
                 actions.alert({
                     message: context.root.$t("modalExportDownloadKeystore.couldNotDownload").toString(),

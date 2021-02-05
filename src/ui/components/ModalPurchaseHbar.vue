@@ -37,6 +37,7 @@ import Modal from "./Modal.vue";
 declare const MOONPAY_API_KEY: string;
 
 export default defineComponent({
+    name: "ModalPurchaseHbar",
     components: { Modal },
     model: {
         prop: "isOpen",

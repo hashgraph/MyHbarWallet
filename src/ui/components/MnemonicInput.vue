@@ -49,7 +49,6 @@ import {
     reactive,
     ref,
     Ref,
-    SetupContext,
     watch
 } from "@vue/composition-api";
 import Vue from "vue";
@@ -73,6 +72,7 @@ interface State {
 const notBlank = (word: string): boolean => word.length > 0;
 
 export default defineComponent({
+    name: "MnemonicInput",
     props: {
         editable: Boolean,
         words: Number,
@@ -80,7 +80,7 @@ export default defineComponent({
         isOpen: Boolean
     },
     components: { Warning },
-    setup(props: Props, context: SetupContext) {
+    setup(props: Props, context) {
         const state = reactive<State>({
             focused: null,
             inputTimeout: null,

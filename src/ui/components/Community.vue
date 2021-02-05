@@ -52,8 +52,8 @@ import githubSocial from "../assets/github.png";
 import CommunitySocialIcon from "./CommunitySocialIcon.vue";
 
 export default defineComponent({
+    name: "Community",
     components: { CommunitySocialIcon },
-    props: {},
     setup() {
         return {
             facebookSocial,

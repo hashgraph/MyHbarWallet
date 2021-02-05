@@ -34,6 +34,7 @@ type Context = SetupContext & {
 };
 
 export default defineComponent({
+    name: "Tooltip",
     props: {
         message: { type: String, required: true },
         pinnable: { type: Boolean, required: false }

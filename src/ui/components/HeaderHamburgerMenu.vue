@@ -109,7 +109,7 @@
 
 <script lang="ts">
 import { mdiChevronRight, mdiOpenInNew } from "@mdi/js";
-import { computed, defineComponent, PropType, reactive, SetupContext } from "@vue/composition-api";
+import { computed, defineComponent, reactive } from "@vue/composition-api";
 
 import { getters } from "../store";
 
@@ -125,6 +125,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "HeaderHamburgerMenu",
     components: {
         MaterialDesignIcon,
         BalanceCard,
@@ -132,11 +133,11 @@ export default defineComponent({
         Button
     },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
+        isOpen: Boolean,
         kabutoLink: String,
         network: String
     },
-    setup(props: Props, context: SetupContext) {
+    setup(props: Props, context) {
         const isInterface = computed(() => {
             const route = context.root.$route;
 

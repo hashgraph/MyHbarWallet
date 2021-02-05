@@ -8,7 +8,6 @@
     >
         <form @submit.stop.prevent="handleSubmit">
             <div
-                v-if="hasPublicKey"
                 class="container"
             >
                 <div
@@ -16,21 +15,17 @@
                     v-text="keyTitle"
                 />
                 <Notice
-                    v-if="hasDerivedPublicKey"
+                    v-if="state.possiblePublicKeys.length > 1"
                     :symbol="mdiHelpCircleOutline"
                     class="notice"
                 >
-                    {{ $t('modalEnterAccountId.aboutDerivedKey') }}
+                    {{ $t('modalEnterAccountId.aboutDerivedKeys') }}
                 </Notice>
                 <ReadOnlyInput
+                    v-for="key in state.possiblePublicKeys"
+                    :key="key.toString(true)"
                     class="input"
-                    :value="publicKey"
-                    multiline
-                />
-                <ReadOnlyInput
-                    v-if="hasDerivedPublicKey"
-                    class="input"
-                    :value="derivedPublicKey"
+                    :value="key.toString(true)"
                     multiline
                 />
             </div>
@@ -109,8 +104,7 @@ export interface State {
     account: import("@hashgraph/sdk").AccountId | null;
     valid: boolean;
     networkValid: boolean;
-    publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
-    derivedPublicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
+    possiblePublicKeys: Array<import("@hashgraph/sdk").Ed25519PublicKey>;
 }
 
 export interface Props {
@@ -118,6 +112,7 @@ export interface Props {
 }
 
 export default defineComponent({
+    name: "ModalEnterAccountId",
     components: {
         Modal,
         Button,
@@ -137,30 +132,12 @@ export default defineComponent({
         const networkSelected = ref(translate(NetworkName.MAINNET));
         const input: Ref<IdInputElement | null> = ref(null);
 
-        const hasPublicKey = computed(() => props.state.publicKey != null);
-        const hasDerivedPublicKey = computed(() => props.state.derivedPublicKey != null);
         const keyTitle = computed(() => {
-            if (hasPublicKey.value && hasDerivedPublicKey.value) {
+            if (props.state.possiblePublicKeys.length > 1) {
                 return context.root.$t("modalEnterAccountId.publicKeys").toString();
             }
 
             return context.root.$t("modalEnterAccountId.publicKey").toString();
-        });
-
-        const publicKey = computed(() => {
-            if (hasPublicKey.value) {
-                return props.state.publicKey!.toString(true);
-            }
-
-            return null;
-        });
-
-        const derivedPublicKey = computed(() => {
-            if (hasDerivedPublicKey.value) {
-                return props.state.derivedPublicKey!.toString(true);
-            }
-
-            return null;
         });
 
         function handleAccount(value: string, account: import("@hashgraph/sdk").AccountId | null): void {
@@ -226,11 +203,7 @@ export default defineComponent({
             networkSelector,
             networkSelectorKey,
             networkSelected,
-            hasPublicKey,
-            hasDerivedPublicKey,
-            publicKey,
             keyTitle,
-            derivedPublicKey,
             handleAccount,
             handleModalChangeIsOpen,
             handleDontHaveAccount,

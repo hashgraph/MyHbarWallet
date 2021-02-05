@@ -70,6 +70,7 @@ export interface State {
 }
 
 export default defineComponent({
+    name: "ModalFeeSummary",
     props: { state: Object as PropType<State> },
     components: {
         Button,

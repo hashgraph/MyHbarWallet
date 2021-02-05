@@ -47,6 +47,7 @@ import SwitchButton from "./SwitchButton.vue";
 import PasswordWithConfirm, { State as PasswordWithConfirmState } from "./PasswordWithConfirm.vue";
 
 export default defineComponent({
+    name: "OptionalPasswordWithConfirm",
     components: {
         TextInput,
         SwitchButton,

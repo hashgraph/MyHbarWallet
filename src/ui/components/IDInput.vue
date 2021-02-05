@@ -43,6 +43,7 @@ export interface Props {
 }
 
 export default defineComponent({
+    name: "IDInput",
     components: { TextInput },
     props: {
         isOpen: Boolean,

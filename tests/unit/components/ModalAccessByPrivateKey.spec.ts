@@ -27,7 +27,8 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                     isBusy: false
                 }
             },
-            listeners: { change: onChange }
+            listeners: { change: onChange },
+            stubs: { CustomerSupportLink: true }
         });
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -62,47 +63,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                       <!----> <span>Access Account</span>
                       <!---->
                     </button>
-                    <div class="customer-support-link">
-                      <div class="customer-support-container"><img alt="" src="">Customer Support
-                      </div>
-                      <modal title="Issue Information">
-                        <form class="modal-issue-information">
-                          <!---->
-                          <!---->
-                          <div class="text-input issue-item"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                              <!----></span>
-                            </label>
-                            <!---->
-                            <!---->
-                          </div>
-                          <div class="text-input issue-item"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Account ID (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                              <!----></span>
-                            </label>
-                            <!---->
-                            <!---->
-                          </div>
-                          <div class="text-input issue-item"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="URL" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                              <!----></span>
-                            </label>
-                            <!---->
-                            <!---->
-                          </div>
-                          <div class="text-input issue-item is-multiline"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea placeholder="Describe the issue" rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                              <!----></span>
-                            </label>
-                            <!---->
-                            <!---->
-                          </div> <button type="submit" class="send-button compact">
-                            <!----> <span>Send</span>
-                            <!---->
-                          </button>
-                        </form>
-                      </modal>
-                    </div>
+                    <customersupportlink-stub></customersupportlink-stub>
                     </form>
                   </div>
               </div>
@@ -127,7 +88,8 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                     isBusy: true
                 }
             },
-            listeners: { change: onChange }
+            listeners: { change: onChange },
+            stubs: { CustomerSupportLink: true }
         });
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -164,47 +126,7 @@ describe("ModalAccessByPrivateKey.vue", (): void => {
                       <!---->
                       <!---->
                     </button>
-                    <div class="customer-support-link">
-                      <div class="customer-support-container"><img alt="" src="">Customer Support
-                      </div>
-                      <modal title="Issue Information">
-                        <form class="modal-issue-information">
-                          <!---->
-                          <!---->
-                          <div class="text-input issue-item"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                              <!----></span>
-                            </label>
-                            <!---->
-                            <!---->
-                          </div>
-                          <div class="text-input issue-item"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Account ID (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                              <!----></span>
-                            </label>
-                            <!---->
-                            <!---->
-                          </div>
-                          <div class="text-input issue-item"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="URL" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
-                              <!----></span>
-                            </label>
-                            <!---->
-                            <!---->
-                          </div>
-                          <div class="text-input issue-item is-multiline"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea placeholder="Describe the issue" rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
-                              <!----></span>
-                            </label>
-                            <!---->
-                            <!---->
-                          </div> <button type="submit" class="send-button compact">
-                            <!----> <span>Send</span>
-                            <!---->
-                          </button>
-                        </form>
-                      </modal>
-                    </div>
+                    <customersupportlink-stub></customersupportlink-stub>
                     </form>
                   </div>
               </div>

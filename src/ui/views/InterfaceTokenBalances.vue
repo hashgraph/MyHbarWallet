@@ -28,12 +28,14 @@ export default defineComponent({
     components: { Button, InterfaceForm, Tokens },
     setup() {
         onMounted(async() => {
-            if (getters.currentUserTokens() == null) {
-                await actions.refreshBalancesAndRate();
+            if (getters.currentUser() != null) {
+                if (getters.currentUserTokens() == null) {
+                    await actions.refreshBalancesAndRate();
+                }
             }
         });
 
-        const tokens = computed(() => getters.currentUserTokens());
+        const tokens = computed(() => getters.currentUserTokens() || []);
 
         return { tokens, handleRefresh };
     }

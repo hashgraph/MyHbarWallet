@@ -23,8 +23,8 @@ import serviceBell from "../assets/help-center.svg";
 import ModalCustomerService from "./ModalCustomerService.vue";
 
 export default defineComponent({
+    name: "CustomerSupportLink",
     components: { ModalCustomerService },
-    props: {},
     setup() {
         const state = reactive({ modalCustomerServiceIsOpen: false });
 

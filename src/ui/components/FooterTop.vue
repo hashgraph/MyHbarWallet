@@ -103,8 +103,8 @@ import affiliates from "../../domain/affiliates";
 import ModalCustomerService from "./ModalCustomerService.vue";
 
 export default defineComponent({
+    name: "FooterTop",
     components: { ModalCustomerService },
-    props: {},
     setup() {
         const state = reactive({ modalCustomerServiceIsOpen: false });
 

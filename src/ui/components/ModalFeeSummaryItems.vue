@@ -50,6 +50,7 @@ interface SplitItem {
 }
 
 export default defineComponent({
+    name: "ModalFeeSummaryItems",
     props: { items: Array as PropType<Item[]> },
     components: { InfoButton },
     setup(props: { items: Item[] }) {

@@ -115,6 +115,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalCreateByPhrase",
     components: {
         Modal,
         Warning,

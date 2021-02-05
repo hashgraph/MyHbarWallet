@@ -75,11 +75,11 @@ function handleClick(): void {
 }
 
 export default defineComponent({
+    name: "InterfaceNavigation",
     components: {
         InterfaceNavigationSection,
         MaterialDesignIcon
     },
-    props: {},
     setup(_, context) {
         const cryptoRoutes = [
             {

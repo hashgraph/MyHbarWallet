@@ -7,10 +7,10 @@ export default interface Wallet {
 }
 
 export enum LoginMethod {
-    KeyStore,
-    PrivateKey,
-    Mnemonic,
-    PasswordMnemonic,
-    Ledger,
-    Trezor
+    KeyStore="file",
+    PrivateKey="key",
+    Mnemonic="phrase",
+    PasswordMnemonic="phrasepassword",
+    Ledger="ledger",
+    Trezor="trezor"
 }

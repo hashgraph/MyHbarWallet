@@ -26,6 +26,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "SwitchButton",
     model: {
         prop: "checked",
         event: "change"

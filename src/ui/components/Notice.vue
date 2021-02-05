@@ -29,6 +29,7 @@ import { computed, defineComponent } from "@vue/composition-api";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
 export default defineComponent({
+    name: "Notice",
     components: { MaterialDesignIcon },
     props: {
         title: String,

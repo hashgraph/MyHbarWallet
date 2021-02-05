@@ -22,6 +22,7 @@ import { mdiTwitter } from "@mdi/js";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
 export default defineComponent({
+    name: "AdBlockTwitter",
     components: { MaterialDesignIcon },
     setup() {
         return { mdiTwitter };

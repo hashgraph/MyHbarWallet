@@ -79,6 +79,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "ModalRequestToCreateAccount",
     components: {
         Modal,
         TextInput,

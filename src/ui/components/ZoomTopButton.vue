@@ -22,8 +22,8 @@ function handleClick(): void {
 }
 
 export default defineComponent({
+    name: "ZoomTopButton",
     components: { MaterialDesignIcon },
-    props: {},
     setup() {
         const isActive = ref(false);
         const classObject = computed(() => ({ "is-active": isActive.value }));

@@ -13,7 +13,7 @@ export async function constructClient(
     account: import("@hashgraph/sdk").AccountId,
     wallet: Wallet,
     network: NetworkSettings
-): Promise<import("@hashgraph/sdk").Client | null> {
+): Promise<import("@hashgraph/sdk").Client | undefined> {
     let privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null = null;
     let publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null = null;
     let signer: import("@hashgraph/sdk").TransactionSigner | null = null;
@@ -24,7 +24,8 @@ export async function constructClient(
 
     publicKey = await wallet.getPublicKey() as import("@hashgraph/sdk").Ed25519PublicKey;
     signer = wallet.signTransaction.bind(wallet) as import("@hashgraph/sdk").TransactionSigner;
-    let client: import("@hashgraph/sdk").Client | null = null;
+
+    let client: import("@hashgraph/sdk").Client | undefined;
     const { Client } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
     if (network.name !== NetworkName.CUSTOM) {
@@ -61,26 +62,28 @@ export async function constructClient(
 // Does the operator key belong to this account?
 export async function testClient(
     account: import("@hashgraph/sdk").AccountId,
-    client: import("@hashgraph/sdk").Client
+    client: import("@hashgraph/sdk").Client | undefined
 ): Promise<boolean> {
     const { CryptoTransferTransaction, HederaStatusError, Status } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
 
-    try {
-        const tx = new CryptoTransferTransaction();
-        tx.addSender(account, 0); // Transfer 0 Tinybar
-        tx.setMaxTransactionFee(1); // Max Fee 1 Tinybar
-        await (await tx.execute(client)).getReceipt(client);
-    } catch (error) {
-        if (error instanceof HederaStatusError) {
-            // If the transaction fails with Insufficient Tx Fee, this means
-            // that the account ID verification succeeded before this point
-            // Same for Insufficient Payer Balance
-            if (error.status.code === Status.InsufficientTxFee.code ||
-                error.status.code === Status.InsufficientPayerBalance.code) {
-                return true;
+    if (client != null) {
+        try {
+            const tx = new CryptoTransferTransaction();
+            tx.addSender(account, 0); // Transfer 0 Tinybar
+            tx.setMaxTransactionFee(1); // Max Fee 1 Tinybar
+            await (await tx.execute(client)).getReceipt(client);
+        } catch (error) {
+            if (error instanceof HederaStatusError) {
+                // If the transaction fails with Insufficient Tx Fee, this means
+                // that the account ID verification succeeded before this point
+                // Same for Insufficient Payer Balance
+                if (error.status.code === Status.InsufficientTxFee.code ||
+                    error.status.code === Status.InsufficientPayerBalance.code) {
+                    return true;
+                }
             }
+            throw error;
         }
-        throw error;
     }
 
     return false;
@@ -90,11 +93,11 @@ export async function constructSession(
     account: import("@hashgraph/sdk").AccountId,
     wallet: Wallet,
     network: NetworkSettings
-): Promise<Session | null> {
+): Promise<Session | undefined> { // Throws
     try {
         const client = await constructClient(account, wallet, network);
-        if (client != null) {
-            if (await testClient(account, client)) { // Throws
+        if (await testClient(account, client)) { // Throws
+            if (client != null) {
                 return {
                     account,
                     client
@@ -104,7 +107,6 @@ export async function constructSession(
     } catch (error) {
         throw error;
     }
-    return null;
 }
 
 export async function getBalance(

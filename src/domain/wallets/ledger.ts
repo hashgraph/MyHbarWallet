@@ -161,38 +161,17 @@ export default class Ledger implements Wallet {
                 LISTENER_TIMEOUT
             );
         } else {
-            // @ts-ignore
-            const TransportWebHID = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-webhid"))[ "default" ];
             const TransportWebUSB = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-webusb"))[ "default" ];
 
-            // WebHID should be what we're doing but it's still unstable on Chrome
-            const shouldUseWebHid = false;
-
-            // WebUSB is *supposed* to work on Windows (and Opera?), but alas
             const webusbSupported = await TransportWebUSB.isSupported() &&
             platform.os!.family !== "Windows" &&
             platform.name !== "Opera";
 
-            if (shouldUseWebHid) {
-                this.transport = await TransportWebHID.create(
-                    OPEN_TIMEOUT,
-                    LISTENER_TIMEOUT
-                );
-            } else if (webusbSupported) {
+            if (webusbSupported) {
                 this.transport = await TransportWebUSB.create(
                     OPEN_TIMEOUT,
                     LISTENER_TIMEOUT
                 );
-            } else {
-                const TransportU2F = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-u2f"))[ "default" ];
-                this.transport = await TransportU2F.create(
-                    OPEN_TIMEOUT,
-                    LISTENER_TIMEOUT
-                );
-
-                // U2F requires a pre-negotiated scramble key
-                // Don't steal this
-                this.transport.setScrambleKey("BOIL");
             }
         }
 

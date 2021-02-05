@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { mdiMinus } from "@mdi/js";
-import { computed, defineComponent, PropType, SetupContext } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 
@@ -36,12 +36,13 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "HeaderHamburgerButton",
     components: { MaterialDesignIcon },
     props: {
-        isOpen: (Boolean as unknown) as PropType<boolean>,
-        isInterface: (Boolean as unknown) as PropType<boolean>
+        isOpen: Boolean,
+        isInterface: Boolean
     },
-    setup(props: Props, context: SetupContext) {
+    setup(props: Props, context) {
         const icon = mdiMinus;
 
         function style(ind: string): string {

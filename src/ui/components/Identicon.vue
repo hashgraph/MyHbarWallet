@@ -23,6 +23,7 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "Identicon",
     props: {
         size: Number,
         value: String

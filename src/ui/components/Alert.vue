@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "@vue/composition-api";
+import { computed, defineComponent } from "@vue/composition-api";
 import {
     mdiAlertOutline,
     mdiCheckCircleOutline,
@@ -37,11 +37,12 @@ interface Props {
 }
 
 export default defineComponent({
+    name: "Alert",
     components: { MaterialDesignIcon },
     props: {
-        id: (Number as unknown) as PropType<number>,
-        message: (String as unknown) as PropType<string>,
-        level: (String as unknown) as PropType<string>
+        id: Number,
+        message: String,
+        level: String
     },
     setup(props: Props) {
         const messageIcon = computed(() => {
