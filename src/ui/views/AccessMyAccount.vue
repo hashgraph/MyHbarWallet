@@ -110,7 +110,7 @@ export default defineComponent({
                 isOpen: false,
                 isBusy: false,
                 optionSelected: "",
-                disableButton: false
+                disableButton: true
             },
             modalAccessBySoftwareState: { isOpen: false },
             modalAccessByPhraseState: {

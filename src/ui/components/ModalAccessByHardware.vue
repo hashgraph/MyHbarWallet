@@ -20,16 +20,16 @@
                 :class="{
                     instructions: true,
                     bold: true,
-                    open: requiresChrome && !isChrome
+                    open: !transportSupported && !state.isBusy
                 }"
             >
-                <div>{{ $t("modalAccessByHardware.useChromeContinue") }}</div>
+                <div>{{ $t("modalAccessByHardware.transportUnsupported") }}</div>
             </div>
             <div
                 :class="{
                     instructions: true,
                     bold: true,
-                    open: !state.disableButton
+                    open: !state.disableButton && transportSupported
                 }"
             >
                 <div>{{ $t("modalAccessByHardware.watchForPrompts") }}</div>
@@ -46,8 +46,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, SetupContext, watch } from "@vue/composition-api";
-import { UAParser } from "ua-parser-js";
+import { computed, defineComponent, PropType, ref, SetupContext, watch } from "@vue/composition-api";
 
 import imageLedger from "../assets/button-ledger.svg";
 import imageFinney from "../assets/button-finney.png";
@@ -55,6 +54,7 @@ import imageBitbox from "../assets/button-bitbox.svg";
 import imageTrezor from "../assets/button-trezor.svg";
 import imageSecalot from "../assets/button-secalot.svg";
 import imageKeepKey from "../assets/button-keepkey.svg";
+import { LoginMethod } from "../../domain/wallets/wallet";
 
 import RadioButtonGroup from "./RadioButtonGroup.vue";
 import Button from "./Button.vue";
@@ -168,16 +168,29 @@ export default defineComponent({
         }\n${
             context.root.$t("warning.browserWarningBody2").toString()}`);
 
-        const isChrome = computed(() => {
-            const name = new UAParser(navigator.userAgent).getBrowser().name;
-            return name === "Chromium" ||
-                    name === "Chrome" ||
-                    name!.includes("Safari");
-        });
+        const transportSupported = ref(true);
 
-        const requiresChrome = computed(() => props.state.optionSelected === AccessHardwareOption.Ledger);
+        // eslint-disable-next-line unicorn/consistent-function-scoping
+        async function checkTransport(): Promise<void> {
+            props.state.isBusy = true;
+
+            try {
+                // eslint-disable-next-line unicorn/expiring-todo-comments
+                // TODO: Check other wallets too
+                const { Ledger } = await import(/* webpackChunkName: "hardware" */ "../../domain/wallets/ledger");
+                const ledger = new Ledger();
+                transportSupported.value = await ledger.hasTransport();
+            // eslint-disable-next-line no-empty
+            } catch (error) {
+                transportSupported.value = false;
+                props.state.disableButton = true;
+            }
+
+            props.state.isBusy = false;
+        }
 
         function handleModalChangeIsOpen(isOpen: boolean): void {
+            if (!isOpen) props.state.optionSelected = "";
             context.emit("change", { ...props.state, isOpen });
         }
 
@@ -188,9 +201,10 @@ export default defineComponent({
         watch(
             () => props.state ? props.state.optionSelected.length : 0,
             () => {
-                // if require chrome but not chrome, or if nothing selected, disable button
+                if (props.state.optionSelected === LoginMethod.Ledger) checkTransport();
+                // if no transport or nothing selected, disable
                 props.state.disableButton =
-                    !isChrome.value && requiresChrome.value ||
+                    !transportSupported.value ||
                     props.state.optionSelected.length === 0;
             }
         );
@@ -202,13 +216,8 @@ export default defineComponent({
         const instructions = computed(() => {
             switch (props.state.optionSelected) {
                 case AccessHardwareOption.Ledger:
-                    if (isChrome.value) {
-                        return context.root
-                            .$t("modalAccessByHardware.ledgerInstructions")
-                            .toString();
-                    }
                     return context.root
-                        .$t("modalAccessByHardware.ledgerChromeOnly")
+                        .$t("modalAccessByHardware.ledgerInstructions")
                         .toString();
 
                 case AccessHardwareOption.Trezor:
@@ -227,9 +236,8 @@ export default defineComponent({
             instructions,
             handleModalChangeIsOpen,
             handleSubmit,
-            isChrome,
             chromeWarning,
-            requiresChrome
+            transportSupported
         };
     }
 });
