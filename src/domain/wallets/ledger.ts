@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore, compat/compat */
 import { getters } from "../../ui/store";
+import { isMobile } from "../../service/platform";
 
 import Wallet, { LoginMethod } from "./wallet";
 
@@ -34,11 +35,6 @@ interface APDU {
     P2: number;
     buffer: Buffer;
 }
-
-const AndroidRegex = /android/i;
-const LGRegex = /webos/i;
-const AppleRegex = /iphone|ipad|ipod/i;
-const GoogleRegex = /nexus|pixel/i;
 
 export default class Ledger implements Wallet {
     private publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null = null;
@@ -121,39 +117,24 @@ export default class Ledger implements Wallet {
         throw new Error("Unexpected Empty Response From Ledger Device");
     }
 
-    private isMobile(platform: typeof import(/* webpackChunkName: "hardware" */ "platform")): boolean {
-        if (typeof platform.product !== "undefined") {
-            if (platform.product != null) {
-                if (AppleRegex.exec(platform.product) != null ||
-                    AndroidRegex.exec(platform.product) != null ||
-                    LGRegex.exec(platform.product) != null ||
-                    GoogleRegex.exec(platform.product)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+    public async hasTransport(): Promise<boolean> {
+        await this.getTransport();
+        return this.transport != null;
     }
 
-    private async getTransport(): Promise<import("@ledgerhq/hw-transport").default> {
+    private async getTransport(): Promise<import("@ledgerhq/hw-transport").default | null> {
         if (this.transport != null) {
             return this.transport;
         }
 
         // Support NodeHID for Electron
-        // eslint-disable-next-line no-process-env, no-undef
         if (IS_ELECTRON) {
             // @ts-ignore
             const TransportNodeHID = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-node-hid-noevents"))[ "default" ];
             const devices = await TransportNodeHID.list();
             this.transport = await TransportNodeHID.open(devices[ 0 ]); // sorry if you connect more than 1
             return this.transport!;
-        }
-
-        const platform = (await import(/* webpackChunkName: "platform" */ "platform"))[ "default" ];
-
-        if (this.isMobile(platform)) {
+        } else if (await isMobile()) {
             // @ts-ignore
             const TransportWebBLE = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-web-ble"))[ "default" ];
             this.transport = await TransportWebBLE.create(
@@ -162,10 +143,7 @@ export default class Ledger implements Wallet {
             );
         } else {
             const TransportWebUSB = (await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport-webusb"))[ "default" ];
-
-            const webusbSupported = await TransportWebUSB.isSupported() &&
-            platform.os!.family !== "Windows" &&
-            platform.name !== "Opera";
+            const webusbSupported = await TransportWebUSB.isSupported();
 
             if (webusbSupported) {
                 this.transport = await TransportWebUSB.create(
@@ -187,7 +165,7 @@ export default class Ledger implements Wallet {
             }
         });
 
-        return this.transport!;
+        return this.transport;
     }
 
     private async sendAPDU(message: APDU): Promise<Buffer | null> {
@@ -197,13 +175,15 @@ export default class Ledger implements Wallet {
         // Transports REQUIRE a context managed async callback
         /* eslint-disable promise/always-return */
         await this.getTransport().then(async(transport) => {
-            response = await transport.send(
-                message.CLA,
-                message.INS,
-                message.P1,
-                message.P2,
-                message.buffer
-            );
+            if (transport != null) {
+                response = await transport.send(
+                    message.CLA,
+                    message.INS,
+                    message.P1,
+                    message.P2,
+                    message.buffer
+                );
+            }
         });
         /* eslint-enable promise/always-return */
 
