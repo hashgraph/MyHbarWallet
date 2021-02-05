@@ -170,9 +170,11 @@ export default defineComponent({
                 state.possibleKeys.push(key);
                 state.modalEnterAccountIdState.possiblePublicKeys.push(key.publicKey);
 
-                const derivedKey = await key.derive2(0);
-                state.possibleKeys.push(derivedKey);
-                state.modalEnterAccountIdState.possiblePublicKeys.push(derivedKey.publicKey);
+                if (key.supportsDerivation) {
+                    const derivedKey = await key.derive2(0);
+                    state.possibleKeys.push(derivedKey);
+                    state.modalEnterAccountIdState.possiblePublicKeys.push(derivedKey.publicKey);
+                }
             } else if (info instanceof Ed25519PrivateKey) {
                 state.possibleKeys.push(info);
                 state.modalEnterAccountIdState.possiblePublicKeys.push(info.publicKey);

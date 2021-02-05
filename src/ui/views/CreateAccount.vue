@@ -56,7 +56,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { defineComponent, reactive, ref, Ref, SetupContext } from "@vue/composition-api";
+import { defineComponent, reactive, ref, SetupContext } from "@vue/composition-api";
 
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "../components/AccountTileButtons.vue";
@@ -65,7 +65,7 @@ import PageTitle from "../components/PageTitle.vue";
 import ModalCreateByPhrase from "../components/ModalCreateByPhrase.vue";
 import ModalCreateByKeystore from "../components/ModalCreateByKeystore.vue";
 import ModalDownloadKeystore from "../components/ModalDownloadKeystore.vue";
-import ModalEnterAccountId, { ModalEnterAccountIdElement } from "../components/ModalEnterAccountId.vue";
+import ModalEnterAccountId from "../components/ModalEnterAccountId.vue";
 import ModalRequestToCreateAccount from "../components/ModalRequestToCreateAccount.vue";
 import ModalCreateBySoftware, { CreateSoftwareOption } from "../components/ModalCreateBySoftware.vue";
 import SoftwareWallet from "../../domain/wallets/software";
@@ -125,16 +125,13 @@ export default defineComponent({
                 downloadClicked: false
             },
             modalEnterAccountIdState: {
-                failed: null,
                 errorMessage: null,
                 isOpen: false,
                 isBusy: false,
                 account: null,
+                possiblePublicKeys: [], // Public Keys
                 valid: false,
-                networkValid: false,
-                publicKey: null,
-                nodeError: null,
-                addressError: null
+                networkValid: false
             },
             modalRequestToCreateAccountState: { isOpen: false },
             loginMethod: null,
@@ -142,12 +139,15 @@ export default defineComponent({
         });
 
         const keystoreFile = ref<HTMLAnchorElement | null>(null);
-        const modalEnterAccountId: Ref<ModalEnterAccountIdElement | null> = ref(null);
 
-        function setPrivateKey(newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey): void {
+        function setPublicKey(newPublicKey: import("@hashgraph/sdk").Ed25519PublicKey | null): void {
+            state.publicKey = newPublicKey;
+            state.modalEnterAccountIdState.possiblePublicKeys.push(newPublicKey);
+        }
+
+        function setPrivateKey(newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null): void {
             state.privateKey = newPrivateKey;
-            state.publicKey = newPrivateKey.publicKey;
-            state.modalEnterAccountIdState.publicKey = newPrivateKey.publicKey;
+            setPublicKey(newPrivateKey ? newPrivateKey.publicKey : null);
         }
 
         function handleNetworkChange(settings: NetworkSettings): void {
@@ -159,11 +159,31 @@ export default defineComponent({
             }
         }
 
+        function resetState(): void {
+            setPrivateKey(null);
+            state.modalEnterAccountIdState.possiblePublicKeys = [];
+            state.modalEnterAccountIdState.account = null;
+
+            state.wallet = null;
+            state.loginMethod = null;
+            state.keyFile = null;
+
+            state.modalKeystoreFilePasswordState.isBusy = false;
+            state.modalCreateByKeystoreState.isBusy = false;
+            state.modalEnterAccountIdState.isBusy = false;
+        }
+
         function handleClickTiles(which: string): void {
+            resetState();
+
             if (which === "hardware") {
-                state.modalCreateByHardwareState.isOpen = true;
+                Vue.nextTick(() => {
+                    state.modalCreateByHardwareState.isOpen = true;
+                });
             } else if (which === "software") {
-                state.modalCreateBySoftwareState.isOpen = true;
+                Vue.nextTick(() => {
+                    state.modalCreateBySoftwareState.isOpen = true;
+                });
             }
         }
 
@@ -171,11 +191,15 @@ export default defineComponent({
             state.modalCreateBySoftwareState.isOpen = false;
 
             if (which === CreateSoftwareOption.File) {
-                state.loginMethod = LoginMethod.KeyStore;
-                state.modalCreateByKeystoreState.isOpen = true;
+                Vue.nextTick(() => {
+                    state.loginMethod = LoginMethod.KeyStore;
+                    state.modalCreateByKeystoreState.isOpen = true;
+                });
             } else if (which === CreateSoftwareOption.Phrase) {
-                state.loginMethod = LoginMethod.Mnemonic;
-                state.modalCreateByPhraseState.isOpen = true;
+                Vue.nextTick(() => {
+                    state.loginMethod = LoginMethod.Mnemonic;
+                    state.modalCreateByPhraseState.isOpen = true;
+                });
             }
         }
 
@@ -189,9 +213,12 @@ export default defineComponent({
                         state.modalCreateByHardwareState.isBusy = true;
                         state.wallet = new Ledger();
                         state.publicKey = (await state.wallet!.getPublicKey()) as import("@hashgraph/sdk").Ed25519PublicKey;
-                        state.modalEnterAccountIdState.publicKey = state.publicKey;
-                        state.modalCreateByHardwareState.isOpen = false;
-                        state.modalRequestToCreateAccountState.isOpen = true;
+                        state.modalEnterAccountIdState.possiblePublicKeys.push(state.publicKey);
+
+                        Vue.nextTick(() => {
+                            state.modalCreateByHardwareState.isOpen = false;
+                            state.modalRequestToCreateAccountState.isOpen = true;
+                        });
                     } catch (error) {
                         state.wallet = null;
                         state.loginMethod = null;
@@ -256,22 +283,13 @@ export default defineComponent({
                     level: "warn"
                 });
             }
-
-            let timeoutLength = 100;
-            if (MHW_ENV === "test") timeoutLength = 500;
-
-            setTimeout(() => {
-                try {
-                    context.root.$el.removeChild(keystoreFile.value as HTMLAnchorElement);
-                } catch {
-                    // Doesn't matter
-                }
-            }, timeoutLength);
         }
 
         function handleDownloadKeystoreContinue(): void {
-            state.modalRequestToCreateAccountState.isOpen = true;
-            state.modalDownloadKeystoreState.isOpen = false;
+            Vue.nextTick(() => {
+                state.modalRequestToCreateAccountState.isOpen = true;
+                state.modalDownloadKeystoreState.isOpen = false;
+            });
         }
 
         function handleCreateByPhraseSubmit(newPrivateKey: import("@hashgraph/sdk").Ed25519PrivateKey): void {
@@ -279,21 +297,18 @@ export default defineComponent({
 
             setPrivateKey(newPrivateKey);
 
-            state.modalRequestToCreateAccountState.isOpen = true;
+            Vue.nextTick(() => {
+                state.modalRequestToCreateAccountState.isOpen = true;
+            });
         }
 
         async function handleAccountIdSubmit(account: import("@hashgraph/sdk").AccountId): Promise<void> {
             state.modalEnterAccountIdState.isBusy = true;
 
-            if (state.loginMethod == null) {
-                state.modalEnterAccountIdState.isBusy = false;
-                throw new Error(context.root.$t("common.error.illegalState").toString());
-            }
-
             if (state.wallet == null) {
                 if (state.privateKey != null) {
                     state.wallet = new SoftwareWallet(
-                        state.loginMethod,
+                        state.loginMethod!,
                         state.privateKey as import("@hashgraph/sdk").Ed25519PrivateKey,
                         state.publicKey as import("@hashgraph/sdk").Ed25519PublicKey
                     );
@@ -302,8 +317,11 @@ export default defineComponent({
 
             try {
                 await actions.logIn(account, state.wallet!, getters.currentNetwork());
-                state.modalEnterAccountIdState.isOpen = false;
-                Vue.nextTick(() => mutations.navigateToInterface());
+
+                Vue.nextTick(() => {
+                    state.modalEnterAccountIdState.isOpen = false;
+                    mutations.navigateToInterface();
+                });
             } catch (error) {
                 const { HederaStatusError } = await import(/* webpackChunkName: "hashgraph" */ "@hashgraph/sdk");
                 if (error instanceof HederaStatusError) {
@@ -334,7 +352,8 @@ export default defineComponent({
                     const message = context.root
                         .$t("network.connectionFailed")
                         .toString();
-                    (modalEnterAccountId.value as ModalEnterAccountIdElement).setAddressError(message);
+
+                    state.modalEnterAccountIdState.errorMessage = message;
                 }
             } finally {
                 state.modalEnterAccountIdState.isBusy = false;

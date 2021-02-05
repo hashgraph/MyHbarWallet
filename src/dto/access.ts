@@ -14,8 +14,14 @@ type ModalBySoftwareState = ModalIsOpen;
 type ModalCreateByPhraseState = ModalIsOpen;
 type ModalRequestToCreateAccountState = ModalIsOpen;
 
-export interface AccountDTO {
+export interface AccessDTO {
     possibleKeys: Array<import("@hashgraph/sdk").Ed25519PrivateKey>;
+    keyFile: Uint8Array | null;
+}
+
+export interface CreateDTO {
+    privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null;
+    publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
     keyFile: Uint8Array | null;
 }
 
@@ -40,5 +46,5 @@ export interface AccountAccessDTO {
     modalRequestToCreateAccountState: ModalRequestToCreateAccountState;
 }
 
-export type AccessAccountDTO = AccountDTO & AccountAccessDTO;
-export type CreateAccountDTO = AccountDTO & AccountCreateDTO;
+export type AccessAccountDTO = AccessDTO & AccountAccessDTO;
+export type CreateAccountDTO = CreateDTO & AccountCreateDTO;
