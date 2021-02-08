@@ -299,12 +299,20 @@ export const actions = {
 
         const { StatusCodes } = await import(/* webpackChunkName: "hardware" */ "@ledgerhq/hw-transport");
 
-        if (payload.error.name != null && payload.error.name === "TransportOpenUserCancelled") {
+        if (
+            payload.error.name === "TransportOpenUserCancelled"
+        ) {
             message = i18n.t("common.error.noDeviceSelected").toString();
+            severity = "warn";
+        } else if (
+            payload.error.name === "TransportInterfaceNotAvailable" ||
+            payload.error.name === "TransportRaceCondition"
+        ) {
+            message = i18n.t("common.error.deviceJiltedLover").toString();
             severity = "warn";
         } else {
             switch (payload.error.statusCode) {
-            // Security Exceptions (not allowed)
+                // Security Exceptions (not allowed)
                 case StatusCodes.PIN_REMAINING_ATTEMPTS: // 0x63c0,
                 case StatusCodes.SECURITY_STATUS_NOT_SATISFIED: // 0x6982,
                 case StatusCodes.CONDITIONS_OF_USE_NOT_SATISFIED: // 0x6985,
@@ -313,14 +321,14 @@ export const actions = {
                     severity = "warn";
                     break;
 
-                    // Attestation / Verification failures
+                // Attestation / Verification failures
                 case StatusCodes.CONTRADICTION_SECRET_CODE_STATUS: // 0x9808,
                 case StatusCodes.CONTRADICTION_INVALIDATION: // 0x9810,
                 case StatusCodes.LICENSING: // 0x6f42,
                     message = i18n.t("common.error.traitorDevice").toString();
                     break;
 
-                    // Command Error (does not make sense to device)
+                // Command Error (does not make sense to device)
                 case StatusCodes.INCORRECT_LENGTH: // 0x6700,
                 case StatusCodes.COMMAND_INCOMPATIBLE_FILE_STRUCTURE: // 0x6981,
                 case StatusCodes.INCORRECT_DATA: // 0x6a80,
@@ -335,7 +343,7 @@ export const actions = {
                     severity = "warn";
                     break;
 
-                    // Device Failure (irrecoverable device errors)
+                // Device Failure (irrecoverable device errors)
                 case StatusCodes.NOT_ENOUGH_MEMORY_SPACE: // 0x6a84,
                 case StatusCodes.FILE_ALREADY_EXISTS: // 0x6a89,
                 case StatusCodes.TECHNICAL_PROBLEM: // 0x6f00,

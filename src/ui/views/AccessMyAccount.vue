@@ -390,7 +390,7 @@ export default defineComponent({
                 const result: HederaStatusErrorTuple = await actions.handleHederaError({ error, showAlert: false });
                 state.modalEnterAccountIdState.errorMessage = result.message;
             } else if (
-                error.name === "TransportStatusError" &&
+                error.name.includes("Transport") &&
                     state.loginMethod === LoginMethod.Ledger
             ) {
                 const result: LedgerErrorTuple = await actions.handleLedgerError({ error, showAlert: false });
