@@ -136,6 +136,15 @@ typeof import("./views/AccessMyAccount.vue")
         "./views/AccessMyAccount.vue");
 }
 
+function InterfaceSendAsset(): Promise<
+typeof import("./views/InterfaceSendAsset.vue")
+> {
+    return import(
+        /* webpackChunkName: "interface" */
+        "./views/InterfaceSendAsset.vue"
+    );
+}
+
 // auth function that redirects visitors who have not logged in back to the home route
 function RequireWallet(
     _to: Route,
@@ -204,6 +213,11 @@ export default new Router({
                     path: "send-transfer",
                     name: "send-transfer",
                     component: InterfaceSendTransfer
+                },
+                {
+                    path: "send-asset",
+                    name: "send-asset",
+                    component: InterfaceSendAsset
                 },
                 {
                     path: "deploy-contract",

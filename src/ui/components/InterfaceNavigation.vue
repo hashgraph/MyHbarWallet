@@ -87,6 +87,10 @@ export default defineComponent({
                 label: context.root.$t("interfaceNavigation.send").toString()
             },
             {
+                name: "send-asset",
+                label: context.root.$t("interfaceNavigation.sendMultiple").toString()
+            },
+            {
                 name: "create-account-transaction",
                 label: context.root.$t("interfaceNavigation.createAccount").toString()
             }
