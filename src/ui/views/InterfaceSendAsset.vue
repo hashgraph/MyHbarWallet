@@ -180,6 +180,7 @@ export default defineComponent({
 
                 state.transfers.forEach((transfer) => {
                     if (transfer.asset === "Hbar") {
+                        // eslint-disable-next-line no-console
                         console.log("sending hbar", transfer.amount.toString(), "to", transfer.to);
 
                         tx.addHbarTransfer(transfer.to, new Hbar(transfer.amount));
@@ -195,6 +196,7 @@ export default defineComponent({
 
                         const scaledAmount = new BigNumber(transfer.amount!).multipliedBy(scaleFactor);
 
+                        // eslint-disable-next-line no-console
                         console.log("transfer token", transfer.asset, "to", transfer.to, "amount", scaledAmount.toString());
 
                         tx.addTokenTransfer(transfer.asset, transfer.to, scaledAmount);
