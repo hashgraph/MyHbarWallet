@@ -6,25 +6,29 @@
     >
         <form @submit.prevent.stop="handleSubmit">
             <IDInput
-                v-model="transfer.from"
-                class="input"
-            />
-
-            <IDInput
                 v-model="transfer.to"
                 class="input"
+                :label="$t('common.toAccount')"
             />
 
-            <AssetInput
-                class="input"
-                @asset="handleAsset"
-                @amount="handleAmount"
-            />
+            <br>
 
-            <Button
-                :label="$t('modalAddTransfer.add')"
-                type="submit"
-            />
+            <div>
+                <span class="label">
+                    Asset
+                </span>
+                <AssetInput
+                    class="input"
+                    @asset="handleAsset"
+                    @amount="handleAmount"
+                />
+            </div>
+
+            <br>
+
+            <br>
+
+            <Button :label="$t('modalAddTransfer.add')" type="submit" />
         </form>
     </Modal>
 </template>
@@ -93,5 +97,14 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .input {
     padding-block-end: 5px;
+}
+
+.label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    height: 24px;
+    margin-block-end: 13px;
+    padding: 0 8px;
 }
 </style>
