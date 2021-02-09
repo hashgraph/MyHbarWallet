@@ -101,15 +101,17 @@ export default defineComponent({
             return false;
         }
 
+        // eslint-disable-next-line unicorn/consistent-function-scoping
         function validate(): boolean {
             // eslint-disable-next-line unicorn/expiring-todo-comments
             // TODO: Check user did not supply more decimals than possible for this asset
-            const bigAmount = new BigNumber(state.amount);
-            return (
-                !bigAmount.isNaN() &&
-                    bigAmount.isGreaterThan(new BigNumber(0)) &&
-                    validateAssetBalance(bigAmount)
-            );
+            // const bigAmount = new BigNumber(state.amount);
+            // return (
+            //     !bigAmount.isNaN() &&
+            //         bigAmount.isGreaterThan(new BigNumber(0)) &&
+            //         validateAssetBalance(bigAmount)
+            // );
+            return true;
         }
 
         function handleAmount(newAmount: string): void {

@@ -1,8 +1,8 @@
 <template>
     <Modal
-        v-model="state.isOpen"
+        :is-open="state.isOpen"
         :title="$t('modalAddTransfer.title')"
-        @change="this.$listeners.change"
+        @change="handleChange"
     >
         <form @submit.prevent.stop="handleSubmit">
             <IDInput
@@ -59,7 +59,7 @@ export default defineComponent({
         IDInput,
         Modal
     },
-    setup(_, context) {
+    setup(props, context) {
         const transfer = reactive({
             from: "",
             to: "",
@@ -84,11 +84,16 @@ export default defineComponent({
             });
         }
 
+        function handleChange(): void {
+            context.emit("change", { ...props.state, isOpen: false, isBusy: false });
+        }
+
         return {
             transfer,
             handleAsset,
             handleAmount,
-            handleSubmit
+            handleSubmit,
+            handleChange
         };
     }
 });
