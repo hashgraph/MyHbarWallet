@@ -37,11 +37,10 @@
             @submit="handleEditSubmit"
         />
 
-        <!-- <ModalTransferSummary
-            :transfers="state.transfers"
-            :memo="state.memo"
+        <ModalTransferSummary
+            v-model="state.modalConfirm"
             @submit="handleSubmitTransaction"
-        /> -->
+        />
     </InterfaceForm>
 </template>
 
@@ -54,6 +53,7 @@ import InterfaceForm from "../components/InterfaceForm.vue";
 import OptionalMemoField from "../components/OptionalMemoField.vue";
 import ModalAddTransfer from "../components/ModalAddTransfer.vue";
 import ModalEditTransfer from "../components/ModalEditTransfer.vue";
+import ModalTransferSummary from "../components/ModalTransferSummary.vue";
 import TransferList from "../components/TransferList.vue";
 import { Transfer } from "../../domain/transfer";
 
@@ -65,6 +65,7 @@ export default defineComponent({
         OptionalMemoField,
         ModalAddTransfer,
         ModalEditTransfer,
+        ModalTransferSummary,
         TransferList
     },
     setup() {
@@ -76,7 +77,7 @@ export default defineComponent({
             disabled: true,
             modalAdd: { isOpen: false },
             modalEdit: { isOpen: false, transfer: null as Transfer | null },
-            modalConfirm: { isOpen: false, transfers: [] as Transfer[] }
+            modalConfirm: { isOpen: false, transfers: [] as Transfer[], memo: "" }
         });
 
         const transferListKey = ref(0);
@@ -131,6 +132,7 @@ export default defineComponent({
 
         function handleConfirmTransaction(): void {
             state.modalConfirm.transfers = state.transfers;
+            state.modalConfirm.memo = state.memo;
 
             Vue.nextTick(() => {
                 state.modalConfirm.isOpen = true;
@@ -138,10 +140,9 @@ export default defineComponent({
         }
 
         function handleSubmitTransaction(): void {
-            state.currentIndex = -1;
-
             Vue.nextTick(() => {
                 state.modalConfirm.transfers = [];
+                state.modalConfirm.memo = "";
                 state.modalConfirm.isOpen = false;
             });
         }
