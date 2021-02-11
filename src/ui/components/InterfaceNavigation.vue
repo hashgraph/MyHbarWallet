@@ -18,7 +18,7 @@ import {LoginMethod} from "../wallets/Wallet";
         </div>
         <nav :class="classObject">
             <InterfaceNavigationSection
-                :icon="mdiCoinOutline"
+                :icon="mdiCoins"
                 :title="$t('interfaceNavigation.crypto')"
                 :routes="cryptoRoutes"
             />
@@ -31,23 +31,9 @@ import {LoginMethod} from "../wallets/Wallet";
             />
 
             <InterfaceNavigationSection
-                :icon="mdiCoins"
-                :title="$t('interfaceNavigation.tokens')"
-                :routes="tokensRoutes"
-            />
-
-            <InterfaceNavigationSection
-                v-if="false"
-                :icon="contractImage"
-                :title="$t('interfaceNavigation.contract')"
-                :routes="contractRoutes"
-            />
-
-            <InterfaceNavigationSection
-                v-if="false"
-                :icon="messageImage"
-                :title="$t('common.message')"
-                :routes="messageRoutes"
+                :icon="mdiToolbox"
+                :title="$t('interfaceNavigation.tools')"
+                :routes="toolsRoutes"
             />
         </nav>
         <div
@@ -59,7 +45,7 @@ import {LoginMethod} from "../wallets/Wallet";
 </template>
 
 <script lang="ts">
-import { mdiClose, mdiCoinOutline, mdiFileDocumentBoxMultipleOutline, mdiCoins } from "@mdi/js";
+import { mdiClose, mdiCoins, mdiFileDocumentBoxMultipleOutline, mdiToolbox } from "@mdi/js";
 import { computed, defineComponent } from "@vue/composition-api";
 
 import { LoginMethod } from "../../domain/wallets/wallet";
@@ -68,8 +54,6 @@ import { mutations, store, getters } from "../store";
 import MaterialDesignIcon from "./MaterialDesignIcon.vue";
 import InterfaceNavigationSection from "./InterfaceNavigationSection.vue";
 
-// Yes, it is used
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function handleClick(): void {
     mutations.setInterfaceMenuIsOpen(false);
 }
@@ -81,42 +65,38 @@ export default defineComponent({
         MaterialDesignIcon
     },
     setup(_, context) {
-        const cryptoRoutes = [
-            {
-                name: "send-transfer",
-                label: context.root.$t("interfaceNavigation.send").toString()
-            },
-            {
-                name: "send-asset",
-                label: context.root.$t("interfaceNavigation.sendMultiple").toString()
-            },
-            {
-                name: "create-account-transaction",
-                label: context.root.$t("interfaceNavigation.createAccount").toString()
+        const notLedger = computed(() => {
+            if (getters.currentUser() != null) {
+                return (
+                    getters.currentUser().wallet.getLoginMethod() !==
+                    LoginMethod.Ledger
+                );
             }
-        ];
 
-        const contractRoutes = [
-            {
-                name: "interact-with-contract",
-                label: context.root.$t("interfaceNavigation.interactWithContract").toString()
-            },
-            {
-                name: "deploy-contract",
-                label: context.root.$t("interfaceNavigation.deployContract").toString()
-            }
-        ];
+            return true;
+        });
 
-        const messageRoutes = [
-            {
-                name: "sign-message",
-                label: context.root.$t("interfaceNavigation.signMessage").toString()
-            },
-            {
-                name: "verify-message",
-                label: "Verify Message"
+        const cryptoRoutes = computed(() => {
+            const routes = [
+                {
+                    name: "send-transfer",
+                    label: context.root.$t("interfaceNavigation.sendHbar").toString()
+                },
+                {
+                    name: "send-token",
+                    label: context.root.$t("interfaceNavigation.sendToken").toString()
+                }
+            ];
+
+            if (notLedger.value) {
+                routes.push({
+                    name: "send-asset",
+                    label: context.root.$t("interfaceNavigation.sendMultiple").toString()
+                });
             }
-        ];
+
+            return routes;
+        });
 
         const filesRoutes = [
             {
@@ -129,18 +109,18 @@ export default defineComponent({
             }
         ];
 
-        const tokensRoutes = [
+        const toolsRoutes = [
             {
                 name: "token-balances",
                 label: context.root.$t("interfaceNavigation.balances").toString()
             },
             {
-                name: "send-token",
-                label: context.root.$t("interfaceNavigation.send").toString()
-            },
-            {
                 name: "associate-token",
                 label: context.root.$t("interfaceNavigation.associate").toString()
+            },
+            {
+                name: "create-account-transaction",
+                label: context.root.$t("interfaceNavigation.createAccount").toString()
             }
         ];
 
@@ -151,29 +131,16 @@ export default defineComponent({
             return "menu-closed";
         });
 
-        const notLedger = computed(() => {
-            if (getters.currentUser() != null) {
-                return (
-                    getters.currentUser().wallet.getLoginMethod() !==
-                    LoginMethod.Ledger
-                );
-            }
-
-            return true;
-        });
-
         return {
             notLedger,
             cryptoRoutes,
-            contractRoutes,
-            messageRoutes,
             mdiClose,
             classObject,
             filesRoutes,
-            tokensRoutes,
+            toolsRoutes,
             mdiFileDocumentBoxMultipleOutline,
-            mdiCoinOutline,
             mdiCoins,
+            mdiToolbox,
             handleClick
         };
     }

@@ -26,7 +26,7 @@ describe("InterfaceNavigation", (): void => {
               <nav class="menu-closed">
                 <div class="nav-section">
                   <div class="nav-section-header"><svg width="24" height="24" viewBox="0 0 24 24" class="icon" alt="">
-                      <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,17V16H9V14H13V13H10A1,1 0 0,1 9,12V9A1,1 0 0,1 10,8H11V7H13V8H15V10H11V11H14A1,1 0 0,1 15,12V15A1,1 0 0,1 14,16H13V17H11Z"></path>
+                      <path d="M15,4A8,8 0 0,1 23,12A8,8 0 0,1 15,20A8,8 0 0,1 7,12A8,8 0 0,1 15,4M15,18A6,6 0 0,0 21,12A6,6 0 0,0 15,6A6,6 0 0,0 9,12A6,6 0 0,0 15,18M3,12C3,14.61 4.67,16.83 7,17.65V19.74C3.55,18.85 1,15.73 1,12C1,8.27 3.55,5.15 7,4.26V6.35C4.67,7.17 3,9.39 3,12Z"></path>
                     </svg> <span class="nav-title">Crypto</span>
                     <transition-stub name="fade" mode="out-in"><svg width="24" height="24" viewBox="0 0 24 24" class="indicator">
                         <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
@@ -46,16 +46,14 @@ describe("InterfaceNavigation", (): void => {
                 </div>
                 <div class="nav-section">
                   <div class="nav-section-header"><svg width="24" height="24" viewBox="0 0 24 24" class="icon" alt="">
-                      <path d="M15,4A8,8 0 0,1 23,12A8,8 0 0,1 15,20A8,8 0 0,1 7,12A8,8 0 0,1 15,4M15,18A6,6 0 0,0 21,12A6,6 0 0,0 15,6A6,6 0 0,0 9,12A6,6 0 0,0 15,18M3,12C3,14.61 4.67,16.83 7,17.65V19.74C3.55,18.85 1,15.73 1,12C1,8.27 3.55,5.15 7,4.26V6.35C4.67,7.17 3,9.39 3,12Z"></path>
-                    </svg> <span class="nav-title">Tokens</span>
+                      <path d="M9,5V6H15V5H9M22,18C22,18.53 21.79,19 21.4,19.41C21,19.81 20.55,20 20,20H4C3.45,20 3,19.81 2.6,19.41C2.21,19 2,18.53 2,18V14H7V15H9V14H15V15H17V14H22V18M4.5,7.22C4.84,6.41 5.45,6 6.33,6H7V5C7,4.45 7.18,4 7.57,3.59C7.96,3.2 8.44,3 9,3H15C15.56,3 16.04,3.2 16.43,3.59C16.82,4 17,4.45 17,5V6H17.67C18.55,6 19.16,6.41 19.5,7.22L21.58,12H17V11H15V12H9V11H7V12H2.42L4.5,7.22Z"></path>
+                    </svg> <span class="nav-title">Tools</span>
                     <transition-stub name="fade" mode="out-in"><svg width="24" height="24" viewBox="0 0 24 24" class="indicator">
                         <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path>
                       </svg></transition-stub>
                   </div>
                   <!---->
                 </div>
-                <!---->
-                <!---->
               </nav>
               <div class="side-nav-background menu-closed"></div>
             </div>

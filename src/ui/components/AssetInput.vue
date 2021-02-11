@@ -94,24 +94,20 @@ export default defineComponent({
             Math.pow(10, currentTokenDecimals.value)
         ));
 
-        function validateAssetBalance(bigAmount: BigNumber): boolean {
+        function validateAssetBalance(): boolean {
+            const bigAmount = new BigNumber(state.amount);
             const adjustedAmount = bigAmount.multipliedBy(scaleFactor.value);
             if (state.asset === Asset.Hbar) return getters.currentUserBalance()?.asTinybar().isGreaterThan(adjustedAmount) ?? false;
             if (currentToken.value != null) return currentToken.value.balance.isGreaterThan(adjustedAmount);
             return false;
         }
 
-        // eslint-disable-next-line unicorn/consistent-function-scoping
         function validate(): boolean {
-            // eslint-disable-next-line unicorn/expiring-todo-comments
-            // TODO: Check user did not supply more decimals than possible for this asset
-            // const bigAmount = new BigNumber(state.amount);
-            // return (
-            //     !bigAmount.isNaN() &&
-            //         bigAmount.isGreaterThan(new BigNumber(0)) &&
-            //         validateAssetBalance(bigAmount)
-            // );
-            return true;
+            const bigAmount = new BigNumber(state.amount);
+            return (
+                !bigAmount.isNaN() &&
+                    bigAmount.isGreaterThan(new BigNumber(0))
+            );
         }
 
         function handleAmount(newAmount: string): void {
@@ -120,8 +116,13 @@ export default defineComponent({
 
             if (validate()) {
                 state.amountValid = true;
-                context.emit("asset", state.asset);
-                context.emit("amount", new BigNumber(state.amount));
+
+                if (validateAssetBalance()) {
+                    context.emit("asset", state.asset);
+                    context.emit("amount", new BigNumber(state.amount));
+                } else {
+                    state.amountErrorMessage = context.root.$t("common.error.insufficientBalance").toString();
+                }
             } else {
                 state.amountErrorMessage = context.root.$t("common.error.invalidAmount").toString();
             }

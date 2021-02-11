@@ -320,7 +320,7 @@ describe("Access My Account", () => {
         } = Cypress.env();
 
         const key = Ed25519PrivateKey.fromString(KEY_PRIVATE_KEY);
-        const KEY_PRIVATE_KEY_UNPREFIXED = key.toString();
+        const KEY_PRIVATE_KEY_UNPREFIXED = key.toString(true);
 
         cy
             .get(softwareTile)
