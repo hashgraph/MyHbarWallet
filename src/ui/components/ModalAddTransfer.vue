@@ -28,7 +28,10 @@
 
             <br>
 
-            <Button :label="$t('modalAddTransfer.add')" type="submit" />
+            <Button
+                :label="$t('modalAddTransfer.add')"
+                type="submit"
+            />
         </form>
     </Modal>
 </template>
@@ -85,7 +88,7 @@ export default defineComponent({
         }
 
         function handleChange(): void {
-            context.emit("change", { ...props.state, isOpen: false, isBusy: false });
+            context.emit("change", { ...props.state, isOpen: false });
         }
 
         return {

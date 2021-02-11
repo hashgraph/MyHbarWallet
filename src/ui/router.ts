@@ -58,30 +58,6 @@ typeof import("./views/InterfaceDeployContract.vue")
         "./views/InterfaceDeployContract.vue");
 }
 
-function InterfaceInteractWithContract(): Promise<
-typeof import("./views/InterfaceInteractWithContract.vue")
-> {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/InterfaceInteractWithContract.vue");
-}
-
-function InterfaceSignMessage(): Promise<
-typeof import("./views/InterfaceSignMessage.vue")
-> {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/InterfaceSignMessage.vue");
-}
-
-function InterfaceVerifyMessage(): Promise<
-typeof import("./views/InterfaceVerifyMessage.vue")
-> {
-    return import(
-        /* webpackChunkName: "interface" */
-        "./views/InterfaceVerifyMessage.vue");
-}
-
 function InterfaceUploadFile(): Promise<
 typeof import("./views/InterfaceUploadFile.vue")
 > {
@@ -225,24 +201,9 @@ export default new Router({
                     component: InterfaceDeployContract
                 },
                 {
-                    path: "interact-with-contract",
-                    name: "interact-with-contract",
-                    component: InterfaceInteractWithContract
-                },
-                {
                     path: "create-account",
                     name: "create-account-transaction",
                     component: InterfaceCreateAccount
-                },
-                {
-                    path: "sign-message",
-                    name: "sign-message",
-                    component: InterfaceSignMessage
-                },
-                {
-                    path: "verify-message",
-                    name: "verify-message",
-                    component: InterfaceVerifyMessage
                 },
                 {
                     path: "upload-file",

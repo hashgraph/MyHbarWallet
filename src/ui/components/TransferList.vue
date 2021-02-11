@@ -1,49 +1,45 @@
 <template>
     <div class="transfer-list">
+        <div class="transfer-label">
+            {{ $t("transferList.transfers") }}
+        </div>
         <div
-            v-if="!table"
-            class="editor"
+            v-if="table"
+            class="header"
         >
-            <div class="transfer-label">Transfers</div>
-            <div class="transfer-inner-list">
-                <div
-                    v-for="(transfer, index) in transfers"
-                    :key="index"
-                    class="transfer"
-                >
-                    <span class="transfer-to">{{ transfer.to.toString() }}</span>
-                    <span class="transfer-asset">{{ transfer.asset }}</span>
-                    <span class="transfer-amount">{{ transfer.amount.toString() }}</span>
-                    <!-- <MaterialDesignIcon
-                        :icon="mdiFileEdit"
-                        @click="$emit('edit', index)"
-                    /> -->
-                    <MaterialDesignIcon
-                        :icon="mdiDelete"
-                        class="transfer-delete"
-                        @click="$emit('delete', index)"
-                    />
-                </div>
+            <span>{{ $t("transferList.recipient") }}</span>
+            <span>{{ $t("transferList.asset") }}</span>
+            <span>{{ $t("transferList.amount") }}</span>
+        </div>
+        <div class="transfer-inner-list">
+            <div
+                v-for="(transfer, index) in transfers"
+                :key="index"
+                class="transfer"
+            >
+                <span class="transfer-to">{{ transfer.to.toString() }}</span>
+                <span class="transfer-asset">{{ transfer.asset }}</span>
+                <span class="transfer-amount">{{ transfer.amount.toString() }}</span>
+                <MaterialDesignIcon
+                    v-if="!table"
+                    :icon="mdiDelete"
+                    class="transfer-delete"
+                    @click="$emit('delete', index)"
+                />
             </div>
-            <Button
-                compact
-                label="Add Transfer"
-                @click="$emit('add')"
-            />
         </div>
-        <div
-            v-else
-            class="table"
-        >
-            <!-- TODO Summarize List -->
-        </div>
+        <Button
+            v-if="!table"
+            compact
+            label="Add Transfer"
+            @click="$emit('add')"
+        />
     </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "@vue/composition-api";
+import { defineComponent, PropType } from "@vue/composition-api";
 import { mdiFileEdit, mdiDelete } from "@mdi/js";
-import { BigNumber } from "bignumber.js";
 
 import { Transfer } from "../../domain/transfer";
 
@@ -54,60 +50,21 @@ export default defineComponent({
     name: "TransferList",
     components: { Button, MaterialDesignIcon },
     props: { table: Boolean, transfers: { type: Array as PropType<Transfer[]>, required: true }},
-    setup(props) {
-        // hate js so much rn
-        // eslint-disable-next-line sonarjs/cognitive-complexity
-        const summaryTransfers = computed(() => {
-            if (props.table) {
-                const map = new Map<string, Map<string, BigNumber>>();
-
-                for (const transfer of props.transfers) {
-                    // For each transfer, if a record is incomplete or missing, add it
-                    // If it already exists, modify it
-                    // Build map of to --> asset --> amount for summary
-                    if (map.has(transfer.to.toString())) {
-                        const extant = map.get(transfer.to.toString());
-
-                        if (extant) {
-                            if (extant.has(transfer.asset)) {
-                                const total = extant.get(transfer.asset);
-
-                                if (total) {
-                                    extant.set(
-                                        transfer.asset,
-                                        total.plus(transfer.amount));
-                                }
-
-                                map.set(
-                                    transfer.to.toString(),
-                                    extant);
-                                continue;
-                            }
-                        }
-                    }
-
-                    map.set(
-                        transfer.to.toString(),
-                        new Map().set(transfer.asset, transfer.amount)
-                    );
-                }
-
-                return map;
-            }
-
-            return null;
-        });
-
+    setup() {
         return {
             mdiFileEdit,
-            mdiDelete,
-            summaryTransfers
+            mdiDelete
         };
     }
 });
 </script>
 
 <style lang="postcss" scoped>
+.header {
+    display: flex;
+    width: 100%;
+}
+
 .transfer-list {
     display: flex;
     flex-direction: column;
@@ -152,7 +109,8 @@ export default defineComponent({
 }
 
 .transfer-amount {
-    flex-basis: 50px;
+    flex-basis: 100px;
+    flex: 1;
     text-align: right;
     padding-right: 15px;
 }
