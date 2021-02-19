@@ -28,6 +28,6 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/unit/**/*.ts",
-    "tests/unit/**/*.tsx"
+    "tests/unit/**/*.tsx", "src/service-worker.js"
   ]
 }
