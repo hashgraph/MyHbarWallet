@@ -268,9 +268,11 @@ export default defineComponent({
                 }
             } else if (which === AccessSoftwareOption.Phrase) {
                 state.loginMethod = LoginMethod.Mnemonic;
+                // eslint-disable-next-line no-return-assign
                 Vue.nextTick(() => state.modalAccessByPhraseState.isOpen = true);
             } else if (which === AccessSoftwareOption.Key) {
                 state.loginMethod = LoginMethod.PrivateKey;
+                // eslint-disable-next-line no-return-assign
                 Vue.nextTick(() => state.modalAccessByPrivateKeyState.isOpen = true);
             }
         }

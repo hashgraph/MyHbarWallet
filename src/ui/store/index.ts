@@ -186,6 +186,7 @@ export const mutations = {
         switch (name) {
             case NetworkName.MAINNET:
             case NetworkName.TESTNET:
+            case NetworkName.PREVIEW:
                 store.state.network.network = availableNetworks[ name ];
                 break;
             case NetworkName.CUSTOM:
