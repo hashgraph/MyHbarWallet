@@ -35,7 +35,8 @@ describe("ModalReportError.Vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         modal!.showModal();
-        await localVue.nextTick();
+        // eslint-disable-next-line no-await-in-loop
+        for (let i = 0; i < 10; i++) await localVue.nextTick();
 
         expect(wrapper).toMatchInlineSnapshot(`
             <transition-stub name="fade">
