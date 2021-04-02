@@ -1,9 +1,9 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
 import VueI18n from "vue-i18n";
-import { mdiSleep } from "@mdi/js";
 
 import ModalAccessByPhrase from "../../../src/ui/components/ModalAccessByPhrase.vue";
+import Button from "../../../src/ui/components/Button.vue";
 import i18n from "../../../src/service/i18n";
 
 describe("ModalAccessByPhrase.vue", (): void => {
@@ -46,7 +46,7 @@ describe("ModalAccessByPhrase.vue", (): void => {
         password: ""
     };
 
-    it("renders", async (): Promise<void> => {
+    it("renders", async(): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -55,13 +55,16 @@ describe("ModalAccessByPhrase.vue", (): void => {
             i18n,
             propsData: { state },
             listeners: { change: onChange },
-            stubs: { CustomerSupportLink: true, Button: true }
+            stubs: {
+                CustomerSupportLink: true,
+                Button
+            }
         });
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            child => child.$options.name === "Modal"
+            (child) => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -141,9 +144,12 @@ describe("ModalAccessByPhrase.vue", (): void => {
                   </div>
                 </transition-stub>
               </div>
-              </div>
-              <button-stub label="Continue" busy="true" class="continue-btn"></button-stub>
-              </form>
+              </div> <button type="submit" class="continue-btn busy"><svg width="24" height="24" viewBox="0 0 24 24" class="spinner mdi-spin">
+                  <path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z"></path>
+                </svg>
+                <!---->
+                <!---->
+              </button></form>
               <div class="support">
                 <customersupportlink-stub></customersupportlink-stub>
               </div>
