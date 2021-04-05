@@ -38,13 +38,7 @@ const plugins = [
 // service worker if web production
 if (process.env.MHW_ENV === "production" && !is_electron) {
     plugins.push(
-        new WorkboxPlugin.GenerateSW({
-            mode: "production",
-            cacheId: "mhw",
-            cleanupOutdatedCaches: true,
-            clientsClaim: true,
-            skipWaiting: true
-        })
+        new WorkboxPlugin.InjectManifest({ swSrc: path.resolve(__dirname, "src/service-worker.js") })
     );
 }
 
