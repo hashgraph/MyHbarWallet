@@ -1,6 +1,9 @@
 <template>
     <div class="interface-form">
-        <InterfaceFormTitle :title="title" />
+        <InterfaceFormTitle
+            :title="title"
+            :description="description"
+        />
         <div class="interface-form-container">
             <div class="form-main">
                 <slot />
@@ -20,7 +23,10 @@ import InterfaceFormTitle from "./InterfaceFormTitle.vue";
 export default defineComponent({
     name: "InterfaceForm",
     components: { InterfaceFormTitle },
-    props: { title: { type: String, required: true }}
+    props: {
+        title: { type: String, required: true },
+        description: { type: String, required: false }
+    }
 });
 </script>
 

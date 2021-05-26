@@ -50,6 +50,22 @@ typeof import("./views/InterfaceSendTransfer.vue")
         "./views/InterfaceSendTransfer.vue");
 }
 
+function InterfaceWrapHbar(): Promise<
+typeof import("./views/bridge/InterfaceWrapHbar.vue")
+> {
+    return import(
+        /* webpackChunkName: "interface" */
+        "./views/bridge/InterfaceWrapHbar.vue");
+}
+
+function InterfaceUnwrapWHbar(): Promise<
+typeof import("./views/bridge/InterfaceUnwrapWHbar.vue")
+> {
+    return import(
+        /* webpackChunkName: "interface" */
+        "./views/bridge/InterfaceUnwrapWHbar.vue");
+}
+
 function InterfaceDeployContract(): Promise<
 typeof import("./views/InterfaceDeployContract.vue")
 > {
@@ -189,6 +205,16 @@ export default new Router({
                     path: "send-transfer",
                     name: "send-transfer",
                     component: InterfaceSendTransfer
+                },
+                {
+                    path: "wrap-hbar",
+                    name: "wrap-hbar",
+                    component: InterfaceWrapHbar
+                },
+                {
+                    path: "unwrap-whbar",
+                    name: "unwrap-whbar",
+                    component: InterfaceUnwrapWHbar
                 },
                 {
                     path: "send-asset",

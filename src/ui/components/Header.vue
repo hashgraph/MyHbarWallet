@@ -418,4 +418,5 @@ export default defineComponent({
 .external-icon {
     margin-inline-start: 5px;
 }
+
 </style>

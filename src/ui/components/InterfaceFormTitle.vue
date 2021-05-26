@@ -2,6 +2,9 @@
     <div class="interface-form-title-container">
         <div class="interface-form-title">
             {{ title }}
+            <div class="interface-form-description">
+                {{ description }}
+            </div>
         </div>
         <Button
             :label="$t('common.menu')"
@@ -23,7 +26,10 @@ function emitMenuOpen(): void {
 
 export default defineComponent({
     name: "InterfaceFormTitle",
-    props: { title: { type: String, required: true }},
+    props: {
+        title: { type: String, required: true },
+        description: { type: String, required: false }
+    },
     components: { Button },
     setup() {
         return { emitMenuOpen };
@@ -59,5 +65,14 @@ button {
     font-size: 24px;
     font-weight: 500;
     padding-inline-start: 27px;
+}
+
+.interface-form-description {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #BDBDBD;
 }
 </style>

@@ -30,7 +30,7 @@ const plugins = [
         COMMIT_HASH: `"${hash.toString().trim()}"`,
         IS_ELECTRON: is_electron,
         HEDERA_NETWORK: `"${process.env.HEDERA_NETWORK || "testnet"}"`,
-        MOONPAY_API_KEY: `"${process.env.MOONPAY_API_KEY || "pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ"}"`
+        MOONPAY_API_KEY: `"${process.env.MOONPAY_API_KEY || "pk_test_ypQ0mhShRarhXwAbGvdLfxAL89AtfQ"}"`,
     }),
     new StatsPlugin("stats.json")
 ];
@@ -65,7 +65,7 @@ const electronOptions = {
             customFileProtocol: "mhw://./",
             chainWebpackRendererProcess(config) {
                 config.plugin("define").tap((args) => {
-                    args[ 0 ].IS_ELECTRON = "true";
+                    args[0].IS_ELECTRON = "true";
                     return args;
                 });
             },
@@ -74,10 +74,10 @@ const electronOptions = {
                 appId: "com.myhbarwallet.app",
                 productName: "MyHbarWallet",
                 copyright: "Copyright © 2020 MyHbarWallet",
-                files: [ "**", "dist/electron/icon.*" ],
+                files: ["**", "dist/electron/icon.*"],
                 npmRebuild: true,
                 win: {
-                    target: [ "nsis" ],
+                    target: ["nsis"],
                     icon: "./dist/electron/icons/icon.ico"
                 },
                 mac: {
@@ -86,7 +86,7 @@ const electronOptions = {
                     icon: "./dist/electron/icons/icon.icns"
                 },
                 linux: {
-                    target: [ "pacman", "deb", "rpm" ],
+                    target: ["pacman", "deb", "rpm"],
                     executableName: "MyHbarWallet",
                     category: "Utility",
                     desktop: {
@@ -100,10 +100,10 @@ const electronOptions = {
 };
 
 // write to disk preferred for electron
-const electronDevServer = { devServer: { writeToDisk: true }};
+const electronDevServer = { devServer: { writeToDisk: true } };
 
 // source map in dev, test
-const css = { css: { sourceMap: process.env.NODE_ENV !== "production" }};
+const css = { css: { sourceMap: process.env.NODE_ENV !== "production" } };
 
 // Keep entrypoint small and asynchronously load chunks at a reasonable pace
 const performance = {
@@ -112,7 +112,7 @@ const performance = {
         maxEntrypointSize: 8000000,
         maxAssetSize: 8000000
     },
-    optimization: { splitChunks: { chunks: "all", maxInitialRequests: 4, maxAsyncRequests: 7 }}
+    optimization: { splitChunks: { chunks: "all", maxInitialRequests: 4, maxAsyncRequests: 7 } }
 };
 
 // explicitly use node version of the hashgraph SDK in electron
@@ -122,7 +122,7 @@ const electronConfig = {
         target: "electron-renderer",
         ...performance,
         plugins,
-        resolve: { alias: { "@hashgraph/sdk": path.resolve(__dirname, "node_modules/@hashgraph/sdk/lib/index-node.js") }}
+        resolve: { alias: { "@hashgraph/sdk": path.resolve(__dirname, "node_modules/@hashgraph/sdk/lib/index-node.js") } }
     },
     ...electronOptions,
     ...electronDevServer
@@ -154,7 +154,7 @@ const chainConfig = {
     chainWebpack(config) {
         config.plugin("html").tap((args) => [
             {
-                ...args[ 0 ],
+                ...args[0],
                 template: path.resolve(__dirname, "src/index.html")
             }
         ]);
@@ -165,10 +165,10 @@ const chainConfig = {
         if (process.env.NODE_ENV === "production") {
             config.plugin("optimize-css").tap((args) => [
                 {
-                    ...args[ 0 ],
+                    ...args[0],
                     preset: [
                         "advanced",
-                        { discardComments: { removeAll: true }}
+                        { discardComments: { removeAll: true } }
                     ]
                 }
             ]);

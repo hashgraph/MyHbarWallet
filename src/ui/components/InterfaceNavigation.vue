@@ -35,6 +35,14 @@ import {LoginMethod} from "../wallets/Wallet";
                 :title="$t('interfaceNavigation.tools')"
                 :routes="toolsRoutes"
             />
+
+            <template v-if="bridgeActive">
+                <InterfaceNavigationSection
+                    :icon="mdiEthereum"
+                    :title="$t('interfaceNavigation.hederaEvmBridge')"
+                    :routes="hederaEvmBridgeRoutes"
+                />
+            </template>
         </nav>
         <div
             :class="classObject"
@@ -45,7 +53,7 @@ import {LoginMethod} from "../wallets/Wallet";
 </template>
 
 <script lang="ts">
-import { mdiClose, mdiCoins, mdiFileDocumentBoxMultipleOutline, mdiToolbox } from "@mdi/js";
+import { mdiClose, mdiCoins, mdiFileDocumentBoxMultipleOutline, mdiToolbox, mdiEthereum } from "@mdi/js";
 import { computed, defineComponent } from "@vue/composition-api";
 
 import { LoginMethod } from "../../domain/wallets/wallet";
@@ -124,11 +132,27 @@ export default defineComponent({
             }
         ];
 
+        const hederaEvmBridgeRoutes = [
+            {
+                name: "wrap-hbar",
+                label: context.root.$t("interfaceNavigation.wrapHbar").toString()
+            },
+            {
+                name: "unwrap-whbar",
+                label: context.root.$t("interfaceNavigation.unwrapWHbar").toString()
+            }
+        ];
+
         const menuOpen = computed(() => store.state.ui.interfaceMenu.isOpen);
 
         const classObject = computed(() => {
             if (menuOpen.value) return "menu-open";
             return "menu-closed";
+        });
+
+        const bridgeActive = computed(() => {
+            const currentNetwork = getters.currentNetwork();
+            return currentNetwork.bridge;
         });
 
         return {
@@ -138,10 +162,13 @@ export default defineComponent({
             classObject,
             filesRoutes,
             toolsRoutes,
+            hederaEvmBridgeRoutes,
             mdiFileDocumentBoxMultipleOutline,
             mdiCoins,
             mdiToolbox,
-            handleClick
+            mdiEthereum,
+            handleClick,
+            bridgeActive
         };
     }
 });

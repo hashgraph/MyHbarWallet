@@ -1,8 +1,9 @@
 <template>
     <div class="notice">
         <div
+            v-if="title"
             class="symbol-container"
-            :class="classObject"
+            :class="symbol"
         >
             <MaterialDesignIcon
                 class="symbol"
@@ -33,7 +34,7 @@ export default defineComponent({
     components: { MaterialDesignIcon },
     props: {
         title: String,
-        symbol: { type: String, required: true }
+        symbol: { type: String, required: false }
     },
     setup(props) {
         const classObject = computed(() => ({ compact: props.title == null }));

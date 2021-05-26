@@ -10,6 +10,7 @@ module.exports = {
         "@launchbadge/eslint-config/vue-typescript"
     ],
     rules: {
+        'no-console': 'off',
         "compat/compat": "off", // shut up
         "vue/no-v-html": "off",
         "require-atomic-updates": "off",

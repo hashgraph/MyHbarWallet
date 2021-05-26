@@ -3,7 +3,8 @@ import { BigNumber } from "bignumber.js";
 
 export enum Asset {
     Hbar="Hbar",
-    Token="Token"
+    Token="Token",
+    WHbar="WHbar"
 }
 
 export interface Transfer {
