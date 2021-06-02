@@ -13,6 +13,7 @@
     "test:e2e": "NODE_ENV=test vue-cli-service test:e2e --headless",
     "test:e2e:dev": "NODE_ENV=test vue-cli-service test:e2e",
     "build": "NODE_ENV=production vue-cli-service build",
+    "build:electron": "NODE_ENV=production vue-cli-service electron:build",
     "prebuild": "npx pnpm install -r --store=node_modules/.pnpm-store || echo skiping pnpm install"
   },
   "main": "background.js",
