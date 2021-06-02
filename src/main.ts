@@ -1,48 +1,18 @@
-import "./main.css";
-import "./ui/directives";
-import "typeface-montserrat";
-import "typeface-inconsolata";
-import Vue, { VNode } from "vue";
-import Router from "vue-router";
-import VueCompositionApi from "@vue/composition-api";
+import "./index.css";
 
-import App from "./ui/App.vue";
-import router from "./ui/router";
-import i18n from "./service/i18n";
-import * as store from "./ui/store";
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 
-declare const IS_ELECTRON: boolean;
-declare const MHW_ENV: string;
+import i18n from "./i18n";
+import router from "./router";
+import container from "./hooks/container";
+import App from "./App.vue";
 
-// Globally install the Vue3 Function API
-Vue.use(VueCompositionApi);
-Vue.use(Router);
+const app = createApp(App);
 
-// Globally catch uncaught exceptions and store it
-/* eslint-disable-next-line @typescript-eslint/unbound-method */
-Vue.config.errorHandler = function(error: Error): void {
-    store.mutations.errorOccurred({ error });
-};
+app.use(i18n);
+app.use(router);
+app.use(container);
+app.use(createPinia());
 
-const app = new Vue({
-    router,
-    render: (h): VNode => h(App),
-    i18n
-});
-
-app.$mount("#app");
-
-// For Cypress
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-window.vueapp = app;
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-window.vueapp.$store = store;
-
-if ("serviceWorker" in navigator && !IS_ELECTRON && MHW_ENV === "production") {
-    window.addEventListener("load", () => {
-        // eslint-disable-next-line compat/compat
-        navigator.serviceWorker.register("./service-worker.js");
-    });
-}
+app.mount("#app");
