@@ -38,7 +38,14 @@ const plugins = [
 // service worker if web production
 if (process.env.MHW_ENV === "production" && !is_electron) {
     plugins.push(
-        new WorkboxPlugin.InjectManifest({ swSrc: path.resolve(__dirname, "src/service-worker.js") })
+        // https://developers.google.com/web/tools/workbox/guides
+        new WorkboxPlugin.GenerateSW({
+            cacheId: "mhw",
+            clientsClaim: true,
+            skipWaiting: true,
+            cleanupOutdatedCaches: true,
+            sourceMap: true
+        })
     );
 }
 
@@ -52,7 +59,7 @@ if (is_electron) {
     plugins.push(
         new webpack.NormalModuleReplacementPlugin(
             /^bindings$/,
-            `${__dirname}/src/electron/bindings`
+            `${__dirname}/src/bindings.ts`
         ));
 }
 
@@ -61,7 +68,7 @@ const electronOptions = {
     pluginOptions: {
         electronBuilder: {
             outputDir: "dist/electron",
-            mainProcessFile: "src/electron/background.ts",
+            mainProcessFile: "src/background.ts",
             customFileProtocol: "mhw://./",
             chainWebpackRendererProcess(config) {
                 config.plugin("define").tap((args) => {
@@ -73,7 +80,7 @@ const electronOptions = {
             builderOptions: {
                 appId: "com.myhbarwallet.app",
                 productName: "MyHbarWallet",
-                copyright: "Copyright © 2020 MyHbarWallet",
+                copyright: "Copyright © 2021 MyHbarWallet",
                 files: [ "**", "dist/electron/icon.*" ],
                 npmRebuild: true,
                 win: {
@@ -134,7 +141,7 @@ const webExternals = {
         "@ledgerhq/hw-transport-node-hid-noevents": "module",
         "@improbable-eng/grpc-web-node-http-transport": "module",
         "node-hid": "module",
-        "grpc-js": "module"
+        "@grpc/grpc-js": "module"
     }
 };
 

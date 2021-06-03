@@ -50,12 +50,6 @@ app.on("window-all-closed", () => {
     app.quit();
 });
 
-// app.on("activate", () => {
-//     if (win == null) {
-//         createWindow();
-//     }
-// });
-
 app.on("ready", async() => {
     createWindow();
 });
