@@ -22,6 +22,9 @@ const WorkboxPlugin = require("workbox-webpack-plugin");
 // is electron or web
 const is_electron = process.env.IS_ELECTRON === "true";
 
+// production
+const is_production = process.env.NODE_ENV === "production";
+
 // environment variables present in app and output stats
 const plugins = [
     new webpack.DefinePlugin({
@@ -36,7 +39,7 @@ const plugins = [
 ];
 
 // service worker if web production
-if (process.env.MHW_ENV === "production" && !is_electron) {
+if (is_production && !is_electron) {
     plugins.push(
         // https://developers.google.com/web/tools/workbox/guides
         new WorkboxPlugin.GenerateSW({
@@ -44,7 +47,8 @@ if (process.env.MHW_ENV === "production" && !is_electron) {
             clientsClaim: true,
             skipWaiting: true,
             cleanupOutdatedCaches: true,
-            sourceMap: true
+            sourcemap: true,
+            swDest: "service-worker.js"
         })
     );
 }
