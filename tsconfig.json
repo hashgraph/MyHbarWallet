@@ -1,33 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "strict": true,
-    "jsx": "preserve",
-    "importHelpers": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
     "baseUrl": ".",
-    "types": [
-      "webpack-env",
-      "jest",
-      "node"
-    ],
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "incremental": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true,
+    "noUnusedParameters": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["dom", "esnext"],
+    "types": ["vite/client", "@intlify/vite-plugin-vue-i18n/client"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/unit/**/*.ts",
-    "tests/unit/**/*.tsx", "src/service-worker.js"
-  ]
+  "include": ["@types", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"]
 }

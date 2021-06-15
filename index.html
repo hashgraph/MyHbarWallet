@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="ie=edge" http-equiv="x-ua-compatible" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preload" as="image" href="src/assets/img_hero.svg" />
+
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <!-- defined in vite.config.js -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="<%= contentSecurityPolicy %>"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="<%= contentSecurityPolicy %>"
+    />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/pinnedTabs/pinnedTabs.html -->
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#39ba8b" />
+
+    <!-- https://html.spec.whatwg.org/multipage/semantics.html -->
+    <meta name="keywords" content="hedera,hashgraph,wallet,hbar" />
+    <meta name="theme-color" content="#39ba8b" />
+    <meta name="application-name" content="MyHbarWallet" />
+    <title>MyHbarWallet</title>
+    <meta
+      name="description"
+      content="MyHbarWallet is a free, client-side interface helping you interact with Hedera™ Hashgraph."
+    />
+
+    <!-- https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/samples/dn455106(v=vs.85) -->
+    <meta name="msapplication-TileColor" content="#ffffff" />
+  </head>
+
+  <body
+    class="
+      h-screen
+      min-h-0
+      antialiased
+      sm:subpixel-antialiased
+      md:antialiased
+      bg-white
+      dark:bg-black
+      font-montserrat
+    "
+  >
+    <div id="app" class="flex flex-col min-h-screen"></div>
+    <div id="modals"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
