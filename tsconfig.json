@@ -18,5 +18,5 @@
     "lib": ["dom", "esnext"],
     "types": ["vite/client", "@intlify/vite-plugin-vue-i18n/client"]
   },
-  "include": ["@types", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"]
+  "include": ["@types", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "src/utils/json-bignumber.js"]
 }
