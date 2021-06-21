@@ -1,12 +1,12 @@
 <template>
-  <div class="lg:flex lg:flex-row">
+  <div class="lg:flex lg:flex-row h-full">
     <Drawer class="hidden sticky top-0 lg:flex" />
     <MobileDrawer class="sticky top-0 z-20 lg:hidden" />
 
     <div class="px-2 md:flex-1 md:px-10 relative flex">
       <div
         class="
-          h-[600px]
+          h-full
           absolute
           top-0
           left-0
@@ -23,7 +23,7 @@
       <main
         :class="[
           'bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1',
-          'lg:mt-10',
+          'lg:mt-10 w-full',
         ]"
       >
         <router-view />

@@ -7,7 +7,6 @@
 import { defineComponent } from "vue";
 import InterfaceAssets from "../../components/interface/Assets.vue";
 import Headline from "../../components/interface/Headline.vue";
-
 export default defineComponent({
   name: "Assets",
   components: {

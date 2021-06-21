@@ -18,6 +18,7 @@ import AccessHardware from "./pages/access/Hardware.vue";
 import AccessKeystore from "./pages/access/Keystore.vue";
 import AccessMnemonic from "./pages/access/Mnemonic.vue";
 import AccessPrivateKey from "./pages/access/PrivateKey.vue";
+import AccessLedger from "./pages/access/Ledger.vue";
 import Account from "./pages/access/Account.vue";
 
 // Create
@@ -41,6 +42,7 @@ import InterfaceTools from "./pages/interface/Tools.vue";
 import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vue";
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
+import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
 
 const routes = [
   {
@@ -71,9 +73,10 @@ const routes = [
       },
       {
         path: "/access/hardware/ledger",
-        component: AccessHardware,
+        component: AccessLedger,
         name: "access.hardware.ledger",
       },
+
       {
         path: "/access/hardware/trezor",
         component: AccessHardware,
@@ -120,6 +123,7 @@ const routes = [
         component: CreatePrivateKey,
         name: "create.key",
       },
+
     ],
   },
   {
@@ -222,6 +226,12 @@ const routes = [
             path: "associate-token",
             name: "tools.associate.token",
           },
+          {
+            component: InterfaceConvertUnits,
+            path: "convert-units",
+            name: "tools.convert.units"
+          },
+        
         ],
       },
     ],

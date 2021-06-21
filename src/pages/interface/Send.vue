@@ -9,18 +9,18 @@
       pb-10
       border-b border-cerebral-grey
       dark:border-midnight-express
+      w-full
     "
   >
-    <div class="flex flex-wrap">
-      <div class="">
+    <div class="flex flex-wrap items-center">
+      <div class="w-full">
         <!-- TODO: when localizing, remove the v-if, the pluralization should be done in the localizer -->
-        <div
-          v-if="state.transfers.length <= 1"
-          class="mb-2 dark:text-silver-polish"
-        >
-          Transfer
+        <div v-if="state.transfers.length <= 1" class="mb-2 dark:text-white">
+          {{ $t("InterfaceHomeSend.section1.header1") }}
         </div>
-        <div v-else class="mb-2 dark:text-silver-polish">Transfers</div>
+        <div v-else class="mb-2 dark:text-white">
+          {{ $t("InterfaceTransactionDetails.transfers") }}
+        </div>
 
         <div
           class="
@@ -38,99 +38,69 @@
             v-model:to="state.transfer.to"
             v-model:asset="state.transfer.asset"
             v-model:amount="state.transfer.amount"
+            v-model:usd="state.transfer.usd"
+          />
+        </div>
+
+        <div class="mb-2 p-4 md:p-0 mt-4">
+          <div class="dark:text-white">From</div>
+
+          <TextInput
+            v-model="state.accountId"
+            class="mt-2 rounded font-medium"
+          />
+
+          <OptionalMemo v-model="state.memo" class="mt-8" />
+
+          <OptionalHbarInput
+            v-model="state.maxFee"
+            class="mt-8"
+            :default-value="state.defaultMaxFee"
           />
         </div>
       </div>
-
-      <!--      <div class="mb-2 p-4 md:p-0">-->
-      <!--        &lt;!&ndash;        <div class="dark:text-silver-polish">From</div>&ndash;&gt;-->
-
-      <!--        &lt;!&ndash;        <TextInput&ndash;&gt;-->
-      <!--        &lt;!&ndash;          v-model="state.accountId"&ndash;&gt;-->
-      <!--        &lt;!&ndash;          disabled&ndash;&gt;-->
-      <!--        &lt;!&ndash;          class="mt-2 rounded font-medium"&ndash;&gt;-->
-      <!--        &lt;!&ndash;        />&ndash;&gt;-->
-
-      <!--        &lt;!&ndash;        <OptionalMemo v-model="state.memo" class="mt-6" />&ndash;&gt;-->
-
-      <!--        &lt;!&ndash;        <OptionalHbarInput&ndash;&gt;-->
-      <!--        &lt;!&ndash;          v-model="state.maxFee"&ndash;&gt;-->
-      <!--        &lt;!&ndash;          class="mt-8"&ndash;&gt;-->
-      <!--        &lt;!&ndash;          :default-value="state.defaultMaxFee"&ndash;&gt;-->
-      <!--        &lt;!&ndash;        />&ndash;&gt;-->
-      <!--      </div>-->
+      <Button color="white" class="mt-8 p-2 w-52" @click="openAddModal">
+        {{ $t("BaseButton.addTransfer1") }}
+      </Button>
     </div>
 
-    <!--    <Button color="white" class="mt-8 p-2 w-52" @click="openAddModal">-->
-    <!--      Add Transfer-->
-    <!--    </Button>-->
-  </div>
-
-  <div
-    v-if="state.generalErrorText != null"
-    class="
-      bg-unburdened-pink
-      mt-10
-      -mb-8
-      max-w-[600px]
-      w-max
-      mx-auto
-      px-4
-      py-3
-      rounded
-    "
-  >
-    <div class="text-sm text-harlocks-cape font-medium text-center">
-      {{ state.generalErrorText }}
-    </div>
-  </div>
-
-  <!-- bottom buttons section -->
-  <div class="flex flex-col items-center w-[420px] m-auto mt-10 mb-10">
-    <Button
-      color="green"
-      class="w-full py-3 mt-6"
-      :disabled="!sendValid"
-      :busy="state.sendBusyText != null"
-      @click="onSend"
+    <div
+      v-if="state.generalErrorText != null"
+      class="bg-unburdened-pink mt-10 -mb-8 w-max mx-auto px-4 py-3 rounded"
     >
-      {{ state.sendBusyText ?? "Send" }}
-    </Button>
+      <div class="text-sm text-harlocks-cape font-medium text-center">
+        {{ state.generalErrorText }}
+      </div>
+    </div>
 
-    <Button color="white" class="text-sm px-9 py-2 mt-4" @click="onCancel">
-      Cancel
-    </Button>
+    <!-- bottom buttons section -->
+    <div class="flex flex-col items-center m-auto mt-10 mb-10 w-7/12">
+      <Button
+        color="green"
+        class="w-full py-3 mt-6"
+        :disabled="!sendValid"
+        :busy="state.sendBusyText != null"
+        @click="onSend"
+      >
+        {{ state.sendBusyText ?? "Send" }}
+      </Button>
+
+      <Button color="white" class="text-sm px-9 py-2 mt-4" @click="onCancel">
+        {{ $t("BaseButton.cancel") }}
+      </Button>
+    </div>
   </div>
-
-  <!--  &lt;!&ndash; Add Transfer Modal &ndash;&gt;-->
-  <!--  <AddEditModal-->
-  <!--    v-model:to="state.transfer.to"-->
-  <!--    v-model:asset="state.transfer.asset"-->
-  <!--    v-model:amount="state.transfer.amount"-->
-  <!--    :is-visible="state.showAddModal"-->
-  <!--    type="add"-->
-  <!--    @close="closeAddModal"-->
-  <!--    @clickAdd="handleAdd"-->
-  <!--  />-->
-
-  <!--  &lt;!&ndash; Edit Transfer Modal &ndash;&gt;-->
-  <!--  <AddEditModal-->
-  <!--    v-if="state.transfers.length > 0"-->
-  <!--    v-model:to="state.transfers[state.indexToEdit].to"-->
-  <!--    v-model:asset="state.transfers[state.indexToEdit].asset"-->
-  <!--    v-model:amount="state.transfers[state.indexToEdit].amount"-->
-  <!--    :is-visible="state.showEditModal"-->
-  <!--    type="edit"-->
-  <!--    @close="closeEditModal"-->
-  <!--    @clickAdd="handleEditAdd"-->
-  <!--  />-->
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, nextTick, reactive } from "vue";
 import Headline from "../../components/interface/Headline.vue";
 import TransferForm from "../../components/interface/TransferForm.vue";
+import OptionalHbarInput from "../../components/interface/OptionalHbarInput.vue";
+import OptionalMemo from "../../components/interface/OptionalMemo.vue";
 import Button from "../../components/base/Button.vue";
+import TextInput from "../../components/base/TextInput.vue";
+
 import BigNumber from "bignumber.js";
 import type { AccountId } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
@@ -148,6 +118,9 @@ export default defineComponent({
     Button,
     TransferForm,
     Headline,
+    TextInput,
+    OptionalMemo,
+    OptionalHbarInput,
   },
   setup() {
     let state = reactive({
@@ -165,6 +138,7 @@ export default defineComponent({
         to: null,
         asset: "HBAR",
         amount: null,
+        usd: "USD",
       } as Transfer,
       transfers: [] as Transfer[],
     });

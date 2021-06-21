@@ -15,10 +15,15 @@
   >
     <div
       v-if="asset === 'HBAR'"
-      class="absolute pointer-events-none left-0 text-right pl-4"
+      class="absolute pointer-events-none left-0 text-right pl-4 dark:text-white"
     >
       ℏ
     </div>
+
+    <div v-if="asset === 'usd'" class = "dark: text-white"> $ </div>
+
+
+
     <input
       v-bind="$attrs"
       :value="formattedValue"
@@ -30,7 +35,7 @@
         border-none
         placeholder-squant
         bg-white
-        dark:text-silver-polish
+        dark:text-white
         dark:bg-ruined-smores
       "
       :class="{ 'pr-5 pl-8': asset === 'HBAR', 'px-5': asset !== 'HBAR' }"
@@ -59,7 +64,7 @@ export default defineComponent({
   emits: ["update:modelValue"],
   setup(props, { emit }) {
     const store = useStore();
-
+    console.log(props.asset);
     const assetDecimals = computed(() =>
       props.asset === "HBAR"
         ? 8

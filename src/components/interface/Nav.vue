@@ -42,12 +42,12 @@
       :to="{ name: 'keys' }"
     />
 
-    <!--    <NavItem-->
-    <!--      :icon="iconNavGreyTools"-->
-    <!--      :active-icon="iconNavPurpleTools"-->
-    <!--      :text="$t('RouterLink.tools')"-->
-    <!--      :to="{ name: 'tools' }"-->
-    <!--    />-->
+       <NavItem
+         :icon="iconNavGreyTools"
+         :active-icon="iconNavPurpleTools"
+         :text="$t('RouterLink.tools')"
+         :to="{ name: 'tools' }"
+       />
   </div>
 </template>
 

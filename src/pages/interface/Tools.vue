@@ -1,13 +1,19 @@
 <template>
   <Headline :title="$t('InterfaceTools.header')" />
 
-  <div class="mt-6 flex flex-wrap">
+  <div class="mt-6 flex flex-wrap justify-items-center">
     <ToolTile
       :title="$t('InterfaceToolTile.associateToken.title')"
-      description="To send or receive a token, you need to first associate your account with
-      the token."
+      :description="$t('InterfaceToolTile.associateToken.hint')"
       :to="{ name: 'tools.associate.token' }"
     />
+
+
+
+    <ToolTile :title = "$t('InterfaceConvertUnits')" :description = "$t('ourHelpfulConversionTool')" :to = "{name: 'tools.convert.units'}"/>
+
+
+    
   </div>
 </template>
 

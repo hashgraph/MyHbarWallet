@@ -63,7 +63,7 @@ export const HardwareOptions: Map<HardwareOption, HardwareAttributes> = new Map(
     [
       HardwareOption.Trezor,
       {
-        supported: true,
+        supported: false,
         title: "Trezor.title",
         description: "Trezor.description",
         value: HardwareOption.Trezor,

@@ -2,7 +2,7 @@
   <div
     :class="[
       'bg-white h-screen border-r border-jupiter flex flex-col',
-      'dark:bg-ruined-smores dark:border-midnight-express',
+      'dark:bg-ruined-smores dark:border-midnight-express dark:text-white',
     ]"
   >
     <Image
@@ -29,7 +29,7 @@
         class="mr-3 w-6 h-6 my-px"
       />
       <div class="dark:text-white font-medium select-none text-squant">
-        Mainnet
+          {{ selectedNetwork }}
       </div>
     </div>
 
@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {computed, defineComponent} from "vue";
 import { useStore } from "../../store";
 import { useRouter } from "vue-router";
 import Image from "../base/Image.vue";
@@ -66,6 +66,8 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
+    const selectedNetwork = computed(() => store.network);
+
 
     function logOut() {
       store.$reset();
@@ -79,7 +81,9 @@ export default defineComponent({
       logoDark: mhwLogoDark,
       hederaLight,
       hederaDark,
+      selectedNetwork,
     };
   },
 });
+
 </script>
