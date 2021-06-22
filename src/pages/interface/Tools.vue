@@ -8,6 +8,11 @@
       the token."
       :to="{ name: 'tools.associate.token' }"
     />
+
+
+
+    <ToolTile :title = "$t('InterfaceConvertUnits')" description = "Our helpful conversion tool and hbar unit reference allow you to calculate your total transaction cost." :to = "{name: 'tools.convert.units'}"/>
+    
   </div>
 </template>
 

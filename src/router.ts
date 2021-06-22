@@ -41,6 +41,9 @@ import InterfaceTools from "./pages/interface/Tools.vue";
 import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vue";
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
+import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
+
+
 
 const routes = [
   {
@@ -222,6 +225,11 @@ const routes = [
             path: "associate-token",
             name: "tools.associate.token",
           },
+          {
+            component: InterfaceConvertUnits,
+            path: "convert-units",
+            name: "tools.convert.units"
+          }
         ],
       },
     ],

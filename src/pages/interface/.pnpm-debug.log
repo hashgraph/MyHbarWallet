@@ -1,0 +1,14 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_NO_SCRIPT",
+    "err": {
+      "name": "Error",
+      "message": "Missing script: serve",
+      "code": "ERR_PNPM_NO_SCRIPT",
+      "stack": "Error: Missing script: serve\n    at Object.handler (C:\\Users\\ukkau\\AppData\\Roaming\\npm\\pnpm-global\\5\\node_modules\\.pnpm\\pnpm@6.8.0\\node_modules\\pnpm\\dist\\pnpm.cjs:120478:15)\n    at async Timeout._onTimeout (C:\\Users\\ukkau\\AppData\\Roaming\\npm\\pnpm-global\\5\\node_modules\\.pnpm\\pnpm@6.8.0\\node_modules\\pnpm\\dist\\pnpm.cjs:124500:24)"
+    }
+  }
+}
