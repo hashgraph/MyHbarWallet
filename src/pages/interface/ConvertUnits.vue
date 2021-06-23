@@ -8,26 +8,27 @@
       pb-10
       border-b border-cerebral-grey
       dark:border-midnight-express
+      items-center
     "
   >
-    <div class="page-subtitle m-4">
+    <div class="page-subtitle m-16">
       {{ $t("ourHelpfulConversionTool") }}
     </div>
 
-    <div class="flex flex-wrap">
-      <div class="block-left">
+    <div class="flex-wrap flex items-stretch m-16">
+      <div class="block-left w-5/12 m-auto">
         <div class="input-block">
-          <TextInput
+          <TextInput class = "m-1"
             v-model="state.valueLeft"
-            placeholder="$t('common.amount')"
+            :placeholder="$t('common.amount')"
             :modelValue="$t('common.amount')"
             @update:modelValue="handleInputValueLeft"
           />
         </div>
 
         <div class="select-block">
-          <DropdownSelector
-            v-model = "state.selectedLeft"
+          <DropdownSelector class = "m-2"
+            v-model="state.selectedLeft"
             :options="state.units"
             :modelValue="state.units[0].name"
             @update:modelValue="handleSelect"
@@ -35,38 +36,50 @@
         </div>
       </div>
 
-      <div class="block-center m-1">
+      <div class="block-center self-center">
         <img src="../../assets/swap.svg" alt="Swap" />
       </div>
 
-      <div class="block-right m-1">
-        <TextInput
+      <div class="block-right w-5/12 m-auto">
+        <TextInput class = "m-1"
           v-model="state.valueRight"
-          placeholder="1"
+          placeholder="'1'"
           :modelValue="'1'"
           @update:modelValue="handleInputValueRight"
         />
         <div class="select-block">
-          <DropdownSelector
-            v-model = "state.selectedRight"
+          <DropdownSelector class = "m-2"
+            v-model="state.selectedRight"
             :options="state.units"
             :modelValue="state.units[2].name"
-            @update:modelValue = "handleSelect"
+            @update:modelValue="handleSelect"
           />
         </div>
       </div>
     </div>
 
-    <div class="unit-table">
-      <table class="table-auto m-auto min-w-full">
-        <tbody>
-          <tr v-for="unit in state.unitRefs" :key="unit.key">
-            <td class="w-1/3">{{ unit.name }}</td>
-            <td class="w-1/3">{{ unit.amount }} {{ unit.symbol }}</td>
-            <td class="w-1/3">{{ unit.amountInHbar }} ℏ</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="unit-table m-16 items-center">
+
+        <div class = "unit-table-header mt-16 mb-6 font-semibold text-center">
+            {{ $t("referenceGuideTitle") }}  
+        </div>
+
+      <div class="table min-w-full m-auto">
+        <div
+          v-for="unit in state.units"
+          :key="unit.key"
+          class="table-row-group"
+
+        >
+          <div class="table-row">
+            <span class="table-cell w-1/3 border-b border-cerebral-grey pl-6 py-3" >{{ unit.name }}</span>
+            <span class="table-cell w-1/3 border-b border-cerebral-grey pl-6 py-3">
+              {{ unit.amount }} {{ unit.symbol }}
+            </span>
+            <span class="table-cell w-1/3 border-b border-cerebral-grey pl-16 py-3">{{ unit.amountInHbar }} ℏ</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -75,8 +88,6 @@
 <script lang= "ts">
 import { defineComponent, reactive } from "vue";
 import Headline from "../../components/interface/Headline.vue";
-// import { convert, Unit } from "../../services/units.ts";
-
 import TextInput from "../../components/base/TextInput.vue";
 import DropdownSelector from "../../components/base/DropdownSelector.vue";
 import { Hbar, HbarUnit } from "@hashgraph/sdk";
@@ -102,75 +113,48 @@ export default defineComponent({
           name: "Tinybar",
           iconLight: null,
           iconDark: null,
-        },
-
-        {
-          name: "Milibar",
-          iconLight: null,
-          iconDark: null,
-        },
-
-        {
-          name: "Hbar",
-          iconLight: null,
-          iconDark: null,
-        },
-        {
-          name: "Kilobar",
-          iconLight: null,
-          iconDark: null,
-        },
-        {
-          name: "Megabar",
-          iconLight: null,
-          iconDark: null,
-        },
-        {
-          name: "Gigabar",
-          iconLight: null,
-          iconDark: null,
-        },
-      ],
-
-      unitRefs: [
-        {
-          name: "Tinybar",
           symbol: "tℏ",
           amount: "100,000,000",
           amountInHbar: "1",
         },
+
         {
-          name: "Microbar",
+          name: "Millibar",
+          iconLight: null,
+          iconDark: null,
           symbol: "μℏ",
           amount: "1,000,000",
           amountInHbar: "1",
         },
-        {
-          name: "Milibar",
-          symbol: "mℏ",
-          amount: "1,000",
-          amountInHbar: "1",
-        },
+
         {
           name: "Hbar",
+          iconLight: null,
+          iconDark: null,
           symbol: "ℏ",
           amount: "1",
           amountInHbar: "1",
         },
         {
           name: "Kilobar",
+          iconLight: null,
+          iconDark: null,
           symbol: "kℏ",
           amount: "1",
           amountInHbar: "1,000",
         },
         {
           name: "Megabar",
+          iconLight: null,
+          iconDark: null,
           symbol: "Mℏ",
           amount: "1",
           amountInHbar: "1,000,000",
         },
         {
           name: "Gigabar",
+          iconLight: null,
+          iconDark: null,
           symbol: "Gℏ",
           amount: "1",
           amountInHbar: "1,000,000,000",
@@ -179,31 +163,86 @@ export default defineComponent({
     });
 
     function handleInputValueLeft(value: string, e: Event): void {
-      console.log(`Left ${value}`);
       if (isNaN(value)) {
-        console.log("Left input is not a number");
+        return;
       }
+
+      state.valueLeft = value;
+
+      computeValueRight();
+      computeValueLeft();
     }
 
     function handleInputValueRight(value: string, e: Event): void {
-      console.log(`Right ${value}`);
       if (isNaN(value)) {
-        console.log("Right input is not a number");
-      }
+          return;
+    }
+
+      state.valueRight = value;
+      computeValueLeft();
+      computeValueRight();
     }
 
     function handleSelect(): void {
-        let hLeft = new Hbar(new BigNumber(state.valueLeft), state.selectedLeft);
-        let hRight = new Hbar(new BigNumber(state.valueRight), state.selectedRight);
-
-
-        console.log(`valueRight: ${state.valueRight}, selectedRight: ${state.selectedRight}`);
-        console.log(hRight);
-        state.valueRight = hRight.toTinybars().toString();
-        console.log(state.valueRight);
-
+      let unitRight = state.selectedRight;
+      let unitLeft = state.selectedLeft;
+      let hLeft = new Hbar(
+        new BigNumber(state.valueLeft),
+        getHbarUnit(unitLeft)
+      );
+      state.valueRight = round(hLeft.to(getHbarUnit(unitRight), 12));
     }
-    return { state, handleInputValueLeft, handleInputValueRight, handleSelect };
+
+    function getHbarUnit(value: string): HbarUnit {
+      switch (value) {
+        case "Tinybar":
+          return HbarUnit.Tinybar;
+        case "Microbar":
+          return HbarUnit.Microbar;
+        case "Millibar":
+          return HbarUnit.Millibar;
+        case "Hbar":
+          return HbarUnit.Hbar;
+        case "Kilobar":
+          return HbarUnit.Kilobar;
+        case "Megabar":
+          return HbarUnit.Megabar;
+        case "Gigabar":
+          return HbarUnit.Gigabar;
+        default:
+          return HbarUnit.Hbar;
+      }
+    }
+
+    function computeValueLeft(): void {
+      let unitRight = state.selectedRight;
+      let unitLeft = state.selectedLeft;
+      let hRight = new Hbar(
+        new BigNumber(state.valueRight),
+        getHbarUnit(unitRight)
+      );
+      state.valueLeft = hRight.to(getHbarUnit(unitLeft));
+    }
+
+    function computeValueRight(): void {
+      let unitRight = state.selectedRight;
+      let unitLeft = state.selectedLeft;
+      let hLeft = new Hbar(
+        new BigNumber(state.valueLeft),
+        getHbarUnit(unitLeft)
+      );
+      state.valueRight = hLeft.to(getHbarUnit(unitRight));
+    }
+
+    return {
+      state,
+      handleInputValueLeft,
+      handleInputValueRight,
+      handleSelect,
+      computeValueLeft,
+      computeValueRight,
+      getHbarUnit,
+    };
   },
 });
 </script>
