@@ -9,6 +9,7 @@
       border-b border-cerebral-grey
       dark:border-midnight-express
       items-center
+      
     "
   >
     <div class="page-subtitle m-16">
@@ -177,7 +178,7 @@ export default defineComponent({
     }
       state.valueRight = value;
       computeValueLeft();
-      computeValueRight();
+      computeValueRight(); 
     }
 
     function handleSelect(): void {
