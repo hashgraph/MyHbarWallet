@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <div class="block-center self-center">
+      <div class="block-center self-center ">
         <img src="../../assets/swap.svg" alt="Swap" />
       </div>
 
@@ -73,7 +73,7 @@
         >
           <div class="table-row">
             <span class="table-cell w-1/3 border-b border-cerebral-grey pl-6 py-3" >{{ unit.name }}</span>
-            <span class="table-cell w-1/3 border-b border-cerebral-grey pl-6 py-3">
+            <span class="table-cell w-1/3 border-b border-cerebral-grey pl-10 py-3">
               {{ unit.amount }} {{ unit.symbol }}
             </span>
             <span class="table-cell w-1/3 border-b border-cerebral-grey pl-16 py-3">{{ unit.amountInHbar }} ℏ</span>
@@ -166,9 +166,7 @@ export default defineComponent({
       if (isNaN(value)) {
         return;
       }
-
       state.valueLeft = value;
-
       computeValueRight();
       computeValueLeft();
     }
@@ -177,7 +175,6 @@ export default defineComponent({
       if (isNaN(value)) {
           return;
     }
-
       state.valueRight = value;
       computeValueLeft();
       computeValueRight();
@@ -190,7 +187,8 @@ export default defineComponent({
         new BigNumber(state.valueLeft),
         getHbarUnit(unitLeft)
       );
-      state.valueRight = round(hLeft.to(getHbarUnit(unitRight), 12));
+      state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
+
     }
 
     function getHbarUnit(value: string): HbarUnit {
@@ -221,7 +219,7 @@ export default defineComponent({
         new BigNumber(state.valueRight),
         getHbarUnit(unitRight)
       );
-      state.valueLeft = hRight.to(getHbarUnit(unitLeft));
+      state.valueLeft = hRight.to(getHbarUnit(unitLeft)).toString();
     }
 
     function computeValueRight(): void {
@@ -231,8 +229,9 @@ export default defineComponent({
         new BigNumber(state.valueLeft),
         getHbarUnit(unitLeft)
       );
-      state.valueRight = hLeft.to(getHbarUnit(unitRight));
+      state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
     }
+
 
     return {
       state,
