@@ -3,13 +3,9 @@
     <label class="block dark:text-silver-polish mb-2" for="to">To</label>
 
     <div class="pb-0.5">
-      <TextInput
-        id="to"
-        :model-value="formattedTo"
-        :valid="toIsValid"
-        placeholder="shard.realm.num"
-        @input="onToInput"
-      />
+      <TextInput id="to" :model-value="formattedTo" :valid="toIsValid"
+      :placeholder="$t('InterfaceHomeSendModal.input1.placeholder')"
+      @input="onToInput" />
     </div>
 
     <label class="dark:text-silver-polish block pt-2 mb-2 mt-5"> Asset </label>
@@ -28,7 +24,9 @@
       </div>
 
       <div class="w-5/12 m-auto">
-        <label class="block dark:text-silver-polish pt-2 mb-2 mt-5 mb-2">USD</label>
+        <label class="block dark:text-silver-polish pt-2 mb-2 mt-5 mb-2"
+          >USD</label
+        >
 
         <TextInput id="usd" :model-Value="'$'" />
       </div>

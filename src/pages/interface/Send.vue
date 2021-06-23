@@ -11,7 +11,7 @@
       dark:border-midnight-express
     "
   >
-    <div class="flex flex-wrap p-4 items-center">
+    <div class="flex flex-wrap p-8 items-center">
       <div class="w-full">
         <!-- TODO: when localizing, remove the v-if, the pluralization should be done in the localizer -->
         <div
