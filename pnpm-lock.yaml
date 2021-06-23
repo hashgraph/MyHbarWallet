@@ -5399,7 +5399,7 @@ packages:
     dev: false
 
   /bignumber/1.1.0:
-    resolution: {integrity: sha1-5qsKdD2l8+oBjlwXWX0SH3howVk=}
+    resolution: {integrity: sha1-5qsKdD2l8+oBjlwXWX0SH3howVk=, tarball: bignumber/-/bignumber-1.1.0.tgz}
     engines: {node: '>=0.4.0'}
     dev: false
 
