@@ -1,6 +1,10 @@
 <template>
-  <Layout title="Keystore File" class="max-w-lg" :back="{ name: 'create' }">
-    <div class="grid auto-rows-min gap-5">
+  <Layout
+    title="Keystore File"
+    class="max-w-lg"
+    :back="{ name: 'create' }"
+  >
+    <form class="grid gap-5 auto-rows-min">
       <PasswordInput
         v-model="password"
         :placeholder="$t('BasePasswordInput.input1.placeholder4')"
@@ -16,13 +20,13 @@
       <Button
         data-cy-keystore-submit
         color="green"
-        class="mt-14 w-full p-3"
+        class="w-full p-3 mt-14"
         :disabled="!ready"
         @click="handleSubmit"
       >
-        {{ $t("BaseButton.continue") }}</Button
-      >
-    </div>
+        {{ $t("BaseButton.continue") }}
+      </Button>
+    </form>
   </Layout>
 </template>
 
@@ -35,12 +39,10 @@ import {
   nextTick,
 } from "vue";
 import { debouncedWatch } from "@vueuse/core";
-
 import { useRouter } from "vue-router";
+
 import { useStore } from "../../store";
-
 import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
-
 import Button from "../../components/base/Button.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";
 import InputError from "../../components/base/InputError.vue";
@@ -108,13 +110,11 @@ export default defineComponent({
 
       nextTick(() => {
         try {
-          const wallet = new KeystoreSoftwareWallet(
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            keystore.value!,
-            password.value
-          );
-          store.setWallet(wallet);
-          router.push({ name: "access.account" });
+          if (keystore.value != null) {
+            const wallet = new KeystoreSoftwareWallet(keystore.value, password.value);
+            store.setWallet(wallet);
+            router.push({ name: "access.account" });
+          }
         } catch (error) {
           errorMessage.value = error.message;
         }

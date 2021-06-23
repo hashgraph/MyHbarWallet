@@ -1,26 +1,42 @@
 <template>
-  <div class="py-3.5 px-6 min-w-[500px] text-carbon dark:bg-ruined-smores">
-    <label class="block dark:text-silver-polish mb-2" for="to">To</label>
+  <div class="py-3.5 px-6 text-carbon dark:bg-ruined-smores">
+    <label class="block dark:text-white mb-2" for="to">To</label>
+
 
     <div class="pb-0.5">
       <TextInput
         id="to"
-        :model-value="formattedTo"
-        :valid="toIsValid"
-        placeholder="shard.realm.num"
+        v-model="state.rawTo"
+        :valid="state.toValid"
+        :placeholder="$t('InterfaceHomeSendModal.input1.placeholder')"
         @input="onToInput"
+
       />
     </div>
 
-    <label class="dark:text-silver-polish block pt-2 mb-2 mt-5"> Asset </label>
+    <label
+      class="dark:text-white block pt-2 mb-2 mt-5"
+    >{{ $t("InterfaceHomeSendModal.input2.label") }}</label>
 
     <AssetSelector v-model="dAsset" />
 
-    <label class="dark:text-silver-polish block pt-2 mb-2 mt-5" for="amount">
-      Amount
-    </label>
+    <div class="flex flex-wrap items-center w-full">
+      <div class="w-5/12 m-auto">
+        <label
+          class="dark:text-white block pt-2 mb-2 mt-5"
+          for="amount"
+        >{{ $t("InterfaceHomeSendModal.input3.label") }}</label>
+        <AssetInput id="amount" v-model="dAmount" :asset="asset" />
+      </div>
 
-    <AssetInput id="amount" v-model="dAmount" :asset="asset" />
+      <div class="w-5/12 m-auto">
+        <label class="block dark:text-white pt-2 mb-2 mt-5 mb-2">{{ $t("InterfaceAssets.usd") }}</label>
+
+        <TextInput id="usd" :model-Value="'$'" />
+      </div>
+
+    </div>
+
   </div>
 </template>
 
@@ -31,6 +47,7 @@ import { useVModel } from "@vueuse/core";
 import AssetInput from "./AssetInput.vue";
 import { AccountId } from "@hashgraph/sdk";
 import TextInput from "../base/TextInput.vue";
+import HbarUnit from "@hedera/sdk";
 
 export default defineComponent({
   name: "TransferForm",
@@ -42,18 +59,20 @@ export default defineComponent({
   props: {
     to: { type: Object as PropType<AccountId>, default: null },
     asset: { type: String, default: "HBAR" },
-    amount: { type: String, default: null },
+    amount: { type: Object as PropType<BigNumber.Instance>, default: null },
   },
-  emits: ["update:to", "update:asset", "update:amount"],
+  emits: ["update:to", "update:asset", "update:amount", "update:usd"],
   setup(props, { emit }) {
     const dAsset = useVModel(props, "asset");
     const dAmount = useVModel(props, "amount");
+    const dUSD = useVModel(props, "usd");
     const toIsValid = ref(false);
 
     function onToInput(event: Event) {
       const target = (event as HTMLInputElement).target;
       let value = target.value;
 
+    async function handleToInput(newTo: string): Promise<void> {
       try {
         emit("update:to", AccountId.fromString(value));
         toIsValid.value = true;
@@ -62,21 +81,20 @@ export default defineComponent({
         emit("update:to", null);
         toIsValid.value = false;
       }
-
       nextTick(() => {
         target.value = value;
       });
     }
 
-    const formattedTo = computed(() => props.to?.toString() ?? "");
+      // function usdToHbar(BigNumber: usd): HbarUnit { }
 
-    return {
-      dAsset,
-      onToInput,
-      formattedTo,
-      toIsValid,
-      dAmount,
-    };
-  },
-});
+      const formattedTo = computed(() => props.to?.toString() ?? "");
+
+        const account = AccountId.fromString(newTo);
+        state.toValid = true;
+        emit("update:to", account);
+      } catch (error) {
+        state.toValid = false;
+      }
+    }
 </script>

@@ -2,7 +2,7 @@
   <component
     :is="navItemComponent"
     :class="[
-      'px-4 py-3 my-0.5 rounded flex items-center cursor-pointer outline-none focus-visible:ring-2 ring-bright-navy-blue hover:bg-lynx-white dark:hover:bg-black-out',
+      'px-4 py-3 my-0.5 rounded flex items-center cursor-pointer outline-none focus-visible:ring-2 ring-bright-navy-blue hover:bg-lynx-white dark:hover:bg-black-out dark:text-white',
       {
         '!bg-first-snow dark:!bg-midnight-express text-bright-navy-blue':
           isActive,
@@ -17,14 +17,14 @@
   >
     <img
       v-if="isActive && activeIcon != null"
-      class="w-7 h-6 object-contain mr-4 my-px"
+      class="object-contain h-6 my-px mr-4 w-7"
       :src="activeIcon"
-    />
+    >
     <img
       v-else-if="icon != null"
-      class="w-7 h-6 object-contain mr-4 my-px"
+      class="object-contain h-6 my-px mr-4 w-7"
       :src="icon"
-    />
+    >
     <div v-else />
 
     <div class="flex-1 font-medium">
@@ -45,7 +45,10 @@ export default defineComponent({
     activeIcon: { type: String, default: null },
     text: { type: String, required: true },
     href: { type: String, default: null },
-    to: { type: [String, Object] as PropType<RouteLocationRaw>, default: null },
+    to: {
+      type: [String, Object] as PropType<RouteLocationRaw>,
+      default: null,
+    },
     highlightActive: { type: Boolean, default: true },
   },
   setup(props) {
@@ -53,7 +56,7 @@ export default defineComponent({
     const isMouseOver = ref(false);
 
     const navItemComponent =
-      props.to != null ? "router-link" : props.href != null ? "a" : "div";
+            props.to != null ? "router-link" : props.href != null ? "a" : "div";
 
     const isActive = computed(() => {
       if (!props.highlightActive) {

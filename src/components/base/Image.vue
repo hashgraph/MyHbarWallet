@@ -1,5 +1,5 @@
 <template>
-  <img :src="determineSource()" />
+  <img :src="determineSource()">
 </template>
 
 <script lang="ts">

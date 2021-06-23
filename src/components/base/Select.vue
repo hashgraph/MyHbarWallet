@@ -1,15 +1,7 @@
 <template>
   <div
     :tabindex="tabindex"
-    class="
-      relative
-      flex
-      leading-10
-      rounded
-      select-none
-      focus:outline-none
-      focus:ring-none
-    "
+    class="relative flex leading-10 rounded select-none focus:outline-none focus:ring-none"
     @blur="state.open = false"
   >
     <div
@@ -20,7 +12,7 @@
         bg-white
         rounded
         cursor-pointer
-        dark:bg-ruined-smores
+        dark:bg-midnight-express
         hover:bg-lynx-white
         dark:hover:bg-black-out
       "
@@ -53,7 +45,10 @@
       </div>
       <div class="flex-1" />
 
-      <img class="ml-3 w-7 h-7" src="../../assets/chevron_down.svg" />
+      <img
+        class="ml-3 w-7 h-7"
+        src="../../assets/chevron_down.svg"
+      >
     </div>
 
     <div
@@ -64,45 +59,18 @@
         'left-0': fullWidth,
       }"
       :style="{ top: `${offset}px` }"
-      class="
-        absolute
-        right-0
-        p-2
-        m-2
-        transition-all
-        duration-300
-        bg-white
-        border
-        rounded
-        shadow-2xl
-        dark:bg-ruined-smores
-        border-jupiter
-        dark:border-midnight-express
-      "
+      class="absolute right-0 p-2 m-2 transition-all duration-300 bg-white border rounded shadow-2xl dark:bg-ruined-smores border-jupiter dark:border-midnight-express"
     >
       <div
         v-for="(option, i) of options"
         :key="i"
         :class="{
-          '!bg-first-snow dark:!bg-midnight-express': selected === option.name,
+          '!bg-first-snow dark:!bg-midnight-express':
+            selected === option.name,
           'bg-white dark:bg-ruined-smores': selected !== option.name,
         }"
         :data-cy-option="option.name"
-        class="
-          flex
-          items-center
-          p-2
-          px-4
-          transition-colors
-          bg-white
-          rounded
-          cursor-pointer
-          dark:bg-ruined-smores
-          text-squant
-          dark:text-white
-          hover:bg-lynx-white
-          dark:hover:bg-black-out
-        "
+        class="flex items-center p-2 px-4 transition-colors bg-white rounded cursor-pointer dark:bg-ruined-smores text-squant dark:text-white hover:bg-lynx-white dark:hover:bg-black-out"
         @click="handleClickOption(i, option.name)"
       >
         <Image
@@ -121,7 +89,10 @@
         <div class="flex-1" />
 
         <div class="flex items-center">
-          <div v-if="option.price != null" class="flex-1 mr-5 text-argent">
+          <div
+            v-if="option.price != null"
+            class="flex-1 mr-5 text-argent"
+          >
             {{ option.price }}
           </div>
 
@@ -129,8 +100,11 @@
             v-if="option.name === selected"
             class="flex-shrink-0 w-5 h-5"
             src="../../assets/icon_check.svg"
+          >
+          <div
+            v-else
+            class="w-5"
           />
-          <div v-else class="w-5" />
         </div>
       </div>
     </div>
@@ -142,7 +116,12 @@
       class="absolute top-0 bottom-0 left-0 right-0 w-full opacity-0"
       @change="handleChangeNativeSelect"
     >
-      <option v-for="(option, i) of options" :key="i">{{ option.name }}</option>
+      <option
+        v-for="(option, i) of options"
+        :key="i"
+      >
+        {{ option.name }}
+      </option>
     </select>
   </div>
 </template>
@@ -150,20 +129,19 @@
 <script lang="ts">
 import { useVModel } from "@vueuse/core";
 import { defineComponent, PropType, reactive } from "vue";
+
 import { useOperatingSystem, ANDROID, IOS } from "../../hooks/platform";
+
 import Image from "./Image.vue";
 
 export interface Option {
-  name: string;
-  iconLight: string;
-  iconDark: string;
-
-  // FIXME: why is there a "price" value in a generic option
-  price?: string;
+    name: string;
+    iconLight: string;
+    iconDark: string;
 }
 
 export default defineComponent({
-  name: "DropdownSelector",
+  name: "Select",
   components: { Image },
   props: {
     capitalize: { type: Boolean, default: false },
@@ -204,7 +182,9 @@ export default defineComponent({
 
     function handleChangeNativeSelect(event: Event) {
       const value = (event.target as HTMLSelectElement).value;
-      const index = props.options.findIndex((option) => option.name === value);
+      const index = props.options.findIndex(
+        (option) => option.name === value
+      );
 
       handleClickOption(index, value);
     }

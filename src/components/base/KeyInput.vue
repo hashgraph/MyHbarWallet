@@ -32,9 +32,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useVModel } from "@vueuse/core";
+
+import { copyText, hasClipboard } from "../../utils/clipboard";
+
 import TextInput from "./TextInput.vue";
 import Button from "./Button.vue";
-import { copyText, hasClipboard } from "../../utils/clipboard";
 
 export default defineComponent({
   name: "KeyInput",

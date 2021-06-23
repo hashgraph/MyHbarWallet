@@ -19,7 +19,11 @@
         confirm
       />
 
-      <Button color="green" class="w-full p-4" @click="handleSubmit">
+      <Button
+        color="green"
+        class="w-full p-4"
+        @click="handleSubmit"
+      >
         {{ $t("MnemonicPhrase.create.button") }}
       </Button>
     </div>
@@ -28,6 +32,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import type { Mnemonic } from "@hashgraph/sdk";
+
 import router from "../../router";
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
@@ -35,7 +41,6 @@ import OptionalPasswordInput from "../../components/base/OptionalPasswordInput.v
 import MnemonicInput from "../../components/base/MnemonicInput.vue";
 import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
 import { useStore } from "../../store";
-import type { Mnemonic } from "@hashgraph/sdk";
 
 export default defineComponent({
   name: "CreateMnemonic",
@@ -54,9 +59,9 @@ export default defineComponent({
       // TODO: router.push({ name: "create.mnemonic.verify" });
 
       const wallet = new MnemonicSoftwareWallet(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        mnemonicPhrase.value! as Mnemonic,
-        password.value
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                mnemonicPhrase.value! as Mnemonic,
+                password.value
       );
 
       store.setWallet(wallet);

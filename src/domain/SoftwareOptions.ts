@@ -1,17 +1,17 @@
 export enum SoftwareOption {
-  Keystore = "Keystore",
-  Mnemonic = "Mnemonic",
-  Key = "PrivateKey",
+    Keystore = "Keystore",
+    Mnemonic = "Mnemonic",
+    Key = "PrivateKey",
 }
 
 export interface SoftwareAttributes {
-  supported: boolean;
-  title: string;
-  description: string;
-  value: SoftwareOption;
-  imageLight: string;
-  imageDark: string;
-  route: string;
+    supported: boolean;
+    title: string;
+    description: string;
+    value: SoftwareOption;
+    imageLight: string;
+    imageDark: string;
+    route: string;
 }
 
 import lightKeystoreFile from "../assets/img_software_keystore.svg";

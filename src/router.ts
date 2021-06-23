@@ -1,8 +1,10 @@
+/* eslint-disable import/order */
 import {
   createRouter,
   createWebHashHistory,
   createWebHistory,
 } from "vue-router";
+import { useStore } from "./store";
 
 // Marketing
 import MarketingLayout from "./components/marketing/Layout.vue";
@@ -18,6 +20,7 @@ import AccessHardware from "./pages/access/Hardware.vue";
 import AccessKeystore from "./pages/access/Keystore.vue";
 import AccessMnemonic from "./pages/access/Mnemonic.vue";
 import AccessPrivateKey from "./pages/access/PrivateKey.vue";
+import AccessLedger from "./pages/access/Ledger.vue";
 import Account from "./pages/access/Account.vue";
 
 // Create
@@ -42,6 +45,7 @@ import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vu
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
+import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
 
 
 
@@ -56,7 +60,11 @@ const routes = [
         component: TermsConditions,
         name: "terms",
       },
-      { path: "/privacy-policy", component: PrivacyPolicy, name: "privacy" },
+      {
+        path: "/privacy-policy",
+        component: PrivacyPolicy,
+        name: "privacy",
+      },
       {
         path: "/access",
         component: Access,
@@ -74,7 +82,7 @@ const routes = [
       },
       {
         path: "/access/hardware/ledger",
-        component: AccessHardware,
+        component: AccessLedger,
         name: "access.hardware.ledger",
       },
       {
@@ -129,6 +137,7 @@ const routes = [
     path: "/wallet",
     component: InterfaceLayout,
     redirect: { name: "home" },
+    meta: { requiresWallet: true },
     children: [
       {
         path: "",
@@ -229,7 +238,14 @@ const routes = [
             component: InterfaceConvertUnits,
             path: "convert-units",
             name: "tools.convert.units"
+          },
+         
+          {
+            component: InterfaceUploadFile,
+            path: "upload",
+            name: "tools.upload"
           }
+
         ],
       },
     ],
@@ -267,6 +283,19 @@ const router = createRouter({
 
     return { x: 0, y: 0 };
   },
+});
+
+router.beforeResolve(async (to, from, next) => {
+  const store = useStore();
+  const neededWallet = from.matched.some(record => record.meta.requiresWallet);
+  const needsWallet = to.matched.some(record => record.meta.requiresWallet);
+  const hasWallet = store.wallet != null;
+
+  if (needsWallet && !hasWallet) {
+    next({ name: "access" });
+  } else if (!needsWallet && neededWallet && hasWallet) {
+    store.setConfirmLogoutOpen(true);
+  } else next();
 });
 
 export default router;

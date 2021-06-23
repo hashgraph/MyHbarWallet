@@ -10,24 +10,14 @@
       @click="$emit('update:modelValue', !modelValue)"
     >
       <div
-        class="
-          w-5
-          h-5
-          duration-300
-          ease-in-out
-          transform
-          bg-white
-          rounded-full
-          shadow-md
-        "
+        class="w-5 h-5 duration-300 ease-in-out transform bg-white rounded-full shadow-md "
         :class="{ 'translate-x-4': modelValue }"
-      ></div>
+      />
     </div>
     <span
       class="text-sm font-medium text-carbon dark:text-white ml-2.5"
       @click="$emit('update:modelValue', !modelValue)"
-      >{{ label }}</span
-    >
+    >{{ label }}</span>
   </div>
 </template>
 

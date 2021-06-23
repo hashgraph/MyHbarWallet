@@ -12,7 +12,7 @@
         v-model:amount="refAmount"
       />
 
-      <div class="flex flex-col items-center mx-4 pb-4">
+      <div class="flex flex-col items-center pb-4 mx-4">
         <Button
           color="green"
           class="w-full p-4 mt-10"
@@ -21,7 +21,11 @@
           {{ buttonName }}
         </Button>
 
-        <Button color="white" class="w-36 p-2 mt-4" @click="$emit('close')">
+        <Button
+          color="white"
+          class="p-2 mt-4 w-36"
+          @click="$emit('close')"
+        >
           Cancel
         </Button>
       </div>
@@ -32,8 +36,10 @@
 <script lang="ts">
 import { useVModel } from "@vueuse/core";
 import { defineComponent, computed } from "vue";
-import Modal from "./Modal.vue";
+
 import Button from "../base/Button.vue";
+
+import Modal from "./Modal.vue";
 import TransferForm from "./TransferForm.vue";
 
 export default defineComponent({
@@ -67,7 +73,9 @@ export default defineComponent({
       props.type == "add" ? "Add Transfer" : "Edit Transfer"
     );
 
-    const buttonName = computed(() => (props.type == "add" ? "Add" : "Save"));
+    const buttonName = computed(() =>
+      props.type == "add" ? "Add" : "Save"
+    );
 
     return {
       refTo,

@@ -1,5 +1,5 @@
-import BigNumber from "bignumber.js";
+import { BigNumber } from "bignumber.js";
 
 export interface HbarPriceService {
-  getHbarPriceInUsd(): Promise<BigNumber>;
+    getHbarPriceInUsd(): Promise<BigNumber>;
 }

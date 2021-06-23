@@ -1,19 +1,20 @@
 <template>
   <div class="">
-    <img class="m-auto mb-9" :src="img" alt="hbdar tab" />
+    <img
+      class="m-auto mb-9"
+      :src="img"
+      alt="hbdar tab"
+    >
 
     <div
-      class="
-        text-3xl text-center text-abbadon-black
-        dark:text-white
-        font-semibold
-        mb-10
-      "
+      class="mb-10 text-3xl font-semibold text-center  text-abbadon-black dark:text-white"
     >
       {{ heading }}
     </div>
 
-    <div class="text-center text-carbon dark:text-white font-medium text-base">
+    <div
+      class="text-base font-medium text-center  text-carbon dark:text-white"
+    >
       {{ bio }}
     </div>
   </div>

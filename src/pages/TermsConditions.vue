@@ -1,16 +1,9 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <div
-    class="
-      my-20
-      max-w-2xl
-      text-sm
-      mx-auto
-      text-midnight-express
-      dark:text-white
-    "
+    class="max-w-2xl mx-auto my-20 text-sm  text-midnight-express dark:text-white"
   >
-    <div class="text-center text-3xl font-semibold">
+    <div class="text-3xl font-semibold text-center">
       {{ $t("TermsAndConditions.title") }}
     </div>
     <div class="mt-6 text-center">
@@ -33,13 +26,12 @@
 
       <div class="mt-6 font-bold">
         Apache License
-        <br />Version 2.0, January 2004
-        <br />
+        <br>Version 2.0, January 2004
+        <br>
         <a
           class="underline text-andrea-blue"
           href="http://www.apache.org/licenses/"
-          >http://www.apache.org/licenses/</a
-        >
+        >http://www.apache.org/licenses/</a>
       </div>
 
       <p class="mt-6 font-bold">
@@ -49,81 +41,101 @@
       <div>
         <p
           class="mt-6"
-          v-html="formatRich($t('TermsAndConditions.license').toString())"
-        />
-
-        <p
-          class="mt-6"
-          v-html="formatRich($t('TermsAndConditions.licensor').toString())"
-        />
-
-        <p
-          class="mt-6"
-          v-html="formatRich($t('TermsAndConditions.legalEntity').toString())"
-        />
-
-        <p
-          class="mt-6"
-          v-html="formatRich($t('TermsAndConditions.youYour').toString())"
-        />
-
-        <p
-          class="mt-6"
-          v-html="formatRich($t('TermsAndConditions.source').toString())"
-        />
-
-        <p
-          class="mt-6"
-          v-html="formatRich($t('TermsAndConditions.object').toString())"
-        />
-
-        <p
-          class="mt-6"
-          v-html="formatRich($t('TermsAndConditions.work').toString())"
-        />
-
-        <p
-          class="mt-6"
           v-html="
-            formatRich($t('TermsAndConditions.derivativeWorks').toString())
+            formatRich($t('TermsAndConditions.license').toString())
           "
         />
 
         <p
           class="mt-6"
-          v-html="formatRich($t('TermsAndConditions.contribution').toString())"
+          v-html="
+            formatRich($t('TermsAndConditions.licensor').toString())
+          "
         />
 
         <p
           class="mt-6"
-          v-html="formatRich($t('TermsAndConditions.contributor').toString())"
+          v-html="
+            formatRich(
+              $t('TermsAndConditions.legalEntity').toString()
+            )
+          "
+        />
+
+        <p
+          class="mt-6"
+          v-html="
+            formatRich($t('TermsAndConditions.youYour').toString())
+          "
+        />
+
+        <p
+          class="mt-6"
+          v-html="
+            formatRich($t('TermsAndConditions.source').toString())
+          "
+        />
+
+        <p
+          class="mt-6"
+          v-html="
+            formatRich($t('TermsAndConditions.object').toString())
+          "
+        />
+
+        <p
+          class="mt-6"
+          v-html="
+            formatRich($t('TermsAndConditions.work').toString())
+          "
+        />
+
+        <p
+          class="mt-6"
+          v-html="
+            formatRich(
+              $t('TermsAndConditions.derivativeWorks').toString()
+            )
+          "
+        />
+
+        <p
+          class="mt-6"
+          v-html="
+            formatRich(
+              $t('TermsAndConditions.contribution').toString()
+            )
+          "
+        />
+
+        <p
+          class="mt-6"
+          v-html="
+            formatRich(
+              $t('TermsAndConditions.contributor').toString()
+            )
+          "
         />
       </div>
 
       <p class="mt-6">
-        <strong
-          ><a name="copyright">{{
-            $t("TermsAndConditions.grantOfCopyrightLicense")
-          }}</a></strong
-        >
+        <strong><a name="copyright">{{
+          $t("TermsAndConditions.grantOfCopyrightLicense")
+        }}</a></strong>
         {{ $t("TermsAndConditions.grantOfCopyrightLicenseContent") }}
       </p>
 
       <p class="mt-6">
-        <strong
-          ><a name="patent">{{
-            $t("TermsAndConditions.grantOfPatentLicense")
-          }}</a></strong
-        >
+        <strong><a name="patent">{{
+          $t("TermsAndConditions.grantOfPatentLicense")
+        }}</a></strong>
         {{ $t("TermsAndConditions.grantOfPatentLicenseContent") }}
       </p>
 
       <p class="mt-6">
-        <strong
-          ><a name="redistribution">{{
-            $t("TermsAndConditions.redistribution")
-          }}</a></strong
-        >
+        <strong><a name="redistribution">{{
+          $t("TermsAndConditions.redistribution")
+        }}</a></strong>
         {{ $t("TermsAndConditions.redistribution.header") }}
       </p>
 
@@ -142,56 +154,50 @@
 
         <li class="mx-6 mt-1">
           4. {{ $t("TermsAndConditions.redistribution.paragraph4") }}
-          <br />
-          <br />
+          <br>
+          <br>
           {{ $t("TermsAndConditions.redistribution.paragraph5") }}
         </li>
       </ol>
 
       <p class="mt-6">
-        <strong
-          ><a name="contributions">{{
-            $t("TermsAndConditions.submission")
-          }}</a></strong
-        >
+        <strong><a name="contributions">{{
+          $t("TermsAndConditions.submission")
+        }}</a></strong>
         {{ $t("TermsAndConditions.submissionContent") }}
       </p>
 
       <p class="mt-6">
-        <strong
-          ><a name="Trademarks">{{
-            $t("TermsAndConditions.trademarks")
-          }}</a></strong
-        >
+        <strong><a name="Trademarks">{{
+          $t("TermsAndConditions.trademarks")
+        }}</a></strong>
         {{ $t("TermsAndConditions.trademarksContent") }}
       </p>
 
       <p class="mt-6">
-        <strong
-          ><a name="no-warranty">{{
-            $t("TermsAndConditions.disclaimerOfWarranty")
-          }}</a></strong
-        >
+        <strong><a name="no-warranty">{{
+          $t("TermsAndConditions.disclaimerOfWarranty")
+        }}</a></strong>
         {{ $t("TermsAndConditions.disclaimerOfWarrantyContent") }}
       </p>
 
       <p class="mt-6">
-        <strong
-          ><a name="no-liability">{{
-            $t("TermsAndConditions.limitationOfLiability")
-          }}</a></strong
-        >
+        <strong><a name="no-liability">{{
+          $t("TermsAndConditions.limitationOfLiability")
+        }}</a></strong>
         {{ $t("TermsAndConditions.limitationOfLiabilityContent") }}
       </p>
 
       <p class="mt-6">
-        <strong
-          ><a name="additional">{{
-            $t("TermsAndConditions.acceptingWarrantyOrAdditionalLiability")
-          }}</a></strong
-        >
+        <strong><a name="additional">{{
+          $t(
+            "TermsAndConditions.acceptingWarrantyOrAdditionalLiability"
+          )
+        }}</a></strong>
         {{
-          $t("TermsAndConditions.acceptingWarrantyOrAdditionalLiabilityContent")
+          $t(
+            "TermsAndConditions.acceptingWarrantyOrAdditionalLiabilityContent"
+          )
         }}
       </p>
     </div>
@@ -200,6 +206,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import { formatRich } from "../utils/format-rich";
 
 export default defineComponent({

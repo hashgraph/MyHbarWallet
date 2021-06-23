@@ -8,7 +8,8 @@
 
     <TextInput
       v-model="state.memo"
-      class="w-96 h-16 transition-all duration-300"
+      class="w-full h-16 transition-all duration-300"
+
       multiline
       :max-length="100"
       char-counter
@@ -20,10 +21,11 @@
     />
 
     <div
-      class="w-96 text-sm text-squant italic transition-all duration-300"
+      class="w-full text-sm text-squant italic transition-all duration-300"
+
       :class="{
-        'mt-2  ': state.addMemo,
-        ' -mt-4 ': !state.addMemo,
+        'mt-4  ': state.addMemo,
+        ' mt-14 ': !state.addMemo,
       }"
     >
       {{ $t("OptionalMemo.aboutMemo") }}
@@ -33,6 +35,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
+
 import Switch from "../base/Switch.vue";
 import TextInput from "../base/TextInput.vue";
 
@@ -49,7 +52,7 @@ export default defineComponent({
   setup() {
     let state = reactive({
       addMemo: false,
-      memo: "" as string | null,
+      memo: "",
     });
 
     function onToggle(open: boolean): void {

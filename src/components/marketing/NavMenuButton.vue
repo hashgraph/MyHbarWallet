@@ -6,7 +6,9 @@
       rounded-md
       focus:outline-none
       focus:ring-2 focus:ring-inset focus:ring-white
+      dark:text-white
     "
+
     aria-expanded="false"
   >
     <span class="sr-only">Open main menu</span>
@@ -15,7 +17,7 @@
     <!-- Icon when menu is closed. -->
     <svg
       v-if="!isOpen"
-      class="h-6 w-6 stroke-current text-dark-shamrock"
+      class="w-6 h-6 stroke-current text-dark-shamrock"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -34,7 +36,7 @@
     <!-- Icon when menu is open. -->
     <svg
       v-else
-      class="h-6 w-6 stroke-current text-dark-shamrock"
+      class="w-6 h-6 stroke-current text-dark-shamrock"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

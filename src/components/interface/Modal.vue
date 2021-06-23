@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-0 overflow-y-auto z-20 transition-all duration-300"
+    class="fixed inset-0 z-20 overflow-y-auto transition-all duration-300"
     :class="[
       {
         'opacity-100': isVisible,
@@ -9,15 +9,7 @@
     ]"
   >
     <div
-      class="
-        flex flex-col
-        min-h-screen
-        items-center
-        justify-center
-        bg-cerebral-grey
-        dark:bg-ruined-smores
-        bg-opacity-70
-      "
+      class="flex flex-col items-center justify-center min-h-screen  bg-cerebral-grey dark:bg-ruined-smores bg-opacity-70"
       @click="$emit('close')"
     >
       <div
@@ -32,22 +24,27 @@
           bg-white
           dark:bg-ruined-smores
           text-carbon
-          dark:text-silver-polish
+          dark:text-white
           transition-all
           duration-300
           border border-white
           dark:border-midnight-express
         "
+
         :class="[
           {
             'transform translate-y-0 opacity-100 ': isVisible,
           },
-          { 'transform translate-y-16 opacity-0 invisible': !isVisible },
+          {
+            'transform translate-y-16 opacity-0 invisible':
+              !isVisible,
+          },
         ]"
         @click.stop
       >
-        <div class="flex justify-between">
+        <div class="flex justify-between dark:text-white">
           <div class="font-medium text-xl">{{ title }}</div>
+
 
           <div>
             <Image
@@ -67,6 +64,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import closeIcon from "../../assets/icon_close.svg";
 import closeIconDark from "../../assets/dark/icon_close.svg";
 import Image from "../base/Image.vue";

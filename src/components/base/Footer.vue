@@ -1,31 +1,9 @@
 <template>
   <footer
-    class="
-      bg-husky
-      dark:bg-midnight-express
-      py-8
-      px-4
-      md:px-0
-      lg:py-24
-      text-sm
-      font-semibold
-      text-andrea-blue
-    "
+    class="px-4 py-8 text-sm font-semibold bg-husky dark:bg-midnight-express md:px-0 lg:py-24 text-andrea-blue"
   >
-    <div
-      class="
-        max-w-screen-2xl
-        h-32
-        mx-auto
-        flex flex-col
-        content-evenly
-        lg:h-0
-        lg:justify-around
-        lg:flex-row
-        md:px-16
-      "
-    >
-      <div class="m-auto text-center mb-6 sm:mb-0">
+    <div class="flex flex-col h-32 mx-auto max-w-screen-2xl content-evenly lg:h-0 lg:justify-around lg:flex-row md:px-16">
+      <div class="m-auto mb-6 text-center sm:mb-0">
         <router-link
           v-t="'SiteFooter.privacy'"
           :to="{ name: 'privacy' }"
@@ -43,7 +21,7 @@
         <span class="mx-2">{{ "•" }}</span>
 
         <a
-          class="hover:opacity-50 hover:no-underline whitespace-nowrap"
+          class=" hover:opacity-50 hover:no-underline whitespace-nowrap"
           href="https://github.com/hashgraph/MyHbarWallet"
           rel="noopener"
           target="_blank"
@@ -52,14 +30,19 @@
         </a>
       </div>
 
-      <div class="w-40 m-auto mb-6 sm:mb-0 flex justify-around lg:order-2">
+      <div
+        class="flex justify-around w-40 m-auto mb-6 sm:mb-0 lg:order-2"
+      >
         <div>
           <a
             href="https://twitter.com/myhbarwallet"
             rel="noopener"
             target="_blank"
           >
-            <img class="hover:opacity-50" src="../../assets/icon_twitter.svg" />
+            <img
+              class="hover:opacity-50"
+              src="../../assets/icon_twitter.svg"
+            >
           </a>
         </div>
 
@@ -69,7 +52,10 @@
             rel="noopener"
             target="_blank"
           >
-            <img class="hover:opacity-50" src="../../assets/icon_github.svg" />
+            <img
+              class="hover:opacity-50"
+              src="../../assets/icon_github.svg"
+            >
           </a>
         </div>
 
@@ -79,18 +65,16 @@
             rel="noopener"
             target="_blank"
           >
-            <img class="hover:opacity-50" src="../../assets/icon_medium.svg" />
+            <img
+              class="hover:opacity-50"
+              src="../../assets/icon_medium.svg"
+            >
           </a>
         </div>
       </div>
 
       <div
-        class="
-          m-auto
-          text-center text-carbon text-sm
-          dark:text-white
-          font-medium
-        "
+        class="m-auto text-sm font-medium text-center text-carbon dark:text-white"
       >
         {{ $t("SiteFooter.copyright") }}
       </div>

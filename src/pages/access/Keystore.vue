@@ -10,7 +10,7 @@
       </div>
 
       <FileUploader
-        :initial-file-name="initialFileName"
+        @name="onUpdateName"
         @keystore="onUpdateKeystore"
       />
 
@@ -46,6 +46,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
+import { useRouter } from "vue-router";
+
 import FileUploader from "../../components/base/FileUploader.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";
 import InputError from "../../components/base/InputError.vue";
@@ -53,7 +55,6 @@ import Button from "../../components/base/Button.vue";
 import Layout from "../../components/access/Layout.vue";
 import { useStore } from "../../store";
 import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
-import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "Keystore",
@@ -70,11 +71,15 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
 
-    const fileData = ref(window.history.state["fileData"] ?? null);
-    const fileName = ref(window.history.state["fileName"] ?? null);
+    const fileData = ref<Uint8Array | null>(null);
+    const fileName = ref<string | null>(null);
 
-    async function onUpdateKeystore(text: string): Promise<void> {
-      fileData.value = text;
+    function onUpdateName(name: string): void {
+      fileName.value = name;
+    }
+    
+    function onUpdateKeystore(bytes: Uint8Array): void {
+      fileData.value = bytes;
     }
 
     const ready = computed(() => {
@@ -110,6 +115,7 @@ export default defineComponent({
       ready,
       errorMessage,
       handleSubmit,
+      onUpdateName,
       onUpdateKeystore,
     };
   },

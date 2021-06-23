@@ -1,12 +1,13 @@
 <template>
   <div class="lg:flex lg:flex-row">
-    <Drawer class="hidden sticky top-0 lg:flex" />
+    <Drawer class="sticky top-0 hidden lg:flex" />
     <MobileDrawer class="sticky top-0 z-20 lg:hidden" />
 
-    <div class="px-2 md:flex-1 md:px-10 relative flex">
+    <div class="px-2 md:flex md:px-10 relative flex w-full h-full">
       <div
         class="
-          h-[600px]
+          h-full
+          min-h-screen
           absolute
           top-0
           left-0
@@ -23,7 +24,7 @@
       <main
         :class="[
           'bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1',
-          'lg:mt-10',
+          'lg:mt-10 w-full',
         ]"
       >
         <router-view />
@@ -34,6 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import Drawer from "./Drawer.vue";
 import MobileDrawer from "./MobileDrawer.vue";
 

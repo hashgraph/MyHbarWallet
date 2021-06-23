@@ -1,10 +1,21 @@
 <template>
-  <Layout title="Private Key" class="max-w-lg" :back="{ name: 'create' }">
+  <Layout
+    title="Private Key"
+    class="max-w-lg"
+    :back="{ name: 'create' }"
+  >
     <div class="grid auto-rows-min gap-5">
       <div class="flex flex-col">
-        <KeyInput v-model="key" disabled can-copy />
+        <KeyInput
+          v-model="key"
+          disabled
+          can-copy
+        />
 
-        <Button color="green" class="mt-14 w-full p-4">
+        <Button
+          color="green"
+          class="mt-14 w-full p-4"
+        >
           {{ $t("BaseButton.continue") }}
         </Button>
 
@@ -22,6 +33,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import KeyInput from "../../components/base/KeyInput.vue";

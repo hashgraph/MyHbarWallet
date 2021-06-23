@@ -1,18 +1,6 @@
 <template>
   <div
-    class="
-      mb-1
-      pb-1
-      md:mb-5
-      md:pb-4
-      text-2xl
-      md:text-3xl
-      font-semibold
-      text-black-out
-      dark:text-white
-      flex
-      container
-    "
+    class="container flex pb-1 mb-1 text-2xl font-semibold  md:mb-5 md:pb-4 md:text-3xl text-black-out dark:text-white"
   >
     <slot />
   </div>

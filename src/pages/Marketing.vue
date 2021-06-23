@@ -8,43 +8,43 @@
       to-white
       dark:to-black
       overflow-x-hidden
+      w-full
     "
+
   >
     <div
-      class="
-        flex flex-col-reverse
-        md:flex-row
-        lg:justify-between
-        items-center
-        md:items-start
-        container
-        mx-auto
-        px-5
-        xl:max-w-screen-xl
-      "
+      class="container flex flex-col-reverse items-center px-5 mx-auto  md:flex-row lg:justify-between md:items-start xl:max-w-screen-xl"
     >
       <div
         class="
-          lg:pt-36
-          md:pt-20
-          pt-5
-          md:pl-5
-          lg:max-w-[425px]
-          max-w-[325px]
-          md:flex-shrink-0
-        "
+                    lg:pt-36
+                    md:pt-20
+                    pt-5
+                    md:pl-5
+                    lg:max-w-[425px]
+                    max-w-[325px]
+                    md:flex-shrink-0
+                "
       >
         <div class="font-semibold text-abbadon-black dark:text-white">
-          <div class="text-4xl">{{ $t("Marketing.hero.header1") }}</div>
-          <div class="text-5xl mt-3">{{ $t("Marketing.hero.header2") }}</div>
+          <div class="text-4xl">
+            {{ $t("Marketing.hero.header1") }}
+          </div>
+          <div class="mt-3 text-5xl">
+            {{ $t("Marketing.hero.header2") }}
+          </div>
         </div>
 
-        <div class="font-medium my-10 text-carbon dark:text-white">
+        <div class="my-10 font-medium text-carbon dark:text-white">
           {{ $t("Marketing.hero.paragraph") }}
         </div>
 
         <router-link :to="{ name: 'create' }">
-          <Button :to="{ name: 'create' }" class="p-2 w-40" color="green">
+          <Button
+            :to="{ name: 'create' }"
+            class="w-40 p-2"
+            color="green"
+          >
             {{ $t("Marketing.hero.button") }}
           </Button>
         </router-link>
@@ -55,16 +55,16 @@
         :light="heroLight"
         alt="man at computer"
         class="
-          flex-1
-          relative
-          lg:top-[-141px]
-          md:top-[-90px]
-          md:mt-0
-          mt-[-70px]
-          max-w-[371px]
-          md:max-w-[580px]
-          lg:max-w-[741px]
-        "
+                    flex-1
+                    relative
+                    lg:top-[-141px]
+                    md:top-[-90px]
+                    md:mt-0
+                    mt-[-70px]
+                    max-w-[371px]
+                    md:max-w-[580px]
+                    lg:max-w-[741px]
+                "
       />
     </div>
   </div>
@@ -78,7 +78,6 @@ import { defineComponent } from "vue";
 
 import heroLight from "../assets/img_hero.svg";
 import heroDark from "../assets/dark/img_hero.svg";
-
 import Button from "../components/base/Button.vue";
 import Image from "../components/base/Image.vue";
 import About from "../components/marketing/About.vue";

@@ -8,7 +8,11 @@
       ]"
       @click="showActions = !showActions"
     >
-      <Image :light="dotsIcon" :dark="dotsIcon" class="h-8" />
+      <Image
+        :light="dotsIcon"
+        :dark="dotsIcon"
+        class="h-8"
+      />
     </div>
     <div
       :class="[
@@ -24,18 +28,11 @@
       <div
         v-for="action in actions"
         :key="action.label"
-        class="
-          flex
-          p-4
-          rounded
-          cursor-pointer
-          hover:bg-first-snow
-          dark:hover:bg-midnight-express
-        "
+        class="flex p-4 rounded cursor-pointer  hover:bg-first-snow dark:hover:bg-midnight-express"
         @click="handleAction(action.action)"
       >
         <div class="w-10">
-          <img :src="action.image" />
+          <img :src="action.image">
         </div>
         <div>{{ action.label }}</div>
       </div>
@@ -45,15 +42,16 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+
 import dotsIcon from "../../assets/icon_dots_vertical.svg";
 import Image from "../base/Image.vue";
 import editImage from "../../assets/icon_edit.svg";
 import removeImage from "../../assets/icon_remove.svg";
 
 interface Action {
-  label: string;
-  action: "edit" | "remove";
-  image: string;
+    label: string;
+    action: "edit" | "remove";
+    image: string;
 }
 
 export default defineComponent({

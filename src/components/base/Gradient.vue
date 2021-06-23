@@ -1,22 +1,12 @@
 <template>
   <div class="relative">
     <div
-      class="
-        bg-gradient-to-b
-        from-first-snow
-        dark:from-midnight-express
-        to-white
-        dark:to-black
-        absolute
-        top-0
-        left-0
-        right-0
-        h-600
-        z-0
-      "
+      class="absolute top-0 left-0 right-0 z-0 bg-gradient-to-b from-first-snow dark:from-midnight-express to-white dark:to-black h-600"
     />
 
-    <div class="relative"><slot /></div>
+    <div class="relative">
+      <slot />
+    </div>
   </div>
 </template>
 

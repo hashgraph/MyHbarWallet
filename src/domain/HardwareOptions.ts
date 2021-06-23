@@ -1,26 +1,25 @@
 export enum HardwareOption {
-  Ledger = "ledger",
-  Finney = "finney",
-  Bitbox = "bitbox",
-  Trezor = "trezor",
-  Secalot = "secalot",
-  Keepkey = "keepkey",
+    Ledger = "ledger",
+    Finney = "finney",
+    Bitbox = "bitbox",
+    Trezor = "trezor",
+    Secalot = "secalot",
+    Keepkey = "keepkey",
 }
 
 export interface HardwareAttributes {
-  supported: boolean;
-  title: string;
-  description: string;
-  value: HardwareOption;
-  image: string;
-  route: string;
+    supported: boolean;
+    title: string;
+    description: string;
+    value: HardwareOption;
+    image: string;
+    route: string;
 }
 
 import imageFinney from "../assets/finney.png";
 import imageBitbox from "../assets/bitbox.svg";
 import imageSecalot from "../assets/secalot.svg";
 import imageKeepKey from "../assets/keepkey.svg";
-
 import imageLedger from "../assets/button_ledger.svg";
 import imageTrezor from "../assets/button_trezor.svg";
 
@@ -63,7 +62,7 @@ export const HardwareOptions: Map<HardwareOption, HardwareAttributes> = new Map(
     [
       HardwareOption.Trezor,
       {
-        supported: true,
+        supported: false,
         title: "Trezor.title",
         description: "Trezor.description",
         value: HardwareOption.Trezor,
