@@ -50,7 +50,6 @@
                                 @focusout="handleFocusOut"
                                 @input="handleInput"
                             >
-<!--                            <div v-if="maxMemoLength != null" class="input-group-addon" v-text=maxMemoLength></div>-->
                             <div class="remaining-characters" v-if="maxMemoLength != null" v-text="(maxMemoLength - value.length)"></div>
                         </div>
 
