@@ -21,7 +21,6 @@
         <div class="input-block">
           <TextInput class = "m-1"
             v-model="state.valueLeft"
-            :placeholder="$t('common.amount')"
             :modelValue="$t('common.amount')"
             @update:modelValue="handleInputValueLeft"
           />
@@ -44,7 +43,6 @@
       <div class="block-right w-5/12 m-auto">
         <TextInput class = "m-1"
           v-model="state.valueRight"
-          placeholder="'1'"
           :modelValue="'1'"
           @update:modelValue="handleInputValueRight"
         />
@@ -93,7 +91,8 @@ import TextInput from "../../components/base/TextInput.vue";
 import DropdownSelector from "../../components/base/DropdownSelector.vue";
 import { Hbar, HbarUnit } from "@hashgraph/sdk";
 import BigNumber from "bignumber.js";
-import { useI18n } from "vue-i18n";
+
+// import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "ConvertUnits",
@@ -103,7 +102,11 @@ export default defineComponent({
     DropdownSelector,
   },
   setup() {
-    const i18n = useI18n();
+
+    BigNumber.config({
+      DECIMAL_PLACES: 64,
+      EXPONENTIAL_AT: 30
+    });
     let state = reactive({
       selectedLeft: "Tinybar",
       selectedRight: "Hbar",
