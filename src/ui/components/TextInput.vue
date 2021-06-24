@@ -233,8 +233,7 @@ export default defineComponent({
         const rows = computed(() => props.compact ? 2 : 8);
 
         const eye = computed(() => state.isEyeOpen ? mdiEye : mdiEyeOutline);
-        // potentially redundant computation
-        // const computedMaxMemoLength = computed(() => props.maxMemoLength != null ? props.maxMemoLength : null);
+
         const hasDecorations = computed(() => props.showValidation || props.obscure);
 
         const classObject = computed(() => ({
