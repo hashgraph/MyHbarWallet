@@ -24,6 +24,7 @@
                 :value="value"
                 :placeholder="$t('common.memo')"
                 :tabindex="state.showMemo ? null : '-1'"
+                :maxMemoLength="state.maxMemoLength"
                 @input="handleInput"
             />
         </div>
@@ -54,7 +55,10 @@ export default defineComponent({
     },
     props: { value: { type: String, default: "" }},
     setup(props, context) {
-        const state = reactive({ showMemo: false });
+        const state = reactive({
+            showMemo: false,
+            maxMemoLength: 50
+        });
 
         function handleInput(memo: string): void {
             context.emit("input", memo);

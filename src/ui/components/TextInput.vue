@@ -44,11 +44,13 @@
                                 :autocomplete="
                                     autocompleteDisabled ? 'off' : 'on'
                                 "
+                                :maxLength="maxMemoLength"
                                 :spellcheck="!spellcheckDisabled"
                                 @focusin="handleFocusIn"
                                 @focusout="handleFocusOut"
                                 @input="handleInput"
                             >
+                            <div class="remaining-characters" v-if="maxMemoLength != null" v-text="(maxMemoLength - value.length)"></div>
                         </div>
 
                         <div class="deco-flex-item">
@@ -148,6 +150,7 @@ interface Props {
     resizable: boolean;
     prefix: string;
     suffix: string;
+    maxMemoLength: number;
 }
 
 export interface Component {
@@ -169,6 +172,7 @@ export interface Component {
     handleFocusIn: () => void;
     handleFocusOut: () => void;
     hasDecorations: Ref<boolean>;
+
 }
 
 export default defineComponent({
@@ -191,6 +195,8 @@ export default defineComponent({
         canCopy: (Boolean as unknown) as PropType<boolean>,
         autocompleteDisabled: (Boolean as unknown) as PropType<boolean>,
         spellcheckDisabled: (Boolean as unknown) as PropType<boolean>,
+        maxMemoLength: (Number as unknown) as PropType<number | null>,
+        remainingCharacters: (Number as unknown) as PropType<number>,
 
         // Whether to hide the text being edited (e.g., for passwords).
         obscure: (Boolean as unknown) as PropType<boolean>,
@@ -526,5 +532,10 @@ input[type="number"]::-webkit-inner-spin-button {
     color: var(--color-lightish-red);
     font-size: 14px;
     margin: 7px 0 0 15px;
+}
+
+.remaining-characters {
+    text-align: end;
+    margin-right: 5px;
 }
 </style>
