@@ -26,6 +26,7 @@
   "BaseButton.iHaveAnAccoutId": "I Have an Account ID",
   "BaseButton.search": "Search",
   "BaseButton.send": "Send",
+  "BaseButton.dismiss": "Dismiss",
   "BaseFileUploader.header": "Uploaded File",
   "BaseFileUploader.button": "Upload New File",
   "BaseOptionCard.recommended": "Recommended",
@@ -48,6 +49,7 @@
   "InterfaceAsset.note2": "Your asset is frozen.",
   "InterfaceAsset.value": "{value} ea.",
   "InterfaceAssets.header": "Assets",
+  "InterfaceAssets.usd": "USD",
   "InterfaceHistory.header": "History",
   "InterfaceHistory.button.all": "All",
   "InterfaceHistory.button.sent": "Sent",
@@ -76,6 +78,7 @@
   "InterfaceTransactionDetails.transactionHash": "Transaction Hash",
   "InterfaceTransactionDetails.transactionID": "Transaction ID",
   "InterfaceTransactionDetails.operator": "Operator",
+  "InterfaceTransactionDetails.estimatedFee": "Estimated Fee",
   "InterfaceTransactionDetails.node": "Node",
   "InterfaceTransactionDetails.consensus": "Consensus",
   "InterfaceTransactionDetails.status": "Status",
@@ -97,6 +100,7 @@
   "InterfaceToken.nav.right": "right",
   "InterfaceToken.nav.last": "Last",
   "InterfaceTokenDetails.header": "Token Details",
+  "InterfaceDownload.fileId": "File ID",
   "InterfaceTokenDetails.subheader": "Holders",
   "InterfaceTokenDetails.rank": "Rank",
   "InterfaceTokenDetails.address": "Address",
@@ -106,6 +110,7 @@
   "InterfaceToolTile.associateToken.title": "Associate Token",
   "InterfaceToolTile.associateToken.label.tokenID": "Token ID",
   "InterfaceToolTile.download.title": "Download",
+  "InterfaceToolTile.download.description": "Download File from HFS.",
   "InterfaceToolTile.upload.title": "Upload",
   "InterfaceToolTile.unitConverter.title": "Unit Converter",
   "InterfaceTokenTile.header.tehter": "Tether (USDT)",
@@ -272,6 +277,11 @@
   "common.amount": "100000000",
   "ourHelpfulConversionTool": "Our helpful conversion tool and hbar unit reference allow you to calculate your total transaction cost.",
   "referenceGuideTitle": "Hbar Unit Reference Guide",
-  "InterfaceToolTile.associateToken.hint": "To send or receive a token, you need to first associate your account with the token."
-
+  "InterfaceToolTile.associateToken.hint": "To send or receive a token, you need to first associate your account with the token.",
+  "Ledger.Connect": "Connect",
+  "Ledger.Instruction1": "Make sure any other apps that use your Ledger are closed.",
+  "Ledger.Instruction2": "Open the Hedera Hashgraph app on your Ledger.",
+  "Ledger.Instruction3": "Watch for prompts on your ledger device.",
+  "Ledger.publicKey": "Public Key",
+  "Ledger.Continue": "Continue"
 }

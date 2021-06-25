@@ -2,7 +2,7 @@
   <component
     :is="navItemComponent"
     :class="[
-      'px-4 py-3 my-0.5 rounded flex items-center cursor-pointer outline-none focus-visible:ring-2 ring-bright-navy-blue hover:bg-lynx-white dark:hover:bg-black-out',
+      'px-4 py-3 my-0.5 rounded flex items-center cursor-pointer outline-none focus-visible:ring-2 ring-bright-navy-blue hover:bg-lynx-white dark:hover:bg-black-out dark:text-white',
       {
         '!bg-first-snow dark:!bg-midnight-express text-bright-navy-blue':
           isActive,

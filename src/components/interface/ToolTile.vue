@@ -11,7 +11,7 @@
 
     <div class="font-semibold text-xl my-2">{{ title }}</div>
 
-    <div class="text-sm text-carbon dark:text-argent">
+    <div class="text-sm text-carbon dark:text-white">
       {{ description }}
     </div>
   </router-link>

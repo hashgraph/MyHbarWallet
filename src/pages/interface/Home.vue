@@ -1,7 +1,7 @@
 <template>
   <div class="md:flex md:justify-between">
     <div>
-      <div class="flex">
+      <div class="flex w-full">
         <div class="mr-2 text-3xl leading-9 text-carbon dark:text-white">
           {{ $t("App.heyThere") }}
         </div>

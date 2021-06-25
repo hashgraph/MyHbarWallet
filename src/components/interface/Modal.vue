@@ -32,7 +32,7 @@
           bg-white
           dark:bg-ruined-smores
           text-carbon
-          dark:text-silver-polish
+          dark:text-white
           transition-all
           duration-300
           border border-white
@@ -46,7 +46,8 @@
         ]"
         @click.stop
       >
-        <div class="flex justify-between">
+
+        <div class="flex justify-between dark:text-white">
           <div class="font-medium text-xl">{{ title }}</div>
 
           <div>

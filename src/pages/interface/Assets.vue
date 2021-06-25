@@ -1,6 +1,6 @@
 <template>
   <Headline :title="$t('InterfaceAssets.header')" />
-  <InterfaceAssets hide-header class="mt-6 pb-10" />
+  <InterfaceAssets hide-header class="mt-6 pb-10 w-full" />
 </template>
 
 <script lang="ts">

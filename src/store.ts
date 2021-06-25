@@ -16,6 +16,8 @@ interface State {
   balance: AccountBalance | null;
   // the current price of HBARS in USD
   hbarPriceUsd: BigNumber.Instance | null;
+  // a place to stuff extra information needed to process a transaction
+  extraTxInfo: Record<string, string | number> | null;
 }
 
 export const useStore = defineStore({
@@ -28,6 +30,7 @@ export const useStore = defineStore({
       hbarPriceUsd: null,
       balance: null,
       network: "mainnet",
+      extraTxInfo: null
     };
   },
 
@@ -43,8 +46,12 @@ export const useStore = defineStore({
     accountId(): AccountId | null {
       return this.client?.getAccountId() ?? null;
     },
-    getClient(): SimpleHederaClient | null{
+    getClient(): SimpleHederaClient | null {
       return this.client ?? null;
+    },
+
+    extraInfo(): Record<string, string | number> | null {
+      return this.extraTxInfo;
     }
   },
 
@@ -61,10 +68,10 @@ export const useStore = defineStore({
       }
     },
 
-    setClient(client: SimpleHederaClient) {
+    setClient(client: SimpleHederaClient | null) {
       this.balance = null;
       this.client = client;
-      void this.requestAccountBalance();
+      if (client) void this.requestAccountBalance();
     },
 
     async requestHbarPrice() {
@@ -77,5 +84,9 @@ export const useStore = defineStore({
 
       this.balance = await this.client.getAccountBalance();
     },
+
+    setExtraInfo(info: Record<string, string | number>): void {
+      this.extraTxInfo = info;
+    }
   },
 });

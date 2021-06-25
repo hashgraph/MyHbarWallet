@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import { Wallet } from "../domain/wallet/abstract";
-import type { AccountId, PrivateKey, PublicKey } from "@hashgraph/sdk";
+import type { AccountId, PrivateKey, PublicKey, TokenId } from "@hashgraph/sdk";
 
 export interface SimpleTransfer {
   // HBAR or Token ID (as string)
@@ -58,4 +58,9 @@ export interface SimpleHederaClient {
     maxFee: BigNumber | null; // tinybars
     onBeforeConfirm?: () => void;
   }): Promise<void>;
+
+  associateToken(options: {
+    account: AccountId;
+    tokens: TokenId[];
+  }): Promise<void>
 }

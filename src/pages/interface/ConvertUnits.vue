@@ -3,19 +3,21 @@
   <div
     class="
       mt-8
+      m-16
       font-medium
       text-carbon
       pb-10
       border-b border-cerebral-grey
       dark:border-midnight-express
+      dark:text-white
       items-center
     "
   >
-    <div class="page-subtitle m-16">
+    <div class="page-subtitle mt-8 w-full">
       {{ $t("ourHelpfulConversionTool") }}
     </div>
 
-    <div class="flex-wrap flex items-stretch m-16">
+    <div class="flex-wrap flex items-stretch mt-8 w-full">
       <div class="block-left w-5/12 m-auto">
         <div class="input-block">
           <TextInput
@@ -45,12 +47,12 @@
         <TextInput
           class="m-1"
           v-model="state.valueRight"
-          :modelValue="'1'"
+          :modelValue="1"
           @update:modelValue="handleInputValueRight"
         />
         <div class="select-block">
           <DropdownSelector
-            class="m-2"
+            class="m-2 w-full"
             v-model="state.selectedRight"
             :options="state.units"
             :modelValue="state.units[2].name"
@@ -60,7 +62,7 @@
       </div>
     </div>
 
-    <div class="unit-table m-16 items-center">
+    <div class="unit-table items-center w-full p-6">
       <div class="unit-table-header mt-16 mb-6 font-semibold text-center">
         {{ $t("referenceGuideTitle") }}
       </div>
@@ -72,17 +74,13 @@
           class="table-row-group"
         >
           <div class="table-row">
-            <span
-              class="table-cell w-1/3 border-b border-cerebral-grey pl-6 py-3"
-              >{{ unit.name }}</span
-            >
-            <span
-              class="table-cell w-1/3 border-b border-cerebral-grey pl-10 py-3"
-            >
+            <span class="table-cell w-1/3 border-b border-cerebral-grey py-3">{{
+              unit.name
+            }}</span>
+            <span class="table-cell w-1/3 border-b border-cerebral-grey py-3">
               {{ unit.amount }} {{ unit.symbol }}
             </span>
-            <span
-              class="table-cell w-1/3 border-b border-cerebral-grey pl-16 py-3"
+            <span class="table-cell w-1/3 border-b border-cerebral-grey py-3"
               >{{ unit.amountInHbar }} ℏ</span
             >
           </div>
@@ -100,6 +98,8 @@ import TextInput from "../../components/base/TextInput.vue";
 import DropdownSelector from "../../components/base/DropdownSelector.vue";
 import { HbarUnit, Hbar } from "@hashgraph/sdk";
 import BigNumber from "bignumber.js";
+// import Hbar from "../../utils/test-bignumber.js";
+import Long from "long";
 
 export default defineComponent({
   name: "ConvertUnits",
@@ -110,9 +110,8 @@ export default defineComponent({
   },
   setup() {
     BigNumber.config({
+      EXPONENTIAL_AT: 1e9,
       DECIMAL_PLACES: 64,
-      RANGE: 500,
-      EXPONENTIAL_AT: 64,
     });
 
     let state = reactive({
@@ -201,9 +200,6 @@ export default defineComponent({
       );
       state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
       console.log(state.valueRight);
-
-      let test = new Hbar(111, HbarUnit.Gigabar);
-      console.log(`Test: ${test.to(HbarUnit.Tinybar).toString()}`);
     }
 
     function getHbarUnit(value: string): HbarUnit {
@@ -227,14 +223,54 @@ export default defineComponent({
       }
     }
 
+    function getMultiplier(unit: string) {
+      switch (unit) {
+        case "Tinybar":
+          return 1;
+        case "Microbar":
+          return 100;
+        case "Millibar":
+          return 100000;
+        case "Hbar":
+          return 1000000;
+        case "Kilobar":
+          return 100000000000;
+        case "Megabar":
+          return 100000000000000;
+        case "Gigabar":
+          return 100000000000000000;
+        default:
+          return 1;
+      }
+    }
+
+
+    function checkBounds(unit: Hbar): Boolean {
+      let test = new BigNumber(unit.toTinybars());
+
+      if (test > 500000000000000000) {
+        return false;
+      }
+      return true;
+    }
+
     function computeValueLeft(): void {
       let unitRight = state.selectedRight;
       let unitLeft = state.selectedLeft;
+
       let hRight = new Hbar(
         new BigNumber(state.valueRight),
         getHbarUnit(unitRight)
       );
-      state.valueLeft = hRight.to(getHbarUnit(unitLeft)).toString();
+      let hLeft = new Hbar(new BigNumber(state.valueLeft), getHbarUnit(unitLeft));
+
+      if (checkBounds(hRight) && checkBounds(hLeft)) {
+        state.valueLeft = hRight.to(getHbarUnit(unitLeft)).toString();
+      } else {
+        state.valueLeft = "0";
+        state.valueRight = "0";
+        throw Error("Converted units has exceeded 50,000,000 Hbars");
+      }
     }
 
     function computeValueRight(): void {
@@ -244,7 +280,15 @@ export default defineComponent({
         new BigNumber(state.valueLeft),
         getHbarUnit(unitLeft)
       );
-      state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
+      let hRight = new Hbar(new BigNumber(state.valueRight), getHbarUnit(unitRight));
+
+      if (checkBounds(hLeft) && checkBounds(hRight)) {
+        state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
+      } else {
+        state.valueRight = "0";
+        state.valueLeft = "0";
+        throw Error("Converted units has exceeded 50,000,000 Hbars");
+      }
     }
 
     return {

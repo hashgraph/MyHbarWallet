@@ -1,12 +1,18 @@
 <template>
+  <div class="lg:flex lg:flex-row h-full">
+    <Drawer class="hidden sticky top-0 lg:flex" />
+    <MobileDrawer class="sticky top-0 z-20 lg:hidden" />
+
   <div class="lg:flex lg:flex-row">
     <Drawer class="hidden sticky top-0 lg:flex" />
     <MobileDrawer class="sticky top-0 z-20 lg:hidden" />
 
-    <div class="px-2 md:flex-1 md:px-10 relative flex">
+      
+    <div class="px-2 md:flex md:px-10 relative flex w-full h-full">
       <div
         class="
-          h-[600px]
+          h-full
+          min-h-screen
           absolute
           top-0
           left-0

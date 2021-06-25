@@ -20,7 +20,7 @@
         bg-white
         rounded
         cursor-pointer
-        dark:bg-ruined-smores
+        dark:bg-midnight-express
         hover:bg-lynx-white
         dark:hover:bg-black-out
       "
