@@ -1,7 +1,6 @@
 import { Wallet } from "../../../domain/wallet/abstract";
-import type { AccountId, Client } from "@hashgraph/sdk";
-import { HederaService } from "../../hedera";
-import { SimpleHederaClient } from "src/services/hedera";
+import { AccountId, Client, TokenId } from "@hashgraph/sdk";
+import { HederaService, SimpleHederaClient } from "../../hedera";
 import { SimpleHederaClientImpl } from "./client";
 
 export class HederaServiceImpl implements HederaService {

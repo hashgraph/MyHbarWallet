@@ -4,38 +4,49 @@
   <Hint :text="$t('InterfaceToolTile.associateToken.hint')" class="mt-4" />
 
   <!-- TODO: TokenIdInput -->
-  <div class="mt-10 flex flex-col max-w-lg m-auto">
+  <div class="flex flex-col max-w-lg m-auto mt-10">
     <label class="font-medium text-squant dark:text-argent">
       {{ $t("InterfaceToolTile.associateToken.label.tokenID") }}</label
     >
+
     <EntityIdInput
       type="token"
-      v-model="state.tokenID"
+      v-model="state.token"
       placeholder="shard.realm.num"
+    />
+
+    <InputError
+      v-model="state.errorMessage"
+      v-if="state.errorMessage.length > 0"
     />
   </div>
 
   <div class="mt-48 border-b border-cerebral-grey"></div>
 
   <div class="flex flex-col items-center max-w-lg m-auto">
-    <Button color="green" class="w-full p-4 mt-10" @click="associateToken">
+    <Button
+      color="green"
+      class="w-full p-4 mt-10"
+      :disabled="state.token == null"
+      @click="handleAssociate"
+    >
       {{ $t("InterfaceToolTile.associateToken.title") }}
     </Button>
 
-    <Button color="white" :to="{ name: 'tools' }" class="w-36 p-2 mt-4">
+    <Button color="white" :to="{ name: 'tools' }" class="p-2 mt-4 w-36">
       {{ $t("BaseButton.cancel") }}
     </Button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed } from "vue";
+import { defineComponent, reactive } from "vue";
 import Headline from "../../components/interface/Headline.vue";
 import Hint from "../../components/interface/Hint.vue";
 import Button from "../../components/base/Button.vue";
 import EntityIdInput from "../../components/base/EntityIdInput.vue";
+import InputError from "../../components/base/InputError.vue";
 import { useStore } from "../../store";
-import { TokenAssociateTransaction } from "@hashgraph/sdk";
 
 export default defineComponent({
   name: "AssociateToken",
@@ -44,28 +55,33 @@ export default defineComponent({
     Hint,
     Button,
     EntityIdInput,
+    InputError,
   },
   setup() {
     const store = useStore();
-
-    const accountID = computed(() => store.accountId);
-    const publicKey = computed(() => store.publicKey);
-    const client = computed(() => store.client);
     const state = reactive({
-      tokenID: null as string | null,
+      token: null,
+      errorMessage: "",
     });
 
-    function associateToken() {
-      if (client == null || store == null) {
-        throw new Error("'client' is null.");
-        return;
-      }
-      console.log(client);
-      
+    async function handleAssociate(): Promise<void> {
+      state.errorMessage = "";
+      const account = store.accountId;
+      const token = state.token;
 
+      if (account != null && token != null) {
+        try {
+          await store.client?.associateToken({
+            account,
+            tokens: [token],
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
 
-    return { state, associateToken, accountID };
+    return { state, handleAssociate };
   },
 });
 </script>

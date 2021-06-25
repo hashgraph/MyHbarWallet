@@ -3,9 +3,10 @@ import {
   SimpleHederaClient,
   SimpleTransfer,
 } from "../../../hedera";
-import type { Client, PublicKey, PrivateKey, AccountId } from "@hashgraph/sdk";
+import type { Client, PublicKey, PrivateKey, AccountId, TokenId } from "@hashgraph/sdk";
 import { getAccountBalance } from "./get-account-balance";
 import { transfer } from "./transfer";
+import { associateToken } from "./associate-token";
 import BigNumber from "bignumber.js";
 
 export class SimpleHederaClientImpl implements SimpleHederaClient {
@@ -43,5 +44,13 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
     onBeforeConfirm?: () => void;
   }): Promise<void> {
     return transfer(this._client, options);
+  }
+
+  // Associate a list of tokens to an account
+  associateToken(options: {
+    account: AccountId,
+    tokens: TokenId[]
+  }): Promise<void> {
+    return associateToken(this._client, options);
   }
 }
