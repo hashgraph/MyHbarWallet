@@ -14,7 +14,16 @@ export async function associateToken(client: Client, options: {
     const associateTransaction = new TokenAssociateTransaction()
       .setAccountId(options.account)
       .setTokenIds(options.tokens)
+      .freezeWith(client)
       .setMaxTransactionFee(Hbar.fromTinybars(1));
+  
+    try {
+      await associateTransaction.execute(client);
+    } catch (err) {
+      if (err instanceof StatusError) {
+        if (err.status === Status.TokenAlreadyAssociatedToAccount) { }
+      }
 
-    // TODO try execute and get result
+      throw err;
+    }
   }
