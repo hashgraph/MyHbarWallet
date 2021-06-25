@@ -2,9 +2,9 @@
   <router-link
     :to="to"
     :class="[
-      'p-7 border border-cerebral-grey shadow-lg rounded m-1 flex flex-col justify-around items-center text-center',
+      'p-7 border border-cerebral-grey shadow-lg rounded m-1 flex flex-col justify-around- items-center text-center overflow-ellipsis ...',
       'dark:bg-dreamless-sleep dark:border-midnight-express dark:text-white',
-      'lg:h-64 lg:w-72',
+      'h-64 w-72',
     ]"
   >
     <img class="w-20" :src="purpleNav" />
@@ -43,3 +43,4 @@ export default defineComponent({
   },
 });
 </script>
+

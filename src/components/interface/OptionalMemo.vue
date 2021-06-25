@@ -22,8 +22,8 @@
     <div
       class="w-96 text-sm text-squant italic transition-all duration-300"
       :class="{
-        'mt-2  ': state.addMemo,
-        ' -mt-4 ': !state.addMemo,
+        'mt-4  ': state.addMemo,
+        ' mt-14 ': !state.addMemo,
       }"
     >
       {{ $t("OptionalMemo.aboutMemo") }}

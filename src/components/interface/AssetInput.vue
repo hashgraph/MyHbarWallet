@@ -19,6 +19,11 @@
     >
       ℏ
     </div>
+
+    <div v-if="asset === 'usd'"> $ </div>
+
+
+
     <input
       v-bind="$attrs"
       :value="formattedValue"
@@ -59,7 +64,7 @@ export default defineComponent({
   emits: ["update:modelValue"],
   setup(props, { emit }) {
     const store = useStore();
-
+    console.log(props.asset);
     const assetDecimals = computed(() =>
       props.asset === "HBAR"
         ? 8
