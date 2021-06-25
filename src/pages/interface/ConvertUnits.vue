@@ -110,10 +110,14 @@ export default defineComponent({
   },
   setup() {
     BigNumber.config({
-      DECIMAL_PLACES: 64,
-      RANGE: 500,
-      EXPONENTIAL_AT: 64,
+      DECIMAL_PLACES: 1e+9,
+      EXPONENTIAL_AT: 1e+9,
+      POW_PRECISION: 1e+9,
+  
     });
+
+    
+
 
     let state = reactive({
       selectedLeft: "Tinybar",
@@ -178,7 +182,7 @@ export default defineComponent({
       if (isNaN(value)) {
         return;
       }
-      state.valueLeft = value;
+      state.valueLeft = new BigNumber(value);
       computeValueRight();
       computeValueLeft();
     }
@@ -187,7 +191,7 @@ export default defineComponent({
       if (isNaN(value)) {
         return;
       }
-      state.valueRight = value;
+      state.valueRight = new BigNumber(value);
       computeValueLeft();
       computeValueRight();
     }
@@ -199,11 +203,11 @@ export default defineComponent({
         new BigNumber(state.valueLeft),
         getHbarUnit(unitLeft)
       );
-      state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
+      state.valueRight = hLeft.to(getHbarUnit(unitRight)).toFixed();
       console.log(state.valueRight);
 
       let test = new Hbar(111, HbarUnit.Gigabar);
-      console.log(`Test: ${test.to(HbarUnit.Tinybar).toString()}`);
+      console.log(`Test: ${test.to(HbarUnit.Tinybar).toFixed()}`);
     }
 
     function getHbarUnit(value: string): HbarUnit {
@@ -234,7 +238,7 @@ export default defineComponent({
         new BigNumber(state.valueRight),
         getHbarUnit(unitRight)
       );
-      state.valueLeft = hRight.to(getHbarUnit(unitLeft)).toString();
+      state.valueLeft = hRight.to(getHbarUnit(unitLeft)).toFixed();
     }
 
     function computeValueRight(): void {
@@ -244,7 +248,7 @@ export default defineComponent({
         new BigNumber(state.valueLeft),
         getHbarUnit(unitLeft)
       );
-      state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
+      state.valueRight = hLeft.to(getHbarUnit(unitRight)).toFixed();
     }
 
     return {

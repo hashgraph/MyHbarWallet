@@ -61,8 +61,8 @@ export default defineComponent({
         return;
       }
       console.log(client);
-      // let tokenHandler = new TokenAssociateTransaction().setAccountId(accountID).setTokenIds([tokenID]);
-      // tokenHandler.signWith(client.value);
+      
+
     }
 
     return { state, associateToken, accountID };
