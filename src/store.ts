@@ -61,10 +61,10 @@ export const useStore = defineStore({
       }
     },
 
-    setClient(client: SimpleHederaClient) {
+    setClient(client: SimpleHederaClient | null) {
       this.balance = null;
       this.client = client;
-      void this.requestAccountBalance();
+      if (client) void this.requestAccountBalance();
     },
 
     async requestHbarPrice() {

@@ -33,7 +33,7 @@ specifiers:
   patch-package: ^6.4.7
   pinia: ^2.0.0-alpha.18
   platform: ^1.3.6
-  pnpm: ^6.3.0
+  pnpm: ^6.9.1
   postcss: ^8.2.15
   postcss-focus-visible: ^5.0.0
   preferred-locale: ^1.0.10
@@ -87,7 +87,7 @@ devDependencies:
   lint-staged: 11.0.0
   npm-run-all: 4.1.5
   patch-package: 6.4.7
-  pnpm: 6.3.0
+  pnpm: 6.9.1
   postcss: 8.2.15
   postcss-focus-visible: 5.0.0
   prettier: 2.3.0
@@ -4238,8 +4238,8 @@ packages:
       semver-compare: 1.0.0
     dev: true
 
-  /pnpm/6.3.0:
-    resolution: {integrity: sha512-mSeVHYbCiPgpQjoib15GzeYae9Ttth1WKuhGe49UwlttYRHYXEsvW+JsEiX4Zm9bltFvSl7dKevCCrm1JJB0qg==}
+  /pnpm/6.9.1:
+    resolution: {integrity: sha512-2qlbvmHB+ULAoTCMpJ75oADYoVQnsxD1ipCemdDJA2KW4auGwoTUzyowVYEiAe4DIDOqw3axhHVkNAo7P6goZA==}
     engines: {node: '>=12.17'}
     hasBin: true
     dev: true
