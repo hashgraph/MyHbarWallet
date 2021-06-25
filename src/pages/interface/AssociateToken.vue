@@ -15,10 +15,9 @@
       placeholder="shard.realm.num"
     />
 
-    <InputError
-      v-model="state.errorMessage"
-      v-if="state.errorMessage.length > 0"
-    />
+    <InputError v-if="state.errorMessage.length > 0">
+      {{ state.errorMessage }}
+    </InputError>
   </div>
 
   <div class="mt-48 border-b border-cerebral-grey"></div>
@@ -76,7 +75,7 @@ export default defineComponent({
             tokens: [token],
           });
         } catch (error) {
-          console.log(error);
+          state.errorMessage = error.message;
         }
       }
     }
