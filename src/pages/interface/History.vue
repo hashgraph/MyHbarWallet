@@ -5,7 +5,7 @@
       class="pb-20 lg:pb-8 mb-5"
     />
 
-    <!-- <div
+    <div
       class="absolute top-14 lg:right-0 lg:top-2 w-64 flex justify-around items-end text-andrea-blue font-medium"
     >
       <span class="py-1 px-4 rounded text-white bg-andrea-blue">{{
@@ -19,7 +19,7 @@
       <span class="py-1 px-4 rounded">{{
         $t("InterfaceHistory.button.received")
       }}</span>
-    </div> -->
+    </div>
   </div>
 
   <Transactions

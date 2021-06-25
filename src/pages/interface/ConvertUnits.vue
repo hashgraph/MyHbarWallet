@@ -92,7 +92,6 @@ import DropdownSelector from "../../components/base/DropdownSelector.vue";
 import { Hbar, HbarUnit } from "@hashgraph/sdk";
 import BigNumber from "bignumber.js";
 
-// import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "ConvertUnits",

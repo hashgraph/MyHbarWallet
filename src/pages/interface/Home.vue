@@ -101,6 +101,9 @@ export default defineComponent({
 
     void store.requestHbarPrice();
 
+
+
+    console.log(accountId);
     return {
       accountId,
       publicKey,

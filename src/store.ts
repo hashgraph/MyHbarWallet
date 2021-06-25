@@ -43,6 +43,9 @@ export const useStore = defineStore({
     accountId(): AccountId | null {
       return this.client?.getAccountId() ?? null;
     },
+    getClient(): SimpleHederaClient | null{
+      return this.client ?? null;
+    }
   },
 
   actions: {

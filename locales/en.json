@@ -104,6 +104,7 @@
   "InterfaceTools.header": "Tools",
   "InterfaceToolTile.createAccount.title": "Create Account",
   "InterfaceToolTile.associateToken.title": "Associate Token",
+  "InterfaceToolTile.associateToken.label.tokenID": "Token ID",
   "InterfaceToolTile.download.title": "Download",
   "InterfaceToolTile.upload.title": "Upload",
   "InterfaceToolTile.unitConverter.title": "Unit Converter",
@@ -270,6 +271,7 @@
   "InterfaceConvertUnits": "Convert Units",
   "common.amount": "100000000",
   "ourHelpfulConversionTool": "Our helpful conversion tool and hbar unit reference allow you to calculate your total transaction cost.",
-  "referenceGuideTitle": "Hbar Unit Reference Guide"
+  "referenceGuideTitle": "Hbar Unit Reference Guide",
+  "InterfaceToolTile.associateToken.hint": "To send or receive a token, you need to first associate your account with the token."
 
 }
