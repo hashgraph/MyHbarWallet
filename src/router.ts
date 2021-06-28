@@ -18,6 +18,7 @@ import AccessHardware from "./pages/access/Hardware.vue";
 import AccessKeystore from "./pages/access/Keystore.vue";
 import AccessMnemonic from "./pages/access/Mnemonic.vue";
 import AccessPrivateKey from "./pages/access/PrivateKey.vue";
+import AccessLedger from "./pages/access/Ledger.vue";
 import Account from "./pages/access/Account.vue";
 
 // Create
@@ -74,7 +75,7 @@ const routes = [
       },
       {
         path: "/access/hardware/ledger",
-        component: AccessHardware,
+        component: AccessLedger,
         name: "access.hardware.ledger",
       },
       {
