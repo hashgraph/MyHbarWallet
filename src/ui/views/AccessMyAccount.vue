@@ -46,7 +46,7 @@
 
         <ModalRequestToCreateAccount
             v-model="state.modalRequestToCreateAccountState.isOpen"
-            :public-key="state.publicKey"
+            :public-key="state.possibleKeys[0]"
             @hasAccount="handleHasAccount"
         />
 
@@ -59,11 +59,9 @@
         >
     </div>
 </template>
-
 <script lang="ts">
 import Vue from "vue";
 import { defineComponent, reactive, ref, Ref } from "@vue/composition-api";
-
 import FAQs from "../components/FAQs.vue";
 import AccountTileButtons from "../components/AccountTileButtons.vue";
 import ModalAccessByHardware, { AccessHardwareOption } from "../components/ModalAccessByHardware.vue";
@@ -142,7 +140,10 @@ export default defineComponent({
                 valid: false,
                 networkValid: false
             },
-            modalRequestToCreateAccountState: { isOpen: false },
+            modalRequestToCreateAccountState: {
+                isOpen: false,
+                publicKey: ""
+            },
             loginMethod: null,
             wallet: null
         });
@@ -486,7 +487,6 @@ export default defineComponent({
                 state.modalEnterAccountIdState.isOpen = true;
             });
         }
-
         return {
             state,
             keystoreFile,

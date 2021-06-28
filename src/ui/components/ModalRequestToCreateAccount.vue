@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, SetupContext, Ref, ref } from "@vue/composition-api";
+import { defineComponent, PropType, SetupContext, Ref, ref, onMounted } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 
 import { writeToClipboard } from "../../service/clipboard";
@@ -74,7 +74,7 @@ import ReadOnlyInput from "./ReadOnlyInput.vue";
 
 interface Props {
     isOpen: boolean;
-    publicKey: import("@hashgraph/sdk").Ed25519PublicKey;
+    publicKey: string;
     event: string;
 }
 
@@ -93,10 +93,13 @@ export default defineComponent({
     },
     props: {
         isOpen: Boolean,
-        publicKey: (Object as unknown) as PropType<import("@hashgraph/sdk").Ed25519PublicKey>,
+        publicKey: { required: true },
         event: String
     },
     setup(props: Props, context: SetupContext) {
+        onMounted(() => {
+            console.log(props.publicKey);
+        });
         const keyRef: Ref<Vue | null> = ref(null);
         const componentKey = ref(0);
 
