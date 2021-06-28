@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, SetupContext, Ref, ref, onMounted } from "@vue/composition-api";
+import { defineComponent, PropType, SetupContext, Ref, ref } from "@vue/composition-api";
 import QrcodeVue from "qrcode.vue";
 
 import { writeToClipboard } from "../../service/clipboard";
@@ -97,9 +97,6 @@ export default defineComponent({
         event: String
     },
     setup(props: Props, context: SetupContext) {
-        onMounted(() => {
-            console.log(props.publicKey);
-        });
         const keyRef: Ref<Vue | null> = ref(null);
         const componentKey = ref(0);
 
