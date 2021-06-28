@@ -1,7 +1,7 @@
 <template>
   <Headline :title="$t('InterfaceTools.header')" />
 
-  <div class="mt-6 flex flex-wrap">
+  <div class="mt-6 flex flex-wrap justify-items-center">
     <ToolTile
       :title="$t('InterfaceToolTile.associateToken.title')"
       description="To send or receive a token, you need to first associate your account with

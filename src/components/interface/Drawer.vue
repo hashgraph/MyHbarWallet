@@ -2,7 +2,7 @@
   <div
     :class="[
       'bg-white h-screen border-r border-jupiter flex flex-col',
-      'dark:bg-ruined-smores dark:border-midnight-express',
+      'dark:bg-ruined-smores dark:border-midnight-express dark:text-white',
     ]"
   >
     <Image

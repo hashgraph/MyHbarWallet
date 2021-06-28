@@ -9,6 +9,7 @@
       pb-10
       border-b border-cerebral-grey
       dark:border-midnight-express
+      w-full
     "
   >
     <div class="flex flex-wrap p-8 items-center">
@@ -16,11 +17,11 @@
         <!-- TODO: when localizing, remove the v-if, the pluralization should be done in the localizer -->
         <div
           v-if="state.transfers.length <= 1"
-          class="mb-2 dark:text-silver-polish"
+          class="mb-2 dark:text-white"
         >
           {{ $t("InterfaceHomeSend.section1.header1") }}
         </div>
-        <div v-else class="mb-2 dark:text-silver-polish">
+        <div v-else class="mb-2 dark:text-white">
           {{ $t("InterfaceTransactionDetails.transfers") }}
         </div>
 
@@ -45,8 +46,8 @@
         </div>
       </div>
 
-      <div class="mb-2 p-4 md:p-0 mt-4 w-full">
-        <div class="dark:text-silver-polish">From</div>
+      <div class="mb-2 p-4 md:p-0 mt-4">
+        <div class="dark:text-white">From</div>
 
         <TextInput
           v-model="state.accountId"

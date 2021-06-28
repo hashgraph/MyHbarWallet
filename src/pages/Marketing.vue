@@ -8,6 +8,7 @@
       to-white
       dark:to-black
       overflow-x-hidden
+      w-full
     "
   >
     <div

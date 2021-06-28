@@ -3,30 +3,33 @@
     <label class="block dark:text-silver-polish mb-2" for="to">To</label>
 
     <div class="pb-0.5">
-      <TextInput id="to" :model-value="formattedTo" :valid="toIsValid"
-      :placeholder="$t('InterfaceHomeSendModal.input1.placeholder')"
-      @input="onToInput" />
+      <TextInput
+        id="to"
+        :model-value="formattedTo"
+        :valid="toIsValid"
+        :placeholder="$t('InterfaceHomeSendModal.input1.placeholder')"
+        @input="onToInput"
+      />
     </div>
 
-    <label class="dark:text-silver-polish block pt-2 mb-2 mt-5"> Asset </label>
+    <label class="dark:text-white block pt-2 mb-2 mt-5">
+      {{ $t("InterfaceHomeSendModal.input2.label") }}
+    </label>
 
     <AssetSelector v-model="dAsset" />
 
     <div class="flex flex-wrap items-center">
       <div class="w-5/12 m-auto">
-        <label
-          class="dark:text-silver-polish block pt-2 mb-2 mt-5"
-          for="amount"
-        >
+        <label class="dark:text-white block pt-2 mb-2 mt-5" for="amount">
           {{ $t("InterfaceHomeSendModal.input3.label") }}
         </label>
         <AssetInput id="amount" v-model="dAmount" :asset="asset" />
       </div>
 
       <div class="w-5/12 m-auto">
-        <label class="block dark:text-silver-polish pt-2 mb-2 mt-5 mb-2"
-          >USD</label
-        >
+        <label class="block dark:text-white pt-2 mb-2 mt-5 mb-2">
+          {{ $t("InterfaceAssets.usd") }}
+        </label>
 
         <TextInput id="usd" :model-Value="'$'" />
       </div>

@@ -6,6 +6,7 @@
       rounded-md
       focus:outline-none
       focus:ring-2 focus:ring-inset focus:ring-white
+      dark:text-white
     "
     aria-expanded="false"
   >
