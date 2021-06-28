@@ -9,7 +9,7 @@
       pb-10
       border-b border-cerebral-grey
       dark:border-midnight-express
-      w-full
+      
     "
   >
     <div class="flex flex-wrap p-8 items-center">
