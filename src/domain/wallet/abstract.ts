@@ -19,7 +19,7 @@ export abstract class Wallet {
   ): Promise<(transactionBody: Uint8Array) => Promise<Uint8Array>>;
 
   // get the public key associated with the wallet
-  abstract getPublicKey(index: number): Promise<PublicKey>;
+  abstract getPublicKey(index: number): Promise<PublicKey | undefined>;
 
   /** Get the private key associated with the wallet (if avaialble) */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
