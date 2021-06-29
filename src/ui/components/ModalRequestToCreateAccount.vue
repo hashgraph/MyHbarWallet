@@ -84,7 +84,7 @@ export default defineComponent({
   },
   props: {
     isOpen: Boolean,
-    publicKey: { type: String, required: true },
+    publicKey: { type: String, default: "" },
     event: String,
   },
   setup(props: Props, context: SetupContext) {
