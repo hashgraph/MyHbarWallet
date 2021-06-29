@@ -13,7 +13,7 @@ export interface ModalIsOpen {
 type ModalBySoftwareState = ModalIsOpen;
 type ModalCreateByPhraseState = ModalIsOpen;
 type ModalRequestToCreateAccountState = ModalIsOpen & {
-  publicKey: string;
+    publicKey: string;
 };
 
 export interface AccessDTO {

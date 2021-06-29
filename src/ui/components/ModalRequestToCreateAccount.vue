@@ -1,54 +1,57 @@
 <template>
-  <Modal
-    :is-open="isOpen"
-    :large="false"
-    not-closable
-    :title="$t('modalRequestToCreateAccount.title')"
-    @change="this.$listeners.change"
-  >
-    <div class="instructions">
-      <div>
-        {{ $t("modalRequestToCreateAccount.provideYourPublicKey") }}
-      </div>
-      <div>
-        {{ $t("modalRequestToCreateAccount.theyMustCreateAndFundYourAccount") }}
-      </div>
-    </div>
+    <Modal
+        :is-open="isOpen"
+        :large="false"
+        not-closable
+        :title="$t('modalRequestToCreateAccount.title')"
+        @change="this.$listeners.change"
+    >
+        <div class="instructions">
+            <div>
+                {{ $t("modalRequestToCreateAccount.provideYourPublicKey") }}
+            </div>
+            <div>
+                {{ $t("modalRequestToCreateAccount.theyMustCreateAndFundYourAccount") }}
+            </div>
+        </div>
 
-    <form class="request-to-create-account" @submit.prevent="$emit('submit')">
-      <qrcode-vue
-        v-show="publicKey != null"
-        :value="publicKey != null ? publicKey.toString(true) : ''"
-        size="180"
-        level="L"
-        class="pub-qr"
-      />
+        <form
+            class="request-to-create-account"
+            @submit.prevent="$emit('submit')"
+        >
+            <qrcode-vue
+                v-show="publicKey != null"
+                :value="publicKey != null ? publicKey.toString(true) : ''"
+                size="180"
+                level="L"
+                class="pub-qr"
+            />
 
-      <ReadOnlyInput
-        v-show="publicKey != null"
-        :key="componentKey"
-        ref="keyRef"
-        multiline
-        :value="publicKey != null ? publicKey.toString(true) : ''"
-      />
+            <ReadOnlyInput
+                v-show="publicKey != null"
+                :key="componentKey"
+                ref="keyRef"
+                multiline
+                :value="publicKey != null ? publicKey.toString(true) : ''"
+            />
 
-      <div class="buttons">
-        <Button
-          compact
-          outline
-          :label="$t('modalRequestToCreateAccount.copyPublicKey')"
-          class="button"
-          @click="handleClickCopy"
-        />
-        <Button
-          compact
-          :label="$t('modalRequestToCreateAccount.iHaveAnAccountId')"
-          class="button"
-          @click="handleHasAccount"
-        />
-      </div>
-    </form>
-  </Modal>
+            <div class="buttons">
+                <Button
+                    compact
+                    outline
+                    :label="$t('modalRequestToCreateAccount.copyPublicKey')"
+                    class="button"
+                    @click="handleClickCopy"
+                />
+                <Button
+                    compact
+                    :label="$t('modalRequestToCreateAccount.iHaveAnAccountId')"
+                    class="button"
+                    @click="handleHasAccount"
+                />
+            </div>
+        </form>
+    </Modal>
 </template>
 
 <script lang="ts">
@@ -64,59 +67,59 @@ import Button from "./Button.vue";
 import ReadOnlyInput from "./ReadOnlyInput.vue";
 
 interface Props {
-  isOpen: boolean;
-  publicKey: string;
-  event: string;
+    isOpen: boolean;
+    publicKey: string;
+    event: string;
 }
 
 export default defineComponent({
-  name: "ModalRequestToCreateAccount",
-  components: {
-    Modal,
-    TextInput,
-    Button,
-    QrcodeVue,
-    ReadOnlyInput,
-  },
-  model: {
-    prop: "isOpen",
-    event: "change",
-  },
-  props: {
-    isOpen: Boolean,
-    publicKey: { type: String, default: "" },
-    event: String,
-  },
-  setup(props: Props, context: SetupContext) {
-    const keyRef: Ref<Vue | null> = ref(null);
-    const componentKey = ref(0);
+    name: "ModalRequestToCreateAccount",
+    components: {
+        Modal,
+        TextInput,
+        Button,
+        QrcodeVue,
+        ReadOnlyInput
+    },
+    model: {
+        prop: "isOpen",
+        event: "change"
+    },
+    props: {
+        isOpen: Boolean,
+        publicKey: { type: String, default: "" },
+        event: String
+    },
+    setup(props: Props, context: SetupContext) {
+        const keyRef: Ref<Vue | null> = ref(null);
+        const componentKey = ref(0);
 
-    async function handleClickCopy(): Promise<void> {
-      componentKey.value += 1;
+        async function handleClickCopy(): Promise<void> {
+            componentKey.value += 1;
 
-      context.root.$nextTick(async () => {
-        if (keyRef.value != null) {
-          writeToClipboard(keyRef.value.$el as HTMLElement);
+            context.root.$nextTick(async() => {
+                if (keyRef.value != null) {
+                    writeToClipboard(keyRef.value.$el as HTMLElement);
 
-          await actions.alert({
-            message: context.root.$t("common.copied").toString(),
-            level: "info",
-          });
+                    await actions.alert({
+                        message: context.root.$t("common.copied").toString(),
+                        level: "info"
+                    });
+                }
+            });
         }
-      });
-    }
 
-    function handleHasAccount(): void {
-      context.emit("hasAccount");
-    }
+        function handleHasAccount(): void {
+            context.emit("hasAccount");
+        }
 
-    return {
-      keyRef,
-      componentKey,
-      handleClickCopy,
-      handleHasAccount,
-    };
-  },
+        return {
+            keyRef,
+            componentKey,
+            handleClickCopy,
+            handleHasAccount
+        };
+    }
 });
 </script>
 
