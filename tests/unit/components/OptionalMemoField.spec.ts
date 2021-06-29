@@ -33,7 +33,7 @@ describe("OptionalMemoField.vue", (): void => {
               </div>
               <div class="memo-input">
                 <div class="text-input"><label class="label-container">
-                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Memo" type="text" tabindex="-1" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
+                    <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Memo" type="text" tabindex="-1" autocomplete="on" maxlength="50" spellcheck="true"> <div class="remaining-characters">50</div></div> <div class="deco-flex-item"><!----></div></div></span>
                     <!----></span>
                   </label>
                   <!---->

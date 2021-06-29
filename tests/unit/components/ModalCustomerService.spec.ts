@@ -18,7 +18,7 @@ describe("ModalCustomerService.vue", (): void => {
         }
     });
 
-    it("renders open", async(): Promise<void> => {
+    it("renders open", async (): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -32,7 +32,7 @@ describe("ModalCustomerService.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            (child) => child.$options.name === "Modal"
+            child => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -55,28 +55,28 @@ describe("ModalCustomerService.vue", (): void => {
                           <!---->
                           <!---->
                           <div class="text-input issue-item"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
+                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Device/Wallet type (if any)" type="text" autocomplete="on" spellcheck="true"> <!----></div> <div class="deco-flex-item"><!----></div></div></span>
                               <!----></span>
                             </label>
                             <!---->
                             <!---->
                           </div>
                           <div class="text-input issue-item"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Account ID (if any)" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
+                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="Account ID (if any)" type="text" autocomplete="on" spellcheck="true"> <!----></div> <div class="deco-flex-item"><!----></div></div></span>
                               <!----></span>
                             </label>
                             <!---->
                             <!---->
                           </div>
                           <div class="text-input issue-item"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="URL" type="text" autocomplete="on" spellcheck="true"></div> <div class="deco-flex-item"><!----></div></div></span>
+                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><input placeholder="URL" type="text" autocomplete="on" spellcheck="true"> <!----></div> <div class="deco-flex-item"><!----></div></div></span>
                               <!----></span>
                             </label>
                             <!---->
                             <!---->
                           </div>
                           <div class="text-input issue-item is-multiline"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea placeholder="Describe the issue" rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
+                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea placeholder="Describe the issue" rows="8" class="text-area resize"></textarea> <!----></div> <div class="deco-flex-item"><!----></div></div></span>
                               <!----></span>
                             </label>
                             <!---->

@@ -10,7 +10,7 @@ describe("ModalMessageSigned.vue", (): void => {
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    it("renders open", async(): Promise<void> => {
+    it("renders open", async (): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -27,7 +27,7 @@ describe("ModalMessageSigned.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            (child) => child.$options.name === "Modal"
+            child => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -46,7 +46,7 @@ describe("ModalMessageSigned.vue", (): void => {
                     <!---->
                     <div class="main">
                       <div class="content-container">
-                        <div class="text-input is-multiline has-label"><label class="label-container"><span class="label">Signed Message</span> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
+                        <div class="text-input is-multiline has-label"><label class="label-container"><span class="label">Signed Message</span> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area"></textarea> <!----></div> <div class="deco-flex-item"><!----></div></div></span>
                             <!----></span>
                           </label>
                           <div class="actions">

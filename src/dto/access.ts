@@ -12,16 +12,18 @@ export interface ModalIsOpen {
 
 type ModalBySoftwareState = ModalIsOpen;
 type ModalCreateByPhraseState = ModalIsOpen;
-type ModalRequestToCreateAccountState = ModalIsOpen;
+type ModalRequestToCreateAccountState = ModalIsOpen & {
+  publicKey: string;
+};
 
 export interface AccessDTO {
-    possibleKeys: Array<import("@hashgraph/sdk").Ed25519PrivateKey>;
+    possibleKeys: Array<import("@hashgraph/sdk").PrivateKey>;
     keyFile: Uint8Array | null;
 }
 
 export interface CreateDTO {
-    privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null;
-    publicKey: import("@hashgraph/sdk").Ed25519PublicKey | null;
+    privateKey: import("@hashgraph/sdk").PrivateKey | null;
+    publicKey: import("@hashgraph/sdk").PublicKey | null;
     keyFile: Uint8Array | null;
 }
 

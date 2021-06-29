@@ -16,7 +16,7 @@ describe("ModalReportError.Vue", (): void => {
         }
     });
 
-    it("renders open", async(): Promise<void> => {
+    it("renders open", async (): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -30,7 +30,7 @@ describe("ModalReportError.Vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            (child) => child.$options.name === "Modal"
+            child => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -61,7 +61,7 @@ describe("ModalReportError.Vue", (): void => {
                             (Optional) What went wrong?
                           </div>
                           <div class="text-input user-details is-multiline"><label class="label-container">
-                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area resize"></textarea></div> <div class="deco-flex-item"><!----></div></div></span>
+                              <!----> <span class="input-container"><!----> <span class="input-wrapper"><div class="flex-container"><div class="text-flex-item"><textarea rows="8" class="text-area resize"></textarea> <!----></div> <div class="deco-flex-item"><!----></div></div></span>
                               <!----></span>
                             </label>
                             <!---->
