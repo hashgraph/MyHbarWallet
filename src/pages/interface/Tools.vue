@@ -11,7 +11,7 @@
 
 
 
-    <ToolTile :title = "$t('InterfaceConvertUnits')" description = "$t('ourHelpfulConversionTool')" :to = "{name: 'tools.convert.units'}"/>
+    <ToolTile :title = "$t('InterfaceConvertUnits')" :description = "$t('ourHelpfulConversionTool')" :to = "{name: 'tools.convert.units'}"/>
 
 
     <ToolTile :title = "$t('InterfaceToolTile.download.title')"  :to = "{name: 'tools.download'}"/>
