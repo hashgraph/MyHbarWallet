@@ -13,17 +13,15 @@
       items-center
     "
   >
-
-  
     <div class="page-subtitle mt-8 w-full">
       {{ $t("ourHelpfulConversionTool") }}
     </div>
 
     <div class="flex-wrap flex items-stretch mt-8 w-full">
       <div class="block-left w-5/12 m-auto">
-        <div class="input-block ">
+        <div class="input-block">
           <TextInput
-            class="m-1 "
+            class="m-1"
             v-model="state.valueLeft"
             :modelValue="$t('common.amount')"
             @update:modelValue="handleInputValueLeft"
@@ -76,17 +74,13 @@
           class="table-row-group"
         >
           <div class="table-row">
-            <span
-              class="table-cell w-1/3 border-b border-cerebral-grey py-3"
-              >{{ unit.name }}</span
-            >
-            <span
-              class="table-cell w-1/3 border-b border-cerebral-grey py-3"
-            >
+            <span class="table-cell w-1/3 border-b border-cerebral-grey py-3">{{
+              unit.name
+            }}</span>
+            <span class="table-cell w-1/3 border-b border-cerebral-grey py-3">
               {{ unit.amount }} {{ unit.symbol }}
             </span>
-            <span
-              class="table-cell w-1/3 border-b border-cerebral-grey py-3"
+            <span class="table-cell w-1/3 border-b border-cerebral-grey py-3"
               >{{ unit.amountInHbar }} ℏ</span
             >
           </div>
@@ -206,9 +200,6 @@ export default defineComponent({
       );
       state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
       console.log(state.valueRight);
-
-      let test = new Hbar(111, HbarUnit.Gigabar);
-      console.log(`Test: ${test.to(HbarUnit.Tinybar).toString()}`);
     }
 
     function getHbarUnit(value: string): HbarUnit {
@@ -232,8 +223,7 @@ export default defineComponent({
       }
     }
 
-
-    function getMultiplier(unit: string){
+    function getMultiplier(unit: string) {
       switch (unit) {
         case "Tinybar":
           return 1;
@@ -255,23 +245,32 @@ export default defineComponent({
     }
 
 
-    // function convert(amount: string, unitOrigin: string, unitDest: string): BigNumber {
-    //   let multOrigin = getMultiplier(unitOrigin);
-    //   let multDest = getMultiplier(unitDest);
+    function checkBounds(unit: Hbar): Boolean {
+      let test = new BigNumber(unit.toTinybars());
 
-    //   return new BigNumber(amount)
-    //     .multipliedBy(multOrigin).integerValue(BigNumber.ROUND_FLOOR)
-    //     .dividedBy(multDest);
-    // }
+      if (test > 500000000000000000) {
+        return false;
+      }
+      return true;
+    }
 
     function computeValueLeft(): void {
       let unitRight = state.selectedRight;
       let unitLeft = state.selectedLeft;
+
       let hRight = new Hbar(
         new BigNumber(state.valueRight),
         getHbarUnit(unitRight)
       );
-      state.valueLeft = hRight.to(getHbarUnit(unitLeft)).toString();
+      let hLeft = new Hbar(new BigNumber(state.valueLeft), getHbarUnit(unitLeft));
+
+      if (checkBounds(hRight) && checkBounds(hLeft)) {
+        state.valueLeft = hRight.to(getHbarUnit(unitLeft)).toString();
+      } else {
+        state.valueLeft = "0";
+        state.valueRight = "0";
+        throw Error("Converted units has exceeded 50,000,000 Hbars");
+      }
     }
 
     function computeValueRight(): void {
@@ -281,7 +280,15 @@ export default defineComponent({
         new BigNumber(state.valueLeft),
         getHbarUnit(unitLeft)
       );
-      state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
+      let hRight = new Hbar(new BigNumber(state.valueRight), getHbarUnit(unitRight));
+
+      if (checkBounds(hLeft) && checkBounds(hRight)) {
+        state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
+      } else {
+        state.valueRight = "0";
+        state.valueLeft = "0";
+        throw Error("Converted units has exceeded 50,000,000 Hbars");
+      }
     }
 
     return {
