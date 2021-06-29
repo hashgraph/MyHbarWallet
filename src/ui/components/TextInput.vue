@@ -50,6 +50,7 @@
                                 @focusout="handleFocusOut"
                                 @input="handleInput"
                             >
+
                             <div class="remaining-characters" v-if="maxMemoLength != null" v-text="(maxMemoLength - value.length)"></div>
                         </div>
 
