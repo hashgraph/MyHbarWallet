@@ -39,7 +39,7 @@ describe("AccessMyAccount.vue", (): void => {
               <modalaccessbysoftware-stub></modalaccessbysoftware-stub>
               <modalkeystorefilepassword-stub state="[object Object]"></modalkeystorefilepassword-stub>
               <modalenteraccountid-stub state="[object Object]"></modalenteraccountid-stub>
-              <modalrequesttocreateaccount-stub></modalrequesttocreateaccount-stub> <input id="file-upload" type="file" style="display: none;">
+              <modalrequesttocreateaccount-stub publickey=""></modalrequesttocreateaccount-stub> <input id="file-upload" type="file" style="display: none;">
             </div>
         `);
     });

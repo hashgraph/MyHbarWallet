@@ -1,6 +1,5 @@
 import { createLocalVue, mount } from "@vue/test-utils";
 import VueCompositionApi from "@vue/composition-api";
-import { Ed25519PublicKey } from "@hashgraph/sdk";
 import VueI18n from "vue-i18n";
 
 import ModalRequestToCreateAccount from "../../../src/ui/components/ModalRequestToCreateAccount.vue";
@@ -11,11 +10,10 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
     localVue.use(VueCompositionApi);
     localVue.use(VueI18n);
 
-    const PUBLIC_KEY = Ed25519PublicKey.fromString(
-        "302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29"
-    );
+    const PUBLIC_KEY =
+        "302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29";
 
-    it("renders open", async(): Promise<void> => {
+    it("renders open", async (): Promise<void> => {
         expect.assertions(1);
 
         const onChange = jest.fn();
@@ -38,7 +36,7 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const modal = wrapper.vm.$children.find(
-            (child) => child.$options.name === "Modal"
+            child => child.$options.name === "Modal"
         );
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
@@ -66,10 +64,10 @@ describe("ModalRequestToCreateAccount.vue", (): void => {
                           </div>
                         </div>
                         <form class="request-to-create-account">
-                          <div value="dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29" level="L" background="#fff" foreground="#000" class="pub-qr"><canvas height="180" width="180" style="width: 180px; height: 180px;"></canvas></div>
+                          <div value="302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29" level="L" background="#fff" foreground="#000" class="pub-qr"><canvas height="180" width="180" style="width: 180px; height: 180px;"></canvas></div>
                           <div class="read-only-input">
                             <div class="value multiline">
-                              dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29
+                              302a300506032b6570032100dec80229a4a416d552f99c9e9b772ff1061b736ade30bf93abdae260b0975f29
                             </div>
                             <!---->
                           </div>
