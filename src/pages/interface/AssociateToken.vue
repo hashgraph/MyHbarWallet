@@ -5,14 +5,14 @@
 
   <!-- TODO: TokenIdInput -->
   <div class="flex flex-col max-w-lg m-auto mt-10">
-    <label class="font-medium text-squant dark:text-argent">
+    <label class="font-medium text-squant dark:text-white mb-4">
       {{ $t("InterfaceToolTile.associateToken.label.tokenID") }}</label
     >
 
     <EntityIdInput
       type="token"
       v-model="state.token"
-      placeholder="shard.realm.num"
+      :placeholder="$t('AccessAccount.section2.input.placeholder')"
     />
 
     <InputError v-if="state.errorMessage.length > 0">
