@@ -1,27 +1,37 @@
 <template>
   <Headline title="Download" parent="tools" />
 
-  <div container class="h-screen">
+  <div container class="h-screen flex flex-col max-w-lg m-auto mt-10">
+    <label class="font-medium text-squant dark:text-white mb-4"> {{ $t("InterfaceDownload.fileId") }} </label>
+    <EntityIdInput
+      type="file"
+      v-model="state.downloadId"
+      :placeholder="$t('AccessAccount.section2.input.placeholder')"
+    />
+
     <Button
       color="green"
-      class="py-3 mt-6 w-full"
+      class="py-3 mt-6 w-full mt-10"
       :busy="state.sendBusyText != null"
       @click="download"
     >
       {{ $t("InterfaceToolTile.download.title") }}
     </Button>
 
-    <Modal v-if = "state.showFeeModal = true" title="Download" @close = "closeModal"> Download </Modal>
+    <Modal :isVisible="state.showFeeModal" title="Download" @close="closeModal">
+      {{ $t("InterfaceToolTile.download.title") }} 
+    </Modal>
   </div>
 </template>
 
 
 <script lang = "ts">
-import { defineComponent, reactive, nextTick} from "vue";
+import { defineComponent, reactive, nextTick } from "vue";
 import Headline from "../../components/interface/Headline.vue";
 import TextInput from "../../components/base/TextInput.vue";
 import Button from "../../components/base/Button.vue";
 import Modal from "../../components/interface/Modal.vue";
+import EntityIdInput from "../../components/base/EntityIdInput.vue";
 
 export default defineComponent({
   name: "DownloadFile",
@@ -30,30 +40,28 @@ export default defineComponent({
     TextInput,
     Button,
     Modal,
+    EntityIdInput,
   },
   setup() {
     let state = reactive({
       sendBusyText: null,
-      showFeeModal: true,
+      showFeeModal: false,
+      downloadId: null,
+      transactionType = "downloadFile"
     });
 
     function download(): void {
-      console.log("User clicked download button.");
       openModal();
     }
 
-
     function openModal(): void {
-        console.log("Opening modal.");
-        state.showFeeModal = true;
+      nextTick((state.showFeeModal = true));
     }
-
-
 
     function closeModal(): void {
-        state.showFeeModal = false;
+      nextTick((state.showFeeModal = false));
     }
-    return { state, download, openModal, closeModal};
+    return { state, download, openModal, closeModal };
   },
 });
 </script>
