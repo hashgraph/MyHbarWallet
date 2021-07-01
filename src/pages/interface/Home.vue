@@ -1,7 +1,11 @@
 <template>
   <div class="md:flex md:justify-between">
     <div>
+<<<<<<< HEAD
       <div class="flex w-full">
+=======
+      <div class="flex">
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
         <div class="mr-2 text-3xl leading-9 text-carbon dark:text-white">
           {{ $t("App.heyThere") }}
         </div>

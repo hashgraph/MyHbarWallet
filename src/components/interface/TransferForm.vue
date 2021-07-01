@@ -1,5 +1,6 @@
 <template>
   <div class="py-3.5 px-6 text-carbon dark:bg-ruined-smores">
+<<<<<<< HEAD
     <label class="block dark:white mb-2" for="to">To</label>
 
     <div class="pb-0.5">
@@ -15,21 +16,45 @@
     <label class="dark:text-white block pt-2 mb-2 mt-5">
       {{ $t("InterfaceHomeSendModal.input2.label") }}
     </label>
+=======
+    <label class="block dark:text-silver-polish mb-2" for="to">To</label>
+
+    <div class="pb-0.5">
+      <TextInput id="to" :model-value="formattedTo" :valid="toIsValid"
+      :placeholder="$t('InterfaceHomeSendModal.input1.placeholder')"
+      @input="onToInput" />
+    </div>
+
+    <label class="dark:text-silver-polish block pt-2 mb-2 mt-5"> Asset </label>
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 
     <AssetSelector v-model="dAsset" />
 
     <div class="flex flex-wrap items-center">
       <div class="w-5/12 m-auto">
+<<<<<<< HEAD
         <label class="dark:text-white block pt-2 mb-2 mt-5" for="amount">
+=======
+        <label
+          class="dark:text-silver-polish block pt-2 mb-2 mt-5"
+          for="amount"
+        >
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
           {{ $t("InterfaceHomeSendModal.input3.label") }}
         </label>
         <AssetInput id="amount" v-model="dAmount" :asset="asset" />
       </div>
 
       <div class="w-5/12 m-auto">
+<<<<<<< HEAD
         <label class="block dark:text-white pt-2 mb-2 mt-5 mb-2">
           {{ $t("InterfaceAssets.usd") }}
         </label>
+=======
+        <label class="block dark:text-silver-polish pt-2 mb-2 mt-5 mb-2"
+          >USD</label
+        >
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 
         <TextInput id="usd" :model-Value="'$'" />
       </div>

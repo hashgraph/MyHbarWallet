@@ -8,7 +8,10 @@
       to-white
       dark:to-black
       overflow-x-hidden
+<<<<<<< HEAD
       w-full
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     "
   >
     <div

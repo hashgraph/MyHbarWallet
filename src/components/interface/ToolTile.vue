@@ -11,7 +11,11 @@
 
     <div class="font-semibold text-xl my-2">{{ title }}</div>
 
+<<<<<<< HEAD
     <div class="text-sm text-carbon dark:text-white">
+=======
+    <div class="text-sm text-carbon dark:text-argent">
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       {{ description }}
     </div>
   </router-link>

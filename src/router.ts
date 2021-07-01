@@ -18,6 +18,10 @@ import AccessHardware from "./pages/access/Hardware.vue";
 import AccessKeystore from "./pages/access/Keystore.vue";
 import AccessMnemonic from "./pages/access/Mnemonic.vue";
 import AccessPrivateKey from "./pages/access/PrivateKey.vue";
+<<<<<<< HEAD
+=======
+import AccessLedger from "./pages/access/Ledger.vue";
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 import Account from "./pages/access/Account.vue";
 
 // Create
@@ -42,8 +46,11 @@ import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vu
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
+<<<<<<< HEAD
 import InterfaceDownload from "./pages/interface/DownloadFile.vue";
 
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 
 
 
@@ -76,7 +83,11 @@ const routes = [
       },
       {
         path: "/access/hardware/ledger",
+<<<<<<< HEAD
         component: AccessHardware,
+=======
+        component: AccessLedger,
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
         name: "access.hardware.ledger",
       },
       {
@@ -125,8 +136,11 @@ const routes = [
         component: CreatePrivateKey,
         name: "create.key",
       },
+<<<<<<< HEAD
 
       
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     ],
   },
   {
@@ -233,11 +247,14 @@ const routes = [
             component: InterfaceConvertUnits,
             path: "convert-units",
             name: "tools.convert.units"
+<<<<<<< HEAD
           },
           {
             component: InterfaceDownload,
             path: "download",
             name: "tools.download"
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
           }
         ],
       },

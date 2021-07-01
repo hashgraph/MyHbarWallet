@@ -5,14 +5,22 @@
 
   <!-- TODO: TokenIdInput -->
   <div class="flex flex-col max-w-lg m-auto mt-10">
+<<<<<<< HEAD
     <label class="font-medium text-squant dark:text-white mb-4">
+=======
+    <label class="font-medium text-squant dark:text-argent">
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       {{ $t("InterfaceToolTile.associateToken.label.tokenID") }}</label
     >
 
     <EntityIdInput
       type="token"
       v-model="state.token"
+<<<<<<< HEAD
       :placeholder="$t('AccessAccount.section2.input.placeholder')"
+=======
+      placeholder="shard.realm.num"
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     />
 
     <InputError v-if="state.errorMessage.length > 0">
@@ -79,8 +87,11 @@ export default defineComponent({
         }
       }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 7db6eb5 (wip: restructure code to use services layer)
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     }
 
     return { state, handleAssociate };

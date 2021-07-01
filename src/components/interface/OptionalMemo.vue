@@ -8,7 +8,11 @@
 
     <TextInput
       v-model="state.memo"
+<<<<<<< HEAD
       class="w-full h-16 transition-all duration-300"
+=======
+      class="w-96 h-16 transition-all duration-300"
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       multiline
       :max-length="100"
       char-counter
@@ -20,7 +24,11 @@
     />
 
     <div
+<<<<<<< HEAD
       class="w-full text-sm text-squant italic transition-all duration-300"
+=======
+      class="w-96 text-sm text-squant italic transition-all duration-300"
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       :class="{
         'mt-4  ': state.addMemo,
         ' mt-14 ': !state.addMemo,

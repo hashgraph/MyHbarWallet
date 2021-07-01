@@ -1,6 +1,10 @@
 <template>
   <div
+<<<<<<< HEAD
     class="flex items-center py-5 bg-white dark:bg-midnight-express relative dark:text-white"
+=======
+    class="flex items-center py-5 bg-white dark:bg-midnight-express relative"
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
   >
     <NavMenuButton
       class="ml-5 mr-2 z-10"

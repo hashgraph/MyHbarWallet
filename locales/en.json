@@ -26,7 +26,10 @@
   "BaseButton.iHaveAnAccoutId": "I Have an Account ID",
   "BaseButton.search": "Search",
   "BaseButton.send": "Send",
+<<<<<<< HEAD
   "BaseButton.dismiss": "Dismiss",
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
   "BaseFileUploader.header": "Uploaded File",
   "BaseFileUploader.button": "Upload New File",
   "BaseOptionCard.recommended": "Recommended",
@@ -49,8 +52,11 @@
   "InterfaceAsset.note2": "Your asset is frozen.",
   "InterfaceAsset.value": "{value} ea.",
   "InterfaceAssets.header": "Assets",
+<<<<<<< HEAD
   "InterfaceAssets.usd": "USD",
   "InterfaceDownload.modal.fee": "There may be a fee associated with this transaction.",
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
   "InterfaceHistory.header": "History",
   "InterfaceHistory.button.all": "All",
   "InterfaceHistory.button.sent": "Sent",
@@ -79,7 +85,10 @@
   "InterfaceTransactionDetails.transactionHash": "Transaction Hash",
   "InterfaceTransactionDetails.transactionID": "Transaction ID",
   "InterfaceTransactionDetails.operator": "Operator",
+<<<<<<< HEAD
   "InterfaceTransactionDetails.estimatedFee": "Estimated Fee",
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
   "InterfaceTransactionDetails.node": "Node",
   "InterfaceTransactionDetails.consensus": "Consensus",
   "InterfaceTransactionDetails.status": "Status",
@@ -101,7 +110,10 @@
   "InterfaceToken.nav.right": "right",
   "InterfaceToken.nav.last": "Last",
   "InterfaceTokenDetails.header": "Token Details",
+<<<<<<< HEAD
   "InterfaceDownload.fileId": "File ID",
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
   "InterfaceTokenDetails.subheader": "Holders",
   "InterfaceTokenDetails.rank": "Rank",
   "InterfaceTokenDetails.address": "Address",
@@ -111,8 +123,11 @@
   "InterfaceToolTile.associateToken.title": "Associate Token",
   "InterfaceToolTile.associateToken.label.tokenID": "Token ID",
   "InterfaceToolTile.download.title": "Download",
+<<<<<<< HEAD
   "InterfaceToolTile.download.description": "Download a file with a File ID.",
 
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
   "InterfaceToolTile.upload.title": "Upload",
   "InterfaceToolTile.unitConverter.title": "Unit Converter",
   "InterfaceTokenTile.header.tehter": "Tether (USDT)",
@@ -279,6 +294,17 @@
   "common.amount": "100000000",
   "ourHelpfulConversionTool": "Our helpful conversion tool and hbar unit reference allow you to calculate your total transaction cost.",
   "referenceGuideTitle": "Hbar Unit Reference Guide",
+<<<<<<< HEAD
   "InterfaceToolTile.associateToken.hint": "To send or receive a token, you need to first associate your account with the token."
 
 }
+=======
+  "InterfaceToolTile.associateToken.hint": "To send or receive a token, you need to first associate your account with the token.",
+  "Ledger.Connect": "Connect",
+  "Ledger.Instruction1": "Make sure any other apps that use your Ledger are closed.",
+  "Ledger.Instruction2": "Open the Hedera Hashgraph app on your Ledger.",
+  "Ledger.Instruction3": "Watch for prompts on your ledger device.",
+  "Ledger.publicKey": "Public Key",
+  "Ledger.Continue": "Continue"
+}
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a

@@ -1,8 +1,15 @@
 <template>
+<<<<<<< HEAD
   <div class="md:flex-grow overflow-x-auto">
     <div v-if="!hideHeader" class="flex justify-between mb-5">
       <div
         class="font-semibold text-xl leading-6 text-black-out dark:text-white "
+=======
+  <div class="md:flex-grow">
+    <div v-if="!hideHeader" class="flex justify-between mb-5">
+      <div
+        class="font-semibold text-xl leading-6 text-black-out dark:text-white"
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       >
         {{ $t("InterfaceAssets.header") }}
       </div>

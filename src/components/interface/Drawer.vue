@@ -2,7 +2,11 @@
   <div
     :class="[
       'bg-white h-screen border-r border-jupiter flex flex-col',
+<<<<<<< HEAD
       'dark:bg-ruined-smores dark:border-midnight-express dark:text-white',
+=======
+      'dark:bg-ruined-smores dark:border-midnight-express',
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     ]"
   >
     <Image
@@ -29,7 +33,11 @@
         class="mr-3 w-6 h-6 my-px"
       />
       <div class="dark:text-white font-medium select-none text-squant">
+<<<<<<< HEAD
         Mainnet
+=======
+          {{ selectedNetwork }}
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       </div>
     </div>
 
@@ -48,7 +56,11 @@
 </template>
 
 <script lang="ts">
+<<<<<<< HEAD
 import { defineComponent } from "vue";
+=======
+import {computed, defineComponent} from "vue";
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 import { useStore } from "../../store";
 import { useRouter } from "vue-router";
 import Image from "../base/Image.vue";
@@ -66,6 +78,11 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
+<<<<<<< HEAD
+=======
+    const selectedNetwork = computed(() => store.network);
+
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 
     function logOut() {
       store.$reset();
@@ -79,7 +96,15 @@ export default defineComponent({
       logoDark: mhwLogoDark,
       hederaLight,
       hederaDark,
+<<<<<<< HEAD
     };
   },
 });
+=======
+      selectedNetwork,
+    };
+  },
+});
+
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 </script>
