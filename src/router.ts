@@ -44,6 +44,7 @@ import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import InterfaceDownload from "./pages/interface/DownloadFile.vue";
 
@@ -51,6 +52,10 @@ import InterfaceDownload from "./pages/interface/DownloadFile.vue";
 
 
 
+=======
+import InterfaceDownload from "./pages/interface/DownloadFile.vue";
+
+>>>>>>> 0e294e5e (Merging to next.)
 const routes = [
   {
     path: "/",
@@ -80,11 +85,13 @@ const routes = [
       },
       {
         path: "/access/hardware/ledger",
+<<<<<<< HEAD
         component: AccessLedger,
         name: "access.hardware.ledger",
       },
+=======
+>>>>>>> 0e294e5e (Merging to next.)
       {
-        path: "/access/hardware/trezor",
         component: AccessHardware,
         name: "access.hardware.trezor",
       },
@@ -130,10 +137,13 @@ const routes = [
         name: "create.key",
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
       
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+>>>>>>> 0e294e5e (Merging to next.)
     ],
   },
   {
@@ -241,6 +251,7 @@ const routes = [
             path: "convert-units",
             name: "tools.convert.units"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           },
           {
@@ -248,6 +259,8 @@ const routes = [
             path: "download",
             name: "tools.download"
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+>>>>>>> 0e294e5e (Merging to next.)
           }
         ],
       },
