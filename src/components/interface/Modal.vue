@@ -33,10 +33,14 @@
           dark:bg-ruined-smores
           text-carbon
 <<<<<<< HEAD
+<<<<<<< HEAD
           dark:text-silver-polish
 =======
           dark:text-white
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+          dark:text-white
+>>>>>>> e7b58571 (Misc. fixes.)
           transition-all
           duration-300
           border border-white
@@ -51,10 +55,14 @@
         @click.stop
       >
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div class="flex justify-between">
 =======
         <div class="flex justify-between dark:text-white">
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+        <div class="flex justify-between dark:text-white">
+>>>>>>> e7b58571 (Misc. fixes.)
           <div class="font-medium text-xl">{{ title }}</div>
 
           <div>
@@ -92,9 +100,12 @@ export default defineComponent({
   setup() {
     return { closeIcon, closeIconDark };
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+>>>>>>> e7b58571 (Misc. fixes.)
   },
 });
 </script>

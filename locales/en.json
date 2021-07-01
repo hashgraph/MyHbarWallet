@@ -64,8 +64,11 @@
 >>>>>>> 54f2556a (feat: update deps to 12)
 =======
   "InterfaceAssets.usd": "USD",
+<<<<<<< HEAD
   "InterfaceDownload.modal.fee": "There may be a fee associated with this transaction.",
 >>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
+=======
+>>>>>>> e7b58571 (Misc. fixes.)
   "InterfaceHistory.header": "History",
   "InterfaceHistory.button.all": "All",
   "InterfaceHistory.button.sent": "Sent",

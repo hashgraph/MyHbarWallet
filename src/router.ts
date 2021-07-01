@@ -45,8 +45,13 @@ import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import InterfaceDownload from "./pages/interface/DownloadFile.vue";
+=======
+import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
+
+>>>>>>> e7b58571 (Misc. fixes.)
 
 >>>>>>> 54f2556a (feat: update deps to 12)
 
@@ -87,6 +92,9 @@ const routes = [
         path: "/access/hardware/ledger",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e7b58571 (Misc. fixes.)
         component: AccessLedger,
         name: "access.hardware.ledger",
       },
@@ -96,6 +104,7 @@ const routes = [
       },
 >>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
       {
+        path: "/access/hardware/trezor",
         component: AccessHardware,
         name: "access.hardware.trezor",
       },
@@ -256,6 +265,7 @@ const routes = [
             name: "tools.convert.units"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
           },
           {
@@ -265,6 +275,13 @@ const routes = [
 >>>>>>> 54f2556a (feat: update deps to 12)
 =======
 >>>>>>> 0e294e5e (Merging to next.)
+=======
+          },
+          {
+            component: InterfaceDownloadFile,
+            path: "download",
+            name: "tools.download"
+>>>>>>> e7b58571 (Misc. fixes.)
           }
         ],
       },

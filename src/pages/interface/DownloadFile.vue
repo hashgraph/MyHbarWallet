@@ -176,7 +176,7 @@ export default defineComponent({
       sendBusyText: null,
       showFeeModal: false,
       downloadId: null,
-      transactionType = "downloadFile"
+      transactionType: "downloadFile"
     });
 
     function download(): void {
