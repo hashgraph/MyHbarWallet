@@ -19,10 +19,14 @@
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ToolTile :title = "$t('InterfaceToolTile.download.title')" :description="$t('InterfaceToolTile.download.description')" :to = "{name: 'tools.download'}"/>
 =======
     <ToolTile :title = "$t('InterfaceToolTile.download.title')"  :to = "{name: 'tools.download'}"/>
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+    <ToolTile :title = "$t('InterfaceToolTile.download.title')"  :to = "{name: 'tools.download'}"/>
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
     
   </div>
 </template>

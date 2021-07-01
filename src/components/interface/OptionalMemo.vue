@@ -9,10 +9,14 @@
     <TextInput
       v-model="state.memo"
 <<<<<<< HEAD
+<<<<<<< HEAD
       class="w-96 h-16 transition-all duration-300"
 =======
       class="w-full h-16 transition-all duration-300"
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+      class="w-full h-16 transition-all duration-300"
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
       multiline
       :max-length="100"
       char-counter
@@ -25,10 +29,14 @@
 
     <div
 <<<<<<< HEAD
+<<<<<<< HEAD
       class="w-96 text-sm text-squant italic transition-all duration-300"
 =======
       class="w-full text-sm text-squant italic transition-all duration-300"
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+      class="w-full text-sm text-squant italic transition-all duration-300"
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
       :class="{
         'mt-4  ': state.addMemo,
         ' mt-14 ': !state.addMemo,

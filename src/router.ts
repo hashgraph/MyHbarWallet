@@ -86,11 +86,15 @@ const routes = [
       {
         path: "/access/hardware/ledger",
 <<<<<<< HEAD
+<<<<<<< HEAD
         component: AccessLedger,
         name: "access.hardware.ledger",
       },
 =======
 >>>>>>> 0e294e5e (Merging to next.)
+=======
+      },
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
       {
         component: AccessHardware,
         name: "access.hardware.trezor",

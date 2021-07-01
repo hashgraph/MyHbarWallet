@@ -20,19 +20,27 @@ import {
 import { debouncedWatch } from "@vueuse/core";
 import Long from "long";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import type { AccountId, TokenId } from "@hashgraph/sdk";
 =======
 import type { AccountId, TokenId, FileId } from "@hashgraph/sdk";
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+import type { AccountId, TokenId, FileId } from "@hashgraph/sdk";
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
 import TextInput from "./TextInput.vue";
 
 export enum EntityType {
   Account = "account",
   Token = "token",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   File = "file"
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+  File = "file"
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
 }
 
 export default defineComponent({
@@ -85,10 +93,14 @@ export default defineComponent({
     );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     function validate(id: AccountId | TokenId): void {
 =======
     function validate(id: AccountId | TokenId | FileId): void {
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+    function validate(id: AccountId | TokenId | FileId): void {
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
       if (id.num.greaterThan(Long.ZERO)) {
         valid(id);
       } else {
@@ -117,7 +129,10 @@ export default defineComponent({
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
 
     function validateFile(file: string): void {
       if(hashgraph.value != null){
@@ -129,7 +144,10 @@ export default defineComponent({
       }
     }
 
+<<<<<<< HEAD
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
     // validate entered Entity String on delay
     debouncedWatch(
       () => state.inputString,
@@ -139,11 +157,17 @@ export default defineComponent({
           try {
             switch (props.type) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
               case EntityType.File:
                 validateFile(newInputString);
                 break;
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+              case EntityType.File:
+                validateFile(newInputString);
+                break;
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
               case EntityType.Account:
                 validateAccount(newInputString);
                 break;

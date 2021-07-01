@@ -4,6 +4,7 @@
     <Drawer class="hidden sticky top-0 lg:flex" />
     <MobileDrawer class="sticky top-0 z-20 lg:hidden" />
 
+<<<<<<< HEAD
     <div class="px-2 md:flex-1 md:px-10 relative flex">
       <div
         class="
@@ -19,6 +20,13 @@
           h-full
           min-h-screen
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+    <div class="px-2 md:flex md:px-10 relative flex w-full h-full">
+      <div
+        class="
+          h-full
+          min-h-screen
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
           absolute
           top-0
           left-0
@@ -36,10 +44,14 @@
         :class="[
           'bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1',
 <<<<<<< HEAD
+<<<<<<< HEAD
           'lg:mt-10',
 =======
           'lg:mt-10 w-full',
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+          'lg:mt-10 w-full',
+>>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
         ]"
       >
         <router-view />
