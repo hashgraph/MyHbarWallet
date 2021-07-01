@@ -13,8 +13,7 @@ specifiers:
   '@vueuse/core': ^4.11.0
   autoprefixer: ^10.2.5
   awilix: ^4.3.4
-  bignumber: ^1.1.0
-  bignumber.js: 9.0.1
+  bignumber.js: ^9.0.1
   cross-env: ^7.0.3
   cypress: ^7.3.0
   cypress-file-upload: ^5.0.7
@@ -53,7 +52,6 @@ dependencies:
   '@hashgraph/sdk': 2.0.20
   '@vueuse/core': 4.11.0_vue@3.0.11
   awilix: 4.3.4
-  bignumber: 1.1.0
   bignumber.js: 9.0.1
   electron-window-state: 5.0.3
   jdenticon: 3.1.0
@@ -1200,11 +1198,6 @@ packages:
 
   /bignumber.js/9.0.1:
     resolution: {integrity: sha512-IdZR9mh6ahOBv/hYGiXyVuyCetmGJhtYkqLBpTStdhEGjegpPlUawydyaF3pbIOFynJTpllEs+NP+CS9jKFLjA==}
-    dev: false
-
-  /bignumber/1.1.0:
-    resolution: {integrity: sha1-5qsKdD2l8+oBjlwXWX0SH3howVk=}
-    engines: {node: '>=0.4.0'}
     dev: false
 
   /binary-extensions/2.2.0:
