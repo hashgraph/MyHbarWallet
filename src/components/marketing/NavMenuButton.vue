@@ -6,7 +6,14 @@
       rounded-md
       focus:outline-none
       focus:ring-2 focus:ring-inset focus:ring-white
+<<<<<<< HEAD
       dark:text-white
+=======
+<<<<<<< HEAD
+      dark:text-white
+=======
+>>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
+>>>>>>> e7b585719a74ad393132360680408d97f5b8f516
     "
     aria-expanded="false"
   >

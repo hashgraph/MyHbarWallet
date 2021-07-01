@@ -3,10 +3,14 @@
     <Drawer class="hidden sticky top-0 lg:flex" />
     <MobileDrawer class="sticky top-0 z-20 lg:hidden" />
 
-    <div class="px-2 md:flex-1 md:px-10 relative flex">
+    <div class="px-2 md:flex md:px-10 relative flex w-full h-full">
       <div
         class="
           h-full
+<<<<<<< HEAD
+=======
+          min-h-screen
+>>>>>>> e7b585719a74ad393132360680408d97f5b8f516
           absolute
           top-0
           left-0
@@ -23,7 +27,7 @@
       <main
         :class="[
           'bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1',
-          'lg:mt-10',
+          'lg:mt-10 w-full',
         ]"
       >
         <router-view />

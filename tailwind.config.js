@@ -69,6 +69,7 @@ module.exports = {
       "united-nations-blue": "#709dea",
       white: "#fff",
       "Megaman-Helmet": "#165CFF",
+      peach: "#fff7e7",
     },
     fontFamily: {
       montserrat: ["Montserrat", "sans-serif"],

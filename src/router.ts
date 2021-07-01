@@ -18,6 +18,7 @@ import AccessHardware from "./pages/access/Hardware.vue";
 import AccessKeystore from "./pages/access/Keystore.vue";
 import AccessMnemonic from "./pages/access/Mnemonic.vue";
 import AccessPrivateKey from "./pages/access/PrivateKey.vue";
+import AccessLedger from "./pages/access/Ledger.vue";
 import Account from "./pages/access/Account.vue";
 
 // Create
@@ -42,7 +43,7 @@ import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vu
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
-
+import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
 
 
 const routes = [
@@ -74,7 +75,7 @@ const routes = [
       },
       {
         path: "/access/hardware/ledger",
-        component: AccessHardware,
+        component: AccessLedger,
         name: "access.hardware.ledger",
       },
       {
@@ -229,6 +230,11 @@ const routes = [
             component: InterfaceConvertUnits,
             path: "convert-units",
             name: "tools.convert.units"
+          },
+          {
+            component: InterfaceDownloadFile,
+            path: "download",
+            name: "tools.download"
           }
         ],
       },

@@ -7,6 +7,7 @@
       font-medium
       dark:text-white
       dark:border-midnight-express
+      min-w-300px
     "
   >
     <div v-if="parent != ''" class="flex items-center">
