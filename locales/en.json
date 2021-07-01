@@ -145,6 +145,7 @@
   "InterfaceToolTile.download.title": "Download",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   "InterfaceToolTile.download.description": "Download a file with a File ID.",
 
@@ -153,6 +154,9 @@
   "InterfaceToolTile.download.description": "Download a file with a File ID.",
 
 >>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
+=======
+  "InterfaceToolTile.download.description": "Download File from HFS.",
+>>>>>>> 35281ba1 (Null ledgerId and client._network issues.)
   "InterfaceToolTile.upload.title": "Upload",
   "InterfaceToolTile.unitConverter.title": "Unit Converter",
   "InterfaceTokenTile.header.tehter": "Tether (USDT)",
