@@ -43,7 +43,8 @@ import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vu
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
-import InterfaceDownload from "./pages/interface/DownloadFile.vue";
+import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
+
 
 const routes = [
   {
@@ -74,8 +75,11 @@ const routes = [
       },
       {
         path: "/access/hardware/ledger",
+        component: AccessLedger,
+        name: "access.hardware.ledger",
       },
       {
+        path: "/access/hardware/trezor",
         component: AccessHardware,
         name: "access.hardware.trezor",
       },
@@ -226,6 +230,11 @@ const routes = [
             component: InterfaceConvertUnits,
             path: "convert-units",
             name: "tools.convert.units"
+          },
+          {
+            component: InterfaceDownloadFile,
+            path: "download",
+            name: "tools.download"
           }
         ],
       },

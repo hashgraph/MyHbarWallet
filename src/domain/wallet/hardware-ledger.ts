@@ -1,8 +1,4 @@
 import { Wallet } from "./abstract";
-<<<<<<< HEAD
-
-export class LedgerHardwareWallet extends Wallet {
-=======
 import { isElectron } from "../../utils/electron";
 import { isMobile } from "../../hooks/platform";
 import { PublicKey } from "@hashgraph/sdk";
@@ -88,21 +84,10 @@ export class LedgerHardwareWallet extends Wallet {
     return response;
   }
 
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
   hasPrivateKey(): boolean {
     return false;
   }
 
-<<<<<<< HEAD
-  getTransactionSigner(
-    index: number
-  ): Promise<(transactionBody: Uint8Array) => Promise<Uint8Array>> {
-    throw new Error("Method not implemented.");
-  }
-
-  getPublicKey(index: number): Promise<any> {
-    throw new Error("Method not implemented.");
-=======
   private async signTransaction(index: number, txn: Uint8Array): Promise<Uint8Array> {
     // IOC hack for missing  decimal information in protos
     let decimals = P1_UNUSED_APDU;
@@ -156,6 +141,5 @@ export class LedgerHardwareWallet extends Wallet {
       const pubKey = PublicKey.fromString(pubKeyStr);
       return pubKey;
     }
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
   }
 }
