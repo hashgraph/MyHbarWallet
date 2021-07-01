@@ -3,16 +3,12 @@
   <div
     class="
       mt-8
-<<<<<<< HEAD
       m-16
-=======
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       font-medium
       text-carbon
       pb-10
       border-b border-cerebral-grey
       dark:border-midnight-express
-<<<<<<< HEAD
       dark:text-white
       items-center
     "
@@ -22,16 +18,6 @@
     </div>
 
     <div class="flex-wrap flex items-stretch mt-8 w-full">
-=======
-      items-center
-    "
-  >
-    <div class="page-subtitle m-16">
-      {{ $t("ourHelpfulConversionTool") }}
-    </div>
-
-    <div class="flex-wrap flex items-stretch m-16">
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       <div class="block-left w-5/12 m-auto">
         <div class="input-block">
           <TextInput
@@ -61,20 +47,12 @@
         <TextInput
           class="m-1"
           v-model="state.valueRight"
-<<<<<<< HEAD
           :modelValue="1"
-=======
-          :modelValue="'1'"
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
           @update:modelValue="handleInputValueRight"
         />
         <div class="select-block">
           <DropdownSelector
-<<<<<<< HEAD
             class="m-2 w-full"
-=======
-            class="m-2"
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
             v-model="state.selectedRight"
             :options="state.units"
             :modelValue="state.units[2].name"
@@ -84,11 +62,7 @@
       </div>
     </div>
 
-<<<<<<< HEAD
     <div class="unit-table items-center w-full p-6">
-=======
-    <div class="unit-table m-16 items-center">
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       <div class="unit-table-header mt-16 mb-6 font-semibold text-center">
         {{ $t("referenceGuideTitle") }}
       </div>
@@ -100,7 +74,6 @@
           class="table-row-group"
         >
           <div class="table-row">
-<<<<<<< HEAD
             <span class="table-cell w-1/3 border-b border-cerebral-grey py-3">{{
               unit.name
             }}</span>
@@ -108,19 +81,6 @@
               {{ unit.amount }} {{ unit.symbol }}
             </span>
             <span class="table-cell w-1/3 border-b border-cerebral-grey py-3"
-=======
-            <span
-              class="table-cell w-1/3 border-b border-cerebral-grey pl-6 py-3"
-              >{{ unit.name }}</span
-            >
-            <span
-              class="table-cell w-1/3 border-b border-cerebral-grey pl-10 py-3"
-            >
-              {{ unit.amount }} {{ unit.symbol }}
-            </span>
-            <span
-              class="table-cell w-1/3 border-b border-cerebral-grey pl-16 py-3"
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
               >{{ unit.amountInHbar }} ℏ</span
             >
           </div>
@@ -138,11 +98,8 @@ import TextInput from "../../components/base/TextInput.vue";
 import DropdownSelector from "../../components/base/DropdownSelector.vue";
 import { HbarUnit, Hbar } from "@hashgraph/sdk";
 import BigNumber from "bignumber.js";
-<<<<<<< HEAD
 // import Hbar from "../../utils/test-bignumber.js";
 import Long from "long";
-=======
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 
 export default defineComponent({
   name: "ConvertUnits",
@@ -153,14 +110,8 @@ export default defineComponent({
   },
   setup() {
     BigNumber.config({
-<<<<<<< HEAD
       EXPONENTIAL_AT: 1e9,
       DECIMAL_PLACES: 64,
-=======
-      DECIMAL_PLACES: 64,
-      RANGE: 500,
-      EXPONENTIAL_AT: 64,
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     });
 
     let state = reactive({
@@ -249,12 +200,6 @@ export default defineComponent({
       );
       state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
       console.log(state.valueRight);
-<<<<<<< HEAD
-=======
-
-      let test = new Hbar(111, HbarUnit.Gigabar);
-      console.log(`Test: ${test.to(HbarUnit.Tinybar).toString()}`);
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     }
 
     function getHbarUnit(value: string): HbarUnit {
@@ -278,7 +223,6 @@ export default defineComponent({
       }
     }
 
-<<<<<<< HEAD
     function getMultiplier(unit: string) {
       switch (unit) {
         case "Tinybar":
@@ -314,16 +258,10 @@ export default defineComponent({
       let unitRight = state.selectedRight;
       let unitLeft = state.selectedLeft;
 
-=======
-    function computeValueLeft(): void {
-      let unitRight = state.selectedRight;
-      let unitLeft = state.selectedLeft;
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       let hRight = new Hbar(
         new BigNumber(state.valueRight),
         getHbarUnit(unitRight)
       );
-<<<<<<< HEAD
       let hLeft = new Hbar(new BigNumber(state.valueLeft), getHbarUnit(unitLeft));
 
       if (checkBounds(hRight) && checkBounds(hLeft)) {
@@ -333,9 +271,6 @@ export default defineComponent({
         state.valueRight = "0";
         throw Error("Converted units has exceeded 50,000,000 Hbars");
       }
-=======
-      state.valueLeft = hRight.to(getHbarUnit(unitLeft)).toString();
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     }
 
     function computeValueRight(): void {
@@ -345,7 +280,6 @@ export default defineComponent({
         new BigNumber(state.valueLeft),
         getHbarUnit(unitLeft)
       );
-<<<<<<< HEAD
       let hRight = new Hbar(new BigNumber(state.valueRight), getHbarUnit(unitRight));
 
       if (checkBounds(hLeft) && checkBounds(hRight)) {
@@ -355,9 +289,6 @@ export default defineComponent({
         state.valueLeft = "0";
         throw Error("Converted units has exceeded 50,000,000 Hbars");
       }
-=======
-      state.valueRight = hLeft.to(getHbarUnit(unitRight)).toString();
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     }
 
     return {

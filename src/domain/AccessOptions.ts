@@ -37,21 +37,6 @@ export const AccessOptions: Map<AccessOptionType, AccessAttributes> = new Map([
       route: "access.software",
     },
   ],
-<<<<<<< HEAD
-  // TODO
-  // [
-  //   AccessOptionType.Hardware,
-  //   {
-  //     supported: true,
-  //     title: "Hardware.title",
-  //     description: "Hardware.description",
-  //     value: AccessOptionType.Hardware,
-  //     imageLight: lightHardware,
-  //     imageDark: darkHardware,
-  //     route: "access.hardware",
-  //   },
-  // ],
-=======
   [
     AccessOptionType.Hardware,
     {
@@ -64,5 +49,4 @@ export const AccessOptions: Map<AccessOptionType, AccessAttributes> = new Map([
       route: "access.hardware",
     },
   ],
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 ]);

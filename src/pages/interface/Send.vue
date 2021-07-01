@@ -9,7 +9,6 @@
       pb-10
       border-b border-cerebral-grey
       dark:border-midnight-express
-<<<<<<< HEAD
       w-full
     "
   >
@@ -20,20 +19,6 @@
           {{ $t("InterfaceHomeSend.section1.header1") }}
         </div>
         <div v-else class="mb-2 dark:text-white">
-=======
-    "
-  >
-    <div class="flex flex-wrap p-8 items-center">
-      <div class="w-full">
-        <!-- TODO: when localizing, remove the v-if, the pluralization should be done in the localizer -->
-        <div
-          v-if="state.transfers.length <= 1"
-          class="mb-2 dark:text-silver-polish"
-        >
-          {{ $t("InterfaceHomeSend.section1.header1") }}
-        </div>
-        <div v-else class="mb-2 dark:text-silver-polish">
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
           {{ $t("InterfaceTransactionDetails.transfers") }}
         </div>
 
@@ -56,7 +41,6 @@
             v-model:usd="state.transfer.usd"
           />
         </div>
-<<<<<<< HEAD
 
         <div class="mb-2 p-4 md:p-0 mt-4">
           <div class="dark:text-white">From</div>
@@ -105,56 +89,6 @@
         {{ $t("BaseButton.cancel") }}
       </Button>
     </div>
-=======
-      </div>
-
-      <div class="mb-2 p-4 md:p-0 mt-4 w-full">
-        <div class="dark:text-silver-polish">From</div>
-
-        <TextInput
-          v-model="state.accountId"
-          class="mt-2 rounded font-medium"
-        />
-
-        <OptionalMemo v-model="state.memo" class="mt-8" />
-
-        <OptionalHbarInput
-          v-model="state.maxFee"
-          class="mt-8"
-          :default-value="state.defaultMaxFee"
-        />
-      </div>
-    </div>
-    <Button color="white" class="mt-8 p-2 w-52" @click="openAddModal">
-      {{ $t("BaseButton.addTransfer1") }}
-    </Button>
-  </div>
-
-  <div
-    v-if="state.generalErrorText != null"
-    class="bg-unburdened-pink mt-10 -mb-8 w-max mx-auto px-4 py-3 rounded"
-  >
-    <div class="text-sm text-harlocks-cape font-medium text-center">
-      {{ state.generalErrorText }}
-    </div>
-  </div>
-
-  <!-- bottom buttons section -->
-  <div class="flex flex-col items-center m-auto mt-10 mb-10 w-7/12">
-    <Button
-      color="green"
-      class="w-full py-3 mt-6"
-      :disabled="!sendValid"
-      :busy="state.sendBusyText != null"
-      @click="onSend"
-    >
-      {{ state.sendBusyText ?? "Send" }}
-    </Button>
-
-    <Button color="white" class="text-sm px-9 py-2 mt-4" @click="onCancel">
-      Cancel
-    </Button>
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
   </div>
 </template>
 
@@ -172,10 +106,6 @@ import type { AccountId } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
 import { useStore } from "../../store";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 export interface Transfer {
   to: AccountId | null;
   asset: string | null; // "HBAR" or token ID (string)
@@ -190,11 +120,7 @@ export default defineComponent({
     Headline,
     TextInput,
     OptionalMemo,
-<<<<<<< HEAD
     OptionalHbarInput,
-=======
-    OptionalHbarInput
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
   },
   setup() {
     let state = reactive({
@@ -212,11 +138,7 @@ export default defineComponent({
         to: null,
         asset: "HBAR",
         amount: null,
-<<<<<<< HEAD
         usd: "USD",
-=======
-        usd: "USD"
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       } as Transfer,
       transfers: [] as Transfer[],
     });

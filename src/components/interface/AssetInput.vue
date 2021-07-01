@@ -15,20 +15,12 @@
   >
     <div
       v-if="asset === 'HBAR'"
-<<<<<<< HEAD
       class="absolute pointer-events-none left-0 text-right pl-4 dark:text-white"
-=======
-      class="absolute pointer-events-none left-0 text-right pl-4"
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     >
       ℏ
     </div>
 
-<<<<<<< HEAD
     <div v-if="asset === 'usd'" class = "dark: text-white"> $ </div>
-=======
-    <div v-if="asset === 'usd'"> $ </div>
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 
 
 
@@ -43,11 +35,7 @@
         border-none
         placeholder-squant
         bg-white
-<<<<<<< HEAD
         dark:text-white
-=======
-        dark:text-silver-polish
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
         dark:bg-ruined-smores
       "
       :class="{ 'pr-5 pl-8': asset === 'HBAR', 'px-5': asset !== 'HBAR' }"

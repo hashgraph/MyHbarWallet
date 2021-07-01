@@ -74,6 +74,7 @@ const routes = [
       },
       {
         path: "/access/hardware/ledger",
+      },
       {
         component: AccessHardware,
         name: "access.hardware.trezor",

@@ -19,20 +19,13 @@ import {
 } from "vue";
 import { debouncedWatch } from "@vueuse/core";
 import Long from "long";
-<<<<<<< HEAD
 import type { AccountId, TokenId, FileId } from "@hashgraph/sdk";
-=======
-import type { AccountId, TokenId } from "@hashgraph/sdk";
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 import TextInput from "./TextInput.vue";
 
 export enum EntityType {
   Account = "account",
   Token = "token",
-<<<<<<< HEAD
   File = "file"
-=======
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
 }
 
 export default defineComponent({
@@ -84,11 +77,7 @@ export default defineComponent({
       }
     );
 
-<<<<<<< HEAD
     function validate(id: AccountId | TokenId | FileId): void {
-=======
-    function validate(id: AccountId | TokenId): void {
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
       if (id.num.greaterThan(Long.ZERO)) {
         valid(id);
       } else {
@@ -116,7 +105,6 @@ export default defineComponent({
       }
     }
 
-<<<<<<< HEAD
 
     function validateFile(file: string): void {
       if(hashgraph.value != null){
@@ -128,8 +116,6 @@ export default defineComponent({
       }
     }
 
-=======
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     // validate entered Entity String on delay
     debouncedWatch(
       () => state.inputString,
@@ -138,12 +124,9 @@ export default defineComponent({
         if (!props.disabled) {
           try {
             switch (props.type) {
-<<<<<<< HEAD
               case EntityType.File:
                 validateFile(newInputString);
                 break;
-=======
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
               case EntityType.Account:
                 validateAccount(newInputString);
                 break;

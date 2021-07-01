@@ -35,13 +35,6 @@ export default defineComponent({
       (option) => option.supported
     );
 
-<<<<<<< HEAD
-    onMounted(() => {
-      store.$reset();
-    });
-
-=======
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     return {
       options,
       AccessOptionType,
