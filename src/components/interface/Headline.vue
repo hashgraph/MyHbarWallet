@@ -7,10 +7,7 @@
       font-medium
       dark:text-white
       dark:border-midnight-express
-<<<<<<< HEAD
       min-w-300px
-=======
->>>>>>> 1071461646dafa61a6e27f9d6450406957b0577a
     "
   >
     <div v-if="parent != ''" class="flex items-center">
