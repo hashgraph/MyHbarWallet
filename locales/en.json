@@ -110,8 +110,7 @@
   "InterfaceToolTile.associateToken.title": "Associate Token",
   "InterfaceToolTile.associateToken.label.tokenID": "Token ID",
   "InterfaceToolTile.download.title": "Download",
-  "InterfaceToolTile.download.description": "Download a file with a File ID.",
-
+  "InterfaceToolTile.download.description": "Download File from HFS.",
   "InterfaceToolTile.upload.title": "Upload",
   "InterfaceToolTile.unitConverter.title": "Unit Converter",
   "InterfaceTokenTile.header.tehter": "Tether (USDT)",
