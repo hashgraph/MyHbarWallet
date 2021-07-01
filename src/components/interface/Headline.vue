@@ -8,9 +8,13 @@
       dark:text-white
       dark:border-midnight-express
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       min-w-300px
 >>>>>>> 54f2556a (feat: update deps to 12)
+=======
+      min-w-300px
+>>>>>>> 7d7f5a34 (Fixing merge conflict issues.)
     "
   >
     <div v-if="parent != ''" class="flex items-center">
