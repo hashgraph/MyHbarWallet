@@ -11,10 +11,15 @@
         >
             <p class="text-2xl">{{ $t("InterfaceUploadFile.drop") }}</p>
             <p class="m-4">{{ $t("InterfaceUploadFile.or") }}</p>
-            <Button color="green" class="p-4 m-4">{{ $t("InterfaceUploadFile.button") }}</Button>
+            <Button
+                color="green"
+                class="p-4 m-4"
+                @click="browse"
+            >{{ $t("InterfaceUploadFile.button") }}</Button>
 
-
-            <p v-if = "fileName != null && fileName !== ''"> {{ fileName }} </p>
+            <p
+                v-if="state.fileNameState != null && state.fileNameState !== ''"
+            >{{ state.fileNameState }}</p>
 
             <input
                 v-show="false"
@@ -36,35 +41,33 @@ export default defineComponent({
     name: "UploadZone",
     props: {
         fileName: String
-    },  
+    },
     components: {
         Button
     },
 
     setup(_, context) {
 
-        const fileTarget = ref<HTMLInputElement | null>(null);
+        const fileTarget = ref<HTMLInputElement>();
 
 
         let state = reactive({
-            hovering: null,
+            hovering: false,
+            fileNameState: ""
         });
 
 
         async function dragEnter(): Promise<void> {
-            console.log("From dragEnter");
             state.hovering = true;
         }
 
 
         async function dragLeave(): Promise<void> {
-            console.log("From dragLeave");
             state.hovering = false;
         }
 
         async function drop(e: DragEvent): Promise<void> {
             state.hovering = false;
-            console.log("From drop.");
             if (!e.dataTransfer || e.dataTransfer.files.length === 0) {
                 console.log("No file present.");
                 return;
@@ -79,24 +82,23 @@ export default defineComponent({
 
 
             let fileBytes = await uint8ArrayOf(file);
-            context.emit("fileSelect", {
+            await context.emit("fileSelect", {
                 fileName: file.name,
                 contents: fileBytes
             });
 
+            state.fileNameState = file.name;
         }
 
 
 
         async function prepareFile(): Promise<void> {
-
             if (!fileTarget.value) {
                 throw new Error("File target should not be null.");
                 return;
             }
 
             if (fileTarget.value.files == null) {
-                console.log("User hit cancel.");
                 return;
             }
 
@@ -112,19 +114,18 @@ export default defineComponent({
 
 
         function browse(): void {
-
+            console.log(fileTarget);
             console.log("From browse.");
-            if (fileTarget.value) {
-                (fileTarget as Ref<HTMLInputElement>).value.value = "";
-                fileTarget.value.click();
 
-            }
+            console.log(fileTarget);
+            fileTarget.value?.click();
+
         }
 
 
 
-        async function uint8ArrayOf(file: File): 
-        Promise<Uint8Array> {
+        async function uint8ArrayOf(file: File):
+            Promise<Uint8Array> {
             console.log("From uint8ArrayOf.");
             let buffer = await new Promise<ArrayBuffer>((res, rej) => {
                 let reader = new FileReader();
