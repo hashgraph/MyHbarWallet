@@ -13,7 +13,6 @@
     <ToolTile :title = "$t('InterfaceConvertUnits')" :description = "$t('ourHelpfulConversionTool')" :to = "{name: 'tools.convert.units'}"/>
 
 
-    <ToolTile :title = "$t('InterfaceToolTile.download.title')" :description="$t('InterfaceToolTile.download.description')" :to = "{name: 'tools.download'}"/>
     
   </div>
 </template>
