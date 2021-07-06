@@ -6,30 +6,22 @@
     ]"
   >
     <Image
-      class="ml-16 mr-5 my-5 invisible lg:visible lg:ml-5 lg:mr-6 lg:h-12"
+      class="invisible my-5 ml-16 mr-5 lg:visible lg:ml-5 lg:mr-6 lg:h-12"
       :light="logo"
       :dark="logoDark"
     />
 
     <div
-      class="
-        border-jupiter
-        dark:border-midnight-express
-        border-b border-t
-        flex
-        items-center
-        px-8
-        py-3
-      "
+      class="flex items-center px-8 py-3 border-t border-b border-jupiter dark:border-midnight-express"
     >
       <!-- TODO: Once we can know which network, put that here -->
       <Image
         :light="hederaLight"
         :dark="hederaDark"
-        class="mr-3 w-6 h-6 my-px"
+        class="w-6 h-6 my-px mr-3"
       />
-      <div class="dark:text-white font-medium select-none text-squant">
-          {{ selectedNetwork }}
+      <div class="font-medium select-none dark:text-white text-squant">
+        {{ selectedNetwork }}
       </div>
     </div>
 
@@ -48,11 +40,11 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent} from "vue";
-import { useStore } from "../../store";
+import { capitalize, computed, defineComponent } from "vue";
 import { useRouter } from "vue-router";
+
+import { useStore } from "../../store";
 import Image from "../base/Image.vue";
-import Nav from "./Nav.vue";
 import NavItem from "../base/NavItem.vue";
 import mhwLogo from "../../assets/myhbarwallet-logo.svg";
 import mhwLogoDark from "../../assets/dark/myhbarwallet-logo.svg";
@@ -60,14 +52,15 @@ import hederaLight from "../../assets/hedera-hashgraph-logo.svg";
 import hederaDark from "../../assets/dark/hedera-hashgraph-logo-dark.svg";
 import iconLogout from "../../assets/icon_logout.svg";
 
+import Nav from "./Nav.vue";
+
 export default defineComponent({
   name: "Drawer",
   components: { Image, NavItem, Nav },
   setup() {
     const store = useStore();
     const router = useRouter();
-    const selectedNetwork = computed(() => store.network);
-
+    const selectedNetwork = computed(() => capitalize(store.network));
 
     function logOut() {
       store.$reset();
@@ -85,5 +78,4 @@ export default defineComponent({
     };
   },
 });
-
 </script>

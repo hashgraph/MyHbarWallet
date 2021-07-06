@@ -1,16 +1,22 @@
 <template>
-  <Headline title="Associate Token" parent="tools" />
+  <Headline
+    title="Associate Token"
+    parent="tools"
+  />
 
-  <Hint :text="$t('InterfaceToolTile.associateToken.hint')" class="mt-4" />
+  <Hint
+    :text="$t('InterfaceToolTile.associateToken.hint')"
+    class="mt-4"
+  />
 
   <!-- TODO: TokenIdInput -->
   <div class="flex flex-col max-w-lg m-auto mt-10">
     <label class="font-medium text-squant dark:text-white mb-4">
+
       {{ $t("InterfaceToolTile.associateToken.label.tokenID") }}</label
     >
 
     <EntityIdInput
-      type="token"
       v-model="state.token"
       :placeholder="$t('AccessAccount.section2.input.placeholder')"
     />
@@ -18,9 +24,10 @@
     <InputError v-if="state.errorMessage.length > 0">
       {{ state.errorMessage }}
     </InputError>
+
   </div>
 
-  <div class="mt-48 border-b border-cerebral-grey"></div>
+  <div class="mt-48 border-b border-cerebral-grey" />
 
   <div class="flex flex-col items-center max-w-lg m-auto">
     <Button
@@ -32,7 +39,11 @@
       {{ $t("InterfaceToolTile.associateToken.title") }}
     </Button>
 
-    <Button color="white" :to="{ name: 'tools' }" class="p-2 mt-4 w-36">
+    <Button
+      color="white"
+      :to="{ name: 'tools' }"
+      class="p-2 mt-4 w-36"
+    >
       {{ $t("BaseButton.cancel") }}
     </Button>
   </div>
@@ -40,6 +51,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
+
 import Headline from "../../components/interface/Headline.vue";
 import Hint from "../../components/interface/Hint.vue";
 import Button from "../../components/base/Button.vue";

@@ -7,35 +7,16 @@
       readonly
       hidden
       @change="onFileUpload"
-    />
+    >
 
     <div
-      class="
-        shadow-md
-        rounded
-        mb-2.5
-        text-carbon
-        font-medium
-        leading-5
-        h-11
-        px-5
-        pt-3
-        bg-white
-        dark:bg-midnight-express
-        dark:text-white
-      "
+      class="shadow-md rounded mb-2.5 text-carbon font-medium leading-5 h-11 px-5 pt-3 bg-white dark:bg-midnight-express dark:text-white"
     >
       {{ fileName }}
     </div>
 
     <button
-      class="
-        mb-8
-        font-semibold
-        leading-5
-        focus:outline-none
-        text-mountain-meadow
-      "
+      class="mb-8 font-semibold leading-5 focus:outline-none text-mountain-meadow"
       @click.prevent="selectFile"
     >
       {{ $t("BaseFileUploader.button") }}
@@ -44,17 +25,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "FileUploader",
-  props: {
-    initialFileName: { type: String, default: null },
-  },
-  emits: ["keystore"],
-  setup(props) {
+  emits: ["name", "file"],
+  setup(_, { emit }) {
     const input = ref<HTMLInputElement>();
-    const fileName = ref(props.initialFileName);
+    const fileName = ref("");
 
     function selectFile() {
       input.value?.click();
@@ -68,10 +46,23 @@ export default defineComponent({
         const keystoreFile = files[0];
 
         fileName.value = keystoreFile.name;
+        emit("name", fileName.value);
 
-        console.log("file?", fileName.value);
+        try {
+          const buffer = await new Promise<ArrayBuffer>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.addEventListener("error", reject);
+            reader.addEventListener("loadend", () => {
+              resolve(reader.result as ArrayBuffer);
+            });
+            reader.readAsArrayBuffer(keystoreFile);
+          });
 
-        // emit("keystore", keystore);
+          const bytes = new Uint8Array(buffer);
+          emit("file", bytes);
+        } catch (error) {
+          console.warn(error);
+        }
       }
 
       target.files = null;

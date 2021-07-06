@@ -5,6 +5,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import InterfaceAssets from "../../components/interface/Assets.vue";
 import Headline from "../../components/interface/Headline.vue";
 

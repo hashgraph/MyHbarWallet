@@ -1,16 +1,11 @@
 <template>
-  <div class="md:flex-grow relative">
-    <div v-if="!hideHeader" class="flex justify-between pb-5">
+  <div class="relative md:flex-grow">
+    <div
+      v-if="!hideHeader"
+      class="flex justify-between pb-5"
+    >
       <div
-        class="
-          flex
-          justify-between
-          font-semibold
-          text-xl
-          leading-6
-          text-black-out
-          dark:text-white
-        "
+        class="flex justify-between text-xl font-semibold leading-6  text-black-out dark:text-white"
       >
         Recent Transactions
       </div>
@@ -73,31 +68,32 @@
     </div>
 
     <div
-      class="
-        absolute
-        top-0
-        left-0
-        h-full
-        w-full
-        flex flex-col
-        items-center
-        justify-center
-      "
+      class="absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full "
     >
-      <div class="text-xl font-bold dark:text-white">Coming Soon</div>
+      <div class="text-xl font-bold dark:text-white">
+        Coming Soon
+      </div>
       <!-- TODO: once we have knowledge of the user's account ID and network put that in the url -->
-      <div class="dark:text-white">View your recent transactions on</div>
-      <a target="_blank" :href="kabutoLink" class="font-bold text-kabuto mt-2"
-        ><img src="../../assets/logo_kabuto.svg"
-      /></a>
+      <div class="dark:text-white">
+        View your recent transactions on
+      </div>
+      <a
+        target="_blank"
+        :href="kabutoLink"
+        class="mt-2 font-bold text-kabuto"
+      ><img
+        src="../../assets/logo_kabuto.svg"
+      ></a>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import Transaction from "./Transaction.vue";
+
 import { useStore } from "../../store";
+
+import Transaction from "./Transaction.vue";
 
 export default defineComponent({
   name: "Transactions",

@@ -2,6 +2,7 @@
   <Headline :title="$t('InterfaceTools.header')" />
 
   <div class="mt-6 flex flex-wrap justify-items-center">
+
     <ToolTile
       :title="$t('InterfaceToolTile.associateToken.title')"
       :description="$t('InterfaceToolTile.associateToken.hint')"
@@ -16,11 +17,14 @@
 
     <ToolTile :title = "$t('InterfaceToolTile.download.title')" :description="$t('InterfaceToolTile.download.description')" :to = "{name: 'tools.download'}"/>
 
+
+
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import Headline from "../../components/interface/Headline.vue";
 import ToolTile from "../../components/interface/ToolTile.vue";
 

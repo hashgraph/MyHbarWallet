@@ -9,14 +9,7 @@
 
   <div
     v-if="hint"
-    class="
-      text-sm
-      transition-all
-      duration-300
-      ease-in-out
-      text-squant
-      dark:text-white
-    "
+    class="text-sm transition-all duration-300 ease-in-out text-squant dark:text-white"
   >
     {{ $t("BaseOptionalPasswordInput.paragraph") }}
   </div>
@@ -38,9 +31,9 @@
       }"
     >
       <PasswordInput
+        v-if="state.hasPassword"
         ref="passwordInput"
         v-model="state.password"
-        data-cy-pass-input
         show-eye
         :placeholder="placeholder"
         :confirm="confirm"
@@ -54,6 +47,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
+
 import PasswordInput, { PasswordInputInstance } from "./PasswordInput.vue";
 import Switch from "./Switch.vue";
 

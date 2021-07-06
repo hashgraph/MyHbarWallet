@@ -1,5 +1,7 @@
 <template>
+  <form autocomplete="off">
   <TextInput
+    data-cy-pass-input
     v-model="state.password"
     :valid="state.isValid"
     :error="error || state.hasError"
@@ -9,6 +11,7 @@
   />
 
   <TextInput
+    data-cy-pass-confirm
     v-if="confirm"
     v-model="state.confirmPassword"
     :valid="state.isValid"
@@ -17,17 +20,19 @@
     hide
     :placeholder="$t('BasePasswordInput.input2.placeholder1')"
   />
+  </form>
 </template>
 
 <script lang="ts">
 import { ComponentPublicInstance, defineComponent, reactive } from "vue";
 import { debouncedWatch } from "@vueuse/core";
+
 import TextInput from "./TextInput.vue";
 
 const PASSWORD_MIN_LEN = 9;
 
 export type PasswordInputInstance = ComponentPublicInstance & {
-  reset: () => void;
+    reset: () => void;
 };
 
 export default defineComponent({

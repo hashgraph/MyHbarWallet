@@ -10,13 +10,16 @@
     >
       <div>{{ accountId }}</div>
 
-      <div class="font-semibold">{{ balance }}</div>
+      <div class="font-semibold">
+        {{ balance }}
+      </div>
     </div>
   </RadioOption>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import RadioOption from "./RadioOption.vue";
 
 export default defineComponent({

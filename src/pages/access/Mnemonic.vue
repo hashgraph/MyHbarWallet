@@ -11,12 +11,14 @@
           :options="[12, 22, 24]"
           @update:modelValue="onChangeWordCount"
         />
-        <div class="text-sm text-black-out dark:text-white">words</div>
+        <div class="text-sm text-black-out dark:text-white">
+          words
+        </div>
       </div>
 
       <div>
         <MnemonicInput
-          :ref="mnemonicInputComponent"
+          ref="mnemonicInputComponent"
           v-model="mnemonicPhrase"
           :word-count="wordCount"
           :warning-indices="warningIndices"
@@ -35,7 +37,8 @@
             :class="[
               'transition-all duration-300 absolute w-full',
               {
-                'opacity-0 invisible': warningIndices.length === 0,
+                'opacity-0 invisible':
+                  warningIndices.length === 0,
               },
             ]"
             :text="$t('MnemonicPhrase.access.unknownWords')"
@@ -65,7 +68,8 @@
         color="green"
         class="w-full p-3"
         :disabled="
-          mnemonicPhrase.filter((word) => word.length > 0).length < wordCount
+          mnemonicPhrase.filter((word) => word.length > 0).length <
+            wordCount
         "
         @click="onSubmit"
       >
@@ -77,8 +81,9 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
-import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
 import { useRouter } from "vue-router";
+
+import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
 import { useStore } from "../../store";
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
@@ -126,9 +131,8 @@ export default defineComponent({
     });
 
     async function onSubmit() {
-      const { BadMnemonicError, BadMnemonicReason, Mnemonic } = await import(
-        "@hashgraph/sdk"
-      );
+      const { BadMnemonicError, BadMnemonicReason, Mnemonic } =
+                await import("@hashgraph/sdk");
 
       let mnemonic;
 

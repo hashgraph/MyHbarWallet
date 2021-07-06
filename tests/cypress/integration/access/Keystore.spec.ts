@@ -1,11 +1,20 @@
 describe("Keystore Access", () => {
   const { KEY_ACCOUNT_ID, KEYSTORE_PASSWORD, KEYSTORE_ACCOUNT_ID } =
-    Cypress.env();
+        Cypress.env();
 
   beforeEach(() => cy.viewport("macbook-13"));
 
   it("can access by keystore", () => {
     cy.visit("/")
+      .get("[data-cy-network-selector]")
+      .filter(":visible")
+      .click()
+      .then(() => {
+        cy.get("[data-cy-option]")
+          .contains("testnet")
+          .filter(":visible")
+          .click();
+      })
       .get("[data-cy-access-link]")
       .filter(":visible")
       .click()
@@ -18,8 +27,8 @@ describe("Keystore Access", () => {
       .filter(":visible")
       .click()
       .get("[data-cy-file-upload]")
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
       .attachFile("Keystore")
       .trigger("change", { force: true })
       .get("input:visible")

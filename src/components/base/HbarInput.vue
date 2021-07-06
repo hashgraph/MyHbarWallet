@@ -9,61 +9,62 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, watch, nextTick } from "vue";
-import type { Hbar } from "@hashgraph/sdk";
-import BigNumber from "bignumber.js";
-import TextInput from "./TextInput.vue";
+import { defineComponent, PropType, reactive, watch, nextTick } from 'vue'
+import type { Hbar } from '@hashgraph/sdk'
+import { BigNumber } from 'bignumber.js'
+
+import TextInput from './TextInput.vue'
 
 export default defineComponent({
-  name: "HbarInput",
+  name: 'HbarInput',
   components: {
     TextInput,
   },
   props: {
     modelValue: { type: Object as PropType<Hbar | null>, required: true },
     disabled: { type: Boolean, default: false },
-    placeholder: { type: String, default: "" },
+    placeholder: { type: String, default: '' },
   },
-  emits: ["update:modelValue"],
+  emits: ['update:modelValue'],
   setup(props, context) {
     const state = reactive({
-      hbarString: "",
-    });
+      hbarString: '',
+    })
 
     async function onInput(input: string) {
-      const { HbarUnit, Hbar } = await import("@hashgraph/sdk");
+      const { HbarUnit, Hbar } = await import('@hashgraph/sdk')
 
-      input = input.trim();
+      input = input.trim()
 
       if (input.length === 0) {
         nextTick(() => {
-          state.hbarString = input;
-        });
+          state.hbarString = input
+        })
 
-        context.emit("update:modelValue", null);
-        return;
+        context.emit('update:modelValue', null)
+        return
       }
 
       try {
-        const bigNumberAmount = new BigNumber(input);
+        const bigNumberAmount = new BigNumber(input)
         if (bigNumberAmount.isNaN() || bigNumberAmount.isNegative()) {
           nextTick(() => {
             state.hbarString =
-              props.modelValue?.to(HbarUnit.Hbar)?.toString() ?? "";
-          });
+              props.modelValue?.to(HbarUnit.Hbar)?.toString() ?? ''
+          })
         } else {
-          const hbarAmount = new Hbar(bigNumberAmount);
+          const hbarAmount = new Hbar(bigNumberAmount)
 
           nextTick(() => {
-            state.hbarString = input;
-          });
-          context.emit("update:modelValue", hbarAmount);
+            state.hbarString = input
+          })
+          context.emit('update:modelValue', hbarAmount)
         }
       } catch (error) {
         nextTick(() => {
           state.hbarString =
-            props.modelValue?.to(HbarUnit.Hbar)?.toString() ?? "";
-        });
+            props.modelValue?.to(HbarUnit.Hbar)?.toString() ?? ''
+        })
       }
     }
 
@@ -72,14 +73,14 @@ export default defineComponent({
       async (newValue) => {
         // FIXME: use toBigNumber()
 
-        const { HbarUnit } = await import("@hashgraph/sdk");
+        const { HbarUnit } = await import('@hashgraph/sdk')
 
-        state.hbarString = newValue?.to(HbarUnit.Hbar)?.toString() ?? "";
+        state.hbarString = newValue?.to(HbarUnit.Hbar)?.toString() ?? ''
       },
-      { immediate: true }
-    );
+      { immediate: true },
+    )
 
-    return { state, onInput };
+    return { state, onInput }
   },
-});
+})
 </script>

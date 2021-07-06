@@ -1,29 +1,27 @@
 <template>
   <div class="flex flex-col">
-    <div v-for="(transaction, index) in TransferList" :key="index">
+    <div
+      v-for="(transaction, index) in TransferList"
+      :key="index"
+    >
       <div
         v-if="transaction.transaction < 0"
-        class="text-squant pl-5 dark:text-white"
+        class="pl-5 text-squant dark:text-white"
       >
         Sender
       </div>
 
-      <div v-else class="text-squant dark:text-white pl-5">Reciever</div>
+      <div
+        v-else
+        class="pl-5 text-squant dark:text-white"
+      >
+        Reciever
+      </div>
     </div>
 
-    <div class="w-1/2 leading-5 pl-5 mb-5">
+    <div class="w-1/2 pl-5 mb-5 leading-5">
       <div
-        class="
-          mt-3
-          rounded-lg
-          bg-first-snow
-          h-auto
-          w-96
-          p-5
-          dark:bg-ruined-smores
-          dark:border-argent
-          border
-        "
+        class="h-auto p-5 mt-3 border rounded-lg  bg-first-snow w-96 dark:bg-ruined-smores dark:border-argent"
       >
         <div class="flex">
           <div

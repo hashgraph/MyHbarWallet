@@ -7,9 +7,14 @@
       'h-64 w-72',
     ]"
   >
-    <img class="w-20" :src="purpleNav" />
+    <img
+      class="w-20"
+      :src="purpleNav"
+    >
 
-    <div class="font-semibold text-xl my-2">{{ title }}</div>
+    <div class="my-2 text-xl font-semibold">
+      {{ title }}
+    </div>
 
     <div class="text-sm text-carbon dark:text-white">
       {{ description }}
@@ -20,6 +25,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { RouteLocationRaw } from "vue-router";
+
 import purpleNav from "../../assets/icon_nav_purple_tools.svg";
 
 export default defineComponent({
@@ -29,7 +35,7 @@ export default defineComponent({
     description: {
       type: String,
       default:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget venenatis dui.",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget venenatis dui.",
     },
     to: {
       type: [String, Object] as PropType<RouteLocationRaw>,
@@ -43,4 +49,3 @@ export default defineComponent({
   },
 });
 </script>
-

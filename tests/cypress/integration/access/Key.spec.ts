@@ -5,6 +5,15 @@ describe("Key Access", () => {
 
   it("can access by private key", () => {
     cy.visit("/")
+      .get("[data-cy-network-selector]")
+      .filter(":visible")
+      .click()
+      .then(() => {
+        cy.get("[data-cy-option]")
+          .contains("testnet")
+          .filter(":visible")
+          .click();
+      })
       .get("[data-cy-access-link]")
       .filter(":visible")
       .click()

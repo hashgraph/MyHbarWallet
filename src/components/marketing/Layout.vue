@@ -6,7 +6,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import Footer from "../base/Footer.vue";
+
 import Nav from "./Nav.vue";
 
 export default defineComponent({

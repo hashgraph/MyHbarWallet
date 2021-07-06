@@ -10,7 +10,6 @@
 
 <script lang="ts">
 import type { AccountId } from "@hashgraph/sdk";
-import TextInput from "./TextInput.vue";
 import Long from "long";
 import {
   defineComponent,
@@ -22,11 +21,16 @@ import {
 } from "vue";
 import { debouncedWatch } from "@vueuse/core";
 
+import TextInput from "./TextInput.vue";
+
 export default defineComponent({
   name: "AccountIdInput",
   components: { TextInput },
   props: {
-    modelValue: { type: Object as PropType<AccountId | null>, default: null },
+    modelValue: {
+      type: Object as PropType<AccountId | null>,
+      default: null,
+    },
     disabled: { type: Boolean, default: false },
     placeholder: { type: String, default: "" },
     error: { type: Boolean, default: false },

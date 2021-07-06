@@ -4,25 +4,30 @@
       v-for="index in wordCount"
       :key="index"
       class="
-        text-sm
-        mt-1
-        pl-1.5
-        pb-0.5
-        sm:w-32
-        flex
-        border-basalt-grey
-        items-center
-      "
+                text-sm
+                mt-1
+                pl-1.5
+                pb-0.5
+                sm:w-32
+                flex
+                border-basalt-grey
+                items-center
+            "
       :class="{
         'border-b': focused !== index,
         'border-han-blue-700 bg-han-blue-700 bg-opacity-5 border-b-2 -mb-px':
           !readOnly && focused === index,
         'dark:border-squant':
-          !warningAtIndex(index - 1) && (readOnly || focused !== index),
-        'border-han-blue-700': warningAtIndex(index - 1) && focused !== index,
+          !warningAtIndex(index - 1) &&
+          (readOnly || focused !== index),
+        'border-han-blue-700':
+          warningAtIndex(index - 1) && focused !== index,
       }"
     >
-      <label :for="`mnemonic:${index}`" class="dark:text-white">
+      <label
+        :for="`mnemonic:${index}`"
+        class="dark:text-white"
+      >
         {{ index.toString().padStart(2, "\u{00A0}") }}.
       </label>
 
@@ -43,7 +48,7 @@
         @input="handleInput(index, $event)"
         @focus="handleFocus(index, $event)"
         @blur="handleBlur(index)"
-      />
+      >
     </div>
   </div>
 </template>
@@ -58,14 +63,17 @@ import {
 } from "vue";
 
 export type MnemonicInputComponent = ComponentPublicInstance & {
-  handleFocus: (index: number, event: Event | null) => void;
+    handleFocus: (index: number, event: Event | null) => void;
 };
 
 export default defineComponent({
   name: "MnemonicInput",
   props: {
     modelValue: { type: Array as PropType<string[]>, required: true },
-    warningIndices: { type: Array as PropType<number[]>, default: () => [] },
+    warningIndices: {
+      type: Array as PropType<number[]>,
+      default: () => [],
+    },
     readOnly: { type: Boolean, default: false },
     wordCount: { type: Number, required: true },
   },

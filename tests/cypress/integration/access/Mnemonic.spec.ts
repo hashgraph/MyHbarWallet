@@ -17,6 +17,15 @@ describe("Mnemonic Access", () => {
 
   it("can access by mnemonic phrase (12 words)", () => {
     cy.visit("/")
+      .get("[data-cy-network-selector]")
+      .filter(":visible")
+      .click()
+      .then(() => {
+        cy.get("[data-cy-option]")
+          .contains("testnet")
+          .filter(":visible")
+          .click();
+      })
       .get("[data-cy-access-link]")
       .filter(":visible")
       .click()
@@ -50,6 +59,15 @@ describe("Mnemonic Access", () => {
 
   it("can access by mnemonic phrase (22 words)", () => {
     cy.visit("/")
+      .get("[data-cy-network-selector]")
+      .filter(":visible")
+      .click()
+      .then(() => {
+        cy.get("[data-cy-option]")
+          .contains("testnet")
+          .filter(":visible")
+          .click();
+      })
       .get("[data-cy-access-link]")
       .filter(":visible")
       .click()
@@ -78,11 +96,23 @@ describe("Mnemonic Access", () => {
       .click()
       .wait(1000);
 
-    cy.get("[data-cy-account-id]").should("contain", MNEMONIC22L_ACCOUNT_ID);
+    cy.get("[data-cy-account-id]").should(
+      "contain",
+      MNEMONIC22L_ACCOUNT_ID
+    );
   });
 
   it("can access by mnemonic phrase (24 words)", () => {
     cy.visit("/")
+      .get("[data-cy-network-selector]")
+      .filter(":visible")
+      .click()
+      .then(() => {
+        cy.get("[data-cy-option]")
+          .contains("testnet")
+          .filter(":visible")
+          .click();
+      })
       .get("[data-cy-access-link]")
       .filter(":visible")
       .click()
@@ -116,6 +146,15 @@ describe("Mnemonic Access", () => {
 
   it("can access by legacy (retired hbar mobile app) mnemonic phrase (24 words)", () => {
     cy.visit("/")
+      .get("[data-cy-network-selector]")
+      .filter(":visible")
+      .click()
+      .then(() => {
+        cy.get("[data-cy-option]")
+          .contains("testnet")
+          .filter(":visible")
+          .click();
+      })
       .get("[data-cy-access-link]")
       .filter(":visible")
       .click()
@@ -144,11 +183,23 @@ describe("Mnemonic Access", () => {
       .click()
       .wait(1000);
 
-    cy.get("[data-cy-account-id]").should("contain", MNEMONIC24L_ACCOUNT_ID);
+    cy.get("[data-cy-account-id]").should(
+      "contain",
+      MNEMONIC24L_ACCOUNT_ID
+    );
   });
 
   it("can access by mnemonic phrase (24 words, password)", () => {
     cy.visit("/")
+      .get("[data-cy-network-selector]")
+      .filter(":visible")
+      .click()
+      .then(() => {
+        cy.get("[data-cy-option]")
+          .contains("testnet")
+          .filter(":visible")
+          .click();
+      })
       .get("[data-cy-access-link]")
       .filter(":visible")
       .click()
@@ -171,7 +222,7 @@ describe("Mnemonic Access", () => {
       })
       .get("[data-cy-switch]")
       .click()
-      .get("[data-cy-pass-input]")
+      .get("[data-cy-pass-input] input")
       .type(MNEMONIC24P_PASSWORD)
       .get("[data-cy-mnemonic-submit]")
       .click()
@@ -181,6 +232,9 @@ describe("Mnemonic Access", () => {
       .click()
       .wait(1000);
 
-    cy.get("[data-cy-account-id]").should("contain", MNEMONIC24P_ACCOUNT_ID);
+    cy.get("[data-cy-account-id]").should(
+      "contain",
+      MNEMONIC24P_ACCOUNT_ID
+    );
   });
 });

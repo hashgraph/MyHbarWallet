@@ -1,5 +1,8 @@
 <template>
-  <Headline :title="$t('InterfaceConvertUnits')" parent="tools" />
+  <Headline
+    :title="$t('InterfaceConvertUnits')"
+    parent="tools"
+  />
   <div
     class="
       mt-8
@@ -19,43 +22,49 @@
 
     <div class="flex-wrap flex items-stretch mt-8 w-full">
       <div class="block-left w-5/12 m-auto">
+
         <div class="input-block">
           <TextInput
-            class="m-1"
             v-model="state.valueLeft"
-            :modelValue="$t('common.amount')"
+            class="m-1"
+            :placeholder="$t('common.amount')"
             @update:modelValue="handleInputValueLeft"
           />
         </div>
 
         <div class="select-block">
-          <DropdownSelector
-            class="m-2"
+          <Select
             v-model="state.selectedLeft"
+            class="m-2"
             :options="state.units"
-            :modelValue="state.units[0].name"
+            :placeholder="state.units[0].name"
             @update:modelValue="handleSelect"
           />
         </div>
       </div>
 
-      <div class="block-center self-center">
-        <img src="../../assets/swap.svg" alt="Swap" />
+      <div class="self-center block-center">
+        <img
+          src="../../assets/swap.svg"
+          alt="Swap"
+        >
       </div>
 
-      <div class="block-right w-5/12 m-auto">
+      <div class="w-5/12 m-auto block-right">
         <TextInput
-          class="m-1"
           v-model="state.valueRight"
           :modelValue="1"
+
           @update:modelValue="handleInputValueRight"
         />
+
         <div class="select-block">
           <DropdownSelector
             class="m-2 w-full"
+
             v-model="state.selectedRight"
+            class="m-2"
             :options="state.units"
-            :modelValue="state.units[2].name"
             @update:modelValue="handleSelect"
           />
         </div>
@@ -64,13 +73,14 @@
 
     <div class="unit-table items-center w-full p-6">
       <div class="unit-table-header mt-16 mb-6 font-semibold text-center">
+
         {{ $t("referenceGuideTitle") }}
       </div>
 
       <div class="table min-w-full m-auto">
         <div
           v-for="unit in state.units"
-          :key="unit.key"
+          :key="unit.name"
           class="table-row-group"
         >
           <div class="table-row">
@@ -90,9 +100,11 @@
   </div>
 </template>
 
-
-<script lang= "ts">
+<script lang="ts">
 import { defineComponent, reactive } from "vue";
+import { HbarUnit, Hbar } from "@hashgraph/sdk";
+import { BigNumber } from "bignumber.js";
+
 import Headline from "../../components/interface/Headline.vue";
 import TextInput from "../../components/base/TextInput.vue";
 import DropdownSelector from "../../components/base/DropdownSelector.vue";
@@ -106,7 +118,7 @@ export default defineComponent({
   components: {
     Headline,
     TextInput,
-    DropdownSelector,
+    Select,
   },
   setup() {
     BigNumber.config({
@@ -114,6 +126,7 @@ export default defineComponent({
       DECIMAL_PLACES: 64,
     });
 
+    // TODO: Fix
     let state = reactive({
       selectedLeft: "Tinybar",
       selectedRight: "Hbar",
@@ -170,22 +183,16 @@ export default defineComponent({
           amount: "1",
           amountInHbar: "1,000,000,000",
         },
-      ],
+      ] as unknown as Option[],
     });
 
-    function handleInputValueLeft(value: string, e: Event): void {
-      if (isNaN(value)) {
-        return;
-      }
+    function handleInputValueLeft(value: string): void {
       state.valueLeft = value;
       computeValueRight();
       computeValueLeft();
     }
 
-    function handleInputValueRight(value: string, e: Event): void {
-      if (isNaN(value)) {
-        return;
-      }
+    function handleInputValueRight(value: string): void {
       state.valueRight = value;
       computeValueLeft();
       computeValueRight();
@@ -303,6 +310,3 @@ export default defineComponent({
   },
 });
 </script>
-
-
-

@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-env node */
-import path from "path";
+import path, { join } from "path";
+
 import html from "vite-plugin-html";
 import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
-import packageJson from "./package.json";
 import { getLastCommit } from "git-last-commit";
 import { defineConfig } from "vite";
+
+import packageJson from "./package.json";
 
 export default async function ({ mode }) {
   const isProduction = mode === "production";
@@ -21,12 +23,12 @@ export default async function ({ mode }) {
   let contentSecurityPolicy = [
     "default-src 'self'",
     "connect-src 'self' " +
-      [
-        "grpc-web.testnet.myhbarwallet.com",
-        "grpc-web.previewnet.myhbarwallet.com",
-        "grpc-web.myhbarwallet.com",
-        "api.coingecko.com",
-      ].join(" "),
+            [
+              "grpc-web.testnet.myhbarwallet.com",
+              "grpc-web.previewnet.myhbarwallet.com",
+              "grpc-web.myhbarwallet.com",
+              "api.coingecko.com",
+            ].join(" "),
     "font-src 'self' data:",
     isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
   ];
@@ -57,7 +59,9 @@ export default async function ({ mode }) {
     },
     define: {
       __APP_VERSION__: JSON.stringify(packageJson.version),
-      __APP_LAST_COMMIT_SHORT_HASH__: JSON.stringify(lastCommit.shortHash),
+      __APP_LAST_COMMIT_SHORT_HASH__: JSON.stringify(
+        lastCommit.shortHash
+      ),
     },
     build: {
       rollupOptions: {
@@ -67,7 +71,10 @@ export default async function ({ mode }) {
               return "hashgraph";
             }
 
-            if (id.includes("node_modules/") && !id.endsWith(".css")) {
+            if (
+              id.includes("node_modules/") &&
+                            !id.endsWith(".css")
+            ) {
               return "vendor";
             }
           },

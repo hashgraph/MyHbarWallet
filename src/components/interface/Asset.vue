@@ -1,15 +1,11 @@
 <template>
   <div
-    class="
-      mb-1
-      shadow
-      rounded
-      border border-jupiter
-      dark:bg-kuroi-black
-      dark:border-kuroi-black
-    "
+    class="mb-1 border rounded shadow border-jupiter dark:bg-kuroi-black dark:border-kuroi-black"
   >
-    <div class="flex items-center" :class="{ 'py-5': !!value, 'py-3': !value }">
+    <div
+      class="flex items-center"
+      :class="{ 'py-5': !!value, 'py-3': !value }"
+    >
       <img
         :class="{
           'mx-4 h-11 w-11': !!value,
@@ -17,45 +13,52 @@
         }"
         :src="img"
         alt=""
-      />
+      >
       <div>
-        <div class="leading-5 text-black-out dark:text-white font-semibold">
+        <div class="font-semibold leading-5 text-black-out dark:text-white">
           {{ name }}
         </div>
         <div
           v-if="value"
-          class="text-sm text-squant dark:text-argent leading-5 mt-1"
+          class="mt-1 text-sm leading-5 text-squant dark:text-argent"
         >
           {{ value }}
         </div>
       </div>
 
-      <div class="ml-auto pr-5">
+      <div class="pr-5 ml-auto">
         <div
-          class="text-right text-carbon dark:text-white font-semibold leading-5"
+          class="font-semibold leading-5 text-right text-carbon dark:text-white"
         >
           {{ amount }}
         </div>
         <div
           v-if="total"
-          class="text-sm text-right text-squant dark:text-argent leading-5 mt-1"
+          class="mt-1 text-sm leading-5 text-right text-squant dark:text-argent"
         >
           {{ total }}
         </div>
       </div>
     </div>
-    <BannerError v-if="error" class="m-1" />
-    <BannerFrozenAsset v-if="frozen" class="m-1" />
+    <BannerError
+      v-if="error"
+      class="m-1"
+    />
+    <BannerFrozenAsset
+      v-if="frozen"
+      class="m-1"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import BannerError from "./BannerError.vue";
-import BannerFrozenAsset from "./BannerError.vue";
+import { defineComponent } from 'vue'
+
+import BannerError from './BannerError.vue'
+import BannerFrozenAsset from './BannerFrozenAsset.vue'
 
 export default defineComponent({
-  name: "Asset",
+  name: 'Asset',
   components: {
     BannerError,
     BannerFrozenAsset,
@@ -69,5 +72,5 @@ export default defineComponent({
     error: { type: Boolean, default: false },
     frozen: { type: Boolean, default: false },
   },
-});
+})
 </script>

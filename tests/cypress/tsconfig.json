@@ -1,11 +1,11 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "target": "es5",
-    "types": ["cypress", "cypress-file-upload", "node"],
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
-  },
-  "include": ["integration"],
-  "exclude": []
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es5",
+        "types": ["cypress", "cypress-file-upload", "node"],
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    },
+    "include": ["integration"],
+    "exclude": []
 }

@@ -10,33 +10,48 @@
       min-w-300px
     "
   >
-    <div v-if="parent != ''" class="flex items-center">
-      <router-link :to="{ name: `${parent}` }" class="text-andrea-blue">
+    <div
+      v-if="parent != ''"
+      class="flex items-center"
+    >
+      <router-link
+        :to="{ name: `${parent}` }"
+        class="text-andrea-blue"
+      >
         {{ capitalize(parent) }}
       </router-link>
 
-      <img src="../../assets/chevron_right.svg" class="mx-2 h-7" />
+      <img
+        src="../../assets/chevron_right.svg"
+        class="mx-2 h-7"
+      >
 
-      <div v-if="title == 'Send'" class="relative mx-2 w-16">
+      <div
+        v-if="title == 'Send'"
+        class="relative w-16 mx-2"
+      >
         <img
           :src="isDark ? sendAssetDark : sendAsset"
-          class="h-16 w-16 absolute -top-8 right-1"
+          class="absolute w-16 h-16 -top-8 right-1"
           alt="paper airplane"
-        />
+        >
       </div>
 
       <div>{{ title }}</div>
     </div>
 
-    <div v-else>{{ title }}</div>
+    <div v-else>
+      {{ title }}
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { usePreferredDark } from "@vueuse/core";
+
 import sendAsset from "../../assets/img_send.svg";
 import sendAssetDark from "../../assets/dark/img_send_dark.svg";
-import { usePreferredDark } from "@vueuse/core";
 
 export default defineComponent({
   name: "Headline",

@@ -5,16 +5,21 @@
     <TextInput
       v-model="searchVal"
       :show-eye="false"
-      class="w-full mr-4 lg:mr-8 text-lg"
+      class="w-full mr-4 text-lg lg:mr-8"
       :placeholder="$t('BaseTextInput.searchTokens')"
     />
 
-    <Button color="green" class="px-7 lg:px-10 lg:text-lg">{{
-      $t("BaseButton.search")
-    }}</Button>
+    <Button
+      color="green"
+      class="px-7 lg:px-10 lg:text-lg"
+    >
+      {{
+        $t("BaseButton.search")
+      }}
+    </Button>
   </div>
 
-  <div class="mt-10 lg:px-6 flex justify-between">
+  <div class="flex justify-between mt-10 lg:px-6">
     <div class="font-semibold dark:text-white">
       {{ $t("InterfaceToken.tokensFound", { tokens: "500,000" }) }}
     </div>
@@ -44,6 +49,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+
 import NavButton from "../../components/interface/NavButton.vue";
 import Headline from "../../components/interface/Headline.vue";
 import Tokens from "../../components/interface/Tokens.vue";

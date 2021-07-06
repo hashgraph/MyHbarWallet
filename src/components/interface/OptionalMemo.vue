@@ -34,6 +34,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
+
 import Switch from "../base/Switch.vue";
 import TextInput from "../base/TextInput.vue";
 
@@ -50,7 +51,7 @@ export default defineComponent({
   setup() {
     let state = reactive({
       addMemo: false,
-      memo: "" as string | null,
+      memo: "",
     });
 
     function onToggle(open: boolean): void {

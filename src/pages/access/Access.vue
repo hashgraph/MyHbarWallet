@@ -1,10 +1,13 @@
 <template>
-  <Layout :title="$t('Access.title')" class="max-w-3xl">
+  <Layout
+    :title="$t('Access.title')"
+    class="max-w-3xl"
+  >
     <div class="grid gap-5 auto-rows-min">
       <OptionCard
         v-for="option in options"
-        :data-cy-option="option.title"
         :key="option.value"
+        :data-cy-option="option.title"
         :light-icon="option.imageLight"
         :dark-icon="option.imageDark"
         :to="{ name: option.route }"
@@ -16,11 +19,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent } from "vue";
+
 import { AccessOptionType, AccessOptions } from "../../domain/AccessOptions";
 import Layout from "../../components/access/Layout.vue";
 import OptionCard from "../../components/base/OptionCard.vue";
-import { useStore } from "../../store";
 
 export default defineComponent({
   name: "Access",
@@ -29,8 +32,6 @@ export default defineComponent({
     Layout,
   },
   setup() {
-    const store = useStore();
-
     const options = Array.from(AccessOptions.values()).filter(
       (option) => option.supported
     );

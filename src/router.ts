@@ -1,8 +1,10 @@
+/* eslint-disable import/order */
 import {
   createRouter,
   createWebHashHistory,
   createWebHistory,
 } from "vue-router";
+import { useStore } from "./store";
 
 // Marketing
 import MarketingLayout from "./components/marketing/Layout.vue";
@@ -56,7 +58,11 @@ const routes = [
         component: TermsConditions,
         name: "terms",
       },
-      { path: "/privacy-policy", component: PrivacyPolicy, name: "privacy" },
+      {
+        path: "/privacy-policy",
+        component: PrivacyPolicy,
+        name: "privacy",
+      },
       {
         path: "/access",
         component: Access,
@@ -130,6 +136,7 @@ const routes = [
     path: "/wallet",
     component: InterfaceLayout,
     redirect: { name: "home" },
+    meta: { requiresWallet: true },
     children: [
       {
         path: "",
@@ -231,12 +238,7 @@ const routes = [
             path: "convert-units",
             name: "tools.convert.units"
           },
-          {
-            component: InterfaceDownload,
-            path: "download",
-            name: "tools.download"
-
-          },
+          
           {
             component: InterfaceDownloadFile,
             path: "download",
@@ -279,6 +281,20 @@ const router = createRouter({
 
     return { x: 0, y: 0 };
   },
+});
+
+
+router.beforeResolve(async (to, from, next) => {
+  const store = useStore();
+  const neededWallet = from.matched.some(record => record.meta.requiresWallet);
+  const needsWallet = to.matched.some(record => record.meta.requiresWallet);
+  const hasWallet = store.wallet != null;
+
+  if (needsWallet && !hasWallet) {
+    next({ name: "access" });
+  } else if (!needsWallet && neededWallet && hasWallet) {
+    store.setConfirmLogoutOpen(true);
+  } else next();
 });
 
 export default router;

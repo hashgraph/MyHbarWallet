@@ -1,8 +1,8 @@
 <template>
   <TextInput
     v-model="state.inputString"
-    :valid="state.isValid"
-    :error="state.hasError"
+    :valid="state.isValid ?? undefined"
+    :error="state.hasError ?? undefined"
     :placeholder="placeholder"
     :disabled="disabled"
   />
