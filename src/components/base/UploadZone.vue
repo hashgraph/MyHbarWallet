@@ -114,19 +114,15 @@ export default defineComponent({
 
 
         function browse(): void {
-            console.log(fileTarget);
             console.log("From browse.");
-
-            console.log(fileTarget);
+            console.log(fileTarget.value);
             fileTarget.value?.click();
-
         }
 
 
 
         async function uint8ArrayOf(file: File):
             Promise<Uint8Array> {
-            console.log("From uint8ArrayOf.");
             let buffer = await new Promise<ArrayBuffer>((res, rej) => {
                 let reader = new FileReader();
                 reader.addEventListener("error", rej);
@@ -140,7 +136,7 @@ export default defineComponent({
         }
 
 
-        return { state, dragEnter, dragLeave, drop, prepareFile, browse, uint8ArrayOf };
+        return { state, dragEnter, dragLeave, drop, prepareFile, browse, uint8ArrayOf, fileTarget };
     }
 });
 </script>
