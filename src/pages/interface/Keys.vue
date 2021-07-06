@@ -1,11 +1,8 @@
 <template>
   <Headline :title="$t('InterfaceKeys.header')" />
 
-<<<<<<< HEAD
-  <div v-if="privateKey" class="md:px-8 py-4 my-8 max-w-3xl mx-auto">
-=======
+  
   <div v-if="privateKey" class="md:px-8 py-4 my-8 max-w-3xl w-full mx-auto">
->>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
     <KeyInput
       :model-value="privateKey"
       can-copy

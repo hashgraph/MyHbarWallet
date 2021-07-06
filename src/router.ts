@@ -231,12 +231,7 @@ const routes = [
             path: "convert-units",
             name: "tools.convert.units"
           },
-          {
-            component: InterfaceDownload,
-            path: "download",
-            name: "tools.download"
-
-          },
+          
           {
             component: InterfaceDownloadFile,
             path: "download",
