@@ -1,6 +1,10 @@
 <template>
   <div class="py-3.5 px-6 text-carbon dark:bg-ruined-smores">
+<<<<<<< HEAD
     <label class="block dark:text-silver-polish mb-2" for="to">To</label>
+=======
+    <label class="block dark:white mb-2" for="to">To</label>
+>>>>>>> 54f2556a (feat: update deps to 12)
 
     <div class="pb-0.5">
       <TextInput

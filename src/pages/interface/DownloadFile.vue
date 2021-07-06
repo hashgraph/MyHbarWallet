@@ -1,6 +1,7 @@
 <template>
   <Headline title="Download" parent="tools" />
 
+<<<<<<< HEAD
   <div
     container
     class="h-screen flex flex-col max-w-lg m-auto mt-10 justify-items-center"
@@ -8,6 +9,10 @@
     <label class="font-medium text-squant dark:text-white mb-4">
       {{ $t("InterfaceDownload.fileId") }}
     </label>
+=======
+  <div container class="h-screen flex flex-col max-w-lg m-auto mt-10">
+    <label class="font-medium text-squant dark:text-white mb-4"> {{ $t("InterfaceDownload.fileId") }} </label>
+>>>>>>> 54f2556a (feat: update deps to 12)
     <EntityIdInput
       type="file"
       v-model="state.downloadId"
@@ -18,11 +23,16 @@
       color="green"
       class="py-3 mt-6 w-full mt-10"
       :busy="state.sendBusyText != null"
+<<<<<<< HEAD
       @click="openFeeModal"
+=======
+      @click="download"
+>>>>>>> 54f2556a (feat: update deps to 12)
     >
       {{ $t("InterfaceToolTile.download.title") }}
     </Button>
 
+<<<<<<< HEAD
     <Modal
       :isVisible="state.showFeeModal"
       :title="downloadModalTitle"
@@ -55,20 +65,31 @@
       :title="$t('InterfaceTransactionDetails.status.value.success')"
       @close="closeDownloadModal"
     >
+=======
+    <Modal :isVisible="state.showFeeModal" title="Download" @close="closeModal">
+      {{ $t("InterfaceToolTile.download.title") }} 
+>>>>>>> 54f2556a (feat: update deps to 12)
     </Modal>
   </div>
 </template>
 
 
 <script lang = "ts">
+<<<<<<< HEAD
 import { defineComponent, reactive, nextTick, computed, ref } from "vue";
+=======
+import { defineComponent, reactive, nextTick } from "vue";
+>>>>>>> 54f2556a (feat: update deps to 12)
 import Headline from "../../components/interface/Headline.vue";
 import TextInput from "../../components/base/TextInput.vue";
 import Button from "../../components/base/Button.vue";
 import Modal from "../../components/interface/Modal.vue";
 import EntityIdInput from "../../components/base/EntityIdInput.vue";
+<<<<<<< HEAD
 import { FileContentsQuery, Hbar } from "@hashgraph/sdk";
 import { useStore } from "../../store";
+=======
+>>>>>>> 54f2556a (feat: update deps to 12)
 
 export default defineComponent({
   name: "DownloadFile",
@@ -80,6 +101,7 @@ export default defineComponent({
     EntityIdInput,
   },
   setup() {
+<<<<<<< HEAD
     const store = useStore();
     const operator = computed(() => store.accountId?.toString());
     const downloadModalTitle = computed(
@@ -149,6 +171,27 @@ export default defineComponent({
       operator,
       downloadModalTitle,
     };
+=======
+    let state = reactive({
+      sendBusyText: null,
+      showFeeModal: false,
+      downloadId: null,
+      transactionType = "downloadFile"
+    });
+
+    function download(): void {
+      openModal();
+    }
+
+    function openModal(): void {
+      nextTick((state.showFeeModal = true));
+    }
+
+    function closeModal(): void {
+      nextTick((state.showFeeModal = false));
+    }
+    return { state, download, openModal, closeModal };
+>>>>>>> 54f2556a (feat: update deps to 12)
   },
 });
 </script>

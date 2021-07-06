@@ -78,6 +78,12 @@ export default defineComponent({
           state.errorMessage = error.message;
         }
       }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 7db6eb5 (wip: restructure code to use services layer)
+>>>>>>> 54f2556a (feat: update deps to 12)
     }
 
     return { state, handleAssociate };

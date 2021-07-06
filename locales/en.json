@@ -26,6 +26,10 @@
   "BaseButton.iHaveAnAccoutId": "I Have an Account ID",
   "BaseButton.search": "Search",
   "BaseButton.send": "Send",
+<<<<<<< HEAD
+=======
+  "BaseButton.dismiss": "Dismiss",
+>>>>>>> 54f2556a (feat: update deps to 12)
   "BaseFileUploader.header": "Uploaded File",
   "BaseFileUploader.button": "Upload New File",
   "BaseOptionCard.recommended": "Recommended",
@@ -48,6 +52,11 @@
   "InterfaceAsset.note2": "Your asset is frozen.",
   "InterfaceAsset.value": "{value} ea.",
   "InterfaceAssets.header": "Assets",
+<<<<<<< HEAD
+=======
+  "InterfaceAssets.usd": "USD",
+  "InterfaceDownload.modal.fee": "There may be a fee associated with this transaction.",
+>>>>>>> 54f2556a (feat: update deps to 12)
   "InterfaceHistory.header": "History",
   "InterfaceHistory.button.all": "All",
   "InterfaceHistory.button.sent": "Sent",
@@ -76,6 +85,10 @@
   "InterfaceTransactionDetails.transactionHash": "Transaction Hash",
   "InterfaceTransactionDetails.transactionID": "Transaction ID",
   "InterfaceTransactionDetails.operator": "Operator",
+<<<<<<< HEAD
+=======
+  "InterfaceTransactionDetails.estimatedFee": "Estimated Fee",
+>>>>>>> 54f2556a (feat: update deps to 12)
   "InterfaceTransactionDetails.node": "Node",
   "InterfaceTransactionDetails.consensus": "Consensus",
   "InterfaceTransactionDetails.status": "Status",
@@ -97,6 +110,10 @@
   "InterfaceToken.nav.right": "right",
   "InterfaceToken.nav.last": "Last",
   "InterfaceTokenDetails.header": "Token Details",
+<<<<<<< HEAD
+=======
+  "InterfaceDownload.fileId": "File ID",
+>>>>>>> 54f2556a (feat: update deps to 12)
   "InterfaceTokenDetails.subheader": "Holders",
   "InterfaceTokenDetails.rank": "Rank",
   "InterfaceTokenDetails.address": "Address",
@@ -106,6 +123,11 @@
   "InterfaceToolTile.associateToken.title": "Associate Token",
   "InterfaceToolTile.associateToken.label.tokenID": "Token ID",
   "InterfaceToolTile.download.title": "Download",
+<<<<<<< HEAD
+=======
+  "InterfaceToolTile.download.description": "Download a file with a File ID.",
+
+>>>>>>> 54f2556a (feat: update deps to 12)
   "InterfaceToolTile.upload.title": "Upload",
   "InterfaceToolTile.unitConverter.title": "Unit Converter",
   "InterfaceTokenTile.header.tehter": "Tether (USDT)",

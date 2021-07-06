@@ -7,6 +7,10 @@
       font-medium
       dark:text-white
       dark:border-midnight-express
+<<<<<<< HEAD
+=======
+      min-w-300px
+>>>>>>> 54f2556a (feat: update deps to 12)
     "
   >
     <div v-if="parent != ''" class="flex items-center">

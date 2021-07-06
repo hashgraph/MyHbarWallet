@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="lg:flex lg:flex-row h-full">
     <Drawer class="hidden sticky top-0 lg:flex" />
     <MobileDrawer class="sticky top-0 z-20 lg:hidden" />
@@ -7,6 +8,17 @@
       <div
         class="
           h-full
+=======
+  <div class="lg:flex lg:flex-row">
+    <Drawer class="hidden sticky top-0 lg:flex" />
+    <MobileDrawer class="sticky top-0 z-20 lg:hidden" />
+
+    <div class="px-2 md:flex md:px-10 relative flex w-full h-full">
+      <div
+        class="
+          h-full
+          min-h-screen
+>>>>>>> 54f2556a (feat: update deps to 12)
           absolute
           top-0
           left-0
@@ -23,7 +35,11 @@
       <main
         :class="[
           'bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1',
+<<<<<<< HEAD
           'lg:mt-10',
+=======
+          'lg:mt-10 w-full',
+>>>>>>> 54f2556a (feat: update deps to 12)
         ]"
       >
         <router-view />
