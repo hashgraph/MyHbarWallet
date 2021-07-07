@@ -71,12 +71,15 @@ export default defineComponent({
 
     const tokenBalances = computed(() => {
       if (store.balance == null) return null
-
-      // FIXME: sort the token balances by balance amount
       return Array.from(store.balance?.tokens).slice(
         0,
         props.limitTokens ?? undefined,
-      )
+      ).sort((a, b) => {
+        // decimals already applied
+        const aBal = new BigNumber(a[1].balance);
+        const bBal = new BigNumber(b[1].balance); 
+        return aBal.isGreaterThan(bBal) ? -1 : aBal.isEqualTo(bBal) ? 0 : 1;
+      });
     })
 
     const hbarPrice = computed(() =>
