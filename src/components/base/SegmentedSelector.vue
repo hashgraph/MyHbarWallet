@@ -2,8 +2,8 @@
   <div class="flex space-x-2">
     <div
       v-for="option in options"
-      :data-cy-segment-option="option"
       :key="option"
+      :data-cy-segment-option="option"
       :class="[
         'rounded-2xl text-sm font-semibold w-10 py-1 text-center select-none cursor-pointer',
         {

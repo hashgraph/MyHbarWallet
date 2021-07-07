@@ -7,7 +7,7 @@
       readonly
       hidden
       @change="onFileUpload"
-    />
+    >
 
     <div
       class="
@@ -29,13 +29,7 @@
     </div>
 
     <button
-      class="
-        mb-8
-        font-semibold
-        leading-5
-        focus:outline-none
-        text-mountain-meadow
-      "
+      class="mb-8 font-semibold leading-5 focus:outline-none text-mountain-meadow"
       @click.prevent="selectFile"
     >
       {{ $t("BaseFileUploader.button") }}
@@ -44,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "FileUploader",

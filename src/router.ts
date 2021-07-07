@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import {
   createRouter,
   createWebHashHistory,
@@ -44,8 +45,6 @@ import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
 
-
-
 const routes = [
   {
     path: "/",
@@ -57,7 +56,11 @@ const routes = [
         component: TermsConditions,
         name: "terms",
       },
-      { path: "/privacy-policy", component: PrivacyPolicy, name: "privacy" },
+      {
+        path: "/privacy-policy",
+        component: PrivacyPolicy,
+        name: "privacy",
+      },
       {
         path: "/access",
         component: Access,
@@ -229,8 +232,8 @@ const routes = [
           {
             component: InterfaceConvertUnits,
             path: "convert-units",
-            name: "tools.convert.units"
-          }
+            name: "tools.convert.units",
+          },
         ],
       },
     ],

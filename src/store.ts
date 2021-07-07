@@ -1,23 +1,26 @@
 import type { PrivateKey, AccountId, PublicKey } from "@hashgraph/sdk";
-import BigNumber from "bignumber.js";
+import { BigNumber } from "bignumber.js";
 import { defineStore } from "pinia";
+
 import { Wallet } from "./domain/wallet/abstract";
 import { AccountBalance, SimpleHederaClient } from "./services/hedera";
 import { useContainer } from "./hooks/container";
 
 interface State {
-  network: "mainnet" | "testnet" | "previewnet";
-  // the wallet that has been unlocked
-  wallet: Wallet | null;
-  // the specific instantiation of a client
-  // from the unlocked wallet that is being used
-  client: SimpleHederaClient | null;
-  // the balance of the account associated with the client
-  balance: AccountBalance | null;
-  // the current price of HBARS in USD
-  hbarPriceUsd: BigNumber.Instance | null;
-  // a place to stuff extra information needed to process a transaction
-  extraTxInfo: Record<string, string | number> | null;
+    network: "mainnet" | "testnet" | "previewnet";
+    // the wallet that has been unlocked
+    wallet: Wallet | null;
+    // the specific instantiation of a client
+    // from the unlocked wallet that is being used
+    client: SimpleHederaClient | null;
+    // the balance of the account associated with the client
+    balance: AccountBalance | null;
+    // the current price of HBARS in USD
+    hbarPriceUsd: BigNumber.Instance | null;
+    // a place to stuff extra information needed to process a transaction
+    extraTxInfo: Record<string, string | number> | null;
+    // is there an open prompt for the user on their hardware wallet
+    prompt: boolean;
 }
 
 export const useStore = defineStore({
@@ -30,7 +33,8 @@ export const useStore = defineStore({
       hbarPriceUsd: null,
       balance: null,
       network: "mainnet",
-      extraTxInfo: null
+      extraTxInfo: null,
+      prompt: false
     };
   },
 
@@ -46,14 +50,14 @@ export const useStore = defineStore({
     accountId(): AccountId | null {
       return this.client?.getAccountId() ?? null;
     },
-    
+
     getClient(): SimpleHederaClient | null {
       return this.client ?? null;
     },
 
     extraInfo(): Record<string, string | number> | null {
       return this.extraTxInfo;
-    }
+    },
   },
 
   actions: {
@@ -77,7 +81,7 @@ export const useStore = defineStore({
 
     async requestHbarPrice() {
       this.hbarPriceUsd =
-        await useContainer().cradle.hbarPrice.getHbarPriceInUsd();
+                await useContainer().cradle.hbarPrice.getHbarPriceInUsd();
     },
 
     async requestAccountBalance() {
@@ -88,6 +92,10 @@ export const useStore = defineStore({
 
     setExtraInfo(info: Record<string, string | number>): void {
       this.extraTxInfo = info;
+    },
+
+    setPromptOpen(open: boolean): void {
+      this.prompt = open;
     }
   },
 });

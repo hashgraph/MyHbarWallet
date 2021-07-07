@@ -1,15 +1,10 @@
 <template>
   <div
-    class="
-      py-4
-      border-cerebral-grey border-t
-      dark:border-midnight-express
-      lg:px-10
-      lg:grid lg:grid-flow-col
-      lg:auto-cols-fr
-    "
+    class="py-4 border-t  border-cerebral-grey dark:border-midnight-express lg:px-10 lg:grid lg:grid-flow-col lg:auto-cols-fr"
   >
-    <div class="text-sm mb-1 lg:text-base lg:mb-0">{{ title }}</div>
+    <div class="mb-1 text-sm lg:text-base lg:mb-0">
+      {{ title }}
+    </div>
 
     <div>{{ stat }}</div>
   </div>

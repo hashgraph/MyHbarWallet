@@ -1,32 +1,33 @@
 <template>
   <button
-    class="
-      bg-first-snow
-      dark:bg-midnight-express
-      text-sm text-carbon
-      dark:text-silver-polish
-      font-medium
-      rounded
-      py-1
-      px-4
-      mr-1
-    "
+    class="px-4 py-1 mr-1 text-sm font-medium rounded  bg-first-snow dark:bg-midnight-express text-carbon dark:text-silver-polish"
   >
     <div v-if="value == 'right'">
-      <Image :light="chevronRight" :dark="chevronRightDark" class="h-4" />
+      <Image
+        :light="chevronRight"
+        :dark="chevronRightDark"
+        class="h-4"
+      />
     </div>
 
     <div v-else-if="value == 'left'">
-      <Image :light="chevronLeft" :dark="chevronLeftDark" class="h-4" />
+      <Image
+        :light="chevronLeft"
+        :dark="chevronLeftDark"
+        class="h-4"
+      />
     </div>
 
-    <div v-else>{{ value }}</div>
+    <div v-else>
+      {{ value }}
+    </div>
   </button>
 </template>
 
 <script lang="ts">
-import Image from "../base/Image.vue";
 import { defineComponent } from "vue";
+
+import Image from "../base/Image.vue";
 import chevronLeft from "../../assets/chevron_left.svg";
 import chevronLeftDark from "../../assets/dark/chevron_left.svg";
 import chevronRight from "../../assets/chevron_right.svg";

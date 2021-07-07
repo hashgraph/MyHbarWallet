@@ -1,51 +1,33 @@
 <template>
-  <div class="px-5 md:pt-24 pt-14 mb-20 md:pb-40">
+  <div class="px-5 mb-20 md:pt-24 pt-14 md:pb-40">
     <div class="mx-auto">
       <div
-        class="
-          text-3xl text-center text-carbon
-          dark:text-white
-          font-semibold
-          mb-8
-        "
+        class="mb-8 text-3xl font-semibold text-center  text-carbon dark:text-white"
       >
         {{ $t("Marketing.faqs.header") }}
       </div>
 
       <div
-        class="
-          text-center text-abbadon-black
-          dark:text-white
-          font-medium
-          text-base
-          mb-8
-          md:mb-12
-        "
+        class="mb-8 text-base font-medium text-center  text-abbadon-black dark:text-white md:mb-12"
       >
         {{ $t("Marketing.faqs.paragraph") }}
       </div>
 
       <div
-        class="
-          flex flex-col
-          items-center
-          lg:items-start
-          justify-center
-          lg:flex-row
-        "
+        class="flex flex-col items-center justify-center  lg:items-start lg:flex-row"
       >
         <Image
           class="
-            w-[200px]
-            h-[200px]
-            md:w-[300px]
-            md:h-[300px]
-            lg:mt-16
-            lg:mr-20
-            lg:mb-0
-            mb-8
-            md:mb-12
-          "
+                        w-[200px]
+                        h-[200px]
+                        md:w-[300px]
+                        md:h-[300px]
+                        lg:mt-16
+                        lg:mr-20
+                        lg:mb-0
+                        mb-8
+                        md:mb-12
+                    "
           :light="faqsLight"
           :dark="faqsDark"
           alt="questions"
@@ -79,10 +61,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Faq from "./Faq.vue";
+
 import Image from "../base/Image.vue";
 import faqsLight from "../../assets/img_faqs.svg";
 import faqsDark from "../../assets/dark/img_faqs.svg";
+
+import Faq from "./Faq.vue";
 
 export default defineComponent({
   name: "Faqs",

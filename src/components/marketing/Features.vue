@@ -1,29 +1,20 @@
 <template>
   <div
-    class="
-      md:py-32
-      py-12
-      px-5
-      bg-gradient-to-b
-      from-first-snow
-      dark:from-midnight-express
-      to-white
-      dark:to-black
-    "
+    class="px-5 py-12  md:py-32 bg-gradient-to-b from-first-snow dark:from-midnight-express to-white dark:to-black"
   >
     <div
       class="
-        grid
-        gap-[80px]
-        md:gap-[100px]
-        lg:grid-cols-[400px,400px]
-        xl:grid-cols-[500px,500px]
-        container
-        mx-auto
-        justify-center
-        lg:max-w-[initial]
-        max-w-[400px]
-      "
+                grid
+                gap-[80px]
+                md:gap-[100px]
+                lg:grid-cols-[400px,400px]
+                xl:grid-cols-[500px,500px]
+                container
+                mx-auto
+                justify-center
+                lg:max-w-[initial]
+                max-w-[400px]
+            "
     >
       <Feature
         :img="hbar"
@@ -42,8 +33,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import hbar from "../../assets/img_hbar.svg";
 import thumbdrive from "../../assets/img_hardware-1.svg";
+
 import Feature from "./Feature.vue";
 
 export default defineComponent({

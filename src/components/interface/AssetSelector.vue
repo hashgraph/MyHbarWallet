@@ -1,20 +1,12 @@
 <template>
-  <div ref="container" class="relative bg-white">
+  <div
+    ref="container"
+    class="relative bg-white"
+  >
     <!-- Current Asset -->
     <div
       ref="trigger"
-      class="
-        border border-cerebral-grey
-        h-[50px]
-        flex
-        items-center
-        pl-2
-        pr-5
-        cursor-pointer
-        select-none
-        rounded
-        hover:bg-lynx-white
-      "
+      class="border border-cerebral-grey h-[50px] flex items-center pl-2 pr-5 cursor-pointer select-none rounded hover:bg-lynx-white"
       :class="{
         'bg-lynx-white': groupFocus,
       }"
@@ -24,20 +16,21 @@
         v-if="modelValue === 'HBAR'"
         class="mx-3 w-7 h-7"
         src="../../assets/hedera-hashgraph-logo.svg"
-        alt=""
-      />
+      >
+
       <img
         v-else
         class="mx-3 w-7 h-7"
         src="../../assets/img_token_gen.svg"
-        alt=""
-      />
+      >
 
-      <div class="flex-1 font-medium pr-5">{{ modelValue }}</div>
+      <div class="flex-1 pr-5 font-medium">
+        {{ modelValue }}
+      </div>
 
       <div
         v-if="hbarPrice && modelValue === 'HBAR'"
-        class="mr-4 text-squant text-sm"
+        class="mr-4 text-sm text-squant"
       >
         {{
           hbarPrice.toFormat(4, {
@@ -51,28 +44,14 @@
       </div>
 
       <img
-        class="w-7 h-7 transform"
+        class="transform w-7 h-7"
         :class="{ 'rotate-180': groupFocus }"
         src="../../assets/chevron_down.svg"
-        alt=""
-      />
+      >
     </div>
     <!-- Options -->
     <div
-      class="
-        absolute
-        z-20
-        border border-cerebral-grey
-        left-0
-        right-0
-        rounded
-        bg-white
-        transition-all
-        max-h-[300px]
-        flex flex-col
-        pt-[50px]
-        duration-200
-      "
+      class="absolute z-20 border border-cerebral-grey left-0 right-0 rounded bg-white transition-all max-h-[300px] flex flex-col pt-[50px] duration-200"
       :class="{
         'opacity-100 top-[60px]': groupFocus,
         'opacity-0 pointer-events-none top-[40px]': !groupFocus,
@@ -84,49 +63,37 @@
           ref="searchInput"
           v-model="searchTerm"
           autofocus
-          class="
-            w-full
-            border-cerebral-grey
-            h-[50px]
-            px-5
-            placeholder-squant
-            rounded-t
-            focus:ring-0
-            focus:border-cerebral-grey
-          "
+          class="w-full border-cerebral-grey h-[50px] px-5 placeholder-squant rounded-t focus:ring-0 focus:border-cerebral-grey"
           type="text"
           placeholder="Search assets …"
           @keydown="onKeyDown"
-        />
+        >
       </div>
       <div class="overflow-y-auto">
         <template v-if="filteredAssets && filteredAssets.length > 0">
           <template
-            v-for="({ name: assetName, balance }, index) of filteredAssets"
+            v-for="(
+              { name: assetName, balance }, index
+            ) of filteredAssets"
             :key="assetName"
           >
             <div
-              :ref="setOptionRef"
-              class="
-                h-[50px]
-                flex
-                items-center
-                px-5
-                hover:bg-lynx-white
-                cursor-pointer
-                last:rounded-b
-              "
+              ref="setOptionRef"
+              class="h-[50px] flex items-center px-5 hover:bg-lynx-white cursor-pointer last:rounded-b"
               :class="{
                 'bg-lynx-white': focusIndex === index,
                 '!bg-first-snow dark:!bg-midnight-express':
                   modelValue === assetName,
-                'bg-white dark:bg-ruined-smores': modelValue !== assetName,
+                'bg-white dark:bg-ruined-smores':
+                  modelValue !== assetName,
               }"
               @mouseenter="onMouseEnterAsset(index)"
               @click="onSelectAsset(assetName)"
             >
-              <div class="flex-1 font-medium">{{ assetName }}</div>
-              <div class="text-squant text-sm">
+              <div class="flex-1 font-medium">
+                {{ assetName }}
+              </div>
+              <div class="text-sm text-squant">
                 {{
                   balance.toFormat({
                     groupSize: 3,
@@ -137,15 +104,22 @@
               </div>
               <img
                 v-if="assetName === modelValue"
-                alt=""
-                class="ml-5 w-5 h-5 flex-shrink-0"
+                class="flex-shrink-0 w-5 h-5 ml-5"
                 src="../../assets/icon_check.svg"
+              >
+              <div
+                v-else
+                class="w-10"
               />
-              <div v-else class="w-10" />
             </div>
           </template>
         </template>
-        <div v-else class="text-squant text-sm px-5 py-3">No assets found.</div>
+        <div
+          v-else
+          class="px-5 py-3 text-sm text-squant"
+        >
+          No assets found.
+        </div>
       </div>
     </div>
   </div>
@@ -154,8 +128,9 @@
 <script lang="ts">
 import { computed, defineComponent, onBeforeUpdate, ref, watch } from "vue";
 import { onClickOutside } from "@vueuse/core";
+import { BigNumber } from "bignumber.js";
+
 import { useStore } from "../../store";
-import BigNumber from "bignumber.js";
 
 export interface Asset {
   name: string;
@@ -241,24 +216,25 @@ export default defineComponent({
       store.balance == null
         ? null
         : [
-            {
-              name: "HBAR",
-              decimals: 8,
-              balance: store.balance.hbars,
-            },
-            ...Array.from(store.balance.tokens.entries()).map(
-              ([tokenId, token]) => ({
-                name: tokenId,
-                decimals: token.decimals,
-                balance: token.balance,
-              })
-            ),
-          ]
+          {
+            name: "HBAR",
+            decimals: 8,
+            balance: store.balance.hbars,
+          },
+          ...Array.from(store.balance.tokens.entries()).map(
+            ([tokenId, token]) => ({
+              name: tokenId,
+              decimals: token.decimals,
+              balance: token.balance,
+            })
+          ),
+        ]
     );
 
     const filteredAssets = computed(() =>
       assets.value?.filter(
-        ({ name, balance }) => balance.gt(0) && name.includes(searchTerm.value)
+        ({ name, balance }) =>
+          balance.gt(0) && name.includes(searchTerm.value)
       )
     );
 

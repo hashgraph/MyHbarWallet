@@ -12,16 +12,18 @@ export function useOperatingSystem(): string | null {
 }
 
 export async function isMobile(): Promise<boolean> {
+  if (platform.product != null) {
     if (platform.product != null) {
-        if (platform.product != null) {
-            if (AppleRegex.exec(platform.product) != null ||
-                    AndroidRegex.exec(platform.product) != null ||
-                    LGRegex.exec(platform.product) != null ||
-                    GoogleRegex.exec(platform.product)) {
-                return true;
-            }
-        }
+      if (
+        AppleRegex.exec(platform.product) != null ||
+                AndroidRegex.exec(platform.product) != null ||
+                LGRegex.exec(platform.product) != null ||
+                GoogleRegex.exec(platform.product)
+      ) {
+        return true;
+      }
     }
+  }
 
-    return false;
+  return false;
 }

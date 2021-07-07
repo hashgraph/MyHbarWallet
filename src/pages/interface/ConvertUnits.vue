@@ -1,90 +1,85 @@
 <template>
-  <Headline :title="$t('InterfaceConvertUnits')" parent="tools" />
+  <Headline
+    :title="$t('InterfaceConvertUnits')"
+    parent="tools"
+  />
   <div
-    class="
-      mt-8
-      font-medium
-      text-carbon
-      pb-10
-      border-b border-cerebral-grey
-      dark:border-midnight-express
-      items-center
-    "
+    class="items-center pb-10 mt-8 font-medium border-b text-carbon border-cerebral-grey dark:border-midnight-express"
   >
-    <div class="page-subtitle m-16">
+    <div class="m-16 page-subtitle">
       {{ $t("ourHelpfulConversionTool") }}
     </div>
 
-    <div class="flex-wrap flex items-stretch m-16">
-      <div class="block-left w-5/12 m-auto">
+    <div class="flex flex-wrap items-stretch m-16">
+      <div class="w-5/12 m-auto block-left">
         <div class="input-block">
           <TextInput
-            class="m-1"
             v-model="state.valueLeft"
-            :modelValue="$t('common.amount')"
+            class="m-1"
+            :placeholder="$t('common.amount')"
             @update:modelValue="handleInputValueLeft"
           />
         </div>
 
         <div class="select-block">
-          <DropdownSelector
-            class="m-2"
+          <Select
             v-model="state.selectedLeft"
+            class="m-2"
             :options="state.units"
-            :modelValue="state.units[0].name"
+            :placeholder="state.units[0].name"
             @update:modelValue="handleSelect"
           />
         </div>
       </div>
 
-      <div class="block-center self-center">
-        <img src="../../assets/swap.svg" alt="Swap" />
+      <div class="self-center block-center">
+        <img
+          src="../../assets/swap.svg"
+          alt="Swap"
+        >
       </div>
 
-      <div class="block-right w-5/12 m-auto">
+      <div class="w-5/12 m-auto block-right">
         <TextInput
-          class="m-1"
           v-model="state.valueRight"
-          :modelValue="'1'"
+          class="m-1"
           @update:modelValue="handleInputValueRight"
         />
+
         <div class="select-block">
-          <DropdownSelector
-            class="m-2"
+          <Select
             v-model="state.selectedRight"
+            class="m-2"
             :options="state.units"
-            :modelValue="state.units[2].name"
             @update:modelValue="handleSelect"
           />
         </div>
       </div>
     </div>
 
-    <div class="unit-table m-16 items-center">
-      <div class="unit-table-header mt-16 mb-6 font-semibold text-center">
+    <div class="items-center m-16 unit-table">
+      <div class="mt-16 mb-6 font-semibold text-center unit-table-header">
         {{ $t("referenceGuideTitle") }}
       </div>
 
       <div class="table min-w-full m-auto">
         <div
           v-for="unit in state.units"
-          :key="unit.key"
+          :key="unit.name"
           class="table-row-group"
         >
           <div class="table-row">
             <span
-              class="table-cell w-1/3 border-b border-cerebral-grey pl-6 py-3"
-              >{{ unit.name }}</span
-            >
+              class="table-cell w-1/3 py-3 pl-6 border-b border-cerebral-grey"
+            >{{ unit.name }}</span>
             <span
-              class="table-cell w-1/3 border-b border-cerebral-grey pl-10 py-3"
+              class="table-cell w-1/3 py-3 pl-10 border-b border-cerebral-grey"
             >
-              {{ unit.amount }} {{ unit.symbol }}
+              <!-- {{ unit.amount }} {{ unit.symbol }} -->
             </span>
-            <span
-              class="table-cell w-1/3 border-b border-cerebral-grey pl-16 py-3"
-              >{{ unit.amountInHbar }} ℏ</span
-            >
+            <!-- <span
+              class="table-cell w-1/3 py-3 pl-16 border-b border-cerebral-grey"
+            >{{ unit.amountInHbar }} ℏ</span> -->
           </div>
         </div>
       </div>
@@ -92,21 +87,21 @@
   </div>
 </template>
 
-
-<script lang= "ts">
+<script lang="ts">
 import { defineComponent, reactive } from "vue";
+import { HbarUnit, Hbar } from "@hashgraph/sdk";
+import { BigNumber } from "bignumber.js";
+
 import Headline from "../../components/interface/Headline.vue";
 import TextInput from "../../components/base/TextInput.vue";
-import DropdownSelector from "../../components/base/DropdownSelector.vue";
-import { HbarUnit, Hbar } from "@hashgraph/sdk";
-import BigNumber from "bignumber.js";
+import Select, { Option } from "../../components/base/Select.vue";
 
 export default defineComponent({
   name: "ConvertUnits",
   components: {
     Headline,
     TextInput,
-    DropdownSelector,
+    Select,
   },
   setup() {
     BigNumber.config({
@@ -115,6 +110,7 @@ export default defineComponent({
       EXPONENTIAL_AT: 64,
     });
 
+    // TODO: Fix
     let state = reactive({
       selectedLeft: "Tinybar",
       selectedRight: "Hbar",
@@ -171,22 +167,16 @@ export default defineComponent({
           amount: "1",
           amountInHbar: "1,000,000,000",
         },
-      ],
+      ] as unknown as Option[],
     });
 
-    function handleInputValueLeft(value: string, e: Event): void {
-      if (isNaN(value)) {
-        return;
-      }
+    function handleInputValueLeft(value: string): void {
       state.valueLeft = value;
       computeValueRight();
       computeValueLeft();
     }
 
-    function handleInputValueRight(value: string, e: Event): void {
-      if (isNaN(value)) {
-        return;
-      }
+    function handleInputValueRight(value: string): void {
       state.valueRight = value;
       computeValueLeft();
       computeValueRight();
@@ -259,6 +249,3 @@ export default defineComponent({
   },
 });
 </script>
-
-
-

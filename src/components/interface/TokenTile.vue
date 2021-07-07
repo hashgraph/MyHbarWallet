@@ -6,7 +6,11 @@
     ]"
   >
     <div class="flex flex-wrap items-center lg:items-start">
-      <img class="h-16 mr-5" :src="img" alt="" />
+      <img
+        class="h-16 mr-5"
+        :src="img"
+        alt=""
+      >
 
       <div class="contents lg:block">
         <div class="text-2xl font-semibold lg:mb-2">
@@ -14,14 +18,7 @@
         </div>
 
         <div
-          class="
-            text-squant
-            leading-5
-            max-w-lg
-            order-4
-            lg:order-2
-            dark:text-argent
-          "
+          class="order-4 max-w-lg leading-5  text-squant lg:order-2 dark:text-argent"
         >
           {{ blurb }}
         </div>
@@ -60,7 +57,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import greenCheck from "../../assets/icon_check_green.svg";
+
 import TokenStat from "./TokenStat.vue";
 import TokenAssociateButton from "./TokenAssociateButton.vue";
 

@@ -1,6 +1,6 @@
 <template>
   <Button
-    :color="associated ? '' : 'white'"
+    :color="associated ? 'green' : 'white'"
     :class="[
       'flex-grow lg:flex-grow-0 py-2',
       {
@@ -13,15 +13,12 @@
   >
     <div
       v-if="associated"
-      class="
-        flex
-        justify-center
-        rounded-3xl
-        font-semibold
-        dark:text-silver-polish
-      "
+      class="flex justify-center font-semibold rounded-3xl dark:text-silver-polish"
     >
-      <img class="w-5 mr-2" :src="greenCheck" />
+      <img
+        class="w-5 mr-2"
+        :src="greenCheck"
+      >
 
       {{ $t("BaseButton.associated") }}
     </div>
@@ -35,15 +32,18 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { RouteLocationRaw } from "vue-router";
-import Button from "../base/Button.vue";
 
+import Button from "../base/Button.vue";
 import greenCheck from "../../assets/icon_check_green.svg";
 
 export default defineComponent({
   name: "TokenAssociateButton",
   components: { Button },
   props: {
-    to: { type: [String, Object] as PropType<RouteLocationRaw>, default: null },
+    to: {
+      type: [String, Object] as PropType<RouteLocationRaw>,
+      default: null,
+    },
     associated: { type: Boolean, required: true },
   },
   setup() {

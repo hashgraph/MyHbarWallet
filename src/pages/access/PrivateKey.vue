@@ -19,7 +19,10 @@
       :error="isBadKey"
     />
 
-    <div v-if="isBadKey" class="mt-2 text-sm font-medium text-harlocks-cape">
+    <div
+      v-if="isBadKey"
+      class="mt-2 text-sm font-medium text-harlocks-cape"
+    >
       {{ $t("PrivateKey.access.badKey") }}
     </div>
 
@@ -35,16 +38,17 @@
 </template>
 
 <script lang="ts">
-import { PrivateKeySoftwareWallet } from "../../domain/wallet/software-private-key";
 import { defineComponent, ref, watch } from "vue";
 import { useRouter } from "vue-router";
+
+import { PrivateKeySoftwareWallet } from "../../domain/wallet/software-private-key";
 import { useStore } from "../../store";
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import KeyInput from "../../components/base/KeyInput.vue";
 
 export default defineComponent({
-  name: "AccessPrivateKey",
+  name: "PrivateKey",
   components: {
     Layout,
     Button,

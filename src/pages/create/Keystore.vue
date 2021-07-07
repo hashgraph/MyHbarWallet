@@ -1,5 +1,9 @@
 <template>
-  <Layout title="Keystore File" class="max-w-lg" :back="{ name: 'create' }">
+  <Layout
+    title="Keystore File"
+    class="max-w-lg"
+    :back="{ name: 'create' }"
+  >
     <div class="grid auto-rows-min gap-5">
       <PasswordInput
         v-model="password"
@@ -20,8 +24,8 @@
         :disabled="!ready"
         @click="handleSubmit"
       >
-        {{ $t("BaseButton.continue") }}</Button
-      >
+        {{ $t("BaseButton.continue") }}
+      </Button>
     </div>
   </Layout>
 </template>
@@ -35,12 +39,10 @@ import {
   nextTick,
 } from "vue";
 import { debouncedWatch } from "@vueuse/core";
-
 import { useRouter } from "vue-router";
+
 import { useStore } from "../../store";
-
 import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
-
 import Button from "../../components/base/Button.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";
 import InputError from "../../components/base/InputError.vue";
@@ -109,9 +111,9 @@ export default defineComponent({
       nextTick(() => {
         try {
           const wallet = new KeystoreSoftwareWallet(
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            keystore.value!,
-            password.value
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        keystore.value!,
+                        password.value
           );
           store.setWallet(wallet);
           router.push({ name: "access.account" });

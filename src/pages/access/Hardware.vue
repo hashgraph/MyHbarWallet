@@ -1,5 +1,9 @@
 <template>
-  <Layout title="Hardware" :back="{ name: 'access' }" class="max-w-3xl">
+  <Layout
+    title="Hardware"
+    :back="{ name: 'access' }"
+    class="max-w-3xl"
+  >
     <div class="grid gap-5 auto-rows-min">
       <OptionCard
         v-for="option in options"
@@ -18,6 +22,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import { HardwareOption, HardwareOptions } from "../../domain/HardwareOptions";
 import Layout from "../../components/access/Layout.vue";
 import OptionCard from "../../components/base/OptionCard.vue";
