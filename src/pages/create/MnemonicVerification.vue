@@ -5,7 +5,10 @@
     :back="{ name: 'create.mnemonic' }"
   >
     <div class="grid auto-rows-min gap-5">
-      <MnemonicInput v-model="mnemonicPhrase" :word-count="24" />
+      <MnemonicInput
+        v-model="mnemonicPhrase"
+        :word-count="24"
+      />
 
       <PasswordInput
         v-model="password"
@@ -15,7 +18,11 @@
         @error="handleError"
       />
 
-      <Button color="green" class="mt-14 w-full p-4" @click="handleSubmit">
+      <Button
+        color="green"
+        class="mt-14 w-full p-4"
+        @click="handleSubmit"
+      >
         Verify
       </Button>
     </div>
@@ -24,6 +31,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";

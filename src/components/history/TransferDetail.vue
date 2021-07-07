@@ -1,18 +1,12 @@
 <template>
   <div
-    class="
-      flex
-      items-center
-      h-16
-      border-b border-cerebral-grey
-      dark:border-midnight-express
-    "
+    class="flex items-center h-16 border-b  border-cerebral-grey dark:border-midnight-express"
   >
-    <div class="w-1/4 leading-5 text-squant pl-5 pr-2 dark:text-white">
+    <div class="w-1/4 pl-5 pr-2 leading-5 text-squant dark:text-white">
       {{ title }}
     </div>
     <div
-      class="flex items-center w-3/4 leading-5 pr-20 break-all"
+      class="flex items-center w-3/4 pr-20 leading-5 break-all"
       :class="[
         {
           'text-squant dark:text-argent': color === ColorOption.GRAY,
@@ -39,10 +33,10 @@
 import { defineComponent, PropType } from "vue";
 
 export enum ColorOption {
-  GREEN = "green",
-  CHARCOAL = "charcoal",
-  BLUE = "blue",
-  GRAY = "gray",
+    GREEN = "green",
+    CHARCOAL = "charcoal",
+    BLUE = "blue",
+    GRAY = "gray",
 }
 
 export default defineComponent({

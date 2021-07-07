@@ -78,7 +78,10 @@ describe("Mnemonic Access", () => {
       .click()
       .wait(1000);
 
-    cy.get("[data-cy-account-id]").should("contain", MNEMONIC22L_ACCOUNT_ID);
+    cy.get("[data-cy-account-id]").should(
+      "contain",
+      MNEMONIC22L_ACCOUNT_ID
+    );
   });
 
   it("can access by mnemonic phrase (24 words)", () => {
@@ -144,7 +147,10 @@ describe("Mnemonic Access", () => {
       .click()
       .wait(1000);
 
-    cy.get("[data-cy-account-id]").should("contain", MNEMONIC24L_ACCOUNT_ID);
+    cy.get("[data-cy-account-id]").should(
+      "contain",
+      MNEMONIC24L_ACCOUNT_ID
+    );
   });
 
   it("can access by mnemonic phrase (24 words, password)", () => {
@@ -181,6 +187,9 @@ describe("Mnemonic Access", () => {
       .click()
       .wait(1000);
 
-    cy.get("[data-cy-account-id]").should("contain", MNEMONIC24P_ACCOUNT_ID);
+    cy.get("[data-cy-account-id]").should(
+      "contain",
+      MNEMONIC24P_ACCOUNT_ID
+    );
   });
 });

@@ -1,7 +1,11 @@
 <template>
   <label class="flex items-center">
     <div class="w-10 mr-4">
-      <RadioButton ref="radio" :name="name" @radio-change="onRadioChange" />
+      <RadioButton
+        ref="radio"
+        :name="name"
+        @radio-change="onRadioChange"
+      />
     </div>
 
     <slot />
@@ -10,10 +14,11 @@
 
 <script lang="ts">
 import { ComponentPublicInstance, defineComponent, ref } from "vue";
+
 import RadioButtonVue, { RadioButton } from "../base/RadioButton.vue";
 
 export type RadioOption = ComponentPublicInstance & {
-  focus: () => void;
+    focus: () => void;
 };
 
 export default defineComponent({

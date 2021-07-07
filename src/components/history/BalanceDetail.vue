@@ -1,17 +1,7 @@
 <template>
-  <div class="w-1/2 leading-5 pl-5 mb-5">
+  <div class="w-1/2 pl-5 mb-5 leading-5">
     <div
-      class="
-        mt-3
-        rounded-lg
-        bg-first-snow
-        h-auto
-        w-96
-        p-5
-        border
-        dark:bg-ruined-smores
-        dark:border-argent
-      "
+      class="h-auto p-5 mt-3 border rounded-lg  bg-first-snow w-96 dark:bg-ruined-smores dark:border-argent"
     >
       <div class="flex mb-2">
         <div
@@ -47,7 +37,7 @@
           class="ml-auto dark:text-argent"
         >
           {{}}
-              {{ transfer.balance - transfer.transaction   }}
+          {{ transfer.balance - transfer.transaction }}
           HBAR
         </div>
       </div>

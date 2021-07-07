@@ -6,7 +6,18 @@
     />
 
     <div
-      class="absolute top-14 lg:right-0 lg:top-2 w-64 flex justify-around items-end text-andrea-blue font-medium"
+      class="
+                absolute
+                top-14
+                lg:right-0
+                lg:top-2
+                w-64
+                flex
+                justify-around
+                items-end
+                text-andrea-blue
+                font-medium
+            "
     >
       <span class="py-1 px-4 rounded text-white bg-andrea-blue">{{
         $t("InterfaceHistory.button.all")
@@ -34,6 +45,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import Headline from "../../components/interface/Headline.vue";
 import Transactions from "../../components/interface/Transactions.vue";
 

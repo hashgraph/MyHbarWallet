@@ -24,14 +24,13 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
+import { useRouter } from "vue-router";
 
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import InputError from "../../components/base/InputError.vue";
 import LedgerInfo from "../../components/access/LedgerInfo.vue";
-import KeyInput from "../../components/base/KeyInput.vue";
 import { LedgerHardwareWallet } from "../../domain/wallet/hardware-ledger";
-import { useRouter } from "vue-router";
 import { useStore } from "../../store";
 
 export default defineComponent({
@@ -41,7 +40,6 @@ export default defineComponent({
     Button,
     InputError,
     LedgerInfo,
-    KeyInput,
   },
   setup() {
     const router = useRouter();

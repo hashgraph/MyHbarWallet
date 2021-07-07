@@ -46,6 +46,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
+import { useRouter } from "vue-router";
+
 import FileUploader from "../../components/base/FileUploader.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";
 import InputError from "../../components/base/InputError.vue";
@@ -53,7 +55,6 @@ import Button from "../../components/base/Button.vue";
 import Layout from "../../components/access/Layout.vue";
 import { useStore } from "../../store";
 import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
-import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "Keystore",

@@ -22,12 +22,13 @@
 <script lang="ts">
 import { ComponentPublicInstance, defineComponent, reactive } from "vue";
 import { debouncedWatch } from "@vueuse/core";
+
 import TextInput from "./TextInput.vue";
 
 const PASSWORD_MIN_LEN = 9;
 
 export type PasswordInputInstance = ComponentPublicInstance & {
-  reset: () => void;
+    reset: () => void;
 };
 
 export default defineComponent({

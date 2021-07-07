@@ -1,5 +1,5 @@
 <template>
-  <div class="text-base text-black-out dark:text-white mt-5 mb-5">
+  <div class="mt-5 mb-5 text-base text-black-out dark:text-white">
     {{ $t("InterfaceTotalBalance.totalvalue") }}
   </div>
   <div class="flex items-center">
@@ -12,26 +12,19 @@
 
     <div
       v-if="balanceInUsd"
-      class="
-        font-semibold
-        text-5xl
-        md:text-6xl
-        leading-10
-        text-mountain-meadow
-        justify-center
-        flex
-      "
+      class="flex justify-center text-5xl font-semibold leading-10  md:text-6xl text-mountain-meadow"
     >
-      <span class="text-2xl self-start">$</span>{{ balanceInUsd }}
+      <span class="self-start text-2xl">$</span>{{ balanceInUsd }}
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { computed, defineComponent } from "vue";
+
 import { useStore } from "../../store";
 import Image from "../base/Image.vue";
 import wallet from "../../assets/img_wallet.svg";
-import { computed, defineComponent } from "vue";
 
 export default defineComponent({
   name: "TotalBalance",

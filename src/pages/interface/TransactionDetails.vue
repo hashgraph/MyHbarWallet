@@ -38,7 +38,11 @@
     :color="ColorOption.GREEN"
     :title="$t('InterfaceTransactionDetails.status')"
   >
-    <img class="mr-1.5 h-3 w-3" :src="checkmark" alt="green checkmark" />
+    <img
+      class="mr-1.5 h-3 w-3"
+      :src="checkmark"
+      alt="green checkmark"
+    >
     Success
   </TransferDetail>
 
@@ -54,7 +58,7 @@
     description=""
   >
     52157454
-    <span class="text-carbon dark:text-argent px-1"> in </span> 0.0.51273
+    <span class="px-1 text-carbon dark:text-argent"> in </span> 0.0.51273
   </TransferDetail>
 
   <TransferDetail
@@ -78,12 +82,12 @@
   <div class="flex my-4">
     <TransactionDetail />
 
-    <div class="flex mt-12 justify-center w-1/2">
+    <div class="flex justify-center w-1/2 mt-12">
       <img
         class="h-3 mt-3"
         src="../../assets/long_arrow.svg"
         alt="right arrow"
-      />
+      >
     </div>
 
     <BalanceDetail class="my-6" />
@@ -92,6 +96,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import checkmark from "../../assets/icon_check_green.svg";
 import Headline from "../../components/interface/Headline.vue";
 import TransferDetail, {

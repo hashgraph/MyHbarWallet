@@ -30,7 +30,8 @@
         {
           'text-sm': !mediumFont,
           'text-md font-roboto font-medium leading-tight': mediumFont,
-          'border-cerebral-grey dark:border-midnight-express': !valid && !error,
+          'border-cerebral-grey dark:border-midnight-express':
+            !valid && !error,
           'border-mountain-meadow focus:border-mountain-meadow focus:ring-mountain-meadow':
             valid,
           'border-harlocks-cape focus:border-harlocks-cape focus:ring-harlocks-cape':
@@ -42,38 +43,46 @@
       ]"
       v-bind="$attrs"
       @input="onInput"
-    />
-    <div v-if="charCounter" class="absolute -top-3 right-1">
-      <div class="text-xs text-argent">{{ numberOfChars }}/100</div>
+    >
+    <div
+      v-if="charCounter"
+      class="absolute -top-3 right-1"
+    >
+      <div class="text-xs text-argent">
+        {{ numberOfChars }}/100
+      </div>
     </div>
     <!-- FIXME: this should be flexed with the input in a container using group-focus -->
-    <div v-if="!multiline" class="absolute top-4 right-4">
+    <div
+      v-if="!multiline"
+      class="absolute top-4 right-4"
+    >
       <div class="flex">
         <img
           v-if="isEyeOpen && showEye"
-          class="mt-px w-4 cursor-pointer"
+          class="w-4 mt-px cursor-pointer"
           src="../../assets/icon_eye.svg"
           @click="clickEye"
-        />
+        >
 
         <img
           v-else-if="!isEyeOpen && showEye"
-          class="mt-px w-4 cursor-pointer"
+          class="w-4 mt-px cursor-pointer"
           src="../../assets/icon_eye_off.svg"
           @click="clickEye"
-        />
+        >
 
         <img
           v-if="valid"
-          class="mt-px w-4 cursor-pointer ml-2"
+          class="w-4 mt-px ml-2 cursor-pointer"
           src="../../assets/icon_check_green.svg"
-        />
+        >
 
         <img
           v-if="!valid && error"
-          class="mt-px w-4 cursor-pointer ml-2"
+          class="w-4 mt-px ml-2 cursor-pointer"
           src="../../assets/icon_error.svg"
-        />
+        >
       </div>
     </div>
   </div>

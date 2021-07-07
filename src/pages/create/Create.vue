@@ -1,14 +1,22 @@
 <template>
-  <Layout :title="$t('Create.title')" class="max-w-3xl">
+  <Layout
+    :title="$t('Create.title')"
+    class="max-w-3xl"
+  >
     <div class="grid gap-5 auto-rows-min">
-      <template v-for="option in options" :key="option.value">
+      <template
+        v-for="option in options"
+        :key="option.value"
+      >
         <!-- TODO: re-enable private key creates eventually -->
         <OptionCard
           v-if="option.value !== 'PrivateKey'"
           :data-cy-option="option.title"
           :light-icon="option.imageLight"
           :dark-icon="option.imageDark"
-          :to="{ name: option.route.replace('access.software', 'create') }"
+          :to="{
+            name: option.route.replace('access.software', 'create'),
+          }"
           :title="$t(option.title)"
           :desc="$t(option.description)"
           :recommended="option.value === SoftwareOption.Keystore"
@@ -20,6 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted } from "vue";
+
 import { SoftwareOption, SoftwareOptions } from "../../domain/SoftwareOptions";
 import Layout from "../../components/access/Layout.vue";
 import OptionCard from "../../components/base/OptionCard.vue";

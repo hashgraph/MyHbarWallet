@@ -1,5 +1,6 @@
 import type { Client } from "@hashgraph/sdk";
-import BigNumber from "bignumber.js";
+import { BigNumber } from "bignumber.js";
+
 import { AccountBalance, TokenBalance } from "../../../hedera";
 
 export async function getAccountBalance(

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col md:p-5 p-2">
+  <div class="flex flex-col p-2 md:p-5">
     <NavItem
       :icon="iconNavGreyHome"
       :active-icon="iconNavPurpleHome"
@@ -42,17 +42,18 @@
       :to="{ name: 'keys' }"
     />
 
-       <NavItem
-         :icon="iconNavGreyTools"
-         :active-icon="iconNavPurpleTools"
-         :text="$t('RouterLink.tools')"
-         :to="{ name: 'tools' }"
-       />
+    <NavItem
+      :icon="iconNavGreyTools"
+      :active-icon="iconNavPurpleTools"
+      :text="$t('RouterLink.tools')"
+      :to="{ name: 'tools' }"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 import NavItem from "../base/NavItem.vue";
 import iconNavGreyAssets from "../../assets/icon_nav_grey_assets.svg";
 import iconNavGreyHistory from "../../assets/icon_nav_grey_history.svg";
@@ -68,7 +69,6 @@ import iconNavPurpleKeys from "../../assets/icon_nav_purple_keys.svg";
 import iconNavPurplePeople from "../../assets/icon_nav_purple_people.svg";
 import iconNavPurpleTokens from "../../assets/icon_nav_purple_tokens.svg";
 import iconNavPurpleTools from "../../assets/icon_nav_purple_tools.svg";
-
 import { useScreen } from "../../hooks/screen";
 
 export default defineComponent({
@@ -94,7 +94,7 @@ export default defineComponent({
       iconNavPurpleTokens,
       iconNavPurpleTools,
       publicKey:
-        "91c45b125adf02b0200d554e6a82a19a80bca2d49e03148de90fffa61ffa600f",
+                "91c45b125adf02b0200d554e6a82a19a80bca2d49e03148de90fffa61ffa600f",
       accountId: "214102",
     };
   },

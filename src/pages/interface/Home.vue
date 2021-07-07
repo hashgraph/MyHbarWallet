@@ -2,7 +2,9 @@
   <div class="md:flex md:justify-between">
     <div>
       <div class="flex">
-        <div class="mr-2 text-3xl leading-9 text-carbon dark:text-white">
+        <div
+          class="mr-2 text-3xl leading-9 text-carbon dark:text-white"
+        >
           {{ $t("App.heyThere") }}
         </div>
 
@@ -24,19 +26,6 @@
     </div>
 
     <div class="flex justify-center py-12">
-      <!-- TODO: Implement BUY -->
-      <!-- <div>
-        <BaseImage
-          class="w-20 h-20"
-          :light="addAssetLight"
-          :dark="addAssetDark"
-          alt="money bills"
-        />
-
-        <div class="font-medium leading-5 text-center text-mountain-meadow">
-          {{ $t("InterfaceHome.button.buy") }}
-        </div>
-      </div> -->
       <div class="w-11" />
       <div>
         <router-link :to="{ name: 'send' }">
@@ -47,7 +36,9 @@
             alt="paper airplane"
           />
 
-          <div class="font-medium leading-5 text-center text-andrea-blue">
+          <div
+            class="font-medium leading-5 text-center text-andrea-blue"
+          >
             {{ $t("InterfaceHome.button.send") }}
           </div>
         </router-link>
@@ -58,14 +49,7 @@
   <div class="border-t border-cerebral-grey dark:border-midnight-express" />
 
   <div
-    class="
-      grid
-      md:grid-flow-col
-      md:gap-x-12
-      md:auto-cols-fr
-      mt-7
-      dark:bg-ruined-smores
-    "
+    class="grid md:grid-flow-col md:gap-x-12 md:auto-cols-fr mt-7 dark:bg-ruined-smores"
   >
     <Assets :limit-tokens="5" />
     <Transactions />
@@ -74,6 +58,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
+
 import { useStore } from "../../store";
 import addAssetLight from "../../assets/img_add.svg";
 import sendAssetLight from "../../assets/img_send.svg";
@@ -98,12 +83,8 @@ export default defineComponent({
     const store = useStore();
     const accountId = computed(() => store.accountId);
     const publicKey = computed(() => store.publicKey);
-
     void store.requestHbarPrice();
 
-
-
-    console.log(accountId);
     return {
       accountId,
       publicKey,

@@ -5,14 +5,15 @@ import {
   asClass,
 } from "awilix";
 import { App, inject, InjectionKey } from "vue";
+
 import { HbarPriceService } from "../services/hbar-price";
 import { HederaService } from "../services/hedera";
 import { CoingeckoHbarPriceServiceImpl } from "../services/impl/hbar-price-coingecko";
 import { HederaServiceImpl } from "../services/impl/hedera";
 
 interface Cradle {
-  hedera: HederaService;
-  hbarPrice: HbarPriceService;
+    hedera: HederaService;
+    hbarPrice: HbarPriceService;
 }
 
 const container = createContainer<Cradle>({

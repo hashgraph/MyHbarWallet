@@ -2,8 +2,8 @@ import { AccountId } from "@hashgraph/sdk";
 import { BigNumber } from "bignumber.js";
 
 export enum Asset {
-    Hbar="Hbar",
-    Token="Token"
+    Hbar = "Hbar",
+    Token = "Token",
 }
 
 export interface Transfer {

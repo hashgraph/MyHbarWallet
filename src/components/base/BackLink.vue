@@ -1,28 +1,18 @@
 <template>
-  <div class="container absolute left-0 right-0 mx-auto max-w-7xl pt-6">
+  <div class="container absolute left-0 right-0 pt-6 mx-auto max-w-7xl">
     <router-link
-      class="
-        text-mountain-meadow
-        font-medium
-        ml-3
-        md:ml-8
-        lg:ml-12
-        px-2
-        py-1
-        rounded-full
-        -my-1
-        w-max
-        flex
-        justify-center
-        hover:opacity-60
-        outline-none
-        focus-visible:ring-mountain-meadow focus-visible:ring-2
-      "
+      class="flex justify-center px-2 py-1 ml-3 -my-1 font-medium rounded-full outline-none text-mountain-meadow md:ml-8 lg:ml-12 w-max hover:opacity-60 focus-visible:ring-mountain-meadow focus-visible:ring-2"
       :to="to"
     >
-      <img width="16" :src="arrowLeft" alt="green arrow" />
+      <img
+        width="16"
+        :src="arrowLeft"
+        alt="green arrow"
+      >
 
-      <div class="ml-2">{{ $t("BackLink") }}</div>
+      <div class="ml-2">
+        {{ $t("BackLink") }}
+      </div>
     </router-link>
   </div>
 </template>
@@ -30,6 +20,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { RouteLocationRaw } from "vue-router";
+
 import arrowLeft from "../../assets/icon_arrow_left.svg";
 
 export default defineComponent({
