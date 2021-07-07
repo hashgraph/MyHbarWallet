@@ -3,23 +3,11 @@ import {
   SimpleHederaClient,
   SimpleTransfer,
 } from "../../../hedera";
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import type { Client, PublicKey, PrivateKey, AccountId, TokenId } from "@hashgraph/sdk";
 import { getAccountBalance } from "./get-account-balance";
 import { transfer } from "./transfer";
 import { associateToken } from "./associate-token";
-=======
-import type { Client, PublicKey, PrivateKey, AccountId } from "@hashgraph/sdk";
-import { getAccountBalance } from "./get-account-balance";
-import { transfer } from "./transfer";
->>>>>>> fb8f1540 (wip: 0.6.0-pre)
-=======
-import type { Client, PublicKey, PrivateKey, AccountId, TokenId } from "@hashgraph/sdk";
-import { getAccountBalance } from "./get-account-balance";
-import { transfer } from "./transfer";
-import { associateToken } from "./associate-token";
->>>>>>> 7db6eb5b (wip: restructure code to use services layer)
 import BigNumber from "bignumber.js";
 
 export class SimpleHederaClientImpl implements SimpleHederaClient {
@@ -58,10 +46,6 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
   }): Promise<void> {
     return transfer(this._client, options);
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 7db6eb5b (wip: restructure code to use services layer)
 
   // Associate a list of tokens to an account
   associateToken(options: {
@@ -70,9 +54,5 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
   }): Promise<void> {
     return associateToken(this._client, options);
   }
-<<<<<<< HEAD
-=======
->>>>>>> fb8f1540 (wip: 0.6.0-pre)
-=======
->>>>>>> 7db6eb5b (wip: restructure code to use services layer)
+
 }

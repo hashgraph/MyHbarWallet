@@ -46,11 +46,7 @@ export const useStore = defineStore({
     accountId(): AccountId | null {
       return this.client?.getAccountId() ?? null;
     },
-<<<<<<< HEAD
     
-=======
-
->>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
     getClient(): SimpleHederaClient | null {
       return this.client ?? null;
     },
@@ -92,11 +88,6 @@ export const useStore = defineStore({
 
     setExtraInfo(info: Record<string, string | number>): void {
       this.extraTxInfo = info;
-<<<<<<< HEAD
     }
   },
-=======
-    },
-  }
->>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
 });
