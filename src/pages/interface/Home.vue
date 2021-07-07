@@ -1,11 +1,7 @@
 <template>
   <div class="md:flex md:justify-between">
     <div>
-<<<<<<< HEAD
-      <div class="flex w-full">
-=======
       <div class="flex">
->>>>>>> 0e31c2ba (Fixed merge conflicts, issues with router.)
         <div class="mr-2 text-3xl leading-9 text-carbon dark:text-white">
           {{ $t("App.heyThere") }}
         </div>
