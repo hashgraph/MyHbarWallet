@@ -54,16 +54,13 @@
         <TextInput
           v-model="state.valueRight"
           :modelValue="1"
-
           @update:modelValue="handleInputValueRight"
         />
 
         <div class="select-block">
-          <DropdownSelector
+          <Select
             class="m-2 w-full"
-
             v-model="state.selectedRight"
-            class="m-2"
             :options="state.units"
             @update:modelValue="handleSelect"
           />
@@ -107,7 +104,7 @@ import { BigNumber } from "bignumber.js";
 
 import Headline from "../../components/interface/Headline.vue";
 import TextInput from "../../components/base/TextInput.vue";
-import DropdownSelector from "../../components/base/DropdownSelector.vue";
+import Select from "../../components/base/Select.vue";
 import { HbarUnit, Hbar } from "@hashgraph/sdk";
 import BigNumber from "bignumber.js";
 // import Hbar from "../../utils/test-bignumber.js";
