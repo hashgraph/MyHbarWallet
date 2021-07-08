@@ -12,7 +12,7 @@
     "cy:dev": "cypress open",
     "dev": "vite",
     "electron:dev": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' electron -r ts-node/register src/electron/main.ts",
-    "prebuild": "[[ $CI = true ]] && npx pnpm install --store=node_modules/.pnpm-store || echo skiping pnpm install",
+    "prebuild": "npx pnpm install -r --store=node_modules/.pnpm-store || echo skiping pnpm install",
     "build": "cross-env NODE_ENV=production vite build",
     "fmt": "eslint --ext .ts,vue . --fix",
     "vti": "vti diagnostics",
