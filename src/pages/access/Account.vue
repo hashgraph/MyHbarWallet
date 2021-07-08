@@ -152,7 +152,7 @@ export default defineComponent({
         state.wallet = store.wallet;
         let key: PublicKey | undefined = undefined;
         
-        for (let keyIdx = -1; keyIdx >= state.wallet.minIndex; keyIdx--) {
+        for (let keyIdx = 0; keyIdx >= state.wallet.minIndex; keyIdx--) {
           key = await state.wallet.getPublicKey(keyIdx);
           break;
         }
@@ -175,7 +175,7 @@ export default defineComponent({
         if (state.wallet.minIndex < 0) {
           let moreKeys = [];
 
-          for (let keyIdx = -1; keyIdx >= state.wallet.minIndex; keyIdx--) {
+          for (let keyIdx = 0; keyIdx >= state.wallet.minIndex; keyIdx--) {
             const key = await state.wallet.getPublicKey(keyIdx);
             if (key) moreKeys.push(key);
           }
