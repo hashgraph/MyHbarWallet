@@ -32,7 +32,6 @@
   "dependencies": {
     "@hashgraph/sdk": "^2.0.24",
     "@ledgerhq/hw-transport": "^6.1.0",
-    "@ledgerhq/hw-transport-node-hid-noevents": "^6.1.0",
     "@ledgerhq/hw-transport-web-ble": "^6.1.0",
     "@ledgerhq/hw-transport-webusb": "^6.1.0",
     "@vueuse/core": "^4.11.2",

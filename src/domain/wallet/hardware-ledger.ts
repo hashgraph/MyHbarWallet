@@ -45,14 +45,7 @@ export class LedgerHardwareWallet extends Wallet {
     }
 
     // Note: Transports must be dynamically imported for builtin polyfills to work
-    if (isElectron()) {
-      const TransportNodeHID = (
-        await import("@ledgerhq/hw-transport-node-hid-noevents")
-      )["default"];
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.transport = await TransportNodeHID.open("");
-    } else if (await isMobile()) {
+    if (await isMobile()) {
       const TransportWebBLE = (
         await import("@ledgerhq/hw-transport-web-ble")
       )["default"];
