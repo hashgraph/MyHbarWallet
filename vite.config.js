@@ -60,6 +60,7 @@ export default async function ({ mode }) {
       __APP_LAST_COMMIT_SHORT_HASH__: JSON.stringify(lastCommit.shortHash),
     },
     build: {
+      outDir: "dist/web",
       rollupOptions: {
         output: {
           manualChunks(id) {
