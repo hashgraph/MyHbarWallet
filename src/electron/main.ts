@@ -42,7 +42,7 @@ function createMainWindow() {
   if (app.isPackaged) {
     win.loadFile("dist/index.html");
   } else {
-    win.loadURL(`http://localhost:${process.env.PORT || 3000}#wallet/new`);
+    win.loadURL("http://localhost:3000#wallet/new");
   }
 }
 
