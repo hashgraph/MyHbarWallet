@@ -23,12 +23,11 @@
     "check:types:tests:cypress": "tsc -p tests/cypress"
   },
   "dependencies": {
-    "@hashgraph/sdk": "^2.0.20",
-    "@ledgerhq/hw-transport": "^6.0.2",
-    "@ledgerhq/hw-transport-node-hid-noevents": "^6.0.2",
-    "@ledgerhq/hw-transport-web-ble": "^6.0.2",
-    "@ledgerhq/hw-transport-webusb": "^6.0.2",
-    "@vueuse/core": "^4.11.0",
+    "@hashgraph/sdk": "^2.0.24",
+    "@ledgerhq/hw-transport": "^6.1.0",
+    "@ledgerhq/hw-transport-web-ble": "^6.1.0",
+    "@ledgerhq/hw-transport-webusb": "^6.1.0",
+    "@vueuse/core": "^4.11.2",
     "awilix": "^4.3.4",
     "bignumber.js": "^9.0.1",
     "buffer": "^6.0.3",
