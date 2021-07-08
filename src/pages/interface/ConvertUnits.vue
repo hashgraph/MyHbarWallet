@@ -29,33 +29,35 @@
         </div>
 
         <div class="select-block">
-          <DropdownSelector
-            class="m-2"
+          <Select
             v-model="state.selectedLeft"
+            class="m-2"
             :options="state.units"
-            :modelValue="state.units[0].name"
+            :placeholder="state.units[0].name"
             @update:modelValue="handleSelect"
           />
         </div>
       </div>
 
-      <div class="block-center self-center">
-        <img src="../../assets/swap.svg" alt="Swap" />
+      <div class="self-center block-center">
+        <img
+          src="../../assets/swap.svg"
+          alt="Swap"
+        >
       </div>
 
-      <div class="block-right w-5/12 m-auto">
+      <div class="w-5/12 m-auto block-right">
         <TextInput
-          class="m-1"
           v-model="state.valueRight"
-          :modelValue="1"
+          class="m-1"
           @update:modelValue="handleInputValueRight"
         />
+
         <div class="select-block">
-          <DropdownSelector
-            class="m-2 w-full"
+          <Select
             v-model="state.selectedRight"
+            class="m-2"
             :options="state.units"
-            :modelValue="state.units[2].name"
             @update:modelValue="handleSelect"
           />
         </div>
@@ -94,23 +96,21 @@
   </div>
 </template>
 
-
-<script lang= "ts">
+<script lang="ts">
 import { defineComponent, reactive } from "vue";
+import { HbarUnit, Hbar } from "@hashgraph/sdk";
+import { BigNumber } from "bignumber.js";
+
 import Headline from "../../components/interface/Headline.vue";
 import TextInput from "../../components/base/TextInput.vue";
-import DropdownSelector from "../../components/base/DropdownSelector.vue";
-import { HbarUnit, Hbar } from "@hashgraph/sdk";
-import BigNumber from "bignumber.js";
-// import Hbar from "../../utils/test-bignumber.js";
-import Long from "long";
+import Select, { Option } from "../../components/base/Select.vue";
 
 export default defineComponent({
   name: "ConvertUnits",
   components: {
     Headline,
     TextInput,
-    DropdownSelector,
+    Select,
   },
   setup() {
     BigNumber.config({

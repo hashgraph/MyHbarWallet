@@ -20,7 +20,6 @@ import imageFinney from "../assets/finney.png";
 import imageBitbox from "../assets/bitbox.svg";
 import imageSecalot from "../assets/secalot.svg";
 import imageKeepKey from "../assets/keepkey.svg";
-
 import imageLedger from "../assets/button_ledger.svg";
 import imageTrezor from "../assets/button_trezor.svg";
 

@@ -1,26 +1,27 @@
 <template>
-  <DropdownSelector
+  <Select
     :model-value="selectedNetwork"
     data-cy-network-selector
     :options="networks"
     :full-width="fullWidth"
     class="h-12 my-auto"
-    capitalize
+    :capitalize="true"
     @update:model-value="onUpdateValue"
   />
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from "vue";
+import { defineComponent, computed } from "vue";
 import { useI18n } from "vue-i18n";
+
 import hedera from "../../assets/icon_hedera.svg";
 import hederaDark from "../../assets/dark/icon_hedera_dark.svg";
-import DropdownSelector from "../base/DropdownSelector.vue";
+import Select from "../base/Select.vue";
 import { useStore } from "../../store";
 
 export default defineComponent({
   name: "NetworkSelector",
-  components: { DropdownSelector },
+  components: { Select },
   props: {
     fullWidth: { type: Boolean, default: false },
   },

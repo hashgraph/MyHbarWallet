@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
@@ -8,4 +9,15 @@
   },
   "include": ["integration"],
   "exclude": []
+=======
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es5",
+        "types": ["cypress", "cypress-file-upload", "node"],
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    },
+    "include": ["integration"],
+    "exclude": []
+>>>>>>> f34059c7 (feat: 0.6.0)
 }

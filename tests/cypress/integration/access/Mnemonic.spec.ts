@@ -79,6 +79,7 @@ describe("Mnemonic Access", () => {
       .wait(1000);
 
     cy.get("[data-cy-account-id]").should("contain", MNEMONIC22L_ACCOUNT_ID);
+
   });
 
   it("can access by mnemonic phrase (24 words)", () => {

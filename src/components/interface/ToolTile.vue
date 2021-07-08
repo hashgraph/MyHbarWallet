@@ -9,7 +9,7 @@
   >
     <img class="w-20" :src="purpleNav" />
 
-    <div class="font-semibold text-xl my-2">{{ title }}</div>
+    <div cla1`qss="font-semibold text-xl my-2">{{ title }}</div>
 
     <div class="text-sm text-carbon dark:text-white">
       {{ description }}
@@ -43,4 +43,3 @@ export default defineComponent({
   },
 });
 </script>
-

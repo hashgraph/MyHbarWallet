@@ -6,7 +6,6 @@ var rx_escapable =
   /[\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
 
 function f(n) {
-  // Format integers to have at least two digits.
   return n < 10 ? "0" + n : n;
 }
 
@@ -35,10 +34,9 @@ if (typeof Date.prototype.toJSON !== "function") {
   Boolean.prototype.toJSON = this_value;
   Number.prototype.toJSON = this_value;
   String.prototype.toJSON = this_value;
-}
+    /[\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
 
-var gap;
-var indent;
+function f(n) {
 var meta;
 var rep;
 
@@ -199,6 +197,7 @@ function str(key, holder) {
       gap = mind;
       return v;
   }
+
 }
 
 // If the JSON object does not yet have a stringify method, give it one.
@@ -414,22 +413,6 @@ var word = function () {
       next("l");
       return null;
   }
-  error("Unexpected '" + ch + "'");
-};
-
-var value; // Place holder for the value function.
-
-var array = function () {
-  // Parse an array value.
-
-  var arr = [];
-
-  if (ch === "[") {
-    next("[");
-    white();
-    if (ch === "]") {
-      next("]");
-      return arr; // empty array
     }
     while (ch) {
       arr.push(value());
@@ -495,6 +478,82 @@ value = function () {
     default:
       return ch >= "0" && ch <= "9" ? number() : word();
   }
+
+    // Parse an array value.
+
+    var arr = [];
+
+    if (ch === "[") {
+        next("[");
+        white();
+        if (ch === "]") {
+            next("]");
+            return arr; // empty array
+        }
+        while (ch) {
+            arr.push(value());
+            white();
+            if (ch === "]") {
+                next("]");
+                return arr;
+            }
+            next(",");
+            white();
+        }
+    }
+    error("Bad array");
+};
+
+var object = function () {
+    // Parse an object value.
+
+    var key;
+    var obj = {};
+
+    if (ch === "{") {
+        next("{");
+        white();
+        if (ch === "}") {
+            next("}");
+            return obj; // empty object
+        }
+        while (ch) {
+            key = string();
+            white();
+            next(":");
+            if (Object.hasOwnProperty.call(obj, key)) {
+                error("Duplicate key '" + key + "'");
+            }
+            obj[key] = value();
+            white();
+            if (ch === "}") {
+                next("}");
+                return obj;
+            }
+            next(",");
+            white();
+        }
+    }
+    error("Bad object");
+};
+
+value = function () {
+    // Parse a JSON value. It could be an object, an array, a string, a number,
+    // or a word.
+
+    white();
+    switch (ch) {
+        case "{":
+            return object();
+        case "[":
+            return array();
+        case '"':
+            return string();
+        case "-":
+            return number();
+        default:
+            return ch >= "0" && ch <= "9" ? number() : word();
+    }
 };
 
 // Set the New JSONBigNumber.parse function It will have access to all of the above

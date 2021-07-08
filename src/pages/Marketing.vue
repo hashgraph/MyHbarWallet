@@ -79,7 +79,6 @@ import { defineComponent } from "vue";
 
 import heroLight from "../assets/img_hero.svg";
 import heroDark from "../assets/dark/img_hero.svg";
-
 import Button from "../components/base/Button.vue";
 import Image from "../components/base/Image.vue";
 import About from "../components/marketing/About.vue";

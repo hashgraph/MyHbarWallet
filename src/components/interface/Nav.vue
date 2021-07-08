@@ -68,7 +68,6 @@ import iconNavPurpleKeys from "../../assets/icon_nav_purple_keys.svg";
 import iconNavPurplePeople from "../../assets/icon_nav_purple_people.svg";
 import iconNavPurpleTokens from "../../assets/icon_nav_purple_tokens.svg";
 import iconNavPurpleTools from "../../assets/icon_nav_purple_tools.svg";
-
 import { useScreen } from "../../hooks/screen";
 
 export default defineComponent({
