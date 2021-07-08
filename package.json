@@ -11,7 +11,7 @@
     "cy:run": "cypress run",
     "dev": "vite",
     "electron:dev": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' electron -r ts-node/register src/electron/main.ts",
-    "prebuild": "test \"$CI\" = true && npx pnpm install --store=node_modules/.pnpm-store || true",
+    "prebuild": "[[ $CI = true ]] && npx pnpm install --store=node_modules/.pnpm-store || echo skiping pnpm install",
     "build": "cross-env NODE_ENV=production vite build",
     "fmt": "prettier -w .",
     "postinstall": "husky install",

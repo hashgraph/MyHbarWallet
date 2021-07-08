@@ -3,17 +3,19 @@ publish = "dist/"
 command = "npm run build"
 
 [build.environment]
-NPM_FLAGS = "--prefix=/dev/null"
+NPM_FLAGS = "--prefix=/"
 CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
 TERM = "xterm"
 
 # Set the HEDERA_NETWORK to mainnet for production
 [context.production.environment]
 HEDERA_NETWORK = "mainnet"
+CI = true
 
 # Set the HEDERA_NETWORK to testnet for deployment previews on PRs
 [context.deploy-preview.environment]
 HEDERA_NETWORK = "testnet"
+CI = true
 
 [[redirects]]
 from = "/*"
