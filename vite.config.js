@@ -64,6 +64,7 @@ export default async function ({ mode }) {
       ),
     },
     build: {
+      outDir: "dist/web",
       rollupOptions: {
         output: {
           manualChunks(id) {
