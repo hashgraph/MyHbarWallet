@@ -185,6 +185,7 @@ export default defineComponent({
 
     const busy = ref<string | null>(null);
 
+
     (async () => {
       publicKey.value = await wallet.getPublicKey(0);
     })();
