@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-env node */
-import path, { join } from "path";
+import path from "path";
 
 import html from "vite-plugin-html";
 import vue from "@vitejs/plugin-vue";
@@ -56,6 +56,7 @@ export default async function ({ mode }) {
     optimizeDeps: {
       exclude: ["path", "electron-window-state"],
       include: ["long/src/long.js"],
+      allowNodeBuiltins: ["Buffer"],
     },
     define: {
       __APP_VERSION__: JSON.stringify(packageJson.version),

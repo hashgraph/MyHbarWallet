@@ -3,15 +3,12 @@ import { Buffer } from "buffer";
 import { PublicKey } from "@hashgraph/sdk";
 import Transport from "@ledgerhq/hw-transport";
 
-import { isElectron } from "../../utils/electron";
 import { isMobile } from "../../hooks/platform";
 import { useStore } from "../../store";
 
-
-
 import { Wallet } from "./abstract";
 
-// :^) sorry
+// :^) sorry, only used by dev server
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 globalThis.Buffer = Buffer;
