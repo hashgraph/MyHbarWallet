@@ -38,17 +38,11 @@ export default async function ({ mode }) {
 
   return defineConfig({
     plugins: [
-      commonJs({
+      node({
+        buffer: true,
         include: [
           /ledger/
         ]
-      }),
-      replace({
-        'Object.defineProperty(exports, "__esModule", { value: true });': '',
-        delimiters: ['\n', '\n']
-      }),
-      node({
-        buffer: true
       }),
       html({
         inject: {
