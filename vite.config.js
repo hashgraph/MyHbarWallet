@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-env node */
-import path, { join } from "path";
+import path from "path";
 
 import html from "vite-plugin-html";
 import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
+import node from "rollup-plugin-polyfill-node";
+import commonJs from "@rollup/plugin-commonjs";
+import replace from "@rollup/plugin-replace";
 import { getLastCommit } from "git-last-commit";
 import { defineConfig } from "vite";
 
@@ -35,6 +38,12 @@ export default async function ({ mode }) {
 
   return defineConfig({
     plugins: [
+      node({
+        buffer: true,
+        include: [
+          /ledger/
+        ]
+      }),
       html({
         inject: {
           injectData: {
@@ -54,8 +63,9 @@ export default async function ({ mode }) {
       },
     },
     optimizeDeps: {
-      exclude: ["path", "electron-window-state"],
+      exclude: ["path", "electron-window-state", "@ledgerhq/hw-transport-webusb"],
       include: ["long/src/long.js"],
+      allowNodeBuiltins: ["Buffer"],
     },
     define: {
       __APP_VERSION__: JSON.stringify(packageJson.version),
