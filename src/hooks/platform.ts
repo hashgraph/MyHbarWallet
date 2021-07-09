@@ -5,7 +5,7 @@ const LGRegex = /webos/i;
 const AppleRegex = /iphone|ipad|ipod/i;
 const GoogleRegex = /nexus|pixel/i;
 
-export function useOperatingSystem(): string | null {
+export async function useOperatingSystem(): Promise<string | null> {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const platform = await import("platform")["default"];
