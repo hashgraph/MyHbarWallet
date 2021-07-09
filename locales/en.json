@@ -284,5 +284,12 @@
   "Ledger.Instruction2": "Open the Hedera Hashgraph app on your Ledger.",
   "Ledger.Instruction3": "Watch for prompts on your ledger device.",
   "Ledger.publicKey": "Public Key",
-  "Ledger.Continue": "Continue"
+  "Ledger.Continue": "Continue",
+  "Common.Prompt": "Waiting for response from hardware wallet",
+  "Account.EnterAccountId": "Enter Account ID",
+  "Account.HederaAccount": "Hedera Account Information",
+  "Account.ShardRealmNum": "Shard.Realm.Num",
+  "Account.UnknownError": "An unknown error has occurred. Please try again.",
+  "Account.Continue": "Continue",
+  "Account.ClientConstructionFail": "Failed to construct a hedera client using this wallet and account id. Please check your seed information and try again."
 }

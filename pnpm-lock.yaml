@@ -77,7 +77,11 @@ dependencies:
 
 devDependencies:
   '@cypress/vue': 3.0.1_cypress@7.7.0+vue@3.1.4
+<<<<<<< HEAD
   '@intlify/vite-plugin-vue-i18n': 2.3.1_ce5c3d9619bdd033cbc89558da2a974e
+=======
+  '@intlify/vite-plugin-vue-i18n': 2.3.1_vite@2.4.1+vue-i18n@9.1.6
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
   '@tailwindcss/forms': 0.3.3_tailwindcss@2.2.4
   '@types/ledgerhq__hw-transport': 4.21.4
   '@types/platform': 1.3.4
@@ -192,7 +196,11 @@ packages:
       babel-loader:
         optional: true
     dependencies:
+<<<<<<< HEAD
       '@vue/test-utils': 2.0.0-rc.10_vue@3.1.4
+=======
+      '@vue/test-utils': 2.0.0-rc.9_vue@3.1.4
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       cypress: 7.7.0
       vue: 3.1.4
     dev: true
@@ -245,7 +253,11 @@ packages:
       ajv: 6.12.6
       debug: 4.3.2
       espree: 7.3.1
+<<<<<<< HEAD
       globals: 13.10.0
+=======
+      globals: 13.9.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       ignore: 4.0.6
       import-fresh: 3.3.0
       js-yaml: 3.14.1
@@ -268,26 +280,44 @@ packages:
     resolution: {integrity: sha512-AxtZcm0mArQhY9z8T3TynCYVEaSKxNCa9mVhVwBCUnsuUEe8Zn94bPYYKVQSLt+hJJ1y0ukr3mUvtWfcATL/IQ==}
     engines: {node: ^8.13.0 || >=10.10.0}
     dependencies:
+<<<<<<< HEAD
       '@types/node': 16.0.1
+=======
+      '@types/node': 15.14.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: false
 
   /@hashgraph/cryptography/1.0.15:
     resolution: {integrity: sha512-BZxcNe8CTX6jlRSYnQaFFjRHCa9UpcZPeLhc0JBOuNs6T7J+YjH8MXmXf/WZPT/yNw4KGujxkMcJdaaus6k3oQ==}
     engines: {node: '>=10.0.0'}
     dependencies:
+<<<<<<< HEAD
       '@types/crypto-js': 4.0.2
       '@types/utf8': 2.1.6
       bignumber.js: 9.0.1
       crypto-js: 4.0.0
       expo-crypto: 9.2.0
       expo-random: 11.2.0
+=======
+      '@types/crypto-js': 4.0.1
+      '@types/utf8': 2.1.6
+      bignumber.js: 9.0.1
+      crypto-js: 4.0.0
+      expo-crypto: 9.1.0
+      expo-random: 11.1.2
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       js-base64: 3.6.1
       tweetnacl: 1.0.3
       utf8: 3.0.0
     dev: false
 
+<<<<<<< HEAD
   /@hashgraph/proto/1.1.5:
     resolution: {integrity: sha512-8rgjqfhNc4zRkJmLvFUisnz3w0yvLHxRUy8qhqcYuHGdAyQ02xG2oYFuunbMJ9OMBJ9XLm1sftbbd4N6wE90BA==}
+=======
+  /@hashgraph/proto/1.1.3:
+    resolution: {integrity: sha512-OAzdOkTSZIOwUkpvmaBt0vM5uwRbN2c2TDJ4Q8G4RaEu9f0xhUlXSm/wRXT9+nhWEJxU3482zXIj8TKyt3vp4Q==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     engines: {node: '>=10.0.0'}
     dependencies:
       protobufjs: 6.11.2
@@ -299,8 +329,13 @@ packages:
     dependencies:
       '@grpc/grpc-js': 1.3.4
       '@hashgraph/cryptography': 1.0.15
+<<<<<<< HEAD
       '@hashgraph/proto': 1.1.5
       '@types/crypto-js': 4.0.2
+=======
+      '@hashgraph/proto': 1.1.3
+      '@types/crypto-js': 4.0.1
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       '@types/utf8': 2.1.6
       bignumber.js: 9.0.1
       crypto-js: 4.0.0
@@ -325,7 +360,11 @@ packages:
     resolution: {integrity: sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==}
     dev: true
 
+<<<<<<< HEAD
   /@intlify/cli/0.5.0_eslint@7.30.0:
+=======
+  /@intlify/cli/0.5.0:
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     resolution: {integrity: sha512-FKPL2Avs+X7+Poer+XHbXBMNYVdFCYvTpuMr8OqnCkHlLtKgCrskeUzLyryelT4G8JG9ZZXOE9AZkiqo/AWYyg==}
     engines: {node: '>= 10'}
     hasBin: true
@@ -337,12 +376,19 @@ packages:
       chalk: 4.1.1
       debug: 4.3.2
       glob: 7.1.7
+<<<<<<< HEAD
       jsonc-eslint-parser: 1.1.0_eslint@7.30.0
+=======
+      jsonc-eslint-parser: 1.0.1
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       source-map: 0.6.1
       yaml-eslint-parser: 0.3.2
       yargs: 16.2.0
     transitivePeerDependencies:
+<<<<<<< HEAD
       - eslint
+=======
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       - supports-color
     dev: true
 
@@ -394,14 +440,22 @@ packages:
     resolution: {integrity: sha512-6MtsKulyfZxdD7OuxjaODjj8QWoHCnLFAk4wkWiHqBCa6UCTC0qXjtEeZ1MxpQihvFmmJZauBUu25EvtngW5qQ==}
     engines: {node: '>= 10'}
 
+<<<<<<< HEAD
   /@intlify/vite-plugin-vue-i18n/2.3.1_ce5c3d9619bdd033cbc89558da2a974e:
+=======
+  /@intlify/vite-plugin-vue-i18n/2.3.1_vite@2.4.1+vue-i18n@9.1.6:
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     resolution: {integrity: sha512-MSm4F1WUyeKVIDjvtfQP9zz+/4Xlvvj4HCwmC4X42FvR7STpXhOqPtOwHgsoYrRdG1JxKenH1uVnXVE0IVVrvQ==}
     engines: {node: '>= 12'}
     peerDependencies:
       vite: ^2.3.6
       vue-i18n: ^9.1.6
     dependencies:
+<<<<<<< HEAD
       '@intlify/cli': 0.5.0_eslint@7.30.0
+=======
+      '@intlify/cli': 0.5.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       '@intlify/shared': 9.1.6
       '@rollup/pluginutils': 4.1.0
       debug: 4.3.2
@@ -409,7 +463,10 @@ packages:
       vite: 2.4.1
       vue-i18n: 9.1.6_vue@3.1.4
     transitivePeerDependencies:
+<<<<<<< HEAD
       - eslint
+=======
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       - rollup
       - supports-color
     dev: true
@@ -494,7 +551,11 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
+<<<<<<< HEAD
       fastq: 1.11.1
+=======
+      fastq: 1.11.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /@protobufjs/aspromise/1.1.2:
@@ -681,34 +742,57 @@ packages:
       tailwindcss: 2.2.4_9c69505cdb34fb579275d5d10e771802
     dev: true
 
+<<<<<<< HEAD
   /@types/crypto-js/4.0.2:
     resolution: {integrity: sha512-sCVniU+h3GcGqxOmng11BRvf9TfN9yIs8KKjB8C8d75W69cpTfZG80gau9yTx5SxF3gvHGbJhdESzzvnjtf3Og==}
+=======
+  /@types/crypto-js/4.0.1:
+    resolution: {integrity: sha512-6+OPzqhKX/cx5xh+yO8Cqg3u3alrkhoxhE5ZOdSEv0DOzJ13lwJ6laqGU0Kv6+XDMFmlnGId04LtY22PsFLQUw==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: false
 
   /@types/estree/0.0.48:
     resolution: {integrity: sha512-LfZwXoGUDo0C3me81HXgkBg5CTQYb6xzEl+fNmbO4JdRiSKQ8A0GD1OBBvKAIsbCUgoyAty7m99GqqMQe784ew==}
     dev: true
 
+<<<<<<< HEAD
   /@types/json-schema/7.0.8:
     resolution: {integrity: sha512-YSBPTLTVm2e2OoQIDYx8HaeWJ5tTToLH67kXR7zYNGupXMEHa2++G8k+DczX2cFVgalypqtyZIcU19AFcmOpmg==}
+=======
+  /@types/json-schema/7.0.7:
+    resolution: {integrity: sha512-cxWFQVseBm6O9Gbw1IWb8r6OS4OhSt3hPZLkFApLjM8TEXROBuQGLAH2i2gZpcXdLBIrpXuTDhH7Vbm1iXmNGA==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /@types/ledgerhq__hw-transport/4.21.4:
     resolution: {integrity: sha512-vep+6yZnGv6owAthIY0w3f72w4dJIb4+yE5PCHveInTlZE9wukvU6Wc5Eig0OUUxcdhTazzeZx1xUaNVLqyQSg==}
     dependencies:
+<<<<<<< HEAD
       '@types/node': 16.0.1
+=======
+      '@types/node': 15.14.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /@types/long/4.0.1:
     resolution: {integrity: sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==}
     dev: false
 
+<<<<<<< HEAD
   /@types/node/14.17.5:
     resolution: {integrity: sha512-bjqH2cX/O33jXT/UmReo2pM7DIJREPMnarixbQ57DOOzzFaI6D2+IcwaJQaJpv0M1E9TIhPCYVxrkcityLjlqA==}
     dev: true
 
   /@types/node/16.0.1:
     resolution: {integrity: sha512-hBOx4SUlEPKwRi6PrXuTGw1z6lz0fjsibcWCM378YxsSu/6+C30L6CR49zIBKHiwNWCYIcOLjg4OHKZaFeLAug==}
+=======
+  /@types/node/14.17.4:
+    resolution: {integrity: sha512-8kQ3+wKGRNN0ghtEn7EGps/B8CzuBz1nXZEIGGLP2GnwbqYn4dbTs7k+VKLTq1HvZLRCIDtN3Snx1Ege8B7L5A==}
+    dev: true
+
+  /@types/node/15.14.0:
+    resolution: {integrity: sha512-um/+/ip3QZmwLfIkWZSNtQIJNVAqrJ92OkLMeuZrjZMTAJniI7fh8N8OICyDhAJ2mzgk/fmYFo72jRr5HyZ1EQ==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -718,16 +802,26 @@ packages:
     resolution: {integrity: sha512-U0o4K+GNiK0PNxoDwd8xRnvLVe4kzei6opn3/FCjAriqaP+rfrDdSl1kP/hLL6Y3/Y3hhGnBwD4dCkkAqs1W/Q==}
     dev: true
 
+<<<<<<< HEAD
   /@types/sinonjs__fake-timers/6.0.3:
     resolution: {integrity: sha512-E1dU4fzC9wN2QK2Cr1MLCfyHM8BoNnRFvuf45LYMPNDA+WqbNzC45S4UzPxvp1fFJ1rvSGU0bPvdd35VLmXG8g==}
+=======
+  /@types/sinonjs__fake-timers/6.0.2:
+    resolution: {integrity: sha512-dIPoZ3g5gcx9zZEszaxLSVTvMReD3xxyyDnQUjA6IYDG9Ba2AV0otMPs+77sG9ojB4Qr2N2Vk5RnKeuA0X/0bg==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /@types/sizzle/2.3.3:
     resolution: {integrity: sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==}
     dev: true
 
+<<<<<<< HEAD
   /@types/unist/2.0.5:
     resolution: {integrity: sha512-wnra4Vw9dopnuybR6HBywJ/URYpYrKLoepBTEtgfJup8Ahoi2zJECPP2cwiXp7btTvOT2CULv87aQRA4eZSP6g==}
+=======
+  /@types/unist/2.0.3:
+    resolution: {integrity: sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /@types/utf8/2.1.6:
@@ -744,6 +838,7 @@ packages:
   /@types/vfile/3.0.2:
     resolution: {integrity: sha512-b3nLFGaGkJ9rzOcuXRfHkZMdjsawuDD0ENL9fzTophtBg8FJHSGbH7daXkEpcwy3v7Xol3pAvsmlYyFhR4pqJw==}
     dependencies:
+<<<<<<< HEAD
       '@types/node': 16.0.1
       '@types/unist': 2.0.5
       '@types/vfile-message': 2.0.0
@@ -753,6 +848,17 @@ packages:
     resolution: {integrity: sha512-8uALY5LTvSuHgloDVUvWP3pIauILm+8/0pDMokuDYIoNsOkSwd5AiHBTSEJjKTDcZr5z8UpgOWZkxBF4iJftoA==}
     dependencies:
       '@types/node': 14.17.5
+=======
+      '@types/node': 15.14.0
+      '@types/unist': 2.0.3
+      '@types/vfile-message': 2.0.0
+    dev: true
+
+  /@types/yauzl/2.9.1:
+    resolution: {integrity: sha512-A1b8SU4D10uoPjwb0lnHmmu8wZhR9d+9o2PKBQT2jU5YPTKsxac6M2qGAdY7VcL+dHHhARVUDmeg0rOrcd9EjA==}
+    dependencies:
+      '@types/node': 15.14.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
     optional: true
 
@@ -787,7 +893,11 @@ packages:
     peerDependencies:
       eslint: '*'
     dependencies:
+<<<<<<< HEAD
       '@types/json-schema': 7.0.8
+=======
+      '@types/json-schema': 7.0.7
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       '@typescript-eslint/scope-manager': 4.28.2
       '@typescript-eslint/types': 4.28.2
       '@typescript-eslint/typescript-estree': 4.28.2_typescript@4.3.5
@@ -870,11 +980,19 @@ packages:
       '@vue/compiler-sfc': 3.1.4_vue@3.1.4
     dev: true
 
+<<<<<<< HEAD
   /@volar/code-gen/0.25.28:
     resolution: {integrity: sha512-kbAsgpY1U6nEOs7OX5p8zcZy1Srp3JJLuZvXFYJLNxbciNkQ6g2RSDTdlYq5T6gTGPAhyOakB5LEcrTMiM84yA==}
     dependencies:
       '@volar/shared': 0.25.28
       '@volar/source-map': 0.25.28
+=======
+  /@volar/code-gen/0.25.25:
+    resolution: {integrity: sha512-uvq0PKJ0q4Bc2rT89Qr0GHasPC9R2UbbHrgwNDwxxCRa9wMRA3MGphKvlP9Fi0T3a9rPn5nZofTKOrSCbjjHKQ==}
+    dependencies:
+      '@volar/shared': 0.25.25
+      '@volar/source-map': 0.25.25
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /@volar/html2pug/0.25.4:
@@ -886,13 +1004,19 @@ packages:
       pug: 3.0.2
     dev: true
 
+<<<<<<< HEAD
   /@volar/shared/0.25.28:
     resolution: {integrity: sha512-f2nHQGdJqhnb9E+HaI0uFBPIBQ2n5m5e4mgT4+FIYpZqeN7wSkjkkoBfHMdfLtJ7B5HSUvPD4H61waaeD34ULQ==}
+=======
+  /@volar/shared/0.25.25:
+    resolution: {integrity: sha512-P6NMy2TDGqRUUdNv/hyzVEb0AeDKHrKUgzIVDZR176q37mvusxNXbnEMOe0WoC8rElJaL790tzYLG+cuiTZAzw==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dependencies:
       upath: 2.0.1
       vscode-languageserver: 7.1.0-next.5
     dev: true
 
+<<<<<<< HEAD
   /@volar/source-map/0.25.28:
     resolution: {integrity: sha512-QUoAMt+UPY7lUCC09AlAG/kyje0A87kDEkQwoRBK81zUVt1tuI8qZ7kV0gy/PiBv/bWEoB27po/qhX0n2m/YgQ==}
     dependencies:
@@ -903,6 +1027,18 @@ packages:
     resolution: {integrity: sha512-XS2NOotfvdSD9skY/Um1KjJmiT4ee32sn6j75ryVx+m8Tj0ox3WFo18DXktJMrSWbZ3E+AEQPE/x9uWyu06Kng==}
     dependencies:
       '@volar/shared': 0.25.28
+=======
+  /@volar/source-map/0.25.25:
+    resolution: {integrity: sha512-R4F/Wsyc7ZrSqsNaLz7Ck69uidEyaMLnErCLiyAehZ5HS1NBatS67z8uas6e0QV5RSw7ScPh7KE5xwESUD7GvQ==}
+    dependencies:
+      '@volar/shared': 0.25.25
+    dev: true
+
+  /@volar/transforms/0.25.25:
+    resolution: {integrity: sha512-u76QloG097qKd/Y68kcuoDZ7Xg9WHsAFmAS0GyFxxTkO7loMWG6OQx7zCmrje3yxOCvHvHBWUY2V3usKIpskYg==}
+    dependencies:
+      '@volar/shared': 0.25.25
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /@vue/compiler-core/3.1.4:
@@ -969,15 +1105,32 @@ packages:
       '@typescript-eslint/parser': 4.28.2_eslint@7.30.0+typescript@4.3.5
       eslint: 7.30.0
       eslint-plugin-vue: 7.13.0_eslint@7.30.0
+<<<<<<< HEAD
       vue-eslint-parser: 7.8.0_eslint@7.30.0
+=======
+      vue-eslint-parser: 7.6.0_eslint@7.30.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
+<<<<<<< HEAD
+=======
+  /@vue/reactivity/3.1.2:
+    resolution: {integrity: sha512-glJzJoN2xE7I2lRvwKM5u1BHRPTd1yc8iaf//Lai/78/uYAvE5DXp5HzWRFOwMlbRvMGJHIQjOqoxj87cDAaag==}
+    dependencies:
+      '@vue/shared': 3.1.2
+    dev: true
+
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
   /@vue/reactivity/3.1.4:
     resolution: {integrity: sha512-YDlgii2Cr9yAoKVZFzgY4j0mYlVT73986X3e5SPp6ifqckSEoFSUWXZK2Tb53TB/9qO29BEEbspnKD3m3wAwkA==}
     dependencies:
       '@vue/shared': 3.1.4
+<<<<<<< HEAD
+=======
+    dev: false
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
 
   /@vue/runtime-core/3.1.4:
     resolution: {integrity: sha512-qmVJgJuFxfT7M4qHQ4M6KqhKC66fjuswK+aBivE8dWiZ2rtIGl9gtJGpwqwjQEcKEBTOfvvrtrwBncYArJUO8Q==}
@@ -994,11 +1147,23 @@ packages:
       csstype: 2.6.17
     dev: false
 
+<<<<<<< HEAD
   /@vue/shared/3.1.4:
     resolution: {integrity: sha512-6O45kZAmkLvzGLToBxEz4lR2W6kXohCtebV2UxjH9GXjd8X9AhEn68FN9eNanFtWNzvgw1hqd6HkPRVQalqf7Q==}
 
   /@vue/test-utils/2.0.0-rc.10_vue@3.1.4:
     resolution: {integrity: sha512-Z8jY+askU08svsI37NcJSLmWrfkZ/1ATA1DENWezRUX2uv3QyEj7idwx+rfeNSOrlNNBh4NTzypBKOUOklxBRA==}
+=======
+  /@vue/shared/3.1.2:
+    resolution: {integrity: sha512-EmH/poaDWBPJaPILXNI/1fvUbArJQmmTyVCwvvyDYDFnkPoTclAbHRAtyIvqfez7jybTDn077HTNILpxlsoWhg==}
+    dev: true
+
+  /@vue/shared/3.1.4:
+    resolution: {integrity: sha512-6O45kZAmkLvzGLToBxEz4lR2W6kXohCtebV2UxjH9GXjd8X9AhEn68FN9eNanFtWNzvgw1hqd6HkPRVQalqf7Q==}
+
+  /@vue/test-utils/2.0.0-rc.9_vue@3.1.4:
+    resolution: {integrity: sha512-iJNAAfXTTSd2/5vUZpFbUwUwC8w3hbFu8s9ptKkZGsiw6pO6mFsaLs2rzI3Ea/8hwqcF3K7Wp2diKOdzqmb6qg==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     peerDependencies:
       vue: ^3.0.1
     dependencies:
@@ -1009,7 +1174,11 @@ packages:
     resolution: {integrity: sha512-4A17XvKXpMR6829EVWvrdSKEeAjTWaiC3+xh51KEtlyCwvWQwZ0xwKDrbMj+e15ANxjHrTw/0bJVaWDfPQt/Pw==}
     dependencies:
       '@vueuse/shared': 4.11.2_vue@3.1.4
+<<<<<<< HEAD
       vue-demi: 0.10.0_vue@3.1.4
+=======
+      vue-demi: 0.9.1_vue@3.1.4
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -1018,7 +1187,11 @@ packages:
   /@vueuse/shared/4.11.2_vue@3.1.4:
     resolution: {integrity: sha512-vTbTi6ou7ljH3CkKVoaIaCAoWB5T1ewSogpL6VnO1duMPNuiv7x8K/LunMbnTg4tVyt6QwaiCuEq/kyS6AUBRg==}
     dependencies:
+<<<<<<< HEAD
       vue-demi: 0.10.0_vue@3.1.4
+=======
+      vue-demi: 0.9.1_vue@3.1.4
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -1079,8 +1252,13 @@ packages:
       uri-js: 4.4.1
     dev: true
 
+<<<<<<< HEAD
   /ajv/8.6.1:
     resolution: {integrity: sha512-42VLtQUOLefAvKFAQIxIZDaThq6om/PrfP0CYk3/vn+y4BMNkKnbli8ON2QCiHov4KkzOSJ/xSoBJdayiiYvVQ==}
+=======
+  /ajv/8.6.0:
+    resolution: {integrity: sha512-cnUG4NSBiM4YFBxgZIj/In3/6KX+rQ2l2YPRVcvAMQGWEPKuXoPIhxzwqh31jA3IPbI4qEOp/5ILI4ynioXsGQ==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dependencies:
       fast-deep-equal: 3.1.3
       json-schema-traverse: 1.0.0
@@ -1114,7 +1292,10 @@ packages:
   /ansi-regex/3.0.0:
     resolution: {integrity: sha1-7QMXwyIGT3lGbAKWa922Bas32Zg=}
     engines: {node: '>=4'}
+<<<<<<< HEAD
     dev: true
+=======
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
 
   /ansi-regex/4.1.0:
     resolution: {integrity: sha512-1apePfXM1UOSqw0o9IiFAovVz9M5S1Dg+4TrDwfMewQ6p/rmMueb7tWZjQ1rx4Loy1ArBggoqGpfqqdI4rondg==}
@@ -1265,7 +1446,11 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.16.6
+<<<<<<< HEAD
       caniuse-lite: 1.0.30001243
+=======
+      caniuse-lite: 1.0.30001241
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       colorette: 1.2.2
       fraction.js: 4.1.1
       normalize-range: 0.1.2
@@ -1385,9 +1570,15 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
+<<<<<<< HEAD
       caniuse-lite: 1.0.30001243
       colorette: 1.2.2
       electron-to-chromium: 1.3.770
+=======
+      caniuse-lite: 1.0.30001241
+      colorette: 1.2.2
+      electron-to-chromium: 1.3.763
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       escalade: 3.1.1
       node-releases: 1.1.73
     dev: true
@@ -1484,14 +1675,23 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+<<<<<<< HEAD
   /caniuse-lite/1.0.30001243:
     resolution: {integrity: sha512-vNxw9mkTBtkmLFnJRv/2rhs1yufpDfCkBZexG3Y0xdOH2Z/eE/85E4Dl5j1YUN34nZVsSp6vVRFQRrez9wJMRA==}
+=======
+  /caniuse-lite/1.0.30001241:
+    resolution: {integrity: sha512-1uoSZ1Pq1VpH0WerIMqwptXHNNGfdl7d1cJUFs80CwQ/lVzdhTvsFZCeNFslze7AjsQnb4C85tzclPa1VShbeQ==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /canvas-renderer/2.2.0:
     resolution: {integrity: sha512-Itdq9pwXcs4IbbkRCXc7reeGBk6i6tlDtZTjE1yc+KvYkx1Mt3WLf6tidZ/Ixbm7Vmi+jpWKG0dRBor67x9yGw==}
     dependencies:
+<<<<<<< HEAD
       '@types/node': 16.0.1
+=======
+      '@types/node': 15.14.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: false
 
   /caseless/0.12.0:
@@ -1873,8 +2073,13 @@ packages:
     dependencies:
       '@cypress/request': 2.88.5
       '@cypress/xvfb': 1.2.4
+<<<<<<< HEAD
       '@types/node': 14.17.5
       '@types/sinonjs__fake-timers': 6.0.3
+=======
+      '@types/node': 14.17.4
+      '@types/sinonjs__fake-timers': 6.0.2
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       '@types/sizzle': 2.3.3
       arch: 2.2.0
       blob-util: 2.0.2
@@ -1886,7 +2091,11 @@ packages:
       cli-table3: 0.6.0
       commander: 5.1.0
       common-tags: 1.8.0
+<<<<<<< HEAD
       dayjs: 1.10.6
+=======
+      dayjs: 1.10.5
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       debug: 4.3.2_supports-color@8.1.1
       enquirer: 2.3.6
       eventemitter2: 6.4.4
@@ -1921,8 +2130,13 @@ packages:
       assert-plus: 1.0.0
     dev: true
 
+<<<<<<< HEAD
   /dayjs/1.10.6:
     resolution: {integrity: sha512-AztC/IOW4L1Q41A86phW5Thhcrco3xuAA+YX/BLpLWWjRcTj5TOt/QImBLmCKlrF7u7k47arTnOyL6GnbG8Hvw==}
+=======
+  /dayjs/1.10.5:
+    resolution: {integrity: sha512-BUFis41ikLz+65iH6LHQCDm4YPMj5r1YFLdupPIyM4SGcXMmtiLQ7U37i+hGS8urIuqe7I/ou3IS1jVc4nbN4g==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /debug/2.6.9:
@@ -1943,6 +2157,21 @@ packages:
       ms: 2.1.3
     dev: true
 
+<<<<<<< HEAD
+=======
+  /debug/4.3.1:
+    resolution: {integrity: sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.2
+    dev: true
+
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
   /debug/4.3.2:
     resolution: {integrity: sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==}
     engines: {node: '>=6.0'}
@@ -2150,8 +2379,13 @@ packages:
       jake: 10.8.2
     dev: true
 
+<<<<<<< HEAD
   /electron-to-chromium/1.3.770:
     resolution: {integrity: sha512-Kyh8DGK1KfEZuYKIHvuOmrKotsKZQ+qBkDIWHciE3QoFkxXB1KzPP+tfLilSHAfxTON0yYMnFCWkQtUOR7g6KQ==}
+=======
+  /electron-to-chromium/1.3.763:
+    resolution: {integrity: sha512-UyvEPae0wvzsyNJhVfGeFSOlUkHEze8xSIiExO5tZQ8QTr7obFiJWGk3U4e7afFOJMQJDszqU/3Pk5jtKiaSEg==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /electron-window-state/5.0.3:
@@ -2169,7 +2403,11 @@ packages:
     requiresBuild: true
     dependencies:
       '@electron/get': 1.12.4
+<<<<<<< HEAD
       '@types/node': 14.17.5
+=======
+      '@types/node': 14.17.4
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       extract-zip: 1.7.0
     transitivePeerDependencies:
       - supports-color
@@ -2274,8 +2512,13 @@ packages:
       es6-promise: 4.2.8
     dev: true
 
+<<<<<<< HEAD
   /esbuild/0.12.15:
     resolution: {integrity: sha512-72V4JNd2+48eOVCXx49xoSWHgC3/cCy96e7mbXKY+WOWghN00cCmlGnwVLRhRHorvv0dgCyuMYBZlM2xDM5OQw==}
+=======
+  /esbuild/0.12.13:
+    resolution: {integrity: sha512-fnKinmXcW1DMYnf1Ol3ZO0yU7dBDCuPcE4XDwceIy2zqTvB4G0NfonqgdvPMJi/IXRoVi/w9r9O5xxg/SqiAxA==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     hasBin: true
     requiresBuild: true
     dev: true
@@ -2343,6 +2586,24 @@ packages:
       tsconfig-paths: 3.10.1
     dev: true
 
+<<<<<<< HEAD
+=======
+  /eslint-plugin-vue/7.12.1_eslint@7.29.0:
+    resolution: {integrity: sha512-xHf/wCt88qmzqQerjaSteUFGASj7fPreglKD4ijnvoKRkoSJ3/H3kuJE8QFFtc+2wjw6hRDs834HH7vpuTJQzg==}
+    engines: {node: '>=8.10'}
+    peerDependencies:
+      eslint: ^6.2.0 || ^7.0.0
+    dependencies:
+      eslint: 7.29.0
+      eslint-utils: 2.1.0
+      natural-compare: 1.4.0
+      semver: 7.3.5
+      vue-eslint-parser: 7.6.0_eslint@7.29.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
   /eslint-plugin-vue/7.13.0_eslint@7.30.0:
     resolution: {integrity: sha512-u0+jL8h2MshRuMTCLslktxRsPTjlENNcNufhgHu01N982DmHVdeFniyMPoVLLRjACQOwdz3FdlsgYGBMBG+AKg==}
     engines: {node: '>=8.10'}
@@ -2393,9 +2654,58 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+<<<<<<< HEAD
   /eslint-visitor-keys/3.0.0:
     resolution: {integrity: sha512-mJOZa35trBTb3IyRmo8xmKBZlxf+N7OnUl4+ZhJHs/r+0770Wh/LEACE2pqMGMe27G/4y8P2bYGk4J70IC5k1Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+=======
+  /eslint/7.29.0:
+    resolution: {integrity: sha512-82G/JToB9qIy/ArBzIWG9xvvwL3R86AlCjtGw+A29OMZDqhTybz/MByORSukGxeI+YPCR4coYyITKk8BFH9nDA==}
+    engines: {node: ^10.12.0 || >=12.0.0}
+    hasBin: true
+    dependencies:
+      '@babel/code-frame': 7.12.11
+      '@eslint/eslintrc': 0.4.2
+      ajv: 6.12.6
+      chalk: 4.1.1
+      cross-spawn: 7.0.3
+      debug: 4.3.2
+      doctrine: 3.0.0
+      enquirer: 2.3.6
+      escape-string-regexp: 4.0.0
+      eslint-scope: 5.1.1
+      eslint-utils: 2.1.0
+      eslint-visitor-keys: 2.1.0
+      espree: 7.3.1
+      esquery: 1.4.0
+      esutils: 2.0.3
+      fast-deep-equal: 3.1.3
+      file-entry-cache: 6.0.1
+      functional-red-black-tree: 1.0.1
+      glob-parent: 5.1.2
+      globals: 13.9.0
+      ignore: 4.0.6
+      import-fresh: 3.3.0
+      imurmurhash: 0.1.4
+      is-glob: 4.0.1
+      js-yaml: 3.14.1
+      json-stable-stringify-without-jsonify: 1.0.1
+      levn: 0.4.1
+      lodash.merge: 4.6.2
+      minimatch: 3.0.4
+      natural-compare: 1.4.0
+      optionator: 0.9.1
+      progress: 2.0.3
+      regexpp: 3.2.0
+      semver: 7.3.5
+      strip-ansi: 6.0.0
+      strip-json-comments: 3.1.1
+      table: 6.7.1
+      text-table: 0.2.0
+      v8-compile-cache: 2.3.0
+    transitivePeerDependencies:
+      - supports-color
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /eslint/7.30.0:
@@ -2423,7 +2733,11 @@ packages:
       file-entry-cache: 6.0.1
       functional-red-black-tree: 1.0.1
       glob-parent: 5.1.2
+<<<<<<< HEAD
       globals: 13.10.0
+=======
+      globals: 13.9.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       ignore: 4.0.6
       import-fresh: 3.3.0
       imurmurhash: 0.1.4
@@ -2572,12 +2886,21 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
+<<<<<<< HEAD
   /expo-crypto/9.2.0:
     resolution: {integrity: sha512-jc9E7jHlOT8fYs64DIsSOdnLtxtIK1pV78O/nBamPwKdGrvFSNqMSFndxyVSuEimBNoPPNRwN+4Pb4W1RRltJA==}
     dev: false
 
   /expo-random/11.2.0:
     resolution: {integrity: sha512-kgBJBB02iCX/kpoTHN57V7b4hWOCj4eACIQDl7bN94lycUcZu62T00P/rVZIcE/29x0GAi+Pw5ZWj0NlqBsMQQ==}
+=======
+  /expo-crypto/9.1.0:
+    resolution: {integrity: sha512-5N3W/B4L7sx8IT/DhUjkSlbAfY0eQXo9ApiQ/67n2VjUNW/NKna4b1kCvAIjetPuqugAR2CFLltcYIc8PinRmA==}
+    dev: false
+
+  /expo-random/11.1.2:
+    resolution: {integrity: sha512-JaNqoYwFWJnyRSsMPpFjjSsm09wrEv+Uoif6IExfR8v6K3m/tIySoVjzS47tD6YVdxLtL/I8RmqmB6Nwh1p6AQ==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dependencies:
       base64-js: 1.5.1
     dev: false
@@ -2605,7 +2928,11 @@ packages:
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
+<<<<<<< HEAD
       '@types/yauzl': 2.9.2
+=======
+      '@types/yauzl': 2.9.1
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2638,8 +2965,13 @@ packages:
     resolution: {integrity: sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=}
     dev: true
 
+<<<<<<< HEAD
   /fastq/1.11.1:
     resolution: {integrity: sha512-HOnr8Mc60eNYl1gzwp6r5RoUyAn5/glBolUzP/Ez6IFVPMPirxn/9phgL6zhOtaTy7ISwPvQ+wT+hfcRZh/bzw==}
+=======
+  /fastq/1.11.0:
+    resolution: {integrity: sha512-7Eczs8gIPDrVzT+EksYBcupqMyxSHXXrHOLRRxU2/DicV8789MRBRR8+Hc2uWzUupOs4YS4JzBmBxjjCVBxD/g==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dependencies:
       reusify: 1.0.4
     dev: true
@@ -2704,12 +3036,21 @@ packages:
     resolution: {integrity: sha512-dm9s5Pw7Jc0GvMYbshN6zchCA9RgQlzzEZX3vylR9IqFfS8XciblUXOKfW6SiuJ0e13eDYZoZV5wdrev7P3Nwg==}
     engines: {node: ^10.12.0 || >=12.0.0}
     dependencies:
+<<<<<<< HEAD
       flatted: 3.2.1
       rimraf: 3.0.2
     dev: true
 
   /flatted/3.2.1:
     resolution: {integrity: sha512-OMQjaErSFHmHqZe+PSidH5n8j3O0F2DdnVh8JB4j4eUQ2k6KvB0qGfrKIhapvez5JerBbmWkaLYUYWISaESoXg==}
+=======
+      flatted: 3.1.1
+      rimraf: 3.0.2
+    dev: true
+
+  /flatted/3.1.1:
+    resolution: {integrity: sha512-zAoAQiudy+r5SvnSw3KJy5os/oRJYHzrzja/tBDqrZtNhUw8bt6y8OBzMWcjWr+8liV8Eb6yOhw8WZ7VFZ5ZzA==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /fn-name/2.0.1:
@@ -2946,8 +3287,13 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+<<<<<<< HEAD
   /globals/13.10.0:
     resolution: {integrity: sha512-piHC3blgLGFjvOuMmWZX60f+na1lXFDhQXBf1UYp2fXPXqvEUbOhNwi6BsQ0bQishwedgnjkwv1d9zKf+MWw3g==}
+=======
+  /globals/13.9.0:
+    resolution: {integrity: sha512-74/FduwI/JaIrr1H8e71UbDE+5x7pIPs1C2rrwC52SszOo043CsWOZEMW7o2Y58xwm9b+0RBKDxY5n2sUpEFxA==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     engines: {node: '>=8'}
     dependencies:
       type-fest: 0.20.2
@@ -3366,7 +3712,10 @@ packages:
   /is-fullwidth-code-point/2.0.0:
     resolution: {integrity: sha1-o7MKXE8ZkYMWeqq5O+764937ZU8=}
     engines: {node: '>=4'}
+<<<<<<< HEAD
     dev: true
+=======
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
 
   /is-fullwidth-code-point/3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
@@ -3609,6 +3958,7 @@ packages:
       minimist: 1.2.5
     dev: true
 
+<<<<<<< HEAD
   /jsonc-eslint-parser/1.1.0_eslint@7.30.0:
     resolution: {integrity: sha512-FA3oS+8V0Mz4vv19YpY4TuZZi2ecR0RHTua9SjbCYb4+e35MWKIi7jn17zdGi6jxE7Cv7Vk61ml376MmMENieA==}
     dependencies:
@@ -3618,6 +3968,14 @@ packages:
       semver: 6.3.0
     transitivePeerDependencies:
       - eslint
+=======
+  /jsonc-eslint-parser/1.0.1:
+    resolution: {integrity: sha512-mh5LY5byThmc692EqJS3Ss9sViNoNeCLNG5VQUgJLoAFFM3FzdIetd99qEiiQ+NXBVAIUgX5sWeK9leniS8RbQ==}
+    dependencies:
+      eslint-utils: 2.1.0
+      eslint-visitor-keys: 2.1.0
+      espree: 7.3.1
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /jsonc-parser/2.3.1:
@@ -3707,7 +4065,11 @@ packages:
       cli-truncate: 2.1.0
       commander: 7.2.0
       cosmiconfig: 7.0.0
+<<<<<<< HEAD
       debug: 4.3.2
+=======
+      debug: 4.3.1
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       dedent: 0.7.0
       enquirer: 2.3.6
       execa: 5.1.1
@@ -4689,7 +5051,11 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.1
+<<<<<<< HEAD
       '@types/node': 16.0.1
+=======
+      '@types/node': 15.14.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       long: 4.0.0
     dev: false
 
@@ -5046,8 +5412,13 @@ packages:
     dev: true
     optional: true
 
+<<<<<<< HEAD
   /rollup/2.52.8:
     resolution: {integrity: sha512-IjAB0C6KK5/lvqzJWAzsvOik+jV5Bt907QdkQ/gDP4j+R9KYNI1tjqdxiPitGPVrWC21Mf/ucXgowUjN/VemaQ==}
+=======
+  /rollup/2.52.6:
+    resolution: {integrity: sha512-H+Xudmwf8KO+xji8njQNoIQRp8l+iQge/NdUR20JngTxVYdEEnlpkMvQ71YGLl3+xZcPecmdj4q2lrClKaPdRA==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
@@ -5291,7 +5662,10 @@ packages:
     dependencies:
       is-fullwidth-code-point: 2.0.0
       strip-ansi: 4.0.0
+<<<<<<< HEAD
     dev: true
+=======
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
 
   /string-width/3.1.0:
     resolution: {integrity: sha512-vafcv6KjVZKSgz06oM/H6GDBrAtz8vdhQakGjFIvNrHA6y3HCF1CInLy+QLq8dTJPQ1b+KDUqDFctkdRW44e1w==}
@@ -5376,7 +5750,10 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       ansi-regex: 3.0.0
+<<<<<<< HEAD
     dev: true
+=======
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
 
   /strip-ansi/5.2.0:
     resolution: {integrity: sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==}
@@ -5462,7 +5839,11 @@ packages:
     resolution: {integrity: sha512-ZGum47Yi6KOOFDE8m223td53ath2enHcYLgOCjGr5ngu8bdIARQk6mN/wRMv4yMRcHnCSnHbCEha4sobQx5yWg==}
     engines: {node: '>=10.0.0'}
     dependencies:
+<<<<<<< HEAD
       ajv: 8.6.1
+=======
+      ajv: 8.6.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       lodash.clonedeep: 4.5.0
       lodash.truncate: 4.4.2
       slice-ansi: 4.0.0
@@ -5799,7 +6180,11 @@ packages:
   /unified/7.1.0:
     resolution: {integrity: sha512-lbk82UOIGuCEsZhPj8rNAkXSDXd6p0QLzIuSsCdxrqnqU56St4eyOB+AlXsVgVeRmetPTYydIuvFfpDIed8mqw==}
     dependencies:
+<<<<<<< HEAD
       '@types/unist': 2.0.5
+=======
+      '@types/unist': 2.0.3
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       '@types/vfile': 3.0.2
       bail: 1.0.5
       extend: 3.0.2
@@ -5850,13 +6235,21 @@ packages:
   /unist-util-stringify-position/2.0.3:
     resolution: {integrity: sha512-3faScn5I+hy9VleOq/qNbAd6pAx7iH5jYBMS9I1HgQVijz/4mv5Bvw5iw1sC/90CODiKo81G/ps8AJrISn687g==}
     dependencies:
+<<<<<<< HEAD
       '@types/unist': 2.0.5
+=======
+      '@types/unist': 2.0.3
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /unist-util-stringify-position/3.0.0:
     resolution: {integrity: sha512-SdfAl8fsDclywZpfMDTVDxA2V7LjtRDTOFd44wUJamgl6OlVngsqWjxvermMYf60elWHbxhuRCZml7AnuXCaSA==}
     dependencies:
+<<<<<<< HEAD
       '@types/unist': 2.0.5
+=======
+      '@types/unist': 2.0.3
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: true
 
   /unist-util-visit-parents/2.1.2:
@@ -5978,14 +6371,22 @@ packages:
   /vfile-message/2.0.4:
     resolution: {integrity: sha512-DjssxRGkMvifUOJre00juHoP9DPWuzjxKuMDrhNbk2TdaYYBNMStsNhEOt3idrtI12VQYM/1+iM0KOzXi4pxwQ==}
     dependencies:
+<<<<<<< HEAD
       '@types/unist': 2.0.5
+=======
+      '@types/unist': 2.0.3
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       unist-util-stringify-position: 2.0.3
     dev: true
 
   /vfile-message/3.0.1:
     resolution: {integrity: sha512-gYmSHcZZUEtYpTmaWaFJwsuUD70/rTY4v09COp8TGtOkix6gGxb/a8iTQByIY9ciTk9GwAwIXd/J9OPfM4Bvaw==}
     dependencies:
+<<<<<<< HEAD
       '@types/unist': 2.0.5
+=======
+      '@types/unist': 2.0.3
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       unist-util-stringify-position: 3.0.0
     dev: true
 
@@ -6031,7 +6432,11 @@ packages:
   /vfile/4.2.1:
     resolution: {integrity: sha512-O6AE4OskCG5S1emQ/4gl8zK586RqA3srz3nfK/Viy0UPToBc5Trp9BVFb1u0CjsKrAWwnpr4ifM/KBXPWwJbCA==}
     dependencies:
+<<<<<<< HEAD
       '@types/unist': 2.0.5
+=======
+      '@types/unist': 2.0.3
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       is-buffer: 2.0.5
       unist-util-stringify-position: 2.0.3
       vfile-message: 2.0.4
@@ -6053,10 +6458,17 @@ packages:
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
+<<<<<<< HEAD
       esbuild: 0.12.15
       postcss: 8.3.5
       resolve: 1.20.0
       rollup: 2.52.8
+=======
+      esbuild: 0.12.13
+      postcss: 8.3.5
+      resolve: 1.20.0
+      rollup: 2.52.6
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
@@ -6066,8 +6478,13 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
+<<<<<<< HEAD
       eslint: 7.30.0
       eslint-plugin-vue: 7.13.0_eslint@7.30.0
+=======
+      eslint: 7.29.0
+      eslint-plugin-vue: 7.12.1_eslint@7.29.0
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       prettier: 2.3.2
       tslint: 6.1.3_typescript@4.3.5
       typescript: 4.3.5
@@ -6100,8 +6517,13 @@ packages:
       vscode-uri: 2.1.2
     dev: true
 
+<<<<<<< HEAD
   /vscode-html-languageservice/4.0.7:
     resolution: {integrity: sha512-P5TQMYpgxAdLs+PwpC7Lm+0lXCyQAC6kZ41YuPYNHVooC4XO7Y2+ncHBcQJVK4C9LU2cTOAl0lzq4WAxuwRHYw==}
+=======
+  /vscode-html-languageservice/4.0.6:
+    resolution: {integrity: sha512-p1VK0+7JLzBFfbUrENm3QcBNbDzJUVhVnXOxHdC9XmgcubQBUINyzNeYio93srOafjRMQcJmzugB4vfmUnbCQg==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dependencies:
       vscode-languageserver-textdocument: 1.0.1
       vscode-languageserver-types: 3.16.0
@@ -6160,6 +6582,7 @@ packages:
     resolution: {integrity: sha512-u0Lw+IYlgbEJFF6/qAqG2d1jQmJl0eyAGJHoAJqr2HT4M2BNuQYSEiSE75f52pXHSJm8AlTjnLLbBFPrdz2hpA==}
     dev: true
 
+<<<<<<< HEAD
   /vscode-pug-languageservice/0.25.28:
     resolution: {integrity: sha512-4zt0Tn+uW9WOTu6YLl6NhYjtdRD91EbpEUtiYqquV9f+U0I1JxkScWgyTomw04ZaUK8yoPC6q/S1oGnaCNaWPg==}
     dependencies:
@@ -6167,16 +6590,32 @@ packages:
       '@volar/shared': 0.25.28
       '@volar/source-map': 0.25.28
       '@volar/transforms': 0.25.28
+=======
+  /vscode-pug-languageservice/0.25.25:
+    resolution: {integrity: sha512-3lnpjOzZTqWtpXEHAELOEcEVS8BTMZgqyOqzR0U8/APobnp324C0T+OfghG4jhGc6V1T8Qrx2GbwT7uvAywG6w==}
+    dependencies:
+      '@volar/code-gen': 0.25.25
+      '@volar/shared': 0.25.25
+      '@volar/source-map': 0.25.25
+      '@volar/transforms': 0.25.25
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       pug-beautify: 0.1.1
       pug-lexer: 5.0.1
       pug-parser: 6.0.0
       vscode-languageserver: 7.1.0-next.5
     dev: true
 
+<<<<<<< HEAD
   /vscode-typescript-languageservice/0.25.28:
     resolution: {integrity: sha512-lj85GVcVKCTVtD3XJJ737PDjw343uOiQuR8qfeZlCPf9N3zVRMWJfUL5FQRhoqoDo0o46jihy+jrDGurtmq6ow==}
     dependencies:
       '@volar/shared': 0.25.28
+=======
+  /vscode-typescript-languageservice/0.25.25:
+    resolution: {integrity: sha512-9W3zrY8foSssaqMEsGujWGYxW5TB0RFCx7gTNp2RsmoqR0vjjyGzMF66qZS7oafxPW8fB0qLfpA6RcIAi93eSg==}
+    dependencies:
+      '@volar/shared': 0.25.25
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       typescript-vscode-sh-plugin: 0.6.14
       upath: 2.0.1
       vscode-languageserver: 7.1.0-next.5
@@ -6191,6 +6630,7 @@ packages:
     resolution: {integrity: sha512-jkjy6pjU1fxUvI51P+gCsxg1u2n8LSt0W6KrCNQceaziKzff74GoWmjVG46KieVzybO1sttPQmYfrwSHey7GUA==}
     dev: true
 
+<<<<<<< HEAD
   /vscode-vue-languageservice/0.25.28_vue@3.1.4:
     resolution: {integrity: sha512-7tH2TCCGxY79exA+wBRZaVdNgocSEH+1+OccP8j6g4Sx58i3Kxh5DDEiKeC85zYXQ5E9XdiB+mMcVDokR4fBmQ==}
     dependencies:
@@ -6203,6 +6643,20 @@ packages:
       '@vue/compiler-dom': 3.1.4
       '@vue/compiler-sfc': 3.1.4_vue@3.1.4
       '@vue/reactivity': 3.1.4
+=======
+  /vscode-vue-languageservice/0.25.25_vue@3.1.4:
+    resolution: {integrity: sha512-E7ZvgFR6Sbs+GGunRM/5pGZa6/sLJztzlKR/H8F6zxbHXUPTbcwyfUAygkWnjHmeUwgG+bnT2Ylxhlrcj98Mxw==}
+    dependencies:
+      '@starptech/prettyhtml': 0.10.0
+      '@volar/code-gen': 0.25.25
+      '@volar/html2pug': 0.25.4
+      '@volar/shared': 0.25.25
+      '@volar/source-map': 0.25.25
+      '@volar/transforms': 0.25.25
+      '@vue/compiler-dom': 3.1.4
+      '@vue/compiler-sfc': 3.1.4_vue@3.1.4
+      '@vue/reactivity': 3.1.2
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
       '@vue/shared': 3.1.4
       jsonc-parser: 3.0.0
       prettier: 1.19.1
@@ -6210,12 +6664,21 @@ packages:
       upath: 2.0.1
       vscode-css-languageservice: 5.1.4
       vscode-emmet-helper: 2.6.4
+<<<<<<< HEAD
       vscode-html-languageservice: 4.0.7
       vscode-json-languageservice: 4.1.5
       vscode-languageserver: 7.1.0-next.5
       vscode-languageserver-textdocument: 1.0.1
       vscode-pug-languageservice: 0.25.28
       vscode-typescript-languageservice: 0.25.28
+=======
+      vscode-html-languageservice: 4.0.6
+      vscode-json-languageservice: 4.1.5
+      vscode-languageserver: 7.1.0-next.5
+      vscode-languageserver-textdocument: 1.0.1
+      vscode-pug-languageservice: 0.25.25
+      vscode-typescript-languageservice: 0.25.25
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     transitivePeerDependencies:
       - vue
     dev: true
@@ -6230,8 +6693,13 @@ packages:
       - supports-color
     dev: true
 
+<<<<<<< HEAD
   /vue-demi/0.10.0_vue@3.1.4:
     resolution: {integrity: sha512-SlVtIkcCVwbSVAiWTk3ixcDF6bRjgPP5nKGjSx4HXmieEUDi2oVQJUQxoFmEOV21js7TKvclzEUhInDEkg0NDQ==}
+=======
+  /vue-demi/0.9.1_vue@3.1.4:
+    resolution: {integrity: sha512-7s1lufRD2l369eFWPjgLvhqCRk0XzGWJsQc7K4q+0mZtixyGIvsK1Cg88P4NcaRIEiBuuN4q1NN4SZKFKwQswA==}
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     hasBin: true
     requiresBuild: true
     peerDependencies:
@@ -6244,6 +6712,43 @@ packages:
       vue: 3.1.4
     dev: false
 
+<<<<<<< HEAD
+=======
+  /vue-eslint-parser/7.6.0_eslint@7.29.0:
+    resolution: {integrity: sha512-QXxqH8ZevBrtiZMZK0LpwaMfevQi9UL7lY6Kcp+ogWHC88AuwUPwwCIzkOUc1LR4XsYAt/F9yHXAB/QoD17QXA==}
+    engines: {node: '>=8.10'}
+    peerDependencies:
+      eslint: '>=5.0.0'
+    dependencies:
+      debug: 4.3.2
+      eslint: 7.29.0
+      eslint-scope: 5.1.1
+      eslint-visitor-keys: 1.3.0
+      espree: 6.2.1
+      esquery: 1.4.0
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /vue-eslint-parser/7.6.0_eslint@7.30.0:
+    resolution: {integrity: sha512-QXxqH8ZevBrtiZMZK0LpwaMfevQi9UL7lY6Kcp+ogWHC88AuwUPwwCIzkOUc1LR4XsYAt/F9yHXAB/QoD17QXA==}
+    engines: {node: '>=8.10'}
+    peerDependencies:
+      eslint: '>=5.0.0'
+    dependencies:
+      debug: 4.3.2
+      eslint: 7.30.0
+      eslint-scope: 5.1.1
+      eslint-visitor-keys: 1.3.0
+      espree: 6.2.1
+      esquery: 1.4.0
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
   /vue-eslint-parser/7.8.0_eslint@7.30.0:
     resolution: {integrity: sha512-ehmmrLZNYLUoKayvVW8l8HyPQIfuYZHiJoQLRP3dapDlTU7bGs4tqIKVGdAEpMuXS/b4R/PImCt7Tkj4UhX1SQ==}
     engines: {node: '>=8.10'}
@@ -6288,7 +6793,11 @@ packages:
     resolution: {integrity: sha512-wQfgo8ZAaBN5mo27cRYQUnOsgR6UIp197w1cNlgukzaD3Mj/GEjwAPuZ6hxpIZiPewLRKNp60SpPM78iuexHQg==}
     hasBin: true
     dependencies:
+<<<<<<< HEAD
       vscode-vue-languageservice: 0.25.28_vue@3.1.4
+=======
+      vscode-vue-languageservice: 0.25.25_vue@3.1.4
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     transitivePeerDependencies:
       - vue
     dev: true
@@ -6329,7 +6838,11 @@ packages:
   /wide-align/1.1.3:
     resolution: {integrity: sha512-QGkOQc8XL6Bt5PwnsExKBPuMKBxnGxWWW3fU55Xt4feHozMUhdUMaBCk290qpm/wG5u/RSKzwdAC4i51YigihA==}
     dependencies:
+<<<<<<< HEAD
       string-width: 1.0.2
+=======
+      string-width: 2.1.1
+>>>>>>> 282174a5 (Cleanup after MHW next integration, fixed send page dark mode.)
     dev: false
 
   /widest-line/2.0.1:

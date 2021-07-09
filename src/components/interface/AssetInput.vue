@@ -1,17 +1,6 @@
 <template>
   <div
-    class="
-      flex
-      items-center
-      rounded
-      text-black-out
-      focus-within:border-han-blue-700
-      focus-within:ring-1
-      focus-within:ring-han-blue-700
-      border border-cerebral-grey
-      dark:border-midnight-express
-      relative
-    "
+    class="relative flex items-center border rounded text-black-out focus-within:border-han-blue-700 focus-within:ring-1 focus-within:ring-han-blue-700 border-cerebral-grey dark:border-midnight-express dark:text-white"
   >
     <div
       v-if="asset === 'HBAR'"

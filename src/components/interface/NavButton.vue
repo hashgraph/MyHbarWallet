@@ -1,16 +1,6 @@
 <template>
   <button
-    class="
-      bg-first-snow
-      dark:bg-midnight-express
-      text-sm text-carbon
-      dark:text-silver-polish
-      font-medium
-      rounded
-      py-1
-      px-4
-      mr-1
-    "
+    class="px-4 py-1 mr-1 text-sm font-medium rounded  bg-first-snow dark:bg-midnight-express text-carbon dark:text-white"
   >
     <div v-if="value == 'right'">
       <Image :light="chevronRight" :dark="chevronRightDark" class="h-4" />
