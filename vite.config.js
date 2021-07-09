@@ -36,7 +36,9 @@ export default async function ({ mode }) {
 
   return defineConfig({
     plugins: [
-      legacy(),
+      legacy({
+        polyfills: ["Buffer"]
+      }),
       html({
         inject: {
           injectData: {
