@@ -58,7 +58,7 @@ export default async function ({ mode }) {
       },
     },
     optimizeDeps: {
-      exclude: ["path", "electron-window-state"],
+      exclude: ["path", "electron-window-state", "@ledgerhq/hw-transport-webusb"],
       include: ["long/src/long.js"],
       allowNodeBuiltins: ["Buffer"],
     },
