@@ -4,6 +4,7 @@
       v-if="multiline"
       :disabled="disabled"
       :value="modelValue"
+      :placeholder="placeholder"
       spellcheck="false"
       v-bind="$attrs"
       :rows="2"
@@ -50,7 +51,7 @@
       class="absolute -top-3 right-1"
     >
       <div class="text-xs text-argent">
-        {{ numberOfChars }}/100
+        {{ numberOfChars }}/{{ maxLength }}
       </div>
     </div>
     <!-- FIXME: this should be flexed with the input in a container using group-focus -->

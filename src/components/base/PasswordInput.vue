@@ -1,25 +1,25 @@
 <template>
   <form autocomplete="off">
-  <TextInput
-    data-cy-pass-input
-    v-model="state.password"
-    :valid="state.isValid"
-    :error="error || state.hasError"
-    hide
-    :show-eye="showEye"
-    :placeholder="placeholder"
-  />
+    <TextInput
+      v-model="state.password"
+      data-cy-pass-input
+      :valid="state.isValid"
+      :error="error || state.hasError"
+      hide
+      :show-eye="showEye"
+      :placeholder="placeholder"
+    />
 
-  <TextInput
-    data-cy-pass-confirm
-    v-if="confirm"
-    v-model="state.confirmPassword"
-    :valid="state.isValid"
-    :error="state.hasError"
-    :show-eye="showEye"
-    hide
-    :placeholder="$t('BasePasswordInput.input2.placeholder1')"
-  />
+    <TextInput
+      v-if="confirm"
+      v-model="state.confirmPassword"
+      data-cy-pass-confirm
+      :valid="state.isValid"
+      :error="state.hasError"
+      :show-eye="showEye"
+      hide
+      :placeholder="$t('BasePasswordInput.input2.placeholder1')"
+    />
   </form>
 </template>
 
@@ -136,7 +136,7 @@ export default defineComponent({
         context.emit("update:modelValue", newPass);
         validate(newPass, newConfirm);
       },
-      { debounce: 500 }
+      { debounce: 50 }
     );
 
     return {

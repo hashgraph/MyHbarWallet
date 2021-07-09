@@ -45,6 +45,8 @@ import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vu
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
+import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
+
 
 const routes = [
   {
@@ -236,6 +238,13 @@ const routes = [
             path: "convert-units",
             name: "tools.convert.units",
           },
+
+          {
+            component: InterfaceDownloadFile,
+            path: "download",
+            name: "tools.download"
+          
+          }
         ],
       },
     ],
