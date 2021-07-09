@@ -6,6 +6,7 @@ import html from "vite-plugin-html";
 import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import legacy from "@vitejs/plugin-legacy";
+import node from "rollup-plugin-polyfill-node";
 import { getLastCommit } from "git-last-commit";
 import { defineConfig } from "vite";
 
@@ -36,9 +37,8 @@ export default async function ({ mode }) {
 
   return defineConfig({
     plugins: [
-      legacy({
-        polyfills: ["Buffer"]
-      }),
+      legacy(),
+      node(),
       html({
         inject: {
           injectData: {
