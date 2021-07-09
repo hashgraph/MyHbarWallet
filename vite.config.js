@@ -7,6 +7,7 @@ import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import legacy from "@vitejs/plugin-legacy";
 import node from "rollup-plugin-polyfill-node";
+import nodeResolve from "@rollup/plugin-node-resolve";
 import { getLastCommit } from "git-last-commit";
 import { defineConfig } from "vite";
 
@@ -38,7 +39,10 @@ export default async function ({ mode }) {
   return defineConfig({
     plugins: [
       legacy(),
-      node(),
+      node({
+        buffer: true
+      }),
+      nodeResolve(),
       html({
         inject: {
           injectData: {
