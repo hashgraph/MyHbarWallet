@@ -1,4 +1,4 @@
-//src/ui/components/ModalCustomerService.vue
+//A modal for submitting customer support emails
 <template>
     <teleport to="#modals">
         <Modal
