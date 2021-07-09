@@ -7,6 +7,7 @@ import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import node from "rollup-plugin-polyfill-node";
 import commonJs from "@rollup/plugin-commonjs";
+import replace from "@rollup/plugin-replace";
 import { getLastCommit } from "git-last-commit";
 import { defineConfig } from "vite";
 
