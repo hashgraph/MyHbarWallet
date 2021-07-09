@@ -39,7 +39,10 @@ export default async function ({ mode }) {
     plugins: [
       commonJs({
         exclude: [
-          /protobuf/
+          /node_modules/
+        ],
+        include: [
+          /ledger/
         ]
       }),
       node({
