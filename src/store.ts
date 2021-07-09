@@ -23,6 +23,8 @@ interface State {
     prompt: boolean;
     // are you sure you want to logout? open state
     logoutConfirm: boolean;
+    //contact customer support. open state
+    contactSupport: boolean;
 }
 
 export const useStore = defineStore({
@@ -37,7 +39,8 @@ export const useStore = defineStore({
       network: "mainnet",
       extraTxInfo: null,
       prompt: false,
-      logoutConfirm: false
+      logoutConfirm: false,
+      contactSupport: false,
     };
   },
 
@@ -61,6 +64,9 @@ export const useStore = defineStore({
     extraInfo(): Record<string, string | number> | null {
       return this.extraTxInfo;
     },
+    // isContactSupportOpen(): boolean | null {
+    //   return this.contactSupport;
+    // }
   },
 
   actions: {
@@ -106,6 +112,10 @@ export const useStore = defineStore({
 
     setConfirmLogoutOpen(open: boolean): void {
       this.logoutConfirm = open;
+    },
+    
+    setContactSupportOpen(open: boolean): void {
+      this.contactSupport = open;
     }
   },
 });
