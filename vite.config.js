@@ -37,7 +37,11 @@ export default async function ({ mode }) {
 
   return defineConfig({
     plugins: [
-      commonJs(),
+      commonJs({
+        exclude: [
+          /protobuf/
+        ]
+      }),
       node({
         buffer: true
       }),
