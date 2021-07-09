@@ -4,6 +4,7 @@
       v-if="multiline"
       :disabled="disabled"
       :value="modelValue"
+      :placeholder="placeholder"
       spellcheck="false"
       v-bind="$attrs"
       :rows="2"
