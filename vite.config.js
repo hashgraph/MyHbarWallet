@@ -38,9 +38,6 @@ export default async function ({ mode }) {
   return defineConfig({
     plugins: [
       commonJs({
-        exclude: [
-          /node_modules/
-        ],
         include: [
           /ledger/
         ]
