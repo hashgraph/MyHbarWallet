@@ -5,7 +5,6 @@ specifiers:
   '@hashgraph/sdk': ^2.0.24
   '@intlify/vite-plugin-vue-i18n': ^2.3.1
   '@ledgerhq/hw-transport': ^6.1.0
-  '@ledgerhq/hw-transport-web-ble': ^6.1.0
   '@ledgerhq/hw-transport-webusb': ^6.1.0
   '@tailwindcss/forms': ^0.3.3
   '@types/ledgerhq__hw-transport': ^4.21.4
@@ -59,7 +58,6 @@ specifiers:
 dependencies:
   '@hashgraph/sdk': 2.0.24
   '@ledgerhq/hw-transport': 6.1.0
-  '@ledgerhq/hw-transport-web-ble': 6.1.0
   '@ledgerhq/hw-transport-webusb': 6.1.0
   '@vueuse/core': 4.11.2_vue@3.1.4
   awilix: 4.3.4
@@ -440,16 +438,6 @@ packages:
 
   /@ledgerhq/errors/6.0.2:
     resolution: {integrity: sha512-m42ZMzR/EKpOrZfPR3DzusE98DoF3d03cbBkQG6ddm6diwVXFSa7MabaKzgD+41EYQ+hrCGOEZK1K0kosX1itg==}
-    dev: false
-
-  /@ledgerhq/hw-transport-web-ble/6.1.0:
-    resolution: {integrity: sha512-2Ik4EBPF4slumZWh3QOVCrytk3kLdAZmPaZmUQKOcIs0h1watFsk4mfAMKYfsSDOQKEtsjTH/0sNDVSvlncslg==}
-    dependencies:
-      '@ledgerhq/devices': 6.1.0
-      '@ledgerhq/errors': 6.0.2
-      '@ledgerhq/hw-transport': 6.1.0
-      '@ledgerhq/logs': 6.0.2
-      rxjs: 6.6.7
     dev: false
 
   /@ledgerhq/hw-transport-webusb/6.1.0:

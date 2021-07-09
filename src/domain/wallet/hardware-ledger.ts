@@ -41,18 +41,6 @@ export class LedgerHardwareWallet extends Wallet {
       return this.transport;
     }
 
-    // Note: Transports must be dynamically imported for builtin polyfills to work
-    if (await isMobile()) {
-      const TransportWebBLE = (
-        await import("@ledgerhq/hw-transport-web-ble")
-      )["default"];
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.transport = await TransportWebBLE.create(
-        OPEN_TIMEOUT,
-        LISTENER_TIMEOUT
-      );
-    } else {
       const TransportWebUSB = (
         await import("@ledgerhq/hw-transport-webusb")
       )["default"];
@@ -62,7 +50,6 @@ export class LedgerHardwareWallet extends Wallet {
         OPEN_TIMEOUT,
         LISTENER_TIMEOUT
       );
-    }
 
     if (this.transport != null) {
       this.transport.on("disconnect", async () => {
