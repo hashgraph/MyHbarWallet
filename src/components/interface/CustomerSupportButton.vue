@@ -1,4 +1,3 @@
-//this component is a wrapper for the customer support button to allow for the opening of the CS modal
 <template>
   <div>
     <Button
@@ -10,6 +9,7 @@
     </Button>
   </div>
 </template>
+
 <script lang="ts">
 import { defineComponent } from 'vue';
 
