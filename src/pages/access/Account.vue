@@ -170,7 +170,11 @@ export default defineComponent({
         }
         
         if (key) state.publicKey = key;
-        if (key) state.hasMorePublicKeys = true; //??
+
+        // will only attempt multiple derivations with non-hardware
+        if (state.wallet.hasPrivateKey()) {
+          if (key) state.hasMorePublicKeys = true;
+        }
       }
     });
 
