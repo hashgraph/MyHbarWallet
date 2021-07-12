@@ -51,7 +51,7 @@
       class="absolute -top-3 right-1"
     >
       <div class="text-xs text-argent">
-        {{ numberOfChars }}/{{maxLength}}
+        {{ numberOfChars }}/{{ maxLength }}
       </div>
     </div>
     <!-- FIXME: this should be flexed with the input in a container using group-focus -->

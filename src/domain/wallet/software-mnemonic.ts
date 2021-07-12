@@ -20,6 +20,11 @@ enum MnemonicVariant {
   LegacyRootDerive0xffffffffff = -14,
 }
 
+// Note: why these indices?
+// Historical Reasons^tm
+// For example, 0xffffffffff is from SDK versions 1.4.6 - 1.4.8
+// inadvertently using this index when creating new accounts
+
 export class MnemonicSoftwareWallet extends Wallet {
   private _mnemonic: Mnemonic;
   private _password: string;
@@ -160,7 +165,11 @@ export class MnemonicSoftwareWallet extends Wallet {
       }
 
       case MnemonicVariant.LegacyRoot: {
-        privateKey = await this._mnemonic.toLegacyPrivateKey();
+        try {
+          privateKey = await this._mnemonic.toLegacyPrivateKey();
+        } catch (error) {
+          console.warn(error);
+        }
         break;
       }
 
