@@ -1,74 +1,84 @@
 //A modal for submitting customer support emails
 <template>
-    <teleport to="#modals">
-        <Modal
-            :is-visible="isVisible"
-            :title="$t('ModalCustomerService.title')"
-            @close="handleClose"
+  <teleport to="#modals">
+    <Modal
+      :is-visible="isVisible"
+      :title="$t('ModalCustomerService.title')"
+      @close="handleClose"
+    >
+      <form
+        class="pt-4 space-y-2"
+        @submit.prevent="handleSubmit"
+      >
+        <TextInput
+          v-if="!hasBrowser"
+          v-model="state.browser"
+          class="issue-item"
+          :placeholder="$t('ModalCustomerService.browser')"
+        />
+
+        <TextInput
+          v-if="!hasPlatform"
+          :model-value="state.platform.toString()"
+          class="issue-item"
+          :placeholder="$t('ModalCustomerService.operatingSystem')"
+        />
+
+        <TextInput
+          v-if="!hasDevice"
+          v-model="state.device"
+          class="issue-item"
+          :placeholder="
+            $t('ModalCustomerService.deviceOrWalletIfAny')
+          "
+        />
+
+        <TextInput
+          v-if="!hasAccountId"
+          v-model="state.accountId"
+          class="issue-item"
+          :placeholder="$t('ModalCustomerService.accountIdIfAny')"
+        />
+
+        <TextInput
+          v-if="!hasUrl"
+          v-model="state.url"
+          class="issue-item"
+          :placeholder="$t('ModalCustomerService.url')"
+        />
+
+        <TextInput
+          ref="input"
+          v-model="state.description"
+          multiline
+          class="issue-item"
+          :placeholder="$t('ModalCustomerService.describeTheIssue')"
+          resizable
+        />
+
+        <Button
+          class="w-full p-2"
+          color="green"
+          :compact="true"
         >
-                <form
-                    class="modal-issue-information"
-                    @submit.prevent="handleSubmit"
-                >
-                    <TextInput
-                        v-if="!hasBrowser"
-                        v-model="state.browser"
-                        class="issue-item"
-                        :placeholder="$t('ModalCustomerService.browser')"
-                    />
-                    <TextInput
-                        v-if="!hasPlatform"
-                        v-model="state.platform"
-                        class="issue-item"
-                        :placeholder="$t('ModalCustomerService.operatingSystem')"
-                    />
-                    <TextInput
-                        v-if="!hasDevice"
-                        v-model="state.device"
-                        class="issue-item"
-                        :placeholder="
-                            $t('ModalCustomerService.deviceOrWalletIfAny')
-                        "
-                    />
-                    <TextInput
-                        v-if="!hasAccountId"
-                        v-model="state.accountId"
-                        class="issue-item"
-                        :placeholder="$t('ModalCustomerService.accountIdIfAny')"
-                    />
-                    <TextInput
-                        v-if="!hasUrl"
-                        v-model="state.url"
-                        class="issue-item"
-                        :placeholder="$t('ModalCustomerService.url')"
-                    />
-                    <TextInput
-                        ref="input"
-                        v-model="state.description"
-                        multiline
-                        class="issue-item"
-                        :placeholder="$t('ModalCustomerService.describeTheIssue')"
-                        resizable
-                    />
-                    <Button
-                        :label="$t('common.send')"
-                        class="send-button"
-                        :compact="true"
-                    >{{$t('Common.send')}}
-                    </Button>
-                </form>
-        </Modal>
-    </teleport>
+          {{ $t('Common.send') }}
+        </Button>
+      </form>
+    </Modal>
+  </teleport>
 </template>
+
 <script lang="ts">
 import platform from "platform";
 import { computed, defineComponent, reactive, ref, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
+
 import { useStore } from "../../store";
 import { formatBuild, formatSupportLink } from "../../utils/format";
-import Modal from "./Modal.vue";
 import Button from "../base/Button.vue";
 import TextInput from "../base/TextInput.vue";
-import { useRouter, useRoute } from "vue-router";
+
+import Modal from "./Modal.vue";
 
 // from vite.config.js
 declare const __APP_VERSION__: string;
@@ -93,9 +103,9 @@ export default defineComponent({
             store.accountId :
             null);
 
-        const accountId: any = computed(() => {
+        const accountId = computed(() => {
             if (account.value != null) {
-                return accountId.toString()
+                return account.value.toString()
             }
             return null;
         });
@@ -135,14 +145,15 @@ export default defineComponent({
         function handleSubmit(): void {
             window.open(sendLink.value);
             store.setContactSupportOpen(false);
-            clearForms();
+            clearForm();
         }
 
-        function clearForms(): void {
+        function clearForm(): void {
             state.device = "";
             state.accountId = "";
             state.description = "";
         }
+
         // When the route is updated, reset the path value
         watch(
             () => router.currentRoute,
@@ -159,7 +170,7 @@ export default defineComponent({
 
         function handleClose(): void {
             store.setContactSupportOpen(false);
-            clearForms();
+            clearForm();
         }
 
         return {

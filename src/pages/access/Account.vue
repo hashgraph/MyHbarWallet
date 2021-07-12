@@ -91,6 +91,16 @@
         </div>
       </template>
     </div>
+
+    <div class="flex items-center justify-between w-full mt-8 mb-6">
+      <div class="h-0 border-b w-52 border-cerebral-grey" />
+      <div class="text-sm text-carbon dark:text-white">
+        OR
+      </div>
+      <div class="h-0 border-b w-52 border-cerebral-grey" />
+    </div>
+    
+    <CustomerSupportButton class="text-center text-mountain-meadow" />
   </Layout>
 </template>
 
@@ -107,6 +117,7 @@ import Layout from "../../components/access/Layout.vue";
 import InputError from "../../components/base/InputError.vue";
 import AccountIdInput from "../../components/base/AccountIdInput.vue";
 import Button from "../../components/base/Button.vue";
+import CustomerSupportButton from "../../components/interface/CustomerSupportButton.vue";
 
 interface State {
   wallet: Wallet | null;
@@ -127,6 +138,7 @@ export default defineComponent({
     AccountIdInput,
     InputError,
     Button,
+    CustomerSupportButton
   },
   setup() {
     const container = useContainer();

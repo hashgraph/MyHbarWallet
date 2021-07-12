@@ -3,7 +3,6 @@ import { Buffer } from "buffer";
 import { PublicKey } from "@hashgraph/sdk";
 import Transport from "@ledgerhq/hw-transport";
 
-import { isMobile } from "../../hooks/platform";
 import { useStore } from "../../store";
 
 import { Wallet } from "./abstract";

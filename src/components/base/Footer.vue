@@ -4,9 +4,6 @@
   >
     <div class="flex flex-col h-32 mx-auto max-w-screen-2xl content-evenly lg:h-0 lg:justify-around lg:flex-row md:px-16">
       <div class="m-auto mb-6 text-center sm:mb-0">
-        
-        <CustomerSupportButton :is="buttonComponent" />
-        
         <router-link
           v-t="'SiteFooter.privacy'"
           :to="{ name: 'privacy' }"
@@ -87,7 +84,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import CustomerSupportButton from '../interface/CustomerSupportButton.vue'
 
 // from vite.config.js
 declare const __APP_VERSION__: string;
@@ -95,15 +91,10 @@ declare const __APP_LAST_COMMIT_SHORT_HASH__: string;
 
 export default defineComponent({
   name: "Footer",
-  components: {
-    CustomerSupportButton
-  },
-
   setup() {
     return {
       appVersion: __APP_VERSION__,
       appLastCommitShortHash: __APP_LAST_COMMIT_SHORT_HASH__,
-      CustomerSupportButton,
     };
   },
 });

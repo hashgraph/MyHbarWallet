@@ -129,6 +129,7 @@
     "Marketing.about.header": "About MyHbarWallet",
     "Marketing.about.paragraph": "MyHbarWallet is a clone of one of the most popular wallets on Ethereum. We took that approach because it was open source and people already are familiar with the interface and processes. We want MyHbarWallet to be the simplest and most intuitive interface to Hedera™ Hashgraph.",
     "Marketing.faqs.header": "FAQs",
+    "Marketing.faqs.needMoreHelp": "Need More Help?",
     "Marketing.faqs.paragraph": "Answers to most frequently asked questions",
     "Marketing.faqs.section1.header": "How do I create a new account?",
     "Marketing.faqs.section1.paragraph1": "MyHbarWallet (MHW) offers three ways to create a new H wallet. These are: By Keystore, By Mnemonic Phrase, or With a Hardware Wallet. Pair your keys with an account ID to start transacting hbar.",

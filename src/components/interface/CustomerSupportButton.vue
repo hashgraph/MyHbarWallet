@@ -1,25 +1,25 @@
 //this component is a wrapper for the customer support button to allow for the opening of the CS modal
 <template>
-    <div>
-        <Button
-          class="hover:opacity-50 hover:no-underline"
-          @click="handleButtonClick"
-        >
-          {{ $t("CustomerSupport.button") }}
-        </Button>
-    </div>
+  <div>
+    <Button
+      color="green"
+      class="px-5 py-2"
+      @click="handleButtonClick"
+    >
+      {{ $t("CustomerSupport.button") }}
+    </Button>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 import { useStore } from "../../store";
 import Button from '../base/Button.vue';
-import CustomerSupportModal from './CustomerSupportModal.vue';
 
 export default defineComponent({
     name: "CustomerSupportButton",
     components: {
       Button,
-      CustomerSupportModal
     },
     setup() {
         const store = useStore();
