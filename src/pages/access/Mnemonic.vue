@@ -61,6 +61,7 @@
         :hint="false"
         :label="$t('BaseOptionalPasswordInput.label1')"
         :placeholder="$t('BasePasswordInput.input1.placeholder1')"
+        @update:modelValue="handlePassword"
       />
 
       <Button
@@ -159,6 +160,11 @@ export default defineComponent({
       router.push({ name: "access.account" });
     }
 
+    function handlePassword(pass: string | null) {
+      if (pass) password.value = pass;
+      else password.value = "";
+    }
+
     return {
       onSubmit,
       onChangeWordCount,
@@ -168,6 +174,7 @@ export default defineComponent({
       warningIndices,
       mnemonicPhrase,
       mnemonicInputComponent,
+      handlePassword
     };
   },
 });
