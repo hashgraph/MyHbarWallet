@@ -53,6 +53,7 @@
     "InterfaceAsset.note1": "There's a problem with this account.",
     "InterfaceAsset.note2": "Your asset is frozen.",
     "InterfaceAsset.value": "{value} ea.",
+    "InterfaceAsset.asset": "Asset",
     "InterfaceAssets.header": "Assets",
     "InterfaceHistory.header": "History",
     "InterfaceHistory.button.all": "All",

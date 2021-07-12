@@ -4,7 +4,7 @@
   >
     <div
       v-if="asset === 'HBAR'"
-      class="absolute left-0 pl-4 text-right pointer-events-none"
+      class="absolute left-0 pl-4 text-right pointer-events-none dark:text-silver-polish"
     >
       ℏ
     </div>
