@@ -1,0 +1,6 @@
+@import "./fonts/google-fonts-1621193246663.css";
+
+/* https://tailwindcss.com/docs */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
