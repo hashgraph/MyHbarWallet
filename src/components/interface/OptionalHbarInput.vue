@@ -12,10 +12,6 @@
       class="mt-3"
       @update:model-value="handleUpdate"
     />
-
-    <div class="mt-2 text-sm italic text-squant">
-      Lorem ipsum hint text.
-    </div>
   </div>
 </template>
 

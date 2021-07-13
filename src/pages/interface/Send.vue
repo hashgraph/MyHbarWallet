@@ -56,6 +56,10 @@
           class="mt-8"
           :default-value="state.defaultMaxFee"
         />
+
+        <div class="mt-2 text-sm italic text-squant">
+          {{ $t("OptionalMaxFee.maxFee") }}
+        </div>
       </div>
     </div>
 
