@@ -53,6 +53,11 @@
             :question="$t('Marketing.faqs.section4.header')"
             :answer="$t('Marketing.faqs.section4.paragraph1')"
           />
+
+          <Faq
+            :question="$t('Marketing.faqs.section5.header')"
+            :answer="$t('Marketing.faqs.section5.paragraph1')"
+          />
         </div>
       </div>
     </div>
