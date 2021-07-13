@@ -16,11 +16,14 @@ export async function transfer(
 
   const transaction = new TransferTransaction();
 
+  transaction.setTransactionMemo(options.memo ?? "");
+  transaction.setMaxTransactionFee(options.maxFee ?? new Hbar(1));
+
   for (const transfer of options.transfers) {
     if (transfer.asset === "HBAR") {
-      const amount = Hbar.fromTinybars(transfer.amount.toNumber());
+      const amount = Hbar.fromTinybars(transfer.amount?.toNumber());
 
-      transaction.addHbarTransfer(transfer.to, amount);
+      transaction.addHbarTransfer(transfer.to ?? "", amount);
 
       transaction.addHbarTransfer(
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -29,16 +32,16 @@ export async function transfer(
       );
     } else {
       transaction.addTokenTransfer(
-        transfer.asset,
-        transfer.to,
-        transfer.amount.toNumber()
+        transfer.asset ?? "",
+        transfer.to ?? "",
+        transfer.amount?.toNumber()
       );
 
       transaction.addTokenTransfer(
-        transfer.asset,
+        transfer.asset ?? "",
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 client.operatorAccountId!,
-                transfer.amount.negated().toNumber()
+                transfer.amount?.negated().toNumber()
       );
     }
   }

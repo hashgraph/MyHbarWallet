@@ -1,5 +1,5 @@
 import { BigNumber } from "bignumber.js";
-import type { AccountId, PrivateKey, PublicKey, TokenId } from "@hashgraph/sdk";
+import type { AccountId, FileId, PrivateKey, PublicKey, TokenId } from "@hashgraph/sdk";
 
 import { Wallet } from "../domain/wallet/abstract";
 
@@ -64,4 +64,10 @@ export interface SimpleHederaClient {
         account: AccountId;
         tokens: TokenId[];
     }): Promise<void>;
+  
+    uploadFile(options: {
+      chunks: Uint8Array[];
+      fileMemo: string | null;
+      memo: string | null;
+    }): Promise<FileId>;
 }

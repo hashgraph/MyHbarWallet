@@ -8,6 +8,14 @@
       :to="{ name: 'tools.associate.token' }"
     />
 
+
+
+    <ToolTile
+    :title = "$t('InterfaceToolTile.upload.title')"
+    :description = "$t('InterfaceToolTile.upload.description')"
+    :to = "{ name: 'tools.upload' }"
+    />
+
     <!-- <ToolTile
       :title="$t('InterfaceConvertUnits')"
       description="Our helpful conversion tool and hbar unit reference allow you to calculate your total transaction cost."

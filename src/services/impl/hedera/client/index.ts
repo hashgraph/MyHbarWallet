@@ -1,9 +1,10 @@
-import type {
+import {
   Client,
   PublicKey,
   PrivateKey,
   AccountId,
   TokenId,
+  FileId,
 } from "@hashgraph/sdk";
 import { BigNumber } from "bignumber.js";
 
@@ -16,7 +17,7 @@ import {
 import { getAccountBalance } from "./get-account-balance";
 import { transfer } from "./transfer";
 import { associateToken } from "./associate-token";
-
+import { uploadFile } from "./upload-file";
 
 export class SimpleHederaClientImpl implements SimpleHederaClient {
     private _client: Client;
@@ -26,6 +27,10 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
     constructor(client: Client, privateKey: PrivateKey | null) {
       this._client = client;
       this._privateKey = privateKey;
+    }
+    
+    uploadFile(options: { chunks: Uint8Array[]; fileMemo: string | null; memo: string | null; }): Promise<FileId> {
+      return uploadFile(this._client, options);
     }
 
     getPrivateKey(): PrivateKey | null {
@@ -42,8 +47,12 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
       return this._client.operatorAccountId!;
     }
 
-    getAccountBalance(): Promise<AccountBalance> {
-      return getAccountBalance(this._client);
+    async getAccountBalance(): Promise<AccountBalance> {
+      // Workaround for extraneous signing in SDK, 
+      // use an operator - less client for balance queries
+      const { Client } = await import("@hashgraph/sdk");
+      const client = Client.forNetwork(this._client.network);
+      return getAccountBalance(client);
     }
 
     transfer(options: {
