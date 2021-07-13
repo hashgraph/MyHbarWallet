@@ -1,16 +1,20 @@
 import type { Client } from "@hashgraph/sdk";
 import { BigNumber } from "bignumber.js";
 
+import { useStore } from "../../../../store";
 import { AccountBalance, TokenBalance } from "../../../hedera";
 
 export async function getAccountBalance(
   client: Client
 ): Promise<AccountBalance> {
   const { HbarUnit, AccountBalanceQuery } = await import("@hashgraph/sdk");
+  
+  // :^)
+  const store = useStore();
 
   const resp = await new AccountBalanceQuery({
     /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
-    accountId: client.operatorAccountId!,
+    accountId: client.operatorAccountId ?? store.accountId ?? undefined,
   }).execute(client);
 
   const hbars = resp.hbars.to(HbarUnit.Hbar);
