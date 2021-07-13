@@ -183,8 +183,8 @@ export default defineComponent({
       try {
         await store.client.transfer({
           transfers: [state.transfer],
-          memo: null,
-          maxFee: null,
+          memo: state.memo ?? "",
+          maxFee: state.maxFee ?? null,
           onBeforeConfirm() {
             state.sendBusyText = "Waiting for confirmation …";
           },

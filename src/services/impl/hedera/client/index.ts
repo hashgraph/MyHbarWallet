@@ -42,7 +42,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
       return this._client.operatorAccountId!;
     }
 
-    getAccountBalance(): Promise<AccountBalance> {
+    async getAccountBalance(): Promise<AccountBalance> {
       return getAccountBalance(this._client);
     }
 
