@@ -1,27 +1,12 @@
 import { Buffer } from "buffer";
 
-<<<<<<< HEAD
-import { PublicKey } from "@hashgraph/sdk";
-import Transport from "@ledgerhq/hw-transport";
-
-import { isMobile } from "../../hooks/platform";
-=======
 import type { PublicKey } from "@hashgraph/sdk";
 import Transport from "@ledgerhq/hw-transport";
 
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
 import { useStore } from "../../store";
 
 import { Wallet } from "./abstract";
 
-<<<<<<< HEAD
-// :^) sorry, only used by dev server
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-globalThis.Buffer = Buffer;
-
-=======
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
 // Path /44' /3030' /0' /0' /INDEX'
 const CLA = 0xe0;
 const INS_GET_PK = 0x02;
@@ -143,15 +128,10 @@ export class LedgerHardwareWallet extends Wallet {
   }
 
   async getPublicKey(index: number): Promise<PublicKey | undefined> {
-<<<<<<< HEAD
-    if (this.publicKeys.get(index) != null) {
-      return this.publicKeys.get(index); 
-=======
     const { PublicKey } = await import("@hashgraph/sdk");
 
     if (this.publicKeys.get(index) != null) {
       return this.publicKeys.get(index);
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
     } else {
       const buffer = Buffer.alloc(4);
       buffer.writeUInt32LE(index, 0);

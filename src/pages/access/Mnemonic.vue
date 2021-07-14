@@ -61,10 +61,7 @@
         :hint="false"
         :label="$t('BaseOptionalPasswordInput.label1')"
         :placeholder="$t('BasePasswordInput.input1.placeholder1')"
-<<<<<<< HEAD
-=======
         @update:modelValue="handlePassword"
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
       />
 
       <Button
@@ -163,14 +160,11 @@ export default defineComponent({
       router.push({ name: "access.account" });
     }
 
-<<<<<<< HEAD
-=======
     function handlePassword(pass: string | null) {
       if (pass) password.value = pass;
       else password.value = "";
     }
 
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
     return {
       onSubmit,
       onChangeWordCount,
@@ -180,10 +174,7 @@ export default defineComponent({
       warningIndices,
       mnemonicPhrase,
       mnemonicInputComponent,
-<<<<<<< HEAD
-=======
       handlePassword
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
     };
   },
 });

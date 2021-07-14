@@ -2,13 +2,9 @@
   <div
     class="max-w-2xl mx-auto my-20 text-sm  text-midnight-express dark:text-white"
   >
-<<<<<<< HEAD
-    <div class="text-3xl font-semibold text-center">
-=======
     <div 
     data-cy-policy-header
     class="text-3xl font-semibold text-center">
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
       Privacy Policy
     </div>
 

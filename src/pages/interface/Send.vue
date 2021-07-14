@@ -56,13 +56,10 @@
           class="mt-8"
           :default-value="state.defaultMaxFee"
         />
-<<<<<<< HEAD
-=======
 
         <div class="mt-2 text-sm italic text-squant">
           {{ $t("OptionalMaxFee.maxFee") }}
         </div>
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
       </div>
     </div>
 
@@ -190,13 +187,8 @@ export default defineComponent({
       try {
         await store.client.transfer({
           transfers: [state.transfer],
-<<<<<<< HEAD
-          memo: null,
-          maxFee: null,
-=======
           memo: state.memo ?? "",
           maxFee: state.maxFee ?? null,
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
           onBeforeConfirm() {
             state.sendBusyText = "Waiting for confirmation …";
           },

@@ -91,8 +91,6 @@
         </div>
       </template>
     </div>
-<<<<<<< HEAD
-=======
 
     <div class="flex items-center justify-between w-full mt-8 mb-6">
       <div class="h-0 border-b w-52 border-cerebral-grey" />
@@ -103,7 +101,6 @@
     </div>
     
     <CustomerSupportButton class="text-center text-mountain-meadow" />
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
   </Layout>
 </template>
 
@@ -120,10 +117,7 @@ import Layout from "../../components/access/Layout.vue";
 import InputError from "../../components/base/InputError.vue";
 import AccountIdInput from "../../components/base/AccountIdInput.vue";
 import Button from "../../components/base/Button.vue";
-<<<<<<< HEAD
-=======
 import CustomerSupportButton from "../../components/interface/CustomerSupportButton.vue";
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
 
 interface State {
   wallet: Wallet | null;
@@ -144,10 +138,7 @@ export default defineComponent({
     AccountIdInput,
     InputError,
     Button,
-<<<<<<< HEAD
-=======
     CustomerSupportButton
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
   },
   setup() {
     const container = useContainer();
@@ -173,15 +164,6 @@ export default defineComponent({
         state.wallet = store.wallet;
         let key: PublicKey | undefined = undefined;
         
-<<<<<<< HEAD
-        for (let keyIdx = 0; keyIdx >= state.wallet.minIndex; keyIdx--) {
-          key = await state.wallet.getPublicKey(keyIdx);
-          break;
-        }
-        
-        if (key) state.publicKey = key;
-        if (key) state.hasMorePublicKeys = true; //??
-=======
         for (let keyIdx = 0; keyIdx >= state.wallet.minIndex; keyIdx--) {          
           try {
             key = await state.wallet.getPublicKey(keyIdx);
@@ -200,7 +182,6 @@ export default defineComponent({
         if (state.wallet.hasPrivateKey()) {
           if (key) state.hasMorePublicKeys = true;
         }
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
       }
     });
 

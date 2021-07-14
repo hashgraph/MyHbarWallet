@@ -105,20 +105,6 @@ export default defineComponent({
         const route = useRoute()
         const appVersion = __APP_VERSION__;
         const appLastCommitShortHash = __APP_LAST_COMMIT_SHORT_HASH__;
-<<<<<<< HEAD
-        
-        const account = computed(() => store.accountId != null ?
-            store.accountId :
-            null);
-
-        const accountId: any = computed(() => {
-            if (account.value != null) {
-                return accountId.toString()
-            }
-            return null;
-        });
-
-=======
         const account = computed(() => store.accountId != null ?
             store.accountId :
             null);
@@ -128,25 +114,16 @@ export default defineComponent({
             }
             return null;
         });
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
         const browser = computed(() => {
             const name = platform.name;
             const version = platform.version;
             return formatBuild(name ?? "", version);
         });
-<<<<<<< HEAD
-
-=======
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
         const device = computed(() => {
             const type = platform.product;
             const model = platform.version;
             return formatBuild(type, model);
         });
-<<<<<<< HEAD
-
-=======
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
         const state = reactive({
             platform: platform.os || "",
             browser: browser.value || "",
@@ -156,10 +133,6 @@ export default defineComponent({
             version: appVersion + appLastCommitShortHash,
             accountId: accountId.value || ""
         });
-<<<<<<< HEAD
-
-=======
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
         const sendLink = computed(() => formatSupportLink(
             state.url,
             state.platform,
@@ -169,23 +142,12 @@ export default defineComponent({
             state.accountId,
             state.description
         ));
-<<<<<<< HEAD
-
-        function handleSubmit(): void {
-            window.open(sendLink.value);
-            store.setContactSupportOpen(false);
-            clearForms();
-        }
-
-        function clearForms(): void {
-=======
         function handleSubmit(): void {
             window.open(sendLink.value);
             store.setContactSupportOpen(false);
             clearForm();
         }
         function clearForm(): void {
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
             state.device = "";
             state.accountId = "";
             state.description = "";
@@ -199,18 +161,6 @@ export default defineComponent({
                 return null;
             }
         );
-<<<<<<< HEAD
-
-        const isVisible = computed(() => {
-            return store.contactSupport
-        });
-
-        function handleClose(): void {
-            store.setContactSupportOpen(false);
-            clearForms();
-        }
-
-=======
         const isVisible = computed(() => {
             return store.contactSupport
         });
@@ -218,7 +168,6 @@ export default defineComponent({
             store.setContactSupportOpen(false);
             clearForm();
         }
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
         return {
             hasAccountId: accountId.value != null,
             hasPlatform: platform.name!= null,
@@ -234,8 +183,4 @@ export default defineComponent({
         };
     }
 });
-<<<<<<< HEAD
 </script>
-=======
-</script>
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11

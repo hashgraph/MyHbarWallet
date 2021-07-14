@@ -1,8 +1,5 @@
 import "./index.css";
-<<<<<<< HEAD
-=======
 import "./shims-buffer";
->>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
