@@ -48,10 +48,10 @@
     >
     <div
       v-if="charCounter"
-      class="absolute -top-3 right-1"
+      class="absolute -top-4 right-1"
     >
       <div class="text-xs text-argent">
-        {{ numberOfChars }}/100
+        {{ numberOfChars }}/{{ maxLength }}
       </div>
     </div>
     <!-- FIXME: this should be flexed with the input in a container using group-focus -->

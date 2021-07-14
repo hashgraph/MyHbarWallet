@@ -42,8 +42,17 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
       return this._client.operatorAccountId!;
     }
 
+<<<<<<< HEAD
     getAccountBalance(): Promise<AccountBalance> {
       return getAccountBalance(this._client);
+=======
+    async getAccountBalance(): Promise<AccountBalance> {
+      // Workaround for extraneous signing in SDK, 
+      // use an operator - less client for balance queries
+      const { Client } = await import("@hashgraph/sdk");
+      const client = Client.forNetwork(this._client.network);
+      return getAccountBalance(client);
+>>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
     }
 
     transfer(options: {

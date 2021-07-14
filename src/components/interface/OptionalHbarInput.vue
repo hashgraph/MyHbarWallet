@@ -10,11 +10,8 @@
       medium-font
       :disabled="!isOpen"
       class="mt-3"
+      @update:model-value="handleUpdate"
     />
-
-    <div class="mt-2 text-sm italic text-squant">
-      Lorem ipsum hint text.
-    </div>
   </div>
 </template>
 
@@ -45,13 +42,18 @@ export default defineComponent({
       emit("update:modelValue", value.value);
     }
 
+    function handleUpdate(fee: Hbar): void {
+      value.value = fee;
+      emit("update:modelValue", fee);
+    }
+
     watch(isOpen, () => {
       if (!isOpen.value) {
         resetHbar();
       }
     });
 
-    return { isOpen, value };
+    return { isOpen, value, handleUpdate };
   },
 });
 </script>

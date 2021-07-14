@@ -3,7 +3,14 @@
   <div
     class="max-w-2xl mx-auto my-20 text-sm  text-midnight-express dark:text-white"
   >
+<<<<<<< HEAD
     <div class="text-3xl font-semibold text-center">
+=======
+    <div 
+    class="text-3xl font-semibold text-center"
+    data-cy-terms-title
+    >
+>>>>>>> f2c10c4df5318585ac3f75f3b2d0fce33b66cc11
       {{ $t("TermsAndConditions.title") }}
     </div>
     <div class="mt-6 text-center">
