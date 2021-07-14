@@ -1,6 +1,7 @@
 import type { PrivateKey, AccountId, PublicKey } from "@hashgraph/sdk";
 import { BigNumber } from "bignumber.js";
 import { defineStore } from "pinia";
+import { useI18n } from "vue-i18n";
 
 import { Wallet } from "./domain/wallet/abstract";
 import { AccountBalance, SimpleHederaClient } from "./services/hedera";
