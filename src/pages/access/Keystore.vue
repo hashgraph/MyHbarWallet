@@ -105,7 +105,7 @@ export default defineComponent({
 
         await router.push({ name: "access.account" });
       } catch (error) {
-        errorMessage.value = error.message;
+        errorMessage.value = await store.errorMessage(error);
       }
     }
 

@@ -53,9 +53,14 @@ export default defineComponent({
     async function handleConnect(): Promise<void> {
       state.disabled = true;
       state.busy = true;
+      state.errorMessage = "";
 
-      const wallet = new LedgerHardwareWallet();
-      store.setWallet(wallet);
+      try {
+        const wallet = new LedgerHardwareWallet();
+        store.setWallet(wallet);
+      } catch (error) {
+          state.errorMessage = await store.errorMessage(error);
+      }
 
       state.busy = false;
       state.disabled = false;

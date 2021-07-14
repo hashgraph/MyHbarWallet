@@ -108,7 +108,7 @@ export default defineComponent({
 
       await downloadKeystore();
 
-      nextTick(() => {
+      nextTick(async () => {
         try {
           if (keystore.value != null) {
             const wallet = new KeystoreSoftwareWallet(keystore.value, password.value);
@@ -116,7 +116,7 @@ export default defineComponent({
             router.push({ name: "access.account" });
           }
         } catch (error) {
-          errorMessage.value = error.message;
+          errorMessage.value = await store.errorMessage(error);
         }
       });
     }
