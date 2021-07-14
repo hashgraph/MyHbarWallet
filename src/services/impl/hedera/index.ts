@@ -1,4 +1,4 @@
-import { AccountId, Client } from "@hashgraph/sdk";
+import type { AccountId, Client } from "@hashgraph/sdk";
 
 import { Wallet } from "../../../domain/wallet/abstract";
 import { HederaService, SimpleHederaClient } from "../../hedera";
