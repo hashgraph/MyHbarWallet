@@ -179,7 +179,6 @@ export default defineComponent({
 
     async function onSend(): Promise<void> {
        if (store.client == null) return;
-      const { StatusError } = await import("@hashgraph/sdk");
       
       state.sendBusyText = "Executing transaction …";
       state.generalErrorText = null;
@@ -201,13 +200,7 @@ export default defineComponent({
         // so we can watch it "reach consensus"
         router.back();
       } catch (err) {
-        if (err instanceof StatusError) {
-          state.generalErrorText = `Transaction failed with status ${
-            err.status
-          } (${err.status.valueOf()})`;
-        } else {
-          throw err;
-        }
+        state.generalErrorText = await store.errorMessage(err);
       } finally {
         state.sendBusyText = null;
       }

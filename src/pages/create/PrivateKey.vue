@@ -4,7 +4,7 @@
     class="max-w-lg"
     :back="{ name: 'create' }"
   >
-    <div class="grid auto-rows-min gap-5">
+    <div class="grid gap-5 auto-rows-min">
       <div class="flex flex-col">
         <KeyInput
           v-model="key"
@@ -14,13 +14,13 @@
 
         <Button
           color="green"
-          class="mt-14 w-full p-4"
+          class="w-full p-4 mt-14"
         >
           {{ $t("BaseButton.continue") }}
         </Button>
 
-        <div class="mt-10 text-black-out dark:text-white text-sm">
-          <span class="text-Megaman-Helmet font-semibold">
+        <div class="mt-10 text-sm text-black-out dark:text-white">
+          <span class="font-semibold text-Megaman-Helmet">
             {{ $t("PrivateKey.note.dnf") }}
           </span>
 

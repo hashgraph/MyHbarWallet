@@ -74,7 +74,6 @@ export default defineComponent({
       try {
         privateKey = PrivateKey.fromString(privateKeyText.value);
       } catch (err) {
-        console.warn(err);
         isBadKey.value = true;
         return;
       }
