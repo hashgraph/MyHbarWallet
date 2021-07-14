@@ -18,7 +18,7 @@
     </div>
 
     <label class="block pt-2 mt-5 mb-2 dark:text-silver-polish">
-      Asset
+      {{ $t('InterfaceAsset.asset') }}
     </label>
 
     <AssetSelector v-model="dAsset" />
