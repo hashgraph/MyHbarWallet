@@ -16,7 +16,7 @@ import {
 import { getAccountBalance } from "./get-account-balance";
 import { transfer } from "./transfer";
 import { associateToken } from "./associate-token";
-
+import { downloadFile } from "./download-file";
 
 export class SimpleHederaClientImpl implements SimpleHederaClient {
     private _client: Client;
@@ -65,5 +65,10 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
         tokens: TokenId[];
     }): Promise<void> {
       return associateToken(this._client, options);
+    }
+
+
+    downloadFile(fileId: FileId){
+      return downloadFile(this._client, fileId);
     }
 }
