@@ -4,24 +4,22 @@
       v-model="isOpen"
       label="Max Transaction Fee"
     />
-
     <HbarInput
       v-model="value"
       medium-font
       :disabled="!isOpen"
-      class="mt-3"
-      @update:model-value="handleUpdate"
+      class="mt-3 px-5"
     />
+    <div class="mt-2 text-sm italic text-squant px-5">
+      {{ $t("OptionalHbarInput.about") }}
+    </div>
   </div>
 </template>
-
 <script lang="ts">
 import type { Hbar } from "@hashgraph/sdk";
 import { defineComponent, PropType, ref, watch } from "vue";
-
 import Switch from "../base/Switch.vue";
 import HbarInput from "../base/HbarInput.vue";
-
 export default defineComponent({
   name: "OptionalHbarInput",
   components: {
@@ -36,24 +34,16 @@ export default defineComponent({
   setup(props, { emit }) {
     const isOpen = ref(false);
     const value = ref(props.defaultValue);
-
     function resetHbar() {
       value.value = props.defaultValue;
       emit("update:modelValue", value.value);
     }
-
-    function handleUpdate(fee: Hbar): void {
-      value.value = fee;
-      emit("update:modelValue", fee);
-    }
-
     watch(isOpen, () => {
       if (!isOpen.value) {
         resetHbar();
       }
     });
-
-    return { isOpen, value, handleUpdate };
+    return { isOpen, value };
   },
 });
 </script>

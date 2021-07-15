@@ -73,7 +73,7 @@
     "InterfaceHomeSendModal.input3.label": "Amount",
     "InterfaceHomeSendConfirmationModal.header": "Confirmation",
     "InterfaceHomeSend.section2.input1.label": "From",
-    "InterfaceHomeSend.section2.toggle1.label": "Add Memo",
+    "InterfaceHomeSend.section2.toggle1.label": "Memo",
     "InterfaceHomeSend.section2.toggle2.label": "Max Transaction Fee",
     "InterfaceKeys.header": "Keys",
     "InterfaceKeys.input1.label": "Private key",
