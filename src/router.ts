@@ -45,7 +45,9 @@ import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vu
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
+import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
 import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
+import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
 
 
 const routes = [
@@ -234,16 +236,24 @@ const routes = [
             name: "tools.associate.token",
           },
           {
+            component: InterfaceCreateAccount,
+            path: "create-account",
+            name: "tools.create.account"
+          },
+          {
             component: InterfaceConvertUnits,
             path: "convert-units",
             name: "tools.convert.units",
           },
-
           {
             component: InterfaceDownloadFile,
             path: "download",
             name: "tools.download"
-          
+          },
+          {
+            component: InterfaceUploadFile,
+            path: "upload",
+            name: "tools.upload"
           }
         ],
       },

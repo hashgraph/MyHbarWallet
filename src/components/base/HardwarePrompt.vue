@@ -12,7 +12,14 @@
       :key="`prompt-open-${isOpen}`"
       class="fixed z-40 flex items-center justify-center h-20 p-2 overflow-hidden italic border-l-4 rounded shadow bottom-10 right-10 w-80 bg-peach"
     >
-      <slot />
+      <div class="flex items-center justify-start">
+        <Image
+          class="pr-2"
+          :dark="infoIcon"
+          :light="infoIcon"
+        />
+        {{ $t('Common.Prompt') }}
+      </div>
     </div>
   </transition>
 </template>
@@ -21,15 +28,22 @@
 import { defineComponent, computed } from "vue";
 
 import { useStore } from "../../store";
+import infoIcon from "../../assets/icon_info.svg";
+
+import Image from "./Image.vue";
 
 export default defineComponent({
-  name: "Prompt",
+  name: "HardwarePrompt",
+  components: {
+    Image
+  },
   setup() {
     const store = useStore();
     const isOpen = computed(() => store.prompt);
 
     return {
-      isOpen
+      isOpen,
+      infoIcon
     }
   }
 })

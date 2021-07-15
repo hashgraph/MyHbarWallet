@@ -1,86 +1,32 @@
 <template>
-  <TextInput
-    v-model="state.hbarString"
-    :placeholder="placeholder"
-    :disabled="disabled"
-    v-bind="$attrs"
-    @update:modelValue="onInput"
+  <AssetInput
+    v-model="dAmount"
+    :asset="'HBAR'"
   />
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, watch, nextTick } from 'vue'
-import type { Hbar } from '@hashgraph/sdk'
+import { defineComponent, PropType } from 'vue'
 import { BigNumber } from 'bignumber.js'
+import { useVModel } from '@vueuse/core';
 
-import TextInput from './TextInput.vue'
+import AssetInput from "../interface/AssetInput.vue";
+
+
 
 export default defineComponent({
   name: 'HbarInput',
   components: {
-    TextInput,
+    AssetInput
   },
   props: {
-    modelValue: { type: Object as PropType<Hbar | null>, required: true },
-    disabled: { type: Boolean, default: false },
-    placeholder: { type: String, default: '' },
+    amount: { type: Object as PropType<BigNumber.Instance>, default: null }
   },
-  emits: ['update:modelValue'],
-  setup(props, context) {
-    const state = reactive({
-      hbarString: '',
-    })
+  emits: ["update:amount"],
+  setup(props) {
 
-    async function onInput(input: string) {
-      const { HbarUnit, Hbar } = await import('@hashgraph/sdk')
-
-      input = input.trim()
-
-      if (input.length === 0) {
-        nextTick(() => {
-          state.hbarString = input
-        })
-
-        context.emit('update:modelValue', null)
-        return
-      }
-
-      try {
-        const bigNumberAmount = new BigNumber(input)
-        if (bigNumberAmount.isNaN() || bigNumberAmount.isNegative()) {
-          nextTick(() => {
-            state.hbarString =
-              props.modelValue?.to(HbarUnit.Hbar)?.toString() ?? ''
-          })
-        } else {
-          const hbarAmount = new Hbar(bigNumberAmount)
-
-          nextTick(() => {
-            state.hbarString = input
-          })
-          context.emit('update:modelValue', hbarAmount)
-        }
-      } catch (error) {
-        nextTick(() => {
-          state.hbarString =
-            props.modelValue?.to(HbarUnit.Hbar)?.toString() ?? ''
-        })
-      }
-    }
-
-    watch(
-      () => props.modelValue,
-      async (newValue) => {
-        // FIXME: use toBigNumber()
-
-        const { HbarUnit } = await import('@hashgraph/sdk')
-
-        state.hbarString = newValue?.to(HbarUnit.Hbar)?.toString() ?? ''
-      },
-      { immediate: true },
-    )
-
-    return { state, onInput }
+    const dAmount = useVModel(props, "amount");
+    return { dAmount }
   },
 })
 </script>

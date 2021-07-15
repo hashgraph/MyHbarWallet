@@ -5,6 +5,7 @@ import path from "path";
 import html from "vite-plugin-html";
 import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
+import { VitePWA } from "vite-plugin-pwa";
 import { getLastCommit } from "git-last-commit";
 import { defineConfig } from "vite";
 
@@ -46,6 +47,7 @@ export default async function ({ mode }) {
             vueI18n({
                 include: path.resolve(__dirname, "./locales/**"),
             }),
+            VitePWA()
         ],
         resolve: {
             alias: {

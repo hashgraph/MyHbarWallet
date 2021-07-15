@@ -11,7 +11,7 @@
       :maxlength="maxLength"
       :class="[
         'leading-5 p-4 text-sm font-medium border-cerebral-grey rounded w-full resize-none',
-        'dark:text-white dark:bg-ruined-smores dark:border-midnight-express',
+        'dark:text-white dark:bg-ruined-smores dark:focus:unburdened-pink dark:border-midnight-express',
       ]"
       @input="onInput"
     />
@@ -28,13 +28,13 @@
       :autocomplete="autoComplete ? '' : 'new-password'"
       :class="[
         'pr-16 rounded w-full text-carbon px-5 py-3.5 border',
-        'dark:text-white dark:placeholder-basalt-grey',
+        'dark:text-white dark:placeholder-basalt-grey bg-transparent',
         {
           'text-sm': !mediumFont,
           'text-md font-roboto font-medium leading-tight': mediumFont,
-          'border-cerebral-grey dark:border-midnight-express':
+          'border-cerebral-grey dark:border-midnight-express ':
             !valid && !error,
-          'border-mountain-meadow focus:border-mountain-meadow focus:ring-mountain-meadow':
+          'border-mountain-meadow focus:ring-mountain-meadow':
             valid,
           'border-harlocks-cape focus:border-harlocks-cape focus:ring-harlocks-cape':
             error,
