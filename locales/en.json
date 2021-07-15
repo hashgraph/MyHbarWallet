@@ -287,6 +287,7 @@
     "Software.description": "A software wallet is a computer program designed device to secure your cryptocurrency while allowing only you to access it.",
     "Hardware.title": "Hardware",
     "Hardware.description": "A hardware wallet is a special type of wallet which stores the user's private keys in a secure hardware device.",
+    "OptionalMaxFee.maxFee": "The maximum fee for this transaction.",
     "OptionalMemo.aboutMemo": "Optionally add up to 100 characters. Memos can be useful for reference information and some exchanges require them for deposits.",
     "OptionalMemo.addMemo": "Add Memo",
     "InterfaceConvertUnits": "Convert Units",
