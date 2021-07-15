@@ -48,7 +48,7 @@
     >
     <div
       v-if="charCounter"
-      class="absolute -top-4 right-1"
+      class="absolute -top-3 right-8"
     >
       <div class="text-xs text-argent">
         {{ numberOfChars }}/{{ maxLength }}

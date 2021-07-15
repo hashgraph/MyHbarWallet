@@ -7,8 +7,8 @@
   <div
     class="pb-10 mt-8 font-medium border-b text-carbon border-cerebral-grey dark:border-midnight-express"
   >
-    <div class="flex flex-wrap items-center p-8">
-      <div class="w-full">
+    <div class="flex flex-wrap p-8">
+      <div class="w-1/2">
         <!-- TODO: when localizing, remove the v-if, the pluralization should be done in the localizer -->
         <div
           v-if="state.transfers.length <= 1"
@@ -25,7 +25,16 @@
         </div>
 
         <div
-          class="p-4 font-medium bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express"
+          class=" 
+                  p-4
+                  font-medium
+                  bg-white
+                  border
+                  rounded
+                  shadow-md
+                  dark:bg-ruined-smores
+                  border-jupiter
+                  dark:border-midnight-express"
         >
           <TransferForm
             v-model:to="state.transfer.to"
@@ -36,17 +45,7 @@
         </div>
       </div>
 
-      <div class="w-full p-4 mt-4 mb-2 md:p-0">
-        <div class="dark:text-silver-polish">
-          From
-        </div>
-
-        <TextInput
-          :model-value="state.accountId?.toString() ?? ''"
-          read-only
-          class="mt-2 font-medium rounded"
-        />
-
+      <div class="w-1/2 p-4 mt-4 mb-2 md:p-0">
         <OptionalMemo
           v-model="state.memo"
           class="mt-8"
@@ -57,10 +56,6 @@
           class="mt-8"
           :default-value="state.defaultMaxFee"
         />
-
-        <div class="mt-2 text-sm italic text-squant">
-          {{ $t("OptionalMaxFee.maxFee") }}
-        </div>
       </div>
     </div>
 
