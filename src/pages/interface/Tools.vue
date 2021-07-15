@@ -8,11 +8,11 @@
       :to="{ name: 'tools.associate.token' }"
     />
 
-    <ToolTile
+    <!-- <ToolTile
       :title="$t('InterfaceToolTile.download.title')"
       :description="$t('InterfaceToolTile.download.description')"
       :to="{ name: 'tools.download' }"
-    />
+    /> -->
 
     <!-- <ToolTile
       :title="$t('InterfaceConvertUnits')"
