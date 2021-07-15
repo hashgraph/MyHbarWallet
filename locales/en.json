@@ -32,6 +32,11 @@
     "BaseButton.iHaveAnAccoutId": "I Have an Account ID",
     "BaseButton.search": "Search",
     "BaseButton.send": "Send",
+<<<<<<< HEAD
+=======
+    "BaseButton.dismiss": "Dismiss",
+    "BaseFileUploader.header": "Uploaded File",
+>>>>>>> 183dea3 (Cleanup commits, signoff (#461))
     "BaseFileUploader.button": "Upload New File",
     "BaseFileUploader.header": "Uploaded File",
     "BaseOptionalPasswordInput.label1": "Password",
@@ -137,8 +142,13 @@
     "InterfaceTransactionDetails.transactionFee": "Transaction Fee",
     "InterfaceTransactionDetails.transfers": "Transfers",
     "InterfaceTransactionDetails.recipients": "Recipients",
+<<<<<<< HEAD
     "InterfaceTransactionDetails.file.id": "File ID",
     "InterfaceTransactionDetails.estimate": "Estimated fee",
+=======
+    "InterfaceTransactionDetails.estimate": "Estimated fee",
+    
+>>>>>>> 183dea3 (Cleanup commits, signoff (#461))
     "InterfaceToken.header": "Tokens",
     "InterfaceToken.nav.current": "Page {currentPage} of {numOfPages}",
     "InterfaceToken.nav.first": "First",
@@ -163,8 +173,12 @@
     "InterfaceToolTile.associateToken.hint": "To send or receive a token, you need to first associate your account with the token.",
     "InterfaceToolTile.associateToken.label.tokenID": "Token ID",
     "InterfaceToolTile.associateToken.placeholder": "Shard.Realm.Num",
+<<<<<<< HEAD
     "InterfaceToolTile.associateToken.title": "Associate Token",
     "InterfaceToolTile.createAccount.title": "Create Account",
+=======
+    "InterfaceToolTile.download.title": "Download",
+>>>>>>> 183dea3 (Cleanup commits, signoff (#461))
     "InterfaceToolTile.download.description": "Download a file from HFS.",
     "InterfaceToolTile.upload.title": "Upload",
     "InterfaceToolTile.upload.description": "Upload a file to HFS.",
@@ -176,6 +190,7 @@
     "InterfaceTokenTile.totalSupply": "Total Supply",
     "InterfaceTokenTile.holders": "Holders",
     "InterfaceTokenTile.holders.addresses": "{numOfAddresses} addresses",
+<<<<<<< HEAD
     "InterfaceUploadFile.drop": "Drop your files here",
     "InterfaceUploadFile.or": "or",
     "InterfaceUploadFile.select": "Select a file from your computer",
@@ -184,6 +199,9 @@
     "InterfaceUploadFile.modal.estimate" : "Estimated fee",
     "InterfaceUploadFile.modal.uploading" : "Uploading",
     "InterfaceUploadFile.modal.success": "Upload was successful.",
+=======
+    "InterfaceDownload.fileId": "File ID",
+>>>>>>> 183dea3 (Cleanup commits, signoff (#461))
     "Hardware.header": "Hardware",
     "KeyInput.button": "Copy",
     "Keystore.description": "A keystore can be a repository where private keys, certificates and symmetric keys can be stored.",
@@ -210,8 +228,11 @@
     "Marketing.faqs.section3.paragraph1": "MHW does not charge any fees for interacting with the Hedera™ API. Hedera™ Hashgraph requires a transaction fee when interacting withthe Hedera™ API. That fee paid in Hbar.",
     "Marketing.faqs.section4.header": "I forgot my passphrase / private key! What can I do?",
     "Marketing.faqs.section4.paragraph1": "MHW does not offer support for recovery or reset of passwords / private keys. We always suggest writing down private keys and passwords on physical media for safekeeping. Maybe you saved it on your computer!",
+<<<<<<< HEAD
     "Marketing.faqs.section5.header": "Can I still use MHW Version 1?",
     "Marketing.faqs.section5.paragraph1": "Yes, it is currently hosted at v1.myhbarwallet.com.",
+=======
+>>>>>>> 183dea3 (Cleanup commits, signoff (#461))
     "Marketing.features.section1.header": "Join MyHbarWallet",
     "Marketing.features.section1.paragraph1": "Access Hedera™ with the #1 Hbar Wallet with an elegant and easy-to-use interface.",
     "Marketing.features.section2.header": "Hardware Wallet Support",
