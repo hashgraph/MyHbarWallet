@@ -95,7 +95,6 @@ export default defineComponent({
         InputError
     },
     setup() {
-
         const store = useStore();
         const modalTitle = computed(() => `Downloading ${state.downloadId}`);
         const accountId = computed(() => store.accountId);
