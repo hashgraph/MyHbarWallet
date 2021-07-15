@@ -77,14 +77,13 @@
 
 <script lang = "ts">
 import { defineComponent, reactive, nextTick, computed } from "vue";
+
 import Headline from "../../components/interface/Headline.vue";
 import Button from "../../components/base/Button.vue";
 import Modal from "../../components/interface/Modal.vue";
 import EntityIdInput from "../../components/base/EntityIdInput.vue";
 import InputError from "../../components/base/InputError.vue";
 import { useStore } from "../../store";
-
-import { Hbar, HbarUnit, FileContentsQuery } from "@hashgraph/sdk";
 
 
 export default defineComponent({
