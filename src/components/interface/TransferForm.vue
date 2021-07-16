@@ -18,7 +18,7 @@
     </div>
 
     <label class="block pt-2 mt-5 mb-2 dark:text-silver-polish">
-      Asset
+      {{ $t('InterfaceAsset.asset') }}
     </label>
 
     <AssetSelector v-model="dAsset" />
@@ -42,7 +42,7 @@
 import { BigNumber } from "bignumber.js";
 import { defineComponent, PropType, reactive } from "vue";
 import { useVModel } from "@vueuse/core";
-import { AccountId } from "@hashgraph/sdk";
+import type { AccountId } from "@hashgraph/sdk";
 
 import TextInput from "../base/TextInput.vue";
 
@@ -73,6 +73,7 @@ export default defineComponent({
 
     async function handleToInput(newTo: string): Promise<void> {
       try {
+        const { AccountId } = await import("@hashgraph/sdk");
         const account = AccountId.fromString(newTo);
         state.toValid = true;
         emit("update:to", account);

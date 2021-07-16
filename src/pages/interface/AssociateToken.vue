@@ -85,7 +85,7 @@ export default defineComponent({
             tokens: [token],
           });
         } catch (error) {
-          state.errorMessage = error.message;
+          state.errorMessage = await store.errorMessage(error);
         }
       }
     }

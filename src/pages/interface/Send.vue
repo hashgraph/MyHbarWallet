@@ -16,6 +16,7 @@
         >
           {{ $t("InterfaceHomeSend.section1.header1") }}
         </div>
+
         <div
           v-else
           class="mb-2 dark:text-silver-polish"
@@ -105,9 +106,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, reactive } from "vue";
+import {
+    computed,
+    defineComponent, 
+    onMounted, 
+    reactive, 
+    ref 
+} from "vue";
 import { BigNumber } from "bignumber.js";
-import { AccountId, Hbar } from "@hashgraph/sdk";
+import type { AccountId } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
 
 import Headline from "../../components/interface/Headline.vue";
@@ -138,6 +145,12 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const store = useStore();
+    const hashgraph = ref<typeof import("@hashgraph/sdk") | null>(null);
+
+    onMounted(async () => {
+        hashgraph.value = await import("@hashgraph/sdk");
+    });
+    
     let state = reactive({
       accountId: store.accountId,
       showAddModal: false,
@@ -147,7 +160,7 @@ export default defineComponent({
       showEditModal: false,
       memo: "" as string | undefined,
       maxFee: null,
-      defaultMaxFee: new Hbar(1),
+      defaultMaxFee: hashgraph.value ? new hashgraph.value.Hbar(1) : null,
       showConfirmModal: false,
       transfer: {
         to: undefined,
@@ -161,25 +174,8 @@ export default defineComponent({
       () => state.transfer.to != null && state.transfer.amount != null
     );
 
-    function openAddModal(): void {
-      nextTick(() => (state.showAddModal = true));
-    }
-
-    function closeAddModal(): void {
-      nextTick(() => (state.showAddModal = false));
-    }
-
-    function openEditModal(): void {
-      nextTick(() => (state.showEditModal = true));
-    }
-
-    function closeEditModal(): void {
-      nextTick(() => (state.showEditModal = false));
-    }
-
     async function onSend(): Promise<void> {
        if (store.client == null) return;
-      const { StatusError } = await import("@hashgraph/sdk");
       
       state.sendBusyText = "Executing transaction …";
       state.generalErrorText = null;
@@ -201,43 +197,10 @@ export default defineComponent({
         // so we can watch it "reach consensus"
         router.back();
       } catch (err) {
-        if (err instanceof StatusError) {
-          state.generalErrorText = `Transaction failed with status ${
-            err.status
-          } (${err.status.valueOf()})`;
-        } else {
-          throw err;
-        }
+        state.generalErrorText = await store.errorMessage(err);
       } finally {
         state.sendBusyText = null;
       }
-    }
-
-    function closeConfirmModal(): void {
-      nextTick(() => (state.showConfirmModal = false));
-    }
-
-    function resetTransfer() {
-      state.transfer.to = undefined;
-      state.transfer.asset = "HBAR";
-      state.transfer.amount = undefined;
-    }
-
-    function handleAdd(): void {
-      if (state.transfer.to != null && state.transfer.amount != null) {
-        state.transfers.push({ ...state.transfer });
-        closeAddModal();
-        resetTransfer();
-      }
-    }
-
-    function handleEditAdd(): void {
-      closeEditModal();
-    }
-
-    function editTransfer(index: number) {
-      state.indexToEdit = index;
-      state.showEditModal = true;
     }
 
     function removeTransfer(index: number) {
@@ -251,15 +214,7 @@ export default defineComponent({
     return {
       state,
       sendValid,
-      handleAdd,
-      handleEditAdd,
-      openAddModal,
-      closeAddModal,
-      openEditModal,
-      closeEditModal,
       onSend,
-      closeConfirmModal,
-      editTransfer,
       removeTransfer,
       onCancel,
     };

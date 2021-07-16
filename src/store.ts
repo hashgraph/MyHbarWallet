@@ -5,6 +5,7 @@ import { defineStore } from "pinia";
 import { Wallet } from "./domain/wallet/abstract";
 import { AccountBalance, SimpleHederaClient } from "./services/hedera";
 import { useContainer } from "./hooks/container";
+import i18n from "./i18n";
 
 interface State {
     network: "mainnet" | "testnet" | "previewnet";
@@ -64,9 +65,6 @@ export const useStore = defineStore({
     extraInfo(): Record<string, string | number> | null {
       return this.extraTxInfo;
     },
-    // isContactSupportOpen(): boolean | null {
-    //   return this.contactSupport;
-    // }
   },
 
   actions: {
@@ -116,6 +114,78 @@ export const useStore = defineStore({
     
     setContactSupportOpen(open: boolean): void {
       this.contactSupport = open;
-    }
+    },
+
+    async errorMessage(error: Error): Promise<string> {
+      const { Status, StatusError } = await import("@hashgraph/sdk");
+      const { TransportStatusError } = await import("@ledgerhq/hw-transport");
+      
+      if (error instanceof StatusError) {
+        switch (error.status) {
+          case Status.AccountDeleted:
+          case Status.AccountExpiredAndPendingRemoval:
+          case Status.AccountIdDoesNotExist:
+            return i18n.global.t("Common.Error.AccountDoesNotExist").toString();
+          case Status.AccountKycNotGrantedForToken:
+          case Status.AccountFrozenForToken:
+            return i18n.global.t("Common.Error.PermissionDeniedAccountToken").toString();
+          case Status.AccountRepeatedInAccountAmounts:
+            return i18n.global.t("Common.Error.CantSendToYourself").toString();
+          case Status.Busy:
+          case Status.Unknown:
+          case Status.Unauthorized:
+            return i18n.global.t("Common.Error.NetworkUnavailable").toString();
+          case Status.DuplicateTransaction:
+            return i18n.global.t("Common.Error.DuplicateTx").toString();
+          case Status.EmptyTokenTransferAccountAmounts:
+          case Status.EmptyTokenTransferBody:
+          case Status.EmptyTransactionBody:
+            return i18n.global.t("Common.Error.EmptyTransaction").toString();
+          case Status.FileContentEmpty:
+            return i18n.global.t("Common.Error.FileEmpty").toString();
+          case Status.FileDeleted:
+            return i18n.global.t("Common.Error.FileDeleted").toString();
+          case Status.MaxFileSizeExceeded:
+            return i18n.global.t("Common.Error.BigFile").toString();
+          case Status.MemoTooLong:
+            return i18n.global.t("Common.Error.MemoTooLong").toString();
+          case Status.MessageSizeTooLarge:
+            return i18n.global.t("Common.Error.BigMessage").toString();
+          case Status.Ok:
+          case Status.Success:
+            return i18n.global.t("Common.Error.Ok").toString();
+          case Status.PayerAccountNotFound:
+            return i18n.global.t("Common.Error.PayerNotReal").toString();
+          case Status.PayerAccountUnauthorized:
+            return i18n.global.t("Common.Error.PayerFrozen").toString();
+          case Status.ReceiptNotFound:
+            return i18n.global.t("Common.Error.NoReceipt").toString();
+          case Status.RecordNotFound:
+            return i18n.global.t("Common.Error.NoRecord").toString();
+          case Status.ResultSizeLimitExceeded:
+            return i18n.global.t("Common.Error.BigResults").toString();
+          case Status.TokenAlreadyAssociatedToAccount:
+            return i18n.global.t("Common.Error.TokenAlreadyAssociated").toString();
+          case Status.TokenNotAssociatedToAccount:
+            return i18n.global.t("Common.Error.TokenNotAssociated").toString();
+          case Status.TokenNotAssociatedToFeeCollector:
+            return i18n.global.t("Common.Error.TokenNoFeeCollector").toString();
+          case Status.TokenHasNoWipeKey:
+          case Status.TokenHasNoFeeScheduleKey:
+          case Status.TokenHasNoFreezeKey:
+          case Status.TokenHasNoKycKey:
+          case Status.TokenHasNoSupplyKey:
+            return i18n.global.t("Common.Error.TokenConfigBroken").toString();
+          case Status.TokenWasDeleted:
+            return i18n.global.t("Common.Error.TokenDeleted").toString();
+          case Status.TokensPerAccountLimitExceeded:
+            return i18n.global.t("Common.Error.TooManyTokens").toString();
+        }
+      } else if (error instanceof TransportStatusError) {
+        return i18n.global.t("Common.Error.LedgerError").toString();
+      }
+
+      return error.message;
+    },
   },
 });

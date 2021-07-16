@@ -168,10 +168,8 @@ export default defineComponent({
           try {
             key = await state.wallet.getPublicKey(keyIdx);
           } catch (error) {
-            if (error.name.includes("Transport")) {
               state.error = true;
-              state.errorMessage = error.message;
-            }
+              state.errorMessage = await store.errorMessage(error);
           }
           if (key) break;
         }
@@ -239,7 +237,7 @@ export default defineComponent({
 
           if (client == null) {
             state.error = true;
-            state.errorMessage = i18n.t("Account.ClientConstructionFail").toString()
+            state.errorMessage = i18n.t("Common.Error.AccountKeyMismatch").toString()
             return;
           }
 

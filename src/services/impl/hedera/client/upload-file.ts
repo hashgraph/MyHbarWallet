@@ -1,4 +1,4 @@
-import { FileAppendTransaction } from "@hashgraph/sdk";
+import { FileAppendTransaction, FileId, Client } from "@hashgraph/sdk";
 
 export async function uploadFile(
   client: Client,
@@ -9,18 +9,28 @@ export async function uploadFile(
 }): Promise<FileId> {
   const { FileCreateTransaction } = await import("@hashgraph/sdk");
 
-  const fileId = await new FileCreateTransaction()
+  const response = await new FileCreateTransaction()
     .setContents(options.chunks[0])
     .setFileMemo(options.fileMemo ?? "")
     .setTransactionMemo(options.memo ?? "")
-    .execute(client)
+    .execute(client);
+
+  const fileId = (await response.getReceipt(client)).fileId;
   
   // TODO get receipt
   // TODO the rest
+  console.log(options.chunks);
   
-  for (chunk of options.chunks.slice(1)) {
-    const receipt = new FileAppendTransaction().setContents(chunk).setFileMemo(options.fileMemo ?? "").setTransactionMemo(options.memo ?? "").execute(client).getReciept().fileId // etc etc
+  for (const chunk of options.chunks) {
+    console.log(chunk);
+    const receipt = await(await new FileAppendTransaction()
+    .setFileId(fileId)
+    .setContents(chunk)
+    .setTransactionMemo(options.memo ?? "")
+    .execute(client)).getReceipt(client);
   }
 
-  return (await (await fileId.getReceipt(client)).fileId);
+
+  
+  return await (await response.getReceipt(client))?.fileId;
 }

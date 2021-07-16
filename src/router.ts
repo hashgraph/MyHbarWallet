@@ -46,6 +46,11 @@ import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
 import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
+import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
+<<<<<<< HEAD
+>>>>>>> 183dea3 (Cleanup commits, signoff (#461))
+=======
+>>>>>>> 7521be9 (Merge with main)
 
 
 const routes = [
@@ -243,6 +248,12 @@ const routes = [
             path: "upload",
             name: "tools.upload"
 
+          },
+          {
+            component: InterfaceDownloadFile,
+            path: "download",
+            name: "tools.download"
+          
           }
         ],
       },

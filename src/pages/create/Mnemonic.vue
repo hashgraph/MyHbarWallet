@@ -4,7 +4,7 @@
     class="max-w-lg"
     :back="{ name: 'create' }"
   >
-    <div class="grid auto-rows-min gap-5">
+    <div class="grid gap-5 auto-rows-min">
       <MnemonicInput
         v-if="mnemonicPhrase"
         :model-value="mnemonicPhrase.words"

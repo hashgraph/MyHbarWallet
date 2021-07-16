@@ -4,8 +4,12 @@
   <div class="flex-col text-center">
     <UploadZone @fileSelect="fileSelect" />
 
+    <InputError v-if = "state.errorMessage.length > 0">
+      {{ state.errorMessage }}
+    </InputError>
+
     <Modal
-      :isVisible="state.showUploadModal"
+      :is-Visible="state.showUploadModal"
       :title="$t('InterfaceTransactionDetails.status.value.success')"
       @close="closeUploadModal"
     >
@@ -38,7 +42,7 @@
         <Button
           color="green"
           class="p-3 m-4 w-1/3"
-          @click="uploadFileClick"
+          @click="uploadConfirm"
         >{{ $t('BaseButton.continue') }}</Button>
       </div>
     </Modal>
@@ -48,13 +52,14 @@
         color="green"
         class="p-3 m-4 w-5/12"
         :disabled="!state.uploadReady"
+        @click="uploadHashClick"
       >{{ $t("InterfaceUploadFile.button.hash") }}</Button>
 
       <Button
         color="green"
         class="p-3 m-4 w-5/12"
         :disabled="!state.uploadReady"
-        @click="openFeeModal"
+        @click="uploadFileClick"
       >{{ $t("InterfaceUploadFile.button.file") }}</Button>
     </div>
   </div>
@@ -71,6 +76,8 @@ import UploadZone from "../../components/interface/UploadZone.vue";
 import Headline from "../../components/interface/Headline.vue";
 import Button from "../../components/base/Button.vue";
 import Modal from "../../components/interface/Modal.vue";
+import InputError from "../../components/base/InputError.vue";
+import { FileId } from "@hashgraph/sdk";
 
 const MAX_CHUNK_LENGTH = 2900;
 
@@ -80,7 +87,8 @@ export default defineComponent({
     UploadZone,
     Headline,
     Button,
-    Modal
+    Modal,
+    InputError
   },
   setup() {
     const store = useStore();
@@ -93,7 +101,9 @@ export default defineComponent({
       showFeeModal: false,
       showUploadModal: false,
       uploadReady: false,
-      fileId: null,
+      uploadHash: false,
+      fileId: null as string | null,
+      errorMessage: "",
       uploadProgress: {
         isOpen: false,
         inProgress: false,
@@ -143,38 +153,61 @@ export default defineComponent({
       state.uploadReady = true;
     }
 
-    function uploadFileClick(): void {
+    function uploadConfirm(): void {
       if (state.fileData != null) {
         closeFeeModal();
         uploadFile(state.fileData);
       }
     }
 
+
+    function uploadHashClick(): void {
+      state.uploadHash = true;
+      openFeeModal();
+    }
+
+
+
+    function uploadFileClick(): void {
+      state.uploadHash = false;
+      openFeeModal();
+    }
+
     async function uploadFile(file: Uint8Array): Promise<void> {
 
+      if (state.uploadHash) {
+        console.log("User wants to upload a hash.");
+        file = new Uint8Array(await window.crypto.subtle.digest("SHA-384", file));
+        state.uploadProgress.totalChunks = 1;
+      }
+      
 
       let chunks: Uint8Array[] = [];
 
       for (let i = 0; i < state.uploadProgress.totalChunks; i++) {
         let start = i * MAX_CHUNK_LENGTH;
         chunks.push(file.slice(start, start + MAX_CHUNK_LENGTH));
+        
       }
 
-      let fileId;
+
+      console.log(chunks);
+      let fileId = null as FileId | null;
       try {
-        state.uploadProgress.currentChunk = 0;
         fileId = await store.client?.uploadFile({
           chunks,
           fileMemo: "",
           memo: ""
         });
       } catch (error) {
+        state.errorMessage = await store.errorMessage(error);
         throw new Error(error);
       }
       if (!fileId) {
-        throw new Error("File Id is null.");
+        state.errorMessage = "There is no file ID.";
       } else {
         state.fileId = fileId.toString();
+        state.errorMessage = "";
         openUploadModal();
       }
     }
@@ -186,6 +219,8 @@ export default defineComponent({
       fileSelect,
       uploadFile,
       uploadFileClick,
+      uploadHashClick,
+      uploadConfirm,
       openFeeModal,
       closeFeeModal,
       openUploadModal,
