@@ -76,6 +76,9 @@ module.exports = {
       roboto: ["Roboto", "sans-serif"],
     },
     extend: {
+      animation: {
+        "spin-slow": "spin 10s linear infinite",
+      },
       height: {
         600: "600px",
         324: "324px",

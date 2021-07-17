@@ -3,6 +3,7 @@
     <Modal
       :is-visible="isVisible"
       :title="$t('ConfirmLogout.title')"
+      class="flex flex-col"
       @close="handleClose"
     >
       <div class="p-4 mt-4">
@@ -11,7 +12,7 @@
         </div>
       </div>
 
-      <div class="flex flex-col items-center pb-4 mx-4">
+      <div class="flex items-center pb-4 mx-4">
         <Button
           color="green"
           class="w-full p-4 mt-4"

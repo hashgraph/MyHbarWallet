@@ -45,12 +45,11 @@ import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vu
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
-import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
-import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
 <<<<<<< HEAD
->>>>>>> 183dea3 (Cleanup commits, signoff (#461))
+import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
 =======
->>>>>>> 7521be9 (Merge with main)
+>>>>>>> 183dea3 (Cleanup commits, signoff (#461))
+import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
 
 
 const routes = [

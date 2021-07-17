@@ -13,13 +13,13 @@
       :description="$t('InterfaceToolTile.upload.description')"
       :to="{ name: 'tools.upload' }"
     />
-    <!-- <ToolTile
+    <ToolTile
       :title="$t('InterfaceToolTile.download.title')"
       :description="$t('InterfaceToolTile.download.description')"
       :to="{ name: 'tools.download' }"
-    />
+    /> -->
 
-      <ToolTile
+     <!-- <ToolTile
       :title="$t('InterfaceConvertUnits')"
       description="Our helpful conversion tool and hbar unit reference allow you to calculate your total transaction cost."
       :to="{ name: 'tools.convert.units' }"
