@@ -5,12 +5,12 @@
 
     <div class="relative flex px-2 md:flex-1 md:px-10">
       <div
-        class="h-full absolute top-0 left-0 right-0 bg-gradient-to-b from-husky dark:from-midnight-express to-white dark:via-ruined-smores dark:to-ruined-smores"
+        class="min-h-screen h-full absolute top-0 left-0 right-0 bg-gradient-to-b from-husky dark:from-midnight-express to-white dark:via-ruined-smores dark:to-ruined-smores"
       />
 
       <main
         :class="[
-          'bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1 w-full min-w-300px',
+          ' bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1 w-full min-w-300px',
           'lg:mt-10',
         ]"
       >
