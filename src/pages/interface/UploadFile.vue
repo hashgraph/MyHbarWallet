@@ -18,6 +18,8 @@
       <p>{{ $t('InterfaceTransactionDetails.file.id') }}: {{ state.fileId }}</p>
     </Modal>
 
+    <ProgressModal :isVisible = "state.showProgressModal" title = "Loading. . . ."/>
+    
     <Modal :isVisible="state.showFeeModal" :title="modalFeeTitle" @close="closeFeeModal">
       <div class="table-fixed text-left p-4">
         <tr>
@@ -77,6 +79,7 @@ import Headline from "../../components/interface/Headline.vue";
 import Button from "../../components/base/Button.vue";
 import Modal from "../../components/interface/Modal.vue";
 import InputError from "../../components/base/InputError.vue";
+import ProgressModal from "../../components/interface/ProgressModal.vue";
 import { FileId } from "@hashgraph/sdk";
 
 const MAX_CHUNK_LENGTH = 2900;
@@ -88,7 +91,8 @@ export default defineComponent({
     Headline,
     Button,
     Modal,
-    InputError
+    InputError,
+    ProgressModal
   },
   setup() {
     const store = useStore();
@@ -100,6 +104,7 @@ export default defineComponent({
       estimateFee: 0,
       showFeeModal: false,
       showUploadModal: false,
+      showProgressModal: false,
       uploadReady: false,
       uploadHash: false,
       fileId: null as string | null,
@@ -185,6 +190,8 @@ export default defineComponent({
 
       let fileId = null as FileId | null;
       try {
+
+        state.showProgressModal = true;
         fileId = await store.client?.uploadFile({
           file,
           fileMemo: "",
@@ -194,7 +201,9 @@ export default defineComponent({
         state.errorMessage = await store.errorMessage(error);
         throw new Error(error);
       }
+      state.showProgressModal = false;
       if (!fileId) {
+
         state.errorMessage = "There is no file ID.";
       } else {
         state.fileId = fileId.toString();

@@ -45,11 +45,8 @@ import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vu
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
-<<<<<<< HEAD
-=======
-import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
->>>>>>> 6a179d6 (wip: merged)
 import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
+import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
 
 
 const routes = [
@@ -242,21 +239,15 @@ const routes = [
             path: "convert-units",
             name: "tools.convert.units",
           },
-<<<<<<< HEAD
-
-=======
-          {
-            component: InterfaceUploadFile,
-            path: "upload",
-            name: "tools.upload"
-
-          },
->>>>>>> 6a179d6 (wip: merged)
           {
             component: InterfaceDownloadFile,
             path: "download",
             name: "tools.download"
-          
+          },
+          {
+            component: InterfaceUploadFile,
+            path: "upload",
+            name: "tools.upload"
           }
         ],
       },

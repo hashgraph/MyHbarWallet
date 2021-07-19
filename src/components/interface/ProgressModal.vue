@@ -26,7 +26,7 @@
                 @click.stop
             >
                 <div class="flex justify-between">
-                    <div class="text-xl font-medium">{{ title }}</div>
+                    <div class="text-xl font-medium mb-4">{{ title }}</div>
                 </div>
                 <div class="text-center items-center justify-center p-4">
                     <Image :light="IP" :dark="IP" class="animate-spin-slow h-28 m-auto" />
@@ -40,13 +40,12 @@
 <script lang = "ts">import { setMapStoreSuffix } from "pinia";
 
 
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent } from "vue";
 import Image from "../base/Image.vue";
 import IP from "../../assets/IP_green-to-purple.svg";
-// import IPDark from "../../assets/dark/IP_purple.svg";
 
 export default defineComponent({
-    name: "IPModal",
+    name: "ProgressModal",
     components: {
         Image
     },
@@ -56,9 +55,8 @@ export default defineComponent({
     },
 
     emits: ["close"],
-    setup(props) {
-        const ip = ref();
-        return { IP, ip };
+    setup() {
+        return { IP };
     },
 });
 
