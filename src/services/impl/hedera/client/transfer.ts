@@ -6,11 +6,11 @@ import { SimpleTransfer } from "../../../hedera";
 export async function transfer(
   client: Client,
   options: {
-        transfers: SimpleTransfer[];
-        memo: string | null;
-        maxFee: BigNumber | null; // tinybars
-        onBeforeConfirm?: () => void;
-    }
+    transfers: SimpleTransfer[];
+    memo: string | null;
+    maxFee: BigNumber.Instance | null; // tinybars
+    onBeforeConfirm?: () => void;
+  }
 ): Promise<void> {
   const { TransferTransaction, Hbar } = await import("@hashgraph/sdk");
 
@@ -26,9 +26,9 @@ export async function transfer(
       transaction.addHbarTransfer(transfer.to ?? "", amount);
 
       transaction.addHbarTransfer(
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                client.operatorAccountId!,
-                amount.negated()
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        client.operatorAccountId!,
+        amount.negated()
       );
     } else {
       transaction.addTokenTransfer(
@@ -39,9 +39,9 @@ export async function transfer(
 
       transaction.addTokenTransfer(
         transfer.asset ?? "",
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                client.operatorAccountId!,
-                transfer.amount?.negated().toNumber()
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        client.operatorAccountId!,
+        transfer.amount?.negated().toNumber()
       );
     }
   }
