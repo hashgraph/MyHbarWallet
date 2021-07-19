@@ -179,6 +179,7 @@
     "InterfaceToolTile.download.title": "Download",
     "InterfaceToolTile.unitConverter.title": "Unit Converter",
     "InterfaceToolTile.upload.title": "Upload",
+    "InterfaceToolTile.upload.description": "Upload a file to HFS.",
     "InterfaceTotalBalance.totalvalue": "Total Value",
     "Key.description": "A private key is a variable in cryptography that is user with an algorithm to encrypt and decrypt code.",
     "Key.title": "Private Key",

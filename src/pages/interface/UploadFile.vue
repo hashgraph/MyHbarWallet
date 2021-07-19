@@ -18,10 +18,8 @@
       <p>{{ $t('InterfaceTransactionDetails.file.id') }}: {{ state.fileId }}</p>
     </Modal>
 
-<<<<<<< HEAD
     <ProgressModal :isVisible = "state.showProgressModal" title = "Loading. . . ."/>
-=======
->>>>>>> c29aa6d (wip: tools)
+    
     <Modal :isVisible="state.showFeeModal" :title="modalFeeTitle" @close="closeFeeModal">
       <div class="table-fixed text-left p-4">
         <tr>
