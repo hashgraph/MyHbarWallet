@@ -10,7 +10,10 @@
   >
     <label
       class="font-medium text-squant dark:text-white mb-4"
-    >{{ $t("InterfaceTransactionDetails.file.id") }}</label>
+    >
+      {{ $t("InterfaceTransactionDetails.file.id") }}
+    </label>
+    
     <EntityIdInput
       v-model="state.downloadId"
       type="file"
@@ -23,7 +26,7 @@
 
     <Button
       color="green"
-      class="py-3 mt-6 w-full mt-10"
+      class="py-3 mt-6 w-full"
       :busy="state.sendBusyText != null"
       @click="openModal"
     >
@@ -40,14 +43,17 @@
           <td class="w-full">
             {{ $t('InterfaceTransactionDetails.operator') }}
           </td>
+
           <td class>
             {{ accountId.toString() }}
           </td>
         </tr>
+
         <tr>
           <td class>
             {{ $t('InterfaceTransactionDetails.estimate') }}
           </td>
+
           <td class>
             {{ state.maxFee }}
           </td>
@@ -62,6 +68,7 @@
         >
           {{ $t('BaseButton.dismiss') }}
         </Button>
+
         <Button
           color="green"
           class="p-3 w-5/12 m-2"
@@ -119,14 +126,22 @@ export default defineComponent({
             closeModal();
         }
 
-        async function openModal(): void {
-            nextTick((state.showFeeModal = true));
+        function openModal(): void {
+            nextTick(() => (state.showFeeModal = true));
         }
 
         function closeModal(): void {
-            nextTick((state.showFeeModal = false));
+            nextTick(() => (state.showFeeModal = false));
         }
-        return { state, download, openModal, closeModal, modalTitle, accountId };
+
+        return { 
+          state, 
+          download, 
+          openModal, 
+          closeModal, 
+          modalTitle, 
+          accountId
+        };
     },
 });
 </script>

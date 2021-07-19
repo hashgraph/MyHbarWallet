@@ -3,6 +3,8 @@ import type { AccountId, FileId, PrivateKey, PublicKey, TokenId } from "@hashgra
 
 import { Wallet } from "../domain/wallet/abstract";
 
+import { HbarPriceService } from "./hbar-price";
+
 export interface SimpleTransfer {
     // HBAR or Token ID (as string)
     asset?: string;
@@ -27,10 +29,10 @@ export interface HederaService {
     // returns null if the account ID does not match the chosen key
     createClient(options: {
         network:
-            | string
-            | {
-                  [key: string]: string | AccountId;
-              };
+        | string
+        | {
+            [key: string]: string | AccountId;
+        };
         wallet: Wallet;
         // index into the wallet, meaning depends on the wallet type
         // 0 always means the canonical key for the wallet
@@ -59,6 +61,11 @@ export interface SimpleHederaClient {
         maxFee: BigNumber | null; // tinybars
         onBeforeConfirm?: () => void;
     }): Promise<void>;
+
+    createAccount(options: {
+        publicKey: PublicKey;
+        initialBalance: BigNumber;
+    }): Promise<AccountId>;
 
     associateToken(options: {
         account: AccountId;
