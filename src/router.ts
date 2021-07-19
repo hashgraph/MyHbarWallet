@@ -45,10 +45,7 @@ import InterfaceTransactionDetails from "./pages/interface/TransactionDetails.vu
 import InterfaceSend from "./pages/interface/Send.vue";
 import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
-<<<<<<< HEAD
 import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
-=======
->>>>>>> 183dea3 (Cleanup commits, signoff (#461))
 import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
 
 
