@@ -10,14 +10,15 @@
     <div
       v-if="offlineReady || needRefresh"
       role="alert"
-      class="fixed z-50 flex items-center justify-center h-40 p-2 overflow-hidden italic border-l-4 rounded shadow bottom-10 right-10 w-200 bg-peach"
+      class="flex flex-col fixed z-50 items-center justify-center h-40 p-2 overflow-hidden italic border-l-4 rounded shadow bottom-10 right-10 w-200 bg-peach"
     >
       <span v-if="offlineReady">{{ $t("Common.SW.OfflineReady") }}</span>
     
       <span v-else>{{ $t("Common.SW.NewContentAvailable") }}</span>
     
-      <div class="mt-2">
+      <div class="mt-2 flex">
         <Button
+          class="px-5 py-2"
           :disabled="!needRefresh"
           color="green"
           @click="handleReload"
@@ -26,6 +27,7 @@
         </Button>
 
         <Button
+          class="px-5 py-2"
           color="white"
           @click="handleClose"
         >
