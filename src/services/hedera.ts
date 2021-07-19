@@ -65,7 +65,7 @@ export interface SimpleHederaClient {
     createAccount(options: {
         publicKey: PublicKey;
         initialBalance: BigNumber;
-    }): Promise<AccountId>;
+    }): Promise<AccountId | null>;
 
     associateToken(options: {
         account: AccountId;
@@ -76,5 +76,7 @@ export interface SimpleHederaClient {
         chunks: Uint8Array[];
         fileMemo: string | null;
         memo: string | null;
-    }): Promise<FileId>;
+    }): Promise<FileId | null>;
+
+    downloadFile(fileId: FileId): Promise<Uint8Array>;
 }

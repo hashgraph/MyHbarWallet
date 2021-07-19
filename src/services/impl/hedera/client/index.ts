@@ -31,10 +31,6 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
     this._privateKey = privateKey;
   }
 
-  uploadFile(options: { chunks: Uint8Array[]; fileMemo: string | null; memo: string | null; }): Promise<FileId> {
-    return uploadFile(this._client, options);
-  }
-
   getPrivateKey(): PrivateKey | null {
     return this._privateKey;
   }
@@ -60,7 +56,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
   transfer(options: {
     transfers: SimpleTransfer[];
     memo: string | null;
-    maxFee: BigNumber.Instance | null;
+    maxFee: BigNumber | null;
     onBeforeConfirm?: () => void;
   }): Promise<void> {
     return transfer(this._client, options);
@@ -68,8 +64,8 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
 
   createAccount(options: {
     publicKey: PublicKey;
-    initialBalance: BigNumber.Instance;
-  }): Promise<AccountId> {
+    initialBalance: BigNumber;
+  }): Promise<AccountId | null> {
     return createAccount(this._client, options);
   }
 
@@ -81,7 +77,15 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
     return associateToken(this._client, options);
   }
 
-  downloadFile(fileId: FileId) {
-    return downloadFile(this._client, fileId);
+  uploadFile(options: {
+    chunks: Uint8Array[];
+    fileMemo: string | null;
+    memo: string | null;
+  }): Promise<FileId | null> {
+    return uploadFile(this._client, options);
+  }
+
+  downloadFile(fileId: FileId): Promise<Uint8Array> {
+    return downloadFile(this._client, { fileId });
   }
 }

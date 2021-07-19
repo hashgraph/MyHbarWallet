@@ -1,13 +1,13 @@
 import { BigNumber } from "bignumber.js";
 
 export enum Unit {
-    Tinybar = "tinybar",
-    Microbar = "microbar",
-    Millibar = "millibar",
-    Hbar = "hbar",
-    Kilobar = "kilobar",
-    Megabar = "megabar",
-    Gigabar = "gigabar",
+  Tinybar = "tinybar",
+  Microbar = "microbar",
+  Millibar = "millibar",
+  Hbar = "hbar",
+  Kilobar = "kilobar",
+  Megabar = "megabar",
+  Gigabar = "gigabar",
 }
 
 const unitMap: Map<Unit, number> = new Map([
@@ -31,13 +31,13 @@ export function convert(
   rounding = true
 ): string {
   const result = new BigNumber(amount)
-  // Convert incoming amount to Tinybar
+    // Convert incoming amount to Tinybar
     .multipliedBy(getValueOfUnit(from))
-  // Drop the fractional part
+    // Drop the fractional part
     .integerValue(
       rounding ? BigNumber.ROUND_HALF_CEIL : BigNumber.ROUND_FLOOR
     )
-  // Convert to requested unit
+    // Convert to requested unit
     .dividedBy(getValueOfUnit(to));
 
   // If the result is NaN, return an empty string
