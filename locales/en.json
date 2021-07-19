@@ -94,6 +94,7 @@
     "InterfaceAsset.note2": "Your asset is frozen.",
     "InterfaceAsset.value": "{value} ea.",
     "InterfaceAssets.header": "Assets",
+    "InterfaceAsset.asset": "Asset",
     "InterfaceConvertUnits": "Convert Units",
     "InterfaceDownload.fileId": "File ID",
     "InterfaceHistory.button.all": "All",

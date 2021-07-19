@@ -55,11 +55,11 @@
         <OptionalHbarInput
           v-model="state.maxFee"
           class="mt-8"
-          :default-value="state.defaultMaxFee"
+          @update:model-value="updateMaxFee"
         />
 
         <div class="mt-2 text-sm italic text-squant">
-          {{ $t("OptionalMaxFee.maxFee") }}
+          {{ $t("InterfaceHomeSend.section2.toggle2.label") }}
         </div>
       </div>
     </div>
@@ -114,7 +114,7 @@ import {
     ref 
 } from "vue";
 import { BigNumber } from "bignumber.js";
-import type { AccountId } from "@hashgraph/sdk";
+import { AccountId, Hbar } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
 
 import Headline from "../../components/interface/Headline.vue";
@@ -146,6 +146,9 @@ export default defineComponent({
     const router = useRouter();
     const store = useStore();
     const hashgraph = ref<typeof import("@hashgraph/sdk") | null>(null);
+    // const defaultMaxFee = computed( ()=> {
+    //   return new Hbar(1);
+    // });
 
     onMounted(async () => {
         hashgraph.value = await import("@hashgraph/sdk");
@@ -159,8 +162,8 @@ export default defineComponent({
       indexToEdit: 0,
       showEditModal: false,
       memo: "" as string | undefined,
-      maxFee: null,
-      defaultMaxFee: hashgraph.value ? new hashgraph.value.Hbar(1) : null,
+      maxFee: null as Hbar | null,
+      // defaultMaxFee: new Hbar(1).toBigNumber(),
       showConfirmModal: false,
       transfer: {
         to: undefined,
@@ -211,12 +214,20 @@ export default defineComponent({
       router.back();
     }
 
+
+    function updateMaxFee(fee: Hbar): void{
+      state.maxFee = fee;
+      console.log(state.maxFee?.toString());
+    }
+
+
     return {
       state,
       sendValid,
       onSend,
       removeTransfer,
       onCancel,
+      updateMaxFee,
     };
   },
 });

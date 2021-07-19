@@ -16,7 +16,7 @@
     <input
       v-bind="$attrs"
       :value="formattedValue ?? undefined"
-      class="w-full py-3 bg-transparent bg-white border-none focus:ring-0 placeholder-squant dark:text-silver-polish dark:bg-ruined-smores"
+      class="py-3 w-full bg-transparent bg-white border-none focus:ring-0 placeholder-squant dark:text-silver-polish dark:bg-ruined-smores"
       :class="{ 'pr-5 pl-8': asset === 'HBAR', 'px-5': asset !== 'HBAR' }"
       type="tel"
       @input="onAmountInput"

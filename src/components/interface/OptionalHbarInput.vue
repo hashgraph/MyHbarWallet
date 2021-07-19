@@ -2,14 +2,13 @@
   <div>
     <Switch
       v-model="isOpen"
-      label="Max Transaction Fee"
+      :label="$t('InterfaceHomeSend.section2.toggle2.label')"
+      class = "mb-4"
     />
 
     <HbarInput
       v-model="value"
-      medium-font
       :disabled="!isOpen"
-      class="mt-3"
       @update:model-value="handleUpdate"
     />
   </div>
@@ -18,9 +17,12 @@
 <script lang="ts">
 import type { Hbar } from "@hashgraph/sdk";
 import { defineComponent, PropType, ref, watch } from "vue";
+import { useVModel } from "@vueuse/core";
 
 import Switch from "../base/Switch.vue";
 import HbarInput from "../base/HbarInput.vue";
+
+
 
 export default defineComponent({
   name: "OptionalHbarInput",
@@ -30,16 +32,14 @@ export default defineComponent({
   },
   props: {
     modelValue: { type: Object as PropType<Hbar | null>, required: true },
-    defaultValue: { type: Object as PropType<Hbar>, required: true },
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
     const isOpen = ref(false);
-    const value = ref(props.defaultValue);
+    const value = useVModel(props, "modelValue");
 
     function resetHbar() {
-      value.value = props.defaultValue;
-      emit("update:modelValue", value.value);
+       emit("update:modelValue", null);
     }
 
     function handleUpdate(fee: Hbar): void {
