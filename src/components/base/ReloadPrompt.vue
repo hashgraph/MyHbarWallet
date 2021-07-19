@@ -16,7 +16,7 @@
     
       <span v-else>{{ $t("Common.SW.NewContentAvailable") }}</span>
     
-      <div class="mt-2 flex">
+      <div class="mt-2 flex items-center justify-between">
         <Button
           class="px-5 py-2"
           :disabled="!needRefresh"
