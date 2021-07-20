@@ -1,6 +1,6 @@
 <template>
   <Headline
-    title="Associate Token"
+    :title="$t('InterfaceToolTile.associateToken.title')"
     parent="tools"
   />
 
@@ -12,7 +12,8 @@
   <!-- TODO: TokenIdInput -->
   <div class="flex flex-col max-w-lg m-auto mt-10">
     <label class="font-medium text-squant dark:text-argent">
-      {{ $t("InterfaceToolTile.associateToken.label.tokenID") }}</label>
+      {{ $t("InterfaceToolTile.associateToken.label.tokenID") }}
+    </label>
 
     <EntityIdInput
       v-model="state.token"

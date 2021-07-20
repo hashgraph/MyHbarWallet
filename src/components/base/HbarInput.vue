@@ -1,9 +1,8 @@
 <template>
-
-    
-  <AssetInput v-model="dAmount" :asset="'HBAR'" />
-
-      
+  <AssetInput
+    v-model="dAmount"
+    :asset="'HBAR'"
+  />
 </template>
 
 <script lang="ts">
@@ -13,8 +12,6 @@ import { useVModel } from '@vueuse/core';
 
 import AssetInput from "../interface/AssetInput.vue";
 
-
-
 export default defineComponent({
   name: 'HbarInput',
   components: {
@@ -23,7 +20,7 @@ export default defineComponent({
   props: {
     amount: { type: Object as PropType<BigNumber.Instance>, default: null }
   },
-  emits: [ "update:amount" ],
+  emits: ["update:amount"],
   setup(props) {
 
     const dAmount = useVModel(props, "amount");

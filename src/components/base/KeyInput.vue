@@ -5,6 +5,7 @@
   >
     {{ label }}
   </label>
+
   <div class="mt-2.5">
     <TextInput
       v-model="value"
@@ -19,6 +20,7 @@
       v-bind="$attrs"
     />
   </div>
+  
   <Button
     v-if="canCopy && hasClipboard()"
     color="white"
