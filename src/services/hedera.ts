@@ -1,7 +1,9 @@
 import { BigNumber } from "bignumber.js";
-import type { AccountId, PrivateKey, PublicKey, TokenId } from "@hashgraph/sdk";
+import type { AccountId, FileId, PrivateKey, PublicKey, TokenId } from "@hashgraph/sdk";
 
 import { Wallet } from "../domain/wallet/abstract";
+
+import { HbarPriceService } from "./hbar-price";
 
 export interface SimpleTransfer {
     // HBAR or Token ID (as string)
@@ -27,10 +29,10 @@ export interface HederaService {
     // returns null if the account ID does not match the chosen key
     createClient(options: {
         network:
-            | string
-            | {
-                  [key: string]: string | AccountId;
-              };
+        | string
+        | {
+            [key: string]: string | AccountId;
+        };
         wallet: Wallet;
         // index into the wallet, meaning depends on the wallet type
         // 0 always means the canonical key for the wallet
@@ -60,8 +62,21 @@ export interface SimpleHederaClient {
         onBeforeConfirm?: () => void;
     }): Promise<void>;
 
+    createAccount(options: {
+        publicKey: PublicKey;
+        initialBalance: BigNumber;
+    }): Promise<AccountId | null>;
+
     associateToken(options: {
         account: AccountId;
         tokens: TokenId[];
     }): Promise<void>;
+
+    uploadFile(options: {
+        chunks: Uint8Array[];
+        fileMemo: string | null;
+        memo: string | null;
+    }): Promise<FileId | null>;
+
+    downloadFile(fileId: FileId): Promise<Uint8Array>;
 }

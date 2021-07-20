@@ -1,6 +1,6 @@
 {
   "name": "my-hbar-wallet",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "MyHbarWallet is a free, client-side interface helping you interact with Hedera™ Hashgraph.",
   "main": "index.html",
   "repository": "https://github.com/hashgraph/myhbarwallet",
