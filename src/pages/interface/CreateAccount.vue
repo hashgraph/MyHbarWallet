@@ -18,8 +18,10 @@
     </label>
 
     <KeyInput
-      v-model="state.publicKey"
+      v-model="state.publicKeyStr"
+      :valid="state.validKey"
       class="mb-4"
+      @update:modelValue="handleKey"
     />
 
     <label class="font-medium text-squant dark:text-argent">
@@ -42,6 +44,7 @@
       class="mt-8 px-5 py-2"
       color="green"
       :busy="state.busy"
+      :disabled="!state.validKey || state.initialBalance == null"
     >
       {{ $t("InterfaceToolTile.createAccount.label.createAccount") }}
     </Button>
@@ -66,7 +69,7 @@
 
       <div class="flex items-center justify-between mt-10">
         <Button
-          class="px-5 py-2"
+          class="px-5 py-2 mr-6"
           color="white"
           @click.stop="handleClose"
         >
@@ -116,15 +119,29 @@ export default defineComponent({
     const state = reactive({
       errorMessage: "",
       initialBalance: new BigNumber(1),
-      publicKey: "",
+      publicKeyStr: "",
+      publicKey: null as PublicKey | null,
+      validKey: false,
       busy: false,
       accountId: null as AccountId | null | undefined,
       resultModalOpen: false
     });
 
     function handleAmount(amount: BigNumber): void {
-      console.log(amount);
       state.initialBalance = amount;
+    }
+
+    async function handleKey(key: string): Promise<void> {
+      state.publicKeyStr = key;
+
+      try {
+        state.publicKey = PublicKey.fromString(key);
+      } catch (error) {
+        state.errorMessage = await store.errorMessage(error);
+      } finally {
+        if (state.publicKey != null) state.validKey = true;
+        else state.validKey = false;
+      }
     }
 
     function handleClose(): void {
@@ -143,11 +160,9 @@ export default defineComponent({
       state.accountId = null;
 
       try {
-        const key = PublicKey.fromString(state.publicKey);
-
-        if (key != null && state.initialBalance != null) {
+        if (state.publicKey != null && state.initialBalance != null) {
           state.accountId = await store.client?.createAccount({
-            publicKey: key,
+            publicKey: state.publicKey as PublicKey,
             initialBalance: new BigNumber(state.initialBalance)
           });
 
@@ -166,6 +181,7 @@ export default defineComponent({
       state,
       handleClose,
       handleCopy,
+      handleKey,
       handleAmount,
       handleSubmit
     }
