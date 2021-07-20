@@ -26,7 +26,7 @@
       color="green"
       class="py-3 mt-6 w-full"
       :busy="state.sendBusyText != null"
-      :disabled = "disableDownload"
+      :disabled="disableDownload"
       @click="openModal"
     >
       {{ $t("InterfaceToolTile.download.title") }}
@@ -82,7 +82,7 @@
 
 
 <script lang = "ts">
-import { defineComponent, reactive, nextTick, computed } from "vue";
+import { defineComponent, reactive, nextTick, computed, ref } from "vue";
 import type { FileId } from "@hashgraph/sdk";
 
 import Headline from "../../components/interface/Headline.vue";
@@ -105,8 +105,8 @@ export default defineComponent({
     const store = useStore();
     const modalTitle = computed(() => `Downloading ${state.downloadId}`);
     const accountId = computed(() => store.accountId);
-    const disableDownload = computed ( ()=> {
-      if(state.downloadId){
+    const disableDownload = computed(() => {
+      if (state.downloadId) {
         return false;
       } else return true;
     });
@@ -120,12 +120,25 @@ export default defineComponent({
       maxFee: "2ℏ",
     });
 
+    // target for file download
+    const fileLink = ref<HTMLAnchorElement | null>(null);
+
     async function download(): Promise<void> {
       try {
         state.errorMessage = "";
 
         if (state.downloadId != null) {
-          await store.client?.downloadFile(state.downloadId);
+          const contents = await store.client?.downloadFile({ fileId: state.downloadId });
+
+          if (contents != null) {
+            const blob = new Blob([contents]);
+            const fileURL = URL.createObjectURL(blob);
+
+            fileLink.value = document.createElement("a") as HTMLAnchorElement;
+            fileLink.value.href = fileURL;
+            fileLink.value.download = `HTS_File_${state.downloadId.toString()}`;
+            fileLink.value.click();
+          }
         }
       } catch (error) {
         closeModal();

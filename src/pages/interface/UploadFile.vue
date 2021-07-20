@@ -1,6 +1,8 @@
 <template>
-  
-  <Headline :title="$t('InterfaceToolTile.upload.title')" parent="tools" />
+  <Headline
+    :title="$t('InterfaceToolTile.upload.title')"
+    parent="tools"
+  />
 
   <div class="flex-col text-center">
     <UploadZone @fileSelect="fileSelect" />
@@ -10,7 +12,7 @@
     </InputError>
 
     <Modal
-      :isVisible="state.showUploadModal"
+      :is-visible="state.showUploadModal"
       :title="$t('InterfaceTransactionDetails.status.value.success')"
       @close="closeUploadModal"
     >
@@ -20,18 +22,20 @@
     </Modal>
 
     <ProgressModal 
-      :isVisible="state.showProgressModal" 
+      :is-visible="state.showProgressModal" 
       :title="$t('InterfaceTransactionDetails.loading')"
     />
 
     <Modal 
-      :isVisible="state.showFeeModal" 
+      :is-visible="state.showFeeModal" 
       :title="modalFeeTitle" 
       @close="closeFeeModal"
     >
       <div class="table-fixed text-left p-4">
         <tr>
-          <td class="w-full">{{ $t('InterfaceTransactionDetails.operator') }}</td>
+          <td class="w-full">
+            {{ $t('InterfaceTransactionDetails.operator') }}
+          </td>
           <td>{{ accountId }}</td>
         </tr>
 
@@ -47,13 +51,17 @@
           color="white"
           class="p-3 m-4 w-1/3"
           @click="closeFeeModal"
-        >{{ $t('BaseButton.dismiss') }}</Button>
+        >
+          {{ $t('BaseButton.dismiss') }}
+        </Button>
 
         <Button
           color="green"
           class="p-3 m-4 w-1/3"
           @click="uploadConfirm"
-        >{{ $t('BaseButton.continue') }}</Button>
+        >
+          {{ $t('BaseButton.continue') }}
+        </Button>
       </div>
     </Modal>
 
@@ -63,36 +71,35 @@
         class="p-3 m-4 w-5/12"
         :disabled="!state.uploadReady"
         @click="uploadHashClick"
-      >{{ $t("InterfaceUploadFile.button.hash") }}</Button>
+      >
+        {{ $t("InterfaceUploadFile.button.hash") }}
+      </Button>
 
       <Button
         color="green"
         class="p-3 m-4 w-5/12"
         :disabled="!state.uploadReady"
         @click="uploadFileClick"
-      >{{ $t("InterfaceUploadFile.button.file") }}</Button>
+      >
+        {{ $t("InterfaceUploadFile.button.file") }}
+      </Button>
     </div>
   </div>
 </template>
 
-
 <script lang = "ts">
-
-
 import { FileId } from "@hashgraph/sdk";
-
 import { defineComponent, reactive, computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 import { useStore } from "../../store";
-
 import UploadZone from "../../components/interface/UploadZone.vue";
 import Headline from "../../components/interface/Headline.vue";
 import Button from "../../components/base/Button.vue";
 import Modal from "../../components/interface/Modal.vue";
 import InputError from "../../components/base/InputError.vue";
 import ProgressModal from "../../components/interface/ProgressModal.vue";
-
-const MAX_CHUNK_LENGTH = 2900;
+import { estimateFee, estimateChunks } from "../../services/impl/hedera/client/upload-file";
 
 export default defineComponent({
   name: "UploadFile",
@@ -106,8 +113,8 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const accountId = computed(() => store.client?.getAccountId().toString());
-    const modalFeeTitle = computed(() => `Uploading ${state.fileName}`);
+    const i18n = useI18n();
+
     const state = reactive({
       fileName: null as string | null,
       fileData: null as Uint8Array | null,
@@ -127,37 +134,25 @@ export default defineComponent({
       }
     });
 
-    //Recycled from V1
-    async function estimateFee(): Promise<void> {
-
-      const { Hbar } = await import("@hashgraph/sdk");
-      state.estimateFee =
-        `${(new Hbar(2.6 * (state.uploadProgress.totalChunks - 1) +
-          ((state.fileData as Uint8Array).byteLength %
-            MAX_CHUNK_LENGTH /
-            1000 *
-            0.55 +
-            1.05))).toBigNumber().toFixed(2)} ℏ`;
-    }
-
+    const accountId = computed(() => store.client?.getAccountId().toString());
+    const modalFeeTitle = computed(() => `Uploading ${state.fileName}`);
 
     function openFeeModal(): void {
-      state.uploadProgress.totalChunks = Math.ceil(state.fileData?.byteLength / MAX_CHUNK_LENGTH);
-      estimateFee();
-      state.showFeeModal = true;
+      if (state.fileData != null) {
+        state.uploadProgress.totalChunks = estimateChunks(state.fileData)
+        state.estimateFee = `${estimateFee(state.fileData)} hbar`;
+        state.showFeeModal = true;
+      }
     }
-
 
     function closeFeeModal(): void {
       state.showFeeModal = false;
     }
 
-
     function openUploadModal(): void {
       state.showProgressModal = false;
       state.showUploadModal = true;
     }
-
 
     function closeUploadModal(): void {
       state.showUploadModal = false;
@@ -176,13 +171,10 @@ export default defineComponent({
       }
     }
 
-
     function uploadHashClick(): void {
       state.uploadHash = true;
       openFeeModal();
     }
-
-
 
     function uploadFileClick(): void {
       state.uploadHash = false;
@@ -190,28 +182,25 @@ export default defineComponent({
     }
 
     async function uploadFile(file: Uint8Array): Promise<void> {
-
       if (state.uploadHash) {
         file = new Uint8Array(await window.crypto.subtle.digest("SHA-384", file));
       }
 
       let fileId = null as FileId | null | undefined;
       try {
-
         state.showProgressModal = true;
         fileId = await store.client?.uploadFile({
           file,
           fileMemo: "",
           memo: ""
         });
-
       } catch (error) {
         state.showProgressModal = false;
         state.errorMessage = await store.errorMessage(error);
-        throw new Error(error);
       }
+
       if (!fileId) {
-        state.errorMessage = "There is no file ID.";
+        state.errorMessage = i18n.t("Common.Error.NoFileId").toString();
       } else {
         state.fileId = fileId.toString();
         state.errorMessage = "";
@@ -233,9 +222,7 @@ export default defineComponent({
       openUploadModal,
       closeUploadModal
     }
-
   }
-
 });
 
 

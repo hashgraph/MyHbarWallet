@@ -64,7 +64,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
 
   createAccount(options: {
     publicKey: PublicKey;
-    initialBalance: BigNumber.Instance;
+    initialBalance: BigNumber;
   }): Promise<AccountId | null> {
     return createAccount(this._client, options);
   }
@@ -87,7 +87,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
 
   downloadFile(options: {
     fileId: FileId;
-  }): Promise<void> {
+  }): Promise<Uint8Array> {
     return downloadFile(this._client, options);
   }
 }
