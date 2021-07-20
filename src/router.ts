@@ -47,7 +47,7 @@ import InterfaceAssociateToken from "./pages/interface/AssociateToken.vue";
 import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
 import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
 import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
-import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
+import InterfaceCreateAccount from "./pages/interface/CreateAccount.vue";
 
 
 const routes = [
