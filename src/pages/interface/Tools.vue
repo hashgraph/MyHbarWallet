@@ -8,17 +8,29 @@
       :to="{ name: 'tools.associate.token' }"
     />
 
-    <!-- <ToolTile
+    <ToolTile
+      :title="$t('InterfaceToolTile.createAccount.title')"
+      :description="$t('InterfaceToolTile.createAccount.description')"
+      :to="{ name: 'tools.create.account' }"
+    />
+
+    <ToolTile
+      :title="$t('InterfaceToolTile.upload.title')"
+      :description="$t('InterfaceToolTile.upload.description')"
+      :to="{ name: 'tools.upload' }"
+    />
+
+    <ToolTile
       :title="$t('InterfaceToolTile.download.title')"
       :description="$t('InterfaceToolTile.download.description')"
       :to="{ name: 'tools.download' }"
-    /> -->
+    />
 
-    <!-- <ToolTile
-      :title="$t('InterfaceConvertUnits')"
-      description="Our helpful conversion tool and hbar unit reference allow you to calculate your total transaction cost."
+    <ToolTile
+      :title="$t('InterfaceToolTile.convert.title')"
+      :description="$t('InterfaceToolTile.convert.description')"
       :to="{ name: 'tools.convert.units' }"
-    />-->
+    />
   </div>
 </template>
 
