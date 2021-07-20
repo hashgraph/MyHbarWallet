@@ -73,10 +73,10 @@ export interface SimpleHederaClient {
     }): Promise<void>;
 
     uploadFile(options: {
-        chunks: Uint8Array[];
+        file: Uint8Array;
         fileMemo: string | null;
         memo: string | null;
     }): Promise<FileId | null>;
 
-    downloadFile(fileId: FileId): Promise<Uint8Array>;
+    downloadFile(options: {fileId: FileId}): Promise<void>;
 }

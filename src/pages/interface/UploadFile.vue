@@ -1,15 +1,16 @@
 <template>
+  
   <Headline :title="$t('InterfaceToolTile.upload.title')" parent="tools" />
 
   <div class="flex-col text-center">
     <UploadZone @fileSelect="fileSelect" />
 
-    <InputError v-if = "state.errorMessage.length > 0">
+    <InputError v-if="state.errorMessage.length > 0">
       {{ state.errorMessage }}
     </InputError>
 
     <Modal
-      :is-Visible="state.showUploadModal"
+      :isVisible="state.showUploadModal"
       :title="$t('InterfaceTransactionDetails.status.value.success')"
       @close="closeUploadModal"
     >
@@ -18,9 +19,16 @@
       <p>{{ $t('InterfaceTransactionDetails.file.id') }}: {{ state.fileId }}</p>
     </Modal>
 
-    <ProgressModal :isVisible = "state.showProgressModal" title = "Loading. . . ."/>
-    
-    <Modal :isVisible="state.showFeeModal" :title="modalFeeTitle" @close="closeFeeModal">
+    <ProgressModal 
+      :isVisible="state.showProgressModal" 
+      :title="$t('InterfaceTransactionDetails.loading')"
+    />
+
+    <Modal 
+      :isVisible="state.showFeeModal" 
+      :title="modalFeeTitle" 
+      @close="closeFeeModal"
+    >
       <div class="table-fixed text-left p-4">
         <tr>
           <td class="w-full">{{ $t('InterfaceTransactionDetails.operator') }}</td>
@@ -30,7 +38,7 @@
         <tr>
           <td>{{ $t('InterfaceUploadFile.modal.estimate') }}</td>
 
-          <td>{{ state.estimatedFee }}</td>
+          <td>{{ state.estimateFee }}</td>
         </tr>
       </div>
 
@@ -65,10 +73,14 @@
       >{{ $t("InterfaceUploadFile.button.file") }}</Button>
     </div>
   </div>
+
 </template>
 
 
 <script lang = "ts">
+
+
+import { FileId } from "@hashgraph/sdk";
 
 import { defineComponent, reactive, computed } from "vue";
 
@@ -80,7 +92,6 @@ import Button from "../../components/base/Button.vue";
 import Modal from "../../components/interface/Modal.vue";
 import InputError from "../../components/base/InputError.vue";
 import ProgressModal from "../../components/interface/ProgressModal.vue";
-import { FileId } from "@hashgraph/sdk";
 
 const MAX_CHUNK_LENGTH = 2900;
 
@@ -101,7 +112,7 @@ export default defineComponent({
     const state = reactive({
       fileName: null as string | null,
       fileData: null as Uint8Array | null,
-      estimateFee: 0,
+      estimateFee: null as string | null,
       showFeeModal: false,
       showUploadModal: false,
       showProgressModal: false,
@@ -121,7 +132,7 @@ export default defineComponent({
     async function estimateFee(): Promise<void> {
 
       const { Hbar } = await import("@hashgraph/sdk");
-      state.estimatedFee =
+      state.estimateFee =
         `${(new Hbar(2.6 * (state.uploadProgress.totalChunks - 1) +
           ((state.fileData as Uint8Array).byteLength %
             MAX_CHUNK_LENGTH /
@@ -144,6 +155,7 @@ export default defineComponent({
 
 
     function openUploadModal(): void {
+      state.showProgressModal = false;
       state.showUploadModal = true;
     }
 
@@ -181,14 +193,10 @@ export default defineComponent({
     async function uploadFile(file: Uint8Array): Promise<void> {
 
       if (state.uploadHash) {
-        console.log("User wants to upload a hash.");
         file = new Uint8Array(await window.crypto.subtle.digest("SHA-384", file));
       }
-      
 
-
-
-      let fileId = null as FileId | null;
+      let fileId = null as FileId | null | undefined;
       try {
 
         state.showProgressModal = true;
@@ -197,13 +205,13 @@ export default defineComponent({
           fileMemo: "",
           memo: ""
         });
+
       } catch (error) {
+        state.showProgressModal = false;
         state.errorMessage = await store.errorMessage(error);
         throw new Error(error);
       }
-      state.showProgressModal = false;
       if (!fileId) {
-
         state.errorMessage = "There is no file ID.";
       } else {
         state.fileId = fileId.toString();

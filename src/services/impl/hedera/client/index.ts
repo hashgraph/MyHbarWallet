@@ -78,14 +78,16 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
   }
 
   uploadFile(options: {
-    chunks: Uint8Array[];
+    file: Uint8Array;
     fileMemo: string | null;
     memo: string | null;
   }): Promise<FileId | null> {
     return uploadFile(this._client, options);
   }
 
-  downloadFile(fileId: FileId): Promise<Uint8Array> {
-    return downloadFile(this._client, { fileId });
+  downloadFile(options: {
+    fileId: FileId;
+  }): Promise<void> {
+    return downloadFile(this._client, options);
   }
 }

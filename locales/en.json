@@ -168,6 +168,7 @@
     "InterfaceTransactionDetails.transfers": "Transfers",
     "InterfaceTransactionDetails.type": "Type",
     "InterfaceTransactionDetails.type.value.transferToken": "Transfer Token",
+    "InterfaceTransactionDetails.loading": "Loading...",
     "InterfaceUploadFile.button.file": "Upload file",
     "InterfaceUploadFile.button.hash": "Upload hash",
     "InterfaceUploadFile.drop": "Drop your files here",

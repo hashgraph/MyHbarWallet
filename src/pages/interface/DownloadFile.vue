@@ -26,6 +26,7 @@
       color="green"
       class="py-3 mt-6 w-full"
       :busy="state.sendBusyText != null"
+      :disabled = "disableDownload"
       @click="openModal"
     >
       {{ $t("InterfaceToolTile.download.title") }}
@@ -104,6 +105,11 @@ export default defineComponent({
     const store = useStore();
     const modalTitle = computed(() => `Downloading ${state.downloadId}`);
     const accountId = computed(() => store.accountId);
+    const disableDownload = computed ( ()=> {
+      if(state.downloadId){
+        return false;
+      } else return true;
+    });
 
     const state = reactive({
       sendBusyText: null,
@@ -143,6 +149,7 @@ export default defineComponent({
       closeModal,
       modalTitle,
       accountId,
+      disableDownload
     };
   },
 });
