@@ -49,7 +49,6 @@ import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
 import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
 import InterfaceCreateAccount from "./pages/interface/CreateAccount.vue";
 
-
 const routes = [
   {
     path: "/",
@@ -246,14 +245,14 @@ const routes = [
             name: "tools.convert.units",
           },
           {
-            component: InterfaceDownloadFile,
-            path: "download",
-            name: "tools.download"
-          },
-          {
             component: InterfaceUploadFile,
             path: "upload",
             name: "tools.upload"
+          },
+          {
+            component: InterfaceDownloadFile,
+            path: "download",
+            name: "tools.download"
           }
         ],
       },

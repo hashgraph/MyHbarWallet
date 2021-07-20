@@ -12,8 +12,6 @@ import { useVModel } from '@vueuse/core';
 
 import AssetInput from "../interface/AssetInput.vue";
 
-
-
 export default defineComponent({
   name: 'HbarInput',
   components: {
