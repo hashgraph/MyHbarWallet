@@ -56,7 +56,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
   transfer(options: {
     transfers: SimpleTransfer[];
     memo: string | null;
-    maxFee: BigNumber.Instance | null;
+    maxFee: BigNumber | null;
     onBeforeConfirm?: () => void;
   }): Promise<void> {
     return transfer(this._client, options);
@@ -64,7 +64,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
 
   createAccount(options: {
     publicKey: PublicKey;
-    initialBalance: BigNumber.Instance;
+    initialBalance: BigNumber;
   }): Promise<AccountId | null> {
     return createAccount(this._client, options);
   }
@@ -86,6 +86,6 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
   }
 
   downloadFile(fileId: FileId): Promise<Uint8Array> {
-    return downloadFile(this._client, fileId);
+    return downloadFile(this._client, { fileId });
   }
 }

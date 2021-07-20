@@ -8,12 +8,10 @@
     container
     class="h-screen flex flex-col max-w-lg m-auto mt-10"
   >
-    <label
-      class="font-medium text-squant dark:text-white mb-4"
-    >
+    <label class="font-medium text-squant dark:text-white mb-4">
       {{ $t("InterfaceTransactionDetails.file.id") }}
     </label>
-    
+
     <EntityIdInput
       v-model="state.downloadId"
       type="file"
@@ -41,7 +39,7 @@
       <div class="table-auto mt-8 p-4">
         <tr>
           <td class="w-full">
-            {{ $t('InterfaceTransactionDetails.operator') }}
+            {{ $t("InterfaceTransactionDetails.operator") }}
           </td>
 
           <td class>
@@ -51,7 +49,7 @@
 
         <tr>
           <td class>
-            {{ $t('InterfaceTransactionDetails.estimate') }}
+            {{ $t("InterfaceTransactionDetails.estimate") }}
           </td>
 
           <td class>
@@ -66,7 +64,7 @@
           class="p-3 w-5/12 m-2"
           @click="closeModal"
         >
-          {{ $t('BaseButton.dismiss') }}
+          {{ $t("BaseButton.dismiss") }}
         </Button>
 
         <Button
@@ -74,7 +72,7 @@
           class="p-3 w-5/12 m-2"
           @click="download"
         >
-          {{ $t('BaseButton.continue') }}
+          {{ $t("BaseButton.continue") }}
         </Button>
       </div>
     </Modal>
@@ -84,6 +82,7 @@
 
 <script lang = "ts">
 import { defineComponent, reactive, nextTick, computed } from "vue";
+import type { FileId } from "@hashgraph/sdk";
 
 import Headline from "../../components/interface/Headline.vue";
 import Button from "../../components/base/Button.vue";
@@ -93,54 +92,58 @@ import InputError from "../../components/base/InputError.vue";
 import { useStore } from "../../store";
 
 export default defineComponent({
-    name: "DownloadFile",
-    components: {
-        Headline,
-        Button,
-        Modal,
-        EntityIdInput,
-        InputError
-    },
-    setup() {
-        const store = useStore();
-        const modalTitle = computed(() => `Downloading ${state.downloadId}`);
-        const accountId = computed(() => store.accountId);
-        let state = reactive({
-            sendBusyText: null,
-            showFeeModal: false,
-            downloadId: null,
-            errorMessage: "",
-            transactionType: "downloadFile",
-            maxFee: "2ℏ",
-        });
+  name: "DownloadFile",
+  components: {
+    Headline,
+    Button,
+    Modal,
+    EntityIdInput,
+    InputError,
+  },
+  setup() {
+    const store = useStore();
+    const modalTitle = computed(() => `Downloading ${state.downloadId}`);
+    const accountId = computed(() => store.accountId);
 
-        async function download(): Promise<void> {
-            try {
-                state.errorMessage = "";
-                await store.client?.downloadFile(state.downloadId);
-            } catch (error) {
-                closeModal();
-                state.errorMessage = await store.errorMessage(error);
-            }
-            closeModal();
+    const state = reactive({
+      sendBusyText: null,
+      showFeeModal: false,
+      downloadId: null as FileId | null,
+      errorMessage: "",
+      transactionType: "downloadFile",
+      maxFee: "2ℏ",
+    });
+
+    async function download(): Promise<void> {
+      try {
+        state.errorMessage = "";
+
+        if (state.downloadId != null) {
+          await store.client?.downloadFile(state.downloadId);
         }
+      } catch (error) {
+        closeModal();
+        state.errorMessage = await store.errorMessage(error);
+      }
+      closeModal();
+    }
 
-        function openModal(): void {
-            nextTick(() => (state.showFeeModal = true));
-        }
+    function openModal(): void {
+      nextTick(() => (state.showFeeModal = true));
+    }
 
-        function closeModal(): void {
-            nextTick(() => (state.showFeeModal = false));
-        }
+    function closeModal(): void {
+      nextTick(() => (state.showFeeModal = false));
+    }
 
-        return { 
-          state, 
-          download, 
-          openModal, 
-          closeModal, 
-          modalTitle, 
-          accountId
-        };
-    },
+    return {
+      state,
+      download,
+      openModal,
+      closeModal,
+      modalTitle,
+      accountId,
+    };
+  },
 });
 </script>

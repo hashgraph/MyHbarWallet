@@ -77,4 +77,6 @@ export interface SimpleHederaClient {
         fileMemo: string | null;
         memo: string | null;
     }): Promise<FileId | null>;
+
+    downloadFile(fileId: FileId): Promise<Uint8Array>;
 }

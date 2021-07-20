@@ -8,7 +8,7 @@ export async function transfer(
   options: {
     transfers: SimpleTransfer[];
     memo: string | null;
-    maxFee: BigNumber.Instance | null; // tinybars
+    maxFee: BigNumber | null; // tinybars
     onBeforeConfirm?: () => void;
   }
 ): Promise<void> {

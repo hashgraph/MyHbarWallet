@@ -1,30 +1,46 @@
-import { FileAppendTransaction, FileId, Client } from "@hashgraph/sdk";
+import {
+  FileCreateTransaction,
+  FileAppendTransaction,
+  FileId,
+  Client,
+  Hbar
+} from "@hashgraph/sdk";
+
+function decode(a: Uint8Array): string {
+  return new TextDecoder().decode(a);
+}
 
 export async function uploadFile(
   client: Client,
   options: {
-    file: Uint8Array;
+    chunks: Uint8Array[];
     fileMemo: string | null;
     memo: string | null;
-}): Promise<FileId> {
-  const { FileCreateTransaction } = await import("@hashgraph/sdk");
+  }): Promise<FileId | null> {
+  const publicKey = client.operatorPublicKey;
 
-  const fileId = await (await(await new FileCreateTransaction()
-                                        .setKeys([client._operator?.publicKey])
-                                        .setFileMemo(options.fileMemo ?? "")
-                                        .setTransactionMemo(options.memo ?? "")
-                                        .execute(client))
-                              .getReceipt(client))
-                        .fileId;
+  if (publicKey != null) {
+    const response = await new FileCreateTransaction()
+      .setKeys([publicKey])
+      .setContents(decode(options.chunks[0]))
+      .setMaxTransactionFee(new Hbar(5))
+      .execute(client);
 
+    const id = await (await response.getReceipt(client)).fileId;
 
-  
-  await ( await new FileAppendTransaction()
-                    .setFileId(fileId)
-                    .setContents(options.file)
-                    .execute(client))
-                .getReceipt(client);
+    if (id != null) {
+      for (const chunk of options.chunks.slice(1)) {
+        await (await new FileAppendTransaction()
+          .setFileId(id)
+          .setContents(decode(chunk))
+          .setMaxTransactionFee(new Hbar(5))
+          .execute(client))
+          .getReceipt(client);
+      }
+    }
 
-  
-  return fileId;
+    return id;
+  }
+
+  return null;
 }
