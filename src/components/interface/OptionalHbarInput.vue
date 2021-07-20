@@ -31,7 +31,8 @@ export default defineComponent({
     HbarInput,
   },
   props: {
-    modelValue: { type: Object as PropType<Hbar | null>, required: true },
+    // eslint-disable-next-line vue/require-default-prop
+    modelValue: { type: Object as PropType<Hbar | null> },
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
