@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:flex lg:flex-row">
+  <div class="lg:flex lg:flex-row min-w-[400px]">
     <Drawer class="sticky top-0 hidden lg:flex" />
     <MobileDrawer class="sticky top-0 z-20 lg:hidden" />
 
@@ -10,7 +10,7 @@
 
       <main
         :class="[
-          ' bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1 w-full min-w-300px',
+          ' bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1 w-full',
           'lg:mt-10',
         ]"
       >
