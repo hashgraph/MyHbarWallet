@@ -1,12 +1,8 @@
 <template>
-  
-  
-  
-  
   <Headline title="Send" parent="home" />
 
   <div
-    class="pb-10 mt-8 font-medium border-b text-carbon border-cerebral-grey dark:border-midnight-express"
+    class="pb-10 mt-8 font-medium border-b text-carbon dark:text-silver-polish border-cerebral-grey dark:border-midnight-express"
   >
     <div class="flex flex-wrap items-center p-8">
       <div class="w-full">
@@ -34,21 +30,24 @@
       </div>
 
       <div class="w-full p-4 mt-4 mb-2 md:p-0">
-        <div class="dark:text-silver-polish">From</div>
+        <div class="mt-4 mb-8">
+          <p> {{ $t("OptionalMemo.addMemo") }} </p>
+          <TextInput 
+            v-model="state.memo" 
+            class="mt-2 font-medium" />
+          <p class = "mt-4 dark:text-argent">
+            {{ $t("OptionalMemo.aboutMemo") }}
+          </p>
+        </div>
 
-        <TextInput
-          :model-value="state.accountId?.toString() ?? ''"
-          read-only
-          class="mt-2 font-medium rounded"
-        />
 
-        <OptionalMemo v-model="state.memo" class="mt-8" />
-
-        <OptionalHbarInput v-model="state.maxFee" class="mt-8" @update:model-value="updateMaxFee" />
-
-        <div
-          class="mt-2 text-sm italic text-squant"
-        >{{ $t("InterfaceHomeSend.section2.toggle2.label") }}</div>
+        <div class = "mt-4">
+          <p class = "mb-4"> {{ $t("InterfaceHomeSend.section2.toggle2.label") }} </p>
+          <AssetInput v-model="state.maxFee" asset = "HBAR"/>
+          <p class = "mt-4 dark:text-argent">
+            {{ $t("InterfaceSend.max.transaction.fee") }}
+          </p>
+        </div>
       </div>
     </div>
 
@@ -79,19 +78,27 @@
       @click="onSend"
     >{{ state.sendBusyText ?? "Send" }}</Button>
 
-    <Button color="white" class="py-2 mt-4 text-sm px-9" @click="onCancel">Cancel</Button>
+    <Button 
+      color="white" 
+      class="py-2 mt-4 text-sm px-9" 
+      @click="onCancel"
+    >
+      {{ $t("BaseButton.cancel") }}
+    </Button>
   </div>
 
-  <ProgressModal :isVisible="state.showIPModal" title="Sending. . . ." />
+  <ProgressModal 
+    :is-visible="state.showIPModal" 
+    :title="$t('InterfaceSend.modal.sending')"
+  />
 
   <Modal
-    :isVisible="state.showConfirmModal"
+    :is-visible="state.showConfirmModal"
     title="Success"
     @close="closeConfirmModal"
-  >Successfully transferred {{ amount.toString() }} to account: {{ state.transfer.to?.toString() }}.</Modal>
-
-  
-
+  >
+    Successfully transferred {{ amount.toString() }} to account: {{ state.transfer.to?.toString() }}.
+  </Modal>
 </template>
 
 <script lang="ts">
@@ -101,7 +108,6 @@ import {
   onMounted,
   reactive,
   ref,
-  nextTick
 } from "vue";
 import { BigNumber } from "bignumber.js";
 import { AccountId, Hbar, HbarUnit } from "@hashgraph/sdk";
@@ -109,14 +115,13 @@ import { useRouter } from "vue-router";
 
 import Headline from "../../components/interface/Headline.vue";
 import TransferForm from "../../components/interface/TransferForm.vue";
-import OptionalHbarInput from "../../components/interface/OptionalHbarInput.vue";
-import OptionalMemo from "../../components/interface/OptionalMemo.vue";
 import Button from "../../components/base/Button.vue";
 import TextInput from "../../components/base/TextInput.vue";
 import ProgressModal from "../../components/interface/ProgressModal.vue";
 import Modal from "../../components/interface/Modal.vue";
+import AssetInput from "../../components/interface/AssetInput.vue";
 import { useStore } from "../../store";
-import { transfer } from "src/services/impl/hedera/client/transfer";
+// import { transfer } from "src/services/impl/hedera/client/transfer";
 
 export interface Transfer {
   to?: AccountId;
@@ -132,8 +137,7 @@ export default defineComponent({
     Headline,
     TextInput,
     TransferForm,
-    OptionalHbarInput,
-    OptionalMemo,
+    AssetInput,
     ProgressModal,
     Modal
 
@@ -155,8 +159,8 @@ export default defineComponent({
       sendBusyText: null as string | null,
       indexToEdit: 0,
       showEditModal: false,
-      memo: "" as string | undefined,
-      maxFee: null as Hbar | null,
+      memo: "" as string,
+      maxFee: null as Hbar | null | undefined,
       showAddModal: false,
       showConfirmModal: false,
       showIPModal: false,
@@ -172,9 +176,9 @@ export default defineComponent({
       () => state.transfer.to != null && state.transfer.amount != null
     );
 
-    const amount = computed( ()=>{
-        let fromTinybar = new Hbar(state.transfer.amount/100000000);
-        return fromTinybar;
+    const amount = computed(() => {
+      let fromTinybar = new Hbar(state.transfer.amount / 100000000);
+      return fromTinybar;
     });
 
     function openConfirmModal(): void {
@@ -205,6 +209,9 @@ export default defineComponent({
           },
         });
 
+
+        console.log(state.maxFee);
+        console.log(state.memo);
         void store.requestAccountBalance();
 
         // go back to home
