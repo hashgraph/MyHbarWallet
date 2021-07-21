@@ -30,7 +30,7 @@
     />
 
     <ToolTile
-      v-if="false"
+      v-if="hasPrivateKey"
       :title="$t('InterfaceToolTile.convert.title')"
       :description="$t('InterfaceToolTile.convert.description')"
       :to="{ name: 'tools.convert.units' }"
