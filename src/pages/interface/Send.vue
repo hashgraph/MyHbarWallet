@@ -10,12 +10,16 @@
         <div
           v-if="state.transfers.length <= 1"
           class="mb-2 dark:text-silver-polish"
-        >{{ $t("InterfaceHomeSend.section1.header1") }}</div>
+        >
+          {{ $t("InterfaceHomeSend.section1.header1") }}
+        </div>
 
         <div
           v-else
           class="mb-2 dark:text-silver-polish"
-        >{{ $t("InterfaceTransactionDetails.transfers") }}</div>
+        >
+          {{ $t("InterfaceTransactionDetails.transfers") }}
+        </div>
 
         <div
           class="p-4 font-medium bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express"
@@ -35,16 +39,18 @@
           <TextInput 
             v-model="state.memo" 
             class="mt-2 font-medium" />
-          <p class = "mt-4 dark:text-argent">
+          <p class="mt-4 dark:text-argent">
             {{ $t("OptionalMemo.aboutMemo") }}
           </p>
         </div>
 
 
-        <div class = "mt-4">
-          <p class = "mb-4"> {{ $t("InterfaceHomeSend.section2.toggle2.label") }} </p>
+        <div class="mt-4">
+          <p class="mb-4"> 
+            {{ $t("InterfaceHomeSend.section2.toggle2.label") }} 
+          </p>
           <AssetInput v-model="state.maxFee" asset = "HBAR"/>
-          <p class = "mt-4 dark:text-argent">
+          <p class="mt-4 dark:text-argent">
             {{ $t("InterfaceSend.max.transaction.fee") }}
           </p>
         </div>
@@ -110,7 +116,7 @@ import {
   ref,
 } from "vue";
 import { BigNumber } from "bignumber.js";
-import { AccountId, Hbar, HbarUnit } from "@hashgraph/sdk";
+import { AccountId, Hbar } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
 
 import Headline from "../../components/interface/Headline.vue";
@@ -209,9 +215,6 @@ export default defineComponent({
           },
         });
 
-
-        console.log(state.maxFee);
-        console.log(state.memo);
         void store.requestAccountBalance();
 
         // go back to home
