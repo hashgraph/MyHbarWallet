@@ -25,6 +25,7 @@ import Account from "./pages/access/Account.vue";
 
 // Create
 import Create from "./pages/create/Create.vue";
+import CreateSoftware from "./pages/create/Software.vue";
 import CreateKeystore from "./pages/create/Keystore.vue";
 import CreateMnemonic from "./pages/create/Mnemonic.vue";
 import MnemonicVerification from "./pages/create/MnemonicVerification.vue";
@@ -112,24 +113,29 @@ const routes = [
       },
       { path: "/create/", component: Create, name: "create" },
       {
+        path: "/create/software",
+        component: CreateSoftware,
+        name: "create.software"
+      },
+      {
         path: "/create/keystore",
         component: CreateKeystore,
-        name: "create.keystore",
+        name: "create.software.keystore",
       },
       {
         path: "/create/mnemonic",
         component: CreateMnemonic,
-        name: "create.mnemonic",
+        name: "create.software.mnemonic",
       },
       {
         path: "/create/mnemonic/verify",
         component: MnemonicVerification,
-        name: "create.mnemonic.verify",
+        name: "create.software.mnemonic.verify",
       },
       {
         path: "/create/key",
         component: CreatePrivateKey,
-        name: "create.key",
+        name: "create.software.key",
       },
     ],
   },
