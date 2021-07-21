@@ -8,18 +8,13 @@
         v-for="option in options"
         :key="option.value"
       >
-        <!-- TODO: re-enable private key creates eventually -->
         <OptionCard
-          v-if="option.value !== 'PrivateKey'"
           :data-cy-option="option.title"
           :light-icon="option.imageLight"
           :dark-icon="option.imageDark"
-          :to="{
-            name: option.route.replace('access.software', 'create'),
-          }"
+          :to="{ name: option.route }"
           :title="$t(option.title)"
           :desc="$t(option.description)"
-          :recommended="option.value === SoftwareOption.Keystore"
         />
       </template>
     </div>
@@ -29,7 +24,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import { SoftwareOption, SoftwareOptions } from "../../domain/SoftwareOptions";
+import { CreateOptions } from "../../domain/CreateOptions";
 import Layout from "../../components/access/Layout.vue";
 import OptionCard from "../../components/base/OptionCard.vue";
 
@@ -40,13 +35,12 @@ export default defineComponent({
     OptionCard,
   },
   setup() {
-    const options = Array.from(SoftwareOptions.values()).filter(
+    const options = Array.from(CreateOptions.values()).filter(
       (option) => option.supported
     );
 
     return {
-      options,
-      SoftwareOption,
+      options
     };
   },
 });

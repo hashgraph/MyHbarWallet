@@ -6,46 +6,46 @@ import darkHardware from "../assets/dark/img_hardware.svg";
 import { HardwareOption } from "./HardwareOptions";
 import { SoftwareOption } from "./SoftwareOptions";
 
-export type AccessOption = HardwareOption | SoftwareOption;
+export type CreateOption = HardwareOption | SoftwareOption;
 
-export enum AccessOptionType {
+export enum CreateOptionType {
     Software = "Software",
     Hardware = "Hardware",
 }
 
-export interface AccessAttributes {
+export interface CreateAttributes {
     supported: boolean;
     title: string;
     description: string;
-    value: AccessOptionType;
+    value: CreateOptionType;
     imageLight: string;
     imageDark: string;
     route: string;
 }
 
-export const AccessOptions: Map<AccessOptionType, AccessAttributes> = new Map([
+export const CreateOptions: Map<CreateOptionType, CreateAttributes> = new Map([
     [
-        AccessOptionType.Software,
+        CreateOptionType.Software,
         {
             supported: true,
             title: "Software.title",
             description: "Software.description",
-            value: AccessOptionType.Software,
+            value: CreateOptionType.Software,
             imageLight: lightSoftware,
             imageDark: darkSoftware,
-            route: "access.software",
+            route: "create.software",
         },
     ],
     [
-        AccessOptionType.Hardware,
+        CreateOptionType.Hardware,
         {
             supported: true,
             title: "Hardware.title",
             description: "Hardware.description",
-            value: AccessOptionType.Hardware,
+            value: CreateOptionType.Hardware,
             imageLight: lightHardware,
             imageDark: darkHardware,
-            route: "access.hardware",
+            route: "access.hardware", // same process as access
         },
     ],
 ]);
