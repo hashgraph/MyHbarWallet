@@ -138,7 +138,7 @@ export default defineComponent({
     AccountIdInput,
     InputError,
     Button,
-    CustomerSupportButton
+    CustomerSupportButton,
   },
   setup() {
     const container = useContainer();
