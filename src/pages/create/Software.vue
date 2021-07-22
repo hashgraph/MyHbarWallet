@@ -7,7 +7,6 @@
     <div class="grid gap-5 auto-rows-min">
       <OptionCard
         v-for="option in options"
-        v-show="option.value !== SoftwareOption.Key"
         :key="option.value"
         :data-cy-option="option.title"
         :light-icon="option.imageLight"
