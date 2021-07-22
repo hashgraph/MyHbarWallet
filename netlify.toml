@@ -15,3 +15,9 @@ HEDERA_NETWORK = "testnet"
 from = "/*"
 to = "/index.html"
 status = 200
+
+[[redirects]]
+from = "https://next.myhbarwallet.com"
+to = "https://myhbarwallet.com"
+status = 301
+force = true
