@@ -4,6 +4,9 @@
     class="max-w-lg"
     :back="{ name: 'access.software' }"
   >
+    <p class="dark:text-white mb-8">
+      {{ $t("MnemonicPhrase.access.prompt") }}
+    </p>
     <div class="grid gap-5 auto-rows-min">
       <div class="flex space-x-2.5 items-center">
         <SegmentedSelector
@@ -55,27 +58,28 @@
           />
         </div>
       </div>
+      <div>
+        <OptionalPasswordInput
+          v-model="password"
+          :hint="false"
+          :label="$t('BaseOptionalPasswordInput.label1')"
+          :placeholder="$t('BasePasswordInput.input1.placeholder1')"
+          @update:modelValue="handlePassword"
+        />
 
-      <OptionalPasswordInput
-        v-model="password"
-        :hint="false"
-        :label="$t('BaseOptionalPasswordInput.label1')"
-        :placeholder="$t('BasePasswordInput.input1.placeholder1')"
-        @update:modelValue="handlePassword"
-      />
-
-      <Button
-        data-cy-mnemonic-submit
-        color="green"
-        class="w-full p-3"
-        :disabled="
-          mnemonicPhrase.filter((word) => word.length > 0).length <
-            wordCount
-        "
-        @click="onSubmit"
-      >
-        {{ $t("BaseButton.accessWallet") }}
-      </Button>
+        <Button
+          data-cy-mnemonic-submit
+          color="green"
+          class="w-full p-3 mt-4"
+          :disabled="
+            mnemonicPhrase.filter((word) => word.length > 0).length <
+              wordCount
+          "
+          @click="onSubmit"
+        >
+          {{ $t("BaseButton.accessWallet") }}
+        </Button>
+      </div>
     </div>
   </Layout>
 </template>

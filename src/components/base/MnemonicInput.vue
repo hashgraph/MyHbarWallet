@@ -17,11 +17,12 @@
         'border-b': focused !== index,
         'border-han-blue-700 bg-han-blue-700 bg-opacity-5 border-b-2 -mb-px':
           !readOnly && focused === index,
-        'dark:border-squant':
-          !warningAtIndex(index - 1) &&
-          (readOnly || focused !== index),
+        'border-cerebral-grey dark:border-midnight-express':
+          (focused !== index) && isBlank(index), 
         'border-han-blue-700':
           warningAtIndex(index - 1) && focused !== index,
+        'border-basalt-grey dark:border-silver-polish':
+          readOnly
       }"
     >
       <label
@@ -33,6 +34,7 @@
 
       <input
         :id="`mnemonic:${index}`"
+        :ref="inputRefs[index - 1]"
         :class="{
           'inline-flex text-black-out text-sm w-full h-full flex-1 border-none bg-transparent outline-none focus:ring-0 px-2': true,
           'dark:text-white dark:placeholder-white': true,
@@ -57,6 +59,7 @@
 import {
   defineComponent,
   ref,
+  Ref,
   PropType,
   SetupContext,
   ComponentPublicInstance,
@@ -80,6 +83,12 @@ export default defineComponent({
   emits: ["update:modelValue"],
   setup(props, context: SetupContext) {
     const focused = ref<number | null>(null);
+
+    //Create array of refs for the input to determine if input is blank in isBlank()
+    const inputRefs: Ref<string>[] = ref([]);
+    for(let i = 0; i < props.wordCount; i++){
+      inputRefs.value.push(ref(`mnemonic:${i + 1}`))
+    }
 
     function warningAtIndex(index: number): boolean {
       return props.warningIndices.find((i) => i === index) != undefined;
@@ -111,8 +120,12 @@ export default defineComponent({
       splitString.forEach((item, i) => {
         newValue[index - 1 + i] = item;
       });
-
       context.emit("update:modelValue", newValue);
+    }
+
+    function isBlank(index: number): boolean {
+      if(inputRefs.value[index - 1].value.value) return false;
+      return true;
     }
 
     return {
@@ -121,6 +134,8 @@ export default defineComponent({
       handleBlur,
       handleInput,
       warningAtIndex,
+      isBlank,
+      inputRefs
     };
   },
 });

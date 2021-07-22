@@ -8,8 +8,8 @@
       hide
       :show-eye="showEye"
       :placeholder="placeholder"
+      class="bg-white dark:bg-midnight-express rounded mb-3"
     />
-
     <TextInput
       v-if="confirm"
       v-model="state.confirmPassword"
@@ -19,6 +19,7 @@
       :show-eye="showEye"
       hide
       :placeholder="$t('BasePasswordInput.input2.placeholder1')"
+      class="bg-white dark:bg-midnight-express rounded mb-3"
     />
   </form>
 </template>

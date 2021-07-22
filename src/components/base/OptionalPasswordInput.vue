@@ -3,35 +3,32 @@
     v-model="state.hasPassword"
     data-cy-pass-toggle
     :label="label"
-    class="mb-1"
     @update:modelValue="handleToggled"
   />
 
   <div
-    v-if="hint"
-    class="text-sm transition-all duration-300 ease-in-out text-squant dark:text-white"
-  >
-    {{ $t("BaseOptionalPasswordInput.paragraph") }}
-  </div>
-
-  <div
     :class="{
-      'h-12': !confirm,
-      'h-28': confirm,
+      'h-14': !confirm && !hint && state.hasPassword,
+      'h-32': confirm && !hint && state.hasPassword,
+      'h-40': !confirm && hint && state.hasPassword,
+      'h-56 sm:h-60': confirm && hint && state.hasPassword,
     }"
   >
     <div
-      class="transition-all duration-300"
+      class="transition-all duration-300 ease-in-out"
       :class="{
-        'h-12': state.hasPassword && !confirm,
-        'h-28': state.hasPassword && confirm,
-        'mt-0 opacity-100': state.hasPassword,
-        '-mt-12 mb-4 opacity-0 pointer-events-none invisible':
-          !state.hasPassword,
+        'opacity-100': state.hasPassword,
+        'h-0 -mt-14 opacity-0 pointer-events-none invisible':
+          !state.hasPassword && !confirm && !hint,
+        'h-0 -mt-32 opacity-0 pointer-events-none invisible':
+          !state.hasPassword && confirm && !hint,
+        'h-0 -mt-40 opacity-0 pointer-events-none invisible':
+          !state.hasPassword && !confirm && hint,
+        'h-0 -mt-56 sm:-mt-60 opacity-0 pointer-events-none invisible':
+          !state.hasPassword && confirm && hint
       }"
     >
       <PasswordInput
-        v-if="state.hasPassword"
         ref="passwordInput"
         v-model="state.password"
         show-eye
@@ -41,6 +38,13 @@
         @error="handleError"
         @update:modelValue="handlePassword"
       />
+
+      <div
+        v-if="hint"
+        class="text-sm text-squant dark:text-white mt-4"
+      >
+        {{ $t("BaseOptionalPasswordInput.paragraph") }}
+      </div>
     </div>
   </div>
 </template>

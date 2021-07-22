@@ -98,7 +98,6 @@
     "ConfirmLogout.title": "Confirm Logout",
     "Create.title": "Create a New Wallet",
     "CreateKeystoreFile.note": "{dnf} to save your password. You will need this Password + Keystore File to access your wallet.",
-    "CreateKeystoreFile.note.dnf": "DO NOT FORGET",
     "CreateRequest.header": "Request to Create Account",
     "CreateRequest.paragraph": "Provide your public key to an existing owner on the Hedera™ network. They must create and fund your account, then provide you with your new account ID.",
     "CustomerSupport.button": "Contact Support",

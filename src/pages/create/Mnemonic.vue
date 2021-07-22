@@ -14,14 +14,22 @@
         :word-count="24"
         read-only
       />
-
+   
       <OptionalPasswordInput
         v-model="password"
         :label="$t('BaseOptionalPasswordInput.label1')"
         :placeholder="$t('BasePasswordInput.input1.placeholder4')"
         confirm
+        :hint = "false"
       />
-
+        
+      <span class="text-bold text-Megaman-Helmet"> 
+        {{ $t("PrivateKey.note.dnf") }} 
+        <span class="dark:text-silver-polish"> 
+          {{ $t("MnemonicPhrase.create.note") }} 
+        </span>
+      </span> 
+      
       <Button
         type="submit"
         color="green"

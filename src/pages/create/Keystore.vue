@@ -5,6 +5,9 @@
     :back="{ name: 'create' }"
   >
     <form class="grid gap-5 auto-rows-min">
+      <p class="dark:text-white">
+        {{ $t("BaseOptionalPasswordInput.label1") }}
+      </p>
       <PasswordInput
         v-model="password"
         :placeholder="$t('BasePasswordInput.input1.placeholder4')"
@@ -12,6 +15,15 @@
         show-eye
         @valid="handleValid"
       />
+
+      <div>
+        <span class="text-bold text-Megaman-Helmet">
+          {{ $t("PrivateKey.note.dnf") }}
+        </span>
+        <span class="dark:text-silver-polish"> 
+          {{ $t("CreateKeystoreFile.note") }} 
+        </span>
+      </div>
 
       <InputError v-if="errorMessage.length > 0">
         {{ errorMessage }}
