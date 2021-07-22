@@ -4,8 +4,8 @@
   <div
     class="pb-10 mt-8 font-medium border-b text-carbon dark:text-silver-polish border-cerebral-grey dark:border-midnight-express"
   >
-    <div class="flex flex-wrap items-center p-8">
-      <div class="w-full">
+    <div class="lg:grid lg:grid-flow-col lg:auto-cols items-center p-8">
+      <div class="w-full lg:w-1/2">
         <!-- TODO: when localizing, remove the v-if, the pluralization should be done in the localizer -->
         <div
           v-if="state.transfers.length <= 1"
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div class="w-full p-4 mt-4 mb-2 md:p-0">
+      <div class="w-full p-4 mt-4 mb-2 lg:w-1/2 lg:m-4 md:p-0">
         <div class="mt-4 mb-8">
           <p> {{ $t("OptionalMemo.addMemo") }} </p>
           <TextInput 
