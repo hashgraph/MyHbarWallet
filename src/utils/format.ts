@@ -1,14 +1,14 @@
 // generates a link for emailing support
 export function formatSupportLink(
-    url: string | null,
-    platform: string | any,
+    url: string,
+    platform: string,
     browser: string,
     device: string,
     version: string,
     accountId: string,
     description: string
 ): string {
-    const subjectTemplate = `Issue on ${url}`;
+    const subjectTemplate = `${url.length > 0 ? '' : 'General '} Issue ${url.length > 0 ? ' on ' + url : ''}`;
     const bodyTemplate = `Browser: ${browser}
 OS: ${platform}
 Device: ${device}

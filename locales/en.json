@@ -227,6 +227,8 @@
     "Marketing.faqs.section4.paragraph1": "MHW does not offer support for recovery or reset of passwords / private keys. We always suggest writing down private keys and passwords on physical media for safekeeping. Maybe you saved it on your computer!",
     "Marketing.faqs.section5.header": "Can I still use Version 1 of MHW?",
     "Marketing.faqs.section5.paragraph1": "Yes, it is available at v1.myhbarwallet.com.",
+    "Marketing.faqs.section6.header": "If I send you my public key, will you make me an account?",
+    "Marketing.faqs.section6.paragraph1": "No. For ledger users, please refer to this guide: https://launchbadge.com/blog/how-to-create-ledger-account-through-mhw.",
     "Marketing.features.section1.header": "Join MyHbarWallet",
     "Marketing.features.section1.paragraph1": "Access Hedera™ with the #1 Hbar Wallet with an elegant and easy-to-use interface.",
     "Marketing.features.section2.header": "Hardware Wallet Support",
