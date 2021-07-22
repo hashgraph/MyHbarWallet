@@ -28,7 +28,7 @@ import Create from "./pages/create/Create.vue";
 import CreateSoftware from "./pages/create/Software.vue";
 import CreateKeystore from "./pages/create/Keystore.vue";
 import CreateMnemonic from "./pages/create/Mnemonic.vue";
-import MnemonicVerification from "./pages/create/MnemonicVerification.vue";
+import MnemonicVerify from "./pages/create/MnemonicVerify.vue";
 import CreatePrivateKey from "./pages/create/PrivateKey.vue";
 
 // Interface
@@ -129,8 +129,9 @@ const routes = [
       },
       {
         path: "/create/mnemonic/verify",
-        component: MnemonicVerification,
+        component: MnemonicVerify,
         name: "create.software.mnemonic.verify",
+        props: true
       },
       {
         path: "/create/key",

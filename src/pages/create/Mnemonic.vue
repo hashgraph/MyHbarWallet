@@ -4,7 +4,10 @@
     class="max-w-lg"
     :back="{ name: 'create' }"
   >
-    <div class="grid gap-5 auto-rows-min">
+    <form
+      class="grid gap-5 auto-rows-min"
+      @submit.prevent="handleSubmit"
+    >
       <MnemonicInput
         v-if="mnemonicPhrase"
         :model-value="mnemonicPhrase.words"
@@ -20,18 +23,18 @@
       />
 
       <Button
+        type="submit"
         color="green"
         class="w-full p-4"
-        @click="handleSubmit"
       >
         {{ $t("MnemonicPhrase.create.button") }}
       </Button>
-    </div>
+    </form>
   </Layout>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import type { Mnemonic } from "@hashgraph/sdk";
 
 import router from "../../router";
@@ -41,6 +44,7 @@ import OptionalPasswordInput from "../../components/base/OptionalPasswordInput.v
 import MnemonicInput from "../../components/base/MnemonicInput.vue";
 import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
 import { useStore } from "../../store";
+import { Wallet } from "../../domain/wallet/abstract";
 
 export default defineComponent({
   name: "CreateMnemonic",
@@ -51,29 +55,43 @@ export default defineComponent({
     OptionalPasswordInput,
   },
   setup() {
-    const password = ref("");
-    const mnemonicPhrase = ref<Mnemonic | null>(null);
     const store = useStore();
+    const mnemonicPhrase = ref<Mnemonic | null>(null);
+    const password = ref("");
+    const wallet = ref<Wallet | null>(null);
+
+    onMounted(() => {
+      if (store.wallet != null) {
+        try {
+          mnemonicPhrase.value = (store.wallet as MnemonicSoftwareWallet).getMnemonic();
+          password.value = (store.wallet as MnemonicSoftwareWallet).getPassword();
+          wallet.value = store.wallet;
+        } catch (error) {
+          router.push({ name: "create" });
+        }
+      }
+
+      import("@hashgraph/sdk").then(({ Mnemonic }) =>
+        Mnemonic.generate().then((mnemonic) => {
+          if (wallet.value == null) {
+            mnemonicPhrase.value = mnemonic;
+            password.value = "";
+          }
+        })
+      );
+    })
 
     function handleSubmit() {
-      // TODO: router.push({ name: "create.mnemonic.verify" });
-
-      const wallet = new MnemonicSoftwareWallet(
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                mnemonicPhrase.value! as Mnemonic,
-                password.value
+      wallet.value = new MnemonicSoftwareWallet(
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        mnemonicPhrase.value! as Mnemonic,
+        password.value
       );
 
-      store.setWallet(wallet);
+      store.setWallet(wallet.value);
 
-      router.push({ name: "access.account" });
+      router.push({ name: "create.software.mnemonic.verify" });
     }
-
-    import("@hashgraph/sdk").then(({ Mnemonic }) =>
-      Mnemonic.generate().then((mnemonic) => {
-        mnemonicPhrase.value = mnemonic;
-      })
-    );
 
     return {
       password,
