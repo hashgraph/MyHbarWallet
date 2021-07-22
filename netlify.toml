@@ -17,7 +17,7 @@ to = "/index.html"
 status = 200
 
 [[redirects]]
-from = "https://next.myhbarwallet.com"
-to = "https://myhbarwallet.com"
+from = "https://next.myhbarwallet.com/*"
+to = "https://myhbarwallet.com/:splat"
 status = 301
 force = true
