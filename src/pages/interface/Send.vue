@@ -1,11 +1,14 @@
 <template>
-  <Headline title="Send" parent="home" />
+  <Headline
+    title="Send"
+    parent="home"
+  />
 
   <div
     class="pb-10 mt-8 font-medium border-b text-carbon dark:text-silver-polish border-cerebral-grey dark:border-midnight-express"
   >
-    <div class="flex flex-wrap items-center p-8">
-      <div class="w-full">
+    <div class="lg:align-baseline lg:m-auto lg:grid lg:grid-flow-col lg:grid-cols-2 lg:gap-16 flex flex-wrap items-center">
+      <div class="w-full lg:h-full">
         <!-- TODO: when localizing, remove the v-if, the pluralization should be done in the localizer -->
         <div
           v-if="state.transfers.length <= 1"
@@ -33,26 +36,33 @@
         </div>
       </div>
 
-      <div class="w-full p-4 mt-4 mb-2 md:p-0">
-        <div class="mt-4 mb-8">
-          <p> {{ $t("OptionalMemo.addMemo") }} </p>
-          <TextInput 
-            v-model="state.memo" 
-            class="mt-2 font-medium" />
-          <p class="mt-4 dark:text-argent">
-            {{ $t("OptionalMemo.aboutMemo") }}
-          </p>
-        </div>
+      <div class="lg:mt-2 lg:h-full w-full mt-4 mb-2 md:p-0">
+        <p class = "mb-2"> {{ $t("InterfaceSend.options") }} </p>
+        <div class="p-10 pt-4 font-medium bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full">
+          <div class="mt-4 mb-8">
+            <p> {{ $t("OptionalMemo.addMemo") }} </p>
+            <TextInput 
+              v-model="state.memo" 
+              class="mt-2 font-medium"
+            />
+            <p class="mt-4 dark:text-argent">
+              {{ $t("OptionalMemo.aboutMemo") }}
+            </p>
+          </div>
 
 
-        <div class="mt-4">
-          <p class="mb-4"> 
-            {{ $t("InterfaceHomeSend.section2.toggle2.label") }} 
-          </p>
-          <AssetInput v-model="state.maxFee" asset = "HBAR"/>
-          <p class="mt-4 dark:text-argent">
-            {{ $t("InterfaceSend.max.transaction.fee") }}
-          </p>
+          <div class="mt-4">
+            <p class="mb-4"> 
+              {{ $t("InterfaceHomeSend.section2.toggle2.label") }} 
+            </p>
+            <AssetInput
+              v-model="state.maxFee"
+              asset="HBAR"
+            />
+            <p class="mt-4 dark:text-argent">
+              {{ $t("InterfaceSend.max.transaction.fee") }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -71,7 +81,9 @@
     v-if="state.generalErrorText != null"
     class="px-4 py-3 mx-auto mt-10 -mb-8 rounded bg-unburdened-pink w-max"
   >
-    <div class="text-sm font-medium text-center text-harlocks-cape">{{ state.generalErrorText }}</div>
+    <div class="text-sm font-medium text-center text-harlocks-cape">
+      {{ state.generalErrorText }}
+    </div>
   </div>
 
   <!-- bottom buttons section -->
@@ -82,7 +94,9 @@
       :disabled="!sendValid"
       :busy="state.sendBusyText != null"
       @click="onSend"
-    >{{ state.sendBusyText ?? "Send" }}</Button>
+    >
+      {{ state.sendBusyText ?? "Send" }}
+    </Button>
 
     <Button 
       color="white" 

@@ -1,7 +1,7 @@
 <template>
   <Layout
     :title="$t('Account.HederaAccount')"
-    :back="{ name: 'access' }"
+    :back="{ name: 'marketing' }"
     class="max-w-[36.5rem]"
   >
     <div>
@@ -110,6 +110,8 @@ import { defineComponent, reactive, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
+import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
+import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
 import { Wallet } from "../../domain/wallet/abstract";
 import { useContainer } from "../../hooks/container";
 import { useStore } from "../../store";
@@ -138,7 +140,7 @@ export default defineComponent({
     AccountIdInput,
     InputError,
     Button,
-    CustomerSupportButton
+    CustomerSupportButton,
   },
   setup() {
     const container = useContainer();
@@ -163,22 +165,23 @@ export default defineComponent({
       } else {
         state.wallet = store.wallet;
         let key: PublicKey | undefined = undefined;
-        
-        for (let keyIdx = 0; keyIdx >= state.wallet.minIndex; keyIdx--) {          
+
+        for (let keyIdx = 0; keyIdx >= state.wallet.minIndex; keyIdx--) {
           try {
             key = await state.wallet.getPublicKey(keyIdx);
           } catch (error) {
-              state.error = true;
-              state.errorMessage = await store.errorMessage(error);
+            state.error = true;
+            state.errorMessage = await store.errorMessage(error);
           }
           if (key) break;
         }
-        
+
         if (key) state.publicKey = key;
 
-        // will only attempt multiple derivations with non-hardware
-        if (state.wallet.hasPrivateKey()) {
-          if (key) state.hasMorePublicKeys = true;
+        // mnemonics and keystores are derivable
+        if (state.wallet instanceof MnemonicSoftwareWallet ||
+          state.wallet instanceof KeystoreSoftwareWallet) {
+          state.hasMorePublicKeys = true;
         }
       }
     });
@@ -189,7 +192,7 @@ export default defineComponent({
         state.error = false;
         state.errorMessage = "";
         state.busyMessage = "";
-    });
+      });
 
     async function onShowMorePublicKeys() {
       if (state.wallet != null) {
@@ -225,7 +228,7 @@ export default defineComponent({
               client = await container.cradle.hedera.createClient({
                 wallet: state.wallet,
                 keyIndex,
-                accountId: state.accountId, 
+                accountId: state.accountId,
                 network: store.network,
               });
             } catch (error) {

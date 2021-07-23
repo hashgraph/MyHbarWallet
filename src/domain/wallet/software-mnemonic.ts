@@ -38,6 +38,14 @@ export class MnemonicSoftwareWallet extends Wallet {
     this._password = password;
   }
 
+  getMnemonic(): Mnemonic {
+    return this._mnemonic;
+  }
+
+  getPassword(): string {
+    return this._password;
+  }
+
   async getTransactionSigner(
     index: number
   ): Promise<(transactionBody: Uint8Array) => Promise<Uint8Array>> {
@@ -104,7 +112,7 @@ export class MnemonicSoftwareWallet extends Wallet {
         }
         break;
       }
-        
+
       case MnemonicVariant.RootDerive0xffffffffff: {
         const rootPrivateKey = await this.getPrivateKey(MnemonicVariant.Root);
         if (rootPrivateKey != null) {
@@ -124,7 +132,7 @@ export class MnemonicSoftwareWallet extends Wallet {
         }
         break;
       }
-        
+
       case MnemonicVariant.NullDerive255: {
         const rootPrivateKey = await this.getPrivateKey(
           MnemonicVariant.Null
