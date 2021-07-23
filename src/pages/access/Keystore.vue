@@ -26,6 +26,10 @@
           :error="errorMessage.length > 0"
         />
 
+        <div>
+          <span class="text-bold text-Megaman-Helmet"> {{ $t("CreateKeystoreFile.note.dnf") }} </span> <span class="dark:text-silver-polish"> {{ $t("CreateKeystoreFile.note") }} </span>
+        </div>
+
         <InputError v-if="errorMessage.length > 0">
           {{ errorMessage }}
         </InputError>

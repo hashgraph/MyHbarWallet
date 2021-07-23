@@ -1,25 +1,33 @@
 <template>
   <form autocomplete="off">
-    <TextInput
-      v-model="state.password"
-      data-cy-pass-input
-      :valid="state.isValid"
-      :error="error || state.hasError"
-      hide
-      :show-eye="showEye"
-      :placeholder="placeholder"
-    />
-
-    <TextInput
-      v-if="confirm"
-      v-model="state.confirmPassword"
-      data-cy-pass-confirm
-      :valid="state.isValid"
-      :error="state.hasError"
-      :show-eye="showEye"
-      hide
-      :placeholder="$t('BasePasswordInput.input2.placeholder1')"
-    />
+    <p class="dark:text-silver-polish mb-4">
+      Password
+    </p>
+    <div class="mb-3">
+      <TextInput
+        v-model="state.password"
+        data-cy-pass-input
+        :valid="state.isValid"
+        :error="error || state.hasError"
+        hide
+        :show-eye="showEye"
+        :placeholder="placeholder"
+        class="bg-white dark:bg-midnight-express rounded"
+      />
+    </div>
+    <div class="mb-3">
+      <TextInput
+        v-if="confirm"
+        v-model="state.confirmPassword"
+        data-cy-pass-confirm
+        :valid="state.isValid"
+        :error="state.hasError"
+        :show-eye="showEye"
+        hide
+        :placeholder="$t('BasePasswordInput.input2.placeholder1')"
+        class="bg-white dark:bg-midnight-express rounded"
+      />
+    </div>
   </form>
 </template>
 
