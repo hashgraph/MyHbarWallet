@@ -128,8 +128,6 @@
     "InterfaceKeys.input1.label": "Private key",
     "InterfaceKeys.input2.label": "Public key",
     "InterfacePeople.header": "People",
-    "InterfaceSend.max.transaction.fee": "Maximum fee that may be assessed for the transaction. Unlike Gas, Hedera™ will only take what it needs and a higher fee does not influence speed or ordering.",
-    "InterfaceSend.modal.sending": "Sending....",
     "InterfaceToken.header": "Tokens",
     "InterfaceToken.nav.current": "Page {currentPage} of {numOfPages}",
     "InterfaceToken.nav.first": "First",
