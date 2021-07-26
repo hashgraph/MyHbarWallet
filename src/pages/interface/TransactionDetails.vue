@@ -43,7 +43,7 @@
       :src="checkmark"
       alt="green checkmark"
     >
-    Success
+    {{ $("InterfaceTransactionDetails.status.value.success") }}
   </TransferDetail>
 
   <TransferDetail
