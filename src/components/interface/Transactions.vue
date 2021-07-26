@@ -7,7 +7,7 @@
       <div
         class="flex justify-between text-xl font-semibold leading-6  text-black-out dark:text-white"
       >
-        Recent Transactions
+        {{ $t("Transactions.Recent") }}
       </div>
 
       <!-- <router-link
@@ -71,11 +71,11 @@
       class="absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full "
     >
       <div class="text-xl font-bold dark:text-white">
-        Coming Soon
+        {{ $t("Transactions.ComingSoon") }}
       </div>
       <!-- TODO: once we have knowledge of the user's account ID and network put that in the url -->
       <div class="dark:text-white">
-        View your recent transactions on
+        {{ $t("Transactions.ViewRecent") }}
       </div>
       <a
         target="_blank"

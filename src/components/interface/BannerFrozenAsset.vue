@@ -7,7 +7,7 @@
       src="../../assets/icon_frozen.svg"
       alt="error"
     >
-    Your asset is frozen.
+    {{ $t("Interface.frozen") }}
   </div>
 </template>
 
