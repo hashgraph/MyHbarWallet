@@ -7,7 +7,7 @@
       src="../../assets/icon_error.svg"
       alt="error"
     >
-    There’s a problem with this account.
+    {{ $t("Account.Error") }}
   </div>
 </template>
 

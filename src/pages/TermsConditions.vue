@@ -4,8 +4,8 @@
     class="max-w-2xl mx-auto my-20 text-sm  text-midnight-express dark:text-white"
   >
     <div 
-    class="text-3xl font-semibold text-center"
-    data-cy-terms-title
+      class="text-3xl font-semibold text-center"
+      data-cy-terms-title
     >
       {{ $t("TermsAndConditions.title") }}
     </div>
@@ -28,8 +28,8 @@
       </p>
 
       <div class="mt-6 font-bold">
-        Apache License
-        <br>Version 2.0, January 2004
+        {{ $t("TermsAndConditions.Apache") }}
+        <br>{{ $t("TermsAndCOnditions.ApacheDate") }}
         <br>
         <a
           class="underline text-andrea-blue"

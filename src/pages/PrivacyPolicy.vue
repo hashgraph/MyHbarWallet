@@ -3,9 +3,10 @@
     class="max-w-2xl mx-auto my-20 text-sm  text-midnight-express dark:text-white"
   >
     <div 
-    data-cy-policy-header
-    class="text-3xl font-semibold text-center">
-      Privacy Policy
+      data-cy-policy-header
+      class="text-3xl font-semibold text-center"
+    >
+      {{ $("PrivacyPolicy.Title") }}
     </div>
 
     <div class="mt-4 text-center">
@@ -33,7 +34,7 @@
     </p>
 
     <div class="text-lg font-bold text-center mt-14">
-      HEDERA™ HASHGRAPH
+      {{ $t("PrivacyPolicy.Hedera") }}
     </div>
 
     <p class="mt-4">

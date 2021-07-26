@@ -37,7 +37,9 @@
       </div>
 
       <div class="lg:mt-2 lg:h-full w-full mt-4 mb-2 md:p-0">
-        <p class = "mb-2"> {{ $t("InterfaceSend.options") }} </p>
+        <p class="mb-2">
+          {{ $t("InterfaceSend.options") }}
+        </p>
         <div class="p-10 pt-4 font-medium bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full">
           <div class="mt-4 mb-8">
             <p> {{ $t("OptionalMemo.addMemo") }} </p>
@@ -117,7 +119,7 @@
     title="Success"
     @close="closeConfirmModal"
   >
-    Successfully transferred {{ amount.toString() }} to account: {{ state.transfer.to?.toString() }}.
+    {{ $("Modal.Send.SuccessfullyTransferred") }} {{ amount.toString() }} {{ $("Modal.Send.ToAccount") }}: {{ state.transfer.to?.toString() }}.
   </Modal>
 </template>
 

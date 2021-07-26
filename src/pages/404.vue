@@ -14,7 +14,7 @@
       </div>
 
       <div class="mt-10 text-3xl">
-        Sorry, no currency here!
+        {{ $("Pages.404.Sorry") }}
       </div>
     </div>
   </Gradient>

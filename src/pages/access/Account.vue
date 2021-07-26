@@ -38,18 +38,17 @@
       <div class="flex items-center justify-between w-full mt-8 mb-6">
         <div class="h-0 border-b w-52 border-cerebral-grey" />
         <div class="text-sm text-carbon dark:text-white">
-          OR
+          {{ $t("Account.Or") }}
         </div>
         <div class="h-0 border-b w-52 border-cerebral-grey" />
       </div>
 
       <div class="mb-2 text-black-out dark:text-white">
-        Request to Create Account
+        {{ $t("Account.RequestCreate") }}
       </div>
 
       <div class="mb-5 text-sm leading-relaxed text-squant">
-        Give your public key to a current Hedera™ account owner so they can
-        create another Account ID for you with your public key.
+        {{ $t("Account.GivePublicKey") }}
       </div>
 
       <div class="flex items-center justify-center m-10">
@@ -84,20 +83,17 @@
       class="mt-1.5"
     >
       <div class="mb-5 ml-4 text-xs leading-relaxed text-squant">
-        If the above does not match your expected public key, please
-        note that Hashgraph wallet applications may derive keys from
-        your phrase in multiple ways. MyHbarWallet will try each of
-        these keys on login.
+        {{ $t("Account.IfTheAbove") }}
         <span
           class="font-medium cursor-pointer text-mountain-meadow hover:text-opacity-60"
           @click="onShowMorePublicKeys"
-        >Click here</span>
-        to view all possible public keys that will be attempted.
+        >{{ $t("Account.ClickHere") }}</span>
+        {{ $t("Account.ViewPossibleKeys") }}
       </div>
 
       <template v-if="state.morePublicKeys">
         <div class="mb-5 text-black-out dark:text-white">
-          Possible Public Keys
+          {{ $t("Account.PossiblePublicKeys") }}
         </div>
 
         <div class="space-y-1.5">
@@ -115,7 +111,7 @@
     <div class="flex items-center justify-between w-full mt-8 mb-6">
       <div class="h-0 border-b w-52 border-cerebral-grey" />
       <div class="text-sm text-carbon dark:text-white">
-        OR
+        {{ $t("Account.Or") }}
       </div>
       <div class="h-0 border-b w-52 border-cerebral-grey" />
     </div>

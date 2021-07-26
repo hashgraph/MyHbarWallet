@@ -8,7 +8,7 @@
     >
       <div class="p-4 mt-4">
         <div class="mb-4 text-squant">
-          Enter Password
+          {{ $t("BasePasswordInput.input1.placeholder1") }}
         </div>
 
         <PasswordInput show-eye />
@@ -19,7 +19,7 @@
           color="green"
           class="w-full p-4 mt-4"
         >
-          Sign
+          {{ $t("Confirmation.Sign") }}
         </Button>
 
         <Button
@@ -27,7 +27,7 @@
           class="p-2 mt-4 w-36"
           @click="$emit('close')"
         >
-          Cancel
+          {{ $t("Confirmation.Cancel") }}
         </Button>
       </div>
     </Modal>
