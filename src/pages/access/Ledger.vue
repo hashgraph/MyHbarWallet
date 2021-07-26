@@ -23,8 +23,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
@@ -32,6 +33,7 @@ import InputError from "../../components/base/InputError.vue";
 import LedgerInfo from "../../components/access/LedgerInfo.vue";
 import { LedgerHardwareWallet } from "../../domain/wallet/hardware-ledger";
 import { useStore } from "../../store";
+import { isWebUsbSupported } from "../../hooks/platform";
 
 export default defineComponent({
   name: "Ledger",
@@ -44,10 +46,18 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const store = useStore();
+    const i18n = useI18n();
     const state = reactive({
       busy: false,
       disabled: false,
       errorMessage: "",
+    });
+
+    onMounted(async () => {
+      if (!await isWebUsbSupported()) {
+        state.disabled = true;
+        state.errorMessage = i18n.t("Ledger.WebUSBNotSupported").toString();
+      }
     });
 
     async function handleConnect(): Promise<void> {
@@ -59,7 +69,7 @@ export default defineComponent({
         const wallet = new LedgerHardwareWallet();
         store.setWallet(wallet);
       } catch (error) {
-          state.errorMessage = await store.errorMessage(error);
+        state.errorMessage = await store.errorMessage(error);
       }
 
       state.busy = false;

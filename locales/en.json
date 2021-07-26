@@ -166,6 +166,7 @@
     "InterfaceToolTile.createAccount.label.publicKey": "Public Key",
     "InterfaceToolTile.createAccount.success": "Success",
     "InterfaceToolTile.createAccount.title": "Create Account",
+    "Ledger.WebUSBNotSupported": "Ledger communication requires a browser that supports the Web USB protocol. Please use a different browser, such as Google Chrome, and try again.",
     "InterfaceToolTile.download.description": "Download a file from HFS.",
     "InterfaceToolTile.download.title": "Download",
     "InterfaceToolTile.unitConverter.title": "Unit Converter",
