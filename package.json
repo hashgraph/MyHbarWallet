@@ -38,15 +38,16 @@
     "bignumber.js": "^9.0.1",
     "buffer": "^6.0.3",
     "electron-window-state": "^5.0.3",
+    "file-type": "16.5.2",
     "jdenticon": "^3.1.0",
     "long": "^4.0.0",
     "pinia": "^2.0.0-beta.5",
     "platform": "^1.3.6",
     "preferred-locale": "^1.0.10",
+    "qrcode.vue": "^3.2.2",
     "vue": "^3.1.4",
     "vue-i18n": "^9.1.6",
-    "vue-router": "^4.0.10",
-    "file-type": "16.5.2"
+    "vue-router": "^4.0.10"
   },
   "devDependencies": {
     "@cypress/vue": "^3.0.1",
