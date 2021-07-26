@@ -27,7 +27,7 @@
       data-cy-account-submit
       color="green"
       class="w-full p-3 mt-12 mb-4"
-      :disabled="state.accountId == null"
+      :disabled="state.accountId == null || state.publicKey == null || state.wallet == null"
       :busy="state.busy"
       @click="onContinue"
     >
@@ -63,6 +63,19 @@
         class="break-all border border-cerebral-grey text-sm font-roboto rounded px-5 py-3.5 bg-white text-carbon"
       >
         {{ state.publicKey.toString().slice(24) }}
+      </div>
+
+      <div
+        v-if="hasLedgerWallet && state.publicKey == null"
+        class="flex items-center justify-center"
+      >
+        <Button
+          class="mt-4 px-5 py-2"
+          color="white"
+          @click="handleExportPublicKey"
+        >
+          {{ $t("Access.Account.ExportPublicKey") }}
+        </Button>
       </div>
     </template>
 
@@ -113,11 +126,12 @@
 
 <script lang="ts">
 import type { AccountId, PublicKey } from "@hashgraph/sdk";
-import { defineComponent, reactive, watch, onMounted } from "vue";
+import { defineComponent, reactive, watch, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import QrCode from "qrcode.vue";
 
+import { LedgerHardwareWallet } from "../../domain/wallet/hardware-ledger";
 import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
 import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
 import { Wallet } from "../../domain/wallet/abstract";
@@ -168,24 +182,31 @@ export default defineComponent({
       busyMessage: ""
     });
 
+    async function handleExportPublicKey(): Promise<void> {
+      state.wallet = store.wallet;
+      state.publicKey = null;
+      state.busy = true;
+      let key: PublicKey | undefined = undefined;
+
+      for (let keyIdx = 0; keyIdx >= (state.wallet?.minIndex ?? 0); keyIdx--) {
+        try {
+          key = await state.wallet?.getPublicKey(keyIdx);
+        } catch (error) {
+          state.error = true;
+          state.errorMessage = await store.errorMessage(error);
+        }
+        if (key) break;
+      }
+
+      if (key) state.publicKey = key;
+      state.busy = false;
+    }
+
     onMounted(async () => {
       if (store.wallet == null) {
         router.push({ name: "access" });
       } else {
-        state.wallet = store.wallet;
-        let key: PublicKey | undefined = undefined;
-
-        for (let keyIdx = 0; keyIdx >= state.wallet.minIndex; keyIdx--) {
-          try {
-            key = await state.wallet.getPublicKey(keyIdx);
-          } catch (error) {
-            state.error = true;
-            state.errorMessage = await store.errorMessage(error);
-          }
-          if (key) break;
-        }
-
-        if (key) state.publicKey = key;
+        await handleExportPublicKey();
 
         // mnemonics and keystores are derivable
         if (state.wallet instanceof MnemonicSoftwareWallet ||
@@ -202,6 +223,10 @@ export default defineComponent({
         state.errorMessage = "";
         state.busyMessage = "";
       });
+
+    const hasLedgerWallet = computed(() => {
+      return state.wallet instanceof LedgerHardwareWallet;
+    });
 
     async function onShowMorePublicKeys() {
       if (state.wallet != null) {
@@ -265,7 +290,9 @@ export default defineComponent({
     return {
       state,
       onShowMorePublicKeys,
-      onContinue
+      onContinue,
+      hasLedgerWallet,
+      handleExportPublicKey
     };
   },
 });
