@@ -6,7 +6,7 @@
     <!-- Current Asset -->
     <div
       ref="trigger"
-      class="border border-cerebral-grey h-[50px] flex items-center pl-2 pr-5 cursor-pointer select-none rounded hover:bg-lynx-white dark:hover:bg-midnight-express dark:bg-ruined-smores dark:text-argent dark:border-midnight-express"
+      class="border border-cerebral-grey h-[50px] flex items-center pl-2 pr-5 cursor-pointer select-none rounded hover:bg-lynx-white dark:hover:bg-midnight-express dark:bg-ruined-smores dark:text-argent dark:border-midnight-express overflow-auto"
       :class="{
         'bg-lynx-white': groupFocus,
       }"
