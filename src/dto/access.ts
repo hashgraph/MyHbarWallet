@@ -17,12 +17,12 @@ type ModalRequestToCreateAccountState = ModalIsOpen & {
 };
 
 export interface AccessDTO {
-    possibleKeys: Array<import("@hashgraph/sdk").PrivateKey>;
+    possibleKeys: Array<import("@hashgraph/sdk").Ed25519PrivateKey>;
     keyFile: Uint8Array | null;
 }
 
 export interface CreateDTO {
-    privateKey: import("@hashgraph/sdk").PrivateKey | null;
+    privateKey: import("@hashgraph/sdk").Ed25519PrivateKey | null;
     publicKey: import("@hashgraph/sdk").PublicKey | null;
     keyFile: Uint8Array | null;
 }

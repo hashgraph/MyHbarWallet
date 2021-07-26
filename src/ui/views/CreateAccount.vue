@@ -133,7 +133,7 @@ export default defineComponent({
                 valid: false,
                 networkValid: false
             },
-            modalRequestToCreateAccountState: { isOpen: false },
+            modalRequestToCreateAccountState: { isOpen: false, publicKey: "" },
             loginMethod: null,
             wallet: null
         });
@@ -142,6 +142,7 @@ export default defineComponent({
 
         function setPublicKey(newPublicKey: import("@hashgraph/sdk").Ed25519PublicKey | null): void {
             state.publicKey = newPublicKey;
+            if (newPublicKey) state.modalRequestToCreateAccountState.publicKey = newPublicKey.toString(true);
             state.modalEnterAccountIdState.possiblePublicKeys.push(newPublicKey);
         }
 
@@ -153,7 +154,7 @@ export default defineComponent({
         function handleNetworkChange(settings: NetworkSettings): void {
             if (
                 getters.currentNetwork().name !== settings.name ||
-                settings.name === NetworkName.CUSTOM
+        settings.name === NetworkName.CUSTOM
             ) {
                 mutations.setCurrentNetwork(settings);
             }
@@ -328,7 +329,7 @@ export default defineComponent({
                     const result: HederaStatusErrorTuple = await actions.handleHederaError({ error, showAlert: false });
 
                     state.modalEnterAccountIdState.errorMessage =
-                        result.message;
+            result.message;
 
                     if (
                         error.message.includes(context.root.$t("common.error.unhandled").toString())
@@ -337,17 +338,17 @@ export default defineComponent({
                     }
                 } else if (
                     error.name === "TransportStatusError" &&
-                    state.loginMethod === LoginMethod.Ledger
+          state.loginMethod === LoginMethod.Ledger
                 ) {
                     const result: LedgerErrorTuple = await actions.handleLedgerError({ error, showAlert: false });
 
                     state.modalEnterAccountIdState.errorMessage =
-                        result.message;
+            result.message;
                 } else if (
                     error.message === "Response closed without headers" ||
-                    error.message === "Response closed without grpc-status" ||
-                    error.message === "404 (Not Found)" ||
-                    error.stack.includes("grpc")
+          error.message === "Response closed without grpc-status" ||
+          error.message === "404 (Not Found)" ||
+          error.stack.includes("grpc")
                 ) {
                     const message = context.root
                         .$t("network.connectionFailed")
