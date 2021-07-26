@@ -52,6 +52,13 @@
         create another Account ID for you with your public key.
       </div>
 
+      <div class="flex items-center justify-center m-10">
+        <QrCode
+          :size="200"
+          :value="state.publicKey.toString().slice(24)"
+        />
+      </div>
+
       <div
         class="break-all border border-cerebral-grey text-sm font-roboto rounded px-5 py-3.5 bg-white text-carbon"
       >
@@ -109,6 +116,7 @@ import type { AccountId, PublicKey } from "@hashgraph/sdk";
 import { defineComponent, reactive, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import QrCode from "qrcode.vue";
 
 import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
 import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
@@ -141,6 +149,7 @@ export default defineComponent({
     InputError,
     Button,
     CustomerSupportButton,
+    QrCode,
   },
   setup() {
     const container = useContainer();
@@ -256,7 +265,7 @@ export default defineComponent({
     return {
       state,
       onShowMorePublicKeys,
-      onContinue,
+      onContinue
     };
   },
 });
