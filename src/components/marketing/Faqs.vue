@@ -65,7 +65,7 @@
             :question="$t('Marketing.faqs.section6.header')"
             :first-answer="$t('Marketing.faqs.section6.paragraph1.1')"
             :second-answer="$t('Marketing.faqs.section6.paragraph1.2')"
-            :link="faq6href"
+            :link="faq6Href"
           />
         </div>
       </div>
