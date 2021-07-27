@@ -41,6 +41,7 @@
     "BaseButton.iHaveAnAccoutId": "I Have an Account ID",
     "BaseButton.search": "Search",
     "BaseButton.send": "Send",
+    "BaseButton.refresh.balance": "Refresh Balance",
     "BaseFileUploader.button": "Upload New File",
     "BaseFileUploader.header": "Uploaded File",
     "BaseOptionalPasswordInput.label1": "Password",
