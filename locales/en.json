@@ -18,6 +18,7 @@
     "Account.GivePublicKey": "Give your public key to a current Hedera™ account owner so they can create another Account ID for you with your public key.",
     "Account.HederaAccount": "Hedera Account Information",
     "Account.IfTheAbove": "If the above does not match your expected public key, please note that Hashgraph wallet applications may derive keys from your phrase in multiple ways. MyHbarWallet will try each of these keys on login.",
+    "Account.Or": "OR",
     "Account.PossiblePublicKeys": "Possible Public Keys",
     "Account.RequestCreate": "Request to Create Account",
     "Account.ShardRealmNum": "Shard.Realm.Num",
