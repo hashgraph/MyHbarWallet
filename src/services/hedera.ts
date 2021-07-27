@@ -2,9 +2,6 @@ import { BigNumber } from "bignumber.js";
 import type { AccountId, FileId, PrivateKey, PublicKey, TokenId } from "@hashgraph/sdk";
 
 import { Wallet } from "../domain/wallet/abstract";
-
-import { HbarPriceService } from "./hbar-price";
-
 export interface SimpleTransfer {
     // HBAR or Token ID (as string)
     asset?: string;
