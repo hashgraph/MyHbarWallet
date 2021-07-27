@@ -54,14 +54,18 @@
             :answer="$t('Marketing.faqs.section4.paragraph1')"
           />
 
-          <Faq
+          <FaqWithLink
             :question="$t('Marketing.faqs.section5.header')"
-            :answer="$t('Marketing.faqs.section5.paragraph1')"
+            :first-answer="$t('Marketing.faqs.section5.paragraph1.1')"
+            :second-answer="$t('Marketing.faqs.section5.paragraph1.2')"
+            :link="faq5Href"
           />
 
-          <Faq
+          <FaqWithLink
             :question="$t('Marketing.faqs.section6.header')"
-            :answer="$t('Marketing.faqs.section6.paragraph1')"
+            :first-answer="$t('Marketing.faqs.section6.paragraph1.1')"
+            :second-answer="$t('Marketing.faqs.section6.paragraph1.2')"
+            :link="faq6href"
           />
         </div>
       </div>
@@ -87,14 +91,19 @@ import faqsLight from "../../assets/img_faqs.svg";
 import faqsDark from "../../assets/dark/img_faqs.svg";
 
 import Faq from "./Faq.vue";
+import FaqWithLink from "./FaqWithLink.vue"
 
 export default defineComponent({
   name: "Faqs",
-  components: { Image, Faq, CustomerSupportButton },
+  components: { Image, Faq, FaqWithLink, CustomerSupportButton },
   setup() {
+    const faq5Href = 'https://v1.myhbarwallet.com'
+    const faq6Href = 'https://launchbadge.com/blog/how-to-create-ledger-account-through-mhw'
     return {
       faqsLight,
       faqsDark,
+      faq5Href,
+      faq6Href,
     };
   },
 });
