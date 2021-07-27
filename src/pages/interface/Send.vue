@@ -119,7 +119,7 @@
     title="Success"
     @close="closeConfirmModal"
   >
-    {{ $("Modal.Send.SuccessfullyTransferred") }} {{ amount.toString() }} {{ $("Modal.Send.ToAccount") }}: {{ state.transfer.to?.toString() }}.
+    {{ $t("Modal.Send.SuccessfullyTransferred") }} {{ amount.toString() }} {{ $t("Modal.Send.ToAccount") }}: {{ state.transfer.to?.toString() }}.
   </Modal>
 </template>
 
@@ -204,11 +204,11 @@ export default defineComponent({
     });
 
     function openConfirmModal(): void {
+      state.showIPModal = false;
       state.showConfirmModal = true;
     }
 
     function closeConfirmModal(): void {
-      state.showIPModal = false;
       state.showConfirmModal = false;
       router.back();
     }
@@ -238,6 +238,7 @@ export default defineComponent({
         // so we can watch it "reach consensus"
         openConfirmModal();
       } catch (err) {
+        state.showIPModal = false;
         state.generalErrorText = await store.errorMessage(err);
       } finally {
         state.sendBusyText = null;
