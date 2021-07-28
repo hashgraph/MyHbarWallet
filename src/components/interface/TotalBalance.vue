@@ -2,7 +2,7 @@
   <div class="mt-5 mb-5 text-base text-black-out dark:text-white">
     {{ $t("InterfaceTotalBalance.totalvalue") }}
   </div>
-  <div class="flex-col items-center text-center mb-4">
+  <div class="flex items-center mb-4">
     <div class="flex mb-4">
       <Image
         class="h-12 mr-7 md:mr-5 md:h-16"
@@ -19,8 +19,8 @@
       </div>
     </div>
 
-    <RefreshButton
-      class="m-auto"
+    <RefreshBalance
+      class = "mb-6 sm:mb-4 ml-4"
       @refresh="refreshBalance"
     />
   </div>
@@ -33,13 +33,13 @@ import { useStore } from "../../store";
 import Image from "../base/Image.vue";
 import wallet from "../../assets/img_wallet.svg";
 
-import RefreshButton from "./RefreshBalance.vue";
+import RefreshBalance from "../base/RefreshBalance.vue";
 
 export default defineComponent({
   name: "TotalBalance",
   components: {
     Image,
-    RefreshButton
+    RefreshBalance
   },
   setup() {
     const store = useStore();
