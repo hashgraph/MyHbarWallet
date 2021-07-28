@@ -1,6 +1,6 @@
 <template>
   <div
-    class="pb-8 overflow-x-hidden  bg-gradient-to-b from-first-snow dark:from-midnight-express to-white dark:to-black"
+    class="pb-8 overflow-x-hidden  bg-gradient-to-b from-first-snow dark:from-midnight-express to-white dark:to-black min-w-[400px]"
   >
     <div
       class="container flex flex-col-reverse items-center px-5 mx-auto  md:flex-row lg:justify-between md:items-start xl:max-w-screen-xl"

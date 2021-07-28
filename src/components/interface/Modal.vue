@@ -9,14 +9,14 @@
     ]"
   >
     <div
-      class="flex flex-col items-center justify-center min-h-screen  bg-cerebral-grey dark:bg-ruined-smores bg-opacity-70"
+      class="flex flex-col items-center justify-center min-h-screen h-full bg-cerebral-grey dark:bg-ruined-smores bg-opacity-70 p-8"
       @click="$emit('close')"
     >
       <div
         class="w-full max-w-lg px-6 py-5 font-medium transition-all duration-300 bg-white border border-white rounded shadow-xl  dark:bg-ruined-smores text-carbon dark:text-silver-polish dark:border-midnight-express"
         :class="[
           {
-            'transform translate-y-0 opacity-100 ': isVisible,
+            'transform sm:translate-y-0 translate-y-1/3 opacity-100 ': isVisible,
           },
           {
             'transform translate-y-16 opacity-0 invisible':

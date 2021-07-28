@@ -8,7 +8,7 @@
       ref="trigger"
       class="border border-cerebral-grey h-[50px] flex items-center pl-2 pr-5 cursor-pointer select-none rounded hover:bg-lynx-white dark:hover:bg-midnight-express dark:bg-ruined-smores dark:text-argent dark:border-midnight-express overflow-auto"
       :class="{
-        'bg-lynx-white': groupFocus,
+        'bg-lynx-white dark:bg-midnight-express': groupFocus,
       }"
       @click="onClickTrigger"
     >
@@ -51,7 +51,7 @@
     </div>
     <!-- Options -->
     <div
-      class="absolute z-20 border border-cerebral-grey left-0 right-0 rounded bg-white transition-all max-h-[300px] flex flex-col pt-[50px] duration-200"
+      class="absolute z-20 border border-cerebral-grey dark:border-midnight-express dark:text-silver-polish dark:hover:bg-midnight-express left-0 right-0 rounded bg-white transition-all max-h-[300px] flex flex-col pt-[50px] duration-200"
       :class="{
         'opacity-100 top-[60px]': groupFocus,
         'opacity-0 pointer-events-none top-[40px]': !groupFocus,
@@ -63,7 +63,7 @@
           ref="searchInput"
           v-model="searchTerm"
           autofocus
-          class="w-full border-cerebral-grey h-[50px] px-5 placeholder-squant rounded-t focus:ring-0 focus:border-cerebral-grey"
+          class="w-full border-cerebral-grey h-[50px] px-5 placeholder-squant rounded-t focus:ring-0 focus:border-cerebral-grey dark:bg-midnight-express"
           type="text"
           placeholder="Search assets …"
           @keydown="onKeyDown"
@@ -79,9 +79,9 @@
           >
             <div
               ref="setOptionRef"
-              class="h-[50px] flex items-center px-5 hover:bg-lynx-white cursor-pointer last:rounded-b"
+              class="h-[50px] flex items-center px-5 hover:bg-lynx-white dark:hover:bg-midnight-express cursor-pointer last:rounded-b"
               :class="{
-                'bg-lynx-white': focusIndex === index,
+                'bg-lynx-white dark:bg-midnight-express': focusIndex === index,
                 '!bg-first-snow dark:!bg-midnight-express':
                   modelValue === assetName,
                 'bg-white dark:bg-ruined-smores':

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="px-5 py-12  md:py-32 bg-gradient-to-b from-first-snow dark:from-midnight-express to-white dark:to-black"
+    class="px-5 py-12  md:py-32 bg-gradient-to-b from-first-snow dark:from-midnight-express to-white dark:to-black min-w-[400px]"
   >
     <div
       class="

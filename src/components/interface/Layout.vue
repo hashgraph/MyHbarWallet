@@ -5,7 +5,7 @@
 
     <div class="relative flex px-2 md:flex-1 md:px-10">
       <div
-        class="min-h-screen h-full absolute top-0 left-0 right-0 bg-gradient-to-b from-husky dark:from-midnight-express to-white dark:via-ruined-smores dark:to-ruined-smores"
+        class="min-h-[950px] h-full absolute top-0 left-0 right-0 bg-gradient-to-b from-husky dark:from-midnight-express to-white dark:via-ruined-smores dark:to-ruined-smores"
       />
 
       <main

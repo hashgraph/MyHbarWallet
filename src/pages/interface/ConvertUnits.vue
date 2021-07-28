@@ -1,11 +1,16 @@
 <template>
-  <Headline :title="$t('InterfaceConvertUnits')" parent="tools" />
+  <Headline
+    :title="$t('InterfaceConvertUnits')"
+    parent="tools"
+  />
   <div
     class="items-center pb-10 mt-8 font-medium border-b text-carbon dark:text-silver-polish border-cerebral-grey dark:border-midnight-express"
   >
-    <div class="m-16 page-subtitle">{{ $t("ourHelpfulConversionTool") }}</div>
+    <div class="sm:m-16 page-subtitle">
+      {{ $t("ourHelpfulConversionTool") }}
+    </div>
 
-    <div class="flex flex-wrap items-stretch m-16">
+    <div class="flex flex-wrap items-stretch mt-4 sm:m-16">
       <div class="w-5/12 m-auto block-left">
         <div class="input-block">
           <TextInput
@@ -28,7 +33,10 @@
       </div>
 
       <div class="self-center block-center">
-        <img src="../../assets/swap.svg" alt="Swap" />
+        <img
+          src="../../assets/swap.svg"
+          :alt="$t('InterfaceConvertUnits.swap')"
+        >
       </div>
 
       <div class="w-5/12 m-auto block-right">
@@ -49,16 +57,24 @@
       </div>
     </div>
 
-    <div class="items-center lg:m-16 md:m-16 unit-table overflow-auto">
+    <div class="items-center sm:m-16 unit-table overflow-auto">
       <div
         class="mt-16 mb-8 font-semibold text-center unit-table-header"
-      >{{ $t("referenceGuideTitle") }}</div>
+      >
+        {{ $t("referenceGuideTitle") }}
+      </div>
 
       <div class="table w-full">
-        <tr class = "flex mb-8">
-          <th class="w-1/3 flex overflow-wrap"> {{ $t("InterfaceConvertUnits.table.unit") }}</th>
-          <th class="w-1/3 flex overflow-wrap"> {{ $t("InterfaceConvertUnits.table.amount") }} </th>
-          <th class="w-1/3 flex overflow-wrap"> {{ $t("InterfaceConvertUnits.table.amount.in.hbar")}} </th>
+        <tr class="flex mb-8">
+          <th class="w-1/3 flex overflow-wrap">
+            {{ $t("InterfaceConvertUnits.table.unit") }}
+          </th>
+          <th class="w-1/3 flex overflow-wrap">
+            {{ $t("InterfaceConvertUnits.table.amount") }}
+          </th>
+          <th class="w-1/3 flex overflow-wrap">
+            {{ $t("InterfaceConvertUnits.table.amount.in.hbar") }}
+          </th>
         </tr>
         <tr
           v-for="unit in units"

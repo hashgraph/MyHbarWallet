@@ -30,7 +30,7 @@
   </nav>
 
   <MobileHeader
-    class="sticky top-0 z-10 bg-white shadow  dark:bg-ruined-smores lg:hidden"
+    class="sticky top-0 z-10 bg-white shadow  dark:bg-ruined-smores lg:hidden min-w-[400px]"
   >
     <div
       :class="[

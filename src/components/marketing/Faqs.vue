@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5 mb-20 md:pt-24 pt-14 md:pb-40">
+  <div class="px-5 mb-20 md:pt-24 pt-14 md:pb-40 min-w-[400px]">
     <div class="mx-auto">
       <div
         class="mb-8 text-3xl font-semibold text-center text-carbon dark:text-white"

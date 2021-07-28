@@ -1,40 +1,48 @@
 <template>
+  <div
+    id="background"
+    class="bg-pale-grey dark:bg-midnight-express text-center dark:text-silver-polish m-8 p-8 rounded border-dashed border-4 border-mountain-meadow dark:border-dark-shamrock"
+  >
     <div
-        id="background"
-        class="bg-pale-grey dark:bg-midnight-express text-center dark:text-silver-polish m-8 p-8 rounded border-dashed border-4 border-mountain-meadow dark:border-dark-shamrock"
+      id="container"
+      class="w-full"
+      @dragenter.prevent="dragEnter"
+      @dragleave.prevent="dragLeave"
+      @dragover.prevent
+      @drop.prevent="drop"
     >
-        <div
-            id="container"
-            class="w-full"
-            @dragenter.prevent="dragEnter"
-            @dragleave.prevent="dragLeave"
-            @dragover.prevent
-            @drop.prevent="drop"
-        >
-            <p class="m-4">{{ $t('InterfaceUploadFile.drop') }}</p>
-            <p>{{ $t('InterfaceUploadFile.or') }}</p>
+      <p class="m-4">
+        {{ $t('InterfaceUploadFile.drop') }}
+      </p>
+      <p>{{ $t('InterfaceUploadFile.or') }}</p>
 
-            <Button
-                color="green"
-                class="p-3 w-1/2 m-4"
-                @click="browse"
-            >{{ $t('InterfaceUploadFile.select') }}</Button>
-            <input v-show="false" ref="fileTarget" type="file" @change="prepareFile" />
+      <Button
+        color="green"
+        class="p-3 w-3/4 sm:w-1/2 m-4"
+        @click="browse"
+      >
+        {{ $t('InterfaceUploadFile.select') }}
+      </Button>
+      <input
+        v-show="false"
+        ref="fileTarget"
+        type="file"
+        @change="prepareFile"
+      >
 
 
-            <p> {{ state.fileName }} </p>
-        </div>
+      <p> {{ state.fileName }} </p>
     </div>
+  </div>
 </template>
 
 
 
 <script lang = "ts">
 
-import { useStore } from "../../store";
-
 import { defineComponent, reactive, ref, resolveComponent } from "vue";
 
+import { useStore } from "../../store";
 import Button from "../base/Button.vue";
 
 export default defineComponent({

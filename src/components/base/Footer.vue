@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="px-4 py-8 text-sm font-semibold bg-husky dark:bg-midnight-express md:px-0 lg:py-24 text-andrea-blue"
+    class="px-4 py-8 text-sm font-semibold bg-husky dark:bg-midnight-express md:px-0 lg:py-24 text-andrea-blue min-w-[400px]"
   >
     <div class="flex flex-col h-32 mx-auto max-w-screen-2xl content-evenly lg:h-0 lg:justify-around lg:flex-row md:px-16">
       <div class="m-auto mb-6 text-center sm:mb-0">

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 mb-40">
+  <div class="flex-1 mb-40 min-w-[400px]">
     <Gradient>
       <BackLink
         v-if="back"
