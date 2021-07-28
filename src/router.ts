@@ -323,7 +323,6 @@ router.beforeEach(()=> {
 
   if (store.network == "testnet"){
     window.store = store; 
-    console.log(window.store);
   }
 })
 
