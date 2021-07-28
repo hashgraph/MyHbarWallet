@@ -18,15 +18,3 @@ app.use(container);
 app.use(createPinia());
 
 app.mount("#app");
-
-//const store = useStore; 
-
-// // For Cypress
-
-// // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// // @ts-ignore
-// window.vueapp = app;
-
-// // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// // @ts-ignore
-// window.vueapp.$store = store;
