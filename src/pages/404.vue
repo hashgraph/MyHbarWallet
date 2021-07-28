@@ -14,7 +14,7 @@
       </div>
 
       <div class="mt-10 text-3xl">
-        {{ $("Pages.404.Sorry") }}
+        {{ $t("Pages.404.Sorry") }}
       </div>
     </div>
   </Gradient>
