@@ -12,7 +12,7 @@ import { Wallet } from "./abstract";
 
 const PATH = (index: number) => `44/3030/0/0/${index}`;
 
-const CLA = 0xe0;
+const CLA = 0xE0;
 const INS_GET_PK = 0x02;
 const INS_SIGN_TX = 0x04;
 
@@ -115,11 +115,16 @@ export class LedgerHardwareWallet extends Wallet {
       decimals = extra.decimals as number;
     }
 
+    // TODO: Use this when the ledger app can be updated to handle full path + tx data
+    // const data = Buffer.from(txn);
+    // const path = this.serializePath(BIPPath.fromString(PATH(index)).toPathArray());
+    // const parts = [path, data];
+    // const buffer = Buffer.concat(parts);
+
     const data = Buffer.from(txn);
-    const path = this.serializePath(BIPPath.fromString(PATH(index)).toPathArray());
-    const buffer = Buffer.alloc(data.length + path.length);
-    buffer.fill(path, 0);
-    buffer.fill(data, path.length);
+    const buffer = Buffer.alloc(4 + data.length);
+    buffer.writeUInt32LE(index);
+    buffer.fill(data, 4);
 
     const response = await this.sendAPDU({
       CLA,
