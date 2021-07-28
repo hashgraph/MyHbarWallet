@@ -10,7 +10,7 @@ import { useStore } from "../../store";
 
 import { Wallet } from "./abstract";
 
-const PATH = (index: number) => `44'/3030'/0'/0'/${index}'`;
+const PATH = (index: number) => `44/3030/0/0/${index}`;
 
 const CLA = 0xe0;
 const INS_GET_PK = 0x02;
