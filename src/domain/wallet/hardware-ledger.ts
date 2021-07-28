@@ -2,12 +2,16 @@ import { Buffer } from "buffer";
 
 import type { PublicKey } from "@hashgraph/sdk";
 import Transport from "@ledgerhq/hw-transport";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import BIPPath from "bip32-path";
 
 import { useStore } from "../../store";
 
 import { Wallet } from "./abstract";
 
-// Path /44' /3030' /0' /0' /INDEX'
+const PATH = (index: number) => `44/3030/0/0/${index}`;
+
 const CLA = 0xe0;
 const INS_GET_PK = 0x02;
 const INS_SIGN_TX = 0x04;
@@ -29,6 +33,16 @@ interface APDU {
 export class LedgerHardwareWallet extends Wallet {
   private transport: Transport | null = null;
   private publicKeys: Map<number, PublicKey> = new Map();
+
+  private serializePath(path: Array<number>): Buffer {
+    const data = Buffer.alloc(1 + path.length * 4);
+
+    path.forEach((segment, index) => {
+      data.writeUInt32BE(segment, 1 + index * 4);
+    });
+
+    return data;
+  }
 
   private async getTransport(): Promise<Transport | null> {
     if (this.transport != null) {
@@ -102,9 +116,10 @@ export class LedgerHardwareWallet extends Wallet {
     }
 
     const data = Buffer.from(txn);
-    const buffer = Buffer.alloc(4 + data.length);
-    buffer.writeUInt32LE(index);
-    buffer.fill(data, 4);
+    const path = this.serializePath(BIPPath.fromString(PATH(index)).toPathArray());
+    const buffer = Buffer.alloc(data.length + path.length);
+    buffer.fill(path, 0);
+    buffer.fill(data, path.length);
 
     const response = await this.sendAPDU({
       CLA,
@@ -133,8 +148,8 @@ export class LedgerHardwareWallet extends Wallet {
     if (this.publicKeys.get(index) != null) {
       return this.publicKeys.get(index);
     } else {
-      const buffer = Buffer.alloc(4);
-      buffer.writeUInt32LE(index, 0);
+      const buffer = this.serializePath(BIPPath.fromString(PATH(index)).toPathArray());
+      
       const response = await this.sendAPDU({
         CLA,
         INS: INS_GET_PK,
