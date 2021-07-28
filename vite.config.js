@@ -64,6 +64,7 @@ export default async function ({ mode }) {
             __APP_LAST_COMMIT_SHORT_HASH__: JSON.stringify(
                 lastCommit.shortHash
             ),
+            _TEST_: !isProduction === true, 
         },
         build: {
             outDir: "dist/web",

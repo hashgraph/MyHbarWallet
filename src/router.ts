@@ -317,12 +317,16 @@ router.beforeResolve(async (to, from, next) => {
 //for cypress testnet 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const window: any;
-//TODO: Add environment variable tooling for testnet check
+
+// from vite.config.js
+declare const _TEST_: string;
+
 router.beforeEach(()=> {
   const store = useStore();
+  const test = _TEST_;
 
-  if (store.network == "testnet"){
-    window.store = store; 
+  if (test){
+    window.store = store;
   }
 })
 
