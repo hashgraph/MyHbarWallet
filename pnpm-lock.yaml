@@ -1,7 +1,8 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@cypress/vue': ^3.0.1
+  '@cypress/vite-dev-server': ^2.0.3
+  '@cypress/vue': ^3.0.0-beta.4
   '@hashgraph/sdk': 2.0.25-beta.1
   '@intlify/vite-plugin-vue-i18n': ^2.3.1
   '@ledgerhq/hw-transport': ^6.1.0
@@ -79,7 +80,8 @@ dependencies:
   vue-router: 4.0.10_vue@3.1.4
 
 devDependencies:
-  '@cypress/vue': 3.0.1_cypress@7.7.0+vue@3.1.4
+  '@cypress/vite-dev-server': 2.0.3_vite@2.4.2
+  '@cypress/vue': 3.0.0-beta.4_cypress@7.7.0+vue@3.1.4
   '@intlify/vite-plugin-vue-i18n': 2.3.1_051ee7e0b3eb0e73c7f7aaac214df483
   '@tailwindcss/forms': 0.3.3_tailwindcss@2.2.4
   '@types/ledgerhq__hw-transport': 4.21.4
@@ -1225,6 +1227,10 @@ packages:
       '@babel/helper-validator-identifier': 7.14.5
       to-fast-properties: 2.0.0
 
+  /@cypress/mount-utils/1.0.2:
+    resolution: {integrity: sha512-Fn3fdTiyayHoy8Ol0RSu4MlBH2maQ2ZEXeEVKl/zHHXEQpld5HX3vdNLhK5YLij8cLynA4DxOT/nO9iEnIiOXw==}
+    dev: true
+
   /@cypress/request/2.88.5:
     resolution: {integrity: sha512-TzEC1XMi1hJkywWpRfD2clreTa/Z+lOrXDCxxBTBPEcY5azdPi56A6Xw+O4tWJnaJH3iIE7G5aDXZC6JgRZLcA==}
     engines: {node: '>= 6'}
@@ -1251,12 +1257,24 @@ packages:
       uuid: 3.4.0
     dev: true
 
-  /@cypress/vue/3.0.1_cypress@7.7.0+vue@3.1.4:
-    resolution: {integrity: sha512-7aSdwbtvCJnKR7MDZdJs3TB718LNo44JXvIidrtcZacOSPXjahvkZ8nQCyLIt/owKBFFaV4dvSn267Lq4ZIbzQ==}
+  /@cypress/vite-dev-server/2.0.3_vite@2.4.2:
+    resolution: {integrity: sha512-t5udxeN9mgnxp5q7rrA/5q9S1luxH1jbBeXJvFoxJswrCVweuzV7iyfees6a7ekEdZRvneXcbhLAKWEQwevxNQ==}
+    peerDependencies:
+      vite: '>= 2.1.3'
+    dependencies:
+      debug: 4.3.2
+      get-port: 5.1.1
+      vite: 2.4.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@cypress/vue/3.0.0-beta.4_cypress@7.7.0+vue@3.1.4:
+    resolution: {integrity: sha512-xdQ6Mmbk721s3gdEoo55BLaTcO9cECiDV8Wl4JM6gY7jfU6fLCEzfLxy0EKhmHT+m9BQ5CyTxTwuIp9jF1ytbg==}
     engines: {node: '>=8'}
     peerDependencies:
       '@cypress/webpack-dev-server': '*'
-      babel-loader: '8'
+      babel-loader: '*'
       cypress: '>=7.0.0'
       vue: '>=3.0.0'
     peerDependenciesMeta:
@@ -1265,6 +1283,7 @@ packages:
       babel-loader:
         optional: true
     dependencies:
+      '@cypress/mount-utils': 1.0.2
       '@vue/test-utils': 2.0.0-rc.10_vue@3.1.4
       cypress: 7.7.0
       vue: 3.1.4
@@ -4065,6 +4084,11 @@ packages:
 
   /get-own-enumerable-property-symbols/3.0.2:
     resolution: {integrity: sha512-I0UBV/XOz1XkIJHEUDMZAbzCThU/H8DxmSfmdGcKPnVhu2VfFqr34jr9777IyaTYvxjedWhqVIilEDsCdP5G6g==}
+    dev: true
+
+  /get-port/5.1.1:
+    resolution: {integrity: sha512-g/Q1aTSDOxFpchXC4i8ZWvxA1lnPqx/JHqcpIw0/LX9T8x/GBbi6YnlN5nhaKIFkT8oFsscUKgDJYxfwfS6QsQ==}
+    engines: {node: '>=8'}
     dev: true
 
   /get-stream/3.0.0:
