@@ -83,6 +83,9 @@ module.exports = {
         600: "600px",
         324: "324px",
       },
+      width: {
+        '1/10': "10%"
+      },
       ringWidth: {
         3: "3px",
       },
