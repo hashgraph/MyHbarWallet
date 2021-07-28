@@ -15,6 +15,7 @@
       :read-only="readOnly"
       :hide="secret"
       :show-eye="secret"
+      data-cy-key-input
       medium-font
       placeholder="302e020100300…"
       v-bind="$attrs"

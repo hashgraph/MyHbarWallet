@@ -313,4 +313,18 @@ router.beforeResolve(async (to, from, next) => {
   } else next();
 });
 
+
+//for cypress testnet 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const window: any;
+//TODO: Add environment variable tooling for testnet check
+router.beforeEach(()=> {
+  const store = useStore();
+
+  if (store.network == "testnet"){
+    window.store = store; 
+    console.log(window.store);
+  }
+})
+
 export default router;

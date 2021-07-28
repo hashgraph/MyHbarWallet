@@ -30,6 +30,7 @@
       data-cy-key-submit
       color="green"
       class="w-full p-3 mt-16"
+      :data-cy-access-button="access"
       @click.prevent="handleSubmit"
     >
       {{ $t("BaseButton.accessWallet") }}

@@ -1,5 +1,8 @@
 <template>
-  <div class="mt-5 mb-5 text-base text-black-out dark:text-white">
+  <div 
+    class="mt-5 mb-5 text-base text-black-out dark:text-white"
+    :data-cy-interface-total="total"
+  >
     {{ $t("InterfaceTotalBalance.totalvalue") }}
   </div>
 

@@ -6,7 +6,7 @@
       data-cy-policy-header
       class="text-3xl font-semibold text-center"
     >
-      {{ $("PrivacyPolicy.Title") }}
+      {{ $t("PrivacyPolicy.Title") }}
     </div>
 
     <div class="mt-4 text-center">

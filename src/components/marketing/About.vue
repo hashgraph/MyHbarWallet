@@ -23,6 +23,7 @@
 
     <div
       class="text-3xl font-semibold text-center  text-abbadon-black dark:text-white mb-7"
+      data-cy-marketing-header
     >
       {{ $t("Marketing.about.header") }}
     </div>

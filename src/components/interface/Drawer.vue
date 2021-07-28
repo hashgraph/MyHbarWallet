@@ -31,6 +31,7 @@
 
     <div class="p-2 md:p-5 md:pt-0">
       <NavItem
+        :data-cy-logout-link="logout"
         :icon="iconLogout"
         :text="$t('RouterLink.logout')"
         @click="logOut"

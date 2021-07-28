@@ -8,6 +8,7 @@ import i18n from "./i18n";
 import router from "./router";
 import container from "./hooks/container";
 import App from "./App.vue";
+//import { useStore } from "./store"
 
 const app = createApp(App);
 
@@ -17,3 +18,15 @@ app.use(container);
 app.use(createPinia());
 
 app.mount("#app");
+
+//const store = useStore; 
+
+// // For Cypress
+
+// // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// // @ts-ignore
+// window.vueapp = app;
+
+// // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// // @ts-ignore
+// window.vueapp.$store = store;
