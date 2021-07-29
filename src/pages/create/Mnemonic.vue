@@ -20,7 +20,6 @@
         :label="$t('BaseOptionalPasswordInput.label1')"
         :placeholder="$t('BasePasswordInput.input1.placeholder4')"
         confirm
-        :hint = "false"
       />
         
       <span class="text-bold text-Megaman-Helmet"> 

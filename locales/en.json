@@ -277,6 +277,7 @@
     "MnemonicPhrase.access.unknownWords": "One or more words are not in the BIP-39 english word list.",
     "MnemonicPhrase.create.button": "I Wrote Down My Mnemonic Phrase",
     "MnemonicPhrase.title": "Mnemonic Phrase",
+    "MnemonicPhrase.create.note": " to save your password. You will need this Password + Mnemonic Phrase to access your wallet.",
     "Modal.Send.SuccessfullyTransferred": "Successfully transferred",
     "Modal.Send.ToAccount": "to account",
     "ModalCustomerService.accountIdIfAny": "Account ID (if any)",
