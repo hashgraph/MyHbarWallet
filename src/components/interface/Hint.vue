@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex p-3 mb-4 text-sm font-semibold rounded bg-first-snow dark:bg-midnight-express text-bright-navy-blue "
+    class="flex text-align-left p-3 mb-4 text-sm font-semibold rounded bg-first-snow dark:bg-midnight-express text-bright-navy-blue "
   >
     <img
       src="../../assets/icon_hint.svg"
@@ -10,6 +10,8 @@
     <p class="ml-4 m-auto">
       {{ text }}
     </p>
+
+    <slot class = "bg-white"/>
   </div>
 </template>
 

@@ -35,6 +35,13 @@
       :description="$t('InterfaceToolTile.convert.description')"
       :to="{ name: 'tools.convert.units' }"
     />
+
+    <ToolTile
+      v-if = "hasPrivateKey"
+      title = "Export Keystore"
+      description = "Export keystore file."
+      :to="{ name: 'tools.export.keystore'}"
+    />
   </div>
 </template>
 
