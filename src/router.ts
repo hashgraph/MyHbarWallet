@@ -313,4 +313,20 @@ router.beforeResolve(async (to, from, next) => {
   } else next();
 });
 
+//for cypress testnet 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const window: any;
+
+// from vite.config.js
+declare const _TEST_: string;
+
+router.beforeEach(()=> {
+  const store = useStore();
+  const test = _TEST_;
+
+  if (test){
+    window.store = store;
+  }
+})
+
 export default router;
