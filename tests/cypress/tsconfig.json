@@ -6,6 +6,6 @@
         "types": ["cypress", "cypress-file-upload", "node"],
         "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
     },
-    "include": ["integration"],
+    "include": ["components", "integration"],
     "exclude": []
 }
