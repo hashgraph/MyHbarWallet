@@ -19,7 +19,11 @@
       />
 
       <InputError v-if="state.error">
-        {{ state.errorMessage.length > 0 ? state.errorMessage : $t("Account.UnknownError") }}
+        {{
+          state.errorMessage.length > 0
+            ? state.errorMessage
+            : $t("Account.UnknownError")
+        }}
       </InputError>
     </div>
 
@@ -27,11 +31,19 @@
       data-cy-account-submit
       color="green"
       class="w-full p-3 mt-12 mb-4"
-      :disabled="state.accountId == null || state.publicKey == null || state.wallet == null"
+      :disabled="
+        state.accountId == null ||
+        state.publicKey == null ||
+        state.wallet == null
+      "
       :busy="state.busy"
       @click="onContinue"
     >
-      {{ state.busyMessage.length > 0 ? state.busyMessage : $t("Account.Continue") }}
+      {{
+        state.busyMessage.length > 0
+          ? state.busyMessage
+          : $t("Account.Continue")
+      }}
     </Button>
 
     <template v-if="state.publicKey != null">
@@ -53,13 +65,25 @@
 
       <div class="flex items-center justify-center m-10">
         <QrCode
+          data-cy-qr-code
           :size="200"
           :value="state.publicKey.toString().slice(24)"
         />
       </div>
 
       <div
-        class="break-all border border-cerebral-grey text-sm font-roboto rounded px-5 py-3.5 bg-white text-carbon"
+        class="
+          break-all
+          border border-cerebral-grey
+          text-sm
+          font-roboto
+          rounded
+          px-5
+          py-3.5
+          bg-white
+          text-carbon
+        "
+        data-cy-public-key
       >
         {{ state.publicKey.toString().slice(24) }}
       </div>
@@ -78,16 +102,19 @@
       </div>
     </template>
 
-    <div
-      v-if="state.hasMorePublicKeys"
-      class="mt-1.5"
-    >
+    <div v-if="state.hasMorePublicKeys" class="mt-1.5">
       <div class="mb-5 ml-4 text-xs leading-relaxed text-squant">
         {{ $t("Account.IfTheAbove") }}
         <span
-          class="font-medium cursor-pointer text-mountain-meadow hover:text-opacity-60"
+          class="
+            font-medium
+            cursor-pointer
+            text-mountain-meadow
+            hover:text-opacity-60
+          "
           @click="onShowMorePublicKeys"
-        >{{ $t("Account.ClickHere") }}</span>
+          >{{ $t("Account.ClickHere") }}</span
+        >
         {{ $t("Account.ViewPossibleKeys") }}
       </div>
 
@@ -100,7 +127,17 @@
           <div
             v-for="publicKey in state.morePublicKeys"
             :key="publicKey.toString()"
-            class="break-all border border-cerebral-grey text-sm font-roboto rounded px-5 py-3.5 bg-white text-carbon"
+            class="
+              break-all
+              border border-cerebral-grey
+              text-sm
+              font-roboto
+              rounded
+              px-5
+              py-3.5
+              bg-white
+              text-carbon
+            "
           >
             {{ publicKey.toString().slice(24) }}
           </div>
@@ -115,7 +152,7 @@
       </div>
       <div class="h-0 border-b w-52 border-cerebral-grey" />
     </div>
-    
+
     <CustomerSupportButton class="text-center text-mountain-meadow" />
   </Layout>
 </template>
@@ -175,7 +212,7 @@ export default defineComponent({
       error: false,
       errorMessage: "",
       busy: false,
-      busyMessage: ""
+      busyMessage: "",
     });
 
     async function handleExportPublicKey(): Promise<void> {
@@ -205,8 +242,10 @@ export default defineComponent({
         await handleExportPublicKey();
 
         // mnemonics and keystores are derivable
-        if (state.wallet instanceof MnemonicSoftwareWallet ||
-          state.wallet instanceof KeystoreSoftwareWallet) {
+        if (
+          state.wallet instanceof MnemonicSoftwareWallet ||
+          state.wallet instanceof KeystoreSoftwareWallet
+        ) {
           state.hasMorePublicKeys = true;
         }
       }
@@ -218,7 +257,8 @@ export default defineComponent({
         state.error = false;
         state.errorMessage = "";
         state.busyMessage = "";
-      });
+      }
+    );
 
     const hasLedgerWallet = computed(() => {
       return state.wallet instanceof LedgerHardwareWallet;
@@ -270,7 +310,9 @@ export default defineComponent({
 
           if (client == null) {
             state.error = true;
-            state.errorMessage = i18n.t("Common.Error.AccountKeyMismatch").toString()
+            state.errorMessage = i18n
+              .t("Common.Error.AccountKeyMismatch")
+              .toString();
             return;
           }
 
@@ -288,7 +330,7 @@ export default defineComponent({
       onShowMorePublicKeys,
       onContinue,
       hasLedgerWallet,
-      handleExportPublicKey
+      handleExportPublicKey,
     };
   },
 });
