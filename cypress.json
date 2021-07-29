@@ -2,8 +2,11 @@
     "baseUrl": "http://localhost:3000",
     "fixturesFolder": "tests/cypress/fixtures",
     "integrationFolder": "tests/cypress/integration",
+    "component": {
+        "componentFolder": "tests/cypress/components"
+    },
     "screenshotsFolder": "tests/cypress/screenshots",
-    "pluginsFile": false,
+    "pluginsFile": "tests/cypress/plugins/index.ts",
     "supportFile": "tests/cypress/support/index.ts",
     "video": true,
     "videosFolder": "tests/cypress/videos",
