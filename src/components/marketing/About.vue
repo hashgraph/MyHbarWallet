@@ -12,6 +12,7 @@
             items-center
             lg:mt-[-141px]
             md:mt-[-90px]
+            min-w-[400px]
         "
   >
     <Image

@@ -43,7 +43,7 @@
         'left-0': fullWidth,
       }"
       :style="{ top: `${offset}px` }"
-      class="absolute right-0 p-2 m-2 transition-all duration-300 bg-white border rounded shadow-2xl dark:bg-ruined-smores border-jupiter dark:border-midnight-express"
+      class="absolute right-0 sm:p-2 m-2 transition-all duration-300 bg-white border rounded shadow-2xl dark:bg-ruined-smores border-jupiter dark:border-midnight-express"
     >
       <div
         v-for="(option, i) of options"

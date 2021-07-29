@@ -1,6 +1,6 @@
 <template>
   <Headline
-    title="Download"
+    :title="$t('InterfaceToolTile.download.title')"
     parent="tools"
   />
 
@@ -44,7 +44,7 @@
           </td>
 
           <td class>
-            {{ accountId.toString() }}
+            {{ accountId?.toString() }}
           </td>
         </tr>
 
