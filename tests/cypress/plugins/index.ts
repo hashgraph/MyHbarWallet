@@ -32,7 +32,7 @@ module.exports = async (on, config) => {
                 }),
                 vue(),
                 vueI18n({
-                    include: path.resolve(__dirname, "./locales/**"),
+                    include: path.resolve(__dirname, "../../../locales/**"),
                 }),
                 VitePWA()
             ]
