@@ -32,6 +32,7 @@ specifiers:
   eslint-plugin-vue: ^7.13.0
   esm: ^3.2.25
   file-type: 16.5.2
+  generate-password: ^1.6.1
   git-last-commit: ^1.0.0
   husky: ^7.0.1
   jdenticon: ^3.1.0
@@ -100,6 +101,7 @@ devDependencies:
   eslint-plugin-import: 2.23.4_eslint@7.30.0
   eslint-plugin-vue: 7.13.0_eslint@7.30.0
   esm: 3.2.25
+  generate-password: 1.6.1
   git-last-commit: 1.0.0
   husky: 7.0.1
   lint-staged: 11.0.0
@@ -3996,6 +3998,10 @@ packages:
 
   /functional-red-black-tree/1.0.1:
     resolution: {integrity: sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=}
+    dev: true
+
+  /generate-password/1.6.1:
+    resolution: {integrity: sha512-JvtWSiN4KVmF6kBFi89Uz9LLN7l/EuGZYiKrIxddFlKcjSgc3D3va0Z5faooNwN85O0VBlt/ZtTdqhbQKhAOyw==}
     dev: true
 
   /generic-names/2.0.1:
