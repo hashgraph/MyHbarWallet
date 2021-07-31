@@ -41,30 +41,16 @@
           {{ $t("InterfaceSend.options") }}
         </p>
         <div class="p-10 pt-4 font-medium bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full">
-          <div class="mt-4 mb-8">
-            <p> {{ $t("OptionalMemo.addMemo") }} </p>
-            <TextInput 
-              v-model="state.memo" 
-              class="mt-2 font-medium"
-            />
-            <p class="mt-4 dark:text-argent">
-              {{ $t("OptionalMemo.aboutMemo") }}
-            </p>
-          </div>
+          <OptionalMemo
+            v-model="state.memo"
+            class="mb-4"
+          />
 
+          <OptionalHbarInput @update:model-value="updateMaxFee" />
 
-          <div class="mt-4">
-            <p class="mb-4"> 
-              {{ $t("InterfaceHomeSend.section2.toggle2.label") }} 
-            </p>
-            <AssetInput
-              v-model="state.maxFee"
-              asset="HBAR"
-            />
-            <p class="mt-4 dark:text-argent">
-              {{ $t("InterfaceSend.max.transaction.fee") }}
-            </p>
-          </div>
+          <p class="mt-4 italic text-squant dark:text-silver-polish text-sm">
+            {{ $t("InterfaceSend.max.transaction.fee") }}
+          </p>
         </div>
       </div>
     </div>
@@ -138,10 +124,10 @@ import { useRouter } from "vue-router";
 import Headline from "../../components/interface/Headline.vue";
 import TransferForm from "../../components/interface/TransferForm.vue";
 import Button from "../../components/base/Button.vue";
-import TextInput from "../../components/base/TextInput.vue";
 import ProgressModal from "../../components/interface/ProgressModal.vue";
 import Modal from "../../components/interface/Modal.vue";
-import AssetInput from "../../components/interface/AssetInput.vue";
+import OptionalMemo from "../../components/interface/OptionalMemo.vue";
+import OptionalHbarInput from "../../components/interface/OptionalHbarInput.vue";
 import { useStore } from "../../store";
 // import { transfer } from "src/services/impl/hedera/client/transfer";
 
@@ -157,12 +143,11 @@ export default defineComponent({
   components: {
     Button,
     Headline,
-    TextInput,
     TransferForm,
-    AssetInput,
     ProgressModal,
-    Modal
-
+    Modal,
+    OptionalMemo,
+    OptionalHbarInput
   },
   setup() {
     const router = useRouter();

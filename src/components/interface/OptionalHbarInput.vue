@@ -3,14 +3,23 @@
     <Switch
       v-model="isOpen"
       :label="$t('InterfaceHomeSend.section2.toggle2.label')"
-      class = "mb-4"
+      class="mb-4"
     />
 
-    <HbarInput
-      v-model="value"
-      :disabled="!isOpen"
-      @update:model-value="handleUpdate"
-    />
+    <div
+      class="h-12 transition-all duration-300"
+      :class="{
+        'mt-4 opacity-100': isOpen,
+        '-mt-16 opacitity-0 invisible': !isOpen
+      }"
+    > 
+      <HbarInput
+        v-if="isOpen"
+        v-model="value"
+        :disabled="!isOpen"      
+        @update:model-value="handleUpdate"
+      />
+    </div>
   </div>
 </template>
 

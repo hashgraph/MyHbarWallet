@@ -3,6 +3,7 @@
     <Switch
       v-model="state.addMemo"
       :label="$t('OptionalMemo.addMemo')"
+      class="mb-4"
       @update:modelValue="onToggle"
     />
 
@@ -14,17 +15,13 @@
       char-counter
       :class="{
         'mt-1 opacity-100': state.addMemo,
-        'h-0 -mt-10 opacity-0 invisible': !state.addMemo,
+        '-mt-20 opacity-0 invisible': !state.addMemo,
       }"
       @update:modelValue="$emit('update:modelValue', state.memo)"
     />
 
     <div
-      class="text-sm italic transition-all duration-300 w-full text-squant"
-      :class="{
-        'mt-4  ': state.addMemo,
-        ' mt-14 ': !state.addMemo,
-      }"
+      class="text-sm italic w-full text-squant dark:text-silver-polish mt-4"
     >
       {{ $t("OptionalMemo.aboutMemo") }}
     </div>

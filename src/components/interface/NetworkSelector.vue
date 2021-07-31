@@ -16,6 +16,7 @@ import { useI18n } from "vue-i18n";
 
 import hedera from "../../assets/icon_hedera.svg";
 import hederaDark from "../../assets/dark/icon_hedera_dark.svg";
+import custom from "../../assets/icon_network_custom.svg";
 import Select from "../base/Select.vue";
 import { useStore } from "../../store";
 
@@ -53,6 +54,10 @@ export default defineComponent({
     function onUpdateValue(value: "mainnet" | "testnet" | "previewnet") {
       store.setNetwork(value);
     }
+
+
+
+
 
     return {
       selectedNetwork,
