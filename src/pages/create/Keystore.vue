@@ -5,6 +5,9 @@
     :back="{ name: 'create' }"
   >
     <form class="grid gap-5 auto-rows-min">
+      <p class="dark:text-white">
+        {{ $t("BaseOptionalPasswordInput.label1") }}
+      </p>
       <PasswordInput
         v-model="password"
         :placeholder="$t('BasePasswordInput.input1.placeholder4')"
@@ -26,6 +29,14 @@
       >
         {{ $t("BaseButton.continue") }}
       </Button>
+
+      <div class="mt-10 text-sm text-black-out dark:text-white">
+        <span class="font-semibold text-Megaman-Helmet">
+          {{ $t("Keystore.create.note.dnf") }}
+        </span>
+
+        {{ $t("Keystore.create.note") }}
+      </div>
     </form>
   </Layout>
 </template>

@@ -8,6 +8,7 @@
       hide
       :show-eye="showEye"
       :placeholder="placeholder"
+      class="bg-white dark:bg-midnight-express rounded"
     />
 
     <TextInput
@@ -19,6 +20,7 @@
       :show-eye="showEye"
       hide
       :placeholder="$t('BasePasswordInput.input2.placeholder1')"
+      class="bg-white dark:bg-midnight-express rounded"
     />
   </form>
 </template>

@@ -76,8 +76,22 @@ module.exports = {
       roboto: ["Roboto", "sans-serif"],
     },
     extend: {
+
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "100"}
+        },
+        fadeOut: {
+          "0%": { opacity: "100"},
+          "100%": { opacity: "0" }
+        }
+      },
+
       animation: {
         "spin-slow": "spin 10s linear infinite",
+        "fade-in": "fadeIn 4s",
+        "fade-out": "fadeOut 4s"
       },
       height: {
         600: "600px",

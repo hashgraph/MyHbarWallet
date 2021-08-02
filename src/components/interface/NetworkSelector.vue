@@ -54,6 +54,10 @@ export default defineComponent({
       store.setNetwork(value);
     }
 
+
+
+
+
     return {
       selectedNetwork,
       networks,

@@ -14,10 +14,6 @@
         @file="onUpdateFile"
       />
 
-      <div class="leading-5 text-black-out dark:text-white">
-        {{ $t("BasePasswordInput.header") }}
-      </div>
-
       <div>
         <PasswordInput
           v-model="password"

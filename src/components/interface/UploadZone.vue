@@ -14,6 +14,7 @@
       <p class="m-4">
         {{ $t('InterfaceUploadFile.drop') }}
       </p>
+
       <p>{{ $t('InterfaceUploadFile.or') }}</p>
 
       <Button
@@ -23,6 +24,7 @@
       >
         {{ $t('InterfaceUploadFile.select') }}
       </Button>
+      
       <input
         v-show="false"
         ref="fileTarget"
@@ -30,19 +32,14 @@
         @change="prepareFile"
       >
 
-
       <p> {{ state.fileName }} </p>
     </div>
   </div>
 </template>
 
+<script lang="ts">
+import { defineComponent, reactive, ref } from "vue";
 
-
-<script lang = "ts">
-
-import { defineComponent, reactive, ref, resolveComponent } from "vue";
-
-import { useStore } from "../../store";
 import Button from "../base/Button.vue";
 
 export default defineComponent({
@@ -50,19 +47,13 @@ export default defineComponent({
     components: {
         Button
     },
-
     props: {
-        fileName: String
+        fileName: { type: String, default: "" }
     },
-
-
     emits: [
         "fileSelect"
     ],
-
     setup(_, context) {
-
-
         const fileTarget = ref<HTMLInputElement | null>(null);
 
         const state = reactive({
@@ -70,17 +61,13 @@ export default defineComponent({
             fileName: null as string | null
         });
 
-
-
         async function dragEnter(): Promise<void> {
             state.isHovering = true;
         }
 
-
         async function dragLeave(): Promise<void> {
             state.isHovering = false;
         }
-
 
         async function drop(e: DragEvent): Promise<void> {
             console.log("from drop");
@@ -94,21 +81,16 @@ export default defineComponent({
                 throw new Error("File does not exist.");
             }
 
-
             let fileData = await uint8ArrayOf(file);
             state.fileName = file.name;
             context.emit("fileSelect", {
                 fileName: file.name,
                 contents: fileData
             });
-
-
-
         }
 
-
         async function browse(): Promise<void> {
-            fileTarget.value.click();
+            fileTarget.value?.click();
         }
 
         async function prepareFile(): Promise<void> {
@@ -128,8 +110,6 @@ export default defineComponent({
                 contents: fileData
             });
         }
-
-
 
         async function uint8ArrayOf(file: File): Promise<Uint8Array> {
             let buffer = await new Promise<ArrayBuffer>((resolve, reject) => {
@@ -152,8 +132,6 @@ export default defineComponent({
             prepareFile,
             browse
         }
-
-
     }
 });
 </script>

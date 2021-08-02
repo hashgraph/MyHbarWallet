@@ -1,13 +1,22 @@
-import { Mnemonic, PrivateKey } from "@hashgraph/sdk";
+import { PrivateKey, Mnemonic } from "@hashgraph/sdk";
+import { generate } from "generate-password";
 
-describe("Mnemonic Create", () => {
+describe("Mnemonic Password Create", () => {
     const PUBLIC_KEY_LENGTH = 64;
 
-    beforeEach(() => cy.viewport("macbook-13"));
+    beforeEach(() => {
+        cy.viewport("macbook-13");
 
-    it("can create wallet with mnemonic phrase (24 words)", () => {
+        // Generate password
+        cy.wrap(generate({ numbers: true })).as("password");
+    });
+
+    it("can create wallet with mnemonic phrase (24 words) and optional password", function () {
         const MNEMONIC24_PHRASE: string[] = [];
         let privateKey: PrivateKey | null = null;
+
+        // Show password to log
+        cy.log(this.password);
 
         // From homepage,
         cy.visit("/")
@@ -35,14 +44,26 @@ describe("Mnemonic Create", () => {
                 }
             })
 
-            // Construct private key from generated words
+            // Construct Private Key from generated words
             .then(async () => {
                 privateKey = await (
                     await PrivateKey.fromMnemonic(
-                        await Mnemonic.fromWords(MNEMONIC24_PHRASE)
+                        await Mnemonic.fromWords(MNEMONIC24_PHRASE), this.password
                     )
                 ).derive(0);
             })
+
+            // Toggle Password switch
+            .get("[data-cy-switch]")
+            .click()
+
+            // Enter password
+            .get("input[data-cy-pass-input]")
+            .type(this.password)
+
+            // Confirm password
+            .get("input[data-cy-pass-confirm]")
+            .type(this.password)
 
             // Click on 'Submit' button
             .get("[type='submit']")
@@ -54,7 +75,11 @@ describe("Mnemonic Create", () => {
                     cy.get(`#mnemonic\\:${i + 1}`).type(MNEMONIC24_PHRASE[i]);
                 }
             })
-            
+
+            // Verify password
+            .get("input[data-cy-pass-input]")
+            .type(this.password)
+
             // Click on 'Verify' button
             .get("[type='submit']")
             .click()
