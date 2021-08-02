@@ -43,7 +43,7 @@
 </template>
 
 
-<script lang = "ts">import { setMapStoreSuffix } from "pinia";
+<script lang = "ts">
 import { defineComponent } from "vue";
 
 import Image from "../base/Image.vue";

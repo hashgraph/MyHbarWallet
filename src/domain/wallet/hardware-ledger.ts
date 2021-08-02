@@ -153,6 +153,7 @@ export class LedgerHardwareWallet extends Wallet {
     if (this.publicKeys.get(index) != null) {
       return this.publicKeys.get(index);
     } else {
+      // NOTE: this just happens to work in the current BOLOS implementation
       const buffer = this.serializePath(BIPPath.fromString(PATH(index)).toPathArray());
       
       const response = await this.sendAPDU({

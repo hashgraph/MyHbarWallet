@@ -5,6 +5,7 @@
     :error="(error || state.hasError) ?? false"
     :placeholder="placeholder"
     :disabled="disabled"
+    class="bg-white"
   />
 </template>
 

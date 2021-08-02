@@ -1,6 +1,6 @@
 {
   "name": "my-hbar-wallet",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "MyHbarWallet is a free, client-side interface helping you interact with Hedera™ Hashgraph.",
   "main": "index.html",
   "repository": "https://github.com/hashgraph/myhbarwallet",
@@ -8,10 +8,10 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "test:e2e:run": "cross-env NODE_ENV=test cypress run",
-    "test:e2e:dev": "cross-env NODE_ENV=test cypress open",
-    "test:unit:run": "cross-env NODE_ENV=test cypress run-ct",
-    "test:unit:dev": "cross-env NODE_ENV=test cypress open-ct",
+    "test:e2e:run": "cypress run",
+    "test:e2e:dev": "cypress open",
+    "test:unit:run": "cypress run-ct",
+    "test:unit:dev": "cypress open-ct",
     "dev": "vite",
     "electron:dev": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' electron -r ts-node/register src/electron/main.ts",
     "prebuild": "npx pnpm install -r --store=node_modules/.pnpm-store || echo skiping pnpm install",

@@ -14,14 +14,14 @@
         :word-count="24"
         read-only
       />
-
+   
       <OptionalPasswordInput
         v-model="password"
         :label="$t('BaseOptionalPasswordInput.label1')"
         :placeholder="$t('BasePasswordInput.input1.placeholder4')"
         confirm
       />
-
+      
       <Button
         type="submit"
         color="green"
@@ -29,6 +29,14 @@
       >
         {{ $t("MnemonicPhrase.create.button") }}
       </Button>
+
+      <div class="mt-10 text-sm text-black-out dark:text-white">
+        <span class="font-semibold text-Megaman-Helmet">
+          {{ $t("MnemonicPhrase.create.note.dnf") }}
+        </span>
+
+        {{ $t("MnemonicPhrase.create.note") }}
+      </div>
     </form>
   </Layout>
 </template>

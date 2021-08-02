@@ -3,6 +3,7 @@
     :title="$t('InterfaceConvertUnits')"
     parent="tools"
   />
+
   <div
     class="items-center pb-10 mt-8 font-medium border-b text-carbon dark:text-silver-polish border-cerebral-grey dark:border-midnight-express"
   >
@@ -69,13 +70,16 @@
           <th class="w-1/3 flex overflow-wrap">
             {{ $t("InterfaceConvertUnits.table.unit") }}
           </th>
+
           <th class="w-1/3 flex overflow-wrap">
             {{ $t("InterfaceConvertUnits.table.amount") }}
           </th>
+          
           <th class="w-1/3 flex overflow-wrap">
             {{ $t("InterfaceConvertUnits.table.amount.in.hbar") }}
           </th>
         </tr>
+
         <tr
           v-for="unit in units"
           :key="unit.name"
@@ -84,9 +88,11 @@
           <td class="w-1/3 flex overflow-wrap">
             {{ unit.name }}
           </td>
+
           <td class="w-1/3 flex overflow-wrap">
             {{ unit.amount }} {{ unit.symbol }} 
           </td>
+          
           <td class="w-1/3 flex overflow-wrap">
             {{ unit.amountInHbar }} {{ units[2].symbol }}
           </td>
@@ -97,7 +103,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed } from "vue";
+import { defineComponent, reactive } from "vue";
 import { BigNumber } from "bignumber.js";
 
 import Headline from "../../components/interface/Headline.vue";

@@ -94,7 +94,6 @@ import { computed, defineComponent } from "vue";
 import { useStore } from "../../store";
 
 import Transaction from "./Transaction.vue";
-
 export default defineComponent({
   name: "Transactions",
   components: { Transaction },
@@ -108,15 +107,12 @@ export default defineComponent({
       switch (store.network) {
         case "mainnet":
           return `https://explorer.kabuto.sh/mainnet/id/${accountId.value}`;
-
         case "testnet":
           return `https://explorer.kabuto.sh/testnet/id/${accountId.value}`;
-
         default:
           return "";
       }
     });
-
     return {
       accountId,
       kabutoLink,

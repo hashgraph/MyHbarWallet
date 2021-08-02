@@ -49,6 +49,7 @@ import InterfaceConvertUnits from "./pages/interface/ConvertUnits.vue";
 import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
 import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
 import InterfaceCreateAccount from "./pages/interface/CreateAccount.vue";
+import InterfaceExportKeystore from "./pages/interface/ExportKeystore.vue";
 
 const routes = [
   {
@@ -260,6 +261,11 @@ const routes = [
             component: InterfaceDownloadFile,
             path: "download",
             name: "tools.download"
+          },
+          {
+            component: InterfaceExportKeystore,
+            path: "export-keystore",
+            name: "tools.export.keystore"
           }
         ],
       },

@@ -1,3 +1,4 @@
+import { PrivateKey, Mnemonic } from "@hashgraph/sdk";
 import { generate } from "generate-password";
 
 describe("Mnemonic Password Create", () => {
@@ -11,7 +12,8 @@ describe("Mnemonic Password Create", () => {
     });
 
     it("can create wallet with mnemonic phrase (24 words) and optional password", function () {
-        const MNEMONIC24_PHRASE = [];
+        const MNEMONIC24_PHRASE: string[] = [];
+        let privateKey: PrivateKey | null = null;
 
         // Show password to log
         cy.log(this.password);
@@ -37,9 +39,18 @@ describe("Mnemonic Password Create", () => {
             .then(() => {
                 for (let i = 0; i < 24; i++) {
                     cy.get(`#mnemonic\\:${i + 1}`).then((phrase) => {
-                        MNEMONIC24_PHRASE.push(phrase.val());
+                        MNEMONIC24_PHRASE.push(phrase.val()?.toString() ?? "");
                     });
                 }
+            })
+
+            // Construct Private Key from generated words
+            .then(async () => {
+                privateKey = await (
+                    await PrivateKey.fromMnemonic(
+                        await Mnemonic.fromWords(MNEMONIC24_PHRASE), this.password
+                    )
+                ).derive(0);
             })
 
             // Toggle Password switch
@@ -78,13 +89,20 @@ describe("Mnemonic Password Create", () => {
             .should("exist")
             .and("be.visible")
 
-            // Check that public key under QR code is visible
-            .get("[data-cy-public-key]")
-            .should("exist")
-            .and("be.visible")
+            .then(() => {
+                // Check that public key under QR code is visible
+                cy
+                    .get("[data-cy-public-key]")
+                    .should("exist")
+                    .and("be.visible")
 
-            // and is of proper length
-            .invoke("text")
-            .should("have.length", PUBLIC_KEY_LENGTH);
+                // and is of proper length
+                .invoke("text")
+                .should("have.length", PUBLIC_KEY_LENGTH)
+
+                // and matches expected public key
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                .should("equal", (privateKey! as PrivateKey).publicKey.toString().slice(24))
+            });
     });
 });

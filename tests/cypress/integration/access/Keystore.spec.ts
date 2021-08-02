@@ -1,5 +1,5 @@
 describe("Keystore Access", () => {
-  const { KEY_ACCOUNT_ID, KEYSTORE_PASSWORD, KEYSTORE_ACCOUNT_ID } =
+  const { KEYSTORE_ACCOUNT_ID, KEYSTORE_PASSWORD, } =
         Cypress.env();
 
   beforeEach(() => cy.viewport("macbook-13"));
@@ -36,7 +36,7 @@ describe("Keystore Access", () => {
       .get("[data-cy-keystore-submit]")
       .click()
       .get("[data-cy-account-input] input")
-      .type(KEY_ACCOUNT_ID)
+      .type(KEYSTORE_ACCOUNT_ID)
       .get("[data-cy-account-submit]")
       .click()
       .wait(1000);
