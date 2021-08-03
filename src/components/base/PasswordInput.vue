@@ -10,7 +10,7 @@
       :placeholder="placeholder"
       class="bg-white dark:bg-midnight-express rounded"
     />
-
+ 
     <div
       v-if="confirm"
       class="my-2"

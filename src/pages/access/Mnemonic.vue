@@ -8,7 +8,7 @@
       {{ $t("MnemonicPhrase.access.prompt") }}
     </p>
     
-    <div class="grid gap-5 auto-rows-min">
+    <div class="transition-all duration-300 grid gap-5 auto-rows-min">
       <div class="flex space-x-2.5 items-center">
         <SegmentedSelector
           :model-value="wordCount"
@@ -21,70 +21,65 @@
         </div>
       </div>
 
-      <div>
-        <MnemonicInput
-          ref="mnemonicInputComponent"
-          v-model="mnemonicPhrase"
-          :word-count="wordCount"
-          :warning-indices="warningIndices"
-        />
+      <MnemonicInput
+        ref="mnemonicInputComponent"
+        v-model="mnemonicPhrase"
+        :word-count="wordCount"
+        :warning-indices="warningIndices"
+        class="pb-5"
+      />
 
-        <div class="h-5" />
-        
-        <div
+      <div
+        :class="[
+          'relative transition-all duration-300',
+          {
+            'h-0': warningIndices.length === 0,
+            'h-16 md:h-10': warningIndices.length !== 0,
+          },
+        ]"
+      >
+        <Hint
           :class="[
-            'relative transition-all duration-300',
+            'transition-all duration-300 absolute w-full',
             {
-              'h-0': warningIndices.length === 0,
-              'h-16 md:h-10': warningIndices.length !== 0,
+              'opacity-0 invisible':
+                warningIndices.length === 0,
             },
           ]"
-        >
-          <Hint
-            :class="[
-              'transition-all duration-300 absolute w-full',
-              {
-                'opacity-0 invisible':
-                  warningIndices.length === 0,
-              },
-            ]"
-            :text="$t('MnemonicPhrase.access.unknownWords')"
-          />
-
-          <Hint
-            :class="[
-              'transition-all duration-300 absolute w-full',
-              {
-                'opacity-0 invisible': !hasChecksumMismatch,
-              },
-            ]"
-            :text="$t('MnemonicPhrase.access.checksum')"
-          />
-        </div>
-      </div>
-
-      <div>
-        <OptionalPasswordInput
-          v-model="password"
-          :hint="false"
-          :label="$t('BaseOptionalPasswordInput.label1')"
-          :placeholder="$t('BasePasswordInput.input1.placeholder1')"
-          @update:modelValue="handlePassword"
+          :text="$t('MnemonicPhrase.access.unknownWords')"
         />
 
-        <Button
-          data-cy-mnemonic-submit
-          color="green"
-          class="w-full p-3 mt-4"
-          :disabled="
-            mnemonicPhrase.filter((word) => word.length > 0).length <
-              wordCount
-          "
-          @click="onSubmit"
-        >
-          {{ $t("BaseButton.accessWallet") }}
-        </Button>
+        <Hint
+          :class="[
+            'transition-all duration-300 absolute w-full',
+            {
+              'opacity-0 invisible': !hasChecksumMismatch,
+            },
+          ]"
+          :text="$t('MnemonicPhrase.access.checksum')"
+        />
       </div>
+
+      <OptionalPasswordInput
+        v-model="password"
+        :hint="false"
+        :label="$t('BaseOptionalPasswordInput.label1')"
+        :placeholder="$t('BasePasswordInput.input1.placeholder1')"
+        @update:modelValue="handlePassword"
+      />
+
+      <Button
+        data-cy-mnemonic-submit
+        color="green"
+        class="w-full p-3 mt-4"
+        :disabled="
+          mnemonicPhrase.filter((word) => word.length > 0).length <
+            wordCount
+        "
+        @click="onSubmit"
+      >
+        {{ $t("BaseButton.accessWallet") }}
+      </Button>
     </div>
   </Layout>
 </template>

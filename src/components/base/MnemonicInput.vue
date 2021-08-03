@@ -86,7 +86,7 @@ export default defineComponent({
 
     //Create array of refs for the input to determine if input is blank in isBlank()
     const inputRefs: Ref<Ref<string>[]> = ref([] as Ref<string>[])
-    for(let i = 0; i < props.wordCount; i++){
+    for(let i = 0; props.wordCount > 0? i < props.wordCount : i < 24; i++){
       inputRefs.value.push(ref(`mnemonic:${i + 1}`))
     }
 
@@ -124,7 +124,7 @@ export default defineComponent({
     }
 
     function isBlank(index: number): boolean {
-      if(inputRefs?.value[index - 1]?.value) return false;
+      if(inputRefs?.value[index - 1]?.value?.value) return false;
       return true;
     }
 
