@@ -29,6 +29,7 @@
     /> -->
 
     <NavItem
+      v-if="network != 'previewnet'"
       :icon="iconNavGreyHistory"
       :active-icon="iconNavPurpleHistory"
       :text="$t('RouterLink.history')"
@@ -55,6 +56,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import { useStore } from "../../store";
 import NavItem from "../base/NavItem.vue";
 import iconNavGreyAssets from "../../assets/icon_nav_grey_assets.svg";
 import iconNavGreyHistory from "../../assets/icon_nav_grey_history.svg";
@@ -77,6 +79,8 @@ export default defineComponent({
   components: { NavItem },
   setup() {
     const lg = useScreen("lg");
+    const store = useStore();
+    const network = store.network;
 
     return {
       lg,
@@ -94,6 +98,7 @@ export default defineComponent({
       iconNavPurplePeople,
       iconNavPurpleTokens,
       iconNavPurpleTools,
+      network
     };
   },
 });
