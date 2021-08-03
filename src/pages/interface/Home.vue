@@ -52,12 +52,13 @@
     class="grid md:grid-flow-col md:gap-x-12 md:auto-cols-fr mt-7 dark:bg-ruined-smores"
   >
     <Assets :limit-tokens="5" />
+
     <Transactions />
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, onMounted } from "vue";
 
 import { useStore } from "../../store";
 import addAssetLight from "../../assets/img_add.svg";
@@ -83,7 +84,10 @@ export default defineComponent({
     const store = useStore();
     const accountId = computed(() => store.accountId);
     const publicKey = computed(() => store.publicKey);
-    void store.requestHbarPrice();
+    
+    onMounted(() => {
+      void store.requestHbarPrice();
+    });
 
     return {
       accountId,

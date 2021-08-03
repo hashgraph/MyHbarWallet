@@ -6,7 +6,9 @@ import { Wallet } from "./domain/wallet/abstract";
 import { AccountBalance, SimpleHederaClient } from "./services/hedera";
 import { useContainer } from "./hooks/container";
 import i18n from "./i18n";
+import { PrivateKeySoftwareWallet } from "./domain/wallet/software-private-key";
 
+declare const __TEST__: boolean;
 interface State {
     network: "mainnet" | "testnet" | "previewnet";
     // the wallet that has been unlocked
@@ -68,6 +70,26 @@ export const useStore = defineStore({
   },
 
   actions: {
+    async login(privateKey: string, accountIdStr: string): Promise<void> {
+      if (__TEST__) {
+        const { PrivateKey, AccountId } = await import("@hashgraph/sdk");
+        const key = PrivateKey.fromString(privateKey);
+        const accountId = AccountId.fromString(accountIdStr);
+        const wallet = new PrivateKeySoftwareWallet(key);
+        const container = useContainer();
+
+        const client = await container.cradle.hedera.createClient({
+              wallet,
+              keyIndex: 0,
+              accountId: accountId,
+              network: "testnet",
+            });
+
+        this.setWallet(wallet);
+        this.setClient(client);
+      }
+    },
+
     setNetwork(name: "mainnet" | "testnet" | "previewnet") {
       this.network = name;
     },

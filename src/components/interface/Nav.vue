@@ -43,6 +43,7 @@
     />
 
     <NavItem
+      data-cy-tools
       :icon="iconNavGreyTools"
       :active-icon="iconNavPurpleTools"
       :text="$t('RouterLink.tools')"

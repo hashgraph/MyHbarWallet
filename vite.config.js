@@ -60,6 +60,7 @@ export default async function ({ mode }) {
             include: ["long/src/long.js"],
         },
         define: {
+            __TEST__: !isProduction,
             __APP_VERSION__: JSON.stringify(packageJson.version),
             __APP_LAST_COMMIT_SHORT_HASH__: JSON.stringify(
                 lastCommit.shortHash
