@@ -38,6 +38,7 @@
     "BaseButton.cancel": "Cancel",
     "BaseButton.continue": "Continue",
     "BaseButton.copy": "Copy",
+    "BaseButton.copy.private.key": "Copy Private Key",
     "BaseButton.dismiss": "Dismiss",
     "BaseButton.downloadKeystoreFile": "Download Keystore File",
     "BaseButton.iHaveAnAccoutId": "I Have an Account ID",

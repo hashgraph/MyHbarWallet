@@ -24,10 +24,10 @@
   <Button
     v-if="canCopy && hasClipboard()"
     color="white"
-    class="px-10 py-2 mt-5 text-sm font-semibold"
+    class="px-10 py-2 mt-6 text-sm font-semibold w-3/4 sm:w-1/2 m-auto dark:text-white"
     @click="handleCopy"
   >
-    {{ $t("BaseButton.copy") }}
+    {{ $t("BaseButton.copy.private.key") }}
   </Button>
 </template>
 
@@ -59,6 +59,7 @@ export default defineComponent({
     function handleCopy() {
       copyText(value.value as string);
     }
+
 
     return {
       value,
