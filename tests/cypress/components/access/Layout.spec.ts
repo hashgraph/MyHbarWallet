@@ -1,16 +1,16 @@
 import { mount } from "@cypress/vue";
 
 import "../../../../src/index.css";
-import Button from "../../../../src/components/base/Button.vue";
+import Layout from "../../../../src/components/access/Layout.vue";
 
-describe("Button.vue", () => {
+describe("Layout.vue", () => {
     it("renders", () => {
-        mount(Button, {
+        mount(Layout, {
             props: {
-                color: "green",
+                title: "Title"
             },
             slots: {
-                default: "Button"
+                default: "Content"
             }
         });
     });
