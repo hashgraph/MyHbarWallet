@@ -45,6 +45,7 @@ import { useRouter } from "vue-router";
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import KeyInput from "../../components/base/KeyInput.vue";
+import InputError from "../../components/base/InputError.vue";
 import { PrivateKeySoftwareWallet } from "../../domain/wallet/software-private-key";
 import { useStore } from "../../store";
 
@@ -54,6 +55,7 @@ export default defineComponent({
     Button,
     KeyInput,
     Layout,
+    InputError
   },
   setup() {
     const store = useStore();

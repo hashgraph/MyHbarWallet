@@ -152,13 +152,11 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const store = useStore();
+    
     const hashgraph = ref<typeof import("@hashgraph/sdk") | null>(null);
     onMounted(async () => {
       hashgraph.value = await import("@hashgraph/sdk");
     });
-
-
-
 
     let state = reactive({
       accountId: store.accountId,
@@ -238,11 +236,9 @@ export default defineComponent({
       router.back();
     }
 
-
     function updateMaxFee(fee: Hbar): void {
       state.maxFee = fee;
     }
-
 
     return {
       state,

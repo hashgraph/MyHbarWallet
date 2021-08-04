@@ -1,4 +1,4 @@
-import { Mnemonic, PrivateKey } from "@hashgraph/sdk";
+import { PrivateKey, Mnemonic } from "@hashgraph/sdk";
 
 describe("Mnemonic Create", () => {
     const PUBLIC_KEY_LENGTH = 64;
