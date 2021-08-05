@@ -12,6 +12,9 @@
       :class="[
         'leading-5 p-4 text-sm font-medium border-cerebral-grey rounded w-full resize-none',
         'dark:text-white dark:bg-ruined-smores dark:focus:unburdened-pink dark:border-midnight-express',
+        {
+          'select-none': disabled || readOnly,
+        },
       ]"
       @input="onInput"
     />
@@ -39,8 +42,8 @@
           'border-harlocks-cape focus:border-harlocks-cape focus:ring-harlocks-cape':
             error,
           'dark:bg-ruined-smores': !disabled,
-          'bg-first-snow border-first-snow dark:bg-hei-se-black dark:border-hei-se-black':
-            disabled,
+          'bg-first-snow border-first-snow dark:bg-hei-se-black dark:border-hei-se-black text-argent dark:text-basalt-grey select-none':
+            disabled || readOnly
         },
       ]"
       v-bind="$attrs"
