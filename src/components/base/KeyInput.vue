@@ -60,7 +60,6 @@ export default defineComponent({
       copyText(value.value as string);
     }
 
-
     return {
       value,
       hasClipboard,

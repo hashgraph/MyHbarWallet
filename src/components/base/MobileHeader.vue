@@ -66,7 +66,7 @@ export default defineComponent({
     }
 
     watch(
-      () => route.fullPath,
+      () => route?.fullPath,
       () => {
         state.menuOpen = false;
       }

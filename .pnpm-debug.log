@@ -1,0 +1,22 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ELIFECYCLE",
+    "errno": "ENOENT",
+    "syscall": "spawn",
+    "file": "sh",
+    "pkgid": "my-hbar-wallet@0.6.5",
+    "stage": "test:unit:dev",
+    "script": "cypress open-ct",
+    "pkgname": "my-hbar-wallet",
+    "err": {
+      "name": "Error",
+      "message": "my-hbar-wallet@0.6.5 test:unit:dev: `cypress open-ct`\nspawn ENOENT",
+      "code": "ELIFECYCLE",
+      "stack": "Error: my-hbar-wallet@0.6.5 test:unit:dev: `cypress open-ct`\nspawn ENOENT\n    at ChildProcess.<anonymous> (/home/chris/.nvm/versions/node/v16.6.1/lib/node_modules/pnpm/dist/pnpm.cjs:93047:22)\n    at ChildProcess.emit (node:events:394:28)\n    at maybeClose (node:internal/child_process:1067:16)\n    at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)"
+    }
+  },
+  "2 warn pnpm:global": " Local package.json exists, but node_modules missing, did you mean to install?"
+}

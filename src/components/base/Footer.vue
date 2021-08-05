@@ -95,8 +95,8 @@ export default defineComponent({
   name: "Footer",
   setup() {
     return {
-      appVersion: __APP_VERSION__,
-      appLastCommitShortHash: __APP_LAST_COMMIT_SHORT_HASH__,
+      appVersion: __APP_VERSION__ ?? "",
+      appLastCommitShortHash: __APP_LAST_COMMIT_SHORT_HASH__ ?? "",
     };
   },
 });
