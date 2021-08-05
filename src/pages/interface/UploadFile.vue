@@ -88,7 +88,7 @@
 </template>
 
 <script lang = "ts">
-import { FileId } from "@hashgraph/sdk";
+import type { FileId } from "@hashgraph/sdk";
 import { defineComponent, reactive, computed } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -137,10 +137,10 @@ export default defineComponent({
     const accountId = computed(() => store.client?.getAccountId().toString());
     const modalFeeTitle = computed(() => `Uploading ${state.fileName}`);
 
-    function openFeeModal(): void {
+    async function openFeeModal(): Promise<void> {
       if (state.fileData != null) {
         state.uploadProgress.totalChunks = estimateChunks(state.fileData)
-        state.estimateFee = `${estimateFee(state.fileData)} hbar`;
+        state.estimateFee = `${await estimateFee(state.fileData)} hbar`;
         state.showFeeModal = true;
       }
     }

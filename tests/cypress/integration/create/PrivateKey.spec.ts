@@ -2,7 +2,6 @@ import { PrivateKey } from "@hashgraph/sdk";
 
 describe("Private Key Create", ()=>{
     const PUBLIC_KEY_LENGTH = 64;
-
     beforeEach(()=> cy.viewport("macbook-13"));
     
     it("can create wallet with private key", async ()=>{

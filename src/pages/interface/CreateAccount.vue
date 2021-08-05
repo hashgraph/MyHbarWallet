@@ -90,8 +90,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { AccountId, PublicKey } from "@hashgraph/sdk";
 import { BigNumber } from "bignumber.js";
+import type { AccountId, PublicKey } from "@hashgraph/sdk";
 
 import Headline from "../../components/interface/Headline.vue";
 import Hint from "../../components/interface/Hint.vue";
@@ -116,6 +116,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+
     const state = reactive({
       errorMessage: "",
       initialBalance: new BigNumber(1),
@@ -132,6 +133,8 @@ export default defineComponent({
     }
 
     async function handleKey(key: string): Promise<void> {
+
+      const { PublicKey } = await import("@hashgraph/sdk");
       state.publicKeyStr = key;
 
       try {
