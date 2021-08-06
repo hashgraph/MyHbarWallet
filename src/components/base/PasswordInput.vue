@@ -9,6 +9,7 @@
       :show-eye="showEye"
       :placeholder="placeholder"
       class="bg-white dark:bg-midnight-express rounded"
+      @update:modelValue="updatePassword"
     />
 
     <div
@@ -26,6 +27,13 @@
       hide
       :placeholder="$t('BasePasswordInput.input2.placeholder1')"
       class="bg-white dark:bg-midnight-express rounded"
+      @update:modelValue="updateConfirmPassword"
+    />
+
+    <PasswordStrength
+      v-if="confirm"
+      class="mt-4"
+      :password="state.password"
     />
   </form>
 </template>
@@ -35,6 +43,7 @@ import { ComponentPublicInstance, defineComponent, reactive } from "vue";
 import { debouncedWatch } from "@vueuse/core";
 
 import TextInput from "./TextInput.vue";
+import PasswordStrength from "./PasswordStrength.vue";
 
 const PASSWORD_MIN_LEN = 9;
 
@@ -44,7 +53,7 @@ export type PasswordInputInstance = ComponentPublicInstance & {
 
 export default defineComponent({
   name: "PasswordInput",
-  components: { TextInput },
+  components: { TextInput, PasswordStrength },
   props: {
     modelValue: { type: String, default: null },
     confirm: { type: Boolean, default: false },
@@ -54,12 +63,21 @@ export default defineComponent({
   },
   emits: ["update:modelValue", "error", "valid"],
   setup(props, context) {
+
     const state = reactive({
       password: "" as string,
       confirmPassword: "" as string,
       isValid: false,
       hasError: false,
     });
+
+    function updatePassword(password: string): void {
+      state.password = password;
+    }
+
+    function updateConfirmPassword(password: string): void {
+      state.confirmPassword = password;
+    }
 
     // resets this component for user interaction
     function reset(): void {
@@ -149,6 +167,8 @@ export default defineComponent({
     return {
       state,
       reset, // return to make available on instances of component
+      updatePassword,
+      updateConfirmPassword,
     };
   },
 });
