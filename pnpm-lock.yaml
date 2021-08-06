@@ -4,6 +4,7 @@ specifiers:
   '@cypress/vite-dev-server': ^2.0.3
   '@cypress/vue': ^3.0.1
   '@hashgraph/sdk': 2.0.25-beta.1
+  '@heroicons/vue': ^1.0.3
   '@intlify/vite-plugin-vue-i18n': ^2.3.1
   '@ledgerhq/hw-transport': ^6.1.0
   '@ledgerhq/hw-transport-webusb': ^6.1.0
@@ -82,6 +83,7 @@ dependencies:
 devDependencies:
   '@cypress/vite-dev-server': 2.0.3_vite@2.4.2
   '@cypress/vue': 3.0.1_cypress@8.0.0+vue@3.1.4
+  '@heroicons/vue': 1.0.3_vue@3.1.4
   '@intlify/vite-plugin-vue-i18n': 2.3.1_051ee7e0b3eb0e73c7f7aaac214df483
   '@tailwindcss/forms': 0.3.3_tailwindcss@2.2.4
   '@types/ledgerhq__hw-transport': 4.21.4
@@ -1432,6 +1434,14 @@ packages:
       protobufjs: 6.11.2
       utf8: 3.0.0
     dev: false
+
+  /@heroicons/vue/1.0.3_vue@3.1.4:
+    resolution: {integrity: sha512-pj1foeBadGwRDT3ldEQ3t+C6p8Yw7LDoINvemJpH3j6Xdpm0iO4014OL288nueBnPKY7/xrHSJwy0dZIum1Eyw==}
+    peerDependencies:
+      vue: '>= 3'
+    dependencies:
+      vue: 3.1.4
+    dev: true
 
   /@humanwhocodes/config-array/0.5.0:
     resolution: {integrity: sha512-FagtKFz74XrTl7y6HCzQpwDfXP0yhxe9lHLD1UZxjvZIcbyRz8zTFF/yYNfSfzU414eDwZ1SrO0Qvtyf+wFMQg==}
