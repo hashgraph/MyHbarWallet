@@ -70,6 +70,11 @@ module.exports = {
       white: "#fff",
       "Megaman-Helmet": "#165CFF",
       peach: "#fff7e7",
+      "harlocks-cape-2": "#bb0000",
+      "black-rooster": "#381414",
+      "candle-flame": "#fff4a1",
+      "jubilation": "#fbdd24",
+      "turbo": "#f5cc23",
     },
     fontFamily: {
       montserrat: ["Montserrat", "sans-serif"],
