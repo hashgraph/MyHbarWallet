@@ -41,14 +41,18 @@ describe("Keystore Create", () => {
             // Click on 'Continue'
             .get("[data-cy-keystore-submit]")
             .click()
-        cy.window().its("$router").invoke("push", { name: "access.software.keystore" });
 
+        // Read the data withing the newly downloaded keystore file
         cy.readFile("cypress/downloads/keystore.txt", { timeout: 3000 }).then(async (file) => {
             const encoder = new TextEncoder();
             const keystore = encoder.encode(file);
             privateKey = await PrivateKey.fromKeystore(keystore, this.password);
         }).then(() => {
+
+            // Navigate to home directory
             cy.visit("/")
+
+                // Set network selector to test net
                 .get("[data-cy-network-selector]")
                 .filter(":visible")
                 .click()
@@ -58,21 +62,32 @@ describe("Keystore Create", () => {
                         .filter(":visible")
                         .click();
                 })
+
+                // Click Access Link
                 .get("[data-cy-access-link]")
                 .filter(":visible")
                 .click()
+
+                // Click software login option
                 .get("[data-cy-option]")
                 .contains("Software")
                 .filter(":visible")
                 .click()
+
+                // Navigate to private key login
                 .get("[data-cy-option]")
                 .contains("Private")
                 .filter(":visible")
                 .click()
+
+                // Type the private key we received from the keystore file
                 .get("[data-cy-key-input] input")
                 .type(privateKey?.toString() ?? "")
+
+                // Submit
                 .get("[data-cy-key-submit]")
                 .click()
+
                 //Check QR code exists
                 .get("[data-cy-qr-code]")
                 .should("exist")
