@@ -2,29 +2,30 @@
   <Switch
     v-model="state.hasPassword"
     data-cy-pass-toggle
+    class="mb-4 relative z-10"
     :label="label"
     @update:modelValue="handleToggled"
   />
 
   <div
     :class="{
-      'h-14': !confirm && !hint && state.hasPassword,
-      'h-32': confirm && !hint && state.hasPassword,
+      'h-20': !confirm && !hint && state.hasPassword,
+      'h-52': confirm && !hint && state.hasPassword,
       'h-40': !confirm && hint && state.hasPassword,
-      'h-56 sm:h-60': confirm && hint && state.hasPassword,
+      'h-72': confirm && hint && state.hasPassword,
     }"
   >
     <div
       class="transition-all duration-300 ease-in-out overflow-y-hidden"
       :class="{
         'opacity-100': state.hasPassword,
-        'h-0 -mt-14 opacity-0 pointer-events-none invisible':
+        '-mt-20 opacity-0 pointer-events-none invisible':
           !state.hasPassword && !confirm && !hint,
-        'h-0 -mt-32 opacity-0 pointer-events-none invisible':
+        '-mt-52 opacity-0 pointer-events-none invisible':
           !state.hasPassword && confirm && !hint,
-        'h-0 -mt-40 opacity-0 pointer-events-none invisible':
+        '-mt-40 opacity-0 pointer-events-none invisible':
           !state.hasPassword && !confirm && hint,
-        'h-0 -mt-56 sm:-mt-60 opacity-0 pointer-events-none invisible':
+        '-mt-72 opacity-0 pointer-events-none invisible':
           !state.hasPassword && confirm && hint
       }"
     >

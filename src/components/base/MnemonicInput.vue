@@ -85,7 +85,7 @@ export default defineComponent({
     const focused = ref<number | null>(null);
 
     //Create array of refs for the input to determine if input is blank in isBlank()
-    const inputRefs: Ref<Ref<string>[]> = ref([] as Ref<string>[])
+    const inputRefs: Ref<Ref<HTMLInputElement | string>[]> = ref([] as Ref<HTMLInputElement | string>[])
     for(let i = 0; i < props.wordCount; i++){
       inputRefs.value.push(ref(`mnemonic:${i + 1}`))
     }
@@ -124,7 +124,7 @@ export default defineComponent({
     }
 
     function isBlank(index: number): boolean {
-      if(inputRefs?.value[index - 1]?.value) return false;
+      if((inputRefs?.value[index - 1]?.value as HTMLInputElement)?.value) return false;
       return true;
     }
 

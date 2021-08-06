@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
@@ -68,18 +68,17 @@ export default defineComponent({
     const mnemonicPhrase = ref<string[]>([]);
     const verifyPhrase = ref<string[]>([]);
 
-    onMounted(() => {
-      if (store.wallet != null) {
-        try {
-          mnemonicPhrase.value = (store.wallet as MnemonicSoftwareWallet).getMnemonic().words;
-          password.value = (store.wallet as MnemonicSoftwareWallet).getPassword();
-        } catch (error) {
-          router.push({ name: "create" });
-        }
-      } else {
+    if (store.wallet != null) {
+      try {
+        mnemonicPhrase.value = (store.wallet as MnemonicSoftwareWallet).getMnemonic().words;
+        password.value = (store.wallet as MnemonicSoftwareWallet).getPassword();
+      } catch (error) {
         router.push({ name: "create" });
       }
-    });
+    } else {
+      router.push({ name: "create" });
+    }
+    
 
     async function handleSubmit(): Promise<void> {
       errorMessage.value = "";
