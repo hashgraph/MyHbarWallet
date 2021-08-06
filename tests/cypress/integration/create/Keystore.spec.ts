@@ -42,7 +42,7 @@ describe("Keystore Create", () => {
             .get("[data-cy-keystore-submit]")
             .click()
 
-        // Read the data withing the newly downloaded keystore file
+        // Read the data within the newly downloaded keystore file
         cy.readFile("cypress/downloads/keystore.txt", { timeout: 3000 }).then(async (file) => {
             const encoder = new TextEncoder();
             const keystore = encoder.encode(file);
