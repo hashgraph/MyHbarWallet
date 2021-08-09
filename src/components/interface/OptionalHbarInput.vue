@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative z-10">
     <Switch
       v-model="isOpen"
       :label="$t('InterfaceHomeSend.section2.toggle2.label')"

@@ -306,7 +306,7 @@
     "Network.preview": "previewnet",
     "Network.testnet": "testnet",
     "OptionalMemo.aboutMemo": "Optionally add up to 100 characters. Memos can be useful for reference information and some exchanges require them for deposits.",
-    "OptionalMemo.addMemo": "Add Memo",
+    "OptionalMemo.addMemo": "Memo",
     "ourHelpfulConversionTool": "Our helpful conversion tool and hbar unit reference allow you to calculate your total transaction cost.",
     "Pages.404.Sorry": "Sorry, no currency here!",
     "PrivacyPolicy.changesToPrivacyPolicy": "CHANGES TO PRIVACY POLICY",

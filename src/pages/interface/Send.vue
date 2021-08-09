@@ -5,7 +5,7 @@
   />
 
   <div
-    class="pb-10 mt-8 font-medium border-b text-carbon dark:text-silver-polish border-cerebral-grey dark:border-midnight-express"
+    class="pb-10 mt-8 border-b text-carbon dark:text-silver-polish border-cerebral-grey dark:border-midnight-express"
   >
     <div class="lg:align-baseline lg:m-auto lg:grid lg:grid-flow-col lg:grid-cols-2 lg:gap-16 flex flex-wrap items-center">
       <div class="w-full lg:h-full">
@@ -25,7 +25,7 @@
         </div>
 
         <div
-          class="p-4 font-medium bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express"
+          class="p-4 bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express"
         >
           <TransferForm
             v-model:to="state.transfer.to"
@@ -40,15 +40,15 @@
         <p class="mb-2">
           {{ $t("InterfaceSend.options") }}
         </p>
-        <div class="p-10 pt-4 font-medium bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full">
+        <div class="p-8 pr-10 pl-10 pt-4 z-10 relative bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full">
           <OptionalMemo
             v-model="state.memo"
-            class="mb-4"
+            class="mb-8 mt-4"
           />
 
           <OptionalHbarInput @update:model-value="updateMaxFee" />
 
-          <p class="mt-4 italic text-squant dark:text-silver-polish text-sm">
+          <p class="mt-4 p-4 italic text-squant dark:text-silver-polish dark:bg-dreamless-sleep rounded shadow-md border border-transparent dark:border-midnight-express">
             {{ $t("InterfaceSend.max.transaction.fee") }}
           </p>
         </div>
@@ -69,7 +69,7 @@
     v-if="state.generalErrorText != null"
     class="px-4 py-3 mx-auto mt-10 -mb-8 rounded bg-unburdened-pink w-max"
   >
-    <div class="text-sm font-medium text-center text-harlocks-cape">
+    <div class="text-center text-harlocks-cape">
       {{ state.generalErrorText }}
     </div>
   </div>
@@ -208,7 +208,7 @@ export default defineComponent({
         await store.client.transfer({
           transfers: [state.transfer],
           memo: state.memo ?? "",
-          maxFee: state.maxFee ?? null,
+          maxFee: state.maxFee?.toBigNumber() ?? new Hbar(2).toBigNumber(),
           onBeforeConfirm() {
             state.sendBusyText = "Waiting for confirmation …";
           },

@@ -15,7 +15,7 @@
       />
     </div>
     <span
-      class="text-sm font-medium text-carbon dark:text-white ml-2.5"
+      class="text-sm font-medium text-carbon dark:text-silver-polish ml-2.5"
       @click="$emit('update:modelValue', !modelValue)"
     >{{ label }}</span>
   </div>

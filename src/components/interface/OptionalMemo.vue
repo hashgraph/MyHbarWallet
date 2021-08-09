@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative z-10">
     <Switch
       v-model="state.addMemo"
       :label="$t('OptionalMemo.addMemo')"
@@ -21,7 +21,7 @@
     />
 
     <div
-      class="text-sm italic w-full text-squant dark:text-silver-polish mt-4"
+      class="italic w-full text-squant mt-4 dark:bg-dreamless-sleep p-4 dark:text-silver-polish rounded shadow-md border border-transparent dark:border-midnight-express"
     >
       {{ $t("OptionalMemo.aboutMemo") }}
     </div>

@@ -6,7 +6,7 @@
     <!-- Current Asset -->
     <div
       ref="trigger"
-      class="border border-cerebral-grey h-[50px] flex items-center pl-2 pr-5 cursor-pointer select-none rounded hover:bg-lynx-white dark:hover:bg-midnight-express dark:bg-ruined-smores dark:text-argent dark:border-midnight-express overflow-auto"
+      class="border border-cerebral-grey  h-[50px] flex items-center pl-2 pr-5 cursor-pointer select-none rounded hover:bg-lynx-white dark:hover:bg-midnight-express dark:bg-ruined-smores dark:text-argent dark:border-midnight-express overflow-auto"
       :class="{
         'bg-lynx-white dark:bg-midnight-express': groupFocus,
       }"
@@ -63,7 +63,7 @@
           ref="searchInput"
           v-model="searchTerm"
           autofocus
-          class="w-full border-cerebral-grey h-[50px] px-5 placeholder-squant rounded-t focus:ring-0 focus:border-cerebral-grey dark:bg-midnight-express"
+          class="w-full border-cerebral-grey h-[50px] px-5 placeholder-squant rounded-t focus:ring-0 dark:border-midnight-express focus:border-han-blue-700 dark:bg-midnight-express dark:focus:border-border-han-blue-700"
           type="text"
           placeholder="Search assets …"
           @keydown="onKeyDown"
@@ -79,7 +79,7 @@
           >
             <div
               ref="setOptionRef"
-              class="h-[50px] flex items-center px-5 hover:bg-lynx-white dark:hover:bg-midnight-express cursor-pointer last:rounded-b"
+              class="h-[50px] flex items-center px-5 hover:bg-lynx-white dark:hover:bg-midnight-express dark:hover:border-han-blue-700 cursor-pointer last:rounded-b dark:border-midnight-express"
               :class="{
                 'bg-lynx-white dark:bg-midnight-express': focusIndex === index,
                 '!bg-first-snow dark:!bg-midnight-express':
