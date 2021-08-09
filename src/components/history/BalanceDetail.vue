@@ -62,7 +62,7 @@ export default defineComponent({
       {
         account: "0.0.22098",
         transaction: 0.00367,
-        balance: Number,
+        balance: 1,
       },
     ]);
     console.log(TransferList.value);

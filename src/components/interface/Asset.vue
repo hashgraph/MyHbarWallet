@@ -40,10 +40,12 @@
         </div>
       </div>
     </div>
+
     <BannerError
       v-if="error"
       class="m-1"
     />
+    
     <BannerFrozenAsset
       v-if="frozen"
       class="m-1"
