@@ -1,40 +1,32 @@
 <template>
   <div class="dark:text-white">
-    <div class="mb-3">
-      <span> {{ $t("BasePasswordStrength.password.strength") }}  </span>
-      <span
-        :class="{
-          'text-black-rooster': stars == 1,
-          'text-harlocks-cape': stars == 2,
-          'text-tangerine': stars == 3,
-          'text-turbo': stars == 4,
-          'text-mountain-meadow': stars == 5
-        }"
-      > {{ strength }} </span>
-    </div>
-
     <!-- Render stars -->
     <!-- TODO: Replace with HeroIcons after merged -->
     <div
-      v-for="i in stars"
-      :key="i"
-      class="flex float-left mr-2"
+      class="flex float-left w-full"
       :class="{
-        'text-black-rooster': stars == 1,
-        'text-harlocks-cape': stars == 2,
-        'text-tangerine': stars == 3,
-        'text-jubilation': stars == 4,
-        'text-mountain-meadow': stars == 5
+        'text-little-red-corvette dark:text-devils-advocate': stars == 1,
+        'text-reddish-purple dark:text-creamed-raspberry': stars == 2,
+        'text-purple-cabbage dark:text-sugar-grape': stars == 3,
+        'text-siniy-blue dark:text-clear-blue': stars == 4,
+        'text-starfleet-blue dark:text-athena-blue': stars == 5
       }"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5"
-        viewBox="0 0 20 20"
-        fill="currentColor"
+      <span class="mr-2 w-1/5 font-bold"> {{ strength }} </span>
+      <div
+        v-for="i in stars"
+        :key="i"
+        class="mr-2"
       >
-        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-      </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 "
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      </div>
     </div>
     <br>
   </div>
