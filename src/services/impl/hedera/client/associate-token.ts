@@ -7,7 +7,7 @@ export async function associateToken(
         tokens: TokenId[];
     }
 ): Promise<void> {
-  const { TokenAssociateTransaction, Hbar, Status, StatusError } =
+  const { TokenAssociateTransaction, Hbar } =
         await import("@hashgraph/sdk");
 
   const associateTransaction = new TokenAssociateTransaction()
@@ -18,13 +18,6 @@ export async function associateToken(
   try {
     await (await associateTransaction.execute(client)).getReceipt(client);
   } catch (err) {
-    if (err instanceof StatusError) {
-      if (err.status === Status.TokenAlreadyAssociatedToAccount) {
-        // That's fine then
-        return;
-      }
-    }
-
     throw err;
   }
 }
