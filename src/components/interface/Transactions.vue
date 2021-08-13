@@ -1,11 +1,11 @@
 <template>
-  <div class="relative md:flex-grow">
+  <div class="relative md:flex-grow overflow-y-auto">
     <div
       v-if="!hideHeader"
       class="flex justify-between pb-5"
     >
       <div
-        class="flex justify-between text-xl font-semibold leading-6  text-black-out dark:text-white"
+        class="flex justify-between text-xl font-semibold leading-6 text-black-out dark:text-white"
       >
         {{ $t("Transactions.Recent") }}
       </div>
@@ -17,90 +17,138 @@
       > -->
     </div>
 
-    <div class="filter blur-sm">
-      <Transaction
-        title="Transfer"
-        account="0.0.5678"
-        time-ago="14 secs ago"
-        transaction="+0.01 HBAR"
-        fee="-0.0025"
-      />
+    <Hint text="Further transaction history support coming soon!" />
 
+    <div
+      v-for="transaction in paginated"
+      :key="transaction.id"
+    >
       <Transaction
-        title="Transfer"
-        account="0.0.96352"
-        time-ago="14 secs ago"
-        transaction="-0.01 HBAR "
-        fee="-0.0025"
-      />
-
-      <Transaction
-        title="Transfer"
-        account="0.0.3462"
-        time-ago="14 secs ago"
-        transaction="+0.01 HBAR"
-        fee="-0.0025"
-      />
-
-      <Transaction
-        title="Transfer"
-        account="0.0.96352"
-        time-ago="14 secs ago"
-        transaction="-0.01 HBAR "
-        fee="-0.0025"
-      />
-
-      <Transaction
-        title="Transfer"
-        account="0.0.96352"
-        time-ago="14 secs ago"
-        transaction="-0.01 HBAR"
-        fee="-0.0025"
-      />
-
-      <Transaction
-        title="Transfer"
-        account="0.0.3462"
-        time-ago="14 secs ago"
-        transaction="+0.01 HBAR"
-        fee="-0.0025"
+        :title="formatType(transaction.type.toString())"
+        :account="transaction.operatorAccountId.toString()"
+        :time-ago="timeElapsed(transaction.consensusAt)"
+        :transaction="sumTransfers(transaction.transfers)"
+        :fee="formatAmount(transaction.fee)"
       />
     </div>
 
+
+    <!-- TODO: Replace with HeroIcons, when available -->
     <div
-      class="absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full "
+      v-if="state.last > 1"
+      class="flex dark:text-silver-polish w-full items-center m-auto mt-6"
     >
-      <div class="text-xl font-bold dark:text-white">
-        {{ $t("Transactions.ComingSoon") }}
+      <div class="m-auto flex text-center items-center float-left">
+        <!-- If there are only two pages, no need to be able to jump to first and last pages -->
+        <div
+          v-if="state.last > 2"
+          class="m-4 cursor-pointer"
+          @click="first"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+            />
+          </svg>
+        </div>
+
+        <div
+          class="m-4 cursor-pointer"
+          @click="previous"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </div>
+
+        <div class="m-4">
+          {{ state.current + 1 }}
+        </div>
+
+        <div
+          class="m-4 cursor-pointer"
+          @click="next"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </div>
+
+        <!-- If there are only two pages, no need to be able to jump to first and last pages -->
+        <div
+          v-if="state.last > 2"
+          class="m-4 cursor-pointer"
+          @click="last"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 5l7 7-7 7M5 5l7 7-7 7"
+            />
+          </svg>
+        </div>
       </div>
-      <!-- TODO: once we have knowledge of the user's account ID and network put that in the url -->
-      <div class="dark:text-white">
-        {{ $t("Transactions.ViewRecent") }}
-      </div>
-      <a
-        target="_blank"
-        :href="kabutoLink"
-        class="mt-2 font-bold text-kabuto"
-      ><img
-        src="../../assets/logo_kabuto.svg"
-      ></a>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, onMounted, reactive } from "vue";
+import { TransactionRecord } from "@hashgraph/sdk";
 
 import { useStore } from "../../store";
 
 import Transaction from "./Transaction.vue";
+import Hint from "./Hint.vue";
+
 export default defineComponent({
   name: "Transactions",
-  components: { Transaction },
+  components: { Transaction, Hint },
   props: {
     hideHeader: { type: Boolean, default: false },
+    pageSize: { type: String, default: "25", required: false },
+    filter: { type: String, default: "all", required: false }
   },
-  setup() {
+  setup(props) {
     const store = useStore();
     const accountId = computed(() => store.accountId);
     const kabutoLink = computed(() => {
@@ -113,9 +161,141 @@ export default defineComponent({
           return "";
       }
     });
+
+    const paginated = computed(()=> {
+      return filtered.value?.slice(state.current * state.pageSize, (state.current * state.pageSize) + state.pageSize);
+    });
+
+    const filtered = computed(()=>{
+      if(props.filter == "all") return state.latestTransactions;
+      let filtered = [] as TransactionRecord[];
+      for(let i in state.latestTransactions){
+        if(state.latestTransactions[i].type == "TRANSFER"){
+          if(props.filter == "sent" && state.latestTransactions[i].id.split("@")[0] == accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
+          if(props.filter == "received" && state.latestTransactions[i].id.split("@")[0] != accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
+        }
+      }
+      return filtered;
+    });
+
+    const state = reactive({
+      latestTransactions: [] as TransactionRecord[] | undefined,
+      paginated: [] as TransactionRecord[] | undefined,
+      pageSize: Number(props.pageSize),
+      current: 0,
+      previous: 0,
+      next: 0,
+      first: 0,
+      last: 0,
+    });
+
+    onMounted(async ()=>{
+      state.latestTransactions = await getLatestTransactions();
+      if(state.pageSize < filtered.value?.length){
+        state.current = 0,
+        state.next = 1,
+        state.previous = -1;
+        state.last = Math.ceil(filtered.value?.length/ state.pageSize);
+      }
+    });
+
+    function previous(): void{
+      if(state.current == 0) return;
+      else if(state.previous == 0){
+        state.current -= 1;
+        state.previous = -1;
+        state.next -= 1;
+      } else {
+        state.current -= 1;
+        state.previous -=1;
+        state.next -= 1;
+      }
+    }
+
+    function next(): void{
+      if(state.current == state.last - 1) return;
+      else if(state.next == state.last){
+        state.current += 1;
+        state.previous += 1;
+        state.next = state.last;
+      } else {
+        state.current += 1;
+        state.previous += 1;
+        state.next += 1;
+      }
+    }
+
+    function first(): void{
+      state.current = 0;
+      state.previous = -1;
+      state.next = 1;
+    }
+
+    function last(): void{
+      state.current = state.last - 1;
+      state.previous = state.current - 1;
+      state.next = state.last;
+    }
+
+    async function getLatestTransactions(): Promise<TransactionRecord[] | undefined>{
+      return await store.client?.getAccountRecords();
+    }
+
+    //Time elapsed since consensus
+    function timeElapsed(date: string): string{
+      const current: Date = new Date(Date.now());
+      const consensus: Date = new Date(date);
+      const elapsed = Math.abs(current-consensus);
+
+      const days = Math.floor(elapsed / (24 * 60 * 60 * 1000));
+      const hours = Math.floor((elapsed % (24 * 60 * 60 * 1000))/(60 * 60 * 1000));
+      const minutes = Math.floor((elapsed % (60 * 60 * 1000)) / (60 * 1000));
+      const seconds = Math.floor( (elapsed % (60 * 1000))/1000);      
+
+      return `${formatTime(days, "d")}${formatTime(hours, "h")}${formatTime(minutes, "m")}${formatTime(seconds, "s")}`;
+    }
+
+    //Helper function for timeElapsed
+    function formatTime(time: number, unit: string): string{
+      if(time > 0) return `${time}${unit} `;
+      return '';
+    }
+  
+    function sumTransfers(transfers: []): string{
+      let sum = 0;
+      for(let i in transfers){
+        if(transfers[i].amount > 0) sum += transfers[i].amount;
+      }
+      return formatAmount(sum);
+    }
+
+    //Format value to print in Hbar
+    function formatAmount(value: number): string{
+      return `${parseFloat((value/100000000).toFixed(8))}ℏ`;
+    }
+
+    function formatType(type: string): string{
+      let words = type.split("_");
+      let formatted = "";
+      for(let i in words){
+        formatted += words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase() + " ";
+      }
+      return formatted.trim();
+    }
+
     return {
       accountId,
       kabutoLink,
+      state,
+      timeElapsed,
+      sumTransfers,
+      formatAmount,
+      formatType,
+      previous,
+      next,
+      paginated,
+      first,
+      last
     };
   },
 });

@@ -1,6 +1,5 @@
 <template>
-  <router-link
-    :to="{ name: 'transaction' }"
+  <div
     class="flex items-center justify-between h-20 mb-1 border-b  border-jupiter dark:border-midnight-express"
   >
     <Identicon class="w-10 h-10 mr-2" />
@@ -33,7 +32,7 @@
         </div>
       </div>
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script lang="ts">
