@@ -9,43 +9,46 @@
     class="mt-4"
   />
 
-  <!-- TODO: TokenIdInput -->
-  <div class="flex flex-col max-w-lg m-auto mt-10">
-    <label class="font-medium text-squant dark:text-argent">
-      {{ $t("InterfaceToolTile.associateToken.label.tokenID") }}
-    </label>
+  <form @submit.prevent="handleAssociate">
+    <div class="flex flex-col max-w-lg m-auto mt-10">
+      <label class="font-medium text-squant dark:text-argent">
+        {{ $t("InterfaceToolTile.associateToken.label.tokenID") }}
+      </label>
 
-    <EntityIdInput
-      v-model="state.token"
-      type="token"
-      :placeholder="$t('InterfaceToolTile.associateToken.placeholder')"
-    />
+      <EntityIdInput
+        data-cy-token-id
+        v-model="state.token"
+        type="token"
+        :placeholder="$t('InterfaceToolTile.associateToken.placeholder')"
+      />
 
-    <InputError v-if="state.errorMessage.length > 0">
-      {{ state.errorMessage }}
-    </InputError>
-  </div>
+      <InputError data-cy-input-error v-if="state.errorMessage.length > 0">
+        {{ state.errorMessage }}
+      </InputError>
+    </div>
 
-  <div class="mt-48 border-b border-cerebral-grey" />
+    <div class="mt-48 border-b border-cerebral-grey" />
 
-  <div class="flex flex-col items-center max-w-lg m-auto">
-    <Button
-      color="green"
-      class="w-full p-4 mt-10"
-      :disabled="state.token == null"
-      @click="handleAssociate"
-    >
-      {{ $t("InterfaceToolTile.associateToken.title") }}
-    </Button>
+    <div class="flex flex-col items-center max-w-lg m-auto">
+      <Button
+        data-cy-submit
+        type="submit"
+        color="green"
+        class="w-full p-4 mt-10"
+        :disabled="state.token == null"
+      >
+        {{ $t("InterfaceToolTile.associateToken.title") }}
+      </Button>
 
-    <Button
-      color="white"
-      :to="{ name: 'tools' }"
-      class="p-2 mt-4 w-36"
-    >
-      {{ $t("BaseButton.cancel") }}
-    </Button>
-  </div>
+      <Button
+        color="white"
+        :to="{ name: 'tools' }"
+        class="p-2 mt-4 w-36"
+      >
+        {{ $t("BaseButton.cancel") }}
+      </Button>
+    </div>
+  </form>
 </template>
 
 <script lang="ts">
