@@ -294,6 +294,7 @@
     "MnemonicPhrase.title": "Mnemonic Phrase",
     "Modal.Send.SuccessfullyTransferred": "Successfully transferred",
     "Modal.Send.ToAccount": "to account",
+    "Modal.AssociateToken": "Token successfully associated",
     "ModalCustomerService.accountIdIfAny": "Account ID (if any)",
     "ModalCustomerService.browser": "Browser",
     "ModalCustomerService.describeTheIssue": "Describe the issue",

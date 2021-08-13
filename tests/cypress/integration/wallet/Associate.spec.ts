@@ -19,46 +19,51 @@ describe("Tool: Associate Token", () => {
             .click();
     });
 
-    //TODO: refactor cypress commands to take credentials for client construction instead of 6189
-    //TODO: refactor test to create token as one account and associate as another
     it("can associate a token", async () => {
         let tokenId: string = "";
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        cy.createToken().then((_tokenId: string) => {
-            tokenId = _tokenId;
-        }).then(() => {
+        cy.createAccount(KEY_ACCOUNT_ID, KEY_PRIVATE_KEY).then((res) => {
+            const privateKey = res.tempPrivateKey.toString();
+            const accountId = res.receipt.accountId.toString();
+
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            cy.dissociateToken(tokenId)
-            }
-        ).then(() => {
-            cy.get("[data-cy-token-id] input")
-                .filter(":visible")
-                .type(tokenId)
-                .get("[data-cy-submit]")
-                .click()
-        })
+            cy.createToken(accountId, privateKey).then((_tokenId: string) => {
+                tokenId = _tokenId;
+            }).then((tokenId: string) => {
+                cy.get("[data-cy-token-id] input")
+                    .filter(":visible")
+                    .type(tokenId)
+                    .get("[data-cy-submit]")
+                    .click()
+                }
+            ).then(() => {
+                cy.get("[data-cy-success-modal]")
+                    .should("exist")
+                    .should("be.visible")
+            })
+        });
     });
 
-    // it("can identify an already associated token", async () => {
-    //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //     // @ts-ignore
-    //     cy.createToken().then((tokenId: string) => {
-    //         const tokenIdString = tokenId.toString();
-    //         if (tokenId) {
-    //             cy.get("[data-cy-token-id] input")
-    //                 .filter(":visible")
-    //                 .type(tokenIdString)
-    //                 .get("[data-cy-submit]")
-    //                 .click()
-    //                 .get("[data-cy-input-error]")
-    //                 .should("be.visible")
-    //                 .should("contain", "This account and token are already associated.")
-    //         }
-    //     });
-    //
-    // });
-    //
-    // it("can identify a token that requires KYC", () => {});
+    it("can identify an already associated token", async () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        cy.createToken(KEY_ACCOUNT_ID, KEY_PRIVATE_KEY).then((tokenId: string) => {
+            const tokenIdString = tokenId.toString();
+            if (tokenId) {
+                cy.get("[data-cy-token-id] input")
+                    .filter(":visible")
+                    .type(tokenIdString)
+                    .get("[data-cy-submit]")
+                    .click()
+                    .get("[data-cy-input-error]")
+                    .should("be.visible")
+                    .should("contain", "This account and token are already associated.")
+            }
+        });
+
+    });
+
+    //it("can identify a token that requires KYC", () => {});
 });

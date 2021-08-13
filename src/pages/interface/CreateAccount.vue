@@ -142,8 +142,7 @@ export default defineComponent({
       } catch (error) {
         state.errorMessage = await store.errorMessage(error);
       } finally {
-        if (state.publicKey != null) state.validKey = true;
-        else state.validKey = false;
+        state.validKey = state.publicKey != null;
       }
     }
 

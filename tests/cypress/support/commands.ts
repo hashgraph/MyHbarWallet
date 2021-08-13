@@ -33,13 +33,13 @@ Cypress.Commands.add("login", (privateKey: string, accountId: string) => {
     cy.window().its("$router").invoke("push", { name: "home" });
 });
 
-Cypress.Commands.add("createAccount", async () => {
+Cypress.Commands.add("createAccount", async (accountId, privateKey) => {
     let client;
 
     try {
         client = Client.forTestnet().setOperator(
-            AccountId.fromString(KEY_ACCOUNT_ID),
-            PrivateKey.fromString(KEY_PRIVATE_KEY),
+            AccountId.fromString(accountId),
+            PrivateKey.fromString(privateKey),
         );
     } catch {
         throw new Error(
@@ -48,9 +48,8 @@ Cypress.Commands.add("createAccount", async () => {
     }
 
     const newKey = PrivateKey.generate();
-
-    console.log(`private key = ${newKey}`);
-    console.log(`public key = ${newKey.publicKey}`);
+    const tempPrivateKey = newKey;
+    const tempPublicKey = newKey.publicKey;
 
     const response = await new AccountCreateTransaction()
         .setInitialBalance(new Hbar(10)) // 10 h
@@ -59,10 +58,12 @@ Cypress.Commands.add("createAccount", async () => {
 
     const receipt = await response.getReceipt(client);
 
-    console.log(`account id = ${receipt.accountId}`);
-
     if(receipt.accountId){
-        return (receipt.accountId.toString());
+        return ({
+            receipt,
+            tempPrivateKey,
+            tempPublicKey,
+        });
     }
 })
 
@@ -93,13 +94,13 @@ Cypress.Commands.add("dissociateToken", async (tokenId) => {
 
 Cypress.Commands.add(
     "createToken",
-    async () => {
+    async (accountId, privateKey) => {
         let client: Client | undefined;
 
         try {
             client = Client.forTestnet().setOperator(
-                AccountId.fromString(KEY_ACCOUNT_ID),
-                PrivateKey.fromString(KEY_PRIVATE_KEY),
+                AccountId.fromString(accountId),
+                PrivateKey.fromString(privateKey),
             );
         } catch {
             cy.log("environment variables not set");
@@ -107,8 +108,6 @@ Cypress.Commands.add(
 
         const key = client?.operatorPublicKey;
         const account = client?.operatorAccountId;
-
-
 
         if (client && key && account) {
             let res = await new TokenCreateTransaction()

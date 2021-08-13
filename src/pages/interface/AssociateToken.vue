@@ -49,6 +49,12 @@
       </Button>
     </div>
   </form>
+  <Modal
+      data-cy-success-modal
+      :is-visible="state.successModal"
+      :title="$t('Modal.AssociateToken')"
+      @close="handleClose"
+  />
 </template>
 
 <script lang="ts">
@@ -59,6 +65,7 @@ import Hint from "../../components/interface/Hint.vue";
 import Button from "../../components/base/Button.vue";
 import EntityIdInput from "../../components/base/EntityIdInput.vue";
 import InputError from "../../components/base/InputError.vue";
+import Modal from "../../components/interface/Modal.vue";
 import { useStore } from "../../store";
 
 export default defineComponent({
@@ -69,15 +76,22 @@ export default defineComponent({
     Button,
     EntityIdInput,
     InputError,
+    Modal,
   },
   setup() {
     const store = useStore();
     const state = reactive({
       token: null,
       errorMessage: "",
+      successModal: false,
     });
 
+    function handleClose(): void {
+      state.successModal = false;
+    }
+
     async function handleAssociate(): Promise<void> {
+      state.successModal = false
       state.errorMessage = "";
       const account = store.accountId;
       const token = state.token;
@@ -88,13 +102,14 @@ export default defineComponent({
             account,
             tokens: [token],
           });
+          state.successModal = true
         } catch (error) {
           state.errorMessage = await store.errorMessage(error);
         }
       }
     }
 
-    return { state, handleAssociate };
+    return { state, handleAssociate, handleClose };
   },
 });
 </script>
