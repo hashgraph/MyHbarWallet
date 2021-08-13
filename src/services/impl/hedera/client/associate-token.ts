@@ -16,7 +16,9 @@ export async function associateToken(
     .setMaxTransactionFee(new Hbar(1));
 
   try {
-    await (await associateTransaction.execute(client)).getReceipt(client);
+    await (
+      await associateTransaction.execute(client)
+    ).getReceipt(client);
   } catch (err) {
     throw err;
   }

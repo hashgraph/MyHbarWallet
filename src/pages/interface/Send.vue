@@ -162,7 +162,7 @@ export default defineComponent({
       if(state.transfer.asset === "HBAR"){
         return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${amount.value} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfer.to?.toString()}`
       }
-      return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${state.transfer.amount?.decimalPlaces(state.decimals)} ${state.symbol} ${i18n.t("InterfaceSend.modal.of")} ${state.tokenType} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfer.to?.toString()}`
+      return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${parseFloat(new BigNumber(state.transfer.amount ?? 0).toFixed(state.decimals))} ${state.symbol} ${i18n.t("InterfaceSend.modal.of")} ${state.tokenType} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfer.to?.toString()}`
     });
 
     onMounted(async () => {
