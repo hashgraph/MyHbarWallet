@@ -7,6 +7,7 @@ import {
     AccountCreateTransaction,
     Hbar,
     TokenDissociateTransaction,
+    TokenRevokeKycTransaction,
 } from "@hashgraph/sdk";
 
 const { KEY_PRIVATE_KEY, KEY_ACCOUNT_ID } = Cypress.env();
@@ -83,6 +84,31 @@ Cypress.Commands.add("dissociateToken", async (tokenId) => {
     const account = client?.operatorAccountId;
 
     if (client && key && account) {
+        let res = await new TokenRevokeKycTransaction()
+            .setAccountId(account)
+            .setTokenId(tokenId)
+            .execute(client);
+
+        await res.getReceipt(client);
+    }
+})
+
+Cypress.Commands.add("revokeKYC", async (tokenId) => {
+    let client: Client | undefined;
+
+    try {
+        client = Client.forTestnet().setOperator(
+            AccountId.fromString(KEY_ACCOUNT_ID),
+            PrivateKey.fromString(KEY_PRIVATE_KEY),
+        );
+    } catch {
+        cy.log("environment variables not set");
+    }
+
+    const key = client?.operatorPublicKey;
+    const account = client?.operatorAccountId;
+
+    if (client && key && account) {
         let res = await new TokenDissociateTransaction()
             .setAccountId(account)
             .setTokenIds([tokenId])
@@ -94,7 +120,7 @@ Cypress.Commands.add("dissociateToken", async (tokenId) => {
 
 Cypress.Commands.add(
     "createToken",
-    async (accountId, privateKey) => {
+    async (accountId, privateKey, kyc?: boolean) => {
         let client: Client | undefined;
 
         try {
@@ -110,20 +136,23 @@ Cypress.Commands.add(
         const account = client?.operatorAccountId;
 
         if (client && key && account) {
-            let res = await new TokenCreateTransaction()
+            let tx = new TokenCreateTransaction()
                 .setTokenName("ffff")
                 .setTokenSymbol("F")
                 .setDecimals(3)
                 .setInitialSupply(100)
                 .setAdminKey(key)
                 .setTreasuryAccountId(account)
-                .execute(client);
+
+                if (kyc) tx.setKycKey(key);
+
+                const res = await tx.execute(client);
 
             const tokenId = (await res.getReceipt(client)).tokenId;
             if(tokenId){
                 return tokenId.toString();
             } {
-                cy.log("unable to perform toke")
+                cy.log("unable to perform token creation")
             }
         }
         {

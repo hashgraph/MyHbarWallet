@@ -1,5 +1,6 @@
 describe("Tool: Associate Token", () => {
     const { KEY_PRIVATE_KEY, KEY_ACCOUNT_ID } = Cypress.env();
+    let tokenId: string = "";
 
     beforeEach(() => {
         cy.viewport("macbook-13");
@@ -20,7 +21,6 @@ describe("Tool: Associate Token", () => {
     });
 
     it("can associate a token", async () => {
-        let tokenId: string = "";
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         cy.createAccount(KEY_ACCOUNT_ID, KEY_PRIVATE_KEY).then((res) => {
@@ -64,6 +64,4 @@ describe("Tool: Associate Token", () => {
         });
 
     });
-
-    //it("can identify a token that requires KYC", () => {});
 });
