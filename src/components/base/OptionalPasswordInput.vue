@@ -8,7 +8,7 @@
   />
 
   <div
-    class="overflow-y-hidden"
+    class="overflow-y-hidden ease-in-out"
     :class="{
       'h-20': !confirm && !hint && state.hasPassword,
       'h-52': confirm && !hint && state.hasPassword,
@@ -17,7 +17,7 @@
     }"
   >
     <div
-      class="transition-all duration-300 ease-in-out relative"
+      class="transition-all duration-300 relative"
       :class="{
         'opacity-100': state.hasPassword,
         '-mt-20 invisible opacity-0':

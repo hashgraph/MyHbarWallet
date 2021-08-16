@@ -15,14 +15,13 @@
         read-only
       />
    
-      <div class = "ease-in-out">
       <OptionalPasswordInput
         v-model="password"
         :label="$t('BaseOptionalPasswordInput.label1')"
         :placeholder="$t('BasePasswordInput.input1.placeholder4')"
         confirm
       />
-    </div>
+      
       <Button
         type="submit"
         color="green"
