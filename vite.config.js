@@ -29,6 +29,9 @@ export default async function ({ mode }) {
                 "grpc-web.previewnet.myhbarwallet.com",
                 "grpc-web.myhbarwallet.com",
                 "api.coingecko.com",
+                "api.iconify.design",
+                "api.unisvg.com"
+
             ].join(" "),
         "font-src 'self' data:",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
@@ -47,7 +50,7 @@ export default async function ({ mode }) {
             vueI18n({
                 include: path.resolve(__dirname, "./locales/**"),
             }),
-            VitePWA()
+            VitePWA(),
         ],
         resolve: {
             alias: {
