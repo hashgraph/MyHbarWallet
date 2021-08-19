@@ -1,6 +1,5 @@
 import { BigNumber } from "bignumber.js";
-
-import type { AccountId, FileId, PrivateKey, PublicKey, TokenId, TransactionRecord, TokenInfo } from "@hashgraph/sdk";
+import type { AccountId, FileId, PrivateKey, PublicKey, TokenId, TokenInfo } from "@hashgraph/sdk";
 
 import { Wallet } from "../domain/wallet/abstract";
 export interface SimpleTransfer {
@@ -80,7 +79,7 @@ export interface SimpleHederaClient {
         fileId: FileId
     }): Promise<Uint8Array | null>;
 
-    getAccountRecords(): Promise<TransactionRecord[]>;
+    getAccountRecords(): Promise<[]>;
 
     getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>;
 }

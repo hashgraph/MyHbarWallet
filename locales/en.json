@@ -128,6 +128,8 @@
     "InterfaceHistory.button.all": "All",
     "InterfaceHistory.button.received": "Received",
     "InterfaceHistory.button.sent": "Sent",
+    "InterfaceHistory.button.account": "Account",
+    "InterfaceHistory.button.tokens": "Tokens",
     "InterfaceHistory.header": "History",
     "InterfaceHome.button.buy": "Buy",
     "InterfaceHome.button.send": "Send",

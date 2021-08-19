@@ -45,7 +45,7 @@ export const useStore = defineStore({
       prompt: false,
       logoutConfirm: false,
       contactSupport: false,
-      kabutoServerAddress: "https://v2.api.testnet.kabuto.sh"
+      kabutoServerAddress: "https://v2.api.mainnet.kabuto.sh"
     };
   },
 
@@ -94,6 +94,7 @@ export const useStore = defineStore({
 
     setNetwork(name: "mainnet" | "testnet" | "previewnet") {
       this.network = name;
+      this.kabutoServerAddress = `https://v2.api.${name}.kabuto.sh`;
     },
 
     setKabutoServerAddress(address: string){

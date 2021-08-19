@@ -32,7 +32,14 @@
       />
     </div>
 
-
+    <InputError
+      v-if="state.error != ''"
+    >
+      {{
+        state.error
+      }}
+    </InputError>
+  
     <!-- TODO: Replace with HeroIcons, when available -->
     <div
       v-if="state.last > 1"
@@ -133,16 +140,17 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, reactive } from "vue";
-import { TransactionRecord } from "@hashgraph/sdk";
 
 import { useStore } from "../../store";
+import InputError from "../base/InputError.vue";
+
 
 import Transaction from "./Transaction.vue";
 import Hint from "./Hint.vue";
 
 export default defineComponent({
   name: "Transactions",
-  components: { Transaction, Hint },
+  components: { Transaction, Hint, InputError },
   props: {
     hideHeader: { type: Boolean, default: false },
     pageSize: { type: String, default: "25", required: false },
@@ -151,16 +159,6 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
     const accountId = computed(() => store.accountId);
-    const kabutoLink = computed(() => {
-      switch (store.network) {
-        case "mainnet":
-          return `https://explorer.kabuto.sh/mainnet/id/${accountId.value}`;
-        case "testnet":
-          return `https://explorer.kabuto.sh/testnet/id/${accountId.value}`;
-        default:
-          return "";
-      }
-    });
 
     const paginated = computed(()=> {
       return filtered.value?.slice(state.current * state.pageSize, (state.current * state.pageSize) + state.pageSize);
@@ -168,34 +166,45 @@ export default defineComponent({
 
     const filtered = computed(()=>{
       if(props.filter == "all") return state.latestTransactions;
-      let filtered = [] as TransactionRecord[];
+      let filtered = [];
       for(let i in state.latestTransactions){
-        if(state.latestTransactions[i].type == "TRANSFER"){
-          if(props.filter == "sent" && state.latestTransactions[i].id.split("@")[0] == accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
-          if(props.filter == "received" && state.latestTransactions[i].id.split("@")[0] != accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
+        if(props.filter == "sent" || props.filter == "received"){
+          if(state.latestTransactions[i].type === "TRANSFER"){
+            if(props.filter == "sent" && state.latestTransactions[i].id.split("@")[0] === accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
+            if(props.filter == "received" && state.latestTransactions[i].id.split("@")[0] !== accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
+          }
+        } else if (props.filter == "tokens"){
+          if(state.latestTransactions[i].type.includes("TOKEN")) filtered.push(state.latestTransactions[i]);
+        } else if (props.filter == "account"){
+          if(state.latestTransactions[i].type.includes("ACCOUNT")) filtered.push(state.latestTransactions[i]);
         }
       }
       return filtered;
     });
 
     const state = reactive({
-      latestTransactions: [] as TransactionRecord[] | undefined,
-      paginated: [] as TransactionRecord[] | undefined,
+      latestTransactions: [],
+      paginated: [],
       pageSize: Number(props.pageSize),
       current: 0,
       previous: 0,
       next: 0,
       first: 0,
       last: 0,
+      error: ""
     });
 
     onMounted(async ()=>{
-      state.latestTransactions = await getLatestTransactions();
-      if(state.pageSize < filtered.value?.length){
-        state.current = 0,
-        state.next = 1,
-        state.previous = -1;
-        state.last = Math.ceil(filtered.value?.length/ state.pageSize);
+      try{
+        state.latestTransactions = await getLatestTransactions();
+          if(state.pageSize < filtered.value?.length){
+            state.current = 0,
+            state.next = 1,
+            state.previous = -1;
+            state.last = Math.ceil(filtered.value?.length/ state.pageSize);
+          }
+      } catch(error){
+        state.error = await store.errorMessage(error);
       }
     });
 
@@ -237,7 +246,7 @@ export default defineComponent({
       state.next = state.last;
     }
 
-    async function getLatestTransactions(): Promise<TransactionRecord[] | undefined>{
+    async function getLatestTransactions(): Promise<[] | undefined>{
       return await store.client?.getAccountRecords();
     }
 
@@ -284,8 +293,6 @@ export default defineComponent({
     }
 
     return {
-      accountId,
-      kabutoLink,
       state,
       timeElapsed,
       sumTransfers,

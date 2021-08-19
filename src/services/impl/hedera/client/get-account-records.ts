@@ -1,17 +1,15 @@
-import { useStore} from "../../../../store";
+import axios from "axios";
 
-import type { TransactionRecord } from "@hashgraph/sdk";
+import { useStore } from "../../../../store";
 
-export async function getAccountRecords(): Promise<TransactionRecord[]>{
-    const axios = await import("axios");
+export async function getAccountRecords(): Promise<[]>{
     const store = useStore();
     const serverAddress = store.kabutoServerAddress;
     const accountId = store.accountId;
 
-    const resp = await axios.get(`${serverAddress}/account/${accountId}/transaction`)
+    const resp = await axios.get(`${serverAddress}/transaction?entity=${accountId}`)
         .catch( (error)=>{
             throw new Error(error);
         });
-
-    return resp.data.transactions as TransactionRecord[];
+    return resp.data.transactions;
 }

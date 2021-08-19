@@ -29,7 +29,8 @@ export default async function ({ mode }) {
                 "grpc-web.previewnet.myhbarwallet.com",
                 "grpc-web.myhbarwallet.com",
                 "api.coingecko.com",
-                "v2.api.testnet.kabuto.sh"
+                "v2.api.testnet.kabuto.sh",
+                "v2.api.mainnet.kabuto.sh"
             ].join(" "),
         "font-src 'self' data:",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
