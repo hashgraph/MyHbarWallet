@@ -151,16 +151,6 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
     const accountId = computed(() => store.accountId);
-    const kabutoLink = computed(() => {
-      switch (store.network) {
-        case "mainnet":
-          return `https://explorer.kabuto.sh/mainnet/id/${accountId.value}`;
-        case "testnet":
-          return `https://explorer.kabuto.sh/testnet/id/${accountId.value}`;
-        default:
-          return "";
-      }
-    });
 
     const paginated = computed(()=> {
       return filtered.value?.slice(state.current * state.pageSize, (state.current * state.pageSize) + state.pageSize);
@@ -170,9 +160,15 @@ export default defineComponent({
       if(props.filter == "all") return state.latestTransactions;
       let filtered = [] as TransactionRecord[];
       for(let i in state.latestTransactions){
-        if(state.latestTransactions[i].type == "TRANSFER"){
-          if(props.filter == "sent" && state.latestTransactions[i].id.split("@")[0] == accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
-          if(props.filter == "received" && state.latestTransactions[i].id.split("@")[0] != accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
+        if(props.filter == "sent" || props.filter == "received"){
+          if(state.latestTransactions[i].type === "TRANSFER"){
+            if(props.filter == "sent" && state.latestTransactions[i].id.split("@")[0] === accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
+            if(props.filter == "received" && state.latestTransactions[i].id.split("@")[0] !== accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
+          }
+        } else if (props.filter == "tokens"){
+          if(state.latestTransactions[i].type.includes("TOKEN")) filtered.push(state.latestTransactions[i]);
+        } else if (props.filter == "account"){
+          if(state.latestTransactions[i].type.includes("ACCOUNT")) filtered.push(state.latestTransactions[i]);
         }
       }
       return filtered;
@@ -284,8 +280,6 @@ export default defineComponent({
     }
 
     return {
-      accountId,
-      kabutoLink,
       state,
       timeElapsed,
       sumTransfers,
