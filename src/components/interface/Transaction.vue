@@ -1,5 +1,7 @@
 <template>
-  <div
+  <router-link
+    :to=" { name: 'transaction', params: { transactionHash: transactionHash } }"
+
     class="flex items-center justify-between h-20 mb-1 border-b  border-jupiter dark:border-midnight-express"
   >
     <Identicon class="w-10 h-10 mr-2" />
@@ -32,7 +34,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script lang="ts">
@@ -41,6 +43,7 @@ import { computed, defineComponent } from "vue";
 import { useScreen } from "../../hooks/screen";
 
 import Identicon from "./Identicon.vue";
+
 
 export default defineComponent({
   name: "Transaction",
@@ -51,6 +54,7 @@ export default defineComponent({
     timeAgo: { type: String, required: true },
     transaction: { type: String, required: true },
     fee: { type: String, required: true },
+    transactionHash: { type: String, required: true}
   },
   setup(props) {
     const md = useScreen("md");
@@ -78,7 +82,11 @@ export default defineComponent({
       return props.transaction;
     });
 
-    return { truncatedTransaction };
+    const transactionHash = computed( ()=>{
+      return props.transactionHash;
+    });
+    
+    return { truncatedTransaction, transactionHash };
   },
 });
 </script>

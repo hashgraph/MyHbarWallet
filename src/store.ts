@@ -28,7 +28,7 @@ interface State {
     logoutConfirm: boolean;
     //contact customer support. open state
     contactSupport: boolean;
-    kabutoServerAddress: string
+    kabutoServerAddress: string;
 }
 
 export const useStore = defineStore({
@@ -45,7 +45,7 @@ export const useStore = defineStore({
       prompt: false,
       logoutConfirm: false,
       contactSupport: false,
-      kabutoServerAddress: "https://v2.api.testnet.kabuto.sh"
+      kabutoServerAddress: "https://v2.api.testnet.kabuto.sh",
     };
   },
 

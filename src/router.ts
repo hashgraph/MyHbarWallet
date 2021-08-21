@@ -214,6 +214,7 @@ const routes = [
             component: InterfaceTransactionDetails,
             path: "transaction",
             name: "transaction",
+            props: true
           },
         ],
       },

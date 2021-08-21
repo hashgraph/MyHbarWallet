@@ -83,4 +83,6 @@ export interface SimpleHederaClient {
     getAccountRecords(): Promise<TransactionRecord[]>;
 
     getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>;
+
+    getTransactionRecord(options: { transactionHash: string }): Promise<TransactionRecord>;
 }

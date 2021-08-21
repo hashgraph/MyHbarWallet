@@ -10,7 +10,7 @@
 
       <main
         :class="[
-          ' bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1 w-full',
+          ' bg-white dark:bg-ruined-smores rounded-lg mx-auto z-10 flex-1 w-full overflow-auto',
           'lg:mt-10',
         ]"
       >

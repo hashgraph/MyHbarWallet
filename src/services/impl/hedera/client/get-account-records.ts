@@ -1,6 +1,7 @@
+import type { TransactionRecord } from "@hashgraph/sdk";
+
 import { useStore} from "../../../../store";
 
-import type { TransactionRecord } from "@hashgraph/sdk";
 
 export async function getAccountRecords(): Promise<TransactionRecord[]>{
     const axios = await import("axios");

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col cursor-pointer">
     <div
       v-for="(transaction, index) in TransferList"
       :key="index"

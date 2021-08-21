@@ -29,6 +29,7 @@
         :time-ago="timeElapsed(transaction.consensusAt)"
         :transaction="sumTransfers(transaction.transfers)"
         :fee="formatAmount(transaction.fee)"
+        :transactionHash="transaction.hash"
       />
     </div>
 
@@ -133,7 +134,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, reactive } from "vue";
-import { TransactionRecord } from "@hashgraph/sdk";
+import type { TransactionRecord } from "@hashgraph/sdk";
 
 import { useStore } from "../../store";
 
@@ -190,7 +191,7 @@ export default defineComponent({
     });
 
     onMounted(async ()=>{
-      state.latestTransactions = await getLatestTransactions();
+      state.latestTransactions = await store.client?.getAccountRecords();
       if(state.pageSize < filtered.value?.length){
         state.current = 0,
         state.next = 1,

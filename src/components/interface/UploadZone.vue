@@ -70,7 +70,6 @@ export default defineComponent({
         }
 
         async function drop(e: DragEvent): Promise<void> {
-            console.log("from drop");
             state.isHovering = false;
             if (!e.dataTransfer || e.dataTransfer.files.length === 0) {
                 throw new Error("No data was transfered.");

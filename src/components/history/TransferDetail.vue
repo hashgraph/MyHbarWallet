@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center h-16 border-b  border-cerebral-grey dark:border-midnight-express"
+    class="flex items-center h-16 border-b border-cerebral-grey dark:border-midnight-express"
   >
     <div class="w-1/4 pl-5 pr-2 leading-5 text-squant dark:text-white">
       {{ title }}

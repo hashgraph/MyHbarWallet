@@ -24,6 +24,7 @@ import { uploadFile } from "./upload-file";
 import { downloadFile } from "./download-file";
 import { getAccountRecords } from "./get-account-records";
 import { getTokenInfo } from "./get-token-info";
+import { getTransactionRecord } from "./get-transaction-record";
 
 export class SimpleHederaClientImpl implements SimpleHederaClient {
   private _client: Client;
@@ -101,5 +102,9 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
 
   getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>{
     return getTokenInfo(this._client, options);
+  }
+
+  getTransactionRecord(options: { transactionHash: string }): Promise<TransactionRecord>{
+    return getTransactionRecord(options);
   }
 }
