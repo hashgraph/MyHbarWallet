@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col p-2 md:p-5">
+  <div class="flex flex-col p-2 md:p-5 z-30">
     <NavItem
       :icon="iconNavGreyHome"
       :active-icon="iconNavPurpleHome"

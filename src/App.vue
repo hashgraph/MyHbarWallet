@@ -8,6 +8,8 @@
   <LogoutModal />
   
   <CustomerSupportModal />
+
+  <NetworkDown />
 </template>
 
 <script lang="ts">
@@ -18,7 +20,8 @@ import HardwarePrompt from "./components/base/HardwarePrompt.vue";
 import ReloadPrompt from "./components/base/ReloadPrompt.vue";
 import infoIcon from "./assets/icon_info.svg";
 import LogoutModal from "./components/interface/LogoutModal.vue";
-import CustomerSupportModal from "./components/interface/CustomerSupportModal.vue"
+import CustomerSupportModal from "./components/interface/CustomerSupportModal.vue";
+import NetworkDown from "./components/interface/NetworkDown.vue";
 import { useStore } from "./store";
 
 declare const __TEST__: boolean;
@@ -30,6 +33,7 @@ export default defineComponent({
     ReloadPrompt,
     LogoutModal,
     CustomerSupportModal,
+    NetworkDown
   },
   setup() {
     if (__TEST__) {

@@ -1,7 +1,7 @@
 <template>
   <div class="lg:flex lg:flex-row min-w-[400px]">
-    <Drawer class="sticky top-0 hidden lg:flex" />
-    <MobileDrawer class="sticky top-0 z-20 lg:hidden" />
+    <Drawer class="sticky top-0 hidden z-30 lg:flex" />
+    <MobileDrawer class="sticky top-0 z-30 lg:hidden" />
 
     <div class="relative flex px-2 md:flex-1 md:px-10">
       <div

@@ -85,6 +85,10 @@ module.exports = {
       montserrat: ["Montserrat", "sans-serif"],
       roboto: ["Roboto", "sans-serif"],
     },
+
+    fontSize:{
+      "xxs": ".7rem"
+    },
     extend: {
 
       keyframes: {
