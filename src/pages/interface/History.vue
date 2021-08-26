@@ -19,32 +19,70 @@
                 font-medium
             "
     >
-      <span class="py-1 px-4 rounded text-white bg-andrea-blue">{{
+      <span
+        class="py-1 px-4 rounded cursor-pointer bg-transparent transition duration-300 ease-in-out"
+        :class="{
+          'bg-andrea-blue text-white': state.filter == 'all'
+        }"
+        @click="changeFilter('all')"
+      >{{
         $t("InterfaceHistory.button.all")
       }}</span>
 
-      <span class="py-1 px-4 rounded">{{
+      <span
+        class="py-1 px-4 rounded cursor-pointer bg-transparent transition duration-300 ease-in-out"
+        :class="{
+          'bg-andrea-blue text-white': state.filter == 'sent'
+        }"
+        @click="changeFilter('sent')"
+      >{{
         $t("InterfaceHistory.button.sent")
       }}</span>
 
-      <span class="py-1 px-4 rounded">{{
+      <span
+        class="py-1 px-4 rounded cursor-pointer bg-transparent transition duration-300 ease-in-out"
+        :class="{
+          'bg-andrea-blue text-white': state.filter == 'received'
+        }"
+        @click="changeFilter('received')"
+      >{{
         $t("InterfaceHistory.button.received")
       }}</span>
     </div>
   </div>
 
-  <Transactions
-    class="lg:mx-8"
-    hide-header
-    title="Token Transfer"
-    timing="0.0.5678  •  14 seconds"
-    transaction="+0.01 HBAR, +0.02 hBTC"
-    fee="Fee  -0.0025"
-  />
+  <div class="overflow-y-auto">
+    <Transactions
+      filter="sent"
+      class="lg:mx-8"
+      :class="{
+        'invisible h-0': state.filter != 'sent'
+      }"  
+      pageSize="10"
+    />
+
+    <Transactions
+      filter="received"
+      class="lg:mx-8"
+      :class="{
+        'invisible h-0': state.filter != 'received'
+      }"
+      pageSize="10"
+    />
+
+    <Transactions
+      filter="all"
+      class="lg:mx-8"
+      :class="{
+        'invisible h-0': state.filter != 'all'
+      }"
+      pageSize="10"
+    />
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, reactive } from "vue";
 
 import Headline from "../../components/interface/Headline.vue";
 import Transactions from "../../components/interface/Transactions.vue";
@@ -55,5 +93,22 @@ export default defineComponent({
     Headline,
     Transactions,
   },
+
+  setup(){
+
+    const state = reactive({
+      filter: "all"
+    });
+
+    function changeFilter(filter: string){
+      state.filter = filter;
+      console.log(`From History: ${state.filter}`);
+    }
+    
+    return {
+      state,
+      changeFilter
+    }
+  }
 });
 </script>

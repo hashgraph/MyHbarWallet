@@ -9,43 +9,52 @@
     class="mt-4"
   />
 
-  <!-- TODO: TokenIdInput -->
-  <div class="flex flex-col max-w-lg m-auto mt-10">
-    <label class="font-medium text-squant dark:text-argent">
-      {{ $t("InterfaceToolTile.associateToken.label.tokenID") }}
-    </label>
+  <form @submit.prevent="handleAssociate">
+    <div class="flex flex-col max-w-lg m-auto mt-10">
+      <label class="font-medium text-squant dark:text-argent">
+        {{ $t("InterfaceToolTile.associateToken.label.tokenID") }}
+      </label>
 
-    <EntityIdInput
-      v-model="state.token"
-      type="token"
-      :placeholder="$t('InterfaceToolTile.associateToken.placeholder')"
-    />
+      <EntityIdInput
+        data-cy-token-id
+        v-model="state.token"
+        type="token"
+        :placeholder="$t('InterfaceToolTile.associateToken.placeholder')"
+      />
 
-    <InputError v-if="state.errorMessage.length > 0">
-      {{ state.errorMessage }}
-    </InputError>
-  </div>
+      <InputError data-cy-input-error v-if="state.errorMessage.length > 0">
+        {{ state.errorMessage }}
+      </InputError>
+    </div>
 
-  <div class="mt-48 border-b border-cerebral-grey" />
+    <div class="mt-48 border-b border-cerebral-grey" />
 
-  <div class="flex flex-col items-center max-w-lg m-auto">
-    <Button
-      color="green"
-      class="w-full p-4 mt-10"
-      :disabled="state.token == null"
-      @click="handleAssociate"
-    >
-      {{ $t("InterfaceToolTile.associateToken.title") }}
-    </Button>
+    <div class="flex flex-col items-center max-w-lg m-auto">
+      <Button
+        data-cy-submit
+        type="submit"
+        color="green"
+        class="w-full p-4 mt-10"
+        :disabled="state.token == null"
+      >
+        {{ $t("InterfaceToolTile.associateToken.title") }}
+      </Button>
 
-    <Button
-      color="white"
-      :to="{ name: 'tools' }"
-      class="p-2 mt-4 w-36"
-    >
-      {{ $t("BaseButton.cancel") }}
-    </Button>
-  </div>
+      <Button
+        color="white"
+        :to="{ name: 'tools' }"
+        class="p-2 mt-4 w-36"
+      >
+        {{ $t("BaseButton.cancel") }}
+      </Button>
+    </div>
+  </form>
+  <Modal
+      data-cy-success-modal
+      :is-visible="state.successModal"
+      :title="$t('Modal.AssociateToken')"
+      @close="handleClose"
+  />
 </template>
 
 <script lang="ts">
@@ -56,6 +65,7 @@ import Hint from "../../components/interface/Hint.vue";
 import Button from "../../components/base/Button.vue";
 import EntityIdInput from "../../components/base/EntityIdInput.vue";
 import InputError from "../../components/base/InputError.vue";
+import Modal from "../../components/interface/Modal.vue";
 import { useStore } from "../../store";
 
 export default defineComponent({
@@ -66,15 +76,22 @@ export default defineComponent({
     Button,
     EntityIdInput,
     InputError,
+    Modal,
   },
   setup() {
     const store = useStore();
     const state = reactive({
       token: null,
       errorMessage: "",
+      successModal: false,
     });
 
+    function handleClose(): void {
+      state.successModal = false;
+    }
+
     async function handleAssociate(): Promise<void> {
+      state.successModal = false
       state.errorMessage = "";
       const account = store.accountId;
       const token = state.token;
@@ -85,13 +102,14 @@ export default defineComponent({
             account,
             tokens: [token],
           });
+          state.successModal = true
         } catch (error) {
           state.errorMessage = await store.errorMessage(error);
         }
       }
     }
 
-    return { state, handleAssociate };
+    return { state, handleAssociate, handleClose };
   },
 });
 </script>

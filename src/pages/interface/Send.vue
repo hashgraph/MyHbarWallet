@@ -40,10 +40,9 @@
         <p class="mb-2">
           {{ $t("InterfaceSend.options") }}
         </p>
-        <div class="p-8 pr-10 pl-10 pt-4 z-10 relative bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full">
+        <div class="p-8 pr-10 pl-10 z-10 relative bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full">
           <OptionalMemo
             v-model="state.memo"
-            class="mb-8 mt-4"
           />
 
           <OptionalHbarInput @update:model-value="updateMaxFee" />
