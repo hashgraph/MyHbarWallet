@@ -84,7 +84,7 @@ Cypress.Commands.add("dissociateToken", async (tokenId) => {
     const account = client?.operatorAccountId;
 
     if (client && key && account) {
-        let res = await new TokenRevokeKycTransaction()
+        const res = await new TokenRevokeKycTransaction()
             .setAccountId(account)
             .setTokenId(tokenId)
             .execute(client);
@@ -109,7 +109,7 @@ Cypress.Commands.add("revokeKYC", async (tokenId) => {
     const account = client?.operatorAccountId;
 
     if (client && key && account) {
-        let res = await new TokenDissociateTransaction()
+        const res = await new TokenDissociateTransaction()
             .setAccountId(account)
             .setTokenIds([tokenId])
             .execute(client);
@@ -136,7 +136,7 @@ Cypress.Commands.add(
         const account = client?.operatorAccountId;
 
         if (client && key && account) {
-            let tx = new TokenCreateTransaction()
+            const tx = new TokenCreateTransaction()
                 .setTokenName("ffff")
                 .setTokenSymbol("F")
                 .setDecimals(3)

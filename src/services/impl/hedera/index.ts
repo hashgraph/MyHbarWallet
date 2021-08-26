@@ -4,8 +4,13 @@ import { Wallet } from "../../../domain/wallet/abstract";
 import { HederaService, SimpleHederaClient } from "../../hedera";
 
 import { SimpleHederaClientImpl } from "./client";
+import { ping } from "./ping";
 
 export class HederaServiceImpl implements HederaService {
+  async ping(options: { network: string; }): Promise<boolean> {
+    return ping(options);
+  }
+
   async createClient(options: {
         wallet: Wallet;
         network:

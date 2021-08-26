@@ -1,5 +1,4 @@
 import { BigNumber } from "bignumber.js";
-
 import type { AccountId, FileId, PrivateKey, PublicKey, TokenId, TransactionRecord, TokenInfo } from "@hashgraph/sdk";
 
 import { Wallet } from "../domain/wallet/abstract";
@@ -38,6 +37,12 @@ export interface HederaService {
         // account ID we wish to associate with the wallet
         accountId: AccountId;
     }): Promise<SimpleHederaClient | null>;
+
+    // pings network, returns true for up, false for down
+    ping(options: {
+        // network name
+        network: string
+    }): Promise<boolean>;
 }
 
 export interface SimpleHederaClient {
@@ -83,6 +88,4 @@ export interface SimpleHederaClient {
     getAccountRecords(): Promise<TransactionRecord[]>;
 
     getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>;
-
-    networkPing(): Promise<boolean>;
 }

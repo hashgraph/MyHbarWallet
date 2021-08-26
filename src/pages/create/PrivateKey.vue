@@ -12,7 +12,7 @@
         <KeyInput
           :model-value="key?.toString().slice(32) ?? ''"
           disabled
-          canCopy
+          can-copy
         />
 
         <Button

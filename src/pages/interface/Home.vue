@@ -55,7 +55,7 @@
 
     <Transactions
       class="mt-4 sm:mt-0"
-      pageSize="5"
+      page-size="5"
     />
   </div>
 </template>

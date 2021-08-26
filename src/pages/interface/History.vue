@@ -58,7 +58,7 @@
       :class="{
         'invisible h-0': state.filter != 'sent'
       }"  
-      pageSize="10"
+      page-size="10"
     />
 
     <Transactions
@@ -67,7 +67,7 @@
       :class="{
         'invisible h-0': state.filter != 'received'
       }"
-      pageSize="10"
+      page-size="10"
     />
 
     <Transactions
@@ -76,7 +76,7 @@
       :class="{
         'invisible h-0': state.filter != 'all'
       }"
-      pageSize="10"
+      page-size="10"
     />
   </div>
 </template>

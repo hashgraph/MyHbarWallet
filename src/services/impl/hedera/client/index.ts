@@ -24,7 +24,6 @@ import { uploadFile } from "./upload-file";
 import { downloadFile } from "./download-file";
 import { getAccountRecords } from "./get-account-records";
 import { getTokenInfo } from "./get-token-info";
-import { networkPing } from "./network-ping";
 
 export class SimpleHederaClientImpl implements SimpleHederaClient {
   private _client: Client;
@@ -102,9 +101,5 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
 
   getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>{
     return getTokenInfo(this._client, options);
-  }
-
-  networkPing(): Promise<boolean>{
-    return networkPing(this._client);
   }
 }

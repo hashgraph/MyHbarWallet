@@ -1,6 +1,6 @@
 describe("Tool: Associate Token", () => {
     const { KEY_PRIVATE_KEY, KEY_ACCOUNT_ID } = Cypress.env();
-    let tokenId: string = "";
+    let tokenId = "";
 
     beforeEach(() => {
         cy.viewport("macbook-13");
