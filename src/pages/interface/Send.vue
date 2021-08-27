@@ -25,9 +25,11 @@
         </div>
 
         <div
-          class="p-4 bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express"
+          class="p-4 bg-white border rounded shadow-md dark:bg-ruined-smores
+          er-jupiter dark:border-midnight-express"
         >
           <TransferForm
+            data-cy-transfer-form
             v-model:to="state.transfer.to"
             v-model:asset="state.transfer.asset"
             v-model:amount="state.transfer.amount"
@@ -76,6 +78,7 @@
   <!-- bottom buttons section -->
   <div class="flex flex-col items-center w-7/12 m-auto mt-10 mb-10">
     <Button
+      data-cy-send-button
       color="green"
       class="w-full py-3 mt-6"
       :disabled="!sendValid"

@@ -9,6 +9,7 @@
 
     <div class="pb-0.5">
       <TextInput
+        data-cy-transfer-to
         id="to"
         v-model="state.rawTo"
         :valid="state.toValid"
@@ -21,7 +22,7 @@
       {{ $t('InterfaceAsset.asset') }}
     </label>
 
-    <AssetSelector v-model="dAsset" />
+    <AssetSelector data-cy-asset-selector v-model="dAsset" />
 
     <label
       class="block pt-2 mt-5 mb-2 dark:text-silver-polish"
@@ -31,6 +32,7 @@
     </label>
 
     <AssetInput
+        data-cy-asset-amount
       id="amount"
       v-model="dAmount"
       :asset="asset"
