@@ -90,7 +90,7 @@
               @mouseenter="onMouseEnterAsset(index)"
               @click="onSelectAsset(assetName)"
             >
-              <div class="flex-1 font-medium">
+              <div class="flex-1 font-medium" :data-cy-selector-asset="assetName">
                 {{ assetName }}
               </div>
               <div class="text-sm text-squant">
