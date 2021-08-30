@@ -1,30 +1,29 @@
 <template>
-  <div class="relative z-10">
-    <Switch
-      v-model="state.addMemo"
-      :label="$t('OptionalMemo.addMemo')"
-      class="mb-4"
-      @update:modelValue="onToggle"
-    />
-
+  <Switch
+    v-model="state.addMemo"
+    :label="$t('OptionalMemo.addMemo')"
+    @update:modelValue="onToggle"
+  />
+  <div
+    class="overflow-y-hidden mb-4"
+  >
     <TextInput
       v-model="state.memo"
-      class="h-16 transition-all duration-300 w-full"
+      class="transition-all duration-300 w-full mt-4"
       multiline
       :max-length="100"
       char-counter
       :class="{
-        'mt-1 opacity-100': state.addMemo,
-        '-mt-20 opacity-0 invisible': !state.addMemo,
+        'opacity-100': state.addMemo,
+        '-mt-32 opacity-0 invisible': !state.addMemo,
       }"
       @update:modelValue="$emit('update:modelValue', state.memo)"
     />
-
-    <div
-      class="italic w-full text-squant mt-4 dark:bg-dreamless-sleep p-4 dark:text-silver-polish rounded shadow-md border border-transparent dark:border-midnight-express"
-    >
-      {{ $t("OptionalMemo.aboutMemo") }}
-    </div>
+  </div>
+  <div
+    class="italic w-full text-squant mt-4 mb-4 dark:bg-dreamless-sleep p-4 dark:text-silver-polish rounded shadow-md border border-transparent dark:border-midnight-express"
+  >
+    {{ $t("OptionalMemo.aboutMemo") }}
   </div>
 </template>
 

@@ -25,7 +25,7 @@
       <Button
         type="submit"
         color="green"
-        class="w-full p-4"
+        class="w-full p-4 relative"
       >
         {{ $t("MnemonicPhrase.create.button") }}
       </Button>

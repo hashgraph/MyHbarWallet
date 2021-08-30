@@ -42,10 +42,9 @@
         <p class="mb-2">
           {{ $t("InterfaceSend.options") }}
         </p>
-        <div class="p-8 pr-10 pl-10 pt-4 z-10 relative bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full">
+        <div class="p-8 pr-10 pl-10 z-10 relative bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full">
           <OptionalMemo
             v-model="state.memo"
-            class="mb-8 mt-4"
           />
 
           <OptionalHbarInput @update:model-value="updateMaxFee" />
@@ -108,7 +107,7 @@
     title="Success"
     @close="closeConfirmModal"
   >
-    {{ $t("Modal.Send.SuccessfullyTransferred") }} {{ amount.toString() }} {{ $t("Modal.Send.ToAccount") }}: {{ state.transfer.to?.toString() }}.
+    {{ success }}
   </Modal>
 </template>
 
@@ -121,8 +120,11 @@ import {
   ref,
 } from "vue";
 import { BigNumber } from "bignumber.js";
+import type { TokenId, TokenInfo } from "@hashgraph/sdk";
 import { AccountId, Hbar } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { transfer } from "src/services/impl/hedera/client/transfer";
 
 import Headline from "../../components/interface/Headline.vue";
 import TransferForm from "../../components/interface/TransferForm.vue";
@@ -155,8 +157,16 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const store = useStore();
-    
+    const i18n = useI18n();
     const hashgraph = ref<typeof import("@hashgraph/sdk") | null>(null);
+
+    const success = computed( ()=> {
+      if(state.transfer.asset === "HBAR"){
+        return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${amount.value} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfer.to?.toString()}`
+      }
+      return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${parseFloat(new BigNumber(state.transfer.amount ?? 0).toFixed(state.decimals))} ${state.symbol} ${i18n.t("InterfaceSend.modal.of")} ${state.tokenType} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfer.to?.toString()}`
+    });
+
     onMounted(async () => {
       hashgraph.value = await import("@hashgraph/sdk");
     });
@@ -178,6 +188,9 @@ export default defineComponent({
         amount: undefined
       } as Transfer,
       transfers: [] as Transfer[],
+      decimals: 0,
+      symbol: null as string | null | undefined,
+      tokenType: null as string | null | undefined
     });
 
     const sendValid = computed(
@@ -219,6 +232,13 @@ export default defineComponent({
 
         void store.requestAccountBalance();
 
+        //get token information if asset is not Hbar
+        if(state.transfer.asset !== "HBAR"){
+          const tokenInfo = await getTokenInfo(state.transfer.asset);
+          state.decimals = tokenInfo?.decimals ?? 0;
+          state.symbol = tokenInfo?.symbol;
+          state.tokenType = tokenInfo?.name ;
+        }
         // go back to home
         // goal is to see the now PENDING transaction
         // so we can watch it "reach consensus"
@@ -243,6 +263,10 @@ export default defineComponent({
       state.maxFee = fee;
     }
 
+    async function getTokenInfo(token: string | TokenId): Promise<TokenInfo | undefined>{
+      return await store.client?.getTokenInfo({token: token});
+    }
+
     return {
       state,
       sendValid,
@@ -252,7 +276,8 @@ export default defineComponent({
       updateMaxFee,
       openConfirmModal,
       closeConfirmModal,
-      amount
+      amount,
+      success
     };
   },
 });
