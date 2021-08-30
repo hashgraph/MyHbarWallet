@@ -9,12 +9,6 @@
       >
         {{ $t("Transactions.Recent") }}
       </div>
-
-      <!-- <router-link
-        :to="{ name: 'history' }"
-        class="font-medium leading-5 text-bright-navy-blue"
-        >View All</router-link
-      > -->
     </div>
 
     <Hint text="Further transaction history support coming soon!" />
@@ -23,15 +17,15 @@
       v-for="transaction in paginated"
       :key="transaction.id"
     >
-      <Transaction
+    <!-- TODO: Fix this -->
+      <!-- <Transaction
         :title="formatType(transaction.type.toString())"
         :account="transaction.operatorAccountId.toString()"
         :time-ago="timeElapsed(transaction.consensusAt)"
         :transaction="sumTransfers(transaction.transfers)"
         :fee="formatAmount(transaction.fee)"
-      />
+      /> -->
     </div>
-
 
     <!-- TODO: Replace with HeroIcons, when available -->
     <div
@@ -133,16 +127,18 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, reactive } from "vue";
-import { TransactionRecord } from "@hashgraph/sdk";
+import { BigNumber } from "bignumber.js";
 
+import { Transfer } from "../../pages/interface/Send.vue";
 import { useStore } from "../../store";
+import { TransactionRecord } from "../../services/impl/hedera/client/get-account-records";
 
-import Transaction from "./Transaction.vue";
+// import Transaction from "./Transaction.vue";
 import Hint from "./Hint.vue";
 
 export default defineComponent({
   name: "Transactions",
-  components: { Transaction, Hint },
+  components: { Hint },
   props: {
     hideHeader: { type: Boolean, default: false },
     pageSize: { type: String, default: "25", required: false },
@@ -151,31 +147,25 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
     const accountId = computed(() => store.accountId);
-    const kabutoLink = computed(() => {
-      switch (store.network) {
-        case "mainnet":
-          return `https://explorer.kabuto.sh/mainnet/id/${accountId.value}`;
-        case "testnet":
-          return `https://explorer.kabuto.sh/testnet/id/${accountId.value}`;
-        default:
-          return "";
+
+    function isSender(txr): boolean {
+      return txr.id.toString().split("@")[0] === accountId.value?.toString(); 
+    }
+
+    const filtered = computed(() => {
+      if (props.filter === "all") {
+        return state.latestTransactions;
+      } else if (props.filter === "from") {
+        return state.latestTransactions?.filter((transaction) => isSender(transaction));
+      } else if (props.filter === "to") {
+        return state.latestTransactions?.filter((transaction) => !isSender(transaction));
       }
+
+      return [];
     });
 
-    const paginated = computed(()=> {
-      return filtered.value?.slice(state.current * state.pageSize, (state.current * state.pageSize) + state.pageSize);
-    });
-
-    const filtered = computed(()=>{
-      if(props.filter == "all") return state.latestTransactions;
-      let filtered = [] as TransactionRecord[];
-      for(let i in state.latestTransactions){
-        if(state.latestTransactions[i].type == "TRANSFER"){
-          if(props.filter == "sent" && state.latestTransactions[i].id.split("@")[0] == accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
-          if(props.filter == "received" && state.latestTransactions[i].id.split("@")[0] != accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
-        }
-      }
-      return filtered;
+    const paginated = computed(() => {
+      return filtered.value?.slice(state.current * state.pageSize, (state.current * state.pageSize) + state.pageSize) as TransactionRecord[];
     });
 
     const state = reactive({
@@ -189,32 +179,34 @@ export default defineComponent({
       last: 0,
     });
 
-    onMounted(async ()=>{
+    onMounted(async () => {
       state.latestTransactions = await getLatestTransactions();
-      if(state.pageSize < filtered.value?.length){
+      const len = (filtered.value?.length ?? 0);
+
+      if (state.pageSize < len) {
         state.current = 0,
         state.next = 1,
         state.previous = -1;
-        state.last = Math.ceil(filtered.value?.length/ state.pageSize);
+        state.last = Math.ceil(len / state.pageSize);
       }
     });
 
-    function previous(): void{
-      if(state.current == 0) return;
-      else if(state.previous == 0){
+    function previous(): void {
+      if (state.current == 0) return;
+      else if (state.previous == 0) {
         state.current -= 1;
         state.previous = -1;
         state.next -= 1;
       } else {
         state.current -= 1;
-        state.previous -=1;
+        state.previous -= 1;
         state.next -= 1;
       }
     }
 
-    function next(): void{
-      if(state.current == state.last - 1) return;
-      else if(state.next == state.last){
+    function next(): void {
+      if (state.current == state.last - 1) return;
+      else if (state.next == state.last) {
         state.current += 1;
         state.previous += 1;
         state.next = state.last;
@@ -225,72 +217,72 @@ export default defineComponent({
       }
     }
 
-    function first(): void{
+    function first(): void {
       state.current = 0;
       state.previous = -1;
       state.next = 1;
     }
 
-    function last(): void{
+    function last(): void {
       state.current = state.last - 1;
       state.previous = state.current - 1;
       state.next = state.last;
     }
 
-    async function getLatestTransactions(): Promise<TransactionRecord[] | undefined>{
+    async function getLatestTransactions(): Promise<TransactionRecord[] | undefined> {
       return await store.client?.getAccountRecords();
     }
 
     //Time elapsed since consensus
-    function timeElapsed(date: string): string{
-      const current: Date = new Date(Date.now());
+    function timeElapsed(date: string): string {
+      const current: Date = new Date();
       const consensus: Date = new Date(date);
-      const elapsed = Math.abs(current-consensus);
+      const elapsed = Math.abs(current.getTime() - consensus.getTime());
 
       const days = Math.floor(elapsed / (24 * 60 * 60 * 1000));
-      const hours = Math.floor((elapsed % (24 * 60 * 60 * 1000))/(60 * 60 * 1000));
+      const hours = Math.floor((elapsed % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
       const minutes = Math.floor((elapsed % (60 * 60 * 1000)) / (60 * 1000));
-      const seconds = Math.floor( (elapsed % (60 * 1000))/1000);      
+      const seconds = Math.floor((elapsed % (60 * 1000)) / 1000);
 
       return `${formatTime(days, "d")}${formatTime(hours, "h")}${formatTime(minutes, "m")}${formatTime(seconds, "s")}`;
     }
 
     //Helper function for timeElapsed
-    function formatTime(time: number, unit: string): string{
-      if(time > 0) return `${time}${unit} `;
+    function formatTime(time: number, unit: string): string {
+      if (time > 0) return `${time}${unit} `;
       return '';
     }
-  
-    function sumTransfers(transfers: []): string{
-      let sum = 0;
-      for(let i in transfers){
-        if(transfers[i].amount > 0) sum += transfers[i].amount;
+
+    function sumTransfers(transfers: Transfer[]): string {
+      let sum = new BigNumber(0);
+
+      for (let i in transfers) {
+        if (transfers[i].amount?.isGreaterThan(new BigNumber(0))) sum = sum.plus(transfers[i].amount ?? new BigNumber(0));
       }
-      return formatAmount(sum);
+
+      return formatAmount(sum.toNumber());
     }
 
     //Format value to print in Hbar
-    function formatAmount(value: number): string{
-      return `${parseFloat((value/100000000).toFixed(8))}ℏ`;
+    function formatAmount(value: number): string {
+      return `${parseFloat((value / 100000000).toFixed(8))}ℏ`;
     }
 
-    function formatType(type: string): string{
+    function formatType(type: string): string {
       let words = type.split("_");
       let formatted = "";
-      for(let i in words){
+      for (let i in words) {
         formatted += words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase() + " ";
       }
       return formatted.trim();
     }
 
     return {
-      accountId,
-      kabutoLink,
       state,
-      timeElapsed,
-      sumTransfers,
-      formatAmount,
-      formatType,
+      // timeElapsed,
+      // sumTransfers,
+      // formatAmount,
+      // formatType,
       previous,
       next,
       paginated,

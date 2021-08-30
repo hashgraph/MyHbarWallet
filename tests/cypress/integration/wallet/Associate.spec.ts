@@ -1,6 +1,8 @@
+import { CreateAccountResponse, CreateTokenResponse } from "../../support/commands";
+
 describe("Tool: Associate Token", () => {
     const { KEY_PRIVATE_KEY, KEY_ACCOUNT_ID } = Cypress.env();
-    let tokenId: string = "";
+    const operatorCreds = { operatorKey: KEY_PRIVATE_KEY, operatorAccountId: KEY_ACCOUNT_ID };
 
     beforeEach(() => {
         cy.viewport("macbook-13");
@@ -9,7 +11,7 @@ describe("Tool: Associate Token", () => {
         cy.visit("/");
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        cy.login(KEY_PRIVATE_KEY, KEY_ACCOUNT_ID);
+        cy.login(operatorCreds);
 
         // Navigate from Home to Tool: Associate Token
         cy.get("[data-cy-tools]")
@@ -23,18 +25,18 @@ describe("Tool: Associate Token", () => {
     it("can associate a token", async () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        cy.createAccount(KEY_ACCOUNT_ID, KEY_PRIVATE_KEY).then((res) => {
-            const privateKey = res.tempPrivateKey.toString();
-            const accountId = res.receipt.accountId.toString();
-
+        cy.createAccount(operatorCreds).then((res) => {
+            const response = res as CreateAccountResponse;
+            const newAccountId = response.accountId;
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            cy.createToken(accountId, privateKey).then((_tokenId: string) => {
-                tokenId = _tokenId;
-            }).then((tokenId: string) => {
+            cy.createToken({ 
+                operatorAccountId: newAccountId.toString(),
+                operatorKey: operatorCreds.operatorKey
+            }).then((res: CreateTokenResponse) => {
                 cy.get("[data-cy-token-id] input")
                     .filter(":visible")
-                    .type(tokenId)
+                    .type(res.tokenId.toString())
                     .get("[data-cy-submit]")
                     .click()
                 }
@@ -49,12 +51,11 @@ describe("Tool: Associate Token", () => {
     it("can identify an already associated token", async () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        cy.createToken(KEY_ACCOUNT_ID, KEY_PRIVATE_KEY).then((tokenId: string) => {
-            const tokenIdString = tokenId.toString();
-            if (tokenId) {
+        cy.createToken(operatorCreds).then((res: CreateTokenResponse) => {
+            if (res.tokenId) {
                 cy.get("[data-cy-token-id] input")
                     .filter(":visible")
-                    .type(tokenIdString)
+                    .type(res.tokenId.toString())
                     .get("[data-cy-submit]")
                     .click()
                     .get("[data-cy-input-error]")

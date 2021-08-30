@@ -29,11 +29,11 @@
           er-jupiter dark:border-midnight-express"
         >
           <TransferForm
-            data-cy-transfer-form
             v-model:to="state.transfer.to"
             v-model:asset="state.transfer.asset"
             v-model:amount="state.transfer.amount"
             v-model:usd="state.transfer.usd"
+            data-cy-transfer-form
           />
         </div>
       </div>
@@ -124,7 +124,6 @@ import type { TokenId, TokenInfo } from "@hashgraph/sdk";
 import { AccountId, Hbar } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { transfer } from "src/services/impl/hedera/client/transfer";
 
 import Headline from "../../components/interface/Headline.vue";
 import TransferForm from "../../components/interface/TransferForm.vue";
@@ -134,7 +133,6 @@ import Modal from "../../components/interface/Modal.vue";
 import OptionalMemo from "../../components/interface/OptionalMemo.vue";
 import OptionalHbarInput from "../../components/interface/OptionalHbarInput.vue";
 import { useStore } from "../../store";
-// import { transfer } from "src/services/impl/hedera/client/transfer";
 
 export interface Transfer {
   to?: AccountId;
@@ -198,7 +196,12 @@ export default defineComponent({
     );
 
     const amount = computed(() => {
-      let fromTinybar = new Hbar(state.transfer.amount / 100000000);
+      let fromTinybar;
+
+      if (state.transfer.amount) {
+        fromTinybar = new Hbar(state.transfer.amount as BigNumber).toTinybars();
+      }
+
       return fromTinybar;
     });
 

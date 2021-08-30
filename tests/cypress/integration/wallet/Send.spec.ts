@@ -1,6 +1,8 @@
+import { CreateAccountResponse } from "../../support/commands";
+
 describe("Tool: Send Token", () => {
     const { KEY_PRIVATE_KEY, KEY_ACCOUNT_ID } = Cypress.env();
-    let tokenId: string = "";
+    let tokenId = "";
 
     beforeEach(() => {
         cy.viewport("macbook-13");
@@ -29,14 +31,18 @@ describe("Tool: Send Token", () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         cy.createAccount(KEY_ACCOUNT_ID, KEY_PRIVATE_KEY).then((res) => {
-            //const privateKey = res.tempPrivateKey.toString();
-            const accountId = res.receipt.accountId.toString();
+            const response = res as CreateAccountResponse;
+            const accountId = response.receipt.accountId?.toString() ?? "";
 
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            cy.createToken(KEY_ACCOUNT_ID, KEY_PRIVATE_KEY).then((_tokenId: string) => {
-                tokenId = _tokenId;
+            cy.createToken(KEY_ACCOUNT_ID, KEY_PRIVATE_KEY).then((_tokenId: string | undefined) => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                cy.associateToken()
 
+
+                if (_tokenId) tokenId = _tokenId;
 
                 cy.window().its("$store").invoke("requestAccountBalance")
 

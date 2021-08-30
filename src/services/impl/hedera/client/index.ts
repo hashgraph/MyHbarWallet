@@ -95,7 +95,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
     return downloadFile(this._client, options);
   }
 
-  getAccountRecords(): Promise<TransactionRecord[]>{
+  getAccountRecords(): Promise<TransactionRecord[] | undefined> {
     return getAccountRecords();
   }
 

@@ -51,14 +51,14 @@
     </div>
   </div>
 
-  <div class="overflow-y-auto">
+  <!-- <div class="overflow-y-auto">
     <Transactions
       filter="sent"
       class="lg:mx-8"
       :class="{
         'invisible h-0': state.filter != 'sent'
       }"  
-      pageSize="10"
+      page-size="10"
     />
 
     <Transactions
@@ -67,7 +67,7 @@
       :class="{
         'invisible h-0': state.filter != 'received'
       }"
-      pageSize="10"
+      page-size="10"
     />
 
     <Transactions
@@ -76,22 +76,21 @@
       :class="{
         'invisible h-0': state.filter != 'all'
       }"
-      pageSize="10"
+      page-size="10"
     />
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 
 import Headline from "../../components/interface/Headline.vue";
-import Transactions from "../../components/interface/Transactions.vue";
+// import Transactions from "../../components/interface/Transactions.vue";
 
 export default defineComponent({
   name: "History",
   components: {
     Headline,
-    Transactions,
   },
 
   setup(){
