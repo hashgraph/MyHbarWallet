@@ -65,8 +65,6 @@ export default defineComponent({
         balance: Number,
       },
     ]);
-    console.log(TransferList.value);
-    console.log(RecieverList.value);
     return { TransferList, RecieverList };
   },
 });
