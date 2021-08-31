@@ -53,8 +53,8 @@ Cypress.Commands.add("createAccount", async (options: CreateAccountRequest): Pro
 
     try {
         client = Client.forTestnet().setOperator(
-            AccountId.fromString(options.operatorKey),
-            PrivateKey.fromString(options.operatorAccountId),
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
         );
     } catch {
         throw new Error(
@@ -90,8 +90,8 @@ Cypress.Commands.add("associateToken", async (options: AssociateTokenRequest): P
 
     try {
         client = Client.forTestnet().setOperator(
-            AccountId.fromString(options.operatorKey),
-            PrivateKey.fromString(options.operatorAccountId),
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
         );
     } catch {
         throw new Error(
@@ -120,8 +120,8 @@ Cypress.Commands.add("dissociateToken", async (options: DissociateTokenRequest):
 
     try {
         client = Client.forTestnet().setOperator(
-            AccountId.fromString(options.operatorKey),
-            PrivateKey.fromString(options.operatorAccountId),
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
         );
     } catch {
         throw new Error(
@@ -153,8 +153,8 @@ Cypress.Commands.add("grantKYC", async (options: GrantKYCRequest): Promise<void 
 
     try {
         client = Client.forTestnet().setOperator(
-            AccountId.fromString(options.operatorKey),
-            PrivateKey.fromString(options.operatorAccountId),
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
         );
     } catch {
         throw new Error(
@@ -183,8 +183,8 @@ Cypress.Commands.add("revokeKYC", async (options: RevokeKYCRequest): Promise<voi
 
     try {
         client = Client.forTestnet().setOperator(
-            AccountId.fromString(options.operatorKey),
-            PrivateKey.fromString(options.operatorAccountId),
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
         );
     } catch {
         throw new Error(
@@ -219,8 +219,8 @@ Cypress.Commands.add("createToken", async (options: CreateTokenRequest): Promise
 
     try {
         client = Client.forTestnet().setOperator(
-            AccountId.fromString(options.operatorKey),
-            PrivateKey.fromString(options.operatorAccountId),
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
         );
     } catch {
         throw new Error(
