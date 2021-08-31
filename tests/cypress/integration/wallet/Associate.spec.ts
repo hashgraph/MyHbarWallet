@@ -54,26 +54,18 @@ describe("Tool: Associate Token", () => {
         })
     });
 
-    // it("can identify an already associated token", async () => {
-    //     // let tokenId = "";
-
-    //     // // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //     // // @ts-ignore
-    //     // cy.createToken(operatorCreds).then((res: CreateTokenResponse) => {
-    //     //     if (res.tokenId) {
-    //     //         tokenId = res.tokenId.toString();
-    //     //     }
-    //     // });
-
-    //     // cy.log(tokenId);
-
-    //     // cy.get("[data-cy-token-id] input")
-    //     //             .filter(":visible")
-    //     //             .type(res.tokenId.toString())
-    //     //             .get("[data-cy-submit]")
-    //     //             .click()
-    //     //             .get("[data-cy-input-error]")
-    //     //             .should("be.visible")
-    //     //             .should("contain", "This account and token are already associated.")
-    // });
+    it("can identify an already associated token", async () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        cy.createToken(operatorCreds).then((res: CreateTokenResponse) => {
+            cy.get("[data-cy-token-id] input")
+                    .filter(":visible")
+                    .type(res.tokenId.toString())
+                    .get("[data-cy-submit]")
+                    .click()
+                    .get("[data-cy-input-error]")
+                    .should("be.visible")
+                    .should("contain", "This account and token are already associated.")
+        });
+    });
 });
