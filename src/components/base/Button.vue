@@ -10,7 +10,7 @@
         'hover:bg-opacity-90': !(disabled || busy),
         'bg-mountain-meadow text-white focus-visible:ring-mountain-meadow':
           color == 'green',
-        'bg-white dark:bg-ruined-smores text-mountain-meadow border border-seafoam-blue focus-visible:ring-white':
+        'bg-white dark:bg-midnight-express dark:text-white dark:border-none text-mountain-meadow border border-seafoam-blue focus-visible:ring-white':
           color == 'white',
       },
     ]"
