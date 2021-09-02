@@ -1,8 +1,13 @@
-import {AssociateTokenRequest, CreateAccountResponse, CreateTokenResponse} from "../../support/commands";
+import { CreateAccountResponse, CreateTokenResponse } from "../../support/commands";
 
 describe("Tool: Send Token", () => {
+    // get key account information from the cypress env
     const { KEY_PRIVATE_KEY, KEY_ACCOUNT_ID } = Cypress.env();
+
+    //assign those credentials to an object
     const operatorCreds = { operatorKey: KEY_PRIVATE_KEY, operatorAccountId: KEY_ACCOUNT_ID };
+
+    //instantiate token ID
     let tokenId = "";
 
     beforeEach(() => {
@@ -23,31 +28,25 @@ describe("Tool: Send Token", () => {
             .click();
     });
 
-    // data-cy-asset-amount
-    // data-cy-selector-asset
-    // data-cy-asset-selector
-    // data-cy-transfer-to
-
     it("can send a token", async () => {
-        // cy.get("[data-cy-tools]")
-        //     .filter(":visible")
-        //     .click()
-        //     .get("[data-cy-tool-associate]")
-        //     .filter(":visible")
-        //     .click();
 
+        // Create a temporary account
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         cy.createAccount(operatorCreds).then((resp: CreateAccountResponse) => {
+            //set accountId to the account Id of created account
             const accountId = resp.accountId?.toString() ?? "";
 
+            // create a token
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             cy.createToken(operatorCreds).then((resp: CreateTokenResponse) => {
+                // set tokenID to the value received from createToken
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 tokenId = resp.tokenId.toString();
 
+                // run associate token command with operator credentials
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 cy.associateToken({
@@ -58,16 +57,10 @@ describe("Tool: Send Token", () => {
                 });
 
             }).then(() => {
-
+                // reload account information
                 cy.window().its("$store").invoke("requestAccountBalance")
-                // Navigate from Home to Tool: Associate Token
-                // cy.get("[data-cy-send]")
-                //     .filter(":visible")
-                //     .click()
-                //     .get("[data-cy-transfer-form]")
-                //     .filter(":visible")
-                //     .click();
 
+                // send token and verify that we receive a success event.
                 cy.get("[data-cy-transfer-to] input")
                     .click()
                     .type(accountId)
@@ -89,25 +82,27 @@ describe("Tool: Send Token", () => {
         });
     });
 
-    // it("can send hbar", async () => {
-    //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //     // @ts-ignore
-    //     cy.createAccount(KEY_ACCOUNT_ID, KEY_PRIVATE_KEY).then((res) => {
-    //         const privateKey = res.tempPrivateKey.toString();
-    //         const accountId = res.receipt.accountId.toString();
-    //
-    //         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //         // @ts-ignore
-    //         cy.createToken(accountId, privateKey).then((_tokenId: string) => {
-    //             tokenId = _tokenId;
-    //         }).then((tokenId: string) => {
-    //
-    //             }
-    //         ).then(() => {
-    //
-    //         })
-    //     });
-    // });
+    it("can send hbar", async () => {
+        // create a temporary account to send to
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        cy.createAccount(operatorCreds).then((resp: CreateAccountResponse) => {
+            // set account id to createAccount command response
+            const accountId = resp.accountId?.toString() ?? "";
 
-
+            // attempt hbar send and verify success event
+            cy.get("[data-cy-transfer-to] input")
+                .click()
+                .type(accountId)
+                .log(accountId)
+                .get("[data-cy-asset-amount]")
+                .type("1")
+                .get("[data-cy-send-button]")
+                .click()
+                .wait(2000)
+                .get("[data-cy-success-message]")
+                .should("exist")
+                .should("contain", accountId)
+        });
+    });
 });
