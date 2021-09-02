@@ -86,18 +86,18 @@ export type AssociateTokenRequest = Operator & {
 }
 
 Cypress.Commands.add("associateToken", async (options: AssociateTokenRequest): Promise<void | undefined> => {
-    let client;
+    // let client;
 
-    try {
-        client = Client.forTestnet().setOperator(
+    // try {
+        const client = Client.forTestnet().setOperator(
             AccountId.fromString(options.operatorAccountId),
             PrivateKey.fromString(options.operatorKey),
         );
-    } catch {
-        throw new Error(
-            "Require options.operatorKey & options.operatorAccountId"
-        );
-    }
+    // } catch {
+    //     throw new Error(
+    //         "Require options.operatorKey & options.operatorAccountId"
+    //     );
+    // }
 
     if (client && options.accountId && options.tokenIds) {
         const res = await new TokenAssociateTransaction()

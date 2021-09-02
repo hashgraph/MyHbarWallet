@@ -103,11 +103,14 @@
   />
 
   <Modal
+    data-cy-modal-success
     :is-visible="state.showConfirmModal"
     title="Success"
     @close="closeConfirmModal"
   >
-    {{ success }}
+    <div data-cy-success-message>
+      {{ success }}
+    </div>
   </Modal>
 </template>
 
