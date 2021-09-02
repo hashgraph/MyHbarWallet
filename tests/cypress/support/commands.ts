@@ -6,11 +6,12 @@ import {
     PrivateKey,
     AccountCreateTransaction,
     Hbar,
+    TokenAssociateTransaction,
     TokenDissociateTransaction,
+    TokenGrantKycTransaction,
     TokenRevokeKycTransaction,
+    TokenId
 } from "@hashgraph/sdk";
-
-const { KEY_PRIVATE_KEY, KEY_ACCOUNT_ID } = Cypress.env();
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace Cypress {
@@ -27,136 +28,227 @@ Cypress.Commands.add("vue", () => {
     return cy.wrap(Cypress.vueWrapper);
 });
 
-Cypress.Commands.add("login", (privateKey: string, accountId: string) => {
+interface Operator {
+    operatorKey: string;
+    operatorAccountId: string;
+}
+
+Cypress.Commands.add("login", (options: Operator) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    cy.window().its("$store").invoke("login", privateKey, accountId);
+    cy.window().its("$store").invoke("login", options.operatorKey, options.operatorAccountId);
     cy.window().its("$router").invoke("push", { name: "home" });
 });
 
-Cypress.Commands.add("createAccount", async (accountId, privateKey) => {
+export type CreateAccountRequest = Operator & {
+    publicKey?: string;
+}
+
+export interface CreateAccountResponse {
+    accountId: AccountId;
+}
+
+Cypress.Commands.add("createAccount", async (options: CreateAccountRequest): Promise<CreateAccountResponse | undefined> => {
     let client;
 
     try {
         client = Client.forTestnet().setOperator(
-            AccountId.fromString(accountId),
-            PrivateKey.fromString(privateKey),
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
         );
     } catch {
         throw new Error(
-            "Environment variables HEDERA_NETWORK, OPERATOR_ID, and OPERATOR_KEY are required."
+            "Require options.operatorKey & options.operatorAccountId"
         );
     }
 
-    const newKey = PrivateKey.generate();
-    const tempPrivateKey = newKey;
-    const tempPublicKey = newKey.publicKey;
+    const publicKey = options.publicKey ?? client.operatorPublicKey;
 
-    const response = await new AccountCreateTransaction()
-        .setInitialBalance(new Hbar(10)) // 10 h
-        .setKey(newKey.publicKey)
-        .execute(client);
+    if (publicKey) {
+        const response = await new AccountCreateTransaction()
+            .setInitialBalance(new Hbar(10)) // 10 h
+            .setKey(publicKey)
+            .execute(client);
 
-    const receipt = await response.getReceipt(client);
+        const receipt = await response.getReceipt(client);
 
-    if(receipt.accountId){
-        return ({
-            receipt,
-            tempPrivateKey,
-            tempPublicKey,
-        });
+        if (receipt.accountId) {
+            return ({
+                accountId: receipt.accountId
+            } as CreateAccountResponse);
+        }
     }
 })
 
-Cypress.Commands.add("dissociateToken", async (tokenId) => {
-    let client: Client | undefined;
+export type AssociateTokenRequest = Operator & {
+    accountId: string;
+    tokenIds: string[];
+}
+
+Cypress.Commands.add("associateToken", async (options: AssociateTokenRequest): Promise<void | undefined> => {
+    // let client;
+
+    // try {
+        const client = Client.forTestnet().setOperator(
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
+        );
+    // } catch {
+    //     throw new Error(
+    //         "Require options.operatorKey & options.operatorAccountId"
+    //     );
+    // }
+
+    if (client && options.accountId && options.tokenIds) {
+        const res = await new TokenAssociateTransaction()
+            .setAccountId(options.accountId)
+            .setTokenIds(options.tokenIds)
+            .execute(client);
+
+        await res.getReceipt(client);
+    } else {
+        throw new Error(
+            "Require options.accountId & options.tokenIds"
+        )
+    }
+})
+
+export type DissociateTokenRequest = AssociateTokenRequest;
+
+Cypress.Commands.add("dissociateToken", async (options: DissociateTokenRequest): Promise<void | undefined> => {
+    let client;
 
     try {
         client = Client.forTestnet().setOperator(
-            AccountId.fromString(KEY_ACCOUNT_ID),
-            PrivateKey.fromString(KEY_PRIVATE_KEY),
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
         );
     } catch {
-        cy.log("environment variables not set");
+        throw new Error(
+            "Require options.operatorKey & options.operatorAccountId"
+        );
+    }
+
+    if (client && options.accountId && options.tokenIds) {
+        const res = await new TokenDissociateTransaction()
+            .setAccountId(options.accountId)
+            .setTokenIds(options.tokenIds)
+            .execute(client);
+
+        await res.getReceipt(client);
+    } else {
+        throw new Error(
+            "Require options.accountId & options.tokenIds"
+        )
+    }
+})
+
+export type GrantKYCRequest = Operator & {
+    accountId: string;
+    tokenId: string;
+}
+
+Cypress.Commands.add("grantKYC", async (options: GrantKYCRequest): Promise<void | undefined> => {
+    let client;
+
+    try {
+        client = Client.forTestnet().setOperator(
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
+        );
+    } catch {
+        throw new Error(
+            "Require options.operatorKey & options.operatorAccountId"
+        );
+    }
+
+    if (client && options.accountId && options.tokenId) {
+        const res = await new TokenGrantKycTransaction()
+            .setAccountId(options.accountId)
+            .setTokenId(options.tokenId)
+            .execute(client);
+
+        await res.getReceipt(client);
+    } else {
+        throw new Error(
+            "Require options.accountId & options.tokenId"
+        )
+    }
+})
+
+export type RevokeKYCRequest = GrantKYCRequest;
+
+Cypress.Commands.add("revokeKYC", async (options: RevokeKYCRequest): Promise<void | undefined> => {
+    let client;
+
+    try {
+        client = Client.forTestnet().setOperator(
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
+        );
+    } catch {
+        throw new Error(
+            "Require options.operatorKey & options.operatorAccountId"
+        );
+    }
+
+    if (client && options.accountId && options.tokenId) {
+        const res = await new TokenRevokeKycTransaction()
+            .setAccountId(options.accountId)
+            .setTokenId(options.tokenId)
+            .execute(client);
+
+        await res.getReceipt(client);
+    } else {
+        throw new Error(
+            "Require options.accountId & options.tokenId"
+        )
+    }
+})
+
+export type CreateTokenRequest = Operator & {
+    kyc?: boolean;
+}
+
+export type CreateTokenResponse = {
+    tokenId: TokenId;
+}
+
+Cypress.Commands.add("createToken", async (options: CreateTokenRequest): Promise<CreateTokenResponse | undefined> => {
+    let client;
+
+    try {
+        client = Client.forTestnet().setOperator(
+            AccountId.fromString(options.operatorAccountId),
+            PrivateKey.fromString(options.operatorKey),
+        );
+    } catch {
+        throw new Error(
+            "Require options.operatorKey & options.operatorAccountId"
+        );
     }
 
     const key = client?.operatorPublicKey;
     const account = client?.operatorAccountId;
 
     if (client && key && account) {
-        let res = await new TokenRevokeKycTransaction()
-            .setAccountId(account)
-            .setTokenId(tokenId)
-            .execute(client);
+        const tx = new TokenCreateTransaction()
+            .setTokenName("Test Token Please Ignore")
+            .setTokenSymbol("( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°)͡°)")
+            .setDecimals(12)
+            .setInitialSupply(1000000000000)
+            .setAdminKey(key)
+            .setTreasuryAccountId(account)
 
-        await res.getReceipt(client);
+        if (options.kyc) tx.setKycKey(key);
+
+        const res = await tx.execute(client);
+
+        const tokenId = (await res.getReceipt(client)).tokenId;
+        if (tokenId) {
+            return { tokenId }
+        } {
+            throw new Error("Token creation failed");
+        }
     }
 })
-
-Cypress.Commands.add("revokeKYC", async (tokenId) => {
-    let client: Client | undefined;
-
-    try {
-        client = Client.forTestnet().setOperator(
-            AccountId.fromString(KEY_ACCOUNT_ID),
-            PrivateKey.fromString(KEY_PRIVATE_KEY),
-        );
-    } catch {
-        cy.log("environment variables not set");
-    }
-
-    const key = client?.operatorPublicKey;
-    const account = client?.operatorAccountId;
-
-    if (client && key && account) {
-        let res = await new TokenDissociateTransaction()
-            .setAccountId(account)
-            .setTokenIds([tokenId])
-            .execute(client);
-
-        await res.getReceipt(client);
-    }
-})
-
-Cypress.Commands.add(
-    "createToken",
-    async (accountId, privateKey, kyc?: boolean) => {
-        let client: Client | undefined;
-
-        try {
-            client = Client.forTestnet().setOperator(
-                AccountId.fromString(accountId),
-                PrivateKey.fromString(privateKey),
-            );
-        } catch {
-            cy.log("environment variables not set");
-        }
-
-        const key = client?.operatorPublicKey;
-        const account = client?.operatorAccountId;
-
-        if (client && key && account) {
-            let tx = new TokenCreateTransaction()
-                .setTokenName("ffff")
-                .setTokenSymbol("F")
-                .setDecimals(3)
-                .setInitialSupply(100)
-                .setAdminKey(key)
-                .setTreasuryAccountId(account)
-
-                if (kyc) tx.setKycKey(key);
-
-                const res = await tx.execute(client);
-
-            const tokenId = (await res.getReceipt(client)).tokenId;
-            if(tokenId){
-                return tokenId.toString();
-            } {
-                cy.log("unable to perform token creation")
-            }
-        }
-        {
-            cy.log("could not associate client account");
-        }
-    }
-);

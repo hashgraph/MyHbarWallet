@@ -1,44 +1,44 @@
 <template>
-    <Layout
-        title="Keystore File"
-        class="max-w-lg"
-        :back="{ name: 'create' }"
-    >
-        <form class="grid gap-5 auto-rows-min">
-            <p class="dark:text-white">
-                {{ $t("BaseOptionalPasswordInput.label1") }}
-            </p>
-            <PasswordInput
-                v-model="password"
-                :placeholder="$t('BasePasswordInput.input1.placeholder4')"
-                confirm
-                show-eye
-                @valid="handleValid"
-            />
+  <Layout
+    title="Keystore File"
+    class="max-w-lg"
+    :back="{ name: 'create' }"
+  >
+    <form class="grid gap-5 auto-rows-min">
+      <p class="dark:text-white">
+        {{ $t("BaseOptionalPasswordInput.label1") }}
+      </p>
+      <PasswordInput
+        v-model="password"
+        :placeholder="$t('BasePasswordInput.input1.placeholder4')"
+        confirm
+        show-eye
+        @valid="handleValid"
+      />
 
-            <InputError v-if="errorMessage.length > 0">
-                {{ errorMessage }}
-            </InputError>
+      <InputError v-if="errorMessage.length > 0">
+        {{ errorMessage }}
+      </InputError>
 
-            <Button
-                data-cy-keystore-submit
-                color="green"
-                class="w-full p-3 mt-14"
-                :disabled="!ready"
-                @click="handleSubmit"
-            >
-                {{ $t("BaseButton.continue") }}
-            </Button>
+      <Button
+        data-cy-keystore-submit
+        color="green"
+        class="w-full p-3 mt-14"
+        :disabled="!ready"
+        @click="handleSubmit"
+      >
+        {{ $t("BaseButton.continue") }}
+      </Button>
 
-            <div class="mt-10 text-sm text-black-out dark:text-white">
+      <div class="mt-10 text-sm text-black-out dark:text-white">
         <span class="font-semibold text-Megaman-Helmet">
           {{ $t("Keystore.create.note.dnf") }}
         </span>
 
-                {{ $t("Keystore.create.note") }}
-            </div>
-        </form>
-    </Layout>
+        {{ $t("Keystore.create.note") }}
+      </div>
+    </form>
+  </Layout>
 </template>
 
 <script lang="ts">

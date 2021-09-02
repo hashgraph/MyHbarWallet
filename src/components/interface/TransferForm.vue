@@ -11,6 +11,7 @@
       <TextInput
         id="to"
         v-model="state.rawTo"
+        data-cy-transfer-to
         :valid="state.toValid"
         :placeholder="$t('InterfaceHomeSendModal.input1.placeholder')"
         @update:modelValue="handleToInput"
@@ -21,7 +22,10 @@
       {{ $t('InterfaceAsset.asset') }}
     </label>
 
-    <AssetSelector v-model="dAsset" />
+    <AssetSelector
+      v-model="dAsset"
+      data-cy-asset-selector
+    />
 
     <label
       class="block pt-2 mt-5 mb-2 dark:text-silver-polish"
@@ -33,6 +37,7 @@
     <AssetInput
       id="amount"
       v-model="dAmount"
+      data-cy-asset-amount
       :asset="asset"
     />
   </div>
