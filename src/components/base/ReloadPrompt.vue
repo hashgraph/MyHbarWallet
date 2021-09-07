@@ -10,15 +10,21 @@
     <div
       v-if="offlineReady || needRefresh"
       role="alert"
-      class="animate-bounce rounded flex flex-col fixed z-50 items-center justify-center h-40 p-4 overflow-hidden italic rounded shadow-lg bottom-10 right-10 w-200 bg-peach dark:border dark:bg-dreamless-sleep dark:border-midnight-express dark:text-white"
+      class="p-6 pt-8 animate-bounce rounded flex flex-col fixed z-50 items-center justify-center h-40 p-4 overflow-hidden italic rounded shadow-lg bottom-10 right-10 w-200 bg-snow-ballet dark:border dark:bg-dreamless-sleep dark:border-midnight-express dark:text-white"
     >
-      <span v-if="offlineReady">{{ $t("Common.SW.OfflineReady") }}</span>
+      <span
+        v-if="offlineReady"
+        class="mr-4 ml-4"
+      >{{ $t("Common.SW.OfflineReady") }}</span>
     
-      <span v-else>{{ $t("Common.SW.NewContentAvailable") }}</span>
+      <span
+        v-else
+        class="mr-4 ml-4"
+      >{{ $t("Common.SW.NewContentAvailable") }}</span>
     
-      <div class="mt-4 flex items-center justify-between">
+      <div class="mt-6 space-x-4 justify-between text-center w-full">
         <Button
-          class="px-5 py-2 mr-4"
+          class="py-2 w-2/5 m-auto mb-4"
           :disabled="!needRefresh"
           color="green"
           @click="handleReload"
@@ -27,7 +33,7 @@
         </Button>
 
         <Button
-          class="px-5 py-2"
+          class="py-2 w-2/5 m-auto mb-4"
           color="white"
           @click="handleClose"
         >

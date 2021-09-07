@@ -28,7 +28,10 @@
     <div class="flex justify-center py-12">
       <div class="w-11" />
       <div>
-        <router-link :to="{ name: 'send' }">
+        <router-link
+          data-cy-send
+          :to="{ name: 'send' }"
+        >
           <Image
             class="w-20 h-20"
             :light="sendAssetLight"
@@ -55,7 +58,7 @@
 
     <Transactions
       class="mt-4 sm:mt-0"
-      pageSize="5"
+      page-size="5"
     />
   </div>
 </template>
