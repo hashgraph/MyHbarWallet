@@ -17,17 +17,16 @@
       v-for="transaction in paginated"
       :key="transaction.id"
     >
-    <!-- TODO: Fix this -->
-      <!-- <Transaction
+      <!-- TODO: Fix this -->
+      <Transaction
         :title="formatType(transaction.type.toString())"
         :account="transaction.operatorAccountId.toString()"
         :time-ago="timeElapsed(transaction.consensusAt)"
         :transaction="sumTransfers(transaction.transfers)"
         :fee="formatAmount(transaction.fee)"
-      /> -->
+      />
     </div>
 
-<<<<<<< HEAD
     <InputError
       v-if="state.error != ''"
     >
@@ -36,8 +35,6 @@
       }}
     </InputError>
   
-=======
->>>>>>> a200a92e947631445939a485b88ef295c4b1238b
     <!-- TODO: Replace with HeroIcons, when available -->
     <div
       v-if="state.last > 1"
@@ -138,30 +135,18 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, reactive } from "vue";
-<<<<<<< HEAD
-=======
-import { BigNumber } from "bignumber.js";
->>>>>>> a200a92e947631445939a485b88ef295c4b1238b
+import BigNumber from "bignumber.js";
 
 import { Transfer } from "../../pages/interface/Send.vue";
 import { useStore } from "../../store";
-<<<<<<< HEAD
 import InputError from "../base/InputError.vue";
+import Transaction from "../interface/Transaction.vue";
 
-=======
-import { TransactionRecord } from "../../services/impl/hedera/client/get-account-records";
->>>>>>> a200a92e947631445939a485b88ef295c4b1238b
-
-// import Transaction from "./Transaction.vue";
 import Hint from "./Hint.vue";
 
 export default defineComponent({
   name: "Transactions",
-<<<<<<< HEAD
-  components: { Transaction, Hint, InputError },
-=======
-  components: { Hint },
->>>>>>> a200a92e947631445939a485b88ef295c4b1238b
+  components: { Hint, InputError, Transaction },
   props: {
     hideHeader: { type: Boolean, default: false },
     pageSize: { type: String, default: "25", required: false },
@@ -170,8 +155,10 @@ export default defineComponent({
   setup(props) {
     const store = useStore();
     const accountId = computed(() => store.accountId);
-<<<<<<< HEAD
-=======
+
+    const paginated = computed(()=>{
+      return filtered.value?.slice(state.current * state.pageSize, (state.current * state.pageSize) + state.pageSize);
+    });
 
     function isSender(txr): boolean {
       return txr.id.toString().split("@")[0] === accountId.value?.toString(); 
@@ -185,32 +172,8 @@ export default defineComponent({
       } else if (props.filter === "to") {
         return state.latestTransactions?.filter((transaction) => !isSender(transaction));
       }
->>>>>>> a200a92e947631445939a485b88ef295c4b1238b
 
       return [];
-    });
-
-<<<<<<< HEAD
-    const filtered = computed(()=>{
-      if(props.filter == "all") return state.latestTransactions;
-      let filtered = [];
-      for(let i in state.latestTransactions){
-        if(props.filter == "sent" || props.filter == "received"){
-          if(state.latestTransactions[i].type === "TRANSFER"){
-            if(props.filter == "sent" && state.latestTransactions[i].id.split("@")[0] === accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
-            if(props.filter == "received" && state.latestTransactions[i].id.split("@")[0] !== accountId.value?.toString()) filtered.push(state.latestTransactions[i]);
-          }
-        } else if (props.filter == "tokens"){
-          if(state.latestTransactions[i].type.includes("TOKEN")) filtered.push(state.latestTransactions[i]);
-        } else if (props.filter == "account"){
-          if(state.latestTransactions[i].type.includes("ACCOUNT")) filtered.push(state.latestTransactions[i]);
-        }
-      }
-      return filtered;
-=======
-    const paginated = computed(() => {
-      return filtered.value?.slice(state.current * state.pageSize, (state.current * state.pageSize) + state.pageSize) as TransactionRecord[];
->>>>>>> a200a92e947631445939a485b88ef295c4b1238b
     });
 
     const state = reactive({
@@ -225,7 +188,6 @@ export default defineComponent({
       error: ""
     });
 
-<<<<<<< HEAD
     onMounted(async ()=>{
       try{
         state.latestTransactions = await getLatestTransactions();
@@ -237,17 +199,6 @@ export default defineComponent({
           }
       } catch(error){
         state.error = await store.errorMessage(error);
-=======
-    onMounted(async () => {
-      state.latestTransactions = await getLatestTransactions();
-      const len = (filtered.value?.length ?? 0);
-
-      if (state.pageSize < len) {
-        state.current = 0,
-        state.next = 1,
-        state.previous = -1;
-        state.last = Math.ceil(len / state.pageSize);
->>>>>>> a200a92e947631445939a485b88ef295c4b1238b
       }
     });
 
@@ -289,11 +240,7 @@ export default defineComponent({
       state.next = state.last;
     }
 
-<<<<<<< HEAD
     async function getLatestTransactions(): Promise<[] | undefined>{
-=======
-    async function getLatestTransactions(): Promise<TransactionRecord[] | undefined> {
->>>>>>> a200a92e947631445939a485b88ef295c4b1238b
       return await store.client?.getAccountRecords();
     }
 
@@ -343,10 +290,10 @@ export default defineComponent({
 
     return {
       state,
-      // timeElapsed,
-      // sumTransfers,
-      // formatAmount,
-      // formatType,
+      timeElapsed,
+      sumTransfers,
+      formatAmount,
+      formatType,
       previous,
       next,
       paginated,

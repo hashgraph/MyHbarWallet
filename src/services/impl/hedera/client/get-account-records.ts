@@ -1,19 +1,20 @@
 import axios from "axios";
 
 import { useStore } from "../../../../store";
+import { TransactionRecord } from "../../../../domain/TransactionRecord";
 
-const serverAddress = (network: string) => `https://v2.api.${network}.kabuto.sh`;
-
-export type TransactionRecord = unknown;
+// export type TransactionRecord = unknown;
 
 export async function getAccountRecords(): Promise<TransactionRecord[] | undefined>{
     const store = useStore();
     const accountId = store.accountId;
-    const network = store.network;
+    const serverAddress = store.kabutoServerAddress;
 
-    const resp = await axios.get(`${serverAddress(network)}/account/${accountId}/transaction`)
+    const resp = await axios.get(`${serverAddress}/transaction?q={"operator":${accountId}}`)
         .catch((error: Error)=>{
             throw error;
         });
+
+    console.log(resp);
     return resp.data.transactions;
 }

@@ -28,6 +28,7 @@ interface State {
     logoutConfirm: boolean;
     //contact customer support. open state
     contactSupport: boolean;
+    kabutoServerAddress: string;
 }
 
 export const useStore = defineStore({
@@ -44,7 +45,7 @@ export const useStore = defineStore({
       prompt: false,
       logoutConfirm: false,
       contactSupport: false,
-      kabutoServerAddress: "https://v2.api.mainnet.kabuto.sh"
+      kabutoServerAddress: "https://api.kabuto.sh/v1"
     };
   },
 
@@ -93,7 +94,7 @@ export const useStore = defineStore({
 
     setNetwork(name: "mainnet" | "testnet" | "previewnet") {
       this.network = name;
-      this.kabutoServerAddress = `https://v2.api.${name}.kabuto.sh`;
+      if(name == "testnet") this.kabutoServerAddress = "https://api.testnet.kabuto.sh/v1";
     },
 
     setWallet(wallet: Wallet | null) {
