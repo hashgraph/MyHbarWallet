@@ -79,7 +79,11 @@ export interface SimpleHederaClient {
         fileId: FileId
     }): Promise<Uint8Array | null>;
 
+<<<<<<< HEAD
     getAccountRecords(): Promise<[]>;
+=======
+    getAccountRecords(): Promise<TransactionRecord[] | undefined>;
+>>>>>>> a200a92e947631445939a485b88ef295c4b1238b
 
     getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>;
 }

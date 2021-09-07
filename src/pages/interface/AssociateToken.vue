@@ -16,13 +16,16 @@
       </label>
 
       <EntityIdInput
-        data-cy-token-id
         v-model="state.token"
+        data-cy-token-id
         type="token"
         :placeholder="$t('InterfaceToolTile.associateToken.placeholder')"
       />
 
-      <InputError data-cy-input-error v-if="state.errorMessage.length > 0">
+      <InputError
+        v-if="state.errorMessage.length > 0"
+        data-cy-input-error
+      >
         {{ state.errorMessage }}
       </InputError>
     </div>
@@ -50,10 +53,10 @@
     </div>
   </form>
   <Modal
-      data-cy-success-modal
-      :is-visible="state.successModal"
-      :title="$t('Modal.AssociateToken')"
-      @close="handleClose"
+    data-cy-success-modal
+    :is-visible="state.successModal"
+    :title="$t('Modal.AssociateToken')"
+    @close="handleClose"
   />
 </template>
 
