@@ -51,7 +51,7 @@
     </div>
   </div>
 
-  <!-- <div class="overflow-y-auto">
+  <div class="overflow-y-auto">
     <Transactions
       filter="sent"
       class="lg:mx-8"
@@ -78,19 +78,20 @@
       }"
       page-size="10"
     />
-  </div> -->
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 
 import Headline from "../../components/interface/Headline.vue";
-// import Transactions from "../../components/interface/Transactions.vue";
+import Transactions from "../../components/interface/Transactions.vue";
 
 export default defineComponent({
   name: "History",
   components: {
     Headline,
+    Transactions
   },
 
   setup(){
@@ -101,7 +102,6 @@ export default defineComponent({
 
     function changeFilter(filter: string){
       state.filter = filter;
-      console.log(`From History: ${state.filter}`);
     }
     
     return {

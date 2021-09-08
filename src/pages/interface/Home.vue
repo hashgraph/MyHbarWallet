@@ -56,10 +56,10 @@
   >
     <Assets :limit-tokens="5" />
 
-    <!-- <Transactions
+    <Transactions
       class="mt-4 sm:mt-0"
       page-size="5"
-    /> -->
+    />
   </div>
 </template>
 

@@ -13,19 +13,73 @@
 
     <Hint text="Further transaction history support coming soon!" />
 
-    <div
+    <div class="p-10 items-center justify-center text-white relative" @click="goToKabuto">
+      <div
+        class="rounded-lg p-8 bg-cerebral-grey dark:bg-midnight-express z-40 m-auto text-center translate-y-1/2"
+      >
+        <img
+          src="../../assets/kabuto-logo.svg"
+          class="m-auto"
+        >
+        See your recent transactions on Kabuto
+      </div>
+      <div class="-mt-40 -z-10">
+        <Transaction
+          title="Transfer"
+          account="0.0.3"
+          time-ago=""
+          transaction="1000000ℏ"
+          fee="1ℏ"
+          class="blur-[4px] z-10"
+        />
+        <Transaction
+          title="Transfer"
+          account="0.0.3"
+          time-ago=""
+          transaction="1000000ℏ"
+          fee="1ℏ"
+          class="blur-[4px] z-10"
+        />
+        <Transaction
+          title="Transfer"
+          account="0.0.3"
+          time-ago=""
+          transaction="1000000ℏ"
+          fee="1ℏ"
+          class="blur-[4px] z-10"
+        />
+        <Transaction
+          title="Transfer"
+          account="0.0.3"
+          time-ago=""
+          transaction="1000000ℏ"
+          fee="1ℏ"
+          class="blur-[4px] z-10"
+        />
+        <Transaction
+          title="Transfer"
+          account="0.0.3"
+          time-ago=""
+          transaction="1000000ℏ"
+          fee="1ℏ"
+          class="blur-[4px] z-10"
+        />
+      </div>
+    </div>
+
+    <!-- <div
       v-for="transaction in paginated"
       :key="transaction.id"
-    >
+    > -->
     <!-- TODO: Fix this -->
-      <!-- <Transaction
+    <!-- <Transaction
         :title="formatType(transaction.type.toString())"
         :account="transaction.operatorAccountId.toString()"
         :time-ago="timeElapsed(transaction.consensusAt)"
         :transaction="sumTransfers(transaction.transfers)"
         :fee="formatAmount(transaction.fee)"
       /> -->
-    </div>
+    <!-- </div> -->
 
     <!-- TODO: Replace with HeroIcons, when available -->
     <div
@@ -133,12 +187,14 @@ import { Transfer } from "../../pages/interface/Send.vue";
 import { useStore } from "../../store";
 import { TransactionRecord } from "../../services/impl/hedera/client/get-account-records";
 
+import Transaction from "./Transaction.vue";
+
 // import Transaction from "./Transaction.vue";
 import Hint from "./Hint.vue";
 
 export default defineComponent({
   name: "Transactions",
-  components: { Hint },
+  components: { Hint, Transaction },
   props: {
     hideHeader: { type: Boolean, default: false },
     pageSize: { type: String, default: "25", required: false },
@@ -180,7 +236,8 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      state.latestTransactions = await getLatestTransactions();
+      // TODO: Fix API call when Kabuto V2 is operational
+      //state.latestTransactions = await getLatestTransactions();
       const len = (filtered.value?.length ?? 0);
 
       if (state.pageSize < len) {
@@ -277,6 +334,10 @@ export default defineComponent({
       return formatted.trim();
     }
 
+    function goToKabuto(): void{
+      window.location.href = "https://explorer.kabuto.sh/mainnet";
+    }
+
     return {
       state,
       // timeElapsed,
@@ -287,7 +348,8 @@ export default defineComponent({
       next,
       paginated,
       first,
-      last
+      last,
+      goToKabuto
     };
   },
 });
