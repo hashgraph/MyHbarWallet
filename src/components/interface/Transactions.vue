@@ -13,63 +13,11 @@
 
     <Hint text="Further transaction history support coming soon!" />
 
-    <div class="p-10 items-center justify-center text-white relative" @click="goToKabuto">
-      <div
-        class="rounded-lg p-8 bg-cerebral-grey dark:bg-midnight-express z-40 m-auto text-center translate-y-1/2"
-      >
-        <img
-          src="../../assets/kabuto-logo.svg"
-          class="m-auto"
-        >
-        See your recent transactions on Kabuto
-      </div>
-      <div class="-mt-40 -z-10">
-        <Transaction
-          title="Transfer"
-          account="0.0.3"
-          time-ago=""
-          transaction="1000000ℏ"
-          fee="1ℏ"
-          class="blur-[4px] z-10"
-        />
-        <Transaction
-          title="Transfer"
-          account="0.0.3"
-          time-ago=""
-          transaction="1000000ℏ"
-          fee="1ℏ"
-          class="blur-[4px] z-10"
-        />
-        <Transaction
-          title="Transfer"
-          account="0.0.3"
-          time-ago=""
-          transaction="1000000ℏ"
-          fee="1ℏ"
-          class="blur-[4px] z-10"
-        />
-        <Transaction
-          title="Transfer"
-          account="0.0.3"
-          time-ago=""
-          transaction="1000000ℏ"
-          fee="1ℏ"
-          class="blur-[4px] z-10"
-        />
-        <Transaction
-          title="Transfer"
-          account="0.0.3"
-          time-ago=""
-          transaction="1000000ℏ"
-          fee="1ℏ"
-          class="blur-[4px] z-10"
-        />
-      </div>
-    </div>
-
+    <KabutoLink v-if="state.showKabuto" />
     <!-- <div
       v-for="transaction in paginated"
       :key="transaction.id"
+      v-if="!state.showKabuto"
     > -->
     <!-- TODO: Fix this -->
     <!-- <Transaction
@@ -187,14 +135,16 @@ import { Transfer } from "../../pages/interface/Send.vue";
 import { useStore } from "../../store";
 import { TransactionRecord } from "../../services/impl/hedera/client/get-account-records";
 
-import Transaction from "./Transaction.vue";
-
 // import Transaction from "./Transaction.vue";
+import KabutoLink from "./KabutoLink.vue";
+
+import Transaction from "./Transaction.vue";
 import Hint from "./Hint.vue";
+import KabutoLink from "./KabutoLink.vue";
 
 export default defineComponent({
   name: "Transactions",
-  components: { Hint, Transaction },
+  components: { Hint, KabutoLink },
   props: {
     hideHeader: { type: Boolean, default: false },
     pageSize: { type: String, default: "25", required: false },
@@ -233,18 +183,23 @@ export default defineComponent({
       next: 0,
       first: 0,
       last: 0,
+      showKabuto: false
     });
 
     onMounted(async () => {
       // TODO: Fix API call when Kabuto V2 is operational
-      //state.latestTransactions = await getLatestTransactions();
-      const len = (filtered.value?.length ?? 0);
+      try {
+        state.latestTransactions = await getLatestTransactions();
+        const len = (filtered.value?.length ?? 0);
 
-      if (state.pageSize < len) {
-        state.current = 0,
-        state.next = 1,
-        state.previous = -1;
-        state.last = Math.ceil(len / state.pageSize);
+        if (state.pageSize < len) {
+          state.current = 0,
+          state.next = 1,
+          state.previous = -1;
+          state.last = Math.ceil(len / state.pageSize);
+        }
+      } catch(error) {
+        state.showKabuto = true;
       }
     });
 
