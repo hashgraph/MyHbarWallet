@@ -136,9 +136,6 @@ import { useStore } from "../../store";
 import { TransactionRecord } from "../../services/impl/hedera/client/get-account-records";
 
 // import Transaction from "./Transaction.vue";
-import KabutoLink from "./KabutoLink.vue";
-
-import Transaction from "./Transaction.vue";
 import Hint from "./Hint.vue";
 import KabutoLink from "./KabutoLink.vue";
 
@@ -198,7 +195,7 @@ export default defineComponent({
           state.previous = -1;
           state.last = Math.ceil(len / state.pageSize);
         }
-      } catch(error) {
+      } catch {
         state.showKabuto = true;
       }
     });
