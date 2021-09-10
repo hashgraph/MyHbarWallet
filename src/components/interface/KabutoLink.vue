@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-10 items-center justify-center dark:text-white relative"
+    class="p-10 items-center justify-center dark:text-white relative cursor-pointer"
     @click="goToKabuto"
   >
     <div
@@ -61,7 +61,10 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 
+import { useStore } from "../../store";
+
 import Transaction from "./Transaction.vue";
+
 
 export default defineComponent({
     name: "KabutoLink",
@@ -69,8 +72,9 @@ export default defineComponent({
         Transaction
     },
     setup(){
+        const store = useStore();
         function goToKabuto(): void {
-            window.location.href = "https://explorer.kabuto.sh/mainnet"
+            window.open(`https://explorer.kabuto.sh/mainnet/id/${store.accountId?.toString()}`);
         }
 
         return {
