@@ -6,25 +6,25 @@
       @click="$emit('close')"
       @close="$emit('close')"
     >
-      <div class="p-4 mt-4">
+      <div class="p-4 mt-4 mb-2 md:mb-0">
         <div class="mb-4 text-squant">
-          {{ $t("BasePasswordInput.input1.placeholder1") }}
+          {{ $t("ConfirmPassword.headline") }}
         </div>
 
         <PasswordInput show-eye />
       </div>
 
-      <div class="flex flex-col items-center pb-4 mx-4">
+      <div class="pb-4 text-center">
         <Button
           color="green"
-          class="w-full p-4 mt-4"
+          class="w-full mb-4 md:mb-0 md:w-3/4 p-4 md:m-4 m-auto"
         >
           {{ $t("Confirmation.Sign") }}
         </Button>
 
         <Button
           color="white"
-          class="p-2 mt-4 w-36"
+          class="p-2 md:m-4 px-12"
           @click="$emit('close')"
         >
           {{ $t("Confirmation.Cancel") }}

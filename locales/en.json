@@ -101,6 +101,8 @@
     "ConfirmLogout.cancel": "Cancel",
     "ConfirmLogout.quit": "Log Out",
     "ConfirmLogout.title": "Confirm Logout",
+    "ConfirmPassword.title": "Confirm Password",
+    "ConfirmPassword.headline": "Confirm your password",
     "Create.title": "Create a New Wallet",
     "CreateRequest.header": "Request to Create Account",
     "CreateRequest.paragraph": "Provide your public key to an existing owner on the Hedera™ network. They must create and fund your account, then provide you with your new account ID.",
