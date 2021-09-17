@@ -34,10 +34,10 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { useVModel } from "@vueuse/core";
+import { useI18n } from "vue-i18n";
 
 import { copyText, hasClipboard } from "../../utils/clipboard";
 
-import { useI18n } from "vue-i18n";
 
 import TextInput from "./TextInput.vue";
 import Button from "./Button.vue";
