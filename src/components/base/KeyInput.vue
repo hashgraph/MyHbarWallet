@@ -27,15 +27,17 @@
     class="px-10 py-2 mt-6 text-sm font-semibold w-3/4 sm:w-1/2 m-auto dark:text-white"
     @click="handleCopy"
   >
-    {{ $t("BaseButton.copy.private.key") }}
+    {{ copyKeyMessage }}
   </Button>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 import { useVModel } from "@vueuse/core";
 
 import { copyText, hasClipboard } from "../../utils/clipboard";
+
+import { useI18n } from "vue-i18n";
 
 import TextInput from "./TextInput.vue";
 import Button from "./Button.vue";
@@ -52,19 +54,26 @@ export default defineComponent({
     readOnly: { type: Boolean, default: false },
     valid: { type: Boolean, default: null },
     error: { type: Boolean, default: null },
+    isPrivateKey: { type: Boolean, default: true }
   },
   setup(props, { emit }) {
+    const i18n = useI18n();
     const value = useVModel(props, "modelValue", emit);
+
+    const copyKeyMessage = computed(()=> {
+      if(props.isPrivateKey === true) return i18n.t("BaseButton.copy.private.key");
+      return i18n.t("BaseButton.copy.public.key");
+    });
 
     function handleCopy() {
       copyText(value.value as string);
     }
 
-
     return {
       value,
       hasClipboard,
       handleCopy,
+      copyKeyMessage
     };
   },
 });
