@@ -28,6 +28,8 @@ interface State {
     logoutConfirm: boolean;
     //contact customer support. open state
     contactSupport: boolean;
+    //Hedera network status
+    networkStatus: boolean
 }
 
 export const useStore = defineStore({
@@ -43,7 +45,8 @@ export const useStore = defineStore({
       extraTxInfo: null,
       prompt: false,
       logoutConfirm: false,
-      contactSupport: false
+      contactSupport: false,
+      networkStatus: false
     };
   },
 
@@ -67,6 +70,9 @@ export const useStore = defineStore({
     extraInfo(): Record<string, string | number> | null {
       return this.extraTxInfo;
     },
+    getNetworkStatus(): boolean {
+      return this.networkStatus;
+    }
   },
 
   actions: {
@@ -88,6 +94,20 @@ export const useStore = defineStore({
         this.setWallet(wallet);
         this.setClient(client);
       }
+    },
+
+    async networkPing(): Promise<boolean> {
+      const { AccountBalanceQuery, AccountId } = await import("@hashgraph/sdk");
+      const accountId = AccountId.fromString("0.0.2");
+    
+      try{
+          new AccountBalanceQuery().setNodeAccountIds([accountId]).setAccountId(accountId);
+          this.networkStatus = true;
+      } catch(error) {
+          this.networkStatus = false;
+      }
+
+      return this.networkStatus;
     },
 
     setNetwork(name: "mainnet" | "testnet" | "previewnet") {
