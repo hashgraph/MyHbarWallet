@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="networkStatus === true"
+    v-if="networkStatus === false"
     class="fixed md:absolute md:mt-16 mt-20 bg-devils-advocate w-full min-w-screen p-3 pt-6 md:pt-8 justify-center float-left text-center text-white sm:flex"
   >
     <img
@@ -32,8 +32,6 @@ export default defineComponent({
         watch( ()=> store.networkStatus, (current: boolean, previous: boolean) => {
             networkStatus.value = current;
         });
-
-        console.log(NetworkDownIcon);
 
         return {
             networkStatus,
