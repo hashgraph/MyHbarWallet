@@ -1,20 +1,18 @@
 import axios from "axios";
 
 import { useStore } from "../../../../store";
+import { CryptoTransfer } from "../../../../domain/CryptoTransfer";
 
-const serverAddress = (network: string) => `https://v2.api.${network}.kabuto.sh`;
-
-export type TransactionRecord = unknown;
-
-export async function getAccountRecords(): Promise<TransactionRecord[] | undefined>{
+export async function getAccountRecords(): Promise<CryptoTransfer[] | undefined>{
     const store = useStore();
     const accountId = store.accountId;
-    const network = store.network;
+    const serverAddress = store.serverAddress;
 
-    const resp = await axios.get(`${serverAddress(network)}/account/${accountId}/transaction`)
+    const resp = await axios.get(`${serverAddress}/transaction?filter[entityId]=${accountId}`)
+        .then(({ data }) => data)
         .catch((error: Error)=>{
             throw error;
         });
-
-    return resp.data.transactions as TransactionRecord[];
+    
+    return resp.data as CryptoTransfer[];
 }

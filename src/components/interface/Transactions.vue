@@ -14,20 +14,18 @@
     <Hint text="Further transaction history support coming soon!" />
 
     <KabutoLink v-if="state.showKabuto" />
-    <!-- <div
-      v-for="transaction in paginated"
-      :key="transaction.id"
-      v-if="!state.showKabuto"
-    > -->
-    <!-- TODO: Fix this -->
-    <!-- <Transaction
+    <div
+      v-for="(transaction, i) in paginated"
+      :key="i"
+    >
+      <Transaction
         :title="formatType(transaction.type.toString())"
         :account="transaction.operatorAccountId.toString()"
         :time-ago="timeElapsed(transaction.consensusAt)"
-        :transaction="sumTransfers(transaction.transfers)"
         :fee="formatAmount(transaction.fee)"
-      /> -->
-    <!-- </div> -->
+        :transaction="sumTransfers(transaction.transfers)"
+      />
+    </div>
 
     <!-- TODO: Replace with HeroIcons, when available -->
     <div
@@ -130,18 +128,30 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, reactive } from "vue";
 import { BigNumber } from "bignumber.js";
+import { AccountId, Timestamp } from "@hashgraph/sdk";
 
-import { Transfer } from "../../pages/interface/Send.vue";
 import { useStore } from "../../store";
-import { TransactionRecord } from "../../services/impl/hedera/client/get-account-records";
+import { CryptoTransfer } from "../../domain/CryptoTransfer";
 
-// import Transaction from "./Transaction.vue";
 import Hint from "./Hint.vue";
 import KabutoLink from "./KabutoLink.vue";
+import Transaction from "./Transaction.vue";
+
+//TODO: Replace with Transfer in domain from Send PR after merge, Transfer will be in domain
+interface Transfer {
+  to?: AccountId;
+  asset: string; // "HBAR" or token ID (string)
+  amount?: BigNumber;
+  usd?: string;
+}
 
 export default defineComponent({
   name: "Transactions",
-  components: { Hint, KabutoLink },
+  components: { 
+    Hint, 
+    KabutoLink, 
+    Transaction 
+  },
   props: {
     hideHeader: { type: Boolean, default: false },
     pageSize: { type: String, default: "25", required: false },
@@ -151,29 +161,30 @@ export default defineComponent({
     const store = useStore();
     const accountId = computed(() => store.accountId);
 
-    function isSender(txr): boolean {
+    function isSender(txr: CryptoTransfer): boolean {
       return txr.id.toString().split("@")[0] === accountId.value?.toString(); 
     }
-
     const filtered = computed(() => {
-      if (props.filter === "all") {
-        return state.latestTransactions;
-      } else if (props.filter === "from") {
-        return state.latestTransactions?.filter((transaction) => isSender(transaction));
-      } else if (props.filter === "to") {
-        return state.latestTransactions?.filter((transaction) => !isSender(transaction));
+      if (props.filter === "all") return state.latestTransactions;
+      const transactions = [] as CryptoTransfer[];
+
+      for(let i in state.latestTransactions) {
+        if(props.filter === "sent" && state.latestTransactions[i].type.includes("TRANSFER") && isSender(state.latestTransactions[i])) transactions.push(state.latestTransactions[i]);
+        else if (props.filter === "received" && state.latestTransactions[i].type.includes("TRANSFER") && !isSender(state.latestTransactions[i])) transactions.push(state.latestTransactions[i]);
+        else if(props.filter === "tokens" && state.latestTransactions[i].type.includes("TOKEN")) transactions.push(state.latestTransactions[i]);
+        else if(props.filter === "account" && state.latestTransactions[i].type.includes("ACCOUNT")) transactions.push(state.latestTransactions[i]);
       }
 
-      return [];
+      return transactions;
     });
 
     const paginated = computed(() => {
-      return filtered.value?.slice(state.current * state.pageSize, (state.current * state.pageSize) + state.pageSize) as TransactionRecord[];
+      return filtered.value?.slice(state.current * state.pageSize, (state.current * state.pageSize) + state.pageSize) as CryptoTransfer[];
     });
 
     const state = reactive({
-      latestTransactions: [] as TransactionRecord[] | undefined,
-      paginated: [] as TransactionRecord[] | undefined,
+      latestTransactions: [] as CryptoTransfer[],
+      paginated: [] as CryptoTransfer[],
       pageSize: Number(props.pageSize),
       current: 0,
       previous: 0,
@@ -186,9 +197,8 @@ export default defineComponent({
     onMounted(async () => {
       // TODO: Fix API call when Kabuto V2 is operational
       try {
-        state.latestTransactions = await getLatestTransactions();
-        const len = (filtered.value?.length ?? 0);
-
+        state.latestTransactions = await getLatestTransactions() ?? [] as CryptoTransfer[];
+        const len = filtered.value.length;
         if (state.pageSize < len) {
           state.current = 0,
           state.next = 1,
@@ -238,14 +248,14 @@ export default defineComponent({
       state.next = state.last;
     }
 
-    async function getLatestTransactions(): Promise<TransactionRecord[] | undefined> {
+    async function getLatestTransactions(): Promise<CryptoTransfer[] | undefined> {
       return await store.client?.getAccountRecords();
     }
 
     //Time elapsed since consensus
-    function timeElapsed(date: string): string {
+    function timeElapsed(time: Timestamp): string {
       const current: Date = new Date();
-      const consensus: Date = new Date(date);
+      const consensus: Date = new Date(time.toString());
       const elapsed = Math.abs(current.getTime() - consensus.getTime());
 
       const days = Math.floor(elapsed / (24 * 60 * 60 * 1000));
@@ -264,17 +274,16 @@ export default defineComponent({
 
     function sumTransfers(transfers: Transfer[]): string {
       let sum = new BigNumber(0);
-
-      for (let i in transfers) {
-        if (transfers[i].amount?.isGreaterThan(new BigNumber(0))) sum = sum.plus(transfers[i].amount ?? new BigNumber(0));
+      for (const transfer of transfers) {
+        const amount = new BigNumber(transfer.amount ?? 0);
+        if(amount.isGreaterThan(0)) sum = sum.plus(amount);
       }
-
       return formatAmount(sum.toNumber());
     }
 
     //Format value to print in Hbar
     function formatAmount(value: number): string {
-      return `${parseFloat((value / 100000000).toFixed(8))}ℏ`;
+      return `${parseFloat((value / Math.pow(10, 8)).toFixed(8))}ℏ`;
     }
 
     function formatType(type: string): string {
@@ -292,13 +301,13 @@ export default defineComponent({
 
     return {
       state,
-      // timeElapsed,
-      // sumTransfers,
-      // formatAmount,
-      // formatType,
+      paginated,
+      timeElapsed,
+      sumTransfers,
+      formatAmount,
+      formatType,
       previous,
       next,
-      paginated,
       first,
       last,
       goToKabuto

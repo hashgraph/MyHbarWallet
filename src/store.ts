@@ -30,6 +30,8 @@ interface State {
     contactSupport: boolean;
     //Hedera network status
     networkStatus: boolean
+    //Kabuto server address, defaults to Mainnet
+    kabutoServerAddress: string;
 }
 
 export const useStore = defineStore({
@@ -46,7 +48,8 @@ export const useStore = defineStore({
       prompt: false,
       logoutConfirm: false,
       contactSupport: false,
-      networkStatus: false
+      networkStatus: false,
+      kabutoServerAddress: "https://v2.api.mainnet.kabuto.sh"
     };
   },
 
@@ -70,8 +73,13 @@ export const useStore = defineStore({
     extraInfo(): Record<string, string | number> | null {
       return this.extraTxInfo;
     },
+
     getNetworkStatus(): boolean {
       return this.networkStatus;
+    },
+
+    serverAddress(): string {
+      return this.kabutoServerAddress;
     }
   },
 
@@ -112,6 +120,7 @@ export const useStore = defineStore({
 
     setNetwork(name: "mainnet" | "testnet" | "previewnet") {
       this.network = name;
+      this.kabutoServerAddress = `https://v2.api.${name}.kabuto.sh`
     },
 
     setWallet(wallet: Wallet | null) {

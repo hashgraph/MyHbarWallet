@@ -6,78 +6,37 @@
     />
 
     <div
-      class="
-                absolute
-                top-14
-                lg:right-0
-                lg:top-2
-                w-64
-                flex
-                justify-around
-                items-end
-                text-andrea-blue
-                font-medium
-            "
+      class="flex flex-wrap items-start w-full mb-2"
     >
-      <span
-        class="py-1 px-4 rounded cursor-pointer bg-transparent transition duration-300 ease-in-out"
-        :class="{
-          'bg-andrea-blue text-white': state.filter == 'all'
-        }"
-        @click="changeFilter('all')"
-      >{{
-        $t("InterfaceHistory.button.all")
-      }}</span>
-
-      <span
-        class="py-1 px-4 rounded cursor-pointer bg-transparent transition duration-300 ease-in-out"
-        :class="{
-          'bg-andrea-blue text-white': state.filter == 'sent'
-        }"
-        @click="changeFilter('sent')"
-      >{{
-        $t("InterfaceHistory.button.sent")
-      }}</span>
-
-      <span
-        class="py-1 px-4 rounded cursor-pointer bg-transparent transition duration-300 ease-in-out"
-        :class="{
-          'bg-andrea-blue text-white': state.filter == 'received'
-        }"
-        @click="changeFilter('received')"
-      >{{
-        $t("InterfaceHistory.button.received")
-      }}</span>
+      <div
+        v-for="option in state.options"
+        :key="option"
+      >
+        <TransactionFilterButton
+          :filter="option"
+          :active="state.filter == option"
+          @changeFilter="changeFilter"
+        >
+          {{ $t(`InterfaceHistory.button.${option}`) }}
+        </TransactionFilterButton>
+      </div>
     </div>
   </div>
 
   <div class="overflow-y-auto">
-    <Transactions
-      filter="sent"
-      class="lg:mx-8"
-      :class="{
-        'invisible h-0': state.filter != 'sent'
-      }"  
-      page-size="10"
-    />
-
-    <Transactions
-      filter="received"
-      class="lg:mx-8"
-      :class="{
-        'invisible h-0': state.filter != 'received'
-      }"
-      page-size="10"
-    />
-
-    <Transactions
-      filter="all"
-      class="lg:mx-8"
-      :class="{
-        'invisible h-0': state.filter != 'all'
-      }"
-      page-size="10"
-    />
+    <div
+      v-for="option in state.options"
+      :key="option"
+    >
+      <Transactions
+        :filter="option"
+        class="lg:mx-8"
+        :class="{
+          'invisible h-0': state.filter !== option
+        }"  
+        page-size="10"
+      />
+    </div>
   </div>
 </template>
 
@@ -86,22 +45,25 @@ import { defineComponent, reactive } from "vue";
 
 import Headline from "../../components/interface/Headline.vue";
 import Transactions from "../../components/interface/Transactions.vue";
+import TransactionFilterButton from "../../components/interface/TransactionFilterButton.vue";
 
 export default defineComponent({
   name: "History",
   components: {
     Headline,
-    Transactions
+    Transactions,
+    TransactionFilterButton
   },
 
   setup(){
 
     const state = reactive({
-      filter: "all"
+      filter: "all",
+      options: [ "all", "sent", "received", "tokens", "account" ],
     });
 
-    function changeFilter(filter: string){
-      state.filter = filter;
+    function changeFilter(e: {filter: string}){
+      state.filter = e.filter;
     }
     
     return {

@@ -23,6 +23,7 @@
       can-copy
       read-only
       :label="$t('InterfaceKeys.input2.label')"
+      :is-private-key="false"
     />
   </div>
 </template>
