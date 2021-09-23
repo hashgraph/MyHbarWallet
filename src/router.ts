@@ -317,6 +317,7 @@ router.beforeResolve(async (to, from, next) => {
   } else if (!needsWallet && neededWallet && hasWallet) {
     store.setConfirmLogoutOpen(true);
   } else next();
+  await store.networkPing();
 });
 
 export default router;
