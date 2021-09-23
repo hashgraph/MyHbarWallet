@@ -5,7 +5,6 @@ import type {
   AccountId,
   TokenId,
   FileId,
-  TransactionRecord,
   TokenInfo
 } from "@hashgraph/sdk";
 import { BigNumber } from "bignumber.js";
@@ -15,6 +14,7 @@ import {
   SimpleHederaClient,
   SimpleTransfer,
 } from "../../../hedera";
+import { CryptoTransfer } from "../../../../domain/CryptoTransfer";
 
 import { getAccountBalance } from "./get-account-balance";
 import { transfer } from "./transfer";
@@ -24,6 +24,7 @@ import { uploadFile } from "./upload-file";
 import { downloadFile } from "./download-file";
 import { getAccountRecords } from "./get-account-records";
 import { getTokenInfo } from "./get-token-info";
+
 
 export class SimpleHederaClientImpl implements SimpleHederaClient {
   private _client: Client;
@@ -95,7 +96,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
     return downloadFile(this._client, options);
   }
 
-  getAccountRecords(): Promise<TransactionRecord[] | undefined> {
+  getAccountRecords(): Promise<CryptoTransfer[] | undefined> {
     return getAccountRecords();
   }
 
