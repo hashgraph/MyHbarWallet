@@ -1,4 +1,3 @@
-
 //See https://docs.kabuto.sh/reference#transaction
 
 import type { AccountId, Timestamp } from "@hashgraph/sdk";

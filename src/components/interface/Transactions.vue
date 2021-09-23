@@ -137,7 +137,7 @@ import Hint from "./Hint.vue";
 import KabutoLink from "./KabutoLink.vue";
 import Transaction from "./Transaction.vue";
 
-
+//TODO: Replace with Transfer in domain from Send PR after merge, Transfer will be in domain
 interface Transfer {
   to?: AccountId;
   asset: string; // "HBAR" or token ID (string)
@@ -275,7 +275,8 @@ export default defineComponent({
     function sumTransfers(transfers: Transfer[]): string {
       let sum = new BigNumber(0);
       for (const transfer of transfers) {
-        if(transfer.amount > 0) sum = sum.plus(transfer.amount);
+        const amount = new BigNumber(transfer.amount ?? 0);
+        if(amount.isGreaterThan(0)) sum = sum.plus(amount);
       }
       return formatAmount(sum.toNumber());
     }
