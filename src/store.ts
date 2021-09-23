@@ -28,6 +28,10 @@ interface State {
     logoutConfirm: boolean;
     //contact customer support. open state
     contactSupport: boolean;
+    //Hedera network status
+    networkStatus: boolean
+    //Kabuto server address, defaults to Mainnet
+    kabutoServerAddress: string;
 }
 
 export const useStore = defineStore({
@@ -43,7 +47,9 @@ export const useStore = defineStore({
       extraTxInfo: null,
       prompt: false,
       logoutConfirm: false,
-      contactSupport: false
+      contactSupport: false,
+      networkStatus: false,
+      kabutoServerAddress: "https://v2.api.mainnet.kabuto.sh"
     };
   },
 
@@ -67,6 +73,14 @@ export const useStore = defineStore({
     extraInfo(): Record<string, string | number> | null {
       return this.extraTxInfo;
     },
+
+    getNetworkStatus(): boolean {
+      return this.networkStatus;
+    },
+
+    serverAddress(): string {
+      return this.kabutoServerAddress;
+    }
   },
 
   actions: {
@@ -90,8 +104,23 @@ export const useStore = defineStore({
       }
     },
 
+    async networkPing(): Promise<boolean> {
+      const { AccountBalanceQuery, AccountId } = await import("@hashgraph/sdk");
+      const accountId = AccountId.fromString("0.0.2");
+    
+      try{
+          new AccountBalanceQuery().setNodeAccountIds([accountId]).setAccountId(accountId);
+          this.networkStatus = true;
+      } catch(error) {
+          this.networkStatus = false;
+      }
+
+      return this.networkStatus;
+    },
+
     setNetwork(name: "mainnet" | "testnet" | "previewnet") {
       this.network = name;
+      this.kabutoServerAddress = `https://v2.api.${name}.kabuto.sh`
     },
 
     setWallet(wallet: Wallet | null) {

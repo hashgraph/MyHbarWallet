@@ -6,16 +6,16 @@
       class="flex flex-col"
       @close="handleClose"
     >
-      <div class="p-4 mt-4">
+      <div class="p-4 mt-4 mb-2 md:mb-0">
         <div class="mb-4 text-squant">
           {{ $t("ConfirmLogout.areYouSure") }}
         </div>
       </div>
 
-      <div class="flex items-center pb-4 mx-4">
+      <div class="pb-4 text-center">
         <Button
           color="green"
-          class="w-full p-4 mt-4"
+          class="w-full mb-4 md:mb-0 md:w-3/4 p-4 md:m-4 m-auto"
           @click="handleQuit"
         >
           {{ $t('ConfirmLogout.quit') }}
@@ -23,7 +23,7 @@
 
         <Button
           color="white"
-          class="p-2 mt-4 w-36"
+          class="p-2 md:m-4 px-12"
           @click="handleClose"
         >
           {{ $t('ConfirmLogout.cancel') }}
