@@ -1,5 +1,7 @@
 <template>
-  <div class="py-3.5 px-6 text-carbon dark:bg-ruined-smores">
+  <div
+    class="shadow-md rounded py-4 px-6 text-carbon bg-white dark:bg-ruined-smores"
+  >
     <label
       class="block mb-2 dark:text-silver-polish"
       for="to"
@@ -91,7 +93,7 @@ export default defineComponent({
       dAsset,
       dAmount,
       state,
-      handleToInput
+      handleToInput,
     };
   },
 });

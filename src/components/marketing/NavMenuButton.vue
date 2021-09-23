@@ -47,10 +47,13 @@
 </template>
 
 <script lang="ts">
+export default defineComponent({
+name: "NavMenuButton",
+});
+</script>
+
+<script lang="ts" setup>
 import { defineComponent } from "vue";
 
-export default defineComponent({
-  name: "NavMenuButton",
-  props: { isOpen: { type: Boolean, required: true } },
-});
+defineProps({ isOpen: { type: Boolean, required: true } });
 </script>

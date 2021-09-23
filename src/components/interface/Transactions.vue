@@ -130,6 +130,7 @@ import { computed, defineComponent, onMounted, reactive } from "vue";
 import { BigNumber } from "bignumber.js";
 import { AccountId, Timestamp } from "@hashgraph/sdk";
 
+import { Transfer } from "../../pages/interface/Send.vue";
 import { useStore } from "../../store";
 import { CryptoTransfer } from "../../domain/CryptoTransfer";
 
