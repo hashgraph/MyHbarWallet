@@ -5,10 +5,8 @@ import { CryptoTransfer } from "../../../../domain/CryptoTransfer";
 
 export async function getAccountRecords(): Promise<CryptoTransfer[] | undefined>{
     const store = useStore();
-    const accountId = store.accountId;
-    const serverAddress = store.serverAddress;
 
-    const resp = await axios.get(`${serverAddress}/transaction?filter[entityId]=${accountId}`)
+    const resp = await axios.get(`https://v2.api.${store.network}.kabuto.sh/transaction?filter[entityId]=${store.accountId}`)
         .then(({ data }) => data)
         .catch((error: Error)=>{
             throw error;
