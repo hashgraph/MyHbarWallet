@@ -1,44 +1,22 @@
 <template>
-  <div class="w-1/2 pl-5 mb-5 leading-5">
+  <div class="m-4 mt-12 dark:text-white">
+    {{ $t("InterfaceTransactionDetails.balance") }}
+  </div>
+
+  <div class="text-center pl-8 pr-8">
     <div
-      class="h-auto p-5 mt-3 border rounded-lg  bg-first-snow w-96 dark:bg-ruined-smores dark:border-argent"
+      class="m-auto min-w-[350px] m-auto h-auto p-5 mt-3 border rounded-lg bg-first-snow dark:bg-ruined-smores dark:border-argent"
     >
-      <div class="flex mb-2">
-        <div
-          v-for="(transfer, index) in TransferList"
-          :key="index"
-          class="text-andrea-blue"
-        >
-          {{ transfer.account }}
+      <div
+        v-for="(transfer) in transfers"
+        :key="transfer.accountId.toString()"
+        class="m-auto text-left flex grid grid-flow-row grid-cols-2"
+      >
+        <div class="text-andrea-blue">
+          {{ transfer.accountId }}
         </div>
-
-        <div
-          v-for="(transfer, index) in TransferList"
-          :key="index"
-          class="ml-auto dark:text-argent"
-        >
-          {{ transfer.balance }}
-          HBAR
-        </div>
-      </div>
-
-      <div class="flex">
-        <div
-          v-for="(transfer, index) in TransferList"
-          :key="index"
-          class="text-andrea-blue"
-        >
-          {{ transfer.account }}
-        </div>
-
-        <div
-          v-for="(transfer, index) in TransferList"
-          :key="index"
-          class="ml-auto dark:text-argent"
-        >
-          {{}}
-          {{ transfer.balance - transfer.transaction }}
-          HBAR
+        <div class="dark:text-silver-polish">
+          {{ formatAmount(transfer.balance) }}
         </div>
       </div>
     </div>
@@ -46,28 +24,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, PropType } from "vue";
 
+import { Transfer } from "../../domain/CryptoTransfer";
 export default defineComponent({
   name: "BalanceDetail",
-  setup() {
-    const TransferList = ref([
-      {
-        account: "0.0.22098",
-        transaction: -0.00453,
-        balance: 0.00434,
-      },
-    ]);
-    const RecieverList = ref([
-      {
-        account: "0.0.22098",
-        transaction: 0.00367,
-        balance: Number,
-      },
-    ]);
-    console.log(TransferList.value);
-    console.log(RecieverList.value);
-    return { TransferList, RecieverList };
+  props: { 
+    transfers: { type: Array as PropType<Transfer[]>, required: true } 
   },
+  setup() {
+    function formatAmount(value: number): string {
+      return `${parseFloat((value/Math.pow(10, 8)).toFixed(8))}ℏ`;
+    }
+
+    return {
+      formatAmount
+    }
+  }
 });
 </script>

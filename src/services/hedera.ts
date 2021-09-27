@@ -84,4 +84,6 @@ export interface SimpleHederaClient {
     getAccountRecords(): Promise<CryptoTransfer[] | undefined>;
 
     getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>;
+
+    getTransfer(options: { hash: string }): Promise<CryptoTransfer>;
 }
