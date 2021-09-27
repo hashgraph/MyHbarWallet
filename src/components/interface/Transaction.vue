@@ -1,19 +1,20 @@
 <template>
-  <div
-    class="flex items-center justify-between h-20 mb-1 border-b  border-jupiter dark:border-midnight-express"
+  <router-link
+    :to=" { name: 'transaction', params: { transactionHash: hash } }"
+    class="flex items-center justify-between h-20 mb-1 border-b border-jupiter dark:border-midnight-express"
   >
     <Identicon class="w-10 h-10 mr-2" />
 
     <div class="flex flex-col flex-grow">
       <div class="flex justify-between flex-grow">
         <div
-          class="flex-shrink-0 mb-1 font-medium leading-5  text-andrea-blue"
+          class="flex-shrink-0 mb-1 font-medium leading-5 text-andrea-blue"
         >
           {{ title }}
         </div>
 
         <div
-          class="mb-1 font-medium leading-5 text-right truncate  text-mountain-meadow max-h-5"
+          class="mb-1 font-medium leading-5 text-right truncate text-mountain-meadow max-h-5"
         >
           {{ truncatedTransaction }}
         </div>
@@ -21,18 +22,18 @@
 
       <div class="flex justify-between">
         <div
-          class="text-xs font-medium leading-4  text-squant dark:text-argent"
+          class="text-xs font-medium leading-4 text-squant dark:text-argent"
         >
           {{ `${account} • ${timeAgo}` }}
         </div>
         <div
-          class="flex justify-end text-xs font-medium leading-4  text-squant dark:text-argent"
+          class="flex justify-end text-xs font-medium leading-4 text-squant dark:text-argent"
         >
           {{ `${$t("RecentTransactions.fee")} ${fee}` }}
         </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script lang="ts">
@@ -51,6 +52,7 @@ export default defineComponent({
     timeAgo: { type: String, required: true },
     transaction: { type: String, required: true },
     fee: { type: String, required: true },
+    hash: { type: String, required: true }
   },
   setup(props) {
     const md = useScreen("md");

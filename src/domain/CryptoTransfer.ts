@@ -1,14 +1,11 @@
 //See https://docs.kabuto.sh/reference#transaction
 
 import type { AccountId, Timestamp } from "@hashgraph/sdk";
-import BigNumber from "bignumber.js";
 
-//TODO: Replace with Transfer in domain from Send PR after merge, Transfer will be in domain
-interface Transfer {
-    to?: AccountId;
-    asset: string; // "HBAR" or token ID (string)
-    amount?: BigNumber;
-    usd?: string;
+export interface Transfer {
+    accountId: AccountId;
+    amount: number;
+    balance: number;
 }
 
 export interface CryptoTransfer {

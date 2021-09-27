@@ -24,6 +24,7 @@
         :time-ago="timeElapsed(transaction.consensusAt)"
         :fee="formatAmount(transaction.fee)"
         :transaction="sumTransfers(transaction.transfers)"
+        :hash="transaction.hash"
       />
     </div>
 
