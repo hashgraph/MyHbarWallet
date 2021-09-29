@@ -12,5 +12,6 @@ export async function getAccountRecords(): Promise<CryptoTransfer[] | undefined>
             throw error;
         });
     
-    return resp.data as CryptoTransfer[];
+    //Display items from newest to oldest (Kabuto started showing oldest first)
+    return resp.data.reverse() as CryptoTransfer[];
 }

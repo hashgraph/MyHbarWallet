@@ -38,9 +38,9 @@
 
     <AssetInput
       id="amount"
-      v-model="dAmount"
       data-cy-asset-amount
       :asset="asset"
+      @update:model-value="updateAmount"
     />
   </div>
 </template>
@@ -66,7 +66,7 @@ export default defineComponent({
   props: {
     to: { type: Object as PropType<AccountId>, default: null },
     asset: { type: String, default: "HBAR" },
-    amount: { type: Object as PropType<BigNumber.Instance>, default: null },
+    amount: { type: String, default: null },
   },
   emits: ["update:to", "update:asset", "update:amount", "update:usd"],
   setup(props, { emit }) {
@@ -89,11 +89,16 @@ export default defineComponent({
       }
     }
     
+    function updateAmount(e: Event): void {
+      emit('update:amount', new BigNumber(e as unknown as number));
+    }
+
     return {
       dAsset,
       dAmount,
       state,
       handleToInput,
+      updateAmount
     };
   },
 });

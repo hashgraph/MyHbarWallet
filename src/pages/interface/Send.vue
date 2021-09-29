@@ -29,13 +29,13 @@
           <TransferForm
             v-model:to="state.transfer.to"
             v-model:asset="state.transfer.asset"
-            v-model:amount="state.transfer.amount"
             v-model:usd="state.transfer.usd"
             class="transition-all duration-300"
             :class="{
               'opacity-100 mt-0': state.transfers.length === 0 || state.editTransfer == true,
               'opacity-0 -mt-80': state.editTransfer === false && state.transfers.length > 0
             }"
+            @update:amount="updateAmount"
           />
 
           <div
@@ -166,7 +166,6 @@ import {
   onMounted,
   reactive,
   ref,
-  nextTick
 } from "vue";
 import { BigNumber } from "bignumber.js";
 import { TokenId, TokenInfo , Hbar } from "@hashgraph/sdk";
@@ -272,17 +271,21 @@ export default defineComponent({
       tokenType: null as string | null | undefined
     });
 
+    function updateAmount(e: Event): void {
+      state.transfer.amount = new BigNumber(e as unknown as number);
+    }
+
     function updateValue(e: { index: number, value: BigNumber }) {
       state.transfers[e.index].amount = e.value;
     }
 
     function createKey(transfer: Transfer): string {
-      return `${transfer.to} ${transfer.asset}`;
+      return `${transfer.to} ${transfer.asset} ${transfer.amount}`;
     }
    
     //Format value to print in Hbar
     function formatAmount(value: number): string {
-      return `${parseFloat((value/Math.pow(10, 8)).toFixed(8))}ℏ`;
+      return `${value.toFixed(8)}ℏ`;
     }
 
     function edit(e: { index: number }): void {
@@ -292,12 +295,11 @@ export default defineComponent({
     }
 
     function remove(e: { index: number }): void {
-      nextTick(()=> {
-        state.transfers.splice(e.index, 1);
-        if(state.transfers.length === 1) {
-          state.transfer = state.transfers.shift() as Transfer;
-        }
-      });
+      state.transfers.splice(e.index, 1);
+      if(state.transfers.length === 1) {
+        state.transfer = state.transfers.shift() as Transfer;
+        state.transfers = [] as Transfer[];
+      }
     }
 
     function editSingleTransfer(): void {
@@ -401,22 +403,24 @@ export default defineComponent({
         });
 
         void store.requestAccountBalance();
-
+        
         //get token information if asset is not Hbar, and only one transfer is going out
+        //Removed token info query to reduce phantom fees, can put back if needed
         if(state.transfer.asset !== "HBAR" && state.transfers.length <= 1){
-          const tokenInfo = Object.assign({}, await getTokenInfo(state.transfer.asset));
-          state.decimals = tokenInfo?.decimals ?? 0;
-          state.symbol = tokenInfo?.symbol;
-          state.tokenType = tokenInfo?.name ;
+          state.decimals = store.balance?.tokens?.get(state.transfer.asset)?.decimals ?? 0;
+          state.symbol = "";
+          state.tokenType = state.transfer.asset;
         }
+
         // go back to home
         // goal is to see the now PENDING transaction
         // so we can watch it "reach consensus"
         openAcceptModal();
       } catch (err) {
         state.showIPModal = false;
-        state.generalErrorText = await store.errorMessage(err);
+        state.generalErrorText = await store.errorMessage(err as Error);
         state.confirmed = false;
+        state.transfer.amount = new BigNumber(0);
       } finally {
         state.sendBusyText = null;
         state.confirmed = false;
@@ -455,7 +459,8 @@ export default defineComponent({
       remove,
       createKey,
       updateValue,
-      handleConfirm
+      handleConfirm,
+      updateAmount
     };
   },
 });
