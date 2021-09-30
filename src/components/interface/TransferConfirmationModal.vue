@@ -29,7 +29,7 @@
             {{ transfer.asset }}
           </td>
           <td>
-            {{ transfer.asset === "HBAR"? transfer.amount?.dividedBy(Math.pow(10, 8)): transfer.amount }}
+            {{ transfer.asset === "HBAR"? transfer.amount?.toFixed(8) ?? '0' : transfer.amount?.toFixed(getDecimal(transfer.asset) ?? 0) ?? '0' }}
           </td>
         </tr>
       </tbody>
@@ -55,7 +55,7 @@
 
 <script lang = "ts">
 import { defineComponent, PropType } from "vue";
-
+import { useStore } from "../../store";
 import { Transfer } from "../../domain/Transfer";
 import Button from "../base/Button.vue";
 
@@ -71,6 +71,13 @@ export default defineComponent({
         isVisible: { type: Boolean, required: true },
         transfers: { type: Array as PropType<Transfer[]>, required: true }
     },
-    emits: ["close", "confirm"]
+    emits: ["close", "confirm"],
+    setup(){
+      const store = useStore();
+      function getDecimal(asset: string): number | undefined {
+        return store.balance?.tokens.get(asset)?.decimals;
+      }
+      return { getDecimal };
+    }
 });
 </script>

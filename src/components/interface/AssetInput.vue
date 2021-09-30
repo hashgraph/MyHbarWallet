@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, PropType, watch } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import { BigNumber } from 'bignumber.js'
 
 import { useStore } from '../../store'
@@ -37,7 +37,7 @@ export default defineComponent({
     asset: { type: String, required: true },
     // NOTE: value here is low denom, so tinybars not hbars
     modelValue: {
-      type: Object as PropType<BigNumber.Instance | null>,
+      type: String,
       default: null,
     },
   },
@@ -65,53 +65,21 @@ export default defineComponent({
       num = num.times(new BigNumber(10).pow(decimals))
       num = num.decimalPlaces(decimals)
 
-      emit('update:modelValue', num)
+      emit('update:modelValue', num.toNumber().toString())
     })
 
     function onAmountInput(event: Event) {
       const target = event.target as HTMLInputElement
-      let inputValue = target.value
+      target.value = target.value.replace(/[^\d.]/g, '');
+      let inputValue = target.value;
 
-      // remove any non-digit characters
-      // for input sanitization and to allow for commas
-      inputValue = inputValue.replace(/[^\d.]/g, '')
-
-      // ignore successive decimal points at the end
-      // this can happen as the final decimal point is a ghost char added
-      // when formatted
-      if (inputValue.endsWith('..'))
-        inputValue = inputValue.slice(0, inputValue.length - 1)
-
-      let inputNum: BigNumber | null | undefined = new BigNumber(inputValue)
-
-      if (inputNum.isNaN()) {
-        if (inputValue.length === 0) {
-          target.value = ''
-          emit('update:modelValue', null)
-
-          return
-        }
-
-        inputNum = new BigNumber(props.modelValue ?? 0)
-        inputValue = props.modelValue?.toFixed(8) ?? '0'
+      if(inputValue != null && inputValue.split(".").length > 2) {
+        inputValue = inputValue.slice(0, -1);
+      } else if(inputValue != "" && inputValue.split(".")[1]?.length > assetDecimals.value) {
+        inputValue = inputValue.slice(0, -1);
       }
-
-      // trim the decimal points to the maximum supported by the asset
-      inputNum = inputNum?.decimalPlaces(assetDecimals.value)
-
-      target.value = formatNum(inputNum)
-
-      emit(
-        'update:modelValue',
-        inputNum?.multipliedBy(assetScale.value) ?? null,
-      )
-
-      if (assetDecimals.value > 0) {
-        nextTick(() => {
-          // IFF the input value had a trailing decimal, re-add it
-          if (inputValue.endsWith('.')) target.value += '.'
-        })
-      }
+      target.value = inputValue.replace(/^0+/,'');
+      emit('update:modelValue', target.value);
     }
 
     const formattedValue = computed(() => {

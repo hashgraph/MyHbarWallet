@@ -80,8 +80,6 @@ export default defineComponent({
         const state = reactive({
             showOptions: false,
             to: props.transfer.to,
-            asset: props.transfer.asset,
-            amount: props.transfer.amount,
             decimals: 0,
             formattedAmount: "",
             index: props.index,
@@ -90,14 +88,14 @@ export default defineComponent({
         });
 
         function formatAmount(value: BigNumber): string {
-          value = value.dividedBy(Math.pow(10, state.decimals));
+          // value = value.dividedBy(Math.pow(10, state.decimals));
           //Represent as Hbar instead of Tinybar
-          if(state.asset === "HBAR") return `${parseFloat(value.dividedBy(Math.pow(10, 8)).toFixed(8))}ℏ`;
+          if(props.transfer.asset === "HBAR") return `${value.toFixed(8)}ℏ`;
           context.emit("update:value", {
             index: props.index,
             value: value
           });
-          return `${parseFloat(value.toFixed(state.decimals))} ${state.symbol}`;
+          return `${value.toFixed(state.decimals)} ${state.symbol}`;
         }
 
         function closeMenu(): void {
@@ -123,16 +121,16 @@ export default defineComponent({
         }
 
         onMounted(async ()=> {
-          if(state.asset !== "HBAR") {
-            const token = Object.assign({}, await store.client?.getTokenInfo({token: state.asset}) as TokenInfo);
-            state.tokenName = token.name;
-            state.symbol = token.symbol;
-            state.decimals = token.decimals;
+          //Removed token info query to reduce phantom fees, can replace if needed   
+          if(props.transfer.asset !== "HBAR") {
+            state.tokenName = props.transfer.asset;
+            state.symbol = "";
+            state.decimals = store.balance?.tokens.get(props.transfer.asset)?.decimals ?? 0;
           }
           else {
-            state.tokenName = state.asset;
+            state.tokenName = props.transfer.asset;
           }
-          state.formattedAmount = formatAmount(state.amount ?? new BigNumber(0));
+          state.formattedAmount = formatAmount(props.transfer.amount ?? new BigNumber(0));
         });
 
         return {

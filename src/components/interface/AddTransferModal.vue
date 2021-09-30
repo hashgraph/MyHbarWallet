@@ -7,10 +7,10 @@
   >
     <TransferForm
       v-model:asset="state.transfer.asset"
-      v-model:amount="state.transfer.amount"
       v-model:usd="state.transfer.usd"
       v-model:to="state.transfer.to"
       class="text-left mt-4 shadow-none"
+      @update:amount="updateAmount"
     />
 
     <Button
@@ -32,6 +32,7 @@ import { Transfer } from "../../domain/Transfer";
 import TransferForm from "../interface/TransferForm.vue";
 import Modal from "../interface/Modal.vue";
 import Button from "../base/Button.vue";
+import BigNumber from "bignumber.js";
 
 export default defineComponent({
     name: "AddTransferModal",
@@ -57,7 +58,7 @@ export default defineComponent({
         });
 
         const valid = computed(()=>{
-          return state.transfer.to != null && state.transfer.amount != null
+          return state.transfer.to != null && state.transfer.amount != null && !isNaN(state.transfer.amount.toNumber()) && state.transfer.amount.toNumber() !== 0;
         });
 
         function handleTransfer(): void {
@@ -78,10 +79,15 @@ export default defineComponent({
           state.transfer.usd = undefined
         }
 
+        function updateAmount(e: Event): void {
+          state.transfer.amount = new BigNumber(e as unknown as number);
+        }
+
         return {
             state,
             valid,
-            handleTransfer
+            handleTransfer,
+            updateAmount
         }
     }
 });
