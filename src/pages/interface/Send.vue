@@ -213,10 +213,10 @@ export default defineComponent({
 
     const success = computed( ()=> {
       if(state.transfers.length === 1) {      
-        if(state.transfer.asset === "HBAR"){
+        if(state.transfers[0].asset === "HBAR"){
           return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${formatAmount(state.transfers[0].amount?.toNumber() ?? 0)} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfers[0].to?.toString()}`
         }
-        return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${parseFloat(new BigNumber(state.transfers[0].amount ?? 0).toFixed(state.decimals))} ${state.symbol} ${i18n.t("InterfaceSend.modal.of")} ${state.tokenType} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfers[0].to?.toString()}`
+        return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${state.transfers[0].amount?.toFixed(state.decimals)} ${i18n.t("InterfaceSend.modal.of")} ${state.transfers[0].asset} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfers[0].to?.toString()}`
       } else {
         return `${i18n.t("InterfaceHomeSendModal.success.multiple.transfers")}`;
       }
@@ -229,7 +229,7 @@ export default defineComponent({
     });
 
     const sendValid = computed(
-      () => state.transfer.to != null && state.transfer.amount != null
+      () => state.transfer.to != null && state.transfer.amount != null && !isNaN(state.transfer.amount.toNumber()) && state.transfer.amount.toNumber() !== 0
     );
 
     const disableSend = computed(()=> {
@@ -405,7 +405,7 @@ export default defineComponent({
         void store.requestAccountBalance();
         
         //get token information if asset is not Hbar, and only one transfer is going out
-        //Removed token info query to reduce phantom fees, can put back if needed
+        //Removed token info query to reduce invisible transactions, can put back if needed
         if(state.transfer.asset !== "HBAR" && state.transfers.length <= 1){
           state.decimals = store.balance?.tokens?.get(state.transfer.asset)?.decimals ?? 0;
           state.symbol = "";
@@ -435,6 +435,7 @@ export default defineComponent({
       state.maxFee = fee;
     }
 
+    //Removed token info queries to reduce invisible transactions, can replace if needed
     async function getTokenInfo(token: string | TokenId): Promise<TokenInfo | undefined>{
       return await store.client?.getTokenInfo({token: token});
     }

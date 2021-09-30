@@ -73,9 +73,9 @@ export default defineComponent({
       target.value = target.value.replace(/[^\d.]/g, '');
       let inputValue = target.value;
 
-      if(inputValue !== null && inputValue.split(".").length > 2) {
+      if(inputValue != null && inputValue.split(".").length > 2) {
         inputValue = inputValue.slice(0, -1);
-      } else if(inputValue !== "" && inputValue.split(".")[1]?.length > assetDecimals.value) {
+      } else if(inputValue != "" && inputValue.split(".")[1]?.length > assetDecimals.value) {
         inputValue = inputValue.slice(0, -1);
       }
       target.value = inputValue.replace(/^0+/,'');

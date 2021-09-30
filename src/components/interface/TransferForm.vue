@@ -71,7 +71,6 @@ export default defineComponent({
   emits: ["update:to", "update:asset", "update:amount", "update:usd"],
   setup(props, { emit }) {
     const dAsset = useVModel(props, "asset");
-    const dAmount = useVModel(props, "amount");
     
     const state = reactive({
       toValid: false,
@@ -90,12 +89,11 @@ export default defineComponent({
     }
     
     function updateAmount(e: Event): void {
-      emit('update:amount', new BigNumber(e as unknown as number));
+      emit('update:amount', e);
     }
 
     return {
       dAsset,
-      dAmount,
       state,
       handleToInput,
       updateAmount
