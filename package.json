@@ -89,6 +89,8 @@
     "vite-plugin-html": "^2.1.0",
     "vite-plugin-pwa": "^0.8.2",
     "vue-tsc": "^0.2.3",
-    "workbox-window": "^6.2.4"
+    "workbox-window": "^6.2.4",
+    "public-ip": "^4.0.4",
+    "dotenv": "^10.0.0"
   }
 }

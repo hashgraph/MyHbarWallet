@@ -25,27 +25,34 @@
       <TotalBalance />
     </div>
 
-    <div class="flex justify-center py-12">
-      <div class="w-11" />
-      <div>
-        <router-link
-          data-cy-send
-          :to="{ name: 'send' }"
-        >
-          <Image
-            class="w-20 h-20"
-            :light="sendAssetLight"
-            :dark="sendAssetDark"
-            alt="paper airplane"
-          />
-
-          <div
-            class="font-medium leading-5 text-center text-andrea-blue"
-          >
-            {{ $t("InterfaceHome.button.send") }}
-          </div>
-        </router-link>
+    <div class="flex justify-center py-12 font-medium leading-5 text-center text-andrea-blue">
+      <div class="mr-4 cursor-pointer">
+        <Image
+          class="w-20 h-20"
+          :light="addAssetLight"
+          :dark="addAssetDark"
+          alt="buy assets"
+          @click="openQuoteModal"
+        />
+        <div>
+          {{ $t("InterfaceHome.button.buy") }}
+        </div>
       </div>
+      <router-link
+        data-cy-send
+        :to="{ name: 'send' }"
+      >
+        <Image
+          class="w-20 h-20"
+          :light="sendAssetLight"
+          :dark="sendAssetDark"
+          alt="paper airplane"
+        />
+
+        <div>
+          {{ $t("InterfaceHome.button.send") }}
+        </div>
+      </router-link>
     </div>
   </div>
 
@@ -61,10 +68,12 @@
       page-size="5"
     />
   </div>
+
+  <BuyAssetsQuoteModal :is-visible="state.showQuoteModal" @close="closeQuoteModal"/>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted } from "vue";
+import { computed, defineComponent, onMounted, reactive } from "vue";
 
 import { useStore } from "../../store";
 import addAssetLight from "../../assets/img_add.svg";
@@ -76,6 +85,7 @@ import Assets from "../../components/interface/Assets.vue";
 import Transactions from "../../components/interface/Transactions.vue";
 import Identicon from "../../components/interface/Identicon.vue";
 import TotalBalance from "../../components/interface/TotalBalance.vue";
+import BuyAssetsQuoteModal from "../../components/interface/BuyAssetsQuoteModal.vue";
 
 export default defineComponent({
   name: "Home",
@@ -85,15 +95,28 @@ export default defineComponent({
     Image,
     Assets,
     Transactions,
+    BuyAssetsQuoteModal
   },
   setup() {
     const store = useStore();
     const accountId = computed(() => store.accountId);
     const publicKey = computed(() => store.publicKey);
+
+    const state = reactive({
+      showQuoteModal: false
+    });
     
     onMounted(() => {
       void store.requestHbarPrice();
     });
+
+    function openQuoteModal(): void {
+      state.showQuoteModal = true;
+    }
+
+    function closeQuoteModal(): void {
+      state.showQuoteModal = false;
+    }
 
     return {
       accountId,
@@ -102,6 +125,9 @@ export default defineComponent({
       sendAssetLight,
       addAssetDark,
       sendAssetDark,
+      state,
+      openQuoteModal,
+      closeQuoteModal
     };
   },
 });

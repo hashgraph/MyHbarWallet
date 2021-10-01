@@ -86,4 +86,6 @@ export interface SimpleHederaClient {
     getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>;
 
     getTransfer(options: { hash: string }): Promise<CryptoTransfer>;
+
+    simplexGetQuote(options: { denomination: string, amount: number, paymentMethod: string[] }): Promise<void>; 
 }

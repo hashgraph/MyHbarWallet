@@ -25,6 +25,7 @@ import { downloadFile } from "./download-file";
 import { getAccountRecords } from "./get-account-records";
 import { getTokenInfo } from "./get-token-info";
 import { getTransfer } from "./get-transaction";
+import { simplexGetQuote } from "./simplex-get-quote"; 
 
 
 export class SimpleHederaClientImpl implements SimpleHederaClient {
@@ -107,5 +108,9 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
 
   getTransfer(options: { hash: string }): Promise<CryptoTransfer> {
     return getTransfer(options);
+  }
+
+  simplexGetQuote(options: { denomimation: string, amount: number, paymentMethod: string[] }): Promise<void> {
+    return simplexGetQuote(options);
   }
 }

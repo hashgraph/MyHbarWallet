@@ -12,6 +12,7 @@ import { defineConfig } from "vite";
 import packageJson from "./package.json";
 
 export default async function ({ mode }) {
+    require("dotenv").config({path: `./.env.${mode}`});
     const isProduction = mode === "production";
 
     const lastCommit = await new Promise((resolve, reject) =>
@@ -20,7 +21,7 @@ export default async function ({ mode }) {
             else resolve(commit);
         })
     );
-
+    //icanhazip and ipify are used to collect user's public API, please see simplex-get-quote.ts for details
     let contentSecurityPolicy = [
         "default-src 'self'",
         "connect-src 'self' " +
@@ -29,7 +30,10 @@ export default async function ({ mode }) {
                 "grpc-web.previewnet.myhbarwallet.com",
                 "grpc-web.myhbarwallet.com",
                 "api.coingecko.com",
-                "v2.api.testnet.kabuto.sh"
+                "v2.api.testnet.kabuto.sh",
+                "https://ipv4.icanhazip.com/",
+                "https://api.ipify.org/",
+                "https://sandbox.test-simplexcc.com/"
             ].join(" "),
         "font-src 'self' data:",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
@@ -42,6 +46,7 @@ export default async function ({ mode }) {
                     injectData: {
                         contentSecurityPolicy: contentSecurityPolicy.join("; "),
                     },
+                    process: "process"
                 },
             }),
             vue(),
@@ -66,6 +71,8 @@ export default async function ({ mode }) {
             __APP_LAST_COMMIT_SHORT_HASH__: JSON.stringify(
                 lastCommit.shortHash
             ),
+            __SIMPLEX_AUTH__: JSON.stringify(process.env.VUE_APP_SIMPLEX_AUTH),
+            __SIMPLEX_WALLET_ID__: JSON.stringify(process.env.VUE_APP_SIMPLEX_WALLET_ID)
         },
         build: {
             outDir: "dist/web",
