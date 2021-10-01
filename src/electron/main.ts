@@ -1,51 +1,23 @@
-import path from "path";
-
-import { BrowserWindow, app } from "electron";
-import type { BrowserWindowConstructorOptions } from "electron";
-import windowStateKeeper from "electron-window-state";
+const path = require("path");
+const { app, BrowserWindow } = require("electron");
 
 function createMainWindow() {
-  const options: BrowserWindowConstructorOptions = {
-    minWidth: 800,
-    title: "MyHbarWallet v0.6.0+??",
-    minHeight: 600,
+  // Create the browser window.
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600,
     autoHideMenuBar: true,
     webPreferences: {
-      contextIsolation: true,
-      devTools: true,
-      spellcheck: false,
-      nodeIntegration: false,
       preload: path.join(__dirname, "preload.ts"),
     },
-  };
-
-  const windowState = windowStateKeeper({
-    defaultWidth: options.minWidth,
-    defaultHeight: options.minHeight,
   });
 
-  const win = new BrowserWindow({
-    ...options,
-    x: windowState.x,
-    y: windowState.y,
-    width: windowState.width,
-    height: windowState.height,
-  });
-
-  windowState.manage(win);
-
-  win.once("ready-to-show", () => {
-    win.show();
-    win.focus();
-  });
-
-  if (app.isPackaged) {
-    win.loadFile("dist/index.html");
-  } else {
-    win.loadURL("http://localhost:3000#wallet/new");
-  }
+  win.loadFile("dist/web/index.html");
 }
 
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createMainWindow();
 

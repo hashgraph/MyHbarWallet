@@ -36,6 +36,7 @@ export default async function ({ mode }) {
     ];
 
     return defineConfig({
+        base: "",
         plugins: [
             html({
                 inject: {
