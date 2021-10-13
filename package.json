@@ -1,5 +1,6 @@
 {
-  "name": "@hashgraph/my-hbar-wallet",
+  "name": "myhbarwallet",
+  "productName": "MyHbarWallet",
   "version": "0.6.5",
   "description": "MyHbarWallet is a free, client-side interface helping you interact with Hedera™ Hashgraph.",
   "main": "src/electron/main.ts",
@@ -15,6 +16,7 @@
     "dev": "vite",
     "electron:dev": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' electron -r ts-node/register src/electron/main.ts",
     "electron:start": "electron .",
+    "electron:build": "electron-builder -mwl",
     "prebuild": "npx pnpm install -r --store=node_modules/.pnpm-store || echo skiping pnpm install",
     "build": "cross-env NODE_ENV=production vite build",
     "fmt": "eslint --ext .ts,vue . --fix",
@@ -22,6 +24,38 @@
     "check:types": "run-s check:types:src check:types:tests:cypress",
     "check:types:src": "vue-tsc",
     "check:types:tests:cypress": "tsc -p tests/cypress"
+  },
+  "build": {
+    "appId": "com.myhbarwallet.app",
+    "copyright": "Copyright © 2021 MyHbarWallet",
+    "directories": {
+      "output": "dist/electron"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "src/electron/assets/icons/icon.icns",
+      "category": "public.app-category.utilities",
+      "darkModeSupport": "true",
+      "type": "distribution"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "src/electron/assets/icons/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "pacman",
+        "rpm"
+      ],
+      "icon": "src/electron/assets/icons/icon.png",
+      "category": "Utilities"
+    }
   },
   "husky": {
     "hooks": {
@@ -70,6 +104,7 @@
     "cypress": "^8.3.1",
     "cypress-file-upload": "^5.0.8",
     "electron": "^13.2.3",
+    "electron-builder": "^22.13.1",
     "eslint": "^7.32.0",
     "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-import": "^2.24.2",
