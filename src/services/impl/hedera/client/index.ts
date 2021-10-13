@@ -25,7 +25,7 @@ import { downloadFile } from "./download-file";
 import { getAccountRecords } from "./get-account-records";
 import { getTokenInfo } from "./get-token-info";
 import { getTransfer } from "./get-transaction";
-import { simplexGetQuote } from "./simplex-get-quote"; 
+import { simplexGetQuote } from "./simplex"; 
 
 
 export class SimpleHederaClientImpl implements SimpleHederaClient {

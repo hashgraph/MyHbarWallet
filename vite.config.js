@@ -33,9 +33,10 @@ export default async function ({ mode }) {
                 "v2.api.testnet.kabuto.sh",
                 "https://ipv4.icanhazip.com/",
                 "https://api.ipify.org/",
-                "https://sandbox.test-simplexcc.com/"
+                "https://sandbox.test-simplexcc.com/",
             ].join(" "),
         "font-src 'self' data:",
+        "script-src-elem 'self' https://iframe.sandbox.test-simplexcc.com/form-sdk.js https://cdn.test-simplexcc.com/sdk/v1/js/sdk.js 'unsafe-eval' 'unsafe-inline'; object-src 'self'",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
     ];
 

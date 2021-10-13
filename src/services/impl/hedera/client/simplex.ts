@@ -1,3 +1,4 @@
+import axios from "axios";
 import publicIp from "public-ip";
 
 import { useStore } from "../../../../store";
@@ -9,14 +10,7 @@ export async function simplexGetQuote(options: { denomimation: string, amount: n
     const store = useStore();
     const publicIPAddress = await publicIp.v4();
 
-    const request = new XMLHttpRequest();
-    request.open("POST", "https://sandbox.test-simplexcc.com/wallet/merchant/v2/quote");
-    request.setRequestHeader("Accept", "application/json");
-    request.setRequestHeader("Content-Type", "application/json");
-    request.setRequestHeader("Access-Control-Allow-Origin", "*");
-    request.setRequestHeader("ApiKey", `${__SIMPLEX_AUTH__}`);
-
-    request.send(JSON.stringify({
+    const data = {
         "end-user-id": store.accountId?.toString(),
         "digital_currency": "HBAR",
         "fiat_currency": options.denomimation,
@@ -25,9 +19,21 @@ export async function simplexGetQuote(options: { denomimation: string, amount: n
         "wallet_id": __SIMPLEX_WALLET_ID__,
         "client_ip": publicIPAddress,
         "payment_methods": options.paymentMethod
-    }));
+    };
 
-    console.log(request);
-    console.log(request.response);
-    console.log(request.responseText);
+    const config = {
+        data: data,
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "ApiKey": `${__SIMPLEX_AUTH__}`
+        }
+    };
+
+    const resp = await axios.post("https://sandbox.test-simplexcc.com/wallet/merchant/v2/quote HTTP/1.1", config)
+        .then( ({data}) => data)
+        .catch((e: Error) => {
+            throw e;
+        });
 }

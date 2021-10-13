@@ -4,10 +4,32 @@
     :is-visible="isVisible"
     @close="$emit('close')"
   >
+    <div
+      id="simplex-form"
+      :ref="simplexFormRef"
+    />
     <form
       class="text-center justify-center md:p-4 pt-8"
       @submit.prevent="getQuote"
     >
+      <!-- <form id="simplex-form">
+        <div id="checkout-element" />
+      </form>
+   
+      <script>
+        window.simplex.createForm();
+      </script> -->
+
+      <!-- <form id="simplex-form">
+        <div id="checkout-element" />
+      </form> -->
+      <!-- <script
+        src="https://iframe.sandbox.test-simplexcc.com/form-sdk.js"
+        type="text/javascript"
+      />
+      <script>
+        window.simplex.createForm();
+      </script> -->
       <Select
         v-model="state.denomination"
         :options="state.denominations"
@@ -44,10 +66,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, onMounted, ref, Ref } from "vue";
 
 import { useStore } from "../../store";
-
 import Button from "../base/Button.vue";
 import Select, { Option } from "../base/Select.vue";
 
@@ -71,6 +92,7 @@ export default defineComponent({
     ],
     setup(){
       const store = useStore();
+      const simplexFormRef = ref();
 
       const state = reactive({
         amount: 0,
@@ -99,13 +121,22 @@ export default defineComponent({
         console.log(state.denomination);
         console.log(state.amount);
         const paymentOptions = ["simplex_account", "credit_card"] as string[];
-        store.client?.simplexGetQuote({ denomination: state.denomination, amount: state.amount, paymentMethod: paymentOptions });
+        //store.client?.simplexGetQuote({ denomination: state.denomination, amount: state.amount, paymentMethod: paymentOptions });
       }
+
+      onMounted(async ()=> {
+        if(document.getElementById("simplexScript")) return;
+        const scriptTag = document.createElement("script");
+        scriptTag.src = "https://iframe.sandbox.test-simplexcc.com/form-sdk.js";
+        scriptTag.id = "simplexScript";
+        document.appendChild(scriptTag);
+      });
 
       return {
         state,
         updateAmount,
-        getQuote
+        getQuote,
+        simplexFormRef
       };
     }
 });
