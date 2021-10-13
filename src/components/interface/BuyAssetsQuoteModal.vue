@@ -121,15 +121,16 @@ export default defineComponent({
         console.log(state.denomination);
         console.log(state.amount);
         const paymentOptions = ["simplex_account", "credit_card"] as string[];
-        //store.client?.simplexGetQuote({ denomination: state.denomination, amount: state.amount, paymentMethod: paymentOptions });
+        store.client?.simplexGetQuote({ denomination: state.denomination, amount: state.amount, paymentMethod: paymentOptions });
       }
 
       onMounted(async ()=> {
+        //Probably don't want to do this, I was trying this to see if it would work
         if(document.getElementById("simplexScript")) return;
         const scriptTag = document.createElement("script");
         scriptTag.src = "https://iframe.sandbox.test-simplexcc.com/form-sdk.js";
         scriptTag.id = "simplexScript";
-        document.appendChild(scriptTag);
+        //document.appendChild(scriptTag);
       });
 
       return {
