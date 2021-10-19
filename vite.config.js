@@ -13,6 +13,11 @@ import packageJson from "./package.json";
 
 export default async function ({ mode }) {
     const isProduction = mode === "production";
+    const isElectron = process.env.IS_ELECTRON === "true";
+
+    // Output directories
+    const webOutDir = "dist/web";
+    const electronOutDir = "dist/electron";
 
     const lastCommit = await new Promise((resolve, reject) =>
         getLastCommit((err, commit) => {
@@ -36,7 +41,7 @@ export default async function ({ mode }) {
     ];
 
     return defineConfig({
-        base: "",
+        base: isElectron ? "./" : "/",
         plugins: [
             html({
                 inject: {
@@ -69,7 +74,7 @@ export default async function ({ mode }) {
             ),
         },
         build: {
-            outDir: "dist/web",
+            outDir: isElectron ? electronOutDir : webOutDir,
         },
     });
 }
