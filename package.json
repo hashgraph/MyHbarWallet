@@ -16,7 +16,8 @@
     "dev": "vite",
     "electron:dev": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' electron -r ts-node/register src/electron/main.ts",
     "electron:start": "electron .",
-    "electron:build": "electron-builder -mwl",
+    "electron:build": "cross-env NODE_ENV=production IS_ELECTRON=true vite build",
+    "electron:create-installers": "electron-builder -mwl",
     "prebuild": "npx pnpm install -r --store=node_modules/.pnpm-store || echo skiping pnpm install",
     "build": "cross-env NODE_ENV=production vite build",
     "fmt": "eslint --ext .ts,vue . --fix",
@@ -29,7 +30,7 @@
     "appId": "com.myhbarwallet.app",
     "copyright": "Copyright © 2021 MyHbarWallet",
     "directories": {
-      "output": "dist/electron"
+      "output": "dist/installers"
     },
     "mac": {
       "target": [

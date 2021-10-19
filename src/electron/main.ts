@@ -12,7 +12,7 @@ function createMainWindow() {
     },
   });
 
-  win.loadFile("dist/web/index.html");
+  win.loadFile("dist/electron/index.html");
 }
 
 // This method will be called when Electron has finished
