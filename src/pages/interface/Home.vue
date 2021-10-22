@@ -100,7 +100,7 @@ export default defineComponent({
       showBuyAssetsModal: false
     });
 
-    onMounted(() => {
+    onMounted(async () => {
       void store.requestHbarPrice();
     });
 
