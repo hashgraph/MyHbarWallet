@@ -13,7 +13,6 @@
         :dark-icon="option.imageDark"
         :title="$t(option.title)"
         :desc="$t(option.description)"
-        :recommended="option.value === SoftwareOption.Keystore"
         @click="onClickOption(option)"
       />
     </div>
