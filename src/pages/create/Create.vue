@@ -8,6 +8,7 @@
         v-for="option in options"
         :key="option.value"
       >
+        <!-- Software method should explicitly be not recommended -->
         <OptionCard
           :data-cy-option="option.title"
           :light-icon="option.imageLight"
@@ -15,6 +16,7 @@
           :to="{ name: option.route }"
           :title="$t(option.title)"
           :desc="$t(option.description)"
+          :recommended="option.value === CreateOptionType.Software ? false : null"
         />
       </template>
     </div>
@@ -24,7 +26,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import { CreateOptions } from "../../domain/CreateOptions";
+import { CreateOptionType, CreateOptions } from "../../domain/CreateOptions";
 import Layout from "../../components/access/Layout.vue";
 import OptionCard from "../../components/base/OptionCard.vue";
 
@@ -40,7 +42,8 @@ export default defineComponent({
     );
 
     return {
-      options
+      options,
+      CreateOptionType
     };
   },
 });

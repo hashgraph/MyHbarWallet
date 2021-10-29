@@ -29,6 +29,13 @@
       >
         {{ $t("Mnemonic.Verify") }}
       </Button>
+
+      <!-- 'Not Recommended' banner for Software method -->
+      <NotRecommendedBanner>
+        <span>
+          {{ $t("MnemonicPhrase.create.note.dnf") + $t("MnemonicPhrase.create.note") }}
+        </span>
+      </NotRecommendedBanner>
     </form>
   </Layout>
 </template>
@@ -37,14 +44,15 @@
 import { defineComponent, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-
 import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
+import { useStore } from "../../store";
+
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";
 import MnemonicInput from "../../components/base/MnemonicInput.vue";
 import InputError from "../../components/base/InputError.vue";
-import { useStore } from "../../store";
+import NotRecommendedBanner from '../../components/base/NotRecommendedBanner.vue';
 
 export default defineComponent({
   name: "MnemonicVerify",
@@ -53,7 +61,8 @@ export default defineComponent({
     MnemonicInput,
     Layout,
     PasswordInput,
-    InputError
+    InputError,
+    NotRecommendedBanner,
   },
   setup() {
     const store = useStore();
@@ -78,7 +87,7 @@ export default defineComponent({
     } else {
       router.push({ name: "create" });
     }
-    
+
 
     async function handleSubmit(): Promise<void> {
       errorMessage.value = "";

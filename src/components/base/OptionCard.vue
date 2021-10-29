@@ -47,23 +47,9 @@
       :dark="darkChevron"
     />
 
-    <div
-      v-if="recommended"
-      class="
-                absolute
-                top-2.5
-                right-2.5
-                inline-flex
-                text-xs text-white
-                font-semibold
-                py-1.5
-                px-3
-                rounded
-                bg-bright-navy-blue
-            "
-    >
-      {{ $t("BaseOptionCard.recommended") }}
-    </div>
+
+    <!-- Absolute positioned elements -->
+    <OptionCardLabel :recommended="recommended" />
   </component>
 </template>
 
@@ -76,10 +62,11 @@ import lightChevron from "../../assets/chevron_right.svg";
 import darkChevron from "../../assets/dark/chevron_right.svg";
 
 import Image from "./Image.vue";
+import OptionCardLabel from './OptionCardLabel.vue';
 
 export default defineComponent({
   name: "OptionCard",
-  components: { Image },
+  components: { Image, OptionCardLabel },
   props: {
     lightIcon: { type: String, required: true },
     darkIcon: { type: String, required: true },
@@ -89,7 +76,8 @@ export default defineComponent({
       type: Object as PropType<RouteLocationRaw | null>,
       default: null,
     },
-    recommended: { type: Boolean, default: false },
+    // true: recommended, false: explicitly not recommended, null: no recommendation/empty
+    recommended: { type: Boolean, default: null }
   },
   setup(props) {
     const sm = useScreen("sm");

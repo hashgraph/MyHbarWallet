@@ -30,13 +30,12 @@
         {{ $t("BaseButton.continue") }}
       </Button>
 
-      <div class="mt-10 text-sm text-black-out dark:text-white">
-        <span class="font-semibold text-Megaman-Helmet">
-          {{ $t("Keystore.create.note.dnf") }}
+      <!-- 'Not Recommended' banner for Software method -->
+      <NotRecommendedBanner>
+        <span>
+          {{ $t("Keystore.create.note.dnf") + $t("Keystore.create.note") }}
         </span>
-
-        {{ $t("Keystore.create.note") }}
-      </div>
+      </NotRecommendedBanner>
     </form>
   </Layout>
 </template>
@@ -51,19 +50,20 @@ import {
 } from "vue";
 import { debouncedWatch } from "@vueuse/core";
 import { useRouter } from "vue-router";
-
 import { useStore } from "../../store";
 import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
+
 import Button from "../../components/base/Button.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";
 import InputError from "../../components/base/InputError.vue";
 import Layout from "../../components/access/Layout.vue";
+import NotRecommendedBanner from '../../components/base/NotRecommendedBanner.vue';
 
 declare const __TEST__: boolean;
 
 export default defineComponent({
     name: "CreateKeystore",
-    components: { Layout, PasswordInput, InputError, Button },
+    components: { Layout, PasswordInput, InputError, Button, NotRecommendedBanner },
     setup() {
         const keystore = ref<Uint8Array | null>(null);
         const keystoreLink = ref<HTMLAnchorElement | null>(null);

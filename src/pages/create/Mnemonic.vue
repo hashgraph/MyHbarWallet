@@ -14,14 +14,14 @@
         :word-count="24"
         read-only
       />
-   
+
       <OptionalPasswordInput
         v-model="password"
         :label="$t('BaseOptionalPasswordInput.label1')"
         :placeholder="$t('BasePasswordInput.input1.placeholder4')"
         confirm
       />
-      
+
       <Button
         type="submit"
         color="green"
@@ -30,13 +30,12 @@
         {{ $t("MnemonicPhrase.create.button") }}
       </Button>
 
-      <div class="mt-10 text-sm text-black-out dark:text-white">
-        <span class="font-semibold text-Megaman-Helmet">
-          {{ $t("MnemonicPhrase.create.note.dnf") }}
+      <!-- 'Not Recommended' banner for Software method -->
+      <NotRecommendedBanner>
+        <span>
+          {{ $t("MnemonicPhrase.create.note.dnf") + $t("MnemonicPhrase.create.note") }}
         </span>
-
-        {{ $t("MnemonicPhrase.create.note") }}
-      </div>
+      </NotRecommendedBanner>
     </form>
   </Layout>
 </template>
@@ -44,15 +43,16 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
 import type { Mnemonic } from "@hashgraph/sdk";
-
+import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
+import { useStore } from "../../store";
+import { Wallet } from "../../domain/wallet/abstract";
 import router from "../../router";
+
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import OptionalPasswordInput from "../../components/base/OptionalPasswordInput.vue";
 import MnemonicInput from "../../components/base/MnemonicInput.vue";
-import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
-import { useStore } from "../../store";
-import { Wallet } from "../../domain/wallet/abstract";
+import NotRecommendedBanner from '../../components/base/NotRecommendedBanner.vue';
 
 export default defineComponent({
   name: "CreateMnemonic",
@@ -61,6 +61,7 @@ export default defineComponent({
     MnemonicInput,
     Layout,
     OptionalPasswordInput,
+    NotRecommendedBanner,
   },
   setup() {
     const store = useStore();

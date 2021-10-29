@@ -15,6 +15,9 @@
         :desc="$t(option.description)"
         @click="onClickOption(option)"
       />
+
+      <!-- 'Not Recommended' banner for Software method -->
+      <NotRecommendedBanner />
     </div>
   </Layout>
 </template>
@@ -30,12 +33,14 @@ import {
 } from "../../domain/SoftwareOptions";
 import OptionCard from "../../components/base/OptionCard.vue";
 import Layout from "../../components/access/Layout.vue";
+import NotRecommendedBanner from '../../components/base/NotRecommendedBanner.vue';
 
 export default defineComponent({
   name: "Software",
   components: {
     OptionCard,
     Layout,
+    NotRecommendedBanner,
   },
   setup() {
     const router = useRouter();
