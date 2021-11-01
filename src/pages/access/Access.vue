@@ -4,6 +4,7 @@
     class="max-w-3xl"
   >
     <div class="grid gap-5 auto-rows-min">
+      <!-- Software method should explicitly be not recommended -->
       <OptionCard
         v-for="option in options"
         :key="option.value"
@@ -13,6 +14,7 @@
         :to="{ name: option.route }"
         :title="$t(option.title)"
         :desc="$t(option.description)"
+        :recommended="option.value === AccessOptionType.Software ? false : null"
       />
     </div>
   </Layout>

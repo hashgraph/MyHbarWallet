@@ -36,6 +36,9 @@
       >
         {{ $t("BaseButton.accessWallet") }}
       </Button>
+
+      <!-- 'Not Recommended' banner for Software method -->
+      <NotRecommendedBanner />
     </div>
   </Layout>
 </template>
@@ -43,14 +46,15 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "../../store";
+import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
 
 import FileUploader from "../../components/base/FileUploader.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";
 import InputError from "../../components/base/InputError.vue";
 import Button from "../../components/base/Button.vue";
 import Layout from "../../components/access/Layout.vue";
-import { useStore } from "../../store";
-import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
+import NotRecommendedBanner from '../../components/base/NotRecommendedBanner.vue';
 
 export default defineComponent({
   name: "Keystore",
@@ -60,6 +64,7 @@ export default defineComponent({
     Button,
     FileUploader,
     Layout,
+    NotRecommendedBanner
   },
   setup() {
     const password = ref("");
@@ -73,7 +78,7 @@ export default defineComponent({
     function onUpdateName(name: string): void {
       fileName.value = name;
     }
-    
+
     function onUpdateFile(bytes: Uint8Array): void {
       fileData.value = bytes;
     }

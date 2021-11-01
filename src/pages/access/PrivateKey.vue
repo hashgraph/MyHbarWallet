@@ -29,11 +29,14 @@
     <Button
       data-cy-key-submit
       color="green"
-      class="w-full p-3 mt-16"
+      class="w-full p-3 mt-16 mb-6"
       @click.prevent="handleSubmit"
     >
       {{ $t("BaseButton.accessWallet") }}
     </Button>
+
+    <!-- 'Not Recommended' banner for Software method -->
+    <NotRecommendedBanner />
   </Layout>
 </template>
 
@@ -46,6 +49,7 @@ import { useStore } from "../../store";
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import KeyInput from "../../components/base/KeyInput.vue";
+import NotRecommendedBanner from '../../components/base/NotRecommendedBanner.vue';
 
 export default defineComponent({
   name: "PrivateKey",
@@ -53,6 +57,7 @@ export default defineComponent({
     Layout,
     Button,
     KeyInput,
+    NotRecommendedBanner,
   },
   setup() {
     const router = useRouter();

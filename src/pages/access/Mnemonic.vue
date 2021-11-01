@@ -7,7 +7,7 @@
     <p class="dark:text-white mb-8">
       {{ $t("MnemonicPhrase.access.prompt") }}
     </p>
-    
+
     <div class="grid gap-5 auto-rows-min">
       <div class="flex space-x-2.5 items-center">
         <SegmentedSelector
@@ -15,7 +15,7 @@
           :options="[12, 22, 24]"
           @update:modelValue="onChangeWordCount"
         />
-        
+
         <div class="text-sm text-black-out dark:text-white">
           words
         </div>
@@ -29,7 +29,7 @@
       />
 
       <div class="h-5" />
-        
+
       <div
         :class="[
           'relative transition-all duration-300',
@@ -74,7 +74,7 @@
     <Button
       data-cy-mnemonic-submit
       color="green"
-      class="w-full p-3 mt-4"
+      class="w-full p-3 mt-4 mb-6"
       :disabled="
         mnemonicPhrase.filter((word) => word.length > 0).length <
           wordCount
@@ -83,6 +83,9 @@
     >
       {{ $t("BaseButton.accessWallet") }}
     </Button>
+
+    <!-- 'Not Recommended' banner for Software method -->
+    <NotRecommendedBanner />
   </Layout>
 </template>
 
@@ -100,6 +103,7 @@ import MnemonicInput, {
   MnemonicInputComponent,
 } from "../../components/base/MnemonicInput.vue";
 import SegmentedSelector from "../../components/base/SegmentedSelector.vue";
+import NotRecommendedBanner from '../../components/base/NotRecommendedBanner.vue';
 
 export default defineComponent({
   name: "Mnemonic",
@@ -110,6 +114,7 @@ export default defineComponent({
     Hint,
     SegmentedSelector,
     MnemonicInput,
+    NotRecommendedBanner,
   },
   setup() {
     const password = ref("");

@@ -25,15 +25,14 @@
         <InputError v-if="errorMessage.length > 0">
           {{ errorMessage }}
         </InputError>
-
-        <div class="mt-10 text-sm text-black-out dark:text-white">
-          <span class="font-semibold text-Megaman-Helmet">
-            {{ $t("PrivateKey.note.dnf") }}
-          </span>
-
-          {{ $t("PrivateKey.note") }}
-        </div>
       </div>
+
+      <!-- 'Not Recommended' banner for Software method -->
+      <NotRecommendedBanner>
+        <span>
+          {{ $t("PrivateKey.note.dnf") + $t("PrivateKey.note") }}
+        </span>
+      </NotRecommendedBanner>
     </form>
   </Layout>
 </template>
@@ -42,13 +41,14 @@
 import { defineComponent, ref, onMounted } from "vue";
 import type { PrivateKey } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
+import { PrivateKeySoftwareWallet } from "../../domain/wallet/software-private-key";
+import { useStore } from "../../store";
 
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import KeyInput from "../../components/base/KeyInput.vue";
 import InputError from "../../components/base/InputError.vue";
-import { PrivateKeySoftwareWallet } from "../../domain/wallet/software-private-key";
-import { useStore } from "../../store";
+import NotRecommendedBanner from '../../components/base/NotRecommendedBanner.vue';
 
 export default defineComponent({
   name: "CreatePrivateKey",
@@ -56,7 +56,8 @@ export default defineComponent({
     Button,
     KeyInput,
     Layout,
-    InputError
+    InputError,
+    NotRecommendedBanner,
   },
   setup() {
     const store = useStore();
