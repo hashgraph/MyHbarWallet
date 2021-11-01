@@ -1,7 +1,7 @@
 {
   "name": "myhbarwallet",
   "productName": "MyHbarWallet",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "MyHbarWallet is a free, client-side interface helping you interact with Hedera™ Hashgraph.",
   "main": "src/electron/main.ts",
   "repository": "https://github.com/hashgraph/myhbarwallet",
