@@ -76,7 +76,7 @@
       >
         {{ $t("Marketing.faqs.needMoreHelp") }}
       </div>
-    
+
       <CustomerSupportButton class="font-semibold text-center text-mountain-meadow" />
     </div>
   </div>
@@ -98,7 +98,7 @@ export default defineComponent({
   components: { Image, Faq, FaqWithLink, CustomerSupportButton },
   setup() {
     const faq5Href = 'https://v1.myhbarwallet.com'
-    const faq6Href = 'https://launchbadge.com/blog/how-to-create-ledger-account-through-mhw'
+    const faq6Href = 'https://launchbadge.com/blog/using-a-ledger-nano-to-create-your-hedera-account'
     return {
       faqsLight,
       faqsDark,
