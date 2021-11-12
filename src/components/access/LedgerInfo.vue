@@ -11,7 +11,7 @@
     <li>
       {{ $t("Ledger.NoAccount") }} <a
         class="underline"
-        href="https://launchbadge.com/blog/how-to-create-ledger-account-through-mhw"
+        href="https://launchbadge.com/blog/using-a-ledger-nano-to-create-your-hedera-account"
       >{{ $t("Ledger.ClickHere") }}</a>
     </li>
 
