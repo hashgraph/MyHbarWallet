@@ -8,13 +8,15 @@ import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import { VitePWA } from "vite-plugin-pwa";
 import { getLastCommit } from "git-last-commit";
 import { defineConfig } from "vite";
+import dotenv from "dotenv"
 
 import packageJson from "./package.json";
 
 export default async function ({ mode }) {
+    dotenv.config();
+
     const isProduction = mode === "production";
     const isElectron = process.env.IS_ELECTRON === "true";
-
     // Output directories
     const webOutDir = "dist/web";
     const electronOutDir = "dist/electron";
@@ -34,9 +36,11 @@ export default async function ({ mode }) {
                 "grpc-web.previewnet.myhbarwallet.com",
                 "grpc-web.myhbarwallet.com",
                 "api.coingecko.com",
-                "v2.api.testnet.kabuto.sh"
+                "v2.api.testnet.kabuto.sh",
+                "https://api.moonpay.com"
             ].join(" "),
         "font-src 'self' data:",
+        "frame-src 'self' https://buy.moonpay.com 'unsafe-eval' 'unsafe-inline'",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
     ];
 
@@ -48,6 +52,7 @@ export default async function ({ mode }) {
                     injectData: {
                         contentSecurityPolicy: contentSecurityPolicy.join("; "),
                     },
+                    process: "process"
                 },
             }),
             vue(),
@@ -72,6 +77,7 @@ export default async function ({ mode }) {
             __APP_LAST_COMMIT_SHORT_HASH__: JSON.stringify(
                 lastCommit.shortHash
             ),
+            __MOONPAY_PROD_KEY__: JSON.stringify(process.env.VUE_APP_MOONPAY_PROD_KEY)
         },
         build: {
             outDir: isElectron ? electronOutDir : webOutDir,

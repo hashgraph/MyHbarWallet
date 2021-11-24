@@ -25,6 +25,7 @@ specifiers:
   cross-env: ^7.0.3
   cypress: ^8.3.1
   cypress-file-upload: ^5.0.8
+  dotenv: ^10.0.0
   electron: ^13.2.3
   electron-builder: ^22.13.1
   electron-window-state: ^5.0.3
@@ -98,6 +99,7 @@ devDependencies:
   cross-env: 7.0.3
   cypress: 8.3.1
   cypress-file-upload: 5.0.8_cypress@8.3.1
+  dotenv: 10.0.0
   electron: 13.2.3
   electron-builder: 22.13.1
   eslint: 7.32.0
