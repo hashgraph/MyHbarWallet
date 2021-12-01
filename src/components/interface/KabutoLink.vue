@@ -73,8 +73,12 @@ export default defineComponent({
     },
     setup(){
         const store = useStore();
+
         function goToKabuto(): void {
-            window.open(`https://explorer.kabuto.sh/mainnet/id/${store.accountId?.toString()}`);
+            const accountId = store.accountId?.toString();
+            const network = store.network;
+
+            window.open(`https://v2.explorer.kabuto.sh/id/${accountId}?network=${network}`);
         }
 
         return {
