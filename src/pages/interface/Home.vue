@@ -25,16 +25,15 @@
 
     <div class="flex justify-center py-12 font-medium leading-5 text-center text-andrea-blue">
       <!-- Buy option should only appear on Mainnet -->
-      <!-- TO DO: Change from boolean to 'onMainnet -->
       <div
-        v-if="true"
+        v-if="onMainnet"
         class="mr-4 cursor-pointer"
       >
         <Image
           class="w-20 h-20"
           :light="addAssetLight"
           :dark="addAssetDark"
-          alt="buy assets"
+          alt="buy hbars"
           @click="openBuyAssetsModal"
         />
         <div>{{ $t("InterfaceHome.button.buy") }}</div>
@@ -48,7 +47,7 @@
           class="w-20 h-20"
           :light="sendAssetLight"
           :dark="sendAssetDark"
-          alt="paper airplane"
+          alt="send/transfer assets"
         />
         <div>{{ $t("InterfaceHome.button.send") }}</div>
       </router-link>
@@ -101,6 +100,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const i18n = useI18n();
+    const onMainnet = store.network === i18n.t("Network.mainnet");
     const accountId = computed(() => store.accountId);
     const publicKey = computed(() => store.publicKey);
 
@@ -108,9 +108,7 @@ export default defineComponent({
       showBuyAssetsModal: false
     });
 
-    const onMainnet = store.network === i18n.t("Network.mainnet");
-
-    onMounted(async () => {
+    onMounted(() => {
       void store.requestHbarPrice();
     });
 

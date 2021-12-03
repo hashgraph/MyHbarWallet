@@ -2,11 +2,11 @@
   <router-view />
 
   <HardwarePrompt />
-
+  
   <ReloadPrompt />
-
+  
   <LogoutModal />
-
+  
   <CustomerSupportModal />
 
   <NetworkStatusBanner />

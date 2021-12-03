@@ -1,48 +1,60 @@
 <template>
-  <Modal
-    title="Buy Assets"
-    :is-visible="open"
-    @close="$emit('close')"
-  >
-    <div class="m-4 mt-8 h-[450px] overflow-auto">
-      <iframe
-        allow="accelerometer; autoplay; camera; gyroscope; payment"
-        frameborder="0"
-        height="100%"
-        :src="moonpayWidgetURL"
-        width="100%"
-        class="rounded"
-      />
-    </div>
-  </Modal>
+    <Modal title="Buy HBAR" :is-visible="open" @close="$emit('close')">
+        <div class="m-4 mt-8 h-[450px] overflow-auto">
+            <iframe
+                allow="accelerometer; autoplay; camera; gyroscope; payment"
+                frameborder="0"
+                class="w-full h-full rounded"
+                :src="widgetURL"
+            />
+        </div>
+    </Modal>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
+import axios, { AxiosResponse } from "axios";
+import { useStore } from "../../store";
 
 import Modal from "./Modal.vue";
-
-// from vite.config.js
-declare const __MOONPAY_API_KEY__: string;
 
 export default defineComponent({
     name: "BuyAssetsModal",
     components: {
-        Modal
+        Modal,
     },
     props: {
-        open: { type: Boolean, default: false }
+        open: { type: Boolean, default: false },
     },
-    emits: [ "close" ],
-    setup(){
-        const moonpayWidgetURL = `https://buy.moonpay.com?apiKey=${__MOONPAY_API_KEY__}`;
+    emits: ["close"],
+    setup() {
+        const store = useStore();
+        const widgetURL = ref("");
 
-        // TO DO: Remove
-        console.log(moonpayWidgetURL);
+        // set widget URL on component mount
+        onMounted(() => setWidgetURL());
+
+        function setWidgetURL(): void {
+            const walletAddress = store.accountId.toString();
+
+            // invoke 'getSignedURL' Netlify function to retrieve signed URL w/ pre-filled wallet address
+            axios
+                .get(
+                    `/.netlify/functions/getSignedURL?walletAddress=${walletAddress}`
+                )
+                .then(
+                    ({ data: signedURL }: AxiosResponse<string>) =>
+                        // set widget URL w/ signed URL
+                        (widgetURL.value = signedURL)
+                )
+                .catch((error: Error) => {
+                    throw error;
+                });
+        }
 
         return {
-            moonpayWidgetURL
-        }
-    }
+            widgetURL,
+        };
+    },
 });
 </script>
