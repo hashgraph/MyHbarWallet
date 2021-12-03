@@ -25,8 +25,9 @@
 
     <div class="flex justify-center py-12 font-medium leading-5 text-center text-andrea-blue">
       <!-- Buy option should only appear on Mainnet -->
+      <!-- TO DO: Change from boolean to 'onMainnet -->
       <div
-        v-if="onMainnet"
+        v-if="true"
         class="mr-4 cursor-pointer"
       >
         <Image
