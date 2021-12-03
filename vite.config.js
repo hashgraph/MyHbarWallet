@@ -37,6 +37,7 @@ export default async function ({ mode }) {
                 "v2.api.testnet.kabuto.sh"
             ].join(" "),
         "font-src 'self' data:",
+        "frame-src 'self' https://buy.moonpay.com",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
     ];
 
@@ -72,6 +73,7 @@ export default async function ({ mode }) {
             __APP_LAST_COMMIT_SHORT_HASH__: JSON.stringify(
                 lastCommit.shortHash
             ),
+            __MOONPAY_API_KEY__: JSON.stringify(process.env.MOONPAY_API_KEY) // MOONPAY_API_KEY from netlify environment vars
         },
         build: {
             outDir: isElectron ? electronOutDir : webOutDir,

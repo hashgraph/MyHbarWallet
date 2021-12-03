@@ -1772,6 +1772,7 @@ packages:
 
   /@types/glob/7.1.4:
     resolution: {integrity: sha512-w+LsMxKyYQm347Otw+IfBXOv9UWVjpHpCDdbBMt8Kz/xbvCYNjP+0qPh91Km3iKfSRLBB0P7fAMf0KHrPu+MyA==}
+    requiresBuild: true
     dependencies:
       '@types/minimatch': 3.0.5
       '@types/node': 16.7.8
@@ -1871,6 +1872,7 @@ packages:
 
   /@types/yauzl/2.9.2:
     resolution: {integrity: sha512-8uALY5LTvSuHgloDVUvWP3pIauILm+8/0pDMokuDYIoNsOkSwd5AiHBTSEJjKTDcZr5z8UpgOWZkxBF4iJftoA==}
+    requiresBuild: true
     dependencies:
       '@types/node': 14.17.12
     dev: true
@@ -2907,6 +2909,7 @@ packages:
   /colors/1.4.0:
     resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==}
     engines: {node: '>=0.1.90'}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -3304,6 +3307,7 @@ packages:
     engines: {node: '>=8'}
     os: [darwin]
     hasBin: true
+    requiresBuild: true
     dependencies:
       '@types/plist': 3.0.2
       '@types/verror': 1.10.5
@@ -4078,6 +4082,7 @@ packages:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -4188,6 +4193,7 @@ packages:
   /global-agent/2.2.0:
     resolution: {integrity: sha512-+20KpaW6DDLqhG7JDiJpD1JvNvb8ts+TNl7BPOYcURqCrXqnN1Vf+XVOrkKJAFPqfX+oEhsdzOj1hLWkBTdNJg==}
     engines: {node: '>=10.0'}
+    requiresBuild: true
     dependencies:
       boolean: 3.1.4
       core-js: 3.16.4
@@ -4209,6 +4215,7 @@ packages:
   /global-tunnel-ng/2.7.1:
     resolution: {integrity: sha512-4s+DyciWBV0eK148wqXxcmVAbFVPqtc3sEtUE/GTQfuU80rySLcMhUmHKSHI7/LDj8q0gDYI1lIhRRB7ieRAqg==}
     engines: {node: '>=0.10'}
+    requiresBuild: true
     dependencies:
       encodeurl: 1.0.2
       lodash: 4.17.21
