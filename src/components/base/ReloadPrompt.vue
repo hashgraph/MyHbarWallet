@@ -1,27 +1,27 @@
 <template>
   <transition
-    leave-active-class="duration-500 ease"
-    leave-from-class="translate-x-0 opacity-100"
-    leave-to-class="translate-x-full opacity-0"
-    enter-active-class="duration-500 ease"
     enter-from-class="translate-x-full opacity-0"
+    enter-active-class="duration-500 ease-out"
     enter-to-class="translate-x-0 opacity-100"
+    leave-from-class="translate-x-0 opacity-100"
+    leave-active-class="duration-300 ease-in"
+    leave-to-class="translate-x-full opacity-0"
   >
     <div
       v-if="offlineReady || needRefresh"
       role="alert"
-      class="p-6 pt-8 animate-bounce rounded flex flex-col fixed z-50 items-center justify-center h-40 p-4 overflow-hidden italic rounded shadow-lg bottom-10 right-10 w-200 bg-snow-ballet dark:border dark:bg-dreamless-sleep dark:border-midnight-express dark:text-white"
+      class="p-6 pt-8 animate-pulse rounded flex flex-col fixed z-50 items-center justify-center h-40 p-4 overflow-hidden italic rounded shadow-lg bottom-10 right-10 w-200 bg-snow-ballet dark:border dark:bg-dreamless-sleep dark:border-midnight-express dark:text-white"
     >
       <span
         v-if="offlineReady"
         class="mr-4 ml-4"
       >{{ $t("Common.SW.OfflineReady") }}</span>
-    
+
       <span
         v-else
         class="mr-4 ml-4"
       >{{ $t("Common.SW.NewContentAvailable") }}</span>
-    
+
       <div class="mt-6 space-x-4 justify-between text-center w-full">
         <Button
           class="py-2 w-2/5 m-auto mb-4"
@@ -69,8 +69,6 @@ export default defineComponent({
             offlineReady.value = false;
             needRefresh.value = false;
         }
-
-        
 
         return {
             offlineReady,
