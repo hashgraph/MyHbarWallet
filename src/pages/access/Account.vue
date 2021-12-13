@@ -117,7 +117,7 @@
       </div>
       <div class="h-0 border-b w-52 border-cerebral-grey" />
     </div>
-    
+
     <CustomerSupportButton class="text-center text-mountain-meadow" />
   </Layout>
 </template>
@@ -149,6 +149,7 @@ interface State {
   accountId: AccountId | null;
   error: boolean;
   errorMessage: string;
+  caughtError: Error;
   busy: boolean;
   busyMessage: string;
 }
@@ -176,6 +177,7 @@ export default defineComponent({
       accountId: null,
       error: false,
       errorMessage: "",
+      caughtError: null,
       busy: false,
       busyMessage: ""
     });
@@ -246,6 +248,7 @@ export default defineComponent({
       state.busyMessage = "Verifying account …";
       state.error = false;
       state.errorMessage = "";
+      state.caughtError = null;
 
       try {
         let client;
@@ -264,7 +267,7 @@ export default defineComponent({
                 network: store.network,
               });
             } catch (error) {
-              console.warn(error);
+              state.caughtError = error;
             }
 
             if (client != null) break;
@@ -272,7 +275,14 @@ export default defineComponent({
 
           if (client == null) {
             state.error = true;
-            state.errorMessage = i18n.t("Common.Error.AccountKeyMismatch").toString()
+
+            if (state.caughtError) {
+                state.errorMessage = await store.errorMessage(state.caughtError);
+            } else {
+                // Account key mismatch does not throw an error
+                state.errorMessage = i18n.t("Common.Error.AccountKeyMismatch").toString()
+            }
+
             return;
           }
 
