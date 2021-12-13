@@ -32,6 +32,12 @@ interface State {
     networkStatus: boolean
 }
 
+// @ledgerhq/hw-transport's TransportStatusError's doesn't expose status* properties
+interface TransportStatusError extends Error {
+    statusCode: number;
+    statusText: string;
+}
+
 export const useStore = defineStore({
   id: "main",
 
@@ -100,7 +106,7 @@ export const useStore = defineStore({
     async networkPing(): Promise<boolean> {
       const { AccountBalanceQuery, AccountId } = await import("@hashgraph/sdk");
       const accountId = AccountId.fromString("0.0.2");
-    
+
       try{
           new AccountBalanceQuery().setNodeAccountIds([accountId]).setAccountId(accountId);
           this.networkStatus = true;
@@ -154,15 +160,15 @@ export const useStore = defineStore({
     setConfirmLogoutOpen(open: boolean): void {
       this.logoutConfirm = open;
     },
-    
+
     setContactSupportOpen(open: boolean): void {
       this.contactSupport = open;
     },
 
     async errorMessage(error: Error): Promise<string> {
       const { Status, StatusError } = await import("@hashgraph/sdk");
-      const { TransportStatusError } = await import("@ledgerhq/hw-transport");
-      
+      const { StatusCodes, TransportStatusError } = await import("@ledgerhq/hw-transport");
+
       if (error instanceof StatusError) {
         switch (error.status) {
           case Status.AccountDeleted:
@@ -225,7 +231,13 @@ export const useStore = defineStore({
             return i18n.global.t("Common.Error.TooManyTokens").toString();
         }
       } else if (error instanceof TransportStatusError) {
-        return i18n.global.t("Common.Error.LedgerError").toString();
+        // need to type assert because @ledgerhq/hw-transport's TransportStatusError doesn't expose statusCode property(?)
+        switch ((error as TransportStatusError).statusCode) {
+            case StatusCodes.CONDITIONS_OF_USE_NOT_SATISFIED:
+                return i18n.global.t("Common.Error.LedgerDenyRequest").toString();
+            default:
+                return i18n.global.t("Common.Error.LedgerError").toString();
+        }
       }
 
       return error.message;

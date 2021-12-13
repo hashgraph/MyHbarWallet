@@ -78,6 +78,7 @@
     "Common.Error.EmptyTransaction": "This transaction contains no transfers, and is invalid.",
     "Common.Error.FileDeleted": "The requested file has been deleted.",
     "Common.Error.LedgerError": "There was a problem while communicating with your ledger. Please reset and try again.",
+    "Common.Error.LedgerDenyRequest": "Denied request on ledger.",
     "Common.Error.MemoTooLong": "The provided memo is too long.",
     "Common.Error.NetworkUnavailable": "The network is currently unavailable. Try again later.",
     "Common.Error.NoFileId": "No File ID for the Uploaded File. Something went wrong.",
