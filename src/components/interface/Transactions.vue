@@ -149,10 +149,10 @@ interface Transfer {
 
 export default defineComponent({
   name: "Transactions",
-  components: { 
-    Hint, 
-    KabutoLink, 
-    Transaction 
+  components: {
+    Hint,
+    KabutoLink,
+    Transaction
   },
   props: {
     hideHeader: { type: Boolean, default: false },
@@ -164,7 +164,7 @@ export default defineComponent({
     const accountId = computed(() => store.accountId);
 
     function isSender(txr: CryptoTransfer): boolean {
-      return txr.id.toString().split("@")[0] === accountId.value?.toString(); 
+      return txr.id.toString().split("@")[0] === accountId.value?.toString();
     }
     const filtered = computed(() => {
       if (props.filter === "all") return state.latestTransactions;
@@ -197,7 +197,6 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      // TODO: Fix API call when Kabuto V2 is operational
       try {
         state.latestTransactions = await getLatestTransactions() ?? [] as CryptoTransfer[];
         const len = filtered.value.length;
