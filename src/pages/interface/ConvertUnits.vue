@@ -94,7 +94,7 @@
           </td>
           
           <td class="w-1/3 flex overflow-wrap">
-            {{ unit.amountInHbar }} {{ units[2].symbol }}
+            {{ unit.amountInHbar }} ℏ
           </td>
         </tr>
       </div>
@@ -137,11 +137,19 @@ export default defineComponent({
         amountInHbar: "1",
       },
       {
-        name: "Millibar",
+        name: "Microbar",
         iconLight: null,
         iconDark: null,
         symbol: "μℏ",
         amount: "1,000,000",
+        amountInHbar: "1",
+      },
+      {
+        name: "Millibar",
+        iconLight: null,
+        iconDark: null,
+        symbol: "mℏ",
+        amount: "1,000",
         amountInHbar: "1",
       },
       {
