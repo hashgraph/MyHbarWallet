@@ -194,25 +194,25 @@ export default defineComponent({
     });
 
 
-    function handleInputValueLeft(value: string): void {
+    async function handleInputValueLeft(value: string): Promise<void> {
       if (isNaN(parseInt(value))) {
         return;
       }
       state.valueLeft = value;
-      computeValueRight();
+      await computeValueRight();
     }
 
-    function handleInputValueRight(value: string): void {
+    async function handleInputValueRight(value: string): Promise<void> {
       if (isNaN(parseInt(value))) {
         return;
       }
       state.valueRight = value;
-      computeValueLeft();
+      await computeValueLeft();
     }
 
     async function handleSelect(): Promise<void> {
-      computeValueLeft();
-      computeValueRight();
+      await computeValueLeft();
+      await computeValueRight();
     }
 
     async function getHbarUnit(value: string): Promise<import("@hashgraph/sdk").HbarUnit> {
