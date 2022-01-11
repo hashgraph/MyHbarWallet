@@ -196,6 +196,7 @@ export default defineComponent({
 
     async function handleInputValueLeft(value: string): Promise<void> {
       if (isNaN(parseInt(value))) {
+        state.valueRight = "";
         return;
       }
       state.valueLeft = value;
@@ -204,6 +205,7 @@ export default defineComponent({
 
     async function handleInputValueRight(value: string): Promise<void> {
       if (isNaN(parseInt(value))) {
+        state.valueLeft = "";
         return;
       }
       state.valueRight = value;
@@ -211,6 +213,9 @@ export default defineComponent({
     }
 
     async function handleSelect(): Promise<void> {
+      if (isNaN(parseInt(state.valueLeft)) || isNaN(parseInt(state.valueRight))) {
+        return;
+      }
       await computeValueLeft();
       await computeValueRight();
     }
