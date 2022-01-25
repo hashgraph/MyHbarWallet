@@ -94,7 +94,7 @@
           </td>
           
           <td class="w-1/3 flex overflow-wrap">
-            {{ unit.amountInHbar }} {{ units[2].symbol }}
+            {{ unit.amountInHbar }} ℏ
           </td>
         </tr>
       </div>
@@ -137,11 +137,19 @@ export default defineComponent({
         amountInHbar: "1",
       },
       {
-        name: "Millibar",
+        name: "Microbar",
         iconLight: null,
         iconDark: null,
         symbol: "μℏ",
         amount: "1,000,000",
+        amountInHbar: "1",
+      },
+      {
+        name: "Millibar",
+        iconLight: null,
+        iconDark: null,
+        symbol: "mℏ",
+        amount: "1,000",
         amountInHbar: "1",
       },
       {
@@ -186,25 +194,30 @@ export default defineComponent({
     });
 
 
-    function handleInputValueLeft(value: string): void {
+    async function handleInputValueLeft(value: string): Promise<void> {
       if (isNaN(parseInt(value))) {
+        state.valueRight = "";
         return;
       }
       state.valueLeft = value;
-      computeValueRight();
+      await computeValueRight();
     }
 
-    function handleInputValueRight(value: string): void {
+    async function handleInputValueRight(value: string): Promise<void> {
       if (isNaN(parseInt(value))) {
+        state.valueLeft = "";
         return;
       }
       state.valueRight = value;
-      computeValueLeft();
+      await computeValueLeft();
     }
 
     async function handleSelect(): Promise<void> {
-      computeValueLeft();
-      computeValueRight();
+      if (isNaN(parseInt(state.valueLeft)) || isNaN(parseInt(state.valueRight))) {
+        return;
+      }
+      await computeValueLeft();
+      await computeValueRight();
     }
 
     async function getHbarUnit(value: string): Promise<import("@hashgraph/sdk").HbarUnit> {
