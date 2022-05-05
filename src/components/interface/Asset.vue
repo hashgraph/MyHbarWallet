@@ -11,12 +11,12 @@
           'mx-4 h-11 w-11': !!value,
           'mx-4 h-8 w-11 object-contain': !value,
         }"
-        :src="img"
+        :src="isCLXY ? calaxyTokenImage : img"
         alt=""
       >
       <div>
         <div class="font-semibold leading-5 text-black-out dark:text-white">
-          {{ name }}
+          {{ isCLXY ? "$CLXY" : name }}
         </div>
         <div
           v-if="value"
@@ -52,7 +52,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
+
+import calaxyTokenImage from '../../assets/CLXY.svg'
 
 import BannerError from './BannerError.vue'
 import BannerFrozenAsset from './BannerFrozenAsset.vue'
@@ -72,5 +74,10 @@ export default defineComponent({
     error: { type: Boolean, default: false },
     frozen: { type: Boolean, default: false },
   },
+  setup(props) {
+      const isCLXY = computed(() => props.name === '0.0.859814');
+
+      return { calaxyTokenImage, isCLXY }
+  }
 })
 </script>
