@@ -166,8 +166,7 @@ import {
   defineComponent,
   onMounted,
   reactive,
-  ref,
-  watch
+  ref
 } from "vue";
 import { BigNumber } from "bignumber.js";
 import { TokenId, TokenInfo , Hbar } from "@hashgraph/sdk";
@@ -436,8 +435,6 @@ export default defineComponent({
     function updateMaxFee(fee: Hbar): void {
       state.maxFee = fee;
     }
-
-    watch(() => state.maxFee, (newMaxFee: Hbar) => console.log(newMaxFee));
 
     //Removed token info queries to reduce invisible transactions, can replace if needed
     async function getTokenInfo(token: string | TokenId): Promise<TokenInfo | undefined>{

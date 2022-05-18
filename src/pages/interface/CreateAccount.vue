@@ -24,9 +24,9 @@
       @update:modelValue="handleKey"
     />
 
-    <label class="font-medium text-squant dark:text-argent">
+    <!-- <label class="font-medium text-squant dark:text-argent">
       {{ $t("InterfaceToolTile.createAccount.label.initialBalance") }}
-    </label>
+    </label> -->
 
     <!-- TODO: lol this doesn't work  -->
     <!-- <HbarInput
