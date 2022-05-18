@@ -46,14 +46,13 @@
 </template>
 
 <script lang="ts">
-import { BigNumber } from "bignumber.js";
 import { defineComponent, PropType, reactive } from "vue";
 import { useVModel } from "@vueuse/core";
 import type { AccountId } from "@hashgraph/sdk";
 
 import TextInput from "../base/TextInput.vue";
+import AssetInput from "../base/AssetInput.vue";
 
-import AssetInput from "./AssetInput.vue";
 import AssetSelector from "./AssetSelector.vue";
 
 export default defineComponent({

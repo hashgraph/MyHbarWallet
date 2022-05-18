@@ -3,7 +3,6 @@
 
   <div class="flex flex-wrap mt-6">
     <ToolTile
-      v-if="hasPrivateKey"
       data-cy-tool-associate
       :title="$t('InterfaceToolTile.associateToken.title')"
       :description="$t('InterfaceToolTile.associateToken.description')"

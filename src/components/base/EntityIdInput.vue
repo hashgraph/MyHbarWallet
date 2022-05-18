@@ -30,7 +30,7 @@ export enum EntityType {
 }
 
 export default defineComponent({
-  name: "HbarInput",
+  name: "EntityIdInput",
   components: { TextInput },
   props: {
     modelValue: {

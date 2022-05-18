@@ -9,7 +9,7 @@
 import { defineComponent, PropType } from 'vue'
 import { BigNumber } from 'bignumber.js'
 
-import AssetInput from "../interface/AssetInput.vue";
+import AssetInput from "../base/AssetInput.vue";
 
 export default defineComponent({
   name: 'HbarInput',

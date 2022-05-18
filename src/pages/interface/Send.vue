@@ -89,6 +89,7 @@
             v-model="state.memo"
           />
 
+          <!-- TODO: lol, HBarInput does not work -->
           <OptionalHbarInput @update:model-value="updateMaxFee" />
 
           <p class="mt-4 p-4 italic text-squant dark:text-silver-polish dark:bg-dreamless-sleep rounded shadow-md border border-transparent dark:border-midnight-express">
@@ -166,6 +167,7 @@ import {
   onMounted,
   reactive,
   ref,
+  watch
 } from "vue";
 import { BigNumber } from "bignumber.js";
 import { TokenId, TokenInfo , Hbar } from "@hashgraph/sdk";
@@ -434,6 +436,8 @@ export default defineComponent({
     function updateMaxFee(fee: Hbar): void {
       state.maxFee = fee;
     }
+
+    watch(() => state.maxFee, (newMaxFee: Hbar) => console.log(newMaxFee));
 
     //Removed token info queries to reduce invisible transactions, can replace if needed
     async function getTokenInfo(token: string | TokenId): Promise<TokenInfo | undefined>{

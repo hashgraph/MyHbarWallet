@@ -51,9 +51,9 @@ export default defineComponent({
        emit("update:modelValue", null);
     }
 
-    function handleUpdate(fee: Hbar): void {
-      value.value = fee;
-      emit("update:modelValue", fee);
+    function handleUpdate(amount: Hbar): void {
+      value.value = amount;
+      emit("update:modelValue", amount);
     }
 
     watch(isOpen, () => {

@@ -4,4 +4,4 @@
   </div>
 </template>
 
-<script lang="ts" name="BaseInputError"></script>
+<script lang="ts" name="BaseInputError" type="module"></script>

@@ -28,10 +28,10 @@
       {{ $t("InterfaceToolTile.createAccount.label.initialBalance") }}
     </label>
 
-    <HbarInput
-      :amount="state.initialBalance"
-      @update:amount="handleAmount"
-    />
+    <!-- TODO: lol this doesn't work  -->
+    <!-- <HbarInput
+      v-model="state.initialBalance"
+    /> -->
 
     <InputError
       v-if="state.errorMessage.length > 0"
@@ -44,7 +44,7 @@
       class="mt-8 px-5 py-2"
       color="green"
       :busy="state.busy"
-      :disabled="!state.validKey || state.initialBalance == null"
+      :disabled="!state.validKey"
     >
       {{ $t("InterfaceToolTile.createAccount.label.createAccount") }}
     </Button>
@@ -91,7 +91,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import { BigNumber } from "bignumber.js";
-import type { AccountId, PublicKey } from "@hashgraph/sdk";
+import { AccountId, Hbar, PublicKey } from "@hashgraph/sdk";
 
 import Headline from "../../components/interface/Headline.vue";
 import Hint from "../../components/interface/Hint.vue";
@@ -119,7 +119,7 @@ export default defineComponent({
 
     const state = reactive({
       errorMessage: "",
-      initialBalance: new BigNumber(1),
+      initialBalance: new Hbar(0),
       publicKeyStr: "",
       publicKey: null as PublicKey | null,
       validKey: false,
@@ -127,10 +127,6 @@ export default defineComponent({
       accountId: null as AccountId | null | undefined,
       resultModalOpen: false
     });
-
-    function handleAmount(amount: BigNumber): void {
-      state.initialBalance = amount;
-    }
 
     async function handleKey(key: string): Promise<void> {
 
@@ -184,7 +180,6 @@ export default defineComponent({
       handleClose,
       handleCopy,
       handleKey,
-      handleAmount,
       handleSubmit
     }
   }
