@@ -1,18 +1,9 @@
 <template>
-  <Headline
-    :title="$t('InterfaceToolTile.createAccount.title')"
-    parent="tools"
-  />
-  
-  <Hint
-    :text="$t('InterfaceToolTile.createAccount.hint')"
-    class="mt-4"
-  />
-  
-  <form
-    class="flex flex-col max-w-lg m-auto mt-10"
-    @submit.prevent="handleSubmit"
-  >
+  <Headline :title="$t('InterfaceToolTile.createAccount.title')" parent="tools" />
+
+  <Hint :text="$t('InterfaceToolTile.createAccount.hint')" class="mt-4" />
+
+  <form class="flex flex-col max-w-lg m-auto mt-10" @submit.prevent="handleSubmit">
     <label class="font-medium text-squant dark:text-argent">
       {{ $t("InterfaceToolTile.createAccount.label.publicKey") }}
     </label>
@@ -33,12 +24,10 @@
       v-model="state.initialBalance"
     /> -->
 
-    <InputError
-      v-if="state.errorMessage.length > 0"
-    >
+    <InputError v-if="state.errorMessage.length > 0">
       {{ state.errorMessage }}
     </InputError>
-    
+
     <Button
       type="submit"
       class="mt-8 px-5 py-2"
@@ -58,29 +47,18 @@
     <div class="flex flex-col items-center">
       <div class="flex items-center justify-center">
         <span class="mr-4">{{ $t("InterfaceToolTile.createAccount.created") }}</span>
-      
-        <span
-          v-if="state.accountId != null"
-          class="font-bold text-basalt-grey"
-        >
+
+        <span v-if="state.accountId != null" class="font-bold text-basalt-grey">
           {{ state.accountId.toString() }}
         </span>
       </div>
 
       <div class="flex items-center justify-between mt-10">
-        <Button
-          class="px-5 py-2 mr-6"
-          color="white"
-          @click.stop="handleClose"
-        >
+        <Button class="px-5 py-2 mr-6" color="white" @click.stop="handleClose">
           {{ $t("InterfaceToolTile.createAccount.close") }}
         </Button>
-          
-        <Button
-          class="px-5 py-2"
-          color="green"
-          @click.stop="handleCopy"
-        >
+
+        <Button class="px-5 py-2" color="green" @click.stop="handleCopy">
           {{ $t("InterfaceToolTile.createAccount.copy") }}
         </Button>
       </div>
@@ -112,7 +90,7 @@ export default defineComponent({
     InputError,
     KeyInput,
     Button,
-    Modal
+    Modal,
   },
   setup() {
     const store = useStore();
@@ -125,11 +103,10 @@ export default defineComponent({
       validKey: false,
       busy: false,
       accountId: null as AccountId | null | undefined,
-      resultModalOpen: false
+      resultModalOpen: false,
     });
 
     async function handleKey(key: string): Promise<void> {
-
       const { PublicKey } = await import("@hashgraph/sdk");
       state.publicKeyStr = key;
 
@@ -161,11 +138,11 @@ export default defineComponent({
         if (state.publicKey != null && state.initialBalance != null) {
           state.accountId = await store.client?.createAccount({
             publicKey: state.publicKey as PublicKey,
-            initialBalance: new BigNumber(state.initialBalance)
+            initialBalance: new BigNumber(0),
           });
 
           if (state.accountId != null) {
-            state.resultModalOpen = true
+            state.resultModalOpen = true;
           }
         }
       } catch (error) {
@@ -180,8 +157,8 @@ export default defineComponent({
       handleClose,
       handleCopy,
       handleKey,
-      handleSubmit
-    }
-  }
-})
+      handleSubmit,
+    };
+  },
+});
 </script>
