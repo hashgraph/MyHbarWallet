@@ -33,16 +33,18 @@
     >
       <div class="table-fixed text-left p-4">
         <tr>
-          <td class="w-full">
+          <td class="w-40">
             {{ $t('InterfaceTransactionDetails.operator') }}
           </td>
           <td>{{ accountId }}</td>
         </tr>
-
         <tr>
-          <td>{{ $t('InterfaceUploadFile.modal.estimate') }}</td>
-
-          <td>{{ state.estimateFee }}</td>
+          <td>{{ $t('InterfaceUploadFile.modal.totalChunks') }}</td>
+          <td>{{ state.uploadProgress.totalChunks }}</td>
+        </tr>
+        <tr>
+          <td><strong>{{ $t('InterfaceUploadFile.modal.estimate') }}</strong></td>
+          <td><strong>{{ state.estimateFee }}</strong></td>
         </tr>
       </div>
 
@@ -69,7 +71,7 @@
       <Button
         color="green"
         class="p-3 m-4 w-5/12"
-        :disabled="!state.uploadReady"
+        :disabled="!state.uploadHashReady"
         @click="uploadHashClick"
       >
         {{ $t("InterfaceUploadFile.button.hash") }}
@@ -78,7 +80,7 @@
       <Button
         color="green"
         class="p-3 m-4 w-5/12"
-        :disabled="!state.uploadReady"
+        :disabled="!state.uploadFileReady"
         @click="uploadFileClick"
       >
         {{ $t("InterfaceUploadFile.button.file") }}
@@ -101,6 +103,8 @@ import InputError from "../../components/base/InputError.vue";
 import ProgressModal from "../../components/interface/ProgressModal.vue";
 import { estimateFee, estimateChunks } from "../../services/impl/hedera/client/upload-file";
 
+const MAX_FILE_LENGTH = 1048576; // The maximum file size is 1,024 kB. See https://docs.hedera.com/guides/docs/sdks/file-storage/create-a-file
+
 export default defineComponent({
   name: "UploadFile",
   components: {
@@ -122,7 +126,8 @@ export default defineComponent({
       showFeeModal: false,
       showUploadModal: false,
       showProgressModal: false,
-      uploadReady: false,
+      uploadHashReady: false,
+      uploadFileReady: false,
       uploadHash: false,
       fileId: null as string | null,
       errorMessage: "",
@@ -135,14 +140,14 @@ export default defineComponent({
     });
 
     const accountId = computed(() => store.client?.getAccountId().toString());
-    const modalFeeTitle = computed(() => `Uploading ${state.fileName}`);
+    const modalFeeTitle = computed(() => state.uploadHash ? `Uploading sha-384 of ${state.fileName}` : `Uploading ${state.fileName}`);
 
     async function openFeeModal(): Promise<void> {
-      if (state.fileData != null) {
-        state.uploadProgress.totalChunks = estimateChunks(state.fileData)
-        state.estimateFee = `${await estimateFee(state.fileData)} hbar`;
-        state.showFeeModal = true;
-      }
+      if (state.fileData == null) return;
+      let payload = state.uploadHash ? new Uint8Array(48) : state.fileData;
+      state.uploadProgress.totalChunks = estimateChunks(payload);
+      state.estimateFee = `${await estimateFee(payload)} hbar`;
+      state.showFeeModal = true;      
     }
 
     function closeFeeModal(): void {
@@ -159,9 +164,13 @@ export default defineComponent({
     }
 
     function fileSelect(e: { fileName: string, contents: Uint8Array }): void {
-      state.fileName = e.fileName;
-      state.fileData = e.contents;
-      state.uploadReady = true;
+      state.uploadHashReady = true;
+      state.uploadFileReady = false;
+      if(e.contents.byteLength <= MAX_FILE_LENGTH) {
+        state.fileName = e.fileName;
+        state.fileData = e.contents;
+        state.uploadFileReady = true;
+      }
     }
 
     function uploadConfirm(): void {

@@ -3,7 +3,10 @@ describe("Asset Render on Access View", () => {
 
     it("can see assets on access pages", () => {
         // From access page,
-        cy.visit("/create")
+        cy.visit("/")
+            .get("[data-cy-create-link]")
+            .filter(":visible")
+            .click()
 
             // check if Software image rendered
             .get('[data-cy-option="Software.title"] img')

@@ -31,8 +31,9 @@
         type="file"
         @change="prepareFile"
       >
+      <p> {{ $t("InterfaceUploadFile.maxFileSize") }} </p>
 
-      <p> {{ state.fileName }} </p>
+       <p> {{ state.fileName ? $t("InterfaceUploadFile.selectedFile") : "" }} {{ state.fileName }} </p>
     </div>
   </div>
 </template>
@@ -81,7 +82,7 @@ export default defineComponent({
             }
 
             let fileData = await uint8ArrayOf(file);
-            state.fileName = file.name;
+            state.fileName = file.name +" ("+ this.$t("size") +" "+ fileData.byteLength +" bytes)";
             context.emit("fileSelect", {
                 fileName: file.name,
                 contents: fileData
@@ -103,7 +104,7 @@ export default defineComponent({
 
             let file = fileTarget.value.files[0];
             let fileData = await uint8ArrayOf(file);
-            state.fileName = file.name;
+            state.fileName = file.name +" ("+ this.$t("size") +" "+ fileData.byteLength +" bytes)";
             context.emit("fileSelect", {
                 fileName: file.name,
                 contents: fileData
