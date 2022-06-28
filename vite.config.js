@@ -38,6 +38,7 @@ export default async function ({ mode }) {
                 "v2.api.testnet.kabuto.sh",
             ].join(" "),
         "font-src 'self' data:",
+        "frame-src 'self' https://buy.moonpay.com",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
     ];
 
