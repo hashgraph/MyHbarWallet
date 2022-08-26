@@ -55,6 +55,7 @@
 
 <script lang = "ts">
 import { defineComponent, PropType } from "vue";
+
 import { useStore } from "../../store";
 import { Transfer } from "../../domain/Transfer";
 import Button from "../base/Button.vue";

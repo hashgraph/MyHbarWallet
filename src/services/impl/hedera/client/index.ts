@@ -25,7 +25,7 @@ import { downloadFile } from "./download-file";
 import { getAccountRecords } from "./get-account-records";
 import { getTokenInfo } from "./get-token-info";
 import { getTransfer } from "./get-transaction";
-
+import { updateStaking } from "./update-staking";
 
 export class SimpleHederaClientImpl implements SimpleHederaClient {
   private _client: Client;
@@ -52,7 +52,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
   }
 
   async getAccountBalance(): Promise<AccountBalance> {
-    // Workaround for extraneous signing in SDK, 
+    // Workaround for extraneous signing in SDK,
     // use an operator - less client for balance queries
     const { Client } = await import("@hashgraph/sdk");
     const client = Client.forNetwork(this._client.network);
@@ -107,5 +107,9 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
 
   getTransfer(options: { hash: string }): Promise<CryptoTransfer> {
     return getTransfer(options);
+  }
+
+  updateStaking(options: { accountId: AccountId, node: number | null, declineRewards: boolean }): Promise<void> {
+    return updateStaking(this._client, options);
   }
 }

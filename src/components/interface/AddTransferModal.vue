@@ -27,12 +27,12 @@
 
 <script lang = "ts">
 import { defineComponent, reactive, computed } from "vue";
+import BigNumber from "bignumber.js";
 
 import { Transfer } from "../../domain/Transfer";
 import TransferForm from "../interface/TransferForm.vue";
 import Modal from "../interface/Modal.vue";
 import Button from "../base/Button.vue";
-import BigNumber from "bignumber.js";
 
 export default defineComponent({
     name: "AddTransferModal",

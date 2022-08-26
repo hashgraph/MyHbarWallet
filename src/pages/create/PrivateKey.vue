@@ -41,9 +41,9 @@
 import { defineComponent, ref, onMounted } from "vue";
 import type { PrivateKey } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
+
 import { PrivateKeySoftwareWallet } from "../../domain/wallet/software-private-key";
 import { useStore } from "../../store";
-
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import KeyInput from "../../components/base/KeyInput.vue";

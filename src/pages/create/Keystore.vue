@@ -50,9 +50,9 @@ import {
 } from "vue";
 import { debouncedWatch } from "@vueuse/core";
 import { useRouter } from "vue-router";
+
 import { useStore } from "../../store";
 import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
-
 import Button from "../../components/base/Button.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";
 import InputError from "../../components/base/InputError.vue";

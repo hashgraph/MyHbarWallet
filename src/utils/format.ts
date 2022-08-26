@@ -1,3 +1,5 @@
+import BigNumber from "bignumber.js";
+
 // generates a link for emailing support
 export function formatSupportLink(
     url: string,
@@ -34,4 +36,9 @@ export function formatBuild(
     }
 
     return null;
+}
+
+// Assumes the amount is in hbars
+export function formatHbar(amount: BigNumber): string {
+    return amount.toFormat();
 }

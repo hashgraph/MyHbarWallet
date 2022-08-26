@@ -3,7 +3,7 @@ import { BigNumber } from "bignumber.js";
 import { defineStore } from "pinia";
 
 import { Wallet } from "./domain/wallet/abstract";
-import { AccountBalance, SimpleHederaClient } from "./services/hedera";
+import { AccountBalance, MirrorAccountInfo, NetworkNodeStakingInfo, SimpleHederaClient } from "./services/hedera";
 import { useContainer } from "./hooks/container";
 import i18n from "./i18n";
 import { PrivateKeySoftwareWallet } from "./domain/wallet/software-private-key";
@@ -29,7 +29,11 @@ interface State {
     //contact customer support. open state
     contactSupport: boolean;
     //Hedera network status
-    networkStatus: boolean
+    networkStatus: boolean;
+    // Hedera Node Staking Info
+    nodeStakingInfo: NetworkNodeStakingInfo[] | null;
+    // Staking Info for the current account
+    accountStakingInfo: MirrorAccountInfo | null;
 }
 
 // @ledgerhq/hw-transport's TransportStatusError's doesn't expose status* properties
@@ -53,6 +57,8 @@ export const useStore = defineStore({
       logoutConfirm: false,
       contactSupport: false,
       networkStatus: false,
+      nodeStakingInfo: null,
+      accountStakingInfo: null,
     };
   },
 
@@ -79,6 +85,14 @@ export const useStore = defineStore({
 
     getNetworkStatus(): boolean {
       return this.networkStatus;
+    },
+
+    getNodeStakingInfo(): NetworkNodeStakingInfo[] | null {
+        return this.nodeStakingInfo;
+    },
+
+    getAccountStakingInfo(): MirrorAccountInfo | null {
+        return this.accountStakingInfo;
     }
   },
 
@@ -163,6 +177,27 @@ export const useStore = defineStore({
 
     setContactSupportOpen(open: boolean): void {
       this.contactSupport = open;
+    },
+
+    async fetchNetworkNodeStakingInfo() {
+      const container = useContainer();
+      this.nodeStakingInfo = await container.cradle.hedera.getNodeStakingInfo(this.network);
+    },
+
+    async fetchAccountStakingInfo() {
+        if (this.accountId == null || this.getClient == null) {
+            throw new Error('tried to get account staking info without being logged in!');
+        }
+        const container = useContainer();
+        this.accountStakingInfo = await container.cradle.hedera.getMirrorAccountInfo(this.network, this.accountId);
+    },
+
+    async updateStake(declineRewards: boolean, node: number | null) {
+        if (this.accountId == null || this.getClient == null) {
+            throw new Error('tried to update stake without being logged in!');
+        }
+
+        await this.getClient?.updateStaking({ node, declineRewards, accountId: this.accountId });
     },
 
     async errorMessage(error: Error): Promise<string> {

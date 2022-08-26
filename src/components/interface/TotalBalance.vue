@@ -1,27 +1,29 @@
 <template>
-  <div class="mt-5 mb-5 text-base text-black-out dark:text-white">
-    {{ $t("InterfaceTotalBalance.totalvalue") }}
-  </div>
-
-  <div class="flex items-center justify-center mb-4">
-    <Image
-      class="h-12 mr-7 md:mr-5 md:h-16"
-      :light="wallet"
-      :dark="wallet"
-      alt="wallet logo"
-    />
-
-    <div
-      v-if="balanceInUsd"
-      class="flex justify-center text-5xl font-semibold leading-10  md:text-6xl text-mountain-meadow"
-    >
-      <span class="self-start text-2xl">$</span>
-      <span>{{ balanceInUsd }}</span>
+  <div>
+    <div class="mt-5 mb-5 text-base text-black-out dark:text-white">
+      {{ $t("InterfaceTotalBalance.totalvalue") }}
     </div>
 
-    <RefreshBalance
-      class="ml-4"
-    />
+    <div class="flex items-center justify-center mb-4">
+      <Image
+        class="h-12 mr-7 md:mr-5 md:h-16"
+        :light="wallet"
+        :dark="wallet"
+        alt="wallet logo"
+      />
+
+      <div
+        v-if="balanceInUsd"
+        class="flex justify-center text-5xl font-semibold leading-10  md:text-6xl text-mountain-meadow"
+      >
+        <span class="self-start text-2xl">$</span>
+        <span>{{ balanceInUsd }}</span>
+      </div>
+
+      <RefreshBalance
+        class="ml-4"
+      />
+    </div>
   </div>
 </template>
 
