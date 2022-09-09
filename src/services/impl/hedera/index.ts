@@ -78,7 +78,7 @@ export class HederaServiceImpl implements HederaService {
                 break;
         }
 
-        const response = await axios.get<{ nodes: Info[] }>(`https://${urlBase}.mirrornode.hedera.com/api/v1/network/nodes`);
+        const response = await axios.get<{ nodes: Info[], links: { next?: string } }>(`https://${urlBase}.mirrornode.hedera.com/api/v1/network/nodes?order=asc&limit=25`);
         const result: NetworkNodeStakingInfo[] = [];
         for (const node of response.data.nodes) {
             result.push({
@@ -93,6 +93,23 @@ export class HederaServiceImpl implements HederaService {
                 reward_rate_start: new BigNumber(node.reward_rate_start),
                 staking_period: node.staking_period,
             });
+        }
+        if (response.data.links.next) {
+            const secondResponse = await axios.get<{ nodes: Info[] }>(`https://${urlBase}.mirrornode.hedera.com${response.data.links.next}`);
+            for (const node of secondResponse.data.nodes) {
+                result.push({
+                    description: node.description,
+                    node_id: node.node_id,
+                    node_account_id: node.node_account_id,
+                    min_stake: new BigNumber(node.min_stake),
+                    max_stake: new BigNumber(node.max_stake),
+                    stake: new BigNumber(node.stake),
+                    stake_rewarded: new BigNumber(node.stake_rewarded),
+                    stake_not_rewarded: new BigNumber(node.stake_not_rewarded),
+                    reward_rate_start: new BigNumber(node.reward_rate_start),
+                    staking_period: node.staking_period,
+                });
+            }
         }
 
         return result;
