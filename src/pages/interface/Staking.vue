@@ -359,7 +359,8 @@ export default defineComponent({
             // reset/close any modals
             handleCancel();
             busy.value = false;
-            // we need to refetch staking information after this is done!
+
+            // we need to refresh staking information after this is done!
             store.fetchAccountStakingInfo();
             store.fetchNetworkNodeStakingInfo();
         }

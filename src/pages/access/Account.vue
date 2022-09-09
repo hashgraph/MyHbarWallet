@@ -269,6 +269,7 @@ export default defineComponent({
 
         async function onContinue() {
             if (state.accountId == null) return;
+            state.busy = true;
             state.busyMessage = "Verifying account …";
             state.error = false;
             state.errorMessage = "";
