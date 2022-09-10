@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-col items-center bg-white rounded-[10px] py-4 px-5 lg:px-[40px] lg:py-[30px]">
+  <div
+    class="flex flex-col items-center bg-white dark:bg-kuroi-black dark:text-white rounded-[10px] py-4 px-5 lg:px-[40px] lg:py-[30px]"
+  >
     <img :src="icon">
     <div class="flex items-center">
       <div class="text-center pt-5 pb-[11px]">

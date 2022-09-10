@@ -194,7 +194,7 @@ export const useStore = defineStore({
             const lastUpdate = localStorage.getItem(`${this.network}.${this.accountId.toString()}.last-updated`);
             const node = localStorage.getItem(`${this.network}.${this.accountId.toString()}.staking-to`);
             const fifteenMinutes = 15 * 60 * 1000;
-            if (lastUpdate == null || node == null || new Date(lastUpdate).getUTCMilliseconds() - new Date().getUTCMilliseconds() > fifteenMinutes) {
+            if (lastUpdate == null || node == null || (Date.now() - +(new Date(parseInt(lastUpdate)))) > fifteenMinutes) {
                 this.accountStakingInfo = await container.cradle.hedera.getMirrorAccountInfo(this.network, this.accountId);
                 localStorage.setItem(`${this.network}.${this.accountId.toString()}.staking-to`, this.accountStakingInfo.staked_node_id?.toString() ?? '');
                 localStorage.setItem(`${this.network}.${this.accountId.toString()}.last-updated`, Date.now().toString());

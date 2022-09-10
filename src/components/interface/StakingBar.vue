@@ -1,14 +1,20 @@
 <template>
   <div class="flex flex-wrap gap-y-1 items-center">
-    <div class="bg-cottonBall rounded-full w-[100px] h-[10px] relative">
-      <div class="absolute w-px h-[10px] bg-white left-5" />
-      <div class="absolute w-px h-[10px] bg-white right-5" />
+    <div
+      class="bg-cottonBall dark:bg-hei-se-black rounded-full w-[100px] h-[10px] relative"
+    >
       <div
-        class=" h-[10px] rounded-bl-full rounded-tl-full"
+        class="absolute w-px h-[10px] bg-white dark:bg-ruined-smores left-5"
+      />
+      <div
+        class="absolute w-px h-[10px] bg-white dark:bg-ruined-smores right-5"
+      />
+      <div
+        class="h-[10px] rounded-bl-full rounded-tl-full"
         :class="{
           'bg-mountain-meadow': isEarning && !isOverMax,
           'bg-candyGrapeFizz': isEarning && isOverMax,
-          'bg-queer-blue': !isEarning,
+          'bg-queer-blue dark:bg-bright-navy-blue': !isEarning,
         }"
         :style="{ width: barFill }"
       />
@@ -48,29 +54,47 @@ export default defineComponent({
     },
     setup(props) {
         const { t } = useI18n();
-        const isEarning = computed(() => props.current.isGreaterThanOrEqualTo(props.min));
-        const isOverMax = computed(() => props.current.isGreaterThan(props.max));
+        const isEarning = computed(() =>
+            props.current.isGreaterThanOrEqualTo(props.min)
+        );
+        const isOverMax = computed(() =>
+            props.current.isGreaterThan(props.max)
+        );
         const amountTo = computed(() => {
             if (!isEarning.value) {
-                return `${t("Staking.toMin")}: ${formatTinybarToHbar(props.min.minus(props.current))}`;
+                return `${t("Staking.toMin")}: ${formatTinybarToHbar(
+                    props.min.minus(props.current)
+                )}`;
             } else {
                 const difference = props.max.minus(props.current);
-                return `${t("Staking.toMax")}: ${formatTinybarToHbar(BigNumber.max(difference, 0))}`;
+                return `${t("Staking.toMax")}: ${formatTinybarToHbar(
+                    BigNumber.max(difference, 0)
+                )}`;
             }
         });
         const barFill = computed(() => {
             if (props.current.isLessThan(props.min)) {
-                const percent = props.current.dividedBy(props.min).multipliedBy(20).integerValue();
+                const percent = props.current
+                    .dividedBy(props.min)
+                    .multipliedBy(20)
+                    .integerValue();
 
-                return props.current.isZero() ? '0px' : `${BigNumber.max(percent, 5)}px` ;
+                return props.current.isZero()
+                    ? "0px"
+                    : `${BigNumber.max(percent, 5)}px`;
             } else if (props.current.isLessThanOrEqualTo(props.max)) {
-                return `${props.current.dividedBy(props.max).multipliedBy(80).integerValue()}px`;
+                return `${props.current
+                    .dividedBy(props.max)
+                    .multipliedBy(80)
+                    .integerValue()}px`;
             }
 
-            return '90px';
+            return "90px";
         });
 
-        const hbarIcon = computed(() => isEarning.value ? hbarBlack : hbarFaded);
+        const hbarIcon = computed(() =>
+            isEarning.value ? hbarBlack : hbarFaded
+        );
         const statusIcon = computed(() => {
             if (isEarning.value) {
                 if (isOverMax.value) {

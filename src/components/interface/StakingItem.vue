@@ -1,14 +1,14 @@
 <template>
-  <div class="grid grid-cols-[auto,1fr] gap-y-[10px] md:grid-cols-[60px,3fr,4fr,100px] gap-x-5 py-5 md:py-2 md:items-center border-b border-cerebral-grey">
+  <div
+    class="grid grid-cols-[auto,1fr] gap-y-[10px] md:grid-cols-[60px,3fr,4fr,100px] gap-x-5 py-5 md:py-2 md:items-center border-b dark:border-midnight-express border-cerebral-grey dark:text-white"
+  >
     <div
       v-if="!md"
       class="font-medium text-squant text-sm"
     >
       {{ $t("Staking.node") }}
     </div>
-    <div
-      class="font-semibold text-base md:text-center"
-    >
+    <div class="font-semibold text-base md:text-center">
       {{ name }}
     </div>
     <div
@@ -20,7 +20,8 @@
     <div class="font-medium">
       <div>{{ hostName }}</div>
       <div class="text-squant text-sm">
-        {{ accountId }} <span v-if="location.length > 0">• {{ location }}</span>
+        {{ accountId }}
+        <span v-if="location.length > 0">• {{ location }}</span>
       </div>
     </div>
     <div
@@ -68,17 +69,23 @@ export default defineComponent({
         stakeMax: { type: BigNumber, required: true },
         stakeRewarded: { type: BigNumber, required: true },
         stakeNonRewarded: { type: BigNumber, required: true },
-        host: { type: String, default: ""},
+        host: { type: String, default: "" },
         accountId: { type: String, required: true },
-        location: { type: String, default: ""},
+        location: { type: String, default: "" },
     },
-    emits: ['stake', 'unstake'],
+    emits: ["stake", "unstake"],
     setup(props, { emit }) {
         const store = useStore();
         const md = useBreakpoints(breakpointsTailwind).greater("md");
-        const buttonText = computed(() => props.isStaked ? "Staking.unstake" : "Staking.stake");
-        const nodeStake = computed(() => props.stakeRewarded.plus(props.stakeNonRewarded));
-        const hostName = computed(() => props.host === "" ? store.network : props.host);
+        const buttonText = computed(() =>
+            props.isStaked ? "Staking.unstake" : "Staking.stake"
+        );
+        const nodeStake = computed(() =>
+            props.stakeRewarded.plus(props.stakeNonRewarded)
+        );
+        const hostName = computed(() =>
+            props.host === "" ? store.network : props.host
+        );
 
         function handleClick() {
             if (props.isStaked) {

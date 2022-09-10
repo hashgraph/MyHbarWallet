@@ -9,7 +9,7 @@
     </div>
     <div
       v-if="isStaking"
-      class="font-medium"
+      class="font-medium dark:text-white"
     >
       You are currently staking <br v-if="!md">
       <span
@@ -27,7 +27,7 @@
   </div>
 
   <div
-    class="bg-cottonBall rounded-t-[10px] grid grid-cols-2 lg:grid-cols-4 p-5 lg:p-9 gap-x-[10px] gap-y-[10px] mt-[30px]"
+    class="bg-cottonBall dark:bg-hei-se-black rounded-t-[10px] grid grid-cols-2 lg:grid-cols-4 p-5 lg:p-9 gap-x-[10px] gap-y-[10px] mt-[30px]"
   >
     <StakingOverviewTile
       :icon="iconNode"
@@ -52,12 +52,12 @@
     /> -->
   </div>
 
-  <div class="font-medium text-xl pt-5">
+  <div class="font-medium text-xl pt-5 dark:text-white">
     {{ $t("Staking.selectNode") }}
   </div>
   <div
     v-if="md"
-    class="grid grid-cols-[60px,3fr,4fr,100px] gap-x-5 text-sm text-squant font-medium border-b pb-[10px] pt-5 border-cerebral-grey"
+    class="grid grid-cols-[60px,3fr,4fr,100px] gap-x-5 text-sm text-squant font-medium border-b dark:border-midnight-express pb-[10px] pt-5 border-cerebral-grey"
   >
     <div class="justify-self-center">
       {{ $t("Staking.node") }}
