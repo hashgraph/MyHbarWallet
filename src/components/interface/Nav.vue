@@ -50,6 +50,14 @@
       :text="$t('RouterLink.tools')"
       :to="{ name: 'tools' }"
     />
+
+    <NavItem
+      data-cy-tools
+      :icon="iconNavGreyStaking"
+      :active-icon="iconNavStaking"
+      :text="$t('Staking.staking')"
+      :to="{ name: 'staking' }"
+    />
   </div>
 </template>
 
@@ -72,6 +80,8 @@ import iconNavPurpleKeys from "../../assets/icon_nav_purple_keys.svg";
 import iconNavPurplePeople from "../../assets/icon_nav_purple_people.svg";
 import iconNavPurpleTokens from "../../assets/icon_nav_purple_tokens.svg";
 import iconNavPurpleTools from "../../assets/icon_nav_purple_tools.svg";
+import iconNavGreyStaking from "../../assets/icon_nav_grey_staking.svg";
+import iconNavStaking from "../../assets/icon_nav_color_staking.svg";
 import { useScreen } from "../../hooks/screen";
 
 export default defineComponent({
@@ -98,6 +108,8 @@ export default defineComponent({
       iconNavPurplePeople,
       iconNavPurpleTokens,
       iconNavPurpleTools,
+      iconNavGreyStaking,
+      iconNavStaking,
       network
     };
   },

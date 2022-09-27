@@ -1,9 +1,18 @@
 <template>
-  <Headline :title="$t('InterfaceToolTile.createAccount.title')" parent="tools" />
+  <Headline
+    :title="$t('InterfaceToolTile.createAccount.title')"
+    parent="tools"
+  />
 
-  <Hint :text="$t('InterfaceToolTile.createAccount.hint')" class="mt-4" />
+  <Hint
+    :text="$t('InterfaceToolTile.createAccount.hint')"
+    class="mt-4"
+  />
 
-  <form class="flex flex-col max-w-lg m-auto mt-10" @submit.prevent="handleSubmit">
+  <form
+    class="flex flex-col max-w-lg m-auto mt-10"
+    @submit.prevent="handleSubmit"
+  >
     <label class="font-medium text-squant dark:text-argent">
       {{ $t("InterfaceToolTile.createAccount.label.publicKey") }}
     </label>
@@ -48,17 +57,28 @@
       <div class="flex items-center justify-center">
         <span class="mr-4">{{ $t("InterfaceToolTile.createAccount.created") }}</span>
 
-        <span v-if="state.accountId != null" class="font-bold text-basalt-grey">
+        <span
+          v-if="state.accountId != null"
+          class="font-bold text-basalt-grey"
+        >
           {{ state.accountId.toString() }}
         </span>
       </div>
 
       <div class="flex items-center justify-between mt-10">
-        <Button class="px-5 py-2 mr-6" color="white" @click.stop="handleClose">
+        <Button
+          class="px-5 py-2 mr-6"
+          color="white"
+          @click.stop="handleClose"
+        >
           {{ $t("InterfaceToolTile.createAccount.close") }}
         </Button>
 
-        <Button class="px-5 py-2" color="green" @click.stop="handleCopy">
+        <Button
+          class="px-5 py-2"
+          color="green"
+          @click.stop="handleCopy"
+        >
           {{ $t("InterfaceToolTile.createAccount.copy") }}
         </Button>
       </div>

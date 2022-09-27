@@ -44,9 +44,9 @@
 import { defineComponent, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+
 import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
 import { useStore } from "../../store";
-
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";

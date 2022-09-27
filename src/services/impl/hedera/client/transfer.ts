@@ -2,7 +2,6 @@ import type { Client } from "@hashgraph/sdk";
 import { BigNumber } from "bignumber.js";
 
 import { SimpleTransfer } from "../../../hedera";
-
 import { useStore } from "../../../../store";
 
 export async function transfer(

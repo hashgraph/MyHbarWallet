@@ -16,7 +16,7 @@
         class="w-full max-w-lg px-6 py-5 font-medium transition-all duration-300 bg-white border border-white rounded shadow-xl  dark:bg-ruined-smores text-carbon dark:text-silver-polish dark:border-midnight-express"
         :class="[
           {
-            'transform sm:translate-y-0 translate-y-1/3 opacity-100 ': isVisible,
+            'transform translate-y-0 opacity-100 ': isVisible,
           },
           {
             'transform translate-y-16 opacity-0 invisible':
@@ -32,6 +32,7 @@
 
           <div>
             <Image
+              v-if="showCloseButton"
               :light="closeIcon"
               :dark="closeIconDark"
               class="h-6 cursor-pointer"
@@ -60,6 +61,7 @@ export default defineComponent({
   },
   props: {
     isVisible: { type: Boolean, required: false },
+    showCloseButton: { type: Boolean, default: true },
     title: { type: String, required: true },
   },
   emits: ["close"],

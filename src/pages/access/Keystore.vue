@@ -46,9 +46,9 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
 import { useRouter } from "vue-router";
+
 import { useStore } from "../../store";
 import { KeystoreSoftwareWallet } from "../../domain/wallet/software-keystore";
-
 import FileUploader from "../../components/base/FileUploader.vue";
 import PasswordInput from "../../components/base/PasswordInput.vue";
 import InputError from "../../components/base/InputError.vue";

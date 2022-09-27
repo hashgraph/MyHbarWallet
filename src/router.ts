@@ -1,8 +1,8 @@
 /* eslint-disable import/order */
 import {
-  createRouter,
-  createWebHashHistory,
-  createWebHistory,
+    createRouter,
+    createWebHashHistory,
+    createWebHistory,
 } from "vue-router";
 import { useStore } from "./store";
 
@@ -50,275 +50,287 @@ import InterfaceUploadFile from "./pages/interface/UploadFile.vue";
 import InterfaceDownloadFile from "./pages/interface/DownloadFile.vue";
 import InterfaceCreateAccount from "./pages/interface/CreateAccount.vue";
 import InterfaceExportKeystore from "./pages/interface/ExportKeystore.vue";
+import InterfaceStaking from "./pages/interface/Staking.vue";
 
 const routes = [
-  {
-    path: "/",
-    component: MarketingLayout,
-    children: [
-      { path: "", component: Marketing, name: "marketing" },
-      {
-        path: "/terms-and-conditions",
-        component: TermsConditions,
-        name: "terms",
-      },
-      {
-        path: "/privacy-policy",
-        component: PrivacyPolicy,
-        name: "privacy",
-      },
-      {
-        path: "/access",
-        component: Access,
-        name: "access",
-      },
-      {
-        path: "/access/software",
-        component: AccessSoftware,
-        name: "access.software",
-      },
-      {
-        path: "/access/hardware",
-        component: AccessHardware,
-        name: "access.hardware",
-      },
-      {
-        path: "/access/hardware/ledger",
-        component: AccessLedger,
-        name: "access.hardware.ledger",
-      },
-      {
-        path: "/access/hardware/trezor",
-        component: AccessHardware,
-        name: "access.hardware.trezor",
-      },
-      {
-        path: "/access/software/keystore",
-        component: AccessKeystore,
-        name: "access.software.keystore",
-      },
-      {
-        path: "/access/software/mnemonic",
-        component: AccessMnemonic,
-        name: "access.software.mnemonic",
-      },
-      {
-        path: "/access/software/key",
-        component: AccessPrivateKey,
-        name: "access.software.key",
-      },
-      {
-        path: "/access/account",
-        component: Account,
-        name: "access.account",
-      },
-      { path: "/create/", component: Create, name: "create" },
-      {
-        path: "/create/software",
-        component: CreateSoftware,
-        name: "create.software"
-      },
-      {
-        path: "/create/keystore",
-        component: CreateKeystore,
-        name: "create.software.keystore",
-      },
-      {
-        path: "/create/mnemonic",
-        component: CreateMnemonic,
-        name: "create.software.mnemonic",
-      },
-      {
-        path: "/create/mnemonic/verify",
-        component: MnemonicVerify,
-        name: "create.software.mnemonic.verify",
-        props: true
-      },
-      {
-        path: "/create/key",
-        component: CreatePrivateKey,
-        name: "create.software.key",
-      },
-    ],
-  },
-  {
-    path: "/wallet",
-    component: InterfaceLayout,
-    redirect: { name: "home" },
-    meta: { requiresWallet: true },
-    children: [
-      {
-        path: "",
-        component: InterfaceMainView,
+    {
+        path: "/",
+        component: MarketingLayout,
         children: [
-          {
-            path: "",
-            component: InterfaceHome,
-            name: "home",
-          },
-          {
-            path: "send",
-            component: InterfaceSend,
-            name: "send",
-          },
+            { path: "", component: Marketing, name: "marketing" },
+            {
+                path: "/terms-and-conditions",
+                component: TermsConditions,
+                name: "terms",
+            },
+            {
+                path: "/privacy-policy",
+                component: PrivacyPolicy,
+                name: "privacy",
+            },
+            {
+                path: "/access",
+                component: Access,
+                name: "access",
+            },
+            {
+                path: "/access/software",
+                component: AccessSoftware,
+                name: "access.software",
+            },
+            {
+                path: "/access/hardware",
+                component: AccessHardware,
+                name: "access.hardware",
+            },
+            {
+                path: "/access/hardware/ledger",
+                component: AccessLedger,
+                name: "access.hardware.ledger",
+            },
+            {
+                path: "/access/hardware/trezor",
+                component: AccessHardware,
+                name: "access.hardware.trezor",
+            },
+            {
+                path: "/access/software/keystore",
+                component: AccessKeystore,
+                name: "access.software.keystore",
+            },
+            {
+                path: "/access/software/mnemonic",
+                component: AccessMnemonic,
+                name: "access.software.mnemonic",
+            },
+            {
+                path: "/access/software/key",
+                component: AccessPrivateKey,
+                name: "access.software.key",
+            },
+            {
+                path: "/access/account",
+                component: Account,
+                name: "access.account",
+            },
+            { path: "/create/", component: Create, name: "create" },
+            {
+                path: "/create/software",
+                component: CreateSoftware,
+                name: "create.software"
+            },
+            {
+                path: "/create/keystore",
+                component: CreateKeystore,
+                name: "create.software.keystore",
+            },
+            {
+                path: "/create/mnemonic",
+                component: CreateMnemonic,
+                name: "create.software.mnemonic",
+            },
+            {
+                path: "/create/mnemonic/verify",
+                component: MnemonicVerify,
+                name: "create.software.mnemonic.verify",
+                props: true
+            },
+            {
+                path: "/create/key",
+                component: CreatePrivateKey,
+                name: "create.software.key",
+            },
         ],
-      },
-      {
-        path: "assets",
-        component: InterfaceMainView,
+    },
+    {
+        path: "/wallet",
+        component: InterfaceLayout,
+        redirect: { name: "home" },
+        meta: { requiresWallet: true },
         children: [
-          {
-            component: InterfaceAssets,
-            path: "",
-            name: "assets",
-          },
+            {
+                path: "",
+                component: InterfaceMainView,
+                children: [
+                    {
+                        path: "",
+                        component: InterfaceHome,
+                        name: "home",
+                    },
+                    {
+                        path: "send",
+                        component: InterfaceSend,
+                        name: "send",
+                    },
+                ],
+            },
+            {
+                path: "assets",
+                component: InterfaceMainView,
+                children: [
+                    {
+                        component: InterfaceAssets,
+                        path: "",
+                        name: "assets",
+                    },
+                ],
+            },
+            {
+                component: InterfaceMainView,
+                path: "tokens",
+                children: [
+                    {
+                        component: InterfaceTokens,
+                        path: "",
+                        name: "tokens",
+                    },
+                    {
+                        component: InterfaceTokenDetails,
+                        path: "tokendetails",
+                        name: "tokendetails",
+                    },
+                ],
+            },
+            {
+                path: "people",
+                component: InterfaceMainView,
+                children: [
+                    {
+                        component: InterfacePeople,
+                        path: "",
+                        name: "people",
+                    },
+                ],
+            },
+            {
+                component: InterfaceMainView,
+                path: "history",
+                children: [
+                    {
+                        component: InterfaceHistory,
+                        path: "",
+                        name: "history",
+                    },
+                    {
+                        component: InterfaceTransactionDetails,
+                        path: "transaction",
+                        name: "transaction",
+                        props: true
+                    },
+                ],
+            },
+            {
+                path: "keys",
+                component: InterfaceMainView,
+                children: [
+                    {
+                        component: InterfaceKeys,
+                        path: "",
+                        name: "keys",
+                    },
+                ],
+            },
+            {
+                path: "tools",
+                component: InterfaceMainView,
+                children: [
+                    {
+                        component: InterfaceTools,
+                        path: "",
+                        name: "tools",
+                    },
+                    {
+                        component: InterfaceAssociateToken,
+                        path: "associate-token",
+                        name: "tools.associate.token",
+                    },
+                    {
+                        component: InterfaceCreateAccount,
+                        path: "create-account",
+                        name: "tools.create.account"
+                    },
+                    {
+                        component: InterfaceConvertUnits,
+                        path: "convert-units",
+                        name: "tools.convert.units",
+                    },
+                    {
+                        component: InterfaceUploadFile,
+                        path: "upload",
+                        name: "tools.upload"
+                    },
+                    {
+                        component: InterfaceDownloadFile,
+                        path: "download",
+                        name: "tools.download"
+                    },
+                    {
+                        component: InterfaceExportKeystore,
+                        path: "export-keystore",
+                        name: "tools.export.keystore"
+                    }
+                ],
+            },
+            {
+                path: "staking",
+                component: InterfaceMainView,
+                children: [
+                    {
+                        component: InterfaceStaking,
+                        path: "",
+                        name: "staking",
+                    },
+                ],
+            },
         ],
-      },
-      {
-        component: InterfaceMainView,
-        path: "tokens",
+    },
+    {
+        path: "/:catchAll(.*)",
+        name: "404",
+        component: MarketingLayout,
         children: [
-          {
-            component: InterfaceTokens,
-            path: "",
-            name: "tokens",
-          },
-          {
-            component: InterfaceTokenDetails,
-            path: "tokendetails",
-            name: "tokendetails",
-          },
+            {
+                component: Error404,
+                path: "",
+            },
         ],
-      },
-      {
-        path: "people",
-        component: InterfaceMainView,
-        children: [
-          {
-            component: InterfacePeople,
-            path: "",
-            name: "people",
-          },
-        ],
-      },
-      {
-        component: InterfaceMainView,
-        path: "history",
-        children: [
-          {
-            component: InterfaceHistory,
-            path: "",
-            name: "history",
-          },
-          {
-            component: InterfaceTransactionDetails,
-            path: "transaction",
-            name: "transaction",
-            props: true
-          },
-        ],
-      },
-      {
-        path: "keys",
-        component: InterfaceMainView,
-        children: [
-          {
-            component: InterfaceKeys,
-            path: "",
-            name: "keys",
-          },
-        ],
-      },
-      {
-        path: "tools",
-        component: InterfaceMainView,
-        children: [
-          {
-            component: InterfaceTools,
-            path: "",
-            name: "tools",
-          },
-          {
-            component: InterfaceAssociateToken,
-            path: "associate-token",
-            name: "tools.associate.token",
-          },
-          {
-            component: InterfaceCreateAccount,
-            path: "create-account",
-            name: "tools.create.account"
-          },
-          {
-            component: InterfaceConvertUnits,
-            path: "convert-units",
-            name: "tools.convert.units",
-          },
-          {
-            component: InterfaceUploadFile,
-            path: "upload",
-            name: "tools.upload"
-          },
-          {
-            component: InterfaceDownloadFile,
-            path: "download",
-            name: "tools.download"
-          },
-          {
-            component: InterfaceExportKeystore,
-            path: "export-keystore",
-            name: "tools.export.keystore"
-          }
-        ],
-      },
-    ],
-  },
-  {
-    path: "/:catchAll(.*)",
-    name: "404",
-    component: MarketingLayout,
-    children: [
-      {
-        component: Error404,
-        path: "",
-      },
-    ],
-  },
+    },
 ];
 
 const router = createRouter({
-  // if running in electron, use hash history
-  history: /electron/i.test(navigator.userAgent)
-    ? createWebHashHistory()
-    : createWebHistory(),
-  routes,
-  scrollBehavior(to, _from, savedPosition) {
-    if (to.hash) {
-      return {
-        el: to.hash,
-        behavior: "smooth",
-      };
-    }
+    // if running in electron, use hash history
+    history: /electron/i.test(navigator.userAgent)
+        ? createWebHashHistory()
+        : createWebHistory(),
+    routes,
+    scrollBehavior(to, _from, savedPosition) {
+        if (to.hash) {
+            return {
+                el: to.hash,
+                behavior: "smooth",
+            };
+        }
 
-    if (savedPosition != null) {
-      return savedPosition;
-    }
+        if (savedPosition != null) {
+            return savedPosition;
+        }
 
-    return { x: 0, y: 0 };
-  },
+        return { x: 0, y: 0 };
+    },
 });
 
 router.beforeResolve(async (to, from, next) => {
-  const store = useStore();
-  const neededWallet = from.matched.some(record => record.meta.requiresWallet);
-  const needsWallet = to.matched.some(record => record.meta.requiresWallet);
-  const hasWallet = store.wallet != null;
+    const store = useStore();
+    const neededWallet = from.matched.some(record => record.meta.requiresWallet);
+    const needsWallet = to.matched.some(record => record.meta.requiresWallet);
+    const hasWallet = store.wallet != null;
 
-  if (needsWallet && !hasWallet) {
-    next({ name: "access" });
-  } else if (!needsWallet && neededWallet && hasWallet) {
-    store.setConfirmLogoutOpen(true);
-  } else next();
-  await store.networkPing();
+    if (needsWallet && !hasWallet) {
+        next({ name: "access" });
+    } else if (!needsWallet && neededWallet && hasWallet) {
+        store.setConfirmLogoutOpen(true);
+    } else next();
+    await store.networkPing();
 });
 
 export default router;

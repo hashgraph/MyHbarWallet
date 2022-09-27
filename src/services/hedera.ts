@@ -39,6 +39,10 @@ export interface HederaService {
         // account ID we wish to associate with the wallet
         accountId: AccountId;
     }): Promise<SimpleHederaClient | null>;
+
+    getNodeStakingInfo(network: "mainnet" | "testnet" | "previewnet"): Promise<NetworkNodeStakingInfo[]>;
+
+    getMirrorAccountInfo(network: "mainnet" | "testnet" | "previewnet", accountId: AccountId): Promise<MirrorAccountInfo>;
 }
 
 export interface SimpleHederaClient {
@@ -86,4 +90,30 @@ export interface SimpleHederaClient {
     getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>;
 
     getTransfer(options: { hash: string }): Promise<CryptoTransfer>;
+
+    updateStaking(options: { accountId: AccountId; node: number | null, declineRewards: boolean}): Promise<void>;
+}
+
+export interface NetworkNodeStakingInfo {
+    description: string;
+    node_id: number;
+    node_account_id: string;
+    stake: BigNumber;
+    min_stake: BigNumber;
+    max_stake: BigNumber;
+    stake_rewarded: BigNumber;
+    stake_not_rewarded: BigNumber;
+    reward_rate_start: BigNumber;
+    // staking period uses strings representing seconds.nanos since the epoch
+    staking_period: {
+        from: string;
+        to: string;
+    }
+}
+
+export interface MirrorAccountInfo {
+    account: string;
+    staked_account_id?: string;
+    staked_node_id?: number;
+    stake_period_start?: number;
 }

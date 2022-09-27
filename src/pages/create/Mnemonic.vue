@@ -43,11 +43,11 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
 import type { Mnemonic } from "@hashgraph/sdk";
+
 import { MnemonicSoftwareWallet } from "../../domain/wallet/software-mnemonic";
 import { useStore } from "../../store";
 import { Wallet } from "../../domain/wallet/abstract";
 import router from "../../router";
-
 import Layout from "../../components/access/Layout.vue";
 import Button from "../../components/base/Button.vue";
 import OptionalPasswordInput from "../../components/base/OptionalPasswordInput.vue";
