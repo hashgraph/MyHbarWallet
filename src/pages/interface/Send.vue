@@ -30,6 +30,7 @@
             v-model:to="state.transfer.to"
             v-model:asset="state.transfer.asset"
             v-model:usd="state.transfer.usd"
+            data-cy-transfer-form
             class="transition-all duration-300"
             :class="{
               'opacity-100 mt-0': state.transfers.length === 0 || state.editTransfer == true,

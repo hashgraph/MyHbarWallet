@@ -2,8 +2,11 @@ describe("Asset Render on Access View", () => {
     beforeEach(() => cy.viewport("macbook-13"));
 
     it("can see assets on access pages", () => {
-        // From access page,
-        cy.visit("/access")
+
+        cy.visit("/")
+            .get("[data-cy-access-link]")
+            .filter(":visible")
+            .click()
 
             // check if Software image rendered
             .get('[data-cy-option="Software.title"] img')
