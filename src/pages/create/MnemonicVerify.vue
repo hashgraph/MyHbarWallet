@@ -79,7 +79,7 @@ export default defineComponent({
 
     if (store.wallet != null) {
       try {
-        mnemonicPhrase.value = (store.wallet as MnemonicSoftwareWallet).getMnemonic().words;
+        mnemonicPhrase.value = (store.wallet as MnemonicSoftwareWallet).getMnemonic().toString().split(' ');
         password.value = (store.wallet as MnemonicSoftwareWallet).getPassword();
       } catch (error) {
         router.push({ name: "create" });

@@ -10,7 +10,7 @@
     >
       <MnemonicInput
         v-if="mnemonicPhrase"
-        :model-value="mnemonicPhrase.words"
+        :model-value="[...mnemonicPhrase.toString().split(' ')]"
         :word-count="24"
         read-only
       />
