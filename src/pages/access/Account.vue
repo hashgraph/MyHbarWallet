@@ -162,7 +162,7 @@ interface State {
     accountId: AccountId | null;
     error: boolean;
     errorMessage: string;
-    caughtError: Error;
+    caughtError: Error | null;
     busy: boolean;
     busyMessage: string;
 }
@@ -289,12 +289,12 @@ export default defineComponent({
                                 {
                                     wallet: state.wallet,
                                     keyIndex,
-                                    accountId: state.accountId,
+                                    accountId: state.accountId as AccountId,
                                     network: store.network,
                                 }
                             );
                         } catch (error) {
-                            state.caughtError = error;
+                            state.caughtError = error as Error;
                         }
 
                         if (client != null) break;
