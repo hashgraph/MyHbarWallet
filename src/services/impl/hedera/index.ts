@@ -3,7 +3,12 @@ import axios from "axios";
 import BigNumber from "bignumber.js";
 
 import { Wallet } from "../../../domain/wallet/abstract";
-import { HederaService, MirrorAccountInfo, NetworkNodeStakingInfo, SimpleHederaClient } from "../../hedera";
+import {
+    HederaService,
+    MirrorAccountInfo,
+    NetworkNodeStakingInfo,
+    SimpleHederaClient,
+} from "../../hedera";
 
 import { SimpleHederaClientImpl } from "./client";
 
@@ -11,10 +16,10 @@ export class HederaServiceImpl implements HederaService {
     async createClient(options: {
         wallet: Wallet;
         network:
-        | string
-        | {
-            [key: string]: string | AccountId;
-        };
+            | string
+            | {
+                  [key: string]: string | AccountId;
+              };
         keyIndex: number;
         accountId: AccountId;
     }): Promise<SimpleHederaClient | null> {
@@ -38,7 +43,11 @@ export class HederaServiceImpl implements HederaService {
         const publicKey = await options.wallet.getPublicKey(options.keyIndex);
 
         // TODO: Fix
-        client.setOperatorWith(options.accountId, publicKey ?? "", transactionSigner);
+        client.setOperatorWith(
+            options.accountId,
+            publicKey ?? "",
+            transactionSigner
+        );
 
         if (!(await testClientOperatorMatch(client))) {
             return null;
@@ -47,7 +56,9 @@ export class HederaServiceImpl implements HederaService {
         return new SimpleHederaClientImpl(client, privateKey);
     }
 
-    async getNodeStakingInfo(network: "mainnet" | "testnet" | "previewnet"): Promise<NetworkNodeStakingInfo[]> {
+    async getNodeStakingInfo(
+        network: "mainnet" | "testnet" | "previewnet"
+    ): Promise<NetworkNodeStakingInfo[]> {
         interface Info {
             description: string;
             node_id: number;
@@ -62,7 +73,7 @@ export class HederaServiceImpl implements HederaService {
             staking_period: {
                 from: string;
                 to: string;
-            }
+            };
         }
 
         let urlBase = "";
@@ -78,7 +89,12 @@ export class HederaServiceImpl implements HederaService {
                 break;
         }
 
-        const response = await axios.get<{ nodes: Info[], links: { next?: string } }>(`https://${urlBase}.mirrornode.hedera.com/api/v1/network/nodes?order=asc&limit=25`);
+        const response = await axios.get<{
+            nodes: Info[];
+            links: { next?: string };
+        }>(
+            `https://${urlBase}.mirrornode.hedera.com/api/v1/network/nodes?order=asc&limit=25`
+        );
         const result: NetworkNodeStakingInfo[] = [];
         for (const node of response.data.nodes) {
             result.push({
@@ -94,8 +110,11 @@ export class HederaServiceImpl implements HederaService {
                 staking_period: node.staking_period,
             });
         }
+
         if (response.data.links.next) {
-            const secondResponse = await axios.get<{ nodes: Info[] }>(`https://${urlBase}.mirrornode.hedera.com${response.data.links.next}`);
+            const secondResponse = await axios.get<{ nodes: Info[] }>(
+                `https://${urlBase}.mirrornode.hedera.com${response.data.links.next}`
+            );
             for (const node of secondResponse.data.nodes) {
                 result.push({
                     description: node.description,
@@ -115,7 +134,10 @@ export class HederaServiceImpl implements HederaService {
         return result;
     }
 
-    async getMirrorAccountInfo(network: "mainnet" | "testnet" | "previewnet", accountId: AccountId): Promise<MirrorAccountInfo> {
+    async getMirrorAccountInfo(
+        network: "mainnet" | "testnet" | "previewnet",
+        accountId: AccountId
+    ): Promise<MirrorAccountInfo> {
         let urlBase = "";
         switch (network) {
             case "mainnet":
@@ -129,7 +151,9 @@ export class HederaServiceImpl implements HederaService {
                 break;
         }
 
-        const response = await axios.get<MirrorAccountInfo>(`https://${urlBase}.mirrornode.hedera.com/api/v1/accounts/${accountId.toString()}`);
+        const response = await axios.get<MirrorAccountInfo>(
+            `https://${urlBase}.mirrornode.hedera.com/api/v1/accounts/${accountId.toString()}`
+        );
         return response.data;
     }
 }
