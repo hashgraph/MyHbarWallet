@@ -319,6 +319,7 @@ export default defineComponent({
             { name: "ServiceNow", location: "Ogden, Utah" },
             { name: "Ubisoft", location: "Singapore, Republic of Singapore" },
         ];
+
         function getHostInfoForNode(
             network: "mainnet" | "testnet" | "previewnet",
             index: number
@@ -345,6 +346,7 @@ export default defineComponent({
                     : node.reward_rate_start.dividedBy(node.stake_rewarded);
             }
         });
+
         const estimatedReward = computed(() => {
             if (!isStaking.value || store.balance == null) {
                 return "-";
@@ -408,7 +410,8 @@ export default defineComponent({
         }
 
         onMounted(() => {
-            store.fetchNetworkNodeStakingInfo();
+          void store.fetchAccountStakingInfo();
+          void store.fetchNetworkNodeStakingInfo();
         });
 
         return {
