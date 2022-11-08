@@ -18,11 +18,13 @@ transfer hbars, and so much more.
 -   <img width="16" src="./src/assets/icon_nav_purple_keys.svg">&nbsp;&nbsp;**Self-sovereignty**._You_ have control over your wallet at all times. Private keys are never stored nor sent to servers. For even more control, a hardware wallet can be used
     to never expose your private key to the application.
 
--   <img width="16" src="./src/assets/icon_nav_purple_people.svg">&nbsp;&nbsp;**Offline**. There is no <font color="#00BE87">**MyHbarWallet**</font> server. The application runs entirely in _your_ browser. It can be run completely disconnected from [MyHbarWallet.com](https://MyHbarWallet.com). It can be run as a desktop application (powered by [Electron](https://www.electronjs.org/)).
+-   <img width="16" src="./src/assets/icon_nav_purple_people.svg">&nbsp;&nbsp;**Offline**. There is no <font color="#00BE87">**MyHbarWallet**</font> server. The application runs entirely in _your_ browser. It can be run completely disconnected from [MyHbarWallet.com](https://MyHbarWallet.com). It can be run as a desktop application (powered by [Vite PWA](https://vite-pwa-org.netlify.app/)).
 
 -   <img width="16" src="./src/assets/icon_hedera.svg">&nbsp;&nbsp;**Hedera™ Hashgraph**. The first wallet (after the official mobile wallets) to exist and will continue to be at the lead in supporting new and exciting functionality on Hedera™ Hashgraph.
 
 -   <img width="16" src="./src/assets/img_token_gen.svg">&nbsp;&nbsp;**Hedera™ Token Service (HTS)**. View the balance of _all_ your assets on Hedera™; transfer tokens (and hbar); and, purchase tokens through an exchange (when available).
+
+-   <img width="16" src="./src/assets/clock.svg">&nbsp;&nbsp;**Hedera™ Staking**. Stake your Hbar to Nodes or Accounts and earn rewards; see rewards calculations for the current staking period. **Not Yet Supported for Ledger™ Hardware Wallets**
 
 ## License
 
