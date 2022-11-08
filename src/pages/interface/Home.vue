@@ -105,13 +105,16 @@ export default defineComponent({
         const store = useStore();
         const accountId = computed(() => store.accountId);
         const publicKey = computed(() => store.publicKey);
+        const isLedger = computed(() => !store.wallet?.hasPrivateKey() ?? false)
 
         const isStaking = computed(
             () =>
                 (store.getAccountStakingInfo?.staked_node_id ??
                     store.getAccountStakingInfo?.staked_account_id) != null
         );
-        const showStakingBanner = ref(true);
+        
+        const showStakingBanner = ref(!isLedger.value);
+        
 
         onMounted(() => {
             void store.requestHbarPrice();
