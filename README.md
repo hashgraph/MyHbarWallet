@@ -28,7 +28,7 @@ transfer hbars, and so much more.
 
 ## License
 
-Copyright 2021 Hedera Hashgraph LLC.
+Copyright 2022 Hedera Hashgraph LLC.
 
 Licensed under the Apache License, Version 2.0 (the "License")
 
