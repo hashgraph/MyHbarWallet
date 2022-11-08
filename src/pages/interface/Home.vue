@@ -9,6 +9,7 @@
       </div>
       <div class="flex-grow" />
       <router-link
+        v-if="!isLedger"
         class="underline font-semibold"
         :to="{ name: 'staking' }"
       >
@@ -138,6 +139,7 @@ export default defineComponent({
             sendAssetDark,
             onClickStake,
             isStaking,
+            isLedger,
             closeCircle,
             closeBanner,
             showStakingBanner,

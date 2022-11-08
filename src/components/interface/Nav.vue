@@ -52,7 +52,8 @@
     />
 
     <NavItem
-      data-cy-tools
+      v-if="!isLedger"
+      data-cy-staking
       :icon="iconNavGreyStaking"
       :active-icon="iconNavStaking"
       :text="$t('Staking.staking')"
@@ -62,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 
 import { useStore } from "../../store";
 import NavItem from "../base/NavItem.vue";
@@ -90,6 +91,7 @@ export default defineComponent({
   setup() {
     const lg = useScreen("lg");
     const store = useStore();
+    const isLedger = computed(() => !store.wallet?.hasPrivateKey() ?? false)
     const network = store.network;
 
     return {
@@ -110,7 +112,8 @@ export default defineComponent({
       iconNavPurpleTools,
       iconNavGreyStaking,
       iconNavStaking,
-      network
+      network,
+      isLedger
     };
   },
 });
