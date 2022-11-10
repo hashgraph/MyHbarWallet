@@ -104,7 +104,7 @@
     "cross-env": "^7.0.3",
     "cypress": "^8.3.1",
     "cypress-file-upload": "^5.0.8",
-    "electron": "^13.2.3",
+    "electron": "^18.3.7",
     "electron-builder": "^22.13.1",
     "eslint": "^7.32.0",
     "eslint-plugin-cypress": "^2.11.3",
