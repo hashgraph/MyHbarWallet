@@ -77,12 +77,15 @@ export default defineComponent({
     setup(props, { emit }) {
         const store = useStore();
         const md = useBreakpoints(breakpointsTailwind).greater("md");
+        
         const buttonText = computed(() =>
             props.isStaked ? "Staking.unstake" : "Staking.stake"
         );
+        
         const nodeStake = computed(() =>
             props.stakeRewarded.plus(props.stakeNonRewarded)
         );
+        
         const hostName = computed(() =>
             props.host === "" ? store.network : props.host
         );

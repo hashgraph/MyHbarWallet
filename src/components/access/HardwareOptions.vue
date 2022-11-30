@@ -7,6 +7,5 @@
     <div class="mx-auto mt-3 text-sm text-center w-80">
       {{ $t("HardwareOptions.body") }}
     </div>
-    <!-- <BaseButton color="white" class="p-2 mt-6 w-52"> View Options </BaseButton> -->
   </div>
 </template>

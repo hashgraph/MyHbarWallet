@@ -122,7 +122,7 @@ export default defineComponent({
       isEyeOpen.value = !isEyeOpen.value;
     }
 
-    let numberOfChars = ref<number>(0);
+    const numberOfChars = ref<number>(0);
 
     watch(
       () => props.modelValue,

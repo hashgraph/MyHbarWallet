@@ -2,7 +2,7 @@
   <Switch
     v-model="state.addMemo"
     :label="$t('OptionalMemo.addMemo')"
-    @update:modelValue="onToggle"
+    @update:model-value="onToggle"
   />
   <div
     class="overflow-y-hidden mb-4"
@@ -17,7 +17,7 @@
         'opacity-100': state.addMemo,
         '-mt-32 opacity-0 invisible': !state.addMemo,
       }"
-      @update:modelValue="$emit('update:modelValue', state.memo)"
+      @update:model-value="$emit('update:modelValue', state.memo)"
     />
   </div>
   <div
@@ -44,7 +44,7 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup() {
-    let state = reactive({
+    const state = reactive({
       addMemo: false,
       memo: "",
     });

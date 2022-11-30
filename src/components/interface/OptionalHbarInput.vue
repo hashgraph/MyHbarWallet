@@ -24,13 +24,11 @@
 
 <script lang="ts">
 import type { Hbar } from "@hashgraph/sdk";
-import { defineComponent, PropType, ref, watch } from "vue";
-import { useVModel } from "@vueuse/core";
+import { defineComponent, onMounted, PropType, ref, watch } from "vue";
+import BigNumber from "bignumber.js";
 
 import Switch from "../base/Switch.vue";
 import HbarInput from "../base/HbarInput.vue";
-
-
 
 export default defineComponent({
   name: "OptionalHbarInput",
@@ -39,21 +37,27 @@ export default defineComponent({
     HbarInput,
   },
   props: {
-    // eslint-disable-next-line vue/require-default-prop
-    modelValue: { type: Object as PropType<Hbar | null> },
+    modelValue: { type: Object as PropType<Hbar | null>, required: true },
   },
   emits: ["update:modelValue"],
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const isOpen = ref(false);
-    const value = useVModel(props, "modelValue");
+    const value = ref<BigNumber>(new BigNumber(0));
+    const sdk = ref<typeof import("@hashgraph/sdk") | null>(null);
+
+    onMounted(async () => {
+      sdk.value = await import("@hashgraph/sdk");
+    });
 
     function resetHbar() {
-       emit("update:modelValue", null);
+      value.value = new BigNumber(0);
+      emit("update:modelValue", null);
     }
 
-    function handleUpdate(amount: Hbar): void {
+    function handleUpdate(amount: BigNumber): void {
       value.value = amount;
-      emit("update:modelValue", amount);
+      if (!sdk.value) emit("update:modelValue", null);
+      else emit("update:modelValue", sdk.value?.Hbar.from(amount, sdk.value?.HbarUnit.Hbar));
     }
 
     watch(isOpen, () => {

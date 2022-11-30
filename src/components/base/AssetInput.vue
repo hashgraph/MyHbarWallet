@@ -100,7 +100,6 @@ export default defineComponent({
 })
 
 function formatNum(num: BigNumber | null | undefined): string {
-  // TODO: support locales here
   return (
     num?.toFormat({
       decimalSeparator: '.',

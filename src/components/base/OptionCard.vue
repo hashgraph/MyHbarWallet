@@ -77,7 +77,7 @@ export default defineComponent({
       default: null,
     },
     // true: recommended, false: explicitly not recommended, null: no recommendation/empty
-    recommended: { type: Boolean, default: null }
+    recommended: { type: Boolean, default: null, optional: true }
   },
   setup(props) {
     const sm = useScreen("sm");

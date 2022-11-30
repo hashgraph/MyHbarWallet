@@ -11,7 +11,7 @@
         <div
           v-for="(transfer, i) in transferList"
           :key="buildKey(transfer.accountId?.toString(), i)"
-          class="flex grid grid-flow-row grid-cols-2"
+          class="grid grid-flow-row grid-cols-2"
         >
           <div class="text-andrea-blue">
             {{ transfer?.accountId }}
@@ -52,7 +52,7 @@
         <div
           v-for="(transfer, i) in recipientList"
           :key="buildKey(transfer.accountId?.toString(), i)"
-          class="flex grid grid-flow-row grid-cols-2"
+          class="grid grid-flow-row grid-cols-2"
         >
           <div class="text-andrea-blue">
             {{ transfer.accountId?.toString() }}
@@ -78,14 +78,14 @@ export default defineComponent({
     transfers: { type: Array as PropType<Transfer[]>, required: true }
   },
   setup(props) {
-    const transferList = computed( ()=> {
+    const transferList = computed(()=> {
       return props.transfers.filter( (transfer: Transfer) => {
         const amount = new BigNumber(transfer?.amount ?? 0)
         if(amount.isLessThan(0)) return transfer;  
       });
     });
 
-    const recipientList = computed( ()=> {
+    const recipientList = computed(()=> {
       return props.transfers.filter( (transfer: Transfer) => {
         const amount = new BigNumber(transfer?.amount ?? 0);
         if(amount.isGreaterThan(0)) return transfer;

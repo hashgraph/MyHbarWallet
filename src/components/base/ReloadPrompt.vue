@@ -10,7 +10,7 @@
     <div
       v-if="offlineReady || needRefresh"
       role="alert"
-      class="p-6 pt-8 animate-pulse rounded flex flex-col fixed z-50 items-center justify-center h-40 p-4 overflow-hidden italic rounded shadow-lg bottom-10 right-10 w-200 bg-snow-ballet dark:border dark:bg-dreamless-sleep dark:border-midnight-express dark:text-white"
+      class="pt-8 animate-pulse flex flex-col fixed z-50 items-center justify-center h-40 p-4 overflow-hidden italic rounded shadow-lg bottom-10 right-10 w-200 bg-snow-ballet dark:border dark:bg-dreamless-sleep dark:border-midnight-express dark:text-white"
     >
       <span
         v-if="offlineReady"

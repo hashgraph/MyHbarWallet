@@ -54,12 +54,15 @@ export default defineComponent({
     },
     setup(props) {
         const { t } = useI18n();
+        
         const isEarning = computed(() =>
             props.current.isGreaterThanOrEqualTo(props.min)
         );
+
         const isOverMax = computed(() =>
             props.current.isGreaterThan(props.max)
         );
+        
         const amountTo = computed(() => {
             if (!isEarning.value) {
                 return `${t("Staking.toMin")}: ${formatTinybarToHbar(
@@ -72,6 +75,7 @@ export default defineComponent({
                 )}`;
             }
         });
+        
         const barFill = computed(() => {
             if (props.current.isLessThan(props.min)) {
                 const percent = props.current
@@ -95,6 +99,7 @@ export default defineComponent({
         const hbarIcon = computed(() =>
             isEarning.value ? hbarBlack : hbarFaded
         );
+        
         const statusIcon = computed(() => {
             if (isEarning.value) {
                 if (isOverMax.value) {

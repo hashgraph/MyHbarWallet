@@ -26,10 +26,9 @@ export default defineComponent({
     name: "NetworkStatusBanner",
     setup(){
         const store = useStore();
+        const networkStatus = ref(true);
 
-        const networkStatus = ref();
-
-        watch( ()=> store.networkStatus, (current: boolean, previous: boolean) => {
+        watch(()=> store.networkStatus, (current: boolean) => {
             networkStatus.value = current;
         });
 

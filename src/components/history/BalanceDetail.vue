@@ -5,12 +5,12 @@
 
   <div class="text-center pl-8 pr-8">
     <div
-      class="m-auto min-w-[350px] m-auto h-auto p-5 mt-3 border rounded-lg bg-first-snow dark:bg-ruined-smores dark:border-argent"
+      class="min-w-[350px] m-auto h-auto p-5 mt-3 border rounded-lg bg-first-snow dark:bg-ruined-smores dark:border-argent"
     >
       <div
         v-for="(transfer) in transfers"
         :key="transfer.accountId.toString()"
-        class="m-auto text-left flex grid grid-flow-row grid-cols-2"
+        class="m-auto text-left grid grid-flow-row grid-cols-2"
       >
         <div class="text-andrea-blue">
           {{ transfer.accountId }}

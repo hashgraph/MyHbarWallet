@@ -2,7 +2,7 @@
   <button
     class="px-4 py-1 mr-1 text-sm font-medium rounded  bg-first-snow dark:bg-midnight-express text-carbon dark:text-silver-polish"
   >
-    <div v-if="value == 'right'">
+    <div v-if="value === 'right'">
       <Image
         :light="chevronRight"
         :dark="chevronRightDark"
@@ -10,7 +10,7 @@
       />
     </div>
 
-    <div v-else-if="value == 'left'">
+    <div v-else-if="value === 'left'">
       <Image
         :light="chevronLeft"
         :dark="chevronLeftDark"

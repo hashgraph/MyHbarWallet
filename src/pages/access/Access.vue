@@ -14,7 +14,7 @@
         :to="{ name: option.route }"
         :title="$t(option.title)"
         :desc="$t(option.description)"
-        :recommended="option.value === AccessOptionType.Software ? false : null"
+        :recommended="option.value === AccessOptionType.Software ? false : undefined"
       />
     </div>
   </Layout>

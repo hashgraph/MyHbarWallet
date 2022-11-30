@@ -59,22 +59,16 @@ export default defineComponent({
   },
   emits: ["close", "clickAdd", "update:to", "update:asset", "update:amount"],
   setup(props, { emit }) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const refTo = useVModel(props, "to", emit);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const refAsset = useVModel(props, "asset", emit);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const refAmount = useVModel(props, "amount", emit);
 
     const title = computed(() =>
-      props.type == "add" ? "Add Transfer" : "Edit Transfer"
+      props.type === "add" ? "Add Transfer" : "Edit Transfer"
     );
 
     const buttonName = computed(() =>
-      props.type == "add" ? "Add" : "Save"
+      props.type === "add" ? "Add" : "Save"
     );
 
     return {
