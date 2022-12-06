@@ -251,7 +251,7 @@ export default defineComponent({
         async function onShowMorePublicKeys() {
             if (state.wallet != null) {
                 if (state.wallet.minIndex < 0) {
-                    let moreKeys = [];
+                    const moreKeys = [];
 
                     for (
                         let keyIdx = 0;

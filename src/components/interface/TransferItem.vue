@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded shadow-md flex float-left bg-white dark:bg-ruined-smores p-4 rounded w-full mt-2 dark:hover:bg-black-out whitespace-nowrap overflow-ellipsis">
+  <div class="shadow-md flex float-left bg-white dark:bg-ruined-smores p-4 rounded w-full mt-2 dark:hover:bg-black-out whitespace-nowrap overflow-ellipsis">
     <div class="w-1/5 mr-12">
       {{ state.to?.toString() }}
     </div>
@@ -51,7 +51,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive, PropType, onMounted } from "vue";
-import type { TokenInfo } from "@hashgraph/sdk";
 import BigNumber from "bignumber.js";
 
 import { useStore } from "../../store";
@@ -74,7 +73,6 @@ export default defineComponent({
         "index",
         "update:value",
     ],
-
     setup(props, context){
         const store = useStore();
         const state = reactive({

@@ -190,7 +190,7 @@ export default defineComponent({
             state.errorMessage = await store.errorMessage(error);
         }
         
-        for(let i in state.tokens) {
+        for(const i in state.tokens) {
           state.attemptedTokens.push(state.tokens[i].toString());
         }
         state.tokens = [] as TokenId[];

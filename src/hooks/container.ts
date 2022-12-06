@@ -30,10 +30,6 @@ export default function installContainer(app: App): void {
   app.provide(containerKey, container);
 }
 
-// NOTE: the idea is that when running unit (snapshot) tests, we could
-//       mock out the implementations of various third-party services
-//       that are used, to provide a consistent snapshot
-
 container.register(
   "hbarPrice",
   asClass<HbarPriceService>(CoingeckoHbarPriceServiceImpl)

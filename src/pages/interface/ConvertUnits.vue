@@ -244,9 +244,9 @@ export default defineComponent({
 
     async function computeValueLeft(): Promise<void> {
       const { Hbar } = await import("@hashgraph/sdk");
-      let unitRight = state.selectedRight;
-      let unitLeft = state.selectedLeft;
-      let hRight = new Hbar(
+      const unitRight = state.selectedRight;
+      const unitLeft = state.selectedLeft;
+      const hRight = new Hbar(
         new BigNumber(state.valueRight),
         await getHbarUnit(unitRight)
       );
@@ -255,9 +255,9 @@ export default defineComponent({
 
     async function computeValueRight(): Promise<void> {
       const { Hbar } = await import("@hashgraph/sdk");
-      let unitRight = state.selectedRight;
-      let unitLeft = state.selectedLeft;
-      let hLeft = new Hbar(
+      const unitRight = state.selectedRight;
+      const unitLeft = state.selectedLeft;
+      const hLeft = new Hbar(
         new BigNumber(state.valueLeft),
         await getHbarUnit(unitLeft)
       );

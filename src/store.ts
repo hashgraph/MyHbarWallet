@@ -93,6 +93,8 @@ export const useStore = defineStore({
         },
 
         getNodeStakingInfo(): NetworkNodeStakingInfo[] | null {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore (BigNumber.Instance vs BigNumber direct import)
             return this.nodeStakingInfo;
         },
 
@@ -204,10 +206,10 @@ export const useStore = defineStore({
             }
             const container = useContainer();
 
-            // HACK: local storage is being used because the Hedera mirror node is up to 15 minutes delayed in accurary
             const lastUpdate = localStorage.getItem(
                 `${this.network}.${this.accountId.toString()}.last-updated`
             );
+
             const node = localStorage.getItem(
                 `${this.network}.${this.accountId.toString()}.staking-to`
             );
@@ -215,17 +217,19 @@ export const useStore = defineStore({
             if (
                 lastUpdate == null ||
                 node == null ||
-                Date.now() - +new Date(parseInt(lastUpdate)) > 5000
+                Date.now() - +new Date(parseInt(lastUpdate)) > 1000 // one second interval
             ) {
                 this.accountStakingInfo =
                     await container.cradle.hedera.getMirrorAccountInfo(
                         this.network,
                         this.accountId
                     );
+
                 localStorage.setItem(
                     `${this.network}.${this.accountId.toString()}.staking-to`,
                     this.accountStakingInfo.staked_node_id?.toString() ?? ""
                 );
+
                 localStorage.setItem(
                     `${this.network}.${this.accountId.toString()}.last-updated`,
                     Date.now().toString()

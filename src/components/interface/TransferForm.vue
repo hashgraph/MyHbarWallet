@@ -16,7 +16,7 @@
         data-cy-transfer-to
         :valid="state.toValid"
         :placeholder="$t('InterfaceHomeSendModal.input1.placeholder')"
-        @update:modelValue="handleToInput"
+        @update:model-value="handleToInput"
       />
     </div>
 

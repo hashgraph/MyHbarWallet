@@ -125,9 +125,9 @@ export default defineComponent({
 
     function formatType(type: string): string | undefined {
       if(!type) return undefined;
-      let words = type.split("_");
+      const words = type.split("_");
       let formatted = "";
-      for(let i in words){
+      for(const i in words){
         formatted += words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase() + " ";
       }
       return formatted.trim();
@@ -141,7 +141,7 @@ export default defineComponent({
     function sumTransfers(transfers: Transfer[]): string | undefined {
       if(!transfers) return undefined;
       let sum = new BigNumber(0);
-      for(let transfer of transfers){
+      for(const transfer of transfers){
         const amount = new BigNumber(transfer?.amount ?? 0);
         if(amount?.isGreaterThan(0)) sum = sum.plus(amount);
       }

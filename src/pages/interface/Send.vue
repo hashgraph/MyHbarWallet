@@ -246,7 +246,7 @@ export default defineComponent({
 
     const disableSave = computed( ()=> state.editTransfer && sendValid.value === true);
 
-    let state = reactive({
+    const state = reactive({
       accountId: store.accountId,
       generalErrorText: null as string | null,
       sendBusyText: null as string | null,
@@ -335,7 +335,7 @@ export default defineComponent({
     }
 
     function validateTransfer(transfer: Transfer): boolean {
-      for(let i in state.transfers) {
+      for(const i in state.transfers) {
         if(state.transfers[i].to?.toString() === transfer.to?.toString() && state.transfers[i].asset.toString() === transfer.asset.toString()) {
           state.generalErrorText = i18n.t("InterfaceHomeSend.error.already.in.list");
           return false;

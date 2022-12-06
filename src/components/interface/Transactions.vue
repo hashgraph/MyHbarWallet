@@ -13,7 +13,6 @@
 
     <Hint text="Further transaction history support coming soon!" />
 
-    <KabutoLink v-if="state.showKabuto" />
     <div
       v-for="(transaction, i) in paginated"
       :key="i"
@@ -131,12 +130,10 @@ import { computed, defineComponent, onMounted, reactive } from "vue";
 import { BigNumber } from "bignumber.js";
 import { AccountId, Timestamp } from "@hashgraph/sdk";
 
-import { Transfer } from "../../pages/interface/Send.vue";
 import { useStore } from "../../store";
 import { CryptoTransfer } from "../../domain/CryptoTransfer";
 
 import Hint from "./Hint.vue";
-import KabutoLink from "./KabutoLink.vue";
 import Transaction from "./Transaction.vue";
 
 //TODO: Replace with Transfer in domain from Send PR after merge, Transfer will be in domain
@@ -151,7 +148,6 @@ export default defineComponent({
   name: "Transactions",
   components: {
     Hint,
-    KabutoLink,
     Transaction
   },
   props: {
@@ -170,7 +166,7 @@ export default defineComponent({
       if (props.filter === "all") return state.latestTransactions;
       const transactions = [] as CryptoTransfer[];
 
-      for(let i in state.latestTransactions) {
+      for(const i in state.latestTransactions) {
         if(props.filter === "sent" && state.latestTransactions[i].type.includes("TRANSFER") && isSender(state.latestTransactions[i])) transactions.push(state.latestTransactions[i]);
         else if (props.filter === "received" && state.latestTransactions[i].type.includes("TRANSFER") && !isSender(state.latestTransactions[i])) transactions.push(state.latestTransactions[i]);
         else if(props.filter === "tokens" && state.latestTransactions[i].type.includes("TOKEN")) transactions.push(state.latestTransactions[i]);
@@ -193,11 +189,9 @@ export default defineComponent({
       next: 0,
       first: 0,
       last: 0,
-      showKabuto: false
     });
 
     onMounted(async () => {
-      try {
         state.latestTransactions = await getLatestTransactions() ?? [] as CryptoTransfer[];
         const len = filtered.value.length;
         if (state.pageSize < len) {
@@ -206,9 +200,6 @@ export default defineComponent({
           state.previous = -1;
           state.last = Math.ceil(len / state.pageSize);
         }
-      } catch {
-        state.showKabuto = true;
-      }
     });
 
     function previous(): void {
@@ -288,16 +279,14 @@ export default defineComponent({
     }
 
     function formatType(type: string): string {
-      let words = type.split("_");
+      const words = type.split("_");
       let formatted = "";
-      for (let i in words) {
+
+      for (const i in words) {
         formatted += words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase() + " ";
       }
-      return formatted.trim();
-    }
 
-    function goToKabuto(): void{
-      window.location.href = "https://explorer.kabuto.sh/mainnet";
+      return formatted.trim();
     }
 
     return {
@@ -311,7 +300,6 @@ export default defineComponent({
       next,
       first,
       last,
-      goToKabuto
     };
   },
 });
