@@ -9,7 +9,6 @@
   >
     <div class="lg:align-baseline lg:m-auto lg:grid lg:grid-flow-col lg:grid-cols-2 lg:gap-16 flex flex-wrap items-center">
       <div class="w-full lg:h-full">
-        <!-- TODO: when localizing, remove the v-if, the pluralization should be done in the localizer -->
         <div
           v-if="state.transfers.length <= 1"
           class="mb-2 dark:text-silver-polish"
@@ -90,8 +89,10 @@
             v-model="state.memo"
           />
 
-          <!-- TODO: lol, HBarInput does not work -->
-          <OptionalHbarInput @update:model-value="updateMaxFee" />
+          <OptionalHbarInput
+            v-model="state.maxFee"
+            @update:model-value="updateMaxFee"
+          />
 
           <p class="mt-4 p-4 italic text-squant dark:text-silver-polish dark:bg-dreamless-sleep rounded shadow-md border border-transparent dark:border-midnight-express">
             {{ $t("InterfaceSend.max.transaction.fee") }}
@@ -149,7 +150,7 @@
       :is-visible="state.showAddTransferModal"
       :edit="state.editTransfer"
       @close="closeAddTransferModal"
-      @addTransfer="addTransfer"
+      @add-transfer="addTransfer"
     />
 
     <TransferConfirmationModal
@@ -170,7 +171,7 @@ import {
   ref
 } from "vue";
 import { BigNumber } from "bignumber.js";
-import { TokenId, TokenInfo , Hbar } from "@hashgraph/sdk";
+import type { AccountId, Hbar } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
@@ -183,7 +184,6 @@ import Modal from "../../components/interface/Modal.vue";
 import OptionalMemo from "../../components/interface/OptionalMemo.vue";
 import OptionalHbarInput from "../../components/interface/OptionalHbarInput.vue";
 import AddTransferModal from "../../components/interface/AddTransferModal.vue";
-import InputError from "../../components/base/InputError.vue";
 import TransferItem from "../../components/interface/TransferItem.vue";
 import TransferConfirmationModal from "../../components/interface/TransferConfirmationModal.vue";
 import { useStore } from "../../store";
@@ -201,7 +201,6 @@ export default defineComponent({
     AddTransferModal,
     TransferItem,
     TransferConfirmationModal,
-    InputError,
   },
   setup() {
     onMounted(async () => {
@@ -253,7 +252,7 @@ export default defineComponent({
       indexToEdit: 0,
       showEditModal: false,
       memo: "" as string,
-      maxFee: null as Hbar | null | undefined,
+      maxFee: null as Hbar | null,
       showAddModal: false,
       showAcceptModal: false,
       showIPModal: false,
@@ -263,7 +262,7 @@ export default defineComponent({
       confirmed: false,
       editTransfer: true,
       transfer: {
-        to: undefined,
+        to: undefined as AccountId | null | undefined,
         asset: "HBAR",
         amount: undefined
       } as Transfer,
@@ -398,7 +397,8 @@ export default defineComponent({
         await store.client.transfer({
           transfers: state.transfers,
           memo: state.memo ?? "",
-          maxFee: state.maxFee?.toBigNumber() ?? new Hbar(2).toBigNumber(),
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          maxFee: state.maxFee?.toBigNumber() ?? new hashgraph.value!.Hbar(2).toBigNumber(),
           onBeforeConfirm() {
             state.sendBusyText = "Waiting for confirmation …";
           },

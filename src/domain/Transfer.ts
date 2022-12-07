@@ -2,8 +2,8 @@ import type { AccountId } from "@hashgraph/sdk";
 import type { BigNumber } from "bignumber.js";
 
 export interface Transfer{
-    to?: AccountId | undefined;
+    to?: AccountId | null;
     asset: string;
-    amount?: BigNumber | undefined;
+    amount?: BigNumber | null;
     usd?: string;
 }

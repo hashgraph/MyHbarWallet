@@ -36,9 +36,6 @@ import InterfaceLayout from "./components/interface/Layout.vue";
 import InterfaceMainView from "./components/interface/MainView.vue";
 import InterfaceHome from "./pages/interface/Home.vue";
 import InterfaceAssets from "./pages/interface/Assets.vue";
-import InterfaceTokens from "./pages/interface/Tokens.vue";
-import InterfaceTokenDetails from "./pages/interface/TokenDetails.vue";
-import InterfacePeople from "./pages/interface/People.vue";
 import InterfaceHistory from "./pages/interface/History.vue";
 import InterfaceKeys from "./pages/interface/Keys.vue";
 import InterfaceTools from "./pages/interface/Tools.vue";
@@ -172,33 +169,6 @@ const routes = [
                         component: InterfaceAssets,
                         path: "",
                         name: "assets",
-                    },
-                ],
-            },
-            {
-                component: InterfaceMainView,
-                path: "tokens",
-                children: [
-                    {
-                        component: InterfaceTokens,
-                        path: "",
-                        name: "tokens",
-                    },
-                    {
-                        component: InterfaceTokenDetails,
-                        path: "tokendetails",
-                        name: "tokendetails",
-                    },
-                ],
-            },
-            {
-                path: "people",
-                component: InterfaceMainView,
-                children: [
-                    {
-                        component: InterfacePeople,
-                        path: "",
-                        name: "people",
                     },
                 ],
             },

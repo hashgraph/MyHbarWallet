@@ -63,7 +63,7 @@ export default defineComponent({
     AssetSelector,
   },
   props: {
-    to: { type: Object as PropType<AccountId>, default: null },
+    to: { type: Object as PropType<AccountId | null>, default: null, optional: true },
     asset: { type: String, default: "HBAR" },
     amount: { type: String, default: null },
   },

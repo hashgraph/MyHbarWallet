@@ -15,7 +15,7 @@
         <TransactionFilterButton
           :filter="option"
           :active="state.filter == option"
-          @changeFilter="changeFilter"
+          @change-filter="changeFilter"
         >
           {{ $t(`InterfaceHistory.button.${option}`) }}
         </TransactionFilterButton>

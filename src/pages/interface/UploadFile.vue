@@ -5,7 +5,7 @@
   />
 
   <div class="flex-col text-center">
-    <UploadZone @fileSelect="fileSelect" />
+    <UploadZone @file-select="fileSelect" />
 
     <InputError v-if="state.errorMessage.length > 0">
       {{ state.errorMessage }}
