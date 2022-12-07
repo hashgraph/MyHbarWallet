@@ -111,11 +111,11 @@ import { useOperatingSystem, ANDROID, IOS } from "../../hooks/platform";
 
 import Image from "./Image.vue";
 
-export interface Option {
+export type Option = {
     name: string;
-    iconLight: string;
-    iconDark: string;
-}
+    iconLight: string | null;
+    iconDark: string | null;
+};
 
 export default defineComponent({
   name: "Select",

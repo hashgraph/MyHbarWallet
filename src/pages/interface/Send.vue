@@ -437,11 +437,6 @@ export default defineComponent({
       state.maxFee = fee;
     }
 
-    //Removed token info queries to reduce invisible transactions, can replace if needed
-    async function getTokenInfo(token: string | TokenId): Promise<TokenInfo | undefined>{
-      return await store.client?.getTokenInfo({token: token});
-    }
-
     return {
       state,
       success,

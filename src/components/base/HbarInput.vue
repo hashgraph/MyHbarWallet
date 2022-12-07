@@ -17,7 +17,7 @@ export default defineComponent({
     AssetInput
   },
   props: {
-    modelValue: { type: Object as PropType<BigNumber.Instance>, default: null }
+    modelValue: { type: Object as PropType<BigNumber>, default: null }
   },
   emits: ["update:modelValue"],
 })
