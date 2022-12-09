@@ -1,8 +1,8 @@
 <template>
   <AssetInput
     :value="amount"
-    @update:model-value="handleUpdate"
     :asset="'HBAR'"
+    @update:model-value="handleUpdate"
   />
 </template>
 

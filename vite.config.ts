@@ -80,7 +80,27 @@ export default async function ({ mode }) {
             outDir: isElectron ? electronOutDir : webOutDir,
         },
         server: {
-          https: true
+          https: true,
+          proxy: {
+            "/mainnet-mirror": {
+              target: "https://mainnet-public.mirrornode.hedera.com",
+              changeOrigin: true,
+              secure: false,
+              rewrite: (path) => path.replace(/^\/mainnet-mirror/, "")
+            },
+            "/testnet-mirror": {
+              target: "https://testnet.mirrornode.hedera.com",
+              changeOrigin: true,
+              secure: false,
+              rewrite: (path) => path.replace(/^\/testnet-mirror/, "")
+            },
+            "/previewnet-mirror": {
+              target: "https://previewnet.mirrornode.hedera.com",
+              changeOrigin: true,
+              secure: false,
+              rewrite: (path) => path.replace(/^\/previewnet-mirror/, "")
+            }
+          }
         }
     });
 }

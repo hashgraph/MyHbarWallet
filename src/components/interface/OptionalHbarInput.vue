@@ -24,10 +24,10 @@
 <script lang="ts">
 import { Hbar } from "@hashgraph/sdk";
 import { defineComponent, PropType, Ref, ref, watch } from "vue";
+import { useVModel } from "@vueuse/core";
 
 import Switch from "../base/Switch.vue";
 import HbarInput from "../base/HbarInput.vue";
-import { useVModel } from "@vueuse/core";
 
 export default defineComponent({
   name: "OptionalHbarInput",
