@@ -86,19 +86,22 @@ export default async function ({ mode }) {
               target: "https://mainnet-public.mirrornode.hedera.com",
               changeOrigin: true,
               secure: false,
-              rewrite: (path) => path.replace(/^\/mainnet-mirror/, "")
+              rewrite: (path) => path.replace(/^\/mainnet-mirror/, ""),
+              ws: true
             },
             "/testnet-mirror": {
               target: "https://testnet.mirrornode.hedera.com",
               changeOrigin: true,
               secure: false,
-              rewrite: (path) => path.replace(/^\/testnet-mirror/, "")
+              rewrite: (path) => path.replace(/^\/testnet-mirror/, ""),
+              ws: true
             },
             "/previewnet-mirror": {
               target: "https://previewnet.mirrornode.hedera.com",
               changeOrigin: true,
               secure: false,
-              rewrite: (path) => path.replace(/^\/previewnet-mirror/, "")
+              rewrite: (path) => path.replace(/^\/previewnet-mirror/, ""),
+              ws: true
             }
           }
         }
