@@ -11,8 +11,6 @@
       </div>
     </div>
 
-    <Hint text="Further transaction history support coming soon!" />
-
     <div
       v-for="(transaction, i) in paginated"
       :key="i"
@@ -136,14 +134,6 @@ import { CryptoTransfer } from "../../domain/CryptoTransfer";
 import Hint from "./Hint.vue";
 import Transaction from "./Transaction.vue";
 
-//TODO: Replace with Transfer in domain from Send PR after merge, Transfer will be in domain
-interface Transfer {
-  to?: AccountId;
-  asset: string; // "HBAR" or token ID (string)
-  amount?: BigNumber;
-  usd?: string;
-}
-
 export default defineComponent({
   name: "Transactions",
   components: {
@@ -162,16 +152,17 @@ export default defineComponent({
     function isSender(txr: CryptoTransfer): boolean {
       return txr.id.toString().split("@")[0] === accountId.value?.toString();
     }
+
     const filtered = computed(() => {
       if (props.filter === "all") return state.latestTransactions;
       const transactions = [] as CryptoTransfer[];
 
-      for(const i in state.latestTransactions) {
-        if(props.filter === "sent" && state.latestTransactions[i].type.includes("TRANSFER") && isSender(state.latestTransactions[i])) transactions.push(state.latestTransactions[i]);
-        else if (props.filter === "received" && state.latestTransactions[i].type.includes("TRANSFER") && !isSender(state.latestTransactions[i])) transactions.push(state.latestTransactions[i]);
-        else if(props.filter === "tokens" && state.latestTransactions[i].type.includes("TOKEN")) transactions.push(state.latestTransactions[i]);
-        else if(props.filter === "account" && state.latestTransactions[i].type.includes("ACCOUNT")) transactions.push(state.latestTransactions[i]);
-      }
+      // for(const i in state.latestTransactions) {
+      //   if(props.filter === "sent" && state.latestTransactions[i].type.includes("TRANSFER") && isSender(state.latestTransactions[i])) transactions.push(state.latestTransactions[i]);
+      //   else if (props.filter === "received" && state.latestTransactions[i].type.includes("TRANSFER") && !isSender(state.latestTransactions[i])) transactions.push(state.latestTransactions[i]);
+      //   else if(props.filter === "tokens" && state.latestTransactions[i].type.includes("TOKEN")) transactions.push(state.latestTransactions[i]);
+      //   else if(props.filter === "account" && state.latestTransactions[i].type.includes("ACCOUNT")) transactions.push(state.latestTransactions[i]);
+      // }
 
       return transactions;
     });

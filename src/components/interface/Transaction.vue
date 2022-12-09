@@ -47,40 +47,40 @@ export default defineComponent({
   name: "Transaction",
   components: { Identicon },
   props: {
-    title: { type: String, required: true },
-    account: { type: String, required: true },
-    timeAgo: { type: String, required: true },
-    transaction: { type: String, required: true },
-    fee: { type: String, required: true },
-    hash: { type: String, required: true }
+    // title: { type: String, required: true },
+    // account: { type: String, required: true },
+    // timeAgo: { type: String, required: true },
+    // transaction: { type: String, required: true },
+    // fee: { type: String, required: true },
+    // hash: { type: String, required: true }
   },
   setup(props) {
-    const md = useScreen("md");
+    // const md = useScreen("md");
 
-    const truncatedTransaction = computed(() => {
-      const firstComma = props.transaction.indexOf(",");
-      if (firstComma != -1) {
-        if (md.value) {
-          const secondComma = props.transaction.indexOf(
-            ",",
-            firstComma + 1
-          );
-          return secondComma === -1
-            ? props.transaction
-            : `${props.transaction.substring(0, secondComma)}, ...`;
-        } else {
-          const truncated = props.transaction.substring(
-            0,
-            firstComma
-          );
-          return `${truncated}, ...`;
-        }
-      }
+    // const truncatedTransaction = computed(() => {
+    //   const firstComma = props.transaction.indexOf(",");
+    //   if (firstComma != -1) {
+    //     if (md.value) {
+    //       const secondComma = props.transaction.indexOf(
+    //         ",",
+    //         firstComma + 1
+    //       );
+    //       return secondComma === -1
+    //         ? props.transaction
+    //         : `${props.transaction.substring(0, secondComma)}, ...`;
+    //     } else {
+    //       const truncated = props.transaction.substring(
+    //         0,
+    //         firstComma
+    //       );
+    //       return `${truncated}, ...`;
+    //     }
+    //   }
 
-      return props.transaction;
-    });
+    //   return props.transaction;
+    // });
 
-    return { truncatedTransaction };
+    // return { truncatedTransaction };
   },
 });
 </script>
