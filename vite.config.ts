@@ -36,7 +36,9 @@ export default async function ({ mode }) {
                 "testnet.mirrornode.hedera.com",
                 "previewnet.mirrornode.hedera.com",
                 "*.swirlds.com", // grpc proxies
-                "*.hedera.com" // grpc proxies
+                "*.hedera.com", // grpc proxies
+                "localhost",
+                "grpc-web.myhbarwallet.com"
             ].join(" "),
         "font-src 'self' data:",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
@@ -53,7 +55,9 @@ export default async function ({ mode }) {
                     },
                 },
             }),
-            vue(),
+            vue({
+              reactivityTransform: true
+            }),
             vueI18n({
                 include: path.resolve(__dirname, "./locales/**"),
             }),
@@ -81,29 +85,7 @@ export default async function ({ mode }) {
         },
         server: {
           https: true,
-          proxy: {
-            "/mainnet-mirror": {
-              target: "https://mainnet-public.mirrornode.hedera.com",
-              changeOrigin: true,
-              secure: false,
-              rewrite: (path) => path.replace(/^\/mainnet-mirror/, ""),
-              ws: true
-            },
-            "/testnet-mirror": {
-              target: "https://testnet.mirrornode.hedera.com",
-              changeOrigin: true,
-              secure: false,
-              rewrite: (path) => path.replace(/^\/testnet-mirror/, ""),
-              ws: true
-            },
-            "/previewnet-mirror": {
-              target: "https://previewnet.mirrornode.hedera.com",
-              changeOrigin: true,
-              secure: false,
-              rewrite: (path) => path.replace(/^\/previewnet-mirror/, ""),
-              ws: true
-            }
-          }
+          port: 5173
         }
     });
 }

@@ -21,18 +21,3 @@ force = true
 from = "/*"
 to = "/index.html"
 status = 200
-
-[[redirects]]
-from = "/mainnet-mirror/*"
-to = "https://mainnet-public.mirrornode.hedera.com/:splat"
-status = 200
-
-[[redirects]]
-from = "/testnet-mirror/*"
-to = "https://testnet.mirrornode.hedera.com/:splat"
-status = 200
-
-[[redirects]]
-from = "/previewnet-mirror/*"
-to = "https://previewnet.mirrornode.hedera.com/:splat"
-status = 200

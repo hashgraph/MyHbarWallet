@@ -8,7 +8,7 @@ export async function getTransfer(options: { hash: string } ): Promise<CryptoTra
     const store = useStore();
     const baseUrl = getMirrorBase(store.network);
 
-    const resp = await axios.get(`${baseUrl}/transactions?hash=${options.hash}`)
+    const resp = await axios.get(`https://${baseUrl}/api/v1/transactions?hash=${options.hash}`)
         .then(({ data }) => data)
         .catch((error: Error) => {
             throw error;

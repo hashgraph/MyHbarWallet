@@ -17,13 +17,13 @@ export function getMirrorBase(network: string): string {
 
   switch (network) {
     case "mainnet":
-      urlBase = "/mainnet-mirror";
+      urlBase = "mainnet-public.mirrornode.hedera.com";
       break;
     case "testnet":
-      urlBase = "/testnet-mirror";
+      urlBase = "testnet.mirrornode.hedera.com";
       break;
     case "previewnet":
-      urlBase = "/previewnet-mirror";
+      urlBase = "previewnet.mirrornode.hedera.com";
       break;
   }
 

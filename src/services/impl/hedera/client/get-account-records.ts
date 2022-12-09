@@ -8,7 +8,7 @@ export async function getAccountRecords(account?: string): Promise<CryptoTransfe
     const store = useStore();
     const baseUrl = getMirrorBase(store.network);
 
-    const resp = await axios.get(`${baseUrl}/transactions?account.id=${account ?? store.client?.getAccountId().toString()}`)
+    const resp = await axios.get(`https://${baseUrl}/api/v1/transactions?account.id=${account ?? store.client?.getAccountId().toString()}`)
         .then(({ data }) => data)
         .catch((error: Error) => {
             throw error;
