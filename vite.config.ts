@@ -7,6 +7,7 @@ import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import { VitePWA } from "vite-plugin-pwa";
 import { Commit, getLastCommit } from "git-last-commit";
+import mkcert from "vite-plugin-mkcert";
 import { defineConfig } from "vite";
 
 import packageJson from "./package.json";
@@ -30,15 +31,12 @@ export default async function ({ mode }) {
         "default-src 'self'",
         "connect-src 'self' " +
             [
-                "grpc-web.testnet.myhbarwallet.com",
-                "grpc-web.previewnet.myhbarwallet.com",
-                "grpc-web.myhbarwallet.com",
                 "api.coingecko.com",
-                "v2.api.kabuto.sh",
-                "v2.api.testnet.kabuto.sh",
                 "mainnet-public.mirrornode.hedera.com",
                 "testnet.mirrornode.hedera.com",
                 "previewnet.mirrornode.hedera.com",
+                "*.swirlds.com", // grpc proxies
+                "*.hedera.com" // grpc proxies
             ].join(" "),
         "font-src 'self' data:",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
@@ -47,6 +45,7 @@ export default async function ({ mode }) {
     return defineConfig({
         base: isElectron ? "./" : "/",
         plugins: [
+            mkcert(),
             createHtmlPlugin({
                 inject: {
                     data: {
@@ -80,5 +79,8 @@ export default async function ({ mode }) {
         build: {
             outDir: isElectron ? electronOutDir : webOutDir,
         },
+        server: {
+          https: true
+        }
     });
 }

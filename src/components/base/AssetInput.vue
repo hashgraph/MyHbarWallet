@@ -9,21 +9,22 @@
       ℏ
     </div>
 
-    <div v-if="asset === 'usd'">
+    <div v-if="asset === 'USD'">
       $
     </div>
 
     <input
       v-bind="$attrs"
-      :value="formattedValue ?? undefined"
+      :value="formattedValue"
       class="py-3 w-full bg-transparent bg-white border-none focus:ring-0 placeholder-squant dark:text-silver-polish dark:bg-ruined-smores"
       :class="{ 'pr-5 pl-8': asset === 'HBAR', 'px-5': asset !== 'HBAR' }"
-      type="tel"
+      type="number"
+      :step="(1 / assetScale.toNumber())"
       @input="onAmountInput"
     >
   </div>
 </template>
-
+ 
 <script lang="ts">
 import { computed, defineComponent, watch } from 'vue'
 import { BigNumber } from 'bignumber.js'
@@ -32,12 +33,11 @@ import { useStore } from '../../store'
 
 export default defineComponent({
   name: 'AssetInput',
-  inheritAttrs: false,
   props: {
     asset: { type: String, required: true },
-    // NOTE: value here is low denom, so tinybars not hbars
+    // NOTE: value here is low denom, so tinybars not hbars, cents not dollars, etc.
     modelValue: {
-      type: String,
+      type: BigNumber,
       default: null,
     },
   },
@@ -57,42 +57,34 @@ export default defineComponent({
     )
 
     watch(assetDecimals, (decimals, prevDecimals) => {
-      if (props.modelValue == null) return
+      if (props.modelValue == null) return;
 
-      let num = new BigNumber(props.modelValue.toString())
+      let num = props.modelValue;
 
-      num = num.div(new BigNumber(10).pow(prevDecimals))
-      num = num.times(new BigNumber(10).pow(decimals))
-      num = num.decimalPlaces(decimals)
+      num = num.div(new BigNumber(10).pow(prevDecimals));
+      num = num.times(new BigNumber(10).pow(decimals));
+      num = num.decimalPlaces(decimals);
 
-      emit('update:modelValue', num.toNumber().toString())
+      emit('update:modelValue', num);
     })
 
-    function onAmountInput(event: Event) {
-      const target = event.target as HTMLInputElement
-      target.value = target.value.replace(/[^\d.]/g, '');
-      let inputValue = target.value;
+    function onAmountInput(payload: Event) {
+      if (props.modelValue == null) return;
 
-      if(inputValue != null && inputValue.split(".").length > 2) {
-        inputValue = inputValue.slice(0, -1);
-      } else if(inputValue != "" && inputValue.split(".")[1]?.length > assetDecimals.value) {
-        inputValue = inputValue.slice(0, -1);
-      }
-      target.value = inputValue.replace(/^0+/,'');
-      emit('update:modelValue', target.value);
+      const raw = (payload.target as HTMLInputElement)!.value;
+      const stripped = raw.replace(/[^\d.]/g, '');
+      
+      emit('update:modelValue', new BigNumber(stripped));
     }
 
     const formattedValue = computed(() => {
       if (props.modelValue == null) return null
 
-      let num = new BigNumber(props.modelValue.toString())
-
-      num = num.div(assetScale.value)
-
-      return formatNum(num)
+      return formatNum(props.modelValue.div(assetScale.value));
     })
 
     return {
+      assetScale,
       formattedValue,
       onAmountInput,
     }
