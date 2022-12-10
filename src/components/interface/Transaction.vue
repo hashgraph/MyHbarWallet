@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to=" { name: 'transaction', params: { hash: hash } }"
+    :to=" { name: 'transaction', params: { hash: transaction?.transactionHash } }"
     class="flex items-center justify-between h-20 mb-1 border-b border-jupiter dark:border-midnight-express"
   >
     <Identicon class="w-10 h-10 mr-2" />
@@ -16,7 +16,7 @@
         <div
           class="mb-1 font-medium leading-5 text-right truncate text-mountain-meadow max-h-5"
         >
-          {{ truncatedTransaction }}
+          {{ body }}
         </div>
       </div>
 
@@ -24,12 +24,12 @@
         <div
           class="text-xs font-medium leading-4 text-squant dark:text-argent"
         >
-          {{ `${account} • ${timeAgo}` }}
+          {{ `${accountId} • ${timeAgo}` }}
         </div>
         <div
           class="flex justify-end text-xs font-medium leading-4 text-squant dark:text-argent"
         >
-          {{ `${$t("RecentTransactions.fee")} ${fee}` }}
+          {{ `${$t("RecentTransactions.fee")} ${transaction?.chargedTxFee}` }}
         </div>
       </div>
     </div>
@@ -37,11 +37,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
-
-import { useScreen } from "../../hooks/screen";
-
+import { Transaction } from "../../domain/Transaction";
+import { defineComponent, PropType, ref } from "vue";
+import { RouterLink } from "vue-router";
 import Identicon from "./Identicon.vue";
+import { useStore } from "../../store";
+import moment from "moment";
+import { useIntervalFn } from "@vueuse/core";
 
 export default defineComponent({
   name: "Transaction",
@@ -50,32 +52,23 @@ export default defineComponent({
     transaction: Object as PropType<Transaction>
   },
   setup(props) {
-    // const md = useScreen("md");
+    const store = useStore();
+    const title = props.transaction?.name;
+    const body = props.transaction?.transactionHash;
+    const accountId = store.accountId;
+    const timeAgo = ref("...");
 
-    // const truncatedTransaction = computed(() => {
-    //   const firstComma = props.transaction.indexOf(",");
-    //   if (firstComma != -1) {
-    //     if (md.value) {
-    //       const secondComma = props.transaction.indexOf(
-    //         ",",
-    //         firstComma + 1
-    //       );
-    //       return secondComma === -1
-    //         ? props.transaction
-    //         : `${props.transaction.substring(0, secondComma)}, ...`;
-    //     } else {
-    //       const truncated = props.transaction.substring(
-    //         0,
-    //         firstComma
-    //       );
-    //       return `${truncated}, ...`;
-    //     }
-    //   }
+    useIntervalFn(() => {
+      if (props.transaction?.consensusTimestamp)
+      timeAgo.value = moment(new Date(props.transaction?.consensusTimestamp)).fromNow();
+    }, 1000)
 
-    //   return props.transaction;
-    // });
-
-    // return { truncatedTransaction };
-  },
+    return {
+      title,
+      body,
+      accountId,
+      timeAgo
+    }
+  }
 });
 </script>

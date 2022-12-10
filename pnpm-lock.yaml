@@ -40,6 +40,7 @@ specifiers:
   jdenticon: ^3.2.0
   lint-staged: ^13.1.0
   long: 4.0.0
+  moment: ^2.29.4
   npm-run-all: ^4.1.5
   patch-package: ^6.5.0
   pinia: ^2.0.27
@@ -74,6 +75,7 @@ dependencies:
   file-type: 18.0.0
   jdenticon: 3.2.0
   long: 4.0.0
+  moment: 2.29.4
   pinia: 2.0.27_mgnvym7yiazkylwwogi5r767ue
   platform: 1.3.6
   preferred-locale: 1.0.10
@@ -5682,6 +5684,10 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dev: true
+
+  /moment/2.29.4:
+    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+    dev: false
 
   /ms/2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}

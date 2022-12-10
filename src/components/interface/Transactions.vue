@@ -12,10 +12,10 @@
     </div>
 
     <div
-      v-for="(transaction, i) in paginated"
+      v-for="(transaction, i) in transactions"
       :key="i"
     >
-      <Transaction
+      <TransactionVue
         :tx="transaction"
       />
     </div>
@@ -25,116 +25,43 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, reactive } from "vue";
-import { BigNumber } from "bignumber.js";
+import { defineComponent, onMounted, ref } from "vue";
 
 import { useStore } from "../../store";
 
 import Hint from "./Hint.vue";
-import Transaction from "./Transaction.vue";
+import TransactionVue from "./Transaction.vue";
 import HashScanLink from "./HashScanLink.vue";
-import { Transfer } from "src/domain/Transfer";
+import { Transaction, formatAmount, formatType, sumTransfers } from "../../domain/Transaction";
 
 export default defineComponent({
   name: "Transactions",
   components: {
     Hint,
     HashScanLink,
-    Transaction
+    TransactionVue
   },
   props: {
     hideHeader: { type: Boolean, default: false },
-    pageSize: { type: String, default: "25", required: false },
     filter: { type: String, default: "all", required: false }
   },
-  setup(props) {
+  setup() {
     const store = useStore();
-    const accountId = computed(() => store.accountId);
+    const transactions = ref<Transaction[] | null | undefined>(null);
 
     onMounted(async () => {
-        state.latestTransactions = await getLatestTransactions();
+        transactions.value = await getLatestTransactions();
     });
 
-    function previous(): void {
-      if (state.current == 0) return;
-      else if (state.previous == 0) {
-        state.current -= 1;
-        state.previous = -1;
-        state.next -= 1;
-      } else {
-        state.current -= 1;
-        state.previous -= 1;
-        state.next -= 1;
-      }
-    }
-
-    function next(): void {
-      if (state.current == state.last - 1) return;
-      else if (state.next == state.last) {
-        state.current += 1;
-        state.previous += 1;
-        state.next = state.last;
-      } else {
-        state.current += 1;
-        state.previous += 1;
-        state.next += 1;
-      }
-    }
-
-    function first(): void {
-      state.current = 0;
-      state.previous = -1;
-      state.next = 1;
-    }
-
-    function last(): void {
-      state.current = state.last - 1;
-      state.previous = state.current - 1;
-      state.next = state.last;
-    }
-
-    async function getLatestTransactions(): Promise<Transfer[] | undefined> {
+    async function getLatestTransactions(): Promise<Transaction[] | undefined> {
       return await store.client?.getAccountRecords();
     }
 
-    function sumTransfers(transfers: Transfer[]): string {
-      let sum = new BigNumber(0);
-
-      for (const transfer of transfers) {
-        const amount = new BigNumber(transfer.amount ?? 0);
-        if(amount.isGreaterThan(0)) sum = sum.plus(amount);
-      }
-      
-      return formatAmount(sum.toNumber());
-    }
-
-    //Format value to print in Hbar
-    function formatAmount(value: number): string {
-      return `${parseFloat((value / Math.pow(10, 8)).toFixed(8))}ℏ`;
-    }
-
-    function formatType(type: string): string {
-      const words = type.split("_");
-      let formatted = "";
-
-      for (const i in words) {
-        formatted += words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase() + " ";
-      }
-
-      return formatted.trim();
-    }
-
     return {
-      state,
-      paginated,
-      timeElapsed,
+      transactions,
       sumTransfers,
       formatAmount,
-      formatType,
-      previous,
-      next,
-      first,
-      last,
+      formatType
     };
   },
 });

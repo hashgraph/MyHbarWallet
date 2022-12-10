@@ -79,6 +79,7 @@
     "file-type": "18.0.0",
     "jdenticon": "^3.2.0",
     "long": "4.0.0",
+    "moment": "^2.29.4",
     "pinia": "^2.0.27",
     "platform": "^1.3.6",
     "preferred-locale": "^1.0.10",

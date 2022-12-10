@@ -27,7 +27,7 @@ import Transactions from "../../components/interface/Transactions.vue";
 import TransactionFilterButton from "../../components/interface/TransactionFilterButton.vue";
 
 export enum TransactionFilter {
-  ALL = "all",
+  ALL = "all", 
   SENT = "sent",
   RECEIVED = "received",
   TOKENS = "tokens",
@@ -42,7 +42,7 @@ export default defineComponent({
   components: {
     Headline,
     Transactions,
-    TransactionFilterButton
+    TransactionFilterButton 
   },
   setup() {
     const state = reactive({
