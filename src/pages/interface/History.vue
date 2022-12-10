@@ -1,13 +1,20 @@
 <template>
   <div class="relative">
-    <Headline :title="$t('InterfaceHistory.header')" class="pb-20 lg:pb-8 mb-5" />
+    <Headline
+      :title="$t('InterfaceHistory.header')"
+      class="pb-20 lg:pb-8 mb-5"
+    />
 
     <div class="flex flex-wrap items-start w-full mb-2">
-      <div v-for="option in state.options" :key="option">
+      <div
+        v-for="option in state.options"
+        :key="option"
+      >
         <TransactionFilterButton 
           :filter="option" 
-          :active="state.filter == option" 
-          @change-filter="changeFilter">
+          :active="state.filter === option" 
+          @change-filter="changeFilter"
+        >
           {{ $t(`InterfaceHistory.button.${option}`) }}
         </TransactionFilterButton>
       </div>
@@ -15,7 +22,10 @@
   </div>
 
   <div class="overflow-y-auto">
-    <Transactions :filter="state.filter" class="lg:mx-8" />
+    <Transactions
+      :filter="state.filter"
+      class="lg:mx-8"
+    />
   </div>
 </template>
 

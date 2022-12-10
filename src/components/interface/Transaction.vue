@@ -10,13 +10,13 @@
         <div
           class="flex-shrink-0 mb-1 font-medium leading-5 text-andrea-blue"
         >
-          {{ title }}
+          {{ transaction.name }}
         </div>
 
         <div
           class="mb-1 font-medium leading-5 text-right truncate text-mountain-meadow max-h-5"
         >
-          {{ body }}
+          {{ transaction.transactionHash }}
         </div>
       </div>
 
@@ -37,24 +37,24 @@
 </template>
 
 <script lang="ts">
-import { Transaction } from "../../domain/Transaction";
 import { defineComponent, PropType, ref } from "vue";
 import { RouterLink } from "vue-router";
-import Identicon from "./Identicon.vue";
-import { useStore } from "../../store";
 import moment from "moment";
 import { useIntervalFn } from "@vueuse/core";
 
+import { useStore } from "../../store";
+import { Transaction } from "../../domain/Transaction";
+
+import Identicon from "./Identicon.vue";
+
 export default defineComponent({
   name: "Transaction",
-  components: { Identicon },
+  components: { Identicon, RouterLink },
   props: {
-    transaction: Object as PropType<Transaction>
+    transaction: { type: Object as PropType<Transaction>, default: null }
   },
   setup(props) {
     const store = useStore();
-    const title = props.transaction?.name;
-    const body = props.transaction?.transactionHash;
     const accountId = store.accountId;
     const timeAgo = ref("...");
 
@@ -64,8 +64,6 @@ export default defineComponent({
     }, 1000)
 
     return {
-      title,
-      body,
       accountId,
       timeAgo
     }

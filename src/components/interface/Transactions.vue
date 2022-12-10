@@ -28,16 +28,14 @@
 import { defineComponent, onMounted, ref } from "vue";
 
 import { useStore } from "../../store";
+import { Transaction, formatAmount, formatType, sumTransfers } from "../../domain/Transaction";
 
-import Hint from "./Hint.vue";
 import TransactionVue from "./Transaction.vue";
 import HashScanLink from "./HashScanLink.vue";
-import { Transaction, formatAmount, formatType, sumTransfers } from "../../domain/Transaction";
 
 export default defineComponent({
   name: "Transactions",
   components: {
-    Hint,
     HashScanLink,
     TransactionVue
   },
