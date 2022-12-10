@@ -1,22 +1,13 @@
 <template>
   <div class="relative">
-    <Headline
-      :title="$t('InterfaceHistory.header')"
-      class="pb-20 lg:pb-8 mb-5"
-    />
+    <Headline :title="$t('InterfaceHistory.header')" class="pb-20 lg:pb-8 mb-5" />
 
-    <div
-      class="flex flex-wrap items-start w-full mb-2"
-    >
-      <div
-        v-for="option in state.options"
-        :key="option"
-      >
-        <TransactionFilterButton
-          :filter="option"
-          :active="state.filter == option"
-          @change-filter="changeFilter"
-        >
+    <div class="flex flex-wrap items-start w-full mb-2">
+      <div v-for="option in state.options" :key="option">
+        <TransactionFilterButton 
+          :filter="option" 
+          :active="state.filter == option" 
+          @change-filter="changeFilter">
           {{ $t(`InterfaceHistory.button.${option}`) }}
         </TransactionFilterButton>
       </div>
@@ -24,19 +15,7 @@
   </div>
 
   <div class="overflow-y-auto">
-    <div
-      v-for="option in state.options"
-      :key="option"
-    >
-      <Transactions
-        :filter="option"
-        class="lg:mx-8"
-        :class="{
-          'invisible h-0': state.filter !== option
-        }"  
-        page-size="10"
-      />
-    </div>
+    <Transactions :filter="state.filter" class="lg:mx-8" />
   </div>
 </template>
 
@@ -71,10 +50,10 @@ export default defineComponent({
       options: TransactionFilterOptions,
     });
 
-    function changeFilter(e: {filter: TransactionFilter}){
+    function changeFilter(e: { filter: TransactionFilter }) {
       state.filter = e.filter;
     }
-    
+
     return {
       state,
       changeFilter
