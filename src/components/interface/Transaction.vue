@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to=" { name: 'transaction', params: { transactionHash: hash } }"
+    :to=" { name: 'transaction', params: { hash: hash } }"
     class="flex items-center justify-between h-20 mb-1 border-b border-jupiter dark:border-midnight-express"
   >
     <Identicon class="w-10 h-10 mr-2" />
@@ -47,12 +47,7 @@ export default defineComponent({
   name: "Transaction",
   components: { Identicon },
   props: {
-    // title: { type: String, required: true },
-    // account: { type: String, required: true },
-    // timeAgo: { type: String, required: true },
-    // transaction: { type: String, required: true },
-    // fee: { type: String, required: true },
-    // hash: { type: String, required: true }
+    transaction: Object as PropType<Transaction>
   },
   setup(props) {
     // const md = useScreen("md");

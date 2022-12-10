@@ -1,10 +1,10 @@
 import axios from "axios";
 
 import { useStore } from "../../../../store";
-import { CryptoTransfer } from "../../../../domain/CryptoTransfer";
 import { getMirrorBase } from "..";
+import { Transaction } from "../../../../domain/Transaction";
 
-export async function getAccountRecords(account?: string): Promise<CryptoTransfer[] | undefined>{
+export async function getAccountRecords(account?: string): Promise<Transaction[] | undefined>{
     const store = useStore();
     const baseUrl = getMirrorBase(store.network);
 
@@ -14,5 +14,5 @@ export async function getAccountRecords(account?: string): Promise<CryptoTransfe
             throw error;
         });
 
-    return resp.data as CryptoTransfer[];
+    return resp.data;
 }

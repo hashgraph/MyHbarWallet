@@ -47,6 +47,17 @@ import Headline from "../../components/interface/Headline.vue";
 import Transactions from "../../components/interface/Transactions.vue";
 import TransactionFilterButton from "../../components/interface/TransactionFilterButton.vue";
 
+export enum TransactionFilter {
+  ALL = "all",
+  SENT = "sent",
+  RECEIVED = "received",
+  TOKENS = "tokens",
+  ACCOUNTS = "accounts"
+}
+
+export const TransactionFilterOptions = Object.keys(TransactionFilter).map(
+  (key) => TransactionFilter[key as keyof typeof TransactionFilter])
+
 export default defineComponent({
   name: "History",
   components: {
@@ -54,15 +65,13 @@ export default defineComponent({
     Transactions,
     TransactionFilterButton
   },
-
-  setup(){
-
+  setup() {
     const state = reactive({
-      filter: "all",
-      options: [ "all", "sent", "received", "tokens", "account" ],
+      filter: TransactionFilter.ALL,
+      options: TransactionFilterOptions,
     });
 
-    function changeFilter(e: {filter: string}){
+    function changeFilter(e: {filter: TransactionFilter}){
       state.filter = e.filter;
     }
     

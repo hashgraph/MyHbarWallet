@@ -14,7 +14,7 @@ import {
   SimpleHederaClient,
   SimpleTransfer,
 } from "../../../hedera";
-import { CryptoTransfer } from "../../../../domain/CryptoTransfer";
+import { Transaction } from "../../../../domain/Transaction";
 
 import { getAccountBalance } from "./get-account-balance";
 import { transfer } from "./transfer";
@@ -97,7 +97,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
     return downloadFile(this._client, options);
   }
 
-  getAccountRecords(): Promise<CryptoTransfer[] | undefined> {
+  getAccountRecords(): Promise<Transaction[] | undefined> {
     return getAccountRecords();
   }
 
@@ -105,7 +105,7 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
     return getTokenInfo(this._client, options);
   }
 
-  getTransfer(options: { hash: string }): Promise<CryptoTransfer> {
+  getTransfer(options: { hash: string }): Promise<Transaction> {
     return getTransfer(options);
   }
 

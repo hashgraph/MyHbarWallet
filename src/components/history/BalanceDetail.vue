@@ -26,7 +26,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import { Transfer } from "../../domain/CryptoTransfer";
+import { Transfer } from "../../domain/Transaction";
 export default defineComponent({
   name: "BalanceDetail",
   props: { 

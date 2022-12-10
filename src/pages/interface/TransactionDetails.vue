@@ -7,7 +7,7 @@
     <TransferDetail
       :color="ColorOption.GRAY"
       :title="$t('InterfaceTransactionDetails.transactionHash')"
-      :description="transactionHash"
+      :description="hash"
     />
 
     <TransferDetail
@@ -85,13 +85,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, nextTick } from "vue";
+import { defineComponent, reactive, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import BigNumber from "bignumber.js";
 
 import { useStore } from "../../store";
-import { CryptoTransfer } from "../../domain/CryptoTransfer";
-import { Transfer } from "../../domain/Transfer";
+import { Transfer, Transaction, formatAmount, formatType, sumTransfers } from "../../domain/Transaction";
 import checkmark from "../../assets/icon_check_green.svg";
 import Headline from "../../components/interface/Headline.vue";
 import TransferDetail, {
@@ -107,46 +105,21 @@ export default defineComponent({
     TransactionDetail,
   },
   props: {
-    transactionHash: { type: String, required: true }
+    hash: { type: String, required: true }
   },
   setup(props) {
     const store = useStore();
     const i18n = useI18n();
 
     const state = reactive({
-      transaction: undefined as unknown as CryptoTransfer
+      transaction: null as Transaction | Transfer | null | undefined
     });
 
     const notAvailable = i18n.t("InterfaceTransactionDetails.not.available");
   
-    nextTick(async()=> {
-      state.transaction = await store.client?.getTransfer({hash: props.transactionHash}) as CryptoTransfer;
+    onMounted(async ()=> {
+      state.transaction = await store.client?.getTransfer({hash: props.hash});
     });
-
-    function formatType(type: string): string | undefined {
-      if(!type) return undefined;
-      const words = type.split("_");
-      let formatted = "";
-      for(const i in words){
-        formatted += words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase() + " ";
-      }
-      return formatted.trim();
-    }
-
-    function formatAmount(value: number): string | undefined {
-      if(!value) return undefined;
-      return `${parseFloat((value/Math.pow(10, 8)).toFixed(8))}ℏ`;
-    }
-
-    function sumTransfers(transfers: Transfer[]): string | undefined {
-      if(!transfers) return undefined;
-      let sum = new BigNumber(0);
-      for(const transfer of transfers){
-        const amount = new BigNumber(transfer?.amount ?? 0);
-        if(amount?.isGreaterThan(0)) sum = sum.plus(amount);
-      }
-      return formatAmount(sum.toNumber());
-    }
 
     return {
       checkmark,

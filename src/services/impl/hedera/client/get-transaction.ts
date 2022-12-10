@@ -1,10 +1,10 @@
 import axios from "axios";
 
 import { useStore } from "../../../../store";
-import { CryptoTransfer } from "../../../../domain/CryptoTransfer";
+import { Transaction } from "../../../../domain/Transaction";
 import { getMirrorBase } from "..";
 
-export async function getTransfer(options: { hash: string } ): Promise<CryptoTransfer> {
+export async function getTransfer(options: { hash: string } ): Promise<Transaction> {
     const store = useStore();
     const baseUrl = getMirrorBase(store.network);
 

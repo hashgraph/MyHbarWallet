@@ -70,7 +70,7 @@
 import BigNumber from "bignumber.js";
 import { defineComponent, PropType, computed } from "vue";
 
-import { Transfer } from "../../domain/CryptoTransfer";
+import { Transfer } from "../../domain/Transaction";
 
 export default defineComponent({
   name: "TransactionDetail",
