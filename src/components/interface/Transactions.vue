@@ -12,12 +12,10 @@
     </div>
 
     <div
-      v-for="(transaction, i) in transactions"
-      :key="i"
+      v-for="transaction in transactions"
+      :key="transaction.transactionHash"
     >
-      <TransactionVue
-        :tx="transaction"
-      />
+      <TransactionVue :tx="(transaction as Transaction)" />
     </div>
 
     <HashScanLink />
@@ -26,9 +24,10 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
+import { useIntervalFn } from "@vueuse/core";
 
 import { useStore } from "../../store";
-import { Transaction, formatAmount, formatType, sumTransfers } from "../../domain/Transaction";
+import { Transaction } from "../../domain/Transaction";
 
 import TransactionVue from "./Transaction.vue";
 import HashScanLink from "./HashScanLink.vue";
@@ -45,21 +44,22 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const transactions = ref<Transaction[] | null | undefined>(null);
+    const transactions = ref<Transaction[] | undefined>([]);
 
-    onMounted(async () => {
-        transactions.value = await getLatestTransactions();
-    });
-
-    async function getLatestTransactions(): Promise<Transaction[] | undefined> {
-      return await store.client?.getAccountRecords();
+    async function getAccountRecords() {
+      transactions.value = await store.client?.getAccountRecords();
     }
 
+    onMounted(async () => {
+      await getAccountRecords();
+    });
+
+    useIntervalFn(async () => {
+      void getAccountRecords();
+    }, 3000);
+
     return {
-      transactions,
-      sumTransfers,
-      formatAmount,
-      formatType
+      transactions
     };
   },
 });

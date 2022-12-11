@@ -31,22 +31,22 @@ export interface Transfer {
 
 export type Transaction = {
   bytes: string | null;
-  chargedTxFee: number;
-  consensusTimestamp: string | null; // Timestamp
-  entityId: string | null;
-  maxFee: number;
-  memoBase64: string;
+  charged_tx_fee: number;
+  consensus_timestamp: string | null; // Timestamp
+  entity_id: string | null;
+  max_fee: number;
+  memo_base64: string;
   name: string;
   node: string;
   nonce: number;
-  parentConsensusTimestamp: string | null; // Timestamp
+  parent_consensus_timestamp: string | null; // Timestamp
   result: string;
   scheduled: boolean;
-  transactionHash: string;
-  transactionId: string;
+  transaction_hash: string;
+  transaction_id: string;
   transfers: Transfer[];
-  validDurationSeconds: number;
-  validStartTimestamp: string | null; // Timestamp
+  valid_duration_seconds: number;
+  valid_start_timestamp: string | null; // Timestamp
 }
 
 export function formatType(type: string): string | undefined {

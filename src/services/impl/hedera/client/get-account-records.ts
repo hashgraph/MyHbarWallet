@@ -14,5 +14,5 @@ export async function getAccountRecords(account?: string): Promise<Transaction[]
             throw error;
         });
 
-    return resp.data;
+    return resp.transactions as Transaction[];
 }

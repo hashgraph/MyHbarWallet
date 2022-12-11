@@ -89,7 +89,7 @@ export interface SimpleHederaClient {
 
     getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>;
 
-    getTransfer(options: { hash: string }): Promise<Transaction>;
+    getTransactionById(options: { id: string }): Promise<Transaction>;
 
     updateStaking(options: { accountId: AccountId; node: number | null, declineRewards: boolean}): Promise<void>;
 }

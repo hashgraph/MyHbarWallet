@@ -1,6 +1,7 @@
 <template>
   <router-link
-    :to=" { name: 'transaction', params: { hash: transaction?.transactionHash } }"
+    v-if="(tx.transaction_id != null)"
+    :to=" { name: 'transaction', params: { id: tx.transaction_id } }"
     class="flex items-center justify-between h-20 mb-1 border-b border-jupiter dark:border-midnight-express"
   >
     <Identicon class="w-10 h-10 mr-2" />
@@ -10,13 +11,7 @@
         <div
           class="flex-shrink-0 mb-1 font-medium leading-5 text-andrea-blue"
         >
-          {{ transaction.name }}
-        </div>
-
-        <div
-          class="mb-1 font-medium leading-5 text-right truncate text-mountain-meadow max-h-5"
-        >
-          {{ transaction.transactionHash }}
+          {{ tx.name }}
         </div>
       </div>
 
@@ -29,7 +24,7 @@
         <div
           class="flex justify-end text-xs font-medium leading-4 text-squant dark:text-argent"
         >
-          {{ `${$t("RecentTransactions.fee")} ${transaction?.chargedTxFee}` }}
+          {{ `${$t("RecentTransactions.fee")} ${feeHbar}` }}
         </div>
       </div>
     </div>
@@ -37,7 +32,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref, computed } from "vue";
+import { Hbar } from "@hashgraph/sdk";
 import { RouterLink } from "vue-router";
 import moment from "moment";
 import { useIntervalFn } from "@vueuse/core";
@@ -51,7 +47,7 @@ export default defineComponent({
   name: "Transaction",
   components: { Identicon, RouterLink },
   props: {
-    transaction: { type: Object as PropType<Transaction>, default: null }
+    tx: { type: Object as PropType<Transaction>, required: true }
   },
   setup(props) {
     const store = useStore();
@@ -59,13 +55,18 @@ export default defineComponent({
     const timeAgo = ref("...");
 
     useIntervalFn(() => {
-      if (props.transaction?.consensusTimestamp)
-      timeAgo.value = moment(new Date(props.transaction?.consensusTimestamp)).fromNow();
-    }, 1000)
+      // TODO
+      timeAgo.value = props.tx.consensus_timestamp as string;
+    }, 1000);
+
+    const feeHbar = computed(() => {
+      return Hbar.fromTinybars(props.tx.charged_tx_fee);
+    });
 
     return {
       accountId,
-      timeAgo
+      timeAgo,
+      feeHbar
     }
   }
 });

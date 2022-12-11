@@ -183,7 +183,7 @@ const routes = [
                     },
                     {
                         component: InterfaceTransactionDetails,
-                        path: "transaction",
+                        path: "transaction/:id",
                         name: "transaction",
                         props: true
                     },
@@ -256,10 +256,10 @@ const routes = [
     },
     {
         path: "/:catchAll(.*)",
-        name: "404",
         component: MarketingLayout,
         children: [
             {
+                name: "404",
                 component: Error404,
                 path: "",
             },
