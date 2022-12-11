@@ -9,14 +9,14 @@
     >
       <div
         v-for="(transfer) in transfers"
-        :key="transfer.accountId.toString()"
+        :key="transfer.account"
         class="m-auto text-left grid grid-flow-row grid-cols-2"
       >
         <div class="text-andrea-blue">
-          {{ transfer.accountId }}
+          {{ transfer.account }}
         </div>
         <div class="dark:text-silver-polish">
-          {{ formatAmount(transfer.balance) }}
+          {{ formatAmount(transfer.amount) }}
         </div>
       </div>
     </div>
