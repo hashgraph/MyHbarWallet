@@ -55,7 +55,7 @@ export default defineComponent({
     const timeAgo = ref("...");
 
     useIntervalFn(() => {
-      // TODO
+      // TODO: moment.js time ago calculation
       timeAgo.value = props.tx.consensus_timestamp as string;
     }, 1000);
 

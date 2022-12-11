@@ -57,7 +57,7 @@
 import { defineComponent, PropType } from "vue";
 
 import { useStore } from "../../store";
-import { Transfer } from "../../domain/Transfer";
+import { Transfer } from "../../domain/Transaction";
 import Button from "../base/Button.vue";
 
 import Modal from "./Modal.vue";
@@ -75,9 +75,11 @@ export default defineComponent({
     emits: ["close", "confirm"],
     setup(){
       const store = useStore();
+      
       function getDecimal(asset: string): number | undefined {
         return store.balance?.tokens.get(asset)?.decimals;
       }
+
       return { getDecimal };
     }
 });

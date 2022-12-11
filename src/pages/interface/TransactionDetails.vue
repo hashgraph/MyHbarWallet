@@ -85,7 +85,7 @@ import Headline from "../../components/interface/Headline.vue";
 import TransferDetail, {
   ColorOption,
 } from "../../components/history/TransferDetail.vue";
-import TransactionDetail from "../../components/history/TransactionDetail.vue";
+import TransactionDetail from "../../components/history/TransferList.vue";
 
 export default defineComponent({
   name: "TransferDetails",

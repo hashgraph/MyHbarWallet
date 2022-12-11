@@ -13,7 +13,7 @@
 
     <div
       v-for="transaction in transactions"
-      :key="transaction.transactionHash"
+      :key="transaction.transaction_hash"
     >
       <TransactionVue :tx="(transaction as Transaction)" />
     </div>

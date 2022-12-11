@@ -54,7 +54,7 @@ import { defineComponent, reactive, PropType, onMounted } from "vue";
 import BigNumber from "bignumber.js";
 
 import { useStore } from "../../store";
-import { Transfer } from "../../domain/Transfer";
+import { Transfer } from "../../domain/Transaction";
 
 import TransferOptionMenu from "./TransferOptionMenu.vue";
 

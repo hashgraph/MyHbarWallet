@@ -9,24 +9,24 @@
         class="text-left min-w-[300px] sm:w-96 m-4 p-5 border rounded-lg bg-first-snow dark:bg-ruined-smores dark:border-argent"
       >
         <div
-          v-for="(transfer, i) in transferList"
-          :key="buildKey(transfer.accountId?.toString(), i)"
+          v-for="(transfer, i) in sentList"
+          :key="buildKey(transfer.to?.toString(), i)"
           class="grid grid-flow-row grid-cols-2"
         >
           <div class="text-andrea-blue">
-            {{ transfer?.accountId }}
+            {{ transfer?.to }}
           </div>
           <div class="dark:text-silver-polish">
-            {{ formatAmount(Math.abs(transfer?.amount)) }}
+            {{ formatAmount(Math.abs(transfer?.amount?.toNumber()!)) }}
           </div>
         </div>
         <!-- Spacer to make right/left divs the same height -->
         <div
-          v-for="transfer, i in recipientList"
+          v-for="transfer, i in receivedList"
           :key="i"
           class="text-white"
         >
-          <div v-if="i < recipientList.length - 1">
+          <div v-if="i < receivedList.length - 1">
             <br>
           </div>
         </div>
@@ -50,15 +50,15 @@
         class="text-left min-w-[300px] sm:w-96 m-4 p-5 border rounded-lg bg-first-snow dark:bg-ruined-smores dark:border-argent"
       >
         <div
-          v-for="(transfer, i) in recipientList"
-          :key="buildKey(transfer.accountId?.toString(), i)"
+          v-for="(transfer, i) in receivedList"
+          :key="buildKey(transfer.to?.toString(), i)"
           class="grid grid-flow-row grid-cols-2"
         >
           <div class="text-andrea-blue">
-            {{ transfer.accountId?.toString() }}
+            {{ transfer.to?.toString() }}
           </div>
           <div class="dark:text-silver-polish">
-            {{ formatAmount(transfer?.amount) }}
+            {{ formatAmount(transfer?.amount?.toNumber()!) }}
           </div>
         </div>
       </div>
@@ -73,19 +73,19 @@ import { defineComponent, PropType, computed } from "vue";
 import { Transfer } from "../../domain/Transaction";
 
 export default defineComponent({
-  name: "TransactionDetail",
+  name: "TransferList",
   props: {
     transfers: { type: Array as PropType<Transfer[]>, required: true }
   },
   setup(props) {
-    const transferList = computed(()=> {
+    const sentList = computed(() => {
       return props.transfers.filter( (transfer: Transfer) => {
         const amount = new BigNumber(transfer?.amount ?? 0)
         if(amount.isLessThan(0)) return transfer;  
       });
     });
 
-    const recipientList = computed(()=> {
+    const receivedList = computed(() => {
       return props.transfers.filter( (transfer: Transfer) => {
         const amount = new BigNumber(transfer?.amount ?? 0);
         if(amount.isGreaterThan(0)) return transfer;
@@ -102,8 +102,8 @@ export default defineComponent({
     
 
     return { 
-      transferList, 
-      recipientList, 
+      sentList, 
+      receivedList, 
       buildKey,
       formatAmount
       };
