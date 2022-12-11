@@ -10,14 +10,14 @@
       >
         <div
           v-for="(transfer, i) in sentList"
-          :key="buildKey(transfer.to?.toString(), i)"
+          :key="buildKey(transfer.account?.toString(), i)"
           class="grid grid-flow-row grid-cols-2"
         >
           <div class="text-andrea-blue">
-            {{ transfer?.to }}
+            {{ transfer?.account }}
           </div>
           <div class="dark:text-silver-polish">
-            {{ formatAmount(Math.abs(transfer?.amount?.toNumber()!)) }}
+            {{ formatAmount(Math.abs(transfer?.amount)) }}
           </div>
         </div>
         <!-- Spacer to make right/left divs the same height -->
@@ -36,7 +36,7 @@
     <div class="flex justify-center self-center mt-12 mb-10">
       <img
         class="h-3 w-12"
-        src="../../assets/long_arrow.svg"
+        :src="longArrow"
         alt="right arrow"
       >
     </div>
@@ -51,14 +51,14 @@
       >
         <div
           v-for="(transfer, i) in receivedList"
-          :key="buildKey(transfer.to?.toString(), i)"
+          :key="buildKey(transfer.amount?.toString(), i)"
           class="grid grid-flow-row grid-cols-2"
         >
           <div class="text-andrea-blue">
-            {{ transfer.to?.toString() }}
+            {{ transfer.amount?.toString() }}
           </div>
           <div class="dark:text-silver-polish">
-            {{ formatAmount(transfer?.amount?.toNumber()!) }}
+            {{ formatAmount(transfer?.amount) }}
           </div>
         </div>
       </div>
@@ -67,10 +67,10 @@
 </template>
 
 <script lang="ts">
-import BigNumber from "bignumber.js";
 import { defineComponent, PropType, computed } from "vue";
 
 import { Transfer } from "../../domain/Transaction";
+import longArrow from "../../assets/long_arrow.svg";
 
 export default defineComponent({
   name: "TransferList",
@@ -79,16 +79,14 @@ export default defineComponent({
   },
   setup(props) {
     const sentList = computed(() => {
-      return props.transfers.filter( (transfer: Transfer) => {
-        const amount = new BigNumber(transfer?.amount ?? 0)
-        if(amount.isLessThan(0)) return transfer;  
+      return props.transfers.filter((transfer: Transfer) => {
+        if (transfer.amount < 0) return transfer;
       });
     });
 
     const receivedList = computed(() => {
       return props.transfers.filter( (transfer: Transfer) => {
-        const amount = new BigNumber(transfer?.amount ?? 0);
-        if(amount.isGreaterThan(0)) return transfer;
+        if (transfer.amount > 0) return transfer;
       });
     });
 
@@ -105,7 +103,8 @@ export default defineComponent({
       sentList, 
       receivedList, 
       buildKey,
-      formatAmount
+      formatAmount,
+      longArrow
       };
   },
 });
