@@ -24,6 +24,7 @@
 </template>
 
 <script lang="ts">
+import { Hbar } from "@hashgraph/sdk";
 import { defineComponent, PropType } from "vue";
 
 import { Transfer } from "../../domain/Transaction";
@@ -34,7 +35,7 @@ export default defineComponent({
   },
   setup() {
     function formatAmount(value: number): string {
-      return `${parseFloat((value/Math.pow(10, 8)).toFixed(8))}ℏ`;
+      return Hbar.fromTinybars(value).toString();
     }
 
     return {
