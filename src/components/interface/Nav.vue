@@ -14,20 +14,6 @@
       :to="{ name: 'assets' }"
     />
 
-    <!-- <NavItem
-      :icon="iconNavGreyTokens"
-      :active-icon="iconNavPurpleTokens"
-      :text="$t('RouterLink.tokens')"
-      :to="{ name: 'tokens' }"
-    /> -->
-
-    <!-- <NavItem
-      :icon="iconNavGreyPeople"
-      :active-icon="iconNavPurplePeople"
-      :text="$t('RouterLink.people')"
-      :to="{ name: 'people' }"
-    /> -->
-
     <NavItem
       v-if="network != 'previewnet'"
       :icon="iconNavGreyHistory"
@@ -71,8 +57,6 @@ import iconNavGreyAssets from "../../assets/icon_nav_grey_assets.svg";
 import iconNavGreyHistory from "../../assets/icon_nav_grey_history.svg";
 import iconNavGreyHome from "../../assets/icon_nav_grey_home.svg";
 import iconNavGreyKeys from "../../assets/icon_nav_grey_keys.svg";
-import iconNavGreyPeople from "../../assets/icon_nav_grey_people.svg";
-import iconNavGreyTokens from "../../assets/icon_nav_grey_tokens.svg";
 import iconNavGreyTools from "../../assets/icon_nav_grey_tools.svg";
 import iconNavPurpleAssets from "../../assets/icon_nav_purple_assets.svg";
 import iconNavPurpleHistory from "../../assets/icon_nav_purple_history.svg";
@@ -100,8 +84,6 @@ export default defineComponent({
       iconNavGreyHistory,
       iconNavGreyHome,
       iconNavGreyKeys,
-      iconNavGreyPeople,
-      iconNavGreyTokens,
       iconNavGreyTools,
       iconNavPurpleAssets,
       iconNavPurpleHistory,

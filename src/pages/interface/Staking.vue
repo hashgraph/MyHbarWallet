@@ -44,12 +44,6 @@
       :title="$t('Staking.estimatedRewardRate')"
       :value="estimatedRewardRate.toString()"
     />
-    <!-- <StakingOverviewTile
-      :icon="iconHbar"
-      :title="$t('Staking.unclaimedReward')"
-      :value="'unknown'"
-      tooltip
-    /> -->
   </div>
 
   <div class="font-medium text-xl pt-5 dark:text-white">

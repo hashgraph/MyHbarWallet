@@ -29,7 +29,6 @@ export default defineComponent({
     const i18n = useI18n();
     const store = useStore();
 
-    // TODO: This will come from the store
     const networks = [
       {
         name: i18n.t("Network.mainnet"),
@@ -48,15 +47,11 @@ export default defineComponent({
       },
     ];
 
-    let selectedNetwork = computed(() => store.network);
+    const selectedNetwork = computed(() => store.network);
 
     function onUpdateValue(value: "mainnet" | "testnet" | "previewnet") {
       store.setNetwork(value);
     }
-
-
-
-
 
     return {
       selectedNetwork,

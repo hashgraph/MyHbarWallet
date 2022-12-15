@@ -1,4 +1,4 @@
-import { CreateAccountResponse, CreateTokenRequest, CreateTokenResponse } from "../../support/commands";
+import { CreateAccountResponse, CreateTokenResponse } from "../../support/commands";
 
 describe("Tool: Associate Token", () => {
     const { KEY_PRIVATE_KEY, KEY_ACCOUNT_ID } = Cypress.env();

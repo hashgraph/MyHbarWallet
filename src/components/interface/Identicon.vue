@@ -1,5 +1,5 @@
 <template>
-  <!-- eslint-disable-next-line vue/no-lone-template, vue/no-v-html -->
+  <!-- eslint-disable-next-line vue/no-v-html -->
   <div v-html="avatar" />
 </template>
 

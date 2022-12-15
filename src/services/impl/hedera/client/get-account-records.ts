@@ -1,17 +1,18 @@
 import axios from "axios";
 
 import { useStore } from "../../../../store";
-import { CryptoTransfer } from "../../../../domain/CryptoTransfer";
+import { getMirrorBase } from "..";
+import { Transaction } from "../../../../domain/Transaction";
 
-export async function getAccountRecords(): Promise<CryptoTransfer[] | undefined>{
+export async function getAccountRecords(account?: string): Promise<Transaction[] | undefined>{
     const store = useStore();
-    const network = store.network === "mainnet" ? "" : ".testnet";
+    const baseUrl = getMirrorBase(store.network);
 
-    const resp = await axios.get(`https://v2.api${network}.kabuto.sh/transaction?filter[entityId]=${store.accountId}`)
+    const resp = await axios.get(`https://${baseUrl}/api/v1/transactions?account.id=${account ?? store.client?.getAccountId().toString()}`)
         .then(({ data }) => data)
         .catch((error: Error) => {
             throw error;
         });
 
-    return resp.data as CryptoTransfer[];
+    return resp.transactions as Transaction[];
 }

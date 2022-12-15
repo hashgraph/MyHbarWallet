@@ -4,7 +4,7 @@
     data-cy-pass-toggle
     class="mb-4"
     :label="label"
-    @update:modelValue="handleToggled"
+    @update:model-value="handleToggled"
   />
 
   <div
@@ -38,7 +38,7 @@
         :confirm="confirm"
         @valid="handleValid"
         @error="handleError"
-        @update:modelValue="handlePassword"
+        @update:model-value="handlePassword"
       />
 
       <div

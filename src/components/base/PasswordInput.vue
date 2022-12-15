@@ -9,7 +9,7 @@
       :show-eye="showEye"
       :placeholder="placeholder"
       class="bg-white dark:bg-midnight-express rounded"
-      @update:modelValue="updatePassword"
+      @update:model-value="updatePassword"
     />
 
     <div
@@ -27,7 +27,7 @@
       hide
       :placeholder="$t('BasePasswordInput.input2.placeholder1')"
       class="bg-white dark:bg-midnight-express rounded"
-      @update:modelValue="updateConfirmPassword"
+      @update:model-value="updateConfirmPassword"
     />
 
     <PasswordStrength

@@ -88,9 +88,7 @@ const colors = {
 };
 
 module.exports = {
-  purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-  mode: "jit",
-  darkMode: "media",
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     colors: colors,
     borderColor: colors,

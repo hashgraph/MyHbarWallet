@@ -5,7 +5,7 @@
   />
 
   <div class="flex-col text-center">
-    <UploadZone @fileSelect="fileSelect" />
+    <UploadZone @file-select="fileSelect" />
 
     <InputError v-if="state.errorMessage.length > 0">
       {{ state.errorMessage }}
@@ -144,7 +144,7 @@ export default defineComponent({
 
     async function openFeeModal(): Promise<void> {
       if (state.fileData == null) return;
-      let payload = state.uploadHash ? new Uint8Array(48) : state.fileData;
+      const payload = state.uploadHash ? new Uint8Array(48) : state.fileData;
       state.uploadProgress.totalChunks = estimateChunks(payload);
       state.estimateFee = `${await estimateFee(payload)} hbar`;
       state.showFeeModal = true;      

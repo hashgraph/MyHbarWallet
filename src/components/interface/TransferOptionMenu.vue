@@ -7,14 +7,14 @@
     @click="$emit('close')"
   />
   <div
-    class="absolute z-40 -ml-48 bg-white dark:border dark:border-midnight-express dark:bg-ruined-smores rounded shadow-md p-3 pr-6 transition-all duration-300 z-30"
+    class="absolute -ml-48 bg-white dark:border dark:border-midnight-express dark:bg-ruined-smores rounded shadow-md p-3 pr-6 transition-all duration-300 z-30"
     :class="{
       'opacity-100 mt-16': open,
       'opacity-0 invisible -mt-36': !open
     }"
   >
     <div
-      class="hover:bg-first-snow dark:hover:bg-black-out flex items-start items-center space-x-4 m-2 p-3 rounded w-full"
+      class="hover:bg-first-snow dark:hover:bg-black-out flex items-center space-x-4 m-2 p-3 rounded w-full"
       @click="$emit('edit')"
     >
       <img
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div
-      class="hover:bg-first-snow dark:hover:bg-black-out flex items-start items-center space-x-4 m-2 p-3 rounded w-full"
+      class="hover:bg-first-snow dark:hover:bg-black-out flex items-center space-x-4 m-2 p-3 rounded w-full"
       @click="$emit('remove')"
     >
       <img

@@ -15,7 +15,7 @@
 
     <Button
       color="green"
-      class="py-2 m-auto w-1/2 m-4"
+      class="py-2 w-1/2 m-4"
       :disabled="!valid"
       @click="handleTransfer"
     >
@@ -27,7 +27,7 @@
 
 <script lang = "ts">
 import { defineComponent, reactive, computed } from "vue";
-import BigNumber from "bignumber.js";
+import  { BigNumber } from "bignumber.js";
 
 import { Transfer } from "../../domain/Transfer";
 import TransferForm from "../interface/TransferForm.vue";
@@ -70,13 +70,6 @@ export default defineComponent({
             });
             context.emit("close");
           }
-        }
-
-        function clear(): void {
-          state.transfer.to = undefined,
-          state.transfer.asset = "HBAR",
-          state.transfer.amount = undefined,
-          state.transfer.usd = undefined
         }
 
         function updateAmount(e: Event): void {

@@ -15,22 +15,19 @@
       <HbarInput
         v-if="isOpen"
         v-model="value"
-        :disabled="!isOpen"      
-        @update:model-value="handleUpdate"
+        :disabled="!isOpen"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import type { Hbar } from "@hashgraph/sdk";
-import { defineComponent, PropType, ref, watch } from "vue";
+import { Hbar } from "@hashgraph/sdk";
+import { defineComponent, PropType, Ref, ref, watch } from "vue";
 import { useVModel } from "@vueuse/core";
 
 import Switch from "../base/Switch.vue";
 import HbarInput from "../base/HbarInput.vue";
-
-
 
 export default defineComponent({
   name: "OptionalHbarInput",
@@ -39,21 +36,15 @@ export default defineComponent({
     HbarInput,
   },
   props: {
-    // eslint-disable-next-line vue/require-default-prop
-    modelValue: { type: Object as PropType<Hbar | null> },
+    modelValue: { type: Object as PropType<Hbar | null>, required: true, default: null },
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
     const isOpen = ref(false);
-    const value = useVModel(props, "modelValue");
+    const value = useVModel(props, "modelValue", emit);
 
     function resetHbar() {
-       emit("update:modelValue", null);
-    }
-
-    function handleUpdate(amount: Hbar): void {
-      value.value = amount;
-      emit("update:modelValue", amount);
+      emit("update:modelValue", null);
     }
 
     watch(isOpen, () => {
@@ -62,7 +53,7 @@ export default defineComponent({
       }
     });
 
-    return { isOpen, value, handleUpdate };
+    return { isOpen, value };
   },
 });
 </script>

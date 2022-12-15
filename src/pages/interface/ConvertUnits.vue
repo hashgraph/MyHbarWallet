@@ -18,7 +18,7 @@
             v-model="state.valueLeft"
             class="m-1"
             :placeholder="$t('common.amount')"
-            @update:modelValue="handleInputValueLeft"
+            @update:model-value="handleInputValueLeft"
           />
         </div>
 
@@ -28,7 +28,7 @@
             class="m-2"
             :options="units"
             :placeholder="units[0].name"
-            @update:modelValue="handleSelect"
+            @update:model-value="handleSelect"
           />
         </div>
       </div>
@@ -44,7 +44,7 @@
         <TextInput
           v-model="state.valueRight"
           class="m-1"
-          @update:modelValue="handleInputValueRight"
+          @update:model-value="handleInputValueRight"
         />
 
         <div class="select-block">
@@ -52,7 +52,7 @@
             v-model="state.selectedRight"
             class="m-2"
             :options="units"
-            @update:modelValue="handleSelect"
+            @update:model-value="handleSelect"
           />
         </div>
       </div>
@@ -126,6 +126,7 @@ export default defineComponent({
       EXPONENTIAL_AT: 64,
     });
 
+    type CurrencyOption = Option & { symbol: string; amount: string; amountInHbar: string };
 
     const units = [
       {
@@ -184,7 +185,7 @@ export default defineComponent({
         amount: "1",
         amountInHbar: "1,000,000,000",
       },
-    ] as unknown as Option[];
+    ] as CurrencyOption[];
 
     const state = reactive({
       selectedLeft: "Tinybar",
@@ -244,9 +245,9 @@ export default defineComponent({
 
     async function computeValueLeft(): Promise<void> {
       const { Hbar } = await import("@hashgraph/sdk");
-      let unitRight = state.selectedRight;
-      let unitLeft = state.selectedLeft;
-      let hRight = new Hbar(
+      const unitRight = state.selectedRight;
+      const unitLeft = state.selectedLeft;
+      const hRight = new Hbar(
         new BigNumber(state.valueRight),
         await getHbarUnit(unitRight)
       );
@@ -255,9 +256,9 @@ export default defineComponent({
 
     async function computeValueRight(): Promise<void> {
       const { Hbar } = await import("@hashgraph/sdk");
-      let unitRight = state.selectedRight;
-      let unitLeft = state.selectedLeft;
-      let hLeft = new Hbar(
+      const unitRight = state.selectedRight;
+      const unitLeft = state.selectedLeft;
+      const hLeft = new Hbar(
         new BigNumber(state.valueLeft),
         await getHbarUnit(unitLeft)
       );

@@ -2,7 +2,7 @@ import { BigNumber } from "bignumber.js";
 import type { AccountId, FileId, PrivateKey, PublicKey, TokenId, TokenInfo } from "@hashgraph/sdk";
 
 import { Wallet } from "../domain/wallet/abstract";
-import { CryptoTransfer } from "../domain/CryptoTransfer";
+import { Transaction } from "../domain/Transaction";
 
 export interface SimpleTransfer {
     // HBAR or Token ID (as string)
@@ -85,11 +85,11 @@ export interface SimpleHederaClient {
         fileId: FileId
     }): Promise<Uint8Array | null>;
 
-    getAccountRecords(): Promise<CryptoTransfer[] | undefined>;
+    getAccountRecords(): Promise<Transaction[] | undefined>;
 
     getTokenInfo(options: { token: string | TokenId }): Promise<TokenInfo>;
 
-    getTransfer(options: { hash: string }): Promise<CryptoTransfer>;
+    getTransactionById(options: { id: string }): Promise<Transaction>;
 
     updateStaking(options: { accountId: AccountId; node: number | null, declineRewards: boolean}): Promise<void>;
 }

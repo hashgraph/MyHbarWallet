@@ -21,17 +21,16 @@
       v-model="state.publicKeyStr"
       :valid="state.validKey"
       class="mb-4"
-      @update:modelValue="handleKey"
+      @update:model-value="handleKey"
     />
 
-    <!-- <label class="font-medium text-squant dark:text-argent">
+    <label class="font-medium text-squant dark:text-argent">
       {{ $t("InterfaceToolTile.createAccount.label.initialBalance") }}
-    </label> -->
+    </label>
 
-    <!-- TODO: lol this doesn't work  -->
-    <!-- <HbarInput
-      v-model="state.initialBalance"
-    /> -->
+    <HbarInput
+      @update:model-value="updateInitialBalance"
+    />
 
     <InputError v-if="state.errorMessage.length > 0">
       {{ state.errorMessage }}
@@ -133,10 +132,14 @@ export default defineComponent({
       try {
         state.publicKey = PublicKey.fromString(key);
       } catch (error) {
-        state.errorMessage = await store.errorMessage(error);
+        state.errorMessage = await store.errorMessage(error as Error);
       } finally {
         state.validKey = state.publicKey != null;
       }
+    }
+
+    function updateInitialBalance(balance: Hbar): void {
+      state.initialBalance = balance;
     }
 
     function handleClose(): void {
@@ -166,7 +169,7 @@ export default defineComponent({
           }
         }
       } catch (error) {
-        state.errorMessage = await store.errorMessage(error);
+        state.errorMessage = await store.errorMessage(error as Error);
       } finally {
         state.busy = false;
       }
@@ -177,6 +180,7 @@ export default defineComponent({
       handleClose,
       handleCopy,
       handleKey,
+      updateInitialBalance,
       handleSubmit,
     };
   },

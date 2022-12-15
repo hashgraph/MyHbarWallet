@@ -33,7 +33,7 @@
       >
       <p> {{ $t("InterfaceUploadFile.maxFileSize") }} </p>
 
-       <p> {{ state.fileName ? $t("InterfaceUploadFile.selectedFile") : "" }} {{ state.fileName }} </p>
+      <p> {{ state.fileName ? $t("InterfaceUploadFile.selectedFile") : "" }} {{ state.fileName }} </p>
     </div>
   </div>
 </template>
@@ -76,12 +76,12 @@ export default defineComponent({
                 throw new Error("No data was transfered.");
             }
 
-            let file = e.dataTransfer.items[0].getAsFile();
+            const file = e.dataTransfer.items[0].getAsFile();
             if (!file) {
                 throw new Error("File does not exist.");
             }
 
-            let fileData = await uint8ArrayOf(file);
+            const fileData = await uint8ArrayOf(file);
             state.fileName = file.name +" ("+ this.$t("size") +" "+ fileData.byteLength +" bytes)";
             context.emit("fileSelect", {
                 fileName: file.name,
@@ -102,8 +102,8 @@ export default defineComponent({
                 return;
             }
 
-            let file = fileTarget.value.files[0];
-            let fileData = await uint8ArrayOf(file);
+            const file = fileTarget.value.files[0];
+            const fileData = await uint8ArrayOf(file);
             state.fileName = file.name +" ("+ this.$t("size") +" "+ fileData.byteLength +" bytes)";
             context.emit("fileSelect", {
                 fileName: file.name,
@@ -112,8 +112,8 @@ export default defineComponent({
         }
 
         async function uint8ArrayOf(file: File): Promise<Uint8Array> {
-            let buffer = await new Promise<ArrayBuffer>((resolve, reject) => {
-                let reader = new FileReader();
+            const buffer = await new Promise<ArrayBuffer>((resolve, reject) => {
+                const reader = new FileReader();
                 reader.addEventListener("error", reject);
                 reader.addEventListener("loadend", (): void => {
                     resolve(reader.result as ArrayBuffer);

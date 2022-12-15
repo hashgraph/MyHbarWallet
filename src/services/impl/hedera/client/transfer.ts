@@ -28,7 +28,8 @@ export async function transfer(
       outgoingHbarAmount = outgoingHbarAmount + Number(transfer.amount?.negated().toString().replace(" ℏ", ""));
     } else {
       
-      const amount = transfer.amount?.multipliedBy(Math.pow(10, store.balance!.tokens!.get(transfer.asset)!.decimals));
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const amount = transfer.amount?.multipliedBy(Math.pow(10, store.balance!.tokens!.get(transfer.asset!)!.decimals));
       transaction.addTokenTransfer(
         transfer.asset ?? "",
         transfer.to ?? "",
@@ -43,7 +44,8 @@ export async function transfer(
     }
   }
 
-  if(outgoingHbarAmount !== 0) transaction.addHbarTransfer(client.operatorAccountId, new Hbar(outgoingHbarAmount));
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  if(outgoingHbarAmount !== 0) transaction.addHbarTransfer(client.operatorAccountId!, new Hbar(outgoingHbarAmount));
   
   const resp = await transaction.execute(client);
 

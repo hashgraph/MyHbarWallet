@@ -14,7 +14,6 @@
     <div
       class="flex items-center px-8 py-3 border-t border-b border-jupiter dark:border-midnight-express"
     >
-      <!-- TODO: Once we can know which network, put that here -->
       <Image
         :light="hederaLight"
         :dark="hederaDark"

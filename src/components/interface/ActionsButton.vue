@@ -61,9 +61,9 @@ export default defineComponent({
   },
   emits: ["edit", "remove"],
   setup(_props, context) {
-    let showActions = ref(false);
+    const showActions = ref(false);
 
-    let actions: Array<Action> = [
+    const actions: Array<Action> = [
       { label: "Edit", action: "edit", image: editImage },
       { label: "Remove", action: "remove", image: removeImage },
     ];

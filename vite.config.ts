@@ -2,11 +2,12 @@
 /* eslint-env node */
 import path from "path";
 
-import html from "vite-plugin-html";
+import { createHtmlPlugin } from "vite-plugin-html";
 import vue from "@vitejs/plugin-vue";
 import vueI18n from "@intlify/vite-plugin-vue-i18n";
 import { VitePWA } from "vite-plugin-pwa";
-import { getLastCommit } from "git-last-commit";
+import { Commit, getLastCommit } from "git-last-commit";
+import mkcert from "vite-plugin-mkcert";
 import { defineConfig } from "vite";
 
 import packageJson from "./package.json";
@@ -19,26 +20,25 @@ export default async function ({ mode }) {
     const webOutDir = "dist/web";
     const electronOutDir = "dist/electron";
 
-    const lastCommit = await new Promise((resolve, reject) =>
+    const lastCommit: Commit = await new Promise((resolve, reject) =>
         getLastCommit((err, commit) => {
             if (err != null) reject(err);
             else resolve(commit);
         })
     );
 
-    let contentSecurityPolicy = [
+    const contentSecurityPolicy = [
         "default-src 'self'",
         "connect-src 'self' " +
             [
-                "grpc-web.testnet.myhbarwallet.com",
-                "grpc-web.previewnet.myhbarwallet.com",
-                "grpc-web.myhbarwallet.com",
                 "api.coingecko.com",
-                "v2.api.kabuto.sh",
-                "v2.api.testnet.kabuto.sh",
                 "mainnet-public.mirrornode.hedera.com",
                 "testnet.mirrornode.hedera.com",
                 "previewnet.mirrornode.hedera.com",
+                "*.swirlds.com", // grpc proxies
+                "*.hedera.com", // grpc proxies
+                "localhost",
+                "grpc-web.myhbarwallet.com"
             ].join(" "),
         "font-src 'self' data:",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",
@@ -47,14 +47,17 @@ export default async function ({ mode }) {
     return defineConfig({
         base: isElectron ? "./" : "/",
         plugins: [
-            html({
+            mkcert(),
+            createHtmlPlugin({
                 inject: {
-                    injectData: {
+                    data: {
                         contentSecurityPolicy: contentSecurityPolicy.join("; "),
                     },
                 },
             }),
-            vue(),
+            vue({
+              reactivityTransform: true
+            }),
             vueI18n({
                 include: path.resolve(__dirname, "./locales/**"),
             }),
@@ -80,5 +83,9 @@ export default async function ({ mode }) {
         build: {
             outDir: isElectron ? electronOutDir : webOutDir,
         },
+        server: {
+          https: true,
+          port: 5173
+        }
     });
 }

@@ -1,7 +1,5 @@
 <template>
   <div class="dark:text-white">
-    <!-- Render stars -->
-    <!-- TODO: Replace with HeroIcons after merged -->
     <div
       class="flex float-left w-full"
       :class="{
@@ -88,7 +86,7 @@ export default defineComponent({
         }
 
         function uniqueChars(phrase: string): number{
-            let chars:string[] = [];
+            const chars:string[] = [];
 
             for(let i = 0; i < phrase.length; i++){
                 if(!chars.includes(phrase.charAt(i))) chars.push(phrase.charAt(i));

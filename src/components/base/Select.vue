@@ -105,17 +105,17 @@
 
 <script lang="ts">
 import { useVModel } from "@vueuse/core";
-import { defineComponent, PropType, reactive } from "vue";
+import { defineComponent, PropType, reactive, onMounted } from "vue";
 
 import { useOperatingSystem, ANDROID, IOS } from "../../hooks/platform";
 
 import Image from "./Image.vue";
 
-export interface Option {
+export type Option = {
     name: string;
-    iconLight: string;
-    iconDark: string;
-}
+    iconLight: string | null;
+    iconDark: string | null;
+};
 
 export default defineComponent({
   name: "Select",
@@ -139,14 +139,18 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props, context) {
-    const os = useOperatingSystem();
-    const isMobile = os == ANDROID || os == IOS;
+    let isMobile = false;
+
+    onMounted(async () => {
+      const os = await useOperatingSystem();
+      isMobile = os == ANDROID || os == IOS;
+    });
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const selected = useVModel(props, "modelValue", context.emit);
 
-    let state = reactive({
+    const state = reactive({
       indexOfSelected: 0,
       open: false,
     });

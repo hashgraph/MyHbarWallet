@@ -13,7 +13,7 @@
         <SegmentedSelector
           :model-value="wordCount"
           :options="[12, 22, 24]"
-          @update:modelValue="onChangeWordCount"
+          @update:model-value="onChangeWordCount"
         />
 
         <div class="text-sm text-black-out dark:text-white">
@@ -68,7 +68,7 @@
       :hint="false"
       :label="$t('BaseOptionalPasswordInput.label1')"
       :placeholder="$t('BasePasswordInput.input1.placeholder1')"
-      @update:modelValue="handlePassword"
+      @update:model-value="handlePassword"
     />
 
     <Button

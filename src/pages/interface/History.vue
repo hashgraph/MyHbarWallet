@@ -5,17 +5,15 @@
       class="pb-20 lg:pb-8 mb-5"
     />
 
-    <div
-      class="flex flex-wrap items-start w-full mb-2"
-    >
+    <div class="flex flex-wrap items-start w-full mb-2">
       <div
         v-for="option in state.options"
         :key="option"
       >
-        <TransactionFilterButton
-          :filter="option"
-          :active="state.filter == option"
-          @changeFilter="changeFilter"
+        <TransactionFilterButton 
+          :filter="option" 
+          :active="state.filter === option" 
+          @change-filter="changeFilter"
         >
           {{ $t(`InterfaceHistory.button.${option}`) }}
         </TransactionFilterButton>
@@ -24,19 +22,10 @@
   </div>
 
   <div class="overflow-y-auto">
-    <div
-      v-for="option in state.options"
-      :key="option"
-    >
-      <Transactions
-        :filter="option"
-        class="lg:mx-8"
-        :class="{
-          'invisible h-0': state.filter !== option
-        }"  
-        page-size="10"
-      />
-    </div>
+    <Transactions
+      :filter="state.filter"
+      class="lg:mx-8"
+    />
   </div>
 </template>
 
@@ -47,25 +36,34 @@ import Headline from "../../components/interface/Headline.vue";
 import Transactions from "../../components/interface/Transactions.vue";
 import TransactionFilterButton from "../../components/interface/TransactionFilterButton.vue";
 
+export enum TransactionFilter {
+  ALL = "all", 
+  SENT = "sent",
+  RECEIVED = "received",
+  TOKENS = "tokens",
+  ACCOUNTS = "accounts"
+}
+
+export const TransactionFilterOptions = Object.keys(TransactionFilter).map(
+  (key) => TransactionFilter[key as keyof typeof TransactionFilter])
+
 export default defineComponent({
   name: "History",
   components: {
     Headline,
     Transactions,
-    TransactionFilterButton
+    TransactionFilterButton 
   },
-
-  setup(){
-
+  setup() {
     const state = reactive({
-      filter: "all",
-      options: [ "all", "sent", "received", "tokens", "account" ],
+      filter: TransactionFilter.ALL,
+      options: TransactionFilterOptions,
     });
 
-    function changeFilter(e: {filter: string}){
+    function changeFilter(e: { filter: TransactionFilter }) {
       state.filter = e.filter;
     }
-    
+
     return {
       state,
       changeFilter
