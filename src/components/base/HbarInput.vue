@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
-import { Hbar } from "@hashgraph/sdk";
+import { Hbar, HbarUnit } from "@hashgraph/sdk";
 import { BigNumber } from 'bignumber.js'
 
 import AssetInput from "../base/AssetInput.vue";
@@ -26,7 +26,7 @@ export default defineComponent({
     const amount = computed(() => props.modelValue?.toBigNumber());
 
     function handleUpdate(value: BigNumber): void {
-      emit("update:modelValue", Hbar.fromTinybars(value));
+      emit("update:modelValue", Hbar.from(value, HbarUnit.Hbar));
     }
 
     return {

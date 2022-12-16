@@ -32,14 +32,13 @@
           <TransferForm
             v-model:to="state.transfer.to"
             v-model:asset="state.transfer.asset"
-            v-model:usd="state.transfer.usd"
+            v-model:usd="state.transfer.amount"
             data-cy-transfer-form
             class="transition-all duration-300"
             :class="{
               'opacity-100 mt-0': state.transfers.length === 0 || state.editTransfer == true,
               'opacity-0 -mt-80': state.editTransfer === false && state.transfers.length > 0
             }"
-            @update:amount="updateAmount"
           />
 
           <div
@@ -63,6 +62,7 @@
             </div>
           </div>
         </div>
+
         <Button
           v-if="state.transfers.length === 0 || !state.editTransfer"
           color="green"
@@ -95,7 +95,6 @@
 
           <OptionalHbarInput
             v-model="state.maxFee"
-            @update:model-value="updateMaxFee"
           />
 
           <p
@@ -181,7 +180,6 @@ import type { Hbar } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
-import { TransferTo } from "../../domain/Transaction";
 import Headline from "../../components/interface/Headline.vue";
 import TransferForm from "../../components/interface/TransferForm.vue";
 import Button from "../../components/base/Button.vue";
@@ -193,6 +191,7 @@ import AddTransferModal from "../../components/interface/AddTransferModal.vue";
 import TransferItem from "../../components/interface/TransferItem.vue";
 import TransferConfirmationModal from "../../components/interface/TransferConfirmationModal.vue";
 import { useStore } from "../../store";
+import { SimpleTransfer } from "../../services/hedera";
 
 export default defineComponent({
   name: "Send",
@@ -216,12 +215,13 @@ export default defineComponent({
 
     const state = reactive({
       accountId: store.accountId,
-      generalErrorText: null as string | null,
-      sendBusyText: null as string | null,
+      generalErrorText: "",
+      sendBusyText: "",
       indexToEdit: 0,
       showEditModal: false,
-      memo: "" as string,
-      maxFee: null as Hbar | null,
+      memo: "",
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      maxFee: new hashgraph.value!.Hbar(0),
       showAddModal: false,
       showAcceptModal: false,
       showIPModal: false,
@@ -231,14 +231,14 @@ export default defineComponent({
       confirmed: false,
       editTransfer: true,
       transfer: {
-        to: null,
+        to: undefined,
         asset: "HBAR",
-        amount: null
-      } as TransferTo,
-      transfers: [] as TransferTo[],
+        amount: new BigNumber(0)
+      } as SimpleTransfer,
+      transfers: [] as SimpleTransfer[],
       decimals: 0,
-      symbol: null as string | null | undefined,
-      tokenType: null as string | null | undefined
+      symbol: "",
+      tokenType: ""
     });
 
     onMounted(async () => {
@@ -269,29 +269,24 @@ export default defineComponent({
       && state.transfer.amount.toNumber() !== 0
     );
 
+    const disableSave = computed(() => !state.editTransfer || !sendValid.value);
+
+    const disableAddTransfer = computed(() => {
+      if (disableSave.value) return true;
+      return state.transfers.length >= 10;
+    });
+
     const disableSend = computed(() => {
       if (state.transfers.length === 0) return !sendValid.value;
       else return false;
     });
 
-    const disableAddTransfer = computed(() => {
-      if (!sendValid.value && state.editTransfer) return true;
-      return state.transfers.length >= 10;
-    });
-
-    const disableSave = computed(() => 
-      (state.editTransfer && sendValid.value) === true);
-
-    function updateAmount(e: Event): void {
-      state.transfer.amount = new BigNumber(e as unknown as number);
-    }
-
     function updateValue(e: { index: number, value: BigNumber }) {
       state.transfers[e.index].amount = e.value;
     }
 
-    function createKey(transfer: TransferTo): string {
-      return `${transfer.to} ${transfer.asset} ${transfer.amount}`;
+    function createKey(transfer: SimpleTransfer): string {
+      return `${transfer.to?.toString()} ${transfer.asset} ${transfer.amount?.toString() ?? ''}`;
     }
 
     function formatAmount(value: number): string {
@@ -307,8 +302,8 @@ export default defineComponent({
     function remove(e: { index: number }): void {
       state.transfers.splice(e.index, 1);
       if (state.transfers.length === 1) {
-        state.transfer = state.transfers.shift() as TransferTo;
-        state.transfers = [] as TransferTo[];
+        state.transfer = state.transfers.shift() as SimpleTransfer;
+        state.transfers = [] as SimpleTransfer[];
       }
     }
 
@@ -331,8 +326,9 @@ export default defineComponent({
       clear();
     }
 
-    function addTransfer(e: { transfer: TransferTo, edit: boolean }) {
+    function addTransfer(e: { transfer: SimpleTransfer, edit: boolean }) {
       const transfer = Object.assign({}, e.transfer);
+
       if (transfer.to && transfer.asset && validateTransfer(transfer) === true) {
         if (e.edit) {
           state.transfers.splice(state.indexToEdit, 1);
@@ -341,10 +337,12 @@ export default defineComponent({
           state.transfers.push(transfer);
         }
       }
+
       clear();
     }
 
-    function validateTransfer(transfer: Transfer): boolean {
+    function validateTransfer(transfer: SimpleTransfer): boolean {
+      // Not sure why we assumed people couldn't send multiple transfers of the same amount to the same account, but we did
       for (const i in state.transfers) {
         if (state.transfers[i].to?.toString() === transfer.to?.toString() && state.transfers[i].asset.toString() === transfer.asset.toString()) {
           state.generalErrorText = i18n.t("InterfaceHomeSend.error.already.in.list");
@@ -354,6 +352,7 @@ export default defineComponent({
 
       state.generalErrorText = "";
       clear();
+
       return true;
     }
 
@@ -364,8 +363,8 @@ export default defineComponent({
 
     function clear(): void {
       state.transfer.to = undefined;
-      state.transfer.asset = "HBAR",
-        state.transfer.amount = undefined
+      state.transfer.asset = "HBAR";
+      state.transfer.amount = new BigNumber(0);
       state.indexToEdit = 0;
       state.editTransfer = false;
     }
@@ -402,7 +401,7 @@ export default defineComponent({
 
       state.showIPModal = true;
       state.sendBusyText = "Executing transaction …";
-      state.generalErrorText = null;
+      state.generalErrorText = "";
 
       try {
         await store.client.transfer({
@@ -420,9 +419,9 @@ export default defineComponent({
         //get token information if asset is not Hbar, and only one transfer is going out
         //Removed token info query to reduce invisible transactions, can put back if needed
         if (state.transfer.asset !== "HBAR" && state.transfers.length <= 1) {
-          state.decimals = store.balance?.tokens?.get(state.transfer.asset)?.decimals ?? 0;
+          state.decimals = store.balance?.tokens?.get(state.transfer.asset ?? "")?.decimals ?? 0;
           state.symbol = "";
-          state.tokenType = state.transfer.asset;
+          state.tokenType = state.transfer.asset ?? "";
         }
 
         // go back to home
@@ -435,17 +434,13 @@ export default defineComponent({
         state.confirmed = false;
         state.transfer.amount = new BigNumber(0);
       } finally {
-        state.sendBusyText = null;
+        state.sendBusyText = "";
         state.confirmed = false;
       }
     }
 
     function onCancel() {
       router.back();
-    }
-
-    function updateMaxFee(fee: Hbar): void {
-      state.maxFee = fee;
     }
 
     return {
@@ -457,7 +452,6 @@ export default defineComponent({
       disableSave,
       onSend,
       onCancel,
-      updateMaxFee,
       closeAcceptModal,
       closeAddTransferModal,
       openConfirmTransferModal,
@@ -469,7 +463,6 @@ export default defineComponent({
       createKey,
       updateValue,
       handleConfirm,
-      updateAmount
     };
   },
 });
