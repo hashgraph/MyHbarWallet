@@ -176,7 +176,6 @@ import {
   ref
 } from "vue";
 import { BigNumber } from "bignumber.js";
-import type { Hbar } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
@@ -220,8 +219,7 @@ export default defineComponent({
       indexToEdit: 0,
       showEditModal: false,
       memo: "",
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      maxFee: new hashgraph.value!.Hbar(0),
+      maxFee: null,
       showAddModal: false,
       showAcceptModal: false,
       showIPModal: false,
@@ -264,9 +262,8 @@ export default defineComponent({
 
     const sendValid = computed(() =>
       state.transfer.to != null &&
-      state.transfer.amount != null &&
-      !isNaN(state.transfer.amount.toNumber())
-      && state.transfer.amount.toNumber() !== 0
+      state.transfer.amount != null && 
+      state.transfer.amount.toNumber() > 0
     );
 
     const disableSave = computed(() => !state.editTransfer || !sendValid.value);

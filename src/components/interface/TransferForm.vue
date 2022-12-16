@@ -12,11 +12,11 @@
     <div class="pb-0.5">
       <TextInput
         id="to"
-        v-model="state.rawTo"
+        v-model="rawTo"
         data-cy-transfer-to
-        :valid="state.toValid"
+        :valid="toValid"
         :placeholder="$t('InterfaceHomeSendModal.input1.placeholder')"
-        @update:model-value="handleToInput"
+        @update:model-value="handleToUpdate"
       />
     </div>
 
@@ -25,7 +25,7 @@
     </label>
 
     <AssetSelector
-      v-model="dAsset"
+      v-model="assetValue"
       data-cy-asset-selector
     />
 
@@ -38,17 +38,18 @@
 
     <AssetInput
       id="amount"
+      v-model="amountValue"
       data-cy-asset-amount
       :asset="asset"
-      @update:model-value="updateAmount"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import { useVModel } from "@vueuse/core";
 import type { AccountId } from "@hashgraph/sdk";
+import { BigNumber } from "bignumber.js";
 
 import TextInput from "../base/TextInput.vue";
 import AssetInput from "../base/AssetInput.vue";
@@ -63,39 +64,35 @@ export default defineComponent({
     AssetSelector,
   },
   props: {
-    to: { type: Object as PropType<AccountId | null>, default: null, optional: true },
+    to: { type: Object as PropType<AccountId | null>, default: null },
     asset: { type: String, default: "HBAR" },
-    amount: { type: String, default: null },
+    amount: { type: Object as PropType<BigNumber>, default: null },
   },
-  emits: ["update:to", "update:asset", "update:amount", "update:usd"],
+  emits: ["update:to", "update:asset", "update:amount"],
   setup(props, { emit }) {
-    const dAsset = useVModel(props, "asset");
+    const rawTo = ref("");
+    const toValid = ref(true);
+    const assetValue = useVModel(props, "asset", emit);
+    const amountValue = useVModel(props, "amount", emit);
     
-    const state = reactive({
-      toValid: false,
-      rawTo: ""
-    })
 
-    async function handleToInput(newTo: string): Promise<void> {
+    async function handleToUpdate(newTo: string): Promise<void> {
       try {
         const { AccountId } = await import("@hashgraph/sdk");
         const account = AccountId.fromString(newTo);
-        state.toValid = true;
+        toValid.value = true;
         emit("update:to", account);
       } catch (error) {
-        state.toValid = false;
+        toValid.value = false;
       }
-    }
-    
-    function updateAmount(e: Event): void {
-      emit('update:amount', e);
     }
 
     return {
-      dAsset,
-      state,
-      handleToInput,
-      updateAmount
+      rawTo,
+      toValid,
+      handleToUpdate,
+      assetValue,
+      amountValue
     };
   },
 });
