@@ -64,9 +64,9 @@ export default defineComponent({
     AssetSelector,
   },
   props: {
-    to: { type: Object as PropType<AccountId | null>, default: null },
+    to: { type: Object as PropType<AccountId | undefined>, default: undefined },
     asset: { type: String, default: "HBAR" },
-    amount: { type: Object as PropType<BigNumber>, default: null },
+    amount: { type: Object as PropType<BigNumber | undefined>, default: undefined },
   },
   emits: ["update:to", "update:asset", "update:amount"],
   setup(props, { emit }) {

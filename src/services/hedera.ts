@@ -9,7 +9,7 @@ export interface SimpleTransfer {
     asset?: string;
     to?: AccountId;
     // amount must be in low denom
-    amount?: BigNumber.Instance;
+    amount?: BigNumber;
 }
 
 export interface AccountBalance {

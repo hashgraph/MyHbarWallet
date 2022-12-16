@@ -32,7 +32,7 @@
           <TransferForm
             v-model:to="state.transfer.to"
             v-model:asset="state.transfer.asset"
-            v-model:usd="state.transfer.amount"
+            v-model:amount="state.transfer.amount"
             data-cy-transfer-form
             class="transition-all duration-300"
             :class="{
@@ -121,10 +121,10 @@
         color="green"
         class="w-full py-3 mt-6"
         :disabled="disableSend"
-        :busy="state.sendBusyText != null"
+        :busy="state.sendBusyText.length > 0"
         @click="openConfirmTransferModal"
       >
-        {{ state.sendBusyText ?? "Send" }}
+        {{ state.sendBusyText.length > 0 ? state.sendBusyText : "Send" }}
       </Button>
 
       <Button
@@ -171,11 +171,10 @@
 import {
   computed,
   defineComponent,
-  onMounted,
-  reactive,
-  ref
+  reactive
 } from "vue";
 import { BigNumber } from "bignumber.js";
+import { Hbar } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
@@ -210,7 +209,6 @@ export default defineComponent({
     const router = useRouter();
     const store = useStore();
     const i18n = useI18n();
-    const hashgraph = ref<typeof import("@hashgraph/sdk") | null>(null);
 
     const state = reactive({
       accountId: store.accountId,
@@ -219,7 +217,7 @@ export default defineComponent({
       indexToEdit: 0,
       showEditModal: false,
       memo: "",
-      maxFee: null,
+      maxFee: new Hbar(0),
       showAddModal: false,
       showAcceptModal: false,
       showIPModal: false,
@@ -237,10 +235,6 @@ export default defineComponent({
       decimals: 0,
       symbol: "",
       tokenType: ""
-    });
-
-    onMounted(async () => {
-      hashgraph.value = await import("@hashgraph/sdk");
     });
 
     const success = computed(() => {
@@ -287,7 +281,7 @@ export default defineComponent({
     }
 
     function formatAmount(value: number): string {
-      return hashgraph.value?.Hbar.fromTinybars(value).toString() ?? '';
+      return Hbar.fromTinybars(value).toString() ?? '';
     }
 
     function edit(e: { index: number }): void {
@@ -341,7 +335,7 @@ export default defineComponent({
     function validateTransfer(transfer: SimpleTransfer): boolean {
       // Not sure why we assumed people couldn't send multiple transfers of the same amount to the same account, but we did
       for (const i in state.transfers) {
-        if (state.transfers[i].to?.toString() === transfer.to?.toString() && state.transfers[i].asset.toString() === transfer.asset.toString()) {
+        if (state.transfers[i].to?.toString() === transfer.to?.toString() && state.transfers[i].asset === transfer.asset) {
           state.generalErrorText = i18n.t("InterfaceHomeSend.error.already.in.list");
           return false;
         }
@@ -404,8 +398,7 @@ export default defineComponent({
         await store.client.transfer({
           transfers: state.transfers,
           memo: state.memo ?? "",
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          maxFee: state.maxFee?.toBigNumber() ?? new hashgraph.value!.Hbar(2).toBigNumber(),
+          maxFee: state.maxFee?.toBigNumber() ?? new Hbar(2).toBigNumber(),
           onBeforeConfirm() {
             state.sendBusyText = "Waiting for confirmation …";
           },

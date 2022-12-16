@@ -15,7 +15,6 @@
 
     <input
       v-bind="$attrs"
-      :value="formattedValue"
       class="py-3 w-full bg-transparent bg-white border-none focus:ring-0 placeholder-squant dark:text-silver-polish dark:bg-ruined-smores"
       :class="{ 'pr-5 pl-8': asset === 'HBAR', 'px-5': asset !== 'HBAR' }"
       type="number"
@@ -26,7 +25,7 @@
 </template>
  
 <script lang="ts">
-import { computed, defineComponent, watch } from 'vue'
+import { computed, defineComponent, watch, PropType, ComputedRef } from 'vue'
 import { BigNumber } from 'bignumber.js'
 
 import { useStore } from '../../store'
@@ -37,8 +36,9 @@ export default defineComponent({
     asset: { type: String, required: true },
     // NOTE: value here is low denom, so tinybars not hbars, cents not dollars, etc.
     modelValue: {
-      type: BigNumber,
-      default: null,
+      type: Object as PropType<BigNumber.Instance>,
+      default: undefined,
+      required: true
     },
   },
   emits: ['update:modelValue'],
@@ -52,7 +52,7 @@ export default defineComponent({
           store.balance!.tokens!.get(props.asset)!.decimals,
     )
 
-    const assetScale = computed(() =>
+    const assetScale: ComputedRef<BigNumber> = computed(() =>
       new BigNumber(10).pow(assetDecimals.value),
     )
 
@@ -69,33 +69,18 @@ export default defineComponent({
     })
 
     function onAmountInput(payload: Event) {
-      const raw = (payload.target as HTMLInputElement).value;
-      const stripped = raw.replace(/[^\d.]/g, '');
+      const text = (payload.target as HTMLInputElement).value;
+      const num = new BigNumber(text)
+        .multipliedBy(assetScale.value)
+        .decimalPlaces(assetDecimals.value);
       
-      emit('update:modelValue', new BigNumber(stripped));
+      emit('update:modelValue', num);
     }
-
-    const formattedValue = computed(() => {
-      if (props.modelValue == null) return null
-
-      return formatNum(props.modelValue.div(assetScale.value));
-    })
 
     return {
       assetScale,
-      formattedValue,
       onAmountInput,
     }
   },
 })
-
-function formatNum(num: BigNumber | null | undefined): string {
-  return (
-    num?.toFormat({
-      decimalSeparator: '.',
-      groupSeparator: ',',
-      groupSize: 3,
-    }) ?? ''
-  )
-}
 </script>

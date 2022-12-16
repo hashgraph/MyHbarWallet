@@ -1,14 +1,14 @@
 <template>
   <AssetInput
-    :value="amount"
+    v-model="tinybar"
     :asset="'HBAR'"
     @update:model-value="handleUpdate"
   />
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from 'vue'
-import { Hbar, HbarUnit } from "@hashgraph/sdk";
+import { defineComponent, PropType, ref } from 'vue'
+import { Hbar } from "@hashgraph/sdk";
 import { BigNumber } from 'bignumber.js'
 
 import AssetInput from "../base/AssetInput.vue";
@@ -19,18 +19,18 @@ export default defineComponent({
     AssetInput
   },
   props: {
-    modelValue: { type: Object as PropType<Hbar | null>, required: true, default: null }
+    modelValue: { type: Object as PropType<Hbar>, required: true }
   },
   emits: ["update:modelValue"],
-  setup(props, { emit }) {
-    const amount = computed(() => props.modelValue?.toBigNumber());
+  setup(_, { emit }) {
+    const tinybar = ref(new BigNumber(0));
 
     function handleUpdate(value: BigNumber): void {
-      emit("update:modelValue", Hbar.from(value, HbarUnit.Hbar));
+      emit("update:modelValue", Hbar.fromTinybars(value));
     }
 
     return {
-      amount,
+      tinybar,
       handleUpdate
     }
   }

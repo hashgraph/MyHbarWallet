@@ -54,7 +54,7 @@ import { defineComponent, reactive, PropType, onMounted } from "vue";
 import BigNumber from "bignumber.js";
 
 import { useStore } from "../../store";
-import { Transfer } from "../../domain/Transaction";
+import { SimpleTransfer } from "../../services/hedera";
 
 import TransferOptionMenu from "./TransferOptionMenu.vue";
 
@@ -64,7 +64,7 @@ export default defineComponent({
         TransferOptionMenu
     },
     props: {
-        transfer: { type: Object as PropType<Transfer>, required: true },
+        transfer: { type: Object as PropType<SimpleTransfer>, required: true },
         index: { type: Number, default: 0, required: true }
     },
     emits:[
@@ -86,13 +86,8 @@ export default defineComponent({
         });
 
         function formatAmount(value: BigNumber): string {
-          // value = value.dividedBy(Math.pow(10, state.decimals));
-          //Represent as Hbar instead of Tinybar
-          if(props.transfer.asset === "HBAR") return `${value.toFixed(8)}ℏ`;
-          context.emit("update:value", {
-            index: props.index,
-            value: value
-          });
+          if (props.transfer.asset === "HBAR") state.symbol = `ℏ`;
+
           return `${value.toFixed(state.decimals)} ${state.symbol}`;
         }
 
@@ -106,6 +101,7 @@ export default defineComponent({
 
         function edit(): void {
           closeMenu();
+
           context.emit("edit", {
             index: props.index
           });
@@ -113,21 +109,22 @@ export default defineComponent({
 
         function remove(): void {
           closeMenu();
+
           context.emit("remove", {
             index: props.index
           });
         }
 
-        onMounted(async ()=> {
-          //Removed token info query to reduce phantom fees, can replace if needed   
-          if(props.transfer.asset !== "HBAR") {
-            state.tokenName = props.transfer.asset;
+        onMounted(async() => { 
+          if (props.transfer.asset !== "HBAR") {
+            state.tokenName = props.transfer.asset ?? "";
             state.symbol = "";
-            state.decimals = store.balance?.tokens.get(props.transfer.asset)?.decimals ?? 0;
-          }
-          else {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            state.decimals = store.balance?.tokens.get(props.transfer.asset!)?.decimals ?? 0;
+          } else {
             state.tokenName = props.transfer.asset;
           }
+
           state.formattedAmount = formatAmount(props.transfer.amount ?? new BigNumber(0));
         });
 

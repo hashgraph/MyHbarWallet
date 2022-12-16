@@ -36,7 +36,7 @@ export default defineComponent({
     HbarInput,
   },
   props: {
-    modelValue: { type: Object as PropType<Hbar | null>, required: true, default: null },
+    modelValue: { type: Object as PropType<Hbar | null>, required: true },
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
@@ -44,7 +44,7 @@ export default defineComponent({
     const value = useVModel(props, "modelValue", emit);
 
     function resetHbar() {
-      emit("update:modelValue", null);
+      value.value = null;
     }
 
     watch(isOpen, () => {

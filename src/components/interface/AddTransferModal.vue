@@ -7,10 +7,9 @@
   >
     <TransferForm
       v-model:asset="state.transfer.asset"
-      v-model:usd="state.transfer.usd"
+      v-model:amount="state.transfer.amount"
       v-model:to="state.transfer.to"
       class="text-left mt-4 shadow-none"
-      @update:amount="updateAmount"
     />
 
     <Button
@@ -51,16 +50,14 @@ export default defineComponent({
             transfer: {
                 to: null,
                 asset: "HBAR",
-                amount: null as BigNumber | null,
-                usd: null as BigNumber | null
+                amount: null as BigNumber | null
             },
         });
 
         const valid = computed(()=>{
           return state.transfer.to != null && 
             state.transfer.amount != null && 
-            !isNaN(state.transfer.amount.toNumber()) 
-            && state.transfer.amount.toNumber() !== 0;
+            state.transfer.amount.isGreaterThan(new BigNumber(0));
         });
 
         function handleTransfer(): void {
@@ -75,15 +72,10 @@ export default defineComponent({
           }
         }
 
-        function updateAmount(e: Event): void {
-          state.transfer.amount = new BigNumber(e as unknown as number);
-        }
-
         return {
             state,
             valid,
-            handleTransfer,
-            updateAmount
+            handleTransfer
         }
     }
 });
