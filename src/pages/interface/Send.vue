@@ -7,7 +7,9 @@
   <div
     class="pb-10 mt-8 border-b text-carbon dark:text-silver-polish border-cerebral-grey dark:border-midnight-express"
   >
-    <div class="lg:align-baseline lg:m-auto lg:grid lg:grid-flow-col lg:grid-cols-2 lg:gap-16 flex flex-wrap items-center">
+    <div
+      class="lg:align-baseline lg:m-auto lg:grid lg:grid-flow-col lg:grid-cols-2 lg:gap-16 flex flex-wrap items-center"
+    >
       <div class="w-full lg:h-full">
         <div
           v-if="state.transfers.length <= 1"
@@ -24,7 +26,9 @@
         </div>
 
 
-        <div class="p-4 bg-first-snow border rounded shadow-md dark:bg-midnight-express border-jupiter dark:border-midnight-express min-w-[325px] min-h-[375px] md:min-h-[400px] overflow-hidden">
+        <div
+          class="p-4 bg-first-snow border rounded shadow-md dark:bg-midnight-express border-jupiter dark:border-midnight-express min-w-[325px] min-h-[375px] md:min-h-[400px] overflow-hidden"
+        >
           <TransferForm
             v-model:to="state.transfer.to"
             v-model:asset="state.transfer.asset"
@@ -75,7 +79,7 @@
           class="p-2 mt-8 w-52"
           :disabled="!disableSave"
           @click="editSingleTransfer"
-        > 
+        >
           {{ $t("InterfaceHomeSend.button.save") }}
         </Button>
       </div>
@@ -84,17 +88,19 @@
         <p class="mb-2">
           {{ $t("InterfaceSend.options") }}
         </p>
-        <div class="p-8 pr-10 pl-10 z-10 relative bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full">
-          <OptionalMemo
-            v-model="state.memo"
-          />
+        <div
+          class="p-8 pr-10 pl-10 z-10 relative bg-white border rounded shadow-md dark:bg-ruined-smores border-jupiter dark:border-midnight-express w-full"
+        >
+          <OptionalMemo v-model="state.memo" />
 
           <OptionalHbarInput
             v-model="state.maxFee"
             @update:model-value="updateMaxFee"
           />
 
-          <p class="mt-4 p-4 italic text-squant dark:text-silver-polish dark:bg-dreamless-sleep rounded shadow-md border border-transparent dark:border-midnight-express">
+          <p
+            class="mt-4 p-4 italic text-squant dark:text-silver-polish dark:bg-dreamless-sleep rounded shadow-md border border-transparent dark:border-midnight-express"
+          >
             {{ $t("InterfaceSend.max.transaction.fee") }}
           </p>
         </div>
@@ -122,17 +128,17 @@
         {{ state.sendBusyText ?? "Send" }}
       </Button>
 
-      <Button 
-        color="white" 
-        class="py-2 mt-4 text-sm px-9" 
+      <Button
+        color="white"
+        class="py-2 mt-4 text-sm px-9"
         @click="onCancel"
       >
         {{ $t("BaseButton.cancel") }}
       </Button>
     </div>
 
-    <ProgressModal 
-      :is-visible="state.showIPModal" 
+    <ProgressModal
+      :is-visible="state.showIPModal"
       :title="$t('InterfaceSend.modal.sending')"
     />
 
@@ -171,11 +177,11 @@ import {
   ref
 } from "vue";
 import { BigNumber } from "bignumber.js";
-import type { AccountId, Hbar } from "@hashgraph/sdk";
+import type { Hbar } from "@hashgraph/sdk";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
-import { Transfer } from "../../domain/Transfer";
+import { TransferTo } from "../../domain/Transaction";
 import Headline from "../../components/interface/Headline.vue";
 import TransferForm from "../../components/interface/TransferForm.vue";
 import Button from "../../components/base/Button.vue";
@@ -203,47 +209,10 @@ export default defineComponent({
     TransferConfirmationModal,
   },
   setup() {
-    onMounted(async () => {
-      hashgraph.value = await import("@hashgraph/sdk");
-    });
-
     const router = useRouter();
     const store = useStore();
     const i18n = useI18n();
     const hashgraph = ref<typeof import("@hashgraph/sdk") | null>(null);
-
-    const success = computed( ()=> {
-      if(state.transfers.length === 1) {      
-        if(state.transfers[0].asset === "HBAR"){
-          return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${formatAmount(state.transfers[0].amount?.toNumber() ?? 0)} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfers[0].to?.toString()}`
-        }
-        return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${state.transfers[0].amount?.toFixed(state.decimals)} ${i18n.t("InterfaceSend.modal.of")} ${state.transfers[0].asset} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfers[0].to?.toString()}`
-      } else {
-        return `${i18n.t("InterfaceHomeSendModal.success.multiple.transfers")}`;
-      }
-    });
-
-    const addTransferButton = computed( ()=>{
-      if(state.transfers.length == 0) return i18n.t("BaseButton.addTransfer1");
-      if(state.editTransfer === true) return i18n.t("InterfaceHomeSend.button.save");
-      return i18n.t("BaseButton.addAnotherTransfer");
-    });
-
-    const sendValid = computed(
-      () => state.transfer.to != null && state.transfer.amount != null && !isNaN(state.transfer.amount.toNumber()) && state.transfer.amount.toNumber() !== 0
-    );
-
-    const disableSend = computed(()=> {
-      if(state.transfers.length === 0) return !sendValid.value;
-      else return false;
-    });
-
-    const disableAddTransfer = computed(()=> {
-      if(!sendValid.value && state.editTransfer) return true;
-      return state.transfers.length >= 10;
-    });
-
-    const disableSave = computed( ()=> state.editTransfer && sendValid.value === true);
 
     const state = reactive({
       accountId: store.accountId,
@@ -262,15 +231,56 @@ export default defineComponent({
       confirmed: false,
       editTransfer: true,
       transfer: {
-        to: undefined as AccountId | null | undefined,
+        to: null,
         asset: "HBAR",
-        amount: undefined
-      } as Transfer,
-      transfers: [] as Transfer[],
+        amount: null
+      } as TransferTo,
+      transfers: [] as TransferTo[],
       decimals: 0,
       symbol: null as string | null | undefined,
       tokenType: null as string | null | undefined
     });
+
+    onMounted(async () => {
+      hashgraph.value = await import("@hashgraph/sdk");
+    });
+
+    const success = computed(() => {
+      if (state.transfers.length === 1) {
+        if (state.transfers[0].asset === "HBAR") {
+          return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${formatAmount(state.transfers[0].amount?.toNumber() ?? 0)} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfers[0].to?.toString()}`
+        }
+        return `${i18n.t("Modal.Send.SuccessfullyTransferred")} ${state.transfers[0].amount?.toFixed(state.decimals)} ${i18n.t("InterfaceSend.modal.of")} ${state.transfers[0].asset} ${i18n.t("Modal.Send.ToAccount")}: ${state.transfers[0].to?.toString()}`
+      } else {
+        return `${i18n.t("InterfaceHomeSendModal.success.multiple.transfers")}`;
+      }
+    });
+
+    const addTransferButton = computed(() => {
+      if (state.transfers.length == 0) return i18n.t("BaseButton.addTransfer1");
+      if (state.editTransfer === true) return i18n.t("InterfaceHomeSend.button.save");
+      return i18n.t("BaseButton.addAnotherTransfer");
+    });
+
+    const sendValid = computed(() =>
+      state.transfer.to != null &&
+      state.transfer.amount != null &&
+      !isNaN(state.transfer.amount.toNumber())
+      && state.transfer.amount.toNumber() !== 0
+    );
+
+    const disableSend = computed(() => {
+      if (state.transfers.length === 0) return !sendValid.value;
+      else return false;
+    });
+
+    const disableAddTransfer = computed(() => {
+      if (!sendValid.value && state.editTransfer) return true;
+      return state.transfers.length >= 10;
+    });
+
+    const disableSave = computed(() => 
+      (state.editTransfer && sendValid.value) === true);
 
     function updateAmount(e: Event): void {
       state.transfer.amount = new BigNumber(e as unknown as number);
@@ -280,13 +290,12 @@ export default defineComponent({
       state.transfers[e.index].amount = e.value;
     }
 
-    function createKey(transfer: Transfer): string {
+    function createKey(transfer: TransferTo): string {
       return `${transfer.to} ${transfer.asset} ${transfer.amount}`;
     }
-   
-    //Format value to print in Hbar
+
     function formatAmount(value: number): string {
-      return `${value.toFixed(8)}ℏ`;
+      return hashgraph.value?.Hbar.fromTinybars(value).toString() ?? '';
     }
 
     function edit(e: { index: number }): void {
@@ -297,33 +306,35 @@ export default defineComponent({
 
     function remove(e: { index: number }): void {
       state.transfers.splice(e.index, 1);
-      if(state.transfers.length === 1) {
-        state.transfer = state.transfers.shift() as Transfer;
-        state.transfers = [] as Transfer[];
+      if (state.transfers.length === 1) {
+        state.transfer = state.transfers.shift() as TransferTo;
+        state.transfers = [] as TransferTo[];
       }
     }
 
     function editSingleTransfer(): void {
-      if(state.transfers.length === 0 && !sendValid.value){
+      if (state.transfers.length === 0 && !sendValid.value) {
         openAddTransferModal();
         return;
       }
-      if(!sendValid.value && !state.editTransfer) {
+
+      if (!sendValid.value && !state.editTransfer) {
         openAddTransferModal();
         return;
       }
-      const transfer = Object.assign({}, state.transfer) as Transfer;
-      if(transfer.to && transfer.asset) {
+
+      if (state.transfer.to && state.transfer.asset) {
         state.transfers.splice(state.indexToEdit, 1);
-        state.transfers.splice(state.indexToEdit, 0, transfer);
+        state.transfers.splice(state.indexToEdit, 0, state.transfer);
       }
+
       clear();
     }
 
-    function addTransfer(e: { transfer: Transfer, edit: boolean }){
+    function addTransfer(e: { transfer: TransferTo, edit: boolean }) {
       const transfer = Object.assign({}, e.transfer);
-      if(transfer.to && transfer.asset && validateTransfer(transfer) === true){
-        if(e.edit) {
+      if (transfer.to && transfer.asset && validateTransfer(transfer) === true) {
+        if (e.edit) {
           state.transfers.splice(state.indexToEdit, 1);
           state.transfers.splice(state.indexToEdit, 0, transfer);
         } else {
@@ -334,8 +345,8 @@ export default defineComponent({
     }
 
     function validateTransfer(transfer: Transfer): boolean {
-      for(const i in state.transfers) {
-        if(state.transfers[i].to?.toString() === transfer.to?.toString() && state.transfers[i].asset.toString() === transfer.asset.toString()) {
+      for (const i in state.transfers) {
+        if (state.transfers[i].to?.toString() === transfer.to?.toString() && state.transfers[i].asset.toString() === transfer.asset.toString()) {
           state.generalErrorText = i18n.t("InterfaceHomeSend.error.already.in.list");
           return false;
         }
@@ -346,7 +357,7 @@ export default defineComponent({
       return true;
     }
 
-    function handleConfirm(): void{
+    function handleConfirm(): void {
       closeConfirmTransferModal();
       onSend();
     }
@@ -354,13 +365,13 @@ export default defineComponent({
     function clear(): void {
       state.transfer.to = undefined;
       state.transfer.asset = "HBAR",
-      state.transfer.amount = undefined
+        state.transfer.amount = undefined
       state.indexToEdit = 0;
       state.editTransfer = false;
     }
 
     function openConfirmTransferModal(): void {
-      if(sendValid.value === true && state.transfers.length === 0) state.transfers.push(state.transfer);
+      if (sendValid.value === true && state.transfers.length === 0) state.transfers.push(state.transfer);
       state.showConfirmTransferModal = true;
     }
 
@@ -405,10 +416,10 @@ export default defineComponent({
         });
 
         void store.requestAccountBalance();
-        
+
         //get token information if asset is not Hbar, and only one transfer is going out
         //Removed token info query to reduce invisible transactions, can put back if needed
-        if(state.transfer.asset !== "HBAR" && state.transfers.length <= 1){
+        if (state.transfer.asset !== "HBAR" && state.transfers.length <= 1) {
           state.decimals = store.balance?.tokens?.get(state.transfer.asset)?.decimals ?? 0;
           state.symbol = "";
           state.tokenType = state.transfer.asset;

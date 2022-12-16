@@ -79,7 +79,7 @@ import { useI18n } from "vue-i18n";
 import type { AccountId } from "@hashgraph/sdk";
 
 import { useStore } from "../../store";
-import { Transfer, Transaction, formatAmount, formatType, sumTransfers } from "../../domain/Transaction";
+import { Transaction, formatAmount, formatType, sumTransfers } from "../../domain/Transaction";
 import checkmark from "../../assets/icon_check_green.svg";
 import Headline from "../../components/interface/Headline.vue";
 import TransferDetail, {

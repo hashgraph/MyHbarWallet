@@ -84,8 +84,8 @@ export default defineComponent({
             keystoreLink.value.download = `keystore-${new Date().toISOString()}`;
             keystoreLink.value.click();
           }
-        } catch(error){
-          state.errorMessage = await store.errorMessage(error);
+        } catch(error) {
+          state.errorMessage = await store.errorMessage(error as Error);
         }
       }
 

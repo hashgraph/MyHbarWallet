@@ -71,7 +71,7 @@ export default defineComponent({
     function onAmountInput(payload: Event) {
       if (props.modelValue == null) return;
 
-      const raw = (payload.target as HTMLInputElement)!.value;
+      const raw = (payload.target as HTMLInputElement).value;
       const stripped = raw.replace(/[^\d.]/g, '');
       
       emit('update:modelValue', new BigNumber(stripped));

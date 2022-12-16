@@ -29,7 +29,9 @@
             {{ transfer.asset }}
           </td>
           <td>
-            {{ transfer.asset === "HBAR"? transfer.amount?.toFixed(8) ?? '0' : transfer.amount?.toFixed(getDecimal(transfer.asset) ?? 0) ?? '0' }}
+            {{ transfer.asset === "HBAR" ? transfer.amount?.toFixed(8) ?? '0' :
+              transfer.amount?.toFixed(getDecimal(transfer.asset) ?? 0) ?? '0'
+            }}
           </td>
         </tr>
       </tbody>
@@ -40,7 +42,7 @@
         class="p-3 mb-3 w-3/4 m-auto"
         @click="$emit('confirm')"
       >
-        {{ transfers.length === 0? $t("BaseButton.send"): $t("InterfaceHomeSend.transfer.confirm.send.all") }}
+        {{ transfers.length === 0 ? $t("BaseButton.send") : $t("InterfaceHomeSend.transfer.confirm.send.all") }}
       </Button>
       <Button
         color="white"
@@ -57,30 +59,30 @@
 import { defineComponent, PropType } from "vue";
 
 import { useStore } from "../../store";
-import { Transfer } from "../../domain/Transaction";
+import { TransferTo } from "../../domain/Transaction";
 import Button from "../base/Button.vue";
 
 import Modal from "./Modal.vue";
 
 export default defineComponent({
-    name: "TransferConfirmationModal",
-    components: {
-        Modal,
-        Button
-    },
-    props: {
-        isVisible: { type: Boolean, required: true },
-        transfers: { type: Array as PropType<Transfer[]>, required: true }
-    },
-    emits: ["close", "confirm"],
-    setup(){
-      const store = useStore();
-      
-      function getDecimal(asset: string): number | undefined {
-        return store.balance?.tokens.get(asset)?.decimals;
-      }
+  name: "TransferConfirmationModal",
+  components: {
+    Modal,
+    Button
+  },
+  props: {
+    isVisible: { type: Boolean, required: true },
+    transfers: { type: Array as PropType<TransferTo[]>, required: true }
+  },
+  emits: ["close", "confirm"],
+  setup() {
+    const store = useStore();
 
-      return { getDecimal };
+    function getDecimal(asset: string): number | undefined {
+      return store.balance?.tokens.get(asset)?.decimals;
     }
+
+    return { getDecimal };
+  }
 });
 </script>

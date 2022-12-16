@@ -1,9 +1,16 @@
-import { BigNumber } from "bignumber.js";
+import type { AccountId } from "@hashgraph/sdk";
+import type { BigNumber } from "bignumber.js";
 
 export interface Transfer {
   account: string;
   amount: number;
   is_approval: boolean;
+}
+
+export interface TransferTo {
+  to: AccountId | null;
+  amount: BigNumber | null;
+  asset: string;
 }
 
 // {"bytes":null,"

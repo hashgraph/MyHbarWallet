@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { useStore } from '../../store';
 import { onMounted, ref, computed } from 'vue';
 import type { AccountId } from "@hashgraph/sdk";
+
+import { useStore } from '../../store';
 import hashscanLogo from "../../assets/hashscan-logo.png";
 
 const accountId = ref<AccountId | null>(null);
@@ -19,7 +20,14 @@ const hashscanLink = computed(() => {
 </script>
 
 <template>
-  <a :href="hashscanLink" target="_blank" rel="noopener noreferrer">
-    <img :src="hashscanLogo" class="max-h-30 max-w-40" />
+  <a
+    :href="hashscanLink"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      :src="hashscanLogo"
+      class="max-h-30 max-w-40"
+    >
   </a>
 </template>

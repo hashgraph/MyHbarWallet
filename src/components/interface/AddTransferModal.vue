@@ -29,7 +29,6 @@
 import { defineComponent, reactive, computed } from "vue";
 import  { BigNumber } from "bignumber.js";
 
-import { Transfer } from "../../domain/Transfer";
 import TransferForm from "../interface/TransferForm.vue";
 import Modal from "../interface/Modal.vue";
 import Button from "../base/Button.vue";
@@ -50,24 +49,28 @@ export default defineComponent({
     setup(props, context) {
         const state = reactive({
             transfer: {
-                to: undefined,
+                to: null,
                 asset: "HBAR",
-                amount: undefined,
-                usd: undefined
-            } as Transfer,
+                amount: null as BigNumber | null,
+                usd: null as BigNumber | null
+            },
         });
 
         const valid = computed(()=>{
-          return state.transfer.to != null && state.transfer.amount != null && !isNaN(state.transfer.amount.toNumber()) && state.transfer.amount.toNumber() !== 0;
+          return state.transfer.to != null && 
+            state.transfer.amount != null && 
+            !isNaN(state.transfer.amount.toNumber()) 
+            && state.transfer.amount.toNumber() !== 0;
         });
 
         function handleTransfer(): void {
-          if(valid.value){
-            const transfer = Object.assign({}, state.transfer);
+          if(valid.value) {
+            
             context.emit("addTransfer", {
-              transfer: transfer,
+              transfer: state.transfer,
               edit: props.edit
             });
+
             context.emit("close");
           }
         }

@@ -55,8 +55,8 @@ export default defineComponent({
     const timeAgo = ref("...");
 
     useIntervalFn(() => {
-      // TODO: moment.js time ago calculation
-      timeAgo.value = props.tx.consensus_timestamp as string;
+      if (props.tx.consensus_timestamp == null) return;
+      timeAgo.value = moment.unix(Number.parseFloat(props.tx.consensus_timestamp)).fromNow();
     }, 1000);
 
     const feeHbar = computed(() => {

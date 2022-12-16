@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Hbar } from "@hashgraph/sdk";
-import { defineComponent, PropType, Ref, ref, watch } from "vue";
+import { defineComponent, PropType, ref, watch } from "vue";
 import { useVModel } from "@vueuse/core";
 
 import Switch from "../base/Switch.vue";
