@@ -3,32 +3,35 @@
     :title="$t('InterfaceTransactionDetails.header')"
     parent="history"
   />
-  <div class="overflow-auto w-full">
-    <TransferDetail 
+  <div
+    v-if="state.transaction != null"
+    class="overflow-auto w-full"
+  >
+    <TransactionDetail 
       :color="ColorOption.GRAY" 
       :title="$t('InterfaceTransactionDetails.transactionHash')"
       :description="state.transaction?.transaction_hash"
     />
 
-    <TransferDetail 
+    <TransactionDetail 
       :color="ColorOption.BLUE" 
       :title="$t('InterfaceTransactionDetails.operator')"
       :description="state.accountId?.toString() ?? notAvailable"
     />
 
-    <TransferDetail 
+    <TransactionDetail 
       :color="ColorOption.BLUE" 
       :title="$t('InterfaceTransactionDetails.node')"
       :description="state.transaction?.node ?? notAvailable"
     />
 
-    <TransferDetail 
+    <TransactionDetail 
       :color="ColorOption.GRAY" 
       :title="$t('InterfaceTransactionDetails.consensus')"
-      :description="new Date(state.transaction?.consensus_timestamp!).toString() ?? notAvailable"
+      :description="consensusTimestamp ?? notAvailable"
     />
 
-    <TransferDetail 
+    <TransactionDetail 
       :color="state.transaction?.result === 'SUCCESS' ? ColorOption.GREEN : ColorOption.CHARCOAL"
       :title="$t('InterfaceTransactionDetails.status')"
     >
@@ -38,60 +41,63 @@
         :src="checkmark"
         alt="green checkmark"
       >
-      {{ formatType(state.transaction?.result!) ?? notAvailable }}
-    </TransferDetail>
+      {{ state.transaction?.result ?? notAvailable }}
+    </TransactionDetail>
 
-    <TransferDetail 
+    <TransactionDetail 
       :color="ColorOption.GRAY" 
       :title="$t('InterfaceTransactionDetails.type')"
-      :description="formatType(state.transaction?.name!) ?? notAvailable"
+      :description="state.transaction?.name ?? notAvailable"
     />
 
-    <TransferDetail 
+    <TransactionDetail 
       :color="ColorOption.GRAY" 
       :title="$t('InterfaceTransactionDetails.memo')"
       :description="state.transaction?.memo_base64"
     />
 
-    <TransferDetail 
+    <TransactionDetail 
       :color="ColorOption.GRAY" 
       :title="$t('InterfaceTransactionDetails.totalAmount')"
-      :description="sumTransfers(state.transaction?.transfers! as Transfer[]) ?? notAvailable"
+      :description="sumTransfers ?? notAvailable"
     />
 
-    <TransferDetail 
+    <TransactionDetail 
       :color="ColorOption.GRAY" 
       :title="$t('InterfaceTransactionDetails.transactionFee')"
-      :description="formatAmount(state.transaction?.charged_tx_fee!) ?? notAvailable"
+      :description="chargedFee ?? notAvailable"
     />
 
     <div class="my-4">
-      <TransactionDetail 
-        :transfers="state.transaction?.transfers as Transfer[] ?? []"
+      <TransferList 
+        :transfers="state.transaction?.transfers ?? []"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted } from "vue";
+import { defineComponent, reactive, computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import type { AccountId } from "@hashgraph/sdk";
+import moment from "moment";
+import { Hbar } from "@hashgraph/sdk";
+import { useIntervalFn } from "@vueuse/core";
+import { transfer } from "src/services/impl/hedera/client/transfer";
 
 import { useStore } from "../../store";
-import { Transaction, formatAmount, formatType, sumTransfers } from "../../domain/Transaction";
+import { Transaction } from "../../domain/Transaction";
 import checkmark from "../../assets/icon_check_green.svg";
 import Headline from "../../components/interface/Headline.vue";
-import TransferDetail, {
+import TransactionDetail, {
   ColorOption,
-} from "../../components/history/TransferDetail.vue";
-import TransactionDetail from "../../components/history/TransferList.vue";
+} from "../../components/history/TransactionDetail.vue";
+import TransferList from "../../components/history/TransferList.vue";
 
 export default defineComponent({
-  name: "TransferDetails",
+  name: "TransactionDetails",
   components: {
     Headline,
-    TransferDetail,
+    TransferList,
     TransactionDetail,
   },
   props: {
@@ -102,25 +108,54 @@ export default defineComponent({
     const i18n = useI18n();
 
     const state = reactive({
-      accountId: null as AccountId | null | undefined,
+      accountId: store.accountId,
       transaction: null as Transaction | null | undefined
     });
 
     const notAvailable = i18n.t("InterfaceTransactionDetails.not.available");
 
     onMounted(async () => {
-      state.accountId = store.accountId;
       state.transaction = await store.client?.getTransactionById({ id: props.id });
     });
+
+    useIntervalFn(async () => {
+      state.transaction = await store.client?.getTransactionById({ id: props.id });
+    }, 10_000);
+
+    const consensusTimestamp = computed(() => {
+      if (state.transaction?.consensus_timestamp != null)
+      return moment.unix(Number.parseFloat(state.transaction?.consensus_timestamp)).toString();
+      else return null;
+    });
+
+    const chargedFee = computed(() => {
+      if (state.transaction?.charged_tx_fee != null)
+      return Hbar.fromTinybars(state.transaction?.charged_tx_fee).toString();
+      else return null;
+    });
+
+    const sumTransfers = computed(() => {
+      if (state.transaction?.transfers != null) {
+        let sum = 0;
+
+        for (const transfer of state.transaction.transfers) {
+          if (transfer.amount > 0) sum += transfer.amount;
+        }
+        
+        return Hbar.fromTinybars(sum).toString();
+      }
+
+      return null;
+    })
 
     return {
       checkmark,
       ColorOption,
       state,
       notAvailable,
-      formatType,
-      formatAmount,
-      sumTransfers,
+      consensusTimestamp,
+      chargedFee,
+      sumTransfers
     };
   },
 });

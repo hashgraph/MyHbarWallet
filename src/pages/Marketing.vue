@@ -43,6 +43,7 @@
       <Image
         :dark="heroDark"
         :light="heroLight"
+        rel="preload"
         alt="man at computer"
         class="
                     flex-1
@@ -58,8 +59,11 @@
       />
     </div>
   </div>
+
   <About id="about" />
+  
   <Features class="px-5" />
+  
   <Faqs id="faqs" />
 </template>
 

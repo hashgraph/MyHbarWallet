@@ -20,7 +20,7 @@
             {{ formatAmount(Math.abs(transfer?.amount)) }}
           </div>
         </div>
-        <!-- Spacer to make right/left divs the same height -->
+
         <div
           v-for="transfer, i in receivedList"
           :key="i"
@@ -51,11 +51,11 @@
       >
         <div
           v-for="(transfer, i) in receivedList"
-          :key="buildKey(transfer.amount?.toString(), i)"
+          :key="buildKey(transfer.account?.toString(), i)"
           class="grid grid-flow-row grid-cols-2"
         >
           <div class="text-andrea-blue">
-            {{ transfer.amount?.toString() }}
+            {{ transfer.account?.toString() }}
           </div>
           <div class="dark:text-silver-polish">
             {{ formatAmount(transfer?.amount) }}

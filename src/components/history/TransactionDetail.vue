@@ -40,7 +40,7 @@ export enum ColorOption {
 }
 
 export default defineComponent({
-  name: "TransferDetail",
+  name: "TransactionDetail",
   props: {
     color: {
       type: String as PropType<ColorOption>,
