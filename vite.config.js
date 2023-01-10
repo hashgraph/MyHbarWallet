@@ -39,6 +39,7 @@ export default async function ({ mode }) {
                 "mainnet-public.mirrornode.hedera.com",
                 "testnet.mirrornode.hedera.com",
                 "previewnet.mirrornode.hedera.com",
+                "node01-00-grpc.swirlds.com",
             ].join(" "),
         "font-src 'self' data:",
         isProduction ? "style-src 'self'" : "style-src 'self' 'unsafe-inline'",

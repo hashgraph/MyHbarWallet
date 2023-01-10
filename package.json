@@ -67,7 +67,7 @@
     "*.{ts,vue}": "eslint --fix"
   },
   "dependencies": {
-    "@hashgraph/sdk": "2.18.0",
+    "@hashgraph/sdk": "2.19.1",
     "@ledgerhq/hw-transport": "^6.3.0",
     "@ledgerhq/hw-transport-webusb": "^6.3.0",
     "@vueuse/core": "^5.3.0",

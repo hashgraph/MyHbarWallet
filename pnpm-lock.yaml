@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@cypress/vite-dev-server': ^2.0.8
   '@cypress/vue': ^3.0.3
-  '@hashgraph/sdk': 2.18.0
+  '@hashgraph/sdk': 2.19.1
   '@intlify/vite-plugin-vue-i18n': ^2.4.0
   '@ledgerhq/hw-transport': ^6.3.0
   '@ledgerhq/hw-transport-webusb': ^6.3.0
@@ -61,7 +61,7 @@ specifiers:
   workbox-window: ^6.2.4
 
 dependencies:
-  '@hashgraph/sdk': 2.18.0
+  '@hashgraph/sdk': 2.19.1
   '@ledgerhq/hw-transport': 6.3.0
   '@ledgerhq/hw-transport-webusb': 6.3.0
   '@vueuse/core': 5.3.0_vue@3.2.6
@@ -118,7 +118,7 @@ devDependencies:
   typescript: 4.4.2
   vite: 2.5.1
   vite-plugin-html: 2.1.0_vite@2.5.1
-  vite-plugin-pwa: 0.8.2_vite@2.5.1
+  vite-plugin-pwa: 0.8.2_ia7nziqafgojbn5lz73pbh3gz4
   vue-tsc: 0.2.3_typescript@4.4.2
   workbox-window: 6.2.4
 
@@ -1389,25 +1389,25 @@ packages:
       - supports-color
     dev: true
 
-  /@ethersproject/bytes/5.6.1:
-    resolution: {integrity: sha512-NwQt7cKn5+ZE4uDn+X5RAXLp46E1chXoaMmrxAyA0rblpxz8t58lVkrHXoRIn0lz1joQElQ8410GqhTqMOwc6g==}
+  /@ethersproject/bytes/5.7.0:
+    resolution: {integrity: sha512-nsbxwgFXWh9NyYWo+U8atvmMsSdKJprTcICAkvbBffT75qDocbuggBU0SJiVK2MuTrp0q+xvLkTnGMPK1+uA9A==}
     dependencies:
-      '@ethersproject/logger': 5.6.0
+      '@ethersproject/logger': 5.7.0
     dev: false
 
-  /@ethersproject/logger/5.6.0:
-    resolution: {integrity: sha512-BiBWllUROH9w+P21RzoxJKzqoqpkyM1pRnEKG69bulE9TSQD8SAIvTQqIMZmmCO8pUNkgLP1wndX1gKghSpBmg==}
+  /@ethersproject/logger/5.7.0:
+    resolution: {integrity: sha512-0odtFdXu/XHtjQXJYA3u9G0G8btm0ND5Cu8M7i5vhEcE8/HmF4Lbdqanwyv4uQTr2tx6b7fQRmgLrsnpQlmnig==}
     dev: false
 
-  /@ethersproject/rlp/5.6.1:
-    resolution: {integrity: sha512-uYjmcZx+DKlFUk7a5/W9aQVaoEC7+1MOBgNtvNg13+RnuUwT4F0zTovC0tmay5SmRslb29V1B7Y5KCri46WhuQ==}
+  /@ethersproject/rlp/5.7.0:
+    resolution: {integrity: sha512-rBxzX2vK8mVF7b0Tol44t5Tb8gomOHkj5guL+HhzQ1yBh/ydjGnpw6at+X6Iw0Kp3OzzzkcKp8N9r0W4kYSs9w==}
     dependencies:
-      '@ethersproject/bytes': 5.6.1
-      '@ethersproject/logger': 5.6.0
+      '@ethersproject/bytes': 5.7.0
+      '@ethersproject/logger': 5.7.0
     dev: false
 
-  /@grpc/grpc-js/1.6.10:
-    resolution: {integrity: sha512-XTX5z/P5kH802MDoVm/rqOil0UwYEOEjf9+NPgfmm5UINIxDzwYaXfVR6z8svCBG8Hlbu/FzkXqhP8J5xaWzSQ==}
+  /@grpc/grpc-js/1.8.2:
+    resolution: {integrity: sha512-5cqCjUvDKJWHGeu1prlrFOUmjuML0NequZKJ38PsCkfwIqPnZq4Q9burPP3It7/+46wpl0KsqVN3s6Te3B9Qtw==}
     engines: {node: ^8.13.0 || >=10.10.0}
     dependencies:
       '@grpc/proto-loader': 0.7.2
@@ -1426,13 +1426,20 @@ packages:
       yargs: 16.2.0
     dev: false
 
-  /@hashgraph/cryptography/1.4.0:
-    resolution: {integrity: sha512-NtDmeuwaWJKBDYZd+g/etAD56p/RPUuZGdT9jhXxiFW0YrKCaU1k4ramICbRaJg7E+RDSFJXJLarh0G72z5YDA==}
+  /@hashgraph/cryptography/1.4.1:
+    resolution: {integrity: sha512-Qx7fl58Upyf1C4Xdqo2DdMaELYAni3RpAr6fVux3tpGUwp0Wo+zaWseW7k2Klg+FPlmjOjL8XBCXkOr1AbHYWQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       expo: ^45.0.3
       expo-crypto: ^10.1.2
       expo-random: ^12.1.2
+    peerDependenciesMeta:
+      expo:
+        optional: true
+      expo-crypto:
+        optional: true
+      expo-random:
+        optional: true
     dependencies:
       bignumber.js: 9.1.0
       crypto-js: 4.1.1
@@ -1442,24 +1449,27 @@ packages:
       utf8: 3.0.0
     dev: false
 
-  /@hashgraph/proto/2.9.0:
-    resolution: {integrity: sha512-Ot0OVLCl9lNBpHZozN0BS4mvlpxgJ0Bkea4p+6MoQ/+sZtOCu+FMsidIVdvFZBvdNjgPXx8byYjkpmFaxiIOpQ==}
+  /@hashgraph/proto/2.11.0:
+    resolution: {integrity: sha512-JOom5ZIfmgPWfPMaCYg5pYBuNyMGb38F9lNFBxjA7cVbo2dnIOUQx4Zi98yyq0O4CrUSlKBhFaspDKXk+FfAhQ==}
     engines: {node: '>=10.0.0'}
     dependencies:
       long: 4.0.0
       protobufjs: 6.11.3
     dev: false
 
-  /@hashgraph/sdk/2.18.0:
-    resolution: {integrity: sha512-+ycMaHKk9HWdhMSuw5BCo450FT9CCpjIwbWpw2lpJ+QKeifORzM1wc70nAm27FkING8/azC4/FL7CLf1DelgTA==}
+  /@hashgraph/sdk/2.19.1:
+    resolution: {integrity: sha512-Mn/o5gEUR/modcd7AfnGjHnEULXb7LYl49pSbSgWyE+HC0wnnPCXcQmThLvul4o2gMFKu2UCTxRiL976GQaQtg==}
     engines: {node: '>=10.17.0'}
     peerDependencies:
       expo: ^45.0.3
+    peerDependenciesMeta:
+      expo:
+        optional: true
     dependencies:
-      '@ethersproject/rlp': 5.6.1
-      '@grpc/grpc-js': 1.6.10
-      '@hashgraph/cryptography': 1.4.0
-      '@hashgraph/proto': 2.9.0
+      '@ethersproject/rlp': 5.7.0
+      '@grpc/grpc-js': 1.8.2
+      '@hashgraph/cryptography': 1.4.1
+      '@hashgraph/proto': 2.11.0
       axios: 0.27.2
       bignumber.js: 9.1.0
       crypto-js: 4.1.1
@@ -2398,10 +2408,10 @@ packages:
     resolution: {integrity: sha512-TsUe7gCdH1cnSknUcqwVRAAxsFxsxcU/BJvnKR8ASzjaZtePW7MU+AEaDVDUURycgYxQ9XeymGjmuQGS32jcbw==}
     engines: {node: '>=14.0.0'}
     dependencies:
+      7zip-bin: 5.1.1
       '@develar/schema-utils': 2.6.5
       '@electron/universal': 1.0.5
       '@malept/flatpak-bundler': 0.4.0
-      7zip-bin: 5.1.1
       async-exit-hook: 2.0.1
       bluebird-lst: 1.0.9
       builder-util: 22.13.1
@@ -2781,9 +2791,9 @@ packages:
   /builder-util/22.13.1:
     resolution: {integrity: sha512-gMdoW9aQbWYxuQ4k4jT4An1BTo/hWzvsdv3pwNz18iNYnqn9j+xMllQOg9CHgfQYKSUd8VuMsZnbCvLO4NltYw==}
     dependencies:
+      7zip-bin: 5.1.1
       '@types/debug': 4.1.7
       '@types/fs-extra': 9.0.13
-      7zip-bin: 5.1.1
       app-builder-bin: 3.7.1
       bluebird-lst: 1.0.9
       builder-util-runtime: 8.8.1
@@ -5264,7 +5274,7 @@ packages:
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.10
     dev: true
 
   /jsonpointer/4.1.0:
@@ -7500,10 +7510,11 @@ packages:
       vite: 2.5.1
     dev: true
 
-  /vite-plugin-pwa/0.8.2_vite@2.5.1:
+  /vite-plugin-pwa/0.8.2_ia7nziqafgojbn5lz73pbh3gz4:
     resolution: {integrity: sha512-DuhFaTTV+a7FczxtKMgBEsaCOifJT5Kpe1KhHL72exb2buPkJ3Na+hoy6akAFDp7T3JuAvH0CAO9kivwbp0MPQ==}
     peerDependencies:
       vite: ^2.0.0
+      workbox-window: ^6.1.5
     dependencies:
       debug: 4.3.2
       fast-glob: 3.2.7

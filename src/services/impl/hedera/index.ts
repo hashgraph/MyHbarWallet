@@ -35,6 +35,9 @@ export class HederaServiceImpl implements HederaService {
             client = Client.forNetwork(options.network);
         }
 
+        // NOTE: important, ensure that we pre-compute the health state of all nodes
+        await client.pingAll();
+
         const transactionSigner = await options.wallet.getTransactionSigner(
             options.keyIndex
         );
