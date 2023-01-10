@@ -56,6 +56,10 @@ export class SimpleHederaClientImpl implements SimpleHederaClient {
     // use an operator - less client for balance queries
     const { Client } = await import("@hashgraph/sdk");
     const client = Client.forNetwork(this._client.network);
+
+    // NOTE: important, ensure that we pre-compute the health state of all nodes
+    await client.pingAll();
+
     return getAccountBalance(client);
   }
 

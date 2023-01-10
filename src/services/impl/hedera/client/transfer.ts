@@ -24,10 +24,10 @@ export async function transfer(
 
   for (const transfer of options.transfers) {
     if (transfer.asset === "HBAR") {
-      transaction.addHbarTransfer(transfer.to ?? "", transfer.amount?.toNumber());      
+      transaction.addHbarTransfer(transfer.to ?? "", transfer.amount?.toNumber());
       outgoingHbarAmount = outgoingHbarAmount + Number(transfer.amount?.negated().toString().replace(" ℏ", ""));
     } else {
-      
+
       const amount = transfer.amount?.multipliedBy(Math.pow(10, store.balance!.tokens!.get(transfer.asset)!.decimals));
       transaction.addTokenTransfer(
         transfer.asset ?? "",
@@ -44,7 +44,7 @@ export async function transfer(
   }
 
   if(outgoingHbarAmount !== 0) transaction.addHbarTransfer(client.operatorAccountId, new Hbar(outgoingHbarAmount));
-  
+
   const resp = await transaction.execute(client);
 
   options.onBeforeConfirm?.();

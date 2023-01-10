@@ -23,14 +23,21 @@ export class HederaServiceImpl implements HederaService {
         keyIndex: number;
         accountId: AccountId;
     }): Promise<SimpleHederaClient | null> {
-        const { Client } = await import("@hashgraph/sdk");
+        const { Client, AccountId } = await import("@hashgraph/sdk");
 
         let client;
 
         if (typeof options.network === "string") {
-            // HACK: the NetworkName type is not exported
-            /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-            client = Client.forName(options.network as any);
+            if (options.network === "mainnet") {
+                // HACK: node 0.0.3 is offline
+                client = Client.forNetwork({
+                    "https://node01-00-grpc.swirlds.com:443": new AccountId(4),
+                });
+            } else {
+                // HACK: the NetworkName type is not exported
+                /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+                client = Client.forName(options.network as any);
+            }
         } else {
             client = Client.forNetwork(options.network);
         }
