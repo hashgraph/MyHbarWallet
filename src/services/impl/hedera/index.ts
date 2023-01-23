@@ -52,6 +52,10 @@ export class HederaServiceImpl implements HederaService {
         const privateKey = await options.wallet.getPrivateKey(options.keyIndex);
         const publicKey = await options.wallet.getPublicKey(options.keyIndex);
 
+        if (publicKey == null) {
+            return null;
+        }
+
         // TODO: Fix
         client.setOperatorWith(
             options.accountId,
