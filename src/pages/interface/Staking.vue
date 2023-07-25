@@ -318,6 +318,9 @@ export default defineComponent({
             { name: "DBS", location: "Singapore, Republic of Singapore" },
             { name: "ServiceNow", location: "Ogden, Utah" },
             { name: "Ubisoft", location: "Singapore, Republic of Singapore" },
+            { name: "abrdn", location: "London, UK" },
+            { name: "Dell", location: "New Jersey, USA" },
+            { name: "COFRA Holdings", location: "Germany" },
         ];
 
         function getHostInfoForNode(
