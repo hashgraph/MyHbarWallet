@@ -46,19 +46,19 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const store = useStore();
-    const i18n = useI18n();
+    // const i18n = useI18n();
     const state = reactive({
       busy: false,
       disabled: false,
       errorMessage: "",
     });
 
-    onMounted(async () => {
-      if (!await isWebUsbSupported()) {
-        state.disabled = true;
-        state.errorMessage = i18n.t("Ledger.WebUSBNotSupported").toString();
-      }
-    });
+    // onMounted(async () => {
+    //   if (!await isWebUsbSupported()) {
+    //     state.disabled = true;
+    //     state.errorMessage = i18n.t("Ledger.WebUSBNotSupported").toString();
+    //   }
+    // });
 
     async function handleConnect(): Promise<void> {
       state.disabled = true;

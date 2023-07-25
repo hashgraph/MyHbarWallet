@@ -49,15 +49,21 @@ export class LedgerHardwareWallet extends Wallet {
       return this.transport;
     }
 
-      const TransportWebUSB = (
-        await import("@ledgerhq/hw-transport-webusb")
-      )["default"];
+      // const TransportWebUSB = (
+      //   await import("@ledgerhq/hw-transport-webusb")
+      // )["default"];
+      // // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // // @ts-ignore
+      // this.transport = await TransportWebUSB.create(
+      //   OPEN_TIMEOUT,
+      //   LISTENER_TIMEOUT
+      // );
+
+      const TransportWebBLE = (await import("@ledgerhq/hw-transport-web-ble"))["default"];
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      this.transport = await TransportWebUSB.create(
-        OPEN_TIMEOUT,
-        LISTENER_TIMEOUT
-      );
+      this.transport = await TransportWebBLE.create(OPEN_TIMEOUT, LISTENER_TIMEOUT);
+
 
     if (this.transport != null) {
       this.transport.on("disconnect", async () => {

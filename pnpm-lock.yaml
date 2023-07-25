@@ -6,6 +6,7 @@ specifiers:
   '@hashgraph/sdk': 2.19.1
   '@intlify/vite-plugin-vue-i18n': ^2.4.0
   '@ledgerhq/hw-transport': ^6.3.0
+  '@ledgerhq/hw-transport-web-ble': ^6.11.2
   '@ledgerhq/hw-transport-webusb': ^6.3.0
   '@tailwindcss/forms': ^0.3.3
   '@types/ledgerhq__hw-transport': ^4.21.4
@@ -63,6 +64,7 @@ specifiers:
 dependencies:
   '@hashgraph/sdk': 2.19.1
   '@ledgerhq/hw-transport': 6.3.0
+  '@ledgerhq/hw-transport-web-ble': 6.11.2
   '@ledgerhq/hw-transport-webusb': 6.3.0
   '@vueuse/core': 5.3.0_vue@3.2.6
   awilix: 4.3.4
@@ -1588,6 +1590,15 @@ packages:
       '@intlify/runtime': 9.1.7
       '@intlify/shared': 9.1.7
 
+  /@ledgerhq/devices/6.11.2:
+    resolution: {integrity: sha512-j2SoG0Ifm7khsPKC2UFhJIoi1oCDCvJemmO+pz7Oc9jx8JRhIGtCfqEIUhL+ZIl0TrIYuApPLaSqJjiFi7VGCQ==}
+    dependencies:
+      '@ledgerhq/errors': 6.10.0
+      '@ledgerhq/logs': 6.10.0
+      rxjs: 6.6.7
+      semver: 7.3.5
+    dev: false
+
   /@ledgerhq/devices/6.3.0:
     resolution: {integrity: sha512-DmVxqMAf3FhkpKjkbBCFVJ5DmesfplujeCLzFwO/zF5VGuwY7xxPqeSxlpusXJkqhEq+DbFzIDRWJYDf7rtXqg==}
     dependencies:
@@ -1597,8 +1608,22 @@ packages:
       semver: 7.3.5
     dev: false
 
+  /@ledgerhq/errors/6.10.0:
+    resolution: {integrity: sha512-fQFnl2VIXh9Yd41lGjReCeK+Q2hwxQJvLZfqHnKqWapTz68NHOv5QcI0OHuZVNEbv0xhgdLhi5b65kgYeQSUVg==}
+    dev: false
+
   /@ledgerhq/errors/6.2.0:
     resolution: {integrity: sha512-eO03x8HJmG60WtlrMuahigW/rwywFdcGzCnihta/MjkM8BD9A660cKVkyIuheCcpaB7UV/r+QsRl9abHbjjaag==}
+    dev: false
+
+  /@ledgerhq/hw-transport-web-ble/6.11.2:
+    resolution: {integrity: sha512-DH2llLwVorVyZipxaNIgwvM5FRYqspWcQlDMlXGtuAw+GveXImR9cPSZeFJ042Dw4B7K9oPB13JfMyilBFiaSQ==}
+    dependencies:
+      '@ledgerhq/devices': 6.11.2
+      '@ledgerhq/errors': 6.10.0
+      '@ledgerhq/hw-transport': 6.11.2
+      '@ledgerhq/logs': 6.10.0
+      rxjs: 6.6.7
     dev: false
 
   /@ledgerhq/hw-transport-webusb/6.3.0:
@@ -1610,12 +1635,24 @@ packages:
       '@ledgerhq/logs': 6.2.0
     dev: false
 
+  /@ledgerhq/hw-transport/6.11.2:
+    resolution: {integrity: sha512-VZbGfyQ8iFl2W6TUkVmQ3rz8kyOXMbOdFiht3VNlglMe3KBGJWOjW9s/5LhOR348NJs797B1gl4V0Zqmn11kUg==}
+    dependencies:
+      '@ledgerhq/devices': 6.11.2
+      '@ledgerhq/errors': 6.10.0
+      events: 3.3.0
+    dev: false
+
   /@ledgerhq/hw-transport/6.3.0:
     resolution: {integrity: sha512-kdnVrgmxrFtKaRdkoaQBEa02RXgLzEBiooYbxA65BGSJig3PGWDS9LrqNpzLTZM1RQlivd9NLBmfwU2ze4chWA==}
     dependencies:
       '@ledgerhq/devices': 6.3.0
       '@ledgerhq/errors': 6.2.0
       events: 3.3.0
+    dev: false
+
+  /@ledgerhq/logs/6.10.0:
+    resolution: {integrity: sha512-lLseUPEhSFUXYTKj6q7s2O3s2vW2ebgA11vMAlKodXGf5AFw4zUoEbTz9CoFOC9jS6xY4Qr8BmRnxP/odT4Uuw==}
     dev: false
 
   /@ledgerhq/logs/6.2.0:
