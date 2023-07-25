@@ -76,7 +76,7 @@
     "bip32-path": "^0.4.2",
     "buffer": "^6.0.3",
     "electron-window-state": "^5.0.3",
-    "file-type": "16.5.2",
+    "file-type": "16.5.4",
     "jdenticon": "^3.1.1",
     "long": "^4.0.0",
     "pinia": "^2.0.0-rc.6",
