@@ -1,5 +1,5 @@
 {
-  "name": "myhbarwallet",
+  "name": "@hashgraph/myhbarwallet",
   "productName": "MyHbarWallet",
   "version": "0.6.6",
   "description": "MyHbarWallet is a free, client-side interface helping you interact with Hedera™ Hashgraph.",
