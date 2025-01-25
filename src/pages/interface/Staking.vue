@@ -78,8 +78,8 @@
     :stake-rewarded="node.stake_rewarded"
     :stake-non-rewarded="node.stake_not_rewarded"
     :name="node.node_id"
-    :host="getHostInfoForNode(network, node.node_id).name"
-    :location="getHostInfoForNode(network, node.node_id).location"
+    :host="parseNode(node).name"
+    :location="parseNode(node).location"
     :is-staked="accountStakingInfo?.staked_node_id == node.node_id"
     @stake="handleStake"
     @unstake="handleUnstake"
@@ -250,6 +250,14 @@ export default defineComponent({
                 groupSize: 3,
             })
         );
+
+        const parseNode = (nodeData) => {
+          const [name, location] = nodeData.description.split("|")
+            .map(part => part.slice(0,4) == "Host" ? part.slice(10).trim() : part.trim());
+
+          return { name, location };
+        };
+
         const accountStakingInfo = computed(() => store.getAccountStakingInfo);
 
         const isStaking = computed(
@@ -290,49 +298,6 @@ export default defineComponent({
                 return result + `${minutes}m`;
             }
         });
-
-        const mainnetNodes = [
-            { name: "LG", location: "Seoul, South Korea" },
-            { name: "Swirlds", location: "North Carolina, USA" },
-            { name: "FIS", location: "Florida, USA" },
-            { name: "Wipro", location: "Mumbai, India" },
-            { name: "Nomura", location: "Tokyo, Japan" },
-            { name: "Google", location: "Helsinki, Finland" },
-            { name: "Zain Group", location: "Kuwait City, Kuwait" },
-            { name: "Magalu", location: "São Paulo, Brazil" },
-            { name: "Boeing", location: "Toronto, Canada" },
-            { name: "DLA Piper", location: "London, UK" },
-            { name: "Tata Communications", location: "California, USA" },
-            { name: "IBM", location: "Washington, USA" },
-            { name: "Deutsche Telekom", location: "Berlin, Germany" },
-            { name: "UCL", location: "Amsterdam, Netherlands" },
-            { name: "Avery Dennison", location: "Pennsylvania, USA" },
-            { name: "Dentons", location: "Frankfurt, DE" },
-            { name: "Standard Bank", location: "Warsaw, Poland" },
-            { name: "eftpos", location: "Oregon, USA" },
-            { name: "EDF", location: "Paris, France" },
-            { name: "Shinhan Bank", location: "Seoul, South Korea" },
-            { name: "Chainlink Labs", location: "Michigan, USA" },
-            { name: "LSE", location: "Virginia, USA" },
-            { name: "IIT Madras", location: "Georgia, USA" },
-            { name: "DBS", location: "Singapore, Republic of Singapore" },
-            { name: "ServiceNow", location: "Ogden, Utah" },
-            { name: "Ubisoft", location: "Singapore, Republic of Singapore" },
-            { name: "abrdn", location: "London, UK" },
-            { name: "Dell", location: "New Jersey, USA" },
-            { name: "COFRA Holdings", location: "Germany" },
-        ];
-
-        function getHostInfoForNode(
-            network: "mainnet" | "testnet" | "previewnet",
-            index: number
-        ) {
-            if (network === "mainnet") {
-                return mainnetNodes[index];
-            } else {
-                return { name: "", location: "" };
-            }
-        }
 
         const rewardRate = computed(() => {
             if (
@@ -420,7 +385,7 @@ export default defineComponent({
         return {
             network,
             stakingInfo,
-            getHostInfoForNode,
+            parseNode,
             accountStakingInfo,
             isStaking,
             timeToNextStakingPeriod,
